@@ -1,2 +1,2 @@
-const VERSION = "unknown"
+const VERSION = "0.0"
 
