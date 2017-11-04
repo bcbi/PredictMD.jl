@@ -20,6 +20,18 @@ dict1 = Dict(
 @test(AluthgeSinhaBase.injective(dict1))
 @test(AluthgeSinhaBase.onetoone(dict1))
 
+dict1_inverse = AluthgeSinhaBase.inverse(dict1)
+@test(
+    dict1_inverse == Dict(
+        1 => "a",
+        2 => "b",
+        3 => "c",
+        4 => "d",
+        5 => "e",
+        6 => "f",
+        )
+    )
+
 dict2 = Dict(
     1 => "odd",
     2 => "even",
@@ -31,3 +43,5 @@ dict2 = Dict(
 
 @test(!AluthgeSinhaBase.injective(dict2))
 @test(!AluthgeSinhaBase.onetoone(dict2))
+
+@test_throws(ErrorException, AluthgeSinhaBase.inverse(dict2))
