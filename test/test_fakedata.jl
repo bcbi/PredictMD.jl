@@ -13,7 +13,7 @@ dataframe, original_label_variables, feature_variables =
 @test(length(feature_variables) > 0)
 label_coding_map = Dict("classzero" => 0, "classone" => 1)
 
-tabular_dataset = TabularDataset(
+tabular_dataset = AluthgeSinhaBase.TabularDataset(
     dataframe,
     original_label_variables,
     feature_variables;
