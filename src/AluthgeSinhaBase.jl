@@ -1,8 +1,5 @@
 module AluthgeSinhaBase
 
-# types to export
-export TabularDataset
-
 include("abstracttypes.jl")
 include("fakedata.jl")
 include("formulas.jl")
