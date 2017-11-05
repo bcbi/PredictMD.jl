@@ -1,4 +1,4 @@
-# AluthgeSinhaBase
+# AluthgeSinhaBase.jl
 
 <table>
     <thead>
