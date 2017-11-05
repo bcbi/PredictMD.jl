@@ -39,9 +39,6 @@ function TabularDataset(
         validation::Real = 0.0,
         testing::Real = 0.0,
         )
-    if !(training + validation + testing == 1)
-        error("training + validation + testing must equal 1.")
-    end
 
     data_frame = DataFrame(data_original)
     num_rows = size(data_frame, 1)
@@ -82,17 +79,6 @@ function TabularDataset(
         rows_testing,
         )
 end
-
-# struct TabularDataset <: AbstractTabularDataset
-#     data_frame::T1 where T1 <: AbstractDataFrame
-#     label_variables::T2 where T2 <: AbstractVector{Symbol}
-#     feature_variables::T3 where T3 <: AbstractVector{Symbol}
-#     rows_training::T3 where T3 <: StatsBase.IntegerVector
-#     rows_validation::T4 where T4 <: StatsBase.IntegerVector
-#     rows_testing::T5 where T5 <: StatsBase.IntegerVector
-# end
-
-
 
 function _calculate_num_rows_partition(
         num_rows::Integer,
