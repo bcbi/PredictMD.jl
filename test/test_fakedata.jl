@@ -12,7 +12,7 @@ dataframe, label_variables, feature_variables =
 @test(typeof(feature_variables) == Vector{Symbol})
 @test(length(feature_variables) > 0)
 
-tabular_dataset = AluthgeSinhaBase.TabularDataset(
+tabular_dataset = HoldoutTabularDataset(
     dataframe,
     label_variables,
     feature_variables;
@@ -21,4 +21,7 @@ tabular_dataset = AluthgeSinhaBase.TabularDataset(
     testing=0.3,
     )
 
-@test(typeof(tabular_dataset) <: AluthgeSinhaBase.AbstractTabularDataset)
+@test(typeof(tabular_dataset) <: AbstractDataset)
+@test(typeof(tabular_dataset) <: AbstractTabularDataset)
+@test(typeof(tabular_dataset) <: AbstractHoldoutTabularDataset)
+@test(typeof(tabular_dataset) <: HoldoutTabularDataset)

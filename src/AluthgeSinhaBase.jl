@@ -5,6 +5,9 @@ export AbstractDataset,
     AbstractTabularDataset,
     AbstractHoldoutTabularDataset
 
+# concrete types to export:
+export HoldoutTabularDataset
+
 include("abstracttypes.jl")
 include("fakedata.jl")
 include("formulas.jl")
