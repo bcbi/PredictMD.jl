@@ -1,5 +1,10 @@
 module AluthgeSinhaBase
 
+# abstract types to export:
+export AbstractDataset,
+    AbstractTabularDataset,
+    AbstractHoldoutTabularDataset
+
 include("abstracttypes.jl")
 include("fakedata.jl")
 include("formulas.jl")
