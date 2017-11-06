@@ -2,7 +2,7 @@ using DataFrames
 using IterableTables
 using StatsBase
 
-struct TabularDataset <: AbstractTabularDataset
+struct HoldoutTabularDataset <: AbstractHoldoutTabularDataset
     data_labels_original::T1 where T1 <: Associative
     data_labels_integer::T2 where T2 <: Associative
     label_decoding_maps_integer::T3 where T3 <: Associative
@@ -19,7 +19,7 @@ struct TabularDataset <: AbstractTabularDataset
     rows_testing::T14 where T14 <: StatsBase.IntegerVector
 end
 
-function TabularDataset(
+function HoldoutTabularDataset(
         data_original,
         label_variables::T2 where T2 <: AbstractVector{Symbol},
         feature_variables::T3 where T3 <: AbstractVector{Symbol};
@@ -28,7 +28,7 @@ function TabularDataset(
         testing::Real = 0.0,
         shuffle_rows::Bool = true,
         )
-    return TabularDataset(
+    return HoldoutTabularDataset(
         Base.GLOBAL_RNG,
         data_original,
         label_variables,
@@ -40,7 +40,7 @@ function TabularDataset(
         )
 end
 
-function TabularDataset(
+function HoldoutTabularDataset(
         rng::AbstractRNG,
         data_original,
         label_variables::T2 where T2 <: AbstractVector{Symbol},
@@ -57,6 +57,8 @@ function TabularDataset(
         permutation = shuffle(rng, 1:num_rows)
         data_frame = data_frame[permutation, :]
     end
+
+    pool!(data_frame)
 
     all_column_names = names(data_frame)
 
@@ -78,6 +80,7 @@ function TabularDataset(
     num_rows_training, num_rows_validation, num_rows_testing =
         _calculate_num_rows_partition(num_rows, training, validation, testing)
     rows_training, rows_validation, rows_testing = _partition_rows(
+        rng,
         num_rows_training,
         num_rows_validation,
         num_rows_testing,
@@ -125,7 +128,7 @@ function TabularDataset(
 
     data_unusedcolumns = data_frame[:, unused_column_names]
 
-    return TabularDataset(
+    return HoldoutTabularDataset(
         data_labels_original,
         data_labels_integer,
         label_decoding_maps_integer,
