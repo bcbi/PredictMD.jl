@@ -36,20 +36,32 @@ function generate_label_encoding_map(
     method::Symbol,
     int_type::DataType = Int,
     ) where label_type
-    if !( method in [:integer, :onehot, :dummy, :fullonehot, :fulldummy])
+    if !(
+            method in [
+                :integer,
+                :integer_zeroindexed,
+                :integer_oneindexed,
+                :onehot,
+                :dummy,
+                :fullonehot,
+                :fulldummy
+                ]
+            )
         error("\"$(method)\" is not a supported label coding method.")
     end
     if !(int_type <: Integer)
         error("int_type must be a subtype of Integer")
     end
-    if (method == :integer)
+    if (method in [:integer, :integer_zeroindexed, :integer_oneindexed])
         label_encoding_map = Dict{label_type, int_type}()
     else
         label_encoding_map = Dict{label_type, Vector{int_type}}()
     end
+
     unique_labels = unique(uncoded_labels)
     num_unique_labels = length(unique_labels)
-    if (method == :integer)
+
+    if (method in [:integer, :integer_zeroindexed, :integer_oneindexed])
         num_columns_needed = 1
     elseif (method == :onehot || method == :dummy)
         num_columns_needed = num_unique_labels - 1
@@ -58,25 +70,30 @@ function generate_label_encoding_map(
     else
     end
 
-    for i = 1:num_unique_labels
-        if (method == :integer)
-            label_encoding_map[unique_labels[i]] =
-                int_type(i - 1)
-        elseif (method == :onehot || method == :dummy)
-            label_encoding_map[unique_labels[i]] =
-                _onehotvector(
-                    num_columns_needed,
-                    i - 1,
-                    int_type,
-                    )
-        elseif (method == :fullonehot || method == :fulldummy)
-            label_encoding_map[unique_labels[i]] =
-                _onehotvector(
-                    num_columns_needed,
-                    i,
-                    int_type,
-                    )
-        else
+    if (method == :integer || method == :integer_zeroindexed)
+        for i = 1:num_unique_labels
+            label_encoding_map[unique_labels[i]] = int_type(i - 1)
+        end
+    elseif method == :integer_oneindexed
+        for i = 1:num_unique_labels
+            label_encoding_map[unique_labels[i]] = int_type(i)
+        end
+    elseif (method == :onehot || method == :dummy)
+        for i = 1:num_unique_labels
+            label_encoding_map[unique_labels[i]] = _onehotvector(
+                num_columns_needed,
+                i - 1,
+                int_type,
+                )
+        end
+
+    elseif (method == :fullonehot || method == :fulldummy)
+        for i = 1:num_unique_labels
+            label_encoding_map[unique_labels[i]] = _onehotvector(
+                num_columns_needed,
+                i,
+                int_type,
+                )
         end
     end
     return label_encoding_map
