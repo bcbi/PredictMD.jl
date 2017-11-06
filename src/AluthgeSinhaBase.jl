@@ -18,4 +18,4 @@ include("tabulardatasets.jl")
 include("util.jl")
 include("version.jl")
 
-end # module
+end # end module AluthgeSinhaBase
