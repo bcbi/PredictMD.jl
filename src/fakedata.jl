@@ -44,19 +44,35 @@ function generatefakedata(rng::AbstractRNG, num_rows::Integer)
             odds_to_probability(dataframe[i,:oddsofbeingclassone])
     end
 
-    dataframe[:mylabel] = Vector{String}(num_rows)
+    dataframe[:mylabel1] = Vector{String}(num_rows)
     for i = 1:num_rows
         proba_classone = dataframe[i, :probabilityofbeingclassone]
         proba_classzero = 1 - proba_classone
         pweightvector = ProbabilityWeights([proba_classzero, proba_classone])
-        dataframe[i, :mylabel] = sample(
+        dataframe[i, :mylabel1] = sample(
             ["classzero", "classone"],
             pweightvector,
             )
     end
 
+    dataframe[:mylabel2] = Vector{String}(num_rows)
+    for i = 1:num_rows
+        dataframe[i, :mylabel2] = sample(
+            ["tails", "head"]
+            )
+    end
+
+    dataframe[:mylabel3] = Vector{String}(num_rows)
+    for i = 1:num_rows
+        dataframe[i, :mylabel3] = sample(
+            ["one", "two", "three", "four", "five", "six"]
+            )
+    end
+
     label_variables = [
-        :mylabel,
+        :mylabel1,
+        :mylabel2,
+        :mylabel3,
         ]
     feature_variables = [
         :catfeat1,

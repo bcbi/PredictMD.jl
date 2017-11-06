@@ -21,8 +21,10 @@ function inverse(a::Associative)
     original_keys = collect(keys(a))
     original_values = collect(values(a))
     result = Dict{eltype(original_values), eltype(original_keys)}()
-    for v = original_values
-        k = original_keys[original_values.==v][1]
+    num_values = length(original_values)
+    for i = 1:num_values
+        v = original_values[i]
+        k = original_keys[i]
         result[v] = k
     end
     return result
