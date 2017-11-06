@@ -3,7 +3,10 @@ module AluthgeSinhaBase
 # abstract types to export:
 export AbstractDataset,
     AbstractTabularDataset,
-    AbstractHoldoutTabularDataset
+    AbstractHoldoutTabularDataset,
+    AbstractModel,
+    AbstractClassifier,
+    AbstractRegression
 
 # concrete types to export:
 export HoldoutTabularDataset
