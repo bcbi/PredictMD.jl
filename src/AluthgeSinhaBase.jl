@@ -8,6 +8,8 @@ export AbstractDataset,
 # concrete types to export:
 export HoldoutTabularDataset
 
+# functions to export:
+
 include("abstracttypes.jl")
 include("fakedata.jl")
 include("formulas.jl")
