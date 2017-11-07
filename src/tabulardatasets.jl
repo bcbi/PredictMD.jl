@@ -65,7 +65,7 @@ function HoldoutTabularDataset(
         data_frame = data_frame[permutation, :]
     end
 
-    pool!(data_frame)
+    DataFrames.pool!(data_frame)
 
     all_column_names = names(data_frame)
 
@@ -322,14 +322,14 @@ function _partition_rows(
         )
     num_rows = num_rows_training + num_rows_validation + num_rows_testing
     all_rows = convert(Array, 1:num_rows)
-    rows_testing = sample(
+    rows_testing = StatsBase.sample(
         rng,
         all_rows,
         num_rows_training;
         replace=false,
         )
     remaining_rows = setdiff(all_rows,rows_testing)
-    rows_validation = sample(
+    rows_validation = StatsBase.sample(
         rng,
         remaining_rows,
         num_rows_validation;

@@ -66,8 +66,8 @@ function SingleLabelBinaryLogisticClassifier(
 
     blobs[:model] = model
 
-    predicted_proba_training = predict(model)
-    predicted_proba_training_verify_nullable = predict(
+    predicted_proba_training = StatsBase.predict(model)
+    predicted_proba_training_verify_nullable = StatsBase.predict(
         model,
         DataTable(data_training_features),
         )
@@ -76,7 +76,7 @@ function SingleLabelBinaryLogisticClassifier(
         predicted_proba_training_verify_nullable,
         )
     @assert(all(predicted_proba_training .≈ predicted_proba_training_verify))
-    predicted_proba_validation_nullable = predict(
+    predicted_proba_validation_nullable = StatsBase.predict(
         model,
         DataTable(data_validation_features),
         )
@@ -84,7 +84,7 @@ function SingleLabelBinaryLogisticClassifier(
         Vector,
         predicted_proba_validation_nullable,
         )
-    predicted_proba_testing_nullable = predict(
+    predicted_proba_testing_nullable = StatsBase.predict(
         model,
         DataTable(data_testing_features),
         )

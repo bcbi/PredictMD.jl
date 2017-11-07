@@ -30,3 +30,17 @@ logistic_binary_classifier = SingleLabelBinaryLogisticClassifier(
     tabular_dataset,
     :mylabel1,
     )
+
+@test(
+    typeof(logistic_binary_classifier) <:
+        AbstractSingleLabelBinaryClassifier
+    )
+
+modelperformance_logistic_binary_classifier = ModelPerformance(
+    logistic_binary_classifier,
+    )
+
+@test(
+    typeof(modelperformance_logistic_binary_classifier) <:
+        AbstractModelPerformance
+    )

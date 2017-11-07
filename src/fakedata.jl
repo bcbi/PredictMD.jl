@@ -17,10 +17,10 @@ function generatefaketabulardata(rng::AbstractRNG, num_rows::Integer)
     dataframe[:floatfeat1] = -99*ones(Cfloat, num_rows)
     dataframe[:floatfeat2] = -99*ones(Cfloat, num_rows)
     for i = 1:num_rows
-        # dataframe[i, :catfeat1] = sample(rng, ["A"])
-        dataframe[i, :catfeat2] = sample(rng, ["B", "C"])
-        dataframe[i, :catfeat3] = sample(rng, ["D", "E", "F"])
-        dataframe[i, :catfeat4] = sample(rng, ["G", "H", "I", "J"])
+        # dataframe[i, :catfeat1] = StatsBase.sample(rng, ["A"])
+        dataframe[i, :catfeat2] = StatsBase.sample(rng, ["B", "C"])
+        dataframe[i, :catfeat3] = StatsBase.sample(rng, ["D", "E", "F"])
+        dataframe[i, :catfeat4] = StatsBase.sample(rng, ["G", "H", "I", "J"])
         dataframe[i, :intfeat1] = rand(rng, Int.(1:5))
         dataframe[i, :intfeat2] = rand(rng, Int.(1:100))
         dataframe[i, :floatfeat1] = rand(rng, Cfloat)*10
@@ -50,7 +50,7 @@ function generatefaketabulardata(rng::AbstractRNG, num_rows::Integer)
         proba_classone = dataframe[i, :probabilityofbeingclassone]
         proba_classzero = 1 - proba_classone
         pweightvector = ProbabilityWeights([proba_classzero, proba_classone])
-        dataframe[i, :mylabel1] = sample(
+        dataframe[i, :mylabel1] = StatsBase.sample(
             ["classzero", "classone"],
             pweightvector,
             )
@@ -58,14 +58,14 @@ function generatefaketabulardata(rng::AbstractRNG, num_rows::Integer)
 
     dataframe[:mylabel2] = Vector{String}(num_rows)
     for i = 1:num_rows
-        dataframe[i, :mylabel2] = sample(
+        dataframe[i, :mylabel2] = StatsBase.sample(
             ["tails", "head"]
             )
     end
 
     dataframe[:mylabel3] = Vector{String}(num_rows)
     for i = 1:num_rows
-        dataframe[i, :mylabel3] = sample(
+        dataframe[i, :mylabel3] = StatsBase.sample(
             ["one", "two", "three", "four", "five", "six"]
             )
     end

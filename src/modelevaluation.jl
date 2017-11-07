@@ -47,25 +47,16 @@ function ModelPerformance(model::AbstractSingleLabelBinaryClassifier)
         ypredlabel_testing,
         )
 
-
     return ModelPerformance(blobs)
 end
 
 function Base.show(io::IO, mp::ModelPerformance)
-    println(io, "hi this is a ModelPerformance object")
-
     println(io, "Training set:")
-    println(io, "\tAccuracy: $(blobs[:accuracy_training])")
+    println(io, "\tAccuracy: $(mp.blobs[:accuracy_training])")
 
     println(io, "Testing set:")
-    println(io, "\tAccuracy: $(blobs[:accuracy_validation])")
+    println(io, "\tAccuracy: $(mp.blobs[:accuracy_validation])")
 
     println(io, "Validation set:")
-    println(io, "\tAccuracy: $(blobs[:accuracy_testing])")
+    println(io, "\tAccuracy: $(mp.blobs[:accuracy_testing])")
 end
-
-
-#     println(
-#         io,
-#         "\tAccuracy: $(accuracy_score(ytrue_training,ypredlabel_training))",
-#         )
