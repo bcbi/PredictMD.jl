@@ -45,3 +45,59 @@ dict2 = Dict(
 @test(!AluthgeSinhaBase.onetoone(dict2))
 
 @test_throws(ErrorException, AluthgeSinhaBase.inverse(dict2))
+
+a = [
+    0,
+    .1,
+    .2,
+    .3,
+    .4,
+    .5,
+    .6,
+    .7,
+    .8,
+    .9,
+    1,
+    ]
+a_twocols = AluthgeSinhaBase.binaryproba_onecoltotwocols(a)
+a_twocols_correctanswer = [
+    1 0;
+    .9 .1;
+    .8 .2;
+    .7 .3;
+    .6 .4;
+    .5 .5;
+    .4 .6;
+    .3 .7;
+    .2 .8;
+    .1 .9;
+    0 1;
+    ]
+@test(all(a_twocols.≈a_twocols_correctanswer))
+
+b = [
+    .95 .05;
+    .85 .15;
+    .75 .25;
+    .65 .35;
+    .55 .45;
+    .45 .55;
+    .35 .65;
+    .25 .75;
+    .15 .85;
+    .05 .95;
+    ]
+b_onecol = AluthgeSinhaBase.binaryproba_twocolstoonecol(b)
+b_onecol_correct_answer = [
+    .05,
+    .15,
+    .25,
+    .35,
+    .45,
+    .55,
+    .65,
+    .75,
+    .85,
+    .95,
+    ]
+@test(all(b_onecol.≈b_onecol_correct_answer))

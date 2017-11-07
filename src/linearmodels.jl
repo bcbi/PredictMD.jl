@@ -14,6 +14,8 @@ function SingleLabelBinaryLogisticClassifier(
         dataset::AbstractHoldoutTabularDataset,
         label_variable::Symbol;
         intercept::Bool = true,
+        family::Distribution = Binomial(),
+        link::Link = LogitLink(),
         )
 
     blobs = Dict{Symbol, Any}()
@@ -27,43 +29,63 @@ function SingleLabelBinaryLogisticClassifier(
         )
     blobs[:model_formula] = model_formula
 
-    data_training_labelandfeatures, recordids_training =
-        getdata(
-            dataset;
-            training = true,
-            single_label = true,
-            label_variable = label_variable,
-            label_type = :integer,
-            features = true,
-            )
+    data_training_labelandfeatures, recordidlist_training = getdata(
+        dataset;
+        training = true,
+        single_label = true,
+        label_variable = label_variable,
+        label_type = :integer,
+        features = true,
+        )
 
-    blobs[:data_training_labelandfeatures] = data_training_labelandfeatures
+    data_training_features = getdata(
+        dataset;
+        features = true,
+        recordidlist = recordidlist_training,
+        )
+    data_training_labels = getdata(
+        dataset;
+        single_label = true,
+        label_variable = label_variable,
+        label_type = :integer,
+        recordidlist = recordidlist_training,
+        )
+    blobs[:true_labels_training] = convert(Array,data_training_labels)
 
-    data_training_features =
-        data_training_labelandfeatures[:, feature_variables]
-    data_validation_features, recordids_validation =
-        getdata(
-            dataset;
-            validation = true,
-            features = true,
-            )
-    data_testing_features, recordids_testing =
-        getdata(
-            dataset;
-            testing = true,
-            features = true,
-            )
-    blobs[:recordids_training] = recordids_training
-    blobs[:recordids_validation] = recordids_validation
-    blobs[:recordids_testing] = recordids_testing
+    data_validation_features, recordidlist_validation = getdata(
+        dataset;
+        validation = true,
+        features = true,
+        )
+    data_validation_labels = getdata(
+        dataset;
+        single_label = true,
+        label_variable = label_variable,
+        label_type = :integer,
+        recordidlist = recordidlist_validation,
+        )
+    blobs[:true_labels_validation] = convert(Array,data_validation_labels)
+
+    data_testing_features, recordidlist_testing = getdata(
+        dataset;
+        testing = true,
+        features = true,
+        )
+    data_testing_labels = getdata(
+        dataset;
+        single_label = true,
+        label_variable = label_variable,
+        label_type = :integer,
+        recordidlist = recordidlist_testing,
+        )
+    blobs[:true_labels_testing] = convert(Array,data_testing_labels)
 
     model = glm(
         model_formula,
         data_training_labelandfeatures,
-        Binomial(),
-        LogitLink(),
+        family,
+        link,
         )
-
     blobs[:model] = model
 
     predicted_proba_training = StatsBase.predict(model)
@@ -76,6 +98,16 @@ function SingleLabelBinaryLogisticClassifier(
         predicted_proba_training_verify_nullable,
         )
     @assert(all(predicted_proba_training .≈ predicted_proba_training_verify))
+    blobs[:predicted_proba_training] =
+        predicted_proba_training
+    blobs[:predicted_proba_training_onecol] =
+        predicted_proba_training
+    predicted_proba_training_twocols = binaryproba_onecoltotwocols(
+        predicted_proba_training,
+        )
+    blobs[:predicted_proba_training_twocols] =
+        predicted_proba_training_twocols
+
     predicted_proba_validation_nullable = StatsBase.predict(
         model,
         DataTable(data_validation_features),
@@ -84,42 +116,46 @@ function SingleLabelBinaryLogisticClassifier(
         Vector,
         predicted_proba_validation_nullable,
         )
+    blobs[:predicted_proba_validation] =
+        predicted_proba_validation
+    blobs[:predicted_proba_validation_onecol] =
+        predicted_proba_validation
+    predicted_proba_validation_twocols = binaryproba_onecoltotwocols(
+        predicted_proba_validation,
+        )
+    blobs[:predicted_proba_validation_twocols] =
+        predicted_proba_validation_twocols
+
     predicted_proba_testing_nullable = StatsBase.predict(
         model,
         DataTable(data_testing_features),
         )
     predicted_proba_testing = convert(
         Vector,
-        predicted_proba_testing_nullable
+        predicted_proba_testing_nullable,
         )
-    blobs[:predicted_proba_training] = predicted_proba_training
-    blobs[:predicted_proba_validation] = predicted_proba_validation
-    blobs[:predicted_proba_testing] = predicted_proba_testing
+    blobs[:predicted_proba_testing] =
+        predicted_proba_testing
+    blobs[:predicted_proba_testing_onecol] =
+        predicted_proba_testing
+    predicted_proba_testing_twocols = binaryproba_onecoltotwocols(
+        predicted_proba_testing
+        )
+    blobs[:predicted_proba_testing_twocols] =
+        predicted_proba_testing_twocols
 
-    predicted_labels_training = classify(predicted_proba_training')-1
-    predicted_labels_validation = classify(predicted_proba_validation')-1
-    predicted_labels_testing = classify(predicted_proba_testing')-1
+    predicted_labels_training =
+        classify(predicted_proba_training_twocols').-1
     blobs[:predicted_labels_training] = predicted_labels_training
+
+    predicted_labels_validation =
+        classify(predicted_proba_validation_twocols').-1
     blobs[:predicted_labels_validation] = predicted_labels_validation
+
+    predicted_labels_testing =
+        classify(predicted_proba_testing_twocols').-1
     blobs[:predicted_labels_testing] = predicted_labels_testing
 
-    data_labels_integer_thislabel =
-        dataset.blobs[:data_labels_integer][label_variable]
-    @assert(typeof(data_labels_integer_thislabel) <: StatsBase.IntegerVector)
-
-    rows_training = dataset.blobs[:rows_training]
-    rows_validation = dataset.blobs[:rows_validation]
-    rows_testing = dataset.blobs[:rows_testing]
-    @assert(typeof(rows_training) <: StatsBase.IntegerVector)
-    @assert(typeof(rows_validation) <: StatsBase.IntegerVector)
-    @assert(typeof(rows_testing) <: StatsBase.IntegerVector)
-
-    blobs[:true_labels_training] =
-        data_labels_integer_thislabel[rows_training]
-    blobs[:true_labels_validation] =
-        data_labels_integer_thislabel[rows_validation]
-    blobs[:true_labels_testing] =
-        data_labels_integer_thislabel[rows_testing]
-
     return SingleLabelBinaryLogisticClassifier(blobs)
+
 end

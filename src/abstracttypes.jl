@@ -7,7 +7,7 @@ end
 abstract type AbstractHoldoutTabularDataset <: AbstractTabularDataset
 end
 
-abstract type AbstractFoldedTabularDataset <: AbstractTabularDataset
+abstract type AbstractKFoldTabularDataset <: AbstractTabularDataset
 end
 
 abstract type AbstractModel

@@ -4,7 +4,7 @@ module AluthgeSinhaBase
 export AbstractDataset,
     AbstractTabularDataset,
     AbstractHoldoutTabularDataset,
-    AbstractFoldedTabularDataset,
+    AbstractKFoldTabularDataset,
     AbstractModel,
     AbstractClassifier,
     AbstractSingleLabelClassifier,
@@ -23,7 +23,7 @@ export HoldoutTabularDataset,
 export getdata, performance
 
 include("abstracttypes.jl")
-include("fakedata.jl")
+include("faketabulardata.jl")
 include("formulas.jl")
 include("labelcoding.jl")
 include("linearmodels.jl")

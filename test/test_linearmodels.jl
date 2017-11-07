@@ -1,16 +1,12 @@
 srand(999)
 
-using DataFrames
+using StatsBase
 
-num_rows = 5_000_000
+num_rows = 50_000
 dataframe, label_variables, feature_variables =
     AluthgeSinhaBase.generatefaketabulardata(num_rows)
-@test(typeof(dataframe) == DataFrame)
-@test(size(dataframe,1) == num_rows)
-@test(typeof(label_variables) == Vector{Symbol})
-@test(length(label_variables) > 0)
-@test(typeof(feature_variables) == Vector{Symbol})
-@test(length(feature_variables) > 0)
+
+countmap(dataframe[:mylabel1])
 
 tabular_dataset = HoldoutTabularDataset(
     dataframe,
@@ -20,11 +16,6 @@ tabular_dataset = HoldoutTabularDataset(
     validation=0.2,
     testing=0.3,
     )
-
-@test(typeof(tabular_dataset) <: AbstractDataset)
-@test(typeof(tabular_dataset) <: AbstractTabularDataset)
-@test(typeof(tabular_dataset) <: AbstractHoldoutTabularDataset)
-@test(typeof(tabular_dataset) <: HoldoutTabularDataset)
 
 logistic_binary_classifier = SingleLabelBinaryLogisticClassifier(
     tabular_dataset,

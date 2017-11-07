@@ -58,6 +58,7 @@ function HoldoutTabularDataset(
     blobs[:recordid_fieldname] = recordid_fieldname
 
     num_rows = size(data_frame, 1)
+    blobs[:num_rows] = num_rows
     data_frame[recordid_fieldname] = 1:num_rows
 
     if shuffle_rows
@@ -153,6 +154,23 @@ function HoldoutTabularDataset(
     return HoldoutTabularDataset(blobs)
 end
 
+function recordidlist_to_rownumberlist(
+        dataset::AbstractHoldoutTabularDataset,
+        recordidlist::StatsBase.IntegerVector,
+        )
+    num_rows = dataset.blobs[:num_rows]
+    onetonumrowsordered = convert(Array, 1:num_rows)
+    num_records_requested = length(recordidlist)
+    recordid_fieldname = dataset.blobs[:recordid_fieldname]
+    data_unusedcolumns = dataset.blobs[:data_unusedcolumns]
+    all_recordids = data_unusedcolumns[recordid_fieldname]
+    row_number_for_each_record = [
+        onetonumrowsordered[all_recordids.==recordidlist[i]][1]
+        for i = 1:num_records_requested
+        ]
+    return row_number_for_each_record
+end
+
 function getdata(
         dataset::AbstractHoldoutTabularDataset;
         training::Bool = false,
@@ -160,10 +178,11 @@ function getdata(
         testing::Bool = false,
         all_labels::Bool = false,
         single_label::Bool = false,
-        label_variable = dataset.blobs[:label_variables][1],
+        label_variable::Symbol = dataset.blobs[:label_variables][1],
         features::Bool = false,
         shuffle_rows::Bool = true,
         label_type::Symbol = :original,
+        recordidlist::StatsBase.IntegerVector = Vector{Int64}(),
         )
     return getdata(
         Base.GLOBAL_RNG,
@@ -177,6 +196,7 @@ function getdata(
         features = features,
         shuffle_rows = shuffle_rows,
         label_type = label_type,
+        recordidlist = recordidlist,
         )
 end
 
@@ -188,16 +208,20 @@ function getdata(
         testing::Bool = false,
         all_labels::Bool = false,
         single_label::Bool = false,
-        label_variable = dataset.blobs[:label_variables][1],
+        label_variable::Symbol = dataset.blobs[:label_variables][1],
         features::Bool = false,
         shuffle_rows::Bool = true,
         label_type::Symbol = :original,
+        recordidlist::StatsBase.IntegerVector = Vector{Int64}(),
         )
-    if !(training || validation || testing)
-        error("At least 1 of training, validation, testing must be true.")
+
+    recordidlist_provided = length(recordidlist) > 0
+
+    if !(recordidlist_provided || training || validation || testing)
+        error("At least 1 of training, validation, testing must be true")
     end
     if !(all_labels || single_label || features)
-        error("At least 1 of all_labels, single_label, features must be true.")
+        error("At least 1 of all_labels, single_label, features must be true")
     end
     if (all_labels && single_label)
         error("all_labels and single_label cannot both be true.")
@@ -242,36 +266,57 @@ function getdata(
         end
     end
 
-
-
-    selected_rows = Vector{Int}()
-    if training
-        selected_rows = vcat(selected_rows, dataset.blobs[:rows_training])
+    if recordidlist_provided
+        rownumberlist = recordidlist_to_rownumberlist(
+            dataset,
+            recordidlist
+            )
+        datatoreturn = allrowsselectedcolumns[rownumberlist, :]
+        return datatoreturn
+    else
+        selected_rows = Vector{Int}()
+        if training
+            selected_rows = vcat(
+                selected_rows,
+                dataset.blobs[:rows_training],
+                )
+        end
+        if validation
+            selected_rows = vcat(
+                selected_rows,
+                dataset.blobs[:rows_validation],
+                )
+        end
+        if testing
+            selected_rows = vcat(
+                selected_rows,
+                dataset.blobs[:rows_testing],
+                )
+        end
+        sort!(selected_rows)
+        num_selected_rows = length(selected_rows)
+        datatoreturn = allrowsselectedcolumns[selected_rows, :]
+        data_unusedcolumns = dataset.blobs[:data_unusedcolumns]
+        recordid_fieldname = dataset.blobs[:recordid_fieldname]
+        corresponding_recordidlist =
+            data_unusedcolumns[selected_rows,recordid_fieldname]
+        @assert(typeof(corresponding_recordidlist) <: AbstractVector)
+        corresponding_recordidlist_array =
+            convert(Array, corresponding_recordidlist)
+        @assert(
+            typeof(corresponding_recordidlist_array) <:
+                StatsBase.IntegerVector
+            )
+        if shuffle_rows
+            permutation = shuffle(rng, 1:num_selected_rows)
+            datatoreturn =
+                datatoreturn[permutation, :]
+            corresponding_recordidlist_array =
+                corresponding_recordidlist_array[permutation]
+        end
+        return datatoreturn, corresponding_recordidlist_array
     end
-    if validation
-        selected_rows = vcat(selected_rows, dataset.blobs[:rows_validation])
-    end
-    if testing
-        selected_rows = vcat(selected_rows, dataset.blobs[:rows_testing])
-    end
-    sort!(selected_rows)
-    num_selected_rows = length(selected_rows)
 
-    result = allrowsselectedcolumns[selected_rows, :]
-
-    corresponding_recordids =
-        dataset.blobs[:data_unusedcolumns][
-            selected_rows,
-            [dataset.blobs[:recordid_fieldname]],
-            ]
-
-    if shuffle_rows
-        permutation = shuffle(rng, 1:num_selected_rows)
-        result = result[permutation, :]
-        corresponding_recordids = corresponding_recordids[permutation, :]
-    end
-
-    return result, corresponding_recordids
 end
 
 function _calculate_num_rows_partition(
@@ -325,7 +370,7 @@ function _partition_rows(
     rows_testing = StatsBase.sample(
         rng,
         all_rows,
-        num_rows_training;
+        num_rows_testing;
         replace=false,
         )
     remaining_rows = setdiff(all_rows,rows_testing)
@@ -337,9 +382,13 @@ function _partition_rows(
         )
     rows_training = setdiff(remaining_rows, rows_validation)
 
-    assigned_rows = vcat(rows_training, rows_validation, rows_testing)
+    @assert(length(rows_training) == num_rows_training)
+    @assert(length(rows_validation) == num_rows_validation)
+    @assert(length(rows_testing) == num_rows_testing)
 
+    assigned_rows = vcat(rows_training, rows_validation, rows_testing)
     @assert(all_rows == sort(assigned_rows))
+
 
     return rows_training, rows_validation, rows_testing
 end
