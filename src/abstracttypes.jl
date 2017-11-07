@@ -28,3 +28,6 @@ end
 
 abstract type AbstractSingleLabelRegression <: AbstractRegression
 end
+
+abstract type AbstractModelPerformance
+end

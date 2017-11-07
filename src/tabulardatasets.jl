@@ -153,9 +153,6 @@ function HoldoutTabularDataset(
     return HoldoutTabularDataset(blobs)
 end
 
-get_feature_variables(dataset::AbstractHoldoutTabularDataset) =
-    dataset.blobs[:feature_variables]
-
 function getdata(
         dataset::AbstractHoldoutTabularDataset;
         training::Bool = false,

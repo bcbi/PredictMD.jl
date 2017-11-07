@@ -28,5 +28,5 @@ tabular_dataset = HoldoutTabularDataset(
 
 logistic_binary_classifier = SingleLabelBinaryLogisticClassifier(
     tabular_dataset,
-    :mylabel1
+    :mylabel1,
     )

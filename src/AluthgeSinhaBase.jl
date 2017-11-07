@@ -10,12 +10,14 @@ export AbstractDataset,
     AbstractSingleLabelClassifier,
     AbstractSingleLabelBinaryClassifier,
     AbstractRegression,
-    AbstractSingleLabelRegression
+    AbstractSingleLabelRegression,
+    AbstractModelPerformance
 
 # concrete types to export:
 export HoldoutTabularDataset,
     ResampledHoldoutTabularDataset,
-    SingleLabelBinaryLogisticClassifier
+    SingleLabelBinaryLogisticClassifier,
+    ModelPerformance
 
 # functions to export:
 export getdata, performance
@@ -25,6 +27,7 @@ include("fakedata.jl")
 include("formulas.jl")
 include("labelcoding.jl")
 include("linearmodels.jl")
+include("modelevaluation.jl")
 include("tabulardatasets.jl")
 include("util.jl")
 include("version.jl")
