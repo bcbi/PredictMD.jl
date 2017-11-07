@@ -82,5 +82,5 @@ ytrue_testing = convert(Array, getdata(
     label_variable = :mylabel1,
     label_type = :integer,
     ))
-yscore_validation = convert(Array, predict(m,DataTable(x_validation)))
-mean(Int.(yscore_validation.>0.5).==ytrue_validation)
+yscore_testing = convert(Array, predict(m,DataTable(x_testing)))
+mean(Int.(yscore_testing.>0.5).==ytrue_testing)
