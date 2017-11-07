@@ -37,7 +37,7 @@ function SingleLabelBinaryLogisticClassifier(
         label_type = :integer,
         features = true,
         )
-
+    blobs[:recordidlist_training] = recordidlist_training
     data_training_features = getdata(
         dataset;
         features = true,
@@ -57,6 +57,7 @@ function SingleLabelBinaryLogisticClassifier(
         validation = true,
         features = true,
         )
+    blobs[:recordidlist_validation] = recordidlist_validation
     data_validation_labels = getdata(
         dataset;
         single_label = true,
@@ -71,6 +72,7 @@ function SingleLabelBinaryLogisticClassifier(
         testing = true,
         features = true,
         )
+    blobs[:recordidlist_testing] = recordidlist_testing
     data_testing_labels = getdata(
         dataset;
         single_label = true,
