@@ -1,13 +1,13 @@
 using DataFrames
 
-function generatefakedata(num_rows::Integer)
-    return generatefakedata(Base.GLOBAL_RNG, num_rows)
+function generatefaketabulardata(num_rows::Integer)
+    return generatefaketabulardata(Base.GLOBAL_RNG, num_rows)
 end
 
-function generatefakedata(rng::AbstractRNG, num_rows::Integer)
+function generatefaketabulardata(rng::AbstractRNG, num_rows::Integer)
     dataframe = DataFrame()
 
-    dataframe[:catfeat1] = Vector{String}(num_rows)
+    # dataframe[:catfeat1] = Vector{String}(num_rows)
     dataframe[:catfeat2] = Vector{String}(num_rows)
     dataframe[:catfeat3] = Vector{String}(num_rows)
     dataframe[:catfeat4] = Vector{String}(num_rows)
@@ -16,7 +16,7 @@ function generatefakedata(rng::AbstractRNG, num_rows::Integer)
     dataframe[:floatfeat1] = -99*ones(Cfloat, num_rows)
     dataframe[:floatfeat2] = -99*ones(Cfloat, num_rows)
     for i = 1:num_rows
-        dataframe[i, :catfeat1] = sample(rng, ["A"])
+        # dataframe[i, :catfeat1] = sample(rng, ["A"])
         dataframe[i, :catfeat2] = sample(rng, ["B", "C"])
         dataframe[i, :catfeat3] = sample(rng, ["D", "E", "F"])
         dataframe[i, :catfeat4] = sample(rng, ["G", "H", "I", "J"])
@@ -75,7 +75,7 @@ function generatefakedata(rng::AbstractRNG, num_rows::Integer)
         :mylabel3,
         ]
     feature_variables = [
-        :catfeat1,
+        # :catfeat1,
         :catfeat2,
         :catfeat3,
         :catfeat4,

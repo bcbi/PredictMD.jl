@@ -4,7 +4,7 @@ using DataFrames
 
 num_rows = 5_000_000
 dataframe, label_variables, feature_variables =
-    AluthgeSinhaBase.generatefakedata(num_rows)
+    AluthgeSinhaBase.generatefaketabulardata(num_rows)
 @test(typeof(dataframe) == DataFrame)
 @test(size(dataframe,1) == num_rows)
 @test(typeof(label_variables) == Vector{Symbol})
@@ -25,3 +25,8 @@ tabular_dataset = HoldoutTabularDataset(
 @test(typeof(tabular_dataset) <: AbstractTabularDataset)
 @test(typeof(tabular_dataset) <: AbstractHoldoutTabularDataset)
 @test(typeof(tabular_dataset) <: HoldoutTabularDataset)
+
+logistic_binary_classifier = SingleLabelBinaryLogisticClassifier(
+    tabular_dataset,
+    :mylabel1
+    )

@@ -3,20 +3,11 @@ using IterableTables
 using StatsBase
 
 struct HoldoutTabularDataset <: AbstractHoldoutTabularDataset
-    data_labels_original::T1 where T1 <: Associative
-    data_labels_integer::T2 where T2 <: Associative
-    label_decoding_maps_integer::T3 where T3 <: Associative
-    data_labels_onehot::T4 where T4 <: Associative
-    label_decoding_maps_onehot::T5 where T5 <: Associative
-    data_labels_fullonehot::T6 where T6 <: Associative
-    label_decoding_maps_fullonehot::T7 where T7 <: Associative
-    data_features::T8 where T8 <: AbstractDataFrame
-    data_unusedcolumns::T9 where T9 <: AbstractDataFrame
-    label_variables::T10 where T10 <: AbstractVector{Symbol}
-    feature_variables::T11 where T11 <: AbstractVector{Symbol}
-    rows_training::T12 where T12 <: StatsBase.IntegerVector
-    rows_validation::T13 where T13 <: StatsBase.IntegerVector
-    rows_testing::T14 where T14 <: StatsBase.IntegerVector
+    blobs::T where T <: Associative
+end
+
+struct ResampledHoldoutTabularDataset <: AbstractHoldoutTabularDataset
+    blobs::T where T <: Associative
 end
 
 function HoldoutTabularDataset(
@@ -27,6 +18,7 @@ function HoldoutTabularDataset(
         validation::Real = 0.0,
         testing::Real = 0.0,
         shuffle_rows::Bool = true,
+        recordid_fieldname::Symbol = :recordid,
         )
     return HoldoutTabularDataset(
         Base.GLOBAL_RNG,
@@ -37,6 +29,7 @@ function HoldoutTabularDataset(
         validation = validation,
         testing = testing,
         shuffle_rows = shuffle_rows,
+        recordid_fieldname = :recordid,
         )
 end
 
@@ -49,9 +42,23 @@ function HoldoutTabularDataset(
         validation::Real = 0.0,
         testing::Real = 0.0,
         shuffle_rows::Bool = true,
+        recordid_fieldname::Symbol = :recordid,
         )
+
+    blobs = Dict{Symbol, Any}()
+
     data_frame = DataFrame(data_original)
+
+    if recordid_fieldname in names(data_frame)
+        msg = "The dataset already has a column named $(recordid_fieldname)."*
+            "Please select a different name for the recordid column."
+        error(msg)
+    end
+
+    blobs[:recordid_fieldname] = recordid_fieldname
+
     num_rows = size(data_frame, 1)
+    data_frame[recordid_fieldname] = 1:num_rows
 
     if shuffle_rows
         permutation = shuffle(rng, 1:num_rows)
@@ -68,11 +75,15 @@ function HoldoutTabularDataset(
         end
     end
 
+    blobs[:label_variables] = label_variables
+
     for x = feature_variables
         if !(x in all_column_names)
             error("feature variable $(x) is not one of the columns")
         end
     end
+
+    blobs[:feature_variables] = feature_variables
 
     used_column_names = vcat(label_variables, feature_variables)
     unused_column_names = setdiff(all_column_names, used_column_names)
@@ -85,6 +96,9 @@ function HoldoutTabularDataset(
         num_rows_validation,
         num_rows_testing,
         )
+    blobs[:rows_training] = rows_training
+    blobs[:rows_validation] = rows_validation
+    blobs[:rows_testing] = rows_testing
 
     data_labels_original = Dict()
     data_labels_integer = Dict()
@@ -123,27 +137,144 @@ function HoldoutTabularDataset(
             label_decoding_maps_fullonehot[labelvar] = fullonehot_coding_map
         end
     end
+    blobs[:data_labels_original] = data_labels_original
+    blobs[:data_labels_integer] = data_labels_integer
+    blobs[:data_labels_onehot] = data_labels_onehot
+    blobs[:data_labels_fullonehot] = data_labels_fullonehot
+    blobs[:label_decoding_maps_integer] = label_decoding_maps_integer
+    blobs[:label_decoding_maps_onehot] = label_decoding_maps_onehot
+    blobs[:label_decoding_maps_fullonehot] = label_decoding_maps_fullonehot
 
-    data_features = data_frame[:, feature_variables]
 
-    data_unusedcolumns = data_frame[:, unused_column_names]
+    blobs[:data_features] = data_frame[:, feature_variables]
 
-    return HoldoutTabularDataset(
-        data_labels_original,
-        data_labels_integer,
-        label_decoding_maps_integer,
-        data_labels_onehot,
-        label_decoding_maps_onehot,
-        data_labels_fullonehot,
-        label_decoding_maps_fullonehot,
-        data_features,
-        data_unusedcolumns,
-        label_variables,
-        feature_variables,
-        rows_training,
-        rows_validation,
-        rows_testing,
+    blobs[:data_unusedcolumns] = data_frame[:, unused_column_names]
+
+    return HoldoutTabularDataset(blobs)
+end
+
+get_feature_variables(dataset::AbstractHoldoutTabularDataset) =
+    dataset.blobs[:feature_variables]
+
+function getdata(
+        dataset::AbstractHoldoutTabularDataset;
+        training::Bool = false,
+        validation::Bool = false,
+        testing::Bool = false,
+        all_labels::Bool = false,
+        single_label::Bool = false,
+        label_variable = dataset.blobs[:label_variables][1],
+        features::Bool = false,
+        shuffle_rows::Bool = true,
+        label_type::Symbol = :original,
         )
+    return getdata(
+        Base.GLOBAL_RNG,
+        dataset;
+        training = training,
+        validation = validation,
+        testing = testing,
+        all_labels = all_labels,
+        single_label = single_label,
+        label_variable = label_variable,
+        features = features,
+        shuffle_rows = shuffle_rows,
+        label_type = label_type,
+        )
+end
+
+function getdata(
+        rng::AbstractRNG,
+        dataset::AbstractHoldoutTabularDataset;
+        training::Bool = false,
+        validation::Bool = false,
+        testing::Bool = false,
+        all_labels::Bool = false,
+        single_label::Bool = false,
+        label_variable = dataset.blobs[:label_variables][1],
+        features::Bool = false,
+        shuffle_rows::Bool = true,
+        label_type::Symbol = :original,
+        )
+    if !(training || validation || testing)
+        error("At least 1 of training, validation, testing must be true.")
+    end
+    if !(all_labels || single_label || features)
+        error("At least 1 of all_labels, single_label, features must be true.")
+    end
+    if (all_labels && single_label)
+        error("all_labels and single_label cannot both be true.")
+    end
+
+    labeltype2labeldata = Dict()
+    labeltype2labeldata[:original] =
+        dataset.blobs[:data_labels_original]
+    labeltype2labeldata[:integer] =
+        dataset.blobs[:data_labels_integer]
+    labeltype2labeldata[:onehot] =
+        dataset.blobs[:data_labels_onehot]
+    labeltype2labeldata[:dummy] =
+        dataset.blobs[:data_labels_onehot]
+    labeltype2labeldata[:fullonehot] =
+        dataset.blobs[:data_labels_fullonehot]
+    labeltype2labeldata[:fulldummy] =
+        dataset.blobs[:data_labels_fullonehot]
+
+    if !haskey(labeltype2labeldata, label_type)
+        error("label_type must be 1 of: $(collect(keys(labeltype2labeldata)))")
+    end
+
+    desiredtype_labeldata = labeltype2labeldata[label_type]
+
+    allrowsselectedcolumns = DataFrame()
+
+    if all_labels
+        for l in dataset.blobs[:label_variables]
+            allrowsselectedcolumns[l] =
+                desiredtype_labeldata[l]
+        end
+    elseif single_label
+        allrowsselectedcolumns[label_variable] =
+            desiredtype_labeldata[label_variable]
+    end
+
+    if features
+        for f in dataset.blobs[:feature_variables]
+            allrowsselectedcolumns[f] =
+                dataset.blobs[:data_features][f]
+        end
+    end
+
+
+
+    selected_rows = Vector{Int}()
+    if training
+        selected_rows = vcat(selected_rows, dataset.blobs[:rows_training])
+    end
+    if validation
+        selected_rows = vcat(selected_rows, dataset.blobs[:rows_validation])
+    end
+    if testing
+        selected_rows = vcat(selected_rows, dataset.blobs[:rows_testing])
+    end
+    sort!(selected_rows)
+    num_selected_rows = length(selected_rows)
+
+    result = allrowsselectedcolumns[selected_rows, :]
+
+    corresponding_recordids =
+        dataset.blobs[:data_unusedcolumns][
+            selected_rows,
+            [dataset.blobs[:recordid_fieldname]],
+            ]
+
+    if shuffle_rows
+        permutation = shuffle(rng, 1:num_selected_rows)
+        result = result[permutation, :]
+        corresponding_recordids = corresponding_recordids[permutation, :]
+    end
+
+    return result, corresponding_recordids
 end
 
 function _calculate_num_rows_partition(
