@@ -181,7 +181,8 @@ function getdata(
         single_label::Bool = false,
         label_variable::Symbol = dataset.blobs[:label_variables][1],
         features::Bool = false,
-        shuffle_rows::Bool = true,
+        # shuffle_rows::Bool = true,
+        shuffle_rows::Bool = false,
         label_type::Symbol = :original,
         recordidlist::StatsBase.IntegerVector = Vector{Int64}(),
         )
@@ -211,7 +212,8 @@ function getdata(
         single_label::Bool = false,
         label_variable::Symbol = dataset.blobs[:label_variables][1],
         features::Bool = false,
-        shuffle_rows::Bool = true,
+        # shuffle_rows::Bool = true,
+        shuffle_rows::Bool = false,
         label_type::Symbol = :original,
         recordidlist::StatsBase.IntegerVector = Vector{Int64}(),
         )

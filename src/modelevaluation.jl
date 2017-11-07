@@ -29,12 +29,12 @@ function ModelPerformance(model::AbstractSingleLabelBinaryClassifier)
     ypredlabel_training = model.blobs[:predicted_labels_training]
     ypredproba_training = model.blobs[:predicted_proba_training]
     blobs[:accuracy_training] = accuracy_score(
-        convert(Vector, ytrue_training),
-        convert(Vector, ypredlabel_training),
+        convert(Array, ytrue_training),
+        convert(Array, ypredlabel_training),
         )
     blobs[:auroc_training] = roc_auc_score(
-        convert(Vector, ytrue_training),
-        convert(Vector, ypredproba_training),
+        convert(Array, ytrue_training),
+        convert(Array, ypredproba_training),
         )
 
     ytrue_validation = model.blobs[:true_labels_validation]
@@ -42,12 +42,12 @@ function ModelPerformance(model::AbstractSingleLabelBinaryClassifier)
     ypredlabel_validation = model.blobs[:predicted_labels_validation]
     ypredproba_validation = model.blobs[:predicted_proba_validation]
     blobs[:accuracy_validation] = accuracy_score(
-        convert(Vector, ytrue_validation),
-        convert(Vector, ypredlabel_validation),
+        convert(Array, ytrue_validation),
+        convert(Array, ypredlabel_validation),
         )
     blobs[:auroc_validation] = roc_auc_score(
-        convert(Vector, ytrue_validation),
-        convert(Vector, ypredproba_validation),
+        convert(Array, ytrue_validation),
+        convert(Array, ypredproba_validation),
         )
 
     ytrue_testing = model.blobs[:true_labels_testing]
@@ -55,12 +55,12 @@ function ModelPerformance(model::AbstractSingleLabelBinaryClassifier)
     ypredlabel_testing = model.blobs[:predicted_labels_testing]
     ypredproba_testing = model.blobs[:predicted_proba_testing]
     blobs[:accuracy_testing] = accuracy_score(
-        convert(Vector, ytrue_testing),
-        convert(Vector, ypredlabel_testing),
+        convert(Array, ytrue_testing),
+        convert(Array, ypredlabel_testing),
         )
     blobs[:auroc_testing] = roc_auc_score(
-        convert(Vector, ytrue_testing),
-        convert(Vector, ypredproba_testing),
+        convert(Array, ytrue_testing),
+        convert(Array, ypredproba_testing),
         )
 
     return ModelPerformance(blobs)
