@@ -40,14 +40,14 @@ modelperformance_logistic_binary_classifier = ModelPerformance(
 
 m = logistic_binary_classifier.blobs[:model]
 
-x_train, r_training= getdata(
+x_training, r_training= getdata(
     tabular_dataset;
     training = true,
     features = true,
     )
 ytrue_training= convert(Array, getdata(
     tabular_dataset;
-    recordidlist = r_train,
+    recordidlist = r_training,
     single_label = true,
     label_variable = :mylabel1,
     label_type = :integer,

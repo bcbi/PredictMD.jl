@@ -8,7 +8,7 @@ end
 function generatefaketabulardata(rng::AbstractRNG, num_rows::Integer)
     dataframe = DataFrame()
 
-    # dataframe[:catfeat1] = Vector{String}(num_rows)
+    dataframe[:catfeat1] = Vector{String}(num_rows)
     dataframe[:catfeat2] = Vector{String}(num_rows)
     dataframe[:catfeat3] = Vector{String}(num_rows)
     dataframe[:catfeat4] = Vector{String}(num_rows)
@@ -17,7 +17,7 @@ function generatefaketabulardata(rng::AbstractRNG, num_rows::Integer)
     dataframe[:floatfeat1] = -99*ones(Cfloat, num_rows)
     dataframe[:floatfeat2] = -99*ones(Cfloat, num_rows)
     for i = 1:num_rows
-        # dataframe[i, :catfeat1] = StatsBase.sample(rng, ["A"])
+        dataframe[i, :catfeat1] = StatsBase.sample(rng, ["A"])
         dataframe[i, :catfeat2] = StatsBase.sample(rng, ["B", "C"])
         dataframe[i, :catfeat3] = StatsBase.sample(rng, ["D", "E", "F"])
         dataframe[i, :catfeat4] = StatsBase.sample(rng, ["G", "H", "I", "J"])
@@ -29,16 +29,14 @@ function generatefaketabulardata(rng::AbstractRNG, num_rows::Integer)
 
     dataframe[:oddsofbeingclassone] = -99*ones(Cfloat, num_rows)
     for i = 1:num_rows
-        # dataframe[i, :oddsofbeingclassone] =
-        #     ( dataframe[i, :catfeat2] == "B" ? 2.0 : 0.8 ) .*
-        #     ( dataframe[i, :catfeat3] == "D" ? 2.0 : 0.8 ) .*
-        #     ( dataframe[i, :catfeat4] == "G" ? 2.0 : 0.8 ) .*
-        #     ( dataframe[i, :intfeat1] == 4 ? 2.0 : 0.8 ) .*
-        #     ( dataframe[i, :intfeat2] > 90 ? 2.0 : 0.8 ) .*
-        #     ( dataframe[i, :floatfeat1] > 75.5 ? 2.0 : 0.8 ) .*
-        #     ( dataframe[i, :floatfeat2] < -100 ? 2.0 : 0.8 )
         dataframe[i, :oddsofbeingclassone] =
-            dataframe[i, :catfeat2] == "B" ? 100.0 : 0.05
+            ( dataframe[i, :catfeat2] == "B" ? 2.0 : 0.8 ) .*
+            ( dataframe[i, :catfeat3] == "D" ? 2.0 : 0.8 ) .*
+            ( dataframe[i, :catfeat4] == "G" ? 2.0 : 0.8 ) .*
+            ( dataframe[i, :intfeat1] == 4 ? 2.0 : 0.8 ) .*
+            ( dataframe[i, :intfeat2] > 90 ? 2.0 : 0.8 ) .*
+            ( dataframe[i, :floatfeat1] > 75.5 ? 2.0 : 0.8 ) .*
+            ( dataframe[i, :floatfeat2] < -100 ? 2.0 : 0.8 )
     end
 
     dataframe[:probabilityofbeingclassone] = -99*ones(Cfloat, num_rows)
