@@ -4,7 +4,7 @@ using DataFrames
 using DataTables
 using StatsBase
 
-num_rows = 50_000
+num_rows = 500_000
 dataframe, label_variables, feature_variables =
     AluthgeSinhaBase.generatefaketabulardata(num_rows)
 
