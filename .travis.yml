@@ -17,6 +17,10 @@ matrix:
   allow_failures:
   - julia: nightly
 
+env:
+  global:
+  - PYTHON=conda
+
 ## uncomment and modify the following lines to manually install system packages
 #addons:
 #  apt: # apt-get for linux
