@@ -1,11 +1,11 @@
 using DataFrames
 using StatsBase
 
-function generatefaketabulardata(num_rows::Integer)
-    return generatefaketabulardata(Base.GLOBAL_RNG, num_rows)
+function generatefaketabulardata1(num_rows::Integer)
+    return generatefaketabulardata1(Base.GLOBAL_RNG, num_rows)
 end
 
-function generatefaketabulardata(rng::AbstractRNG, num_rows::Integer)
+function generatefaketabulardata1(rng::AbstractRNG, num_rows::Integer)
     dataframe = DataFrame()
 
     dataframe[:catfeat1] = Vector{String}(num_rows)
@@ -84,6 +84,47 @@ function generatefaketabulardata(rng::AbstractRNG, num_rows::Integer)
         :intfeat2,
         :floatfeat1,
         :floatfeat2,
+        ]
+
+    return dataframe, label_variables, feature_variables
+end
+
+function generatefaketabulardata2(num_rows::Integer)
+    return generatefaketabulardata2(Base.GLOBAL_RNG, num_rows)
+end
+
+function generatefaketabulardata2(rng::AbstractRNG, num_rows::Integer)
+    dataframe = DataFrame()
+
+    dataframe[:x] = Vector{String}(num_rows)
+    for i = 1:num_rows
+        dataframe[i, :x] = StatsBase.sample(rng, ["heads", "tails"])
+    end
+
+    dataframe[:y] = -99*ones(Int, num_rows)
+    pweightvector_heads = StatsBase.ProbabilityWeights([0.10, 0.90])
+    pweightvector_tails = StatsBase.ProbabilityWeights([0.89, 0.11])
+    for i = 1:num_rows
+        if dataframe[i, :x] == "heads"
+            dataframe[i, :y] = StatsBase.sample(
+                rng,
+                [0, 1],
+                pweightvector_heads,
+                )
+        else
+            dataframe[i, :y] = StatsBase.sample(
+                rng,
+                [0, 1],
+                pweightvector_tails,
+                )
+        end
+    end
+
+    label_variables = [
+        :y,
+        ]
+    feature_variables = [
+        :x,
         ]
 
     return dataframe, label_variables, feature_variables

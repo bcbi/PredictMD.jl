@@ -114,6 +114,9 @@ function HoldoutTabularDataset(
         labeltype = eltype(label_column_original)
         if labeltype <: Real
             data_labels_original[labelvar] = label_column_original
+            if labeltype <: Integer
+                data_labels_integer[labelvar] = label_column_original
+            end
         else
             data_labels_original[labelvar] = label_column_original
             #

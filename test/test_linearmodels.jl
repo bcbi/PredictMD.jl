@@ -4,11 +4,11 @@ using DataFrames
 using DataTables
 using StatsBase
 
-num_rows = 500_000
+num_rows = 50_000
 dataframe, label_variables, feature_variables =
-    AluthgeSinhaBase.generatefaketabulardata(num_rows)
+    AluthgeSinhaBase.generatefaketabulardata1(num_rows)
 
-countmap(dataframe[:mylabel1])
+StatsBase.countmap(dataframe[:mylabel1])
 
 tabular_dataset = HoldoutTabularDataset(
     dataframe,
@@ -52,7 +52,7 @@ ytrue_training= convert(Array, getdata(
     label_variable = :mylabel1,
     label_type = :integer,
     ))
-yscore_training= convert(Array, predict(m,DataTable(x_training)))
+yscore_training = convert(Array, predict(m,DataTable(x_training)))
 mean(Int.(yscore_training.>0.5).==ytrue_training)
 
 x_validation, r_validation = getdata(
@@ -84,3 +84,27 @@ ytrue_testing = convert(Array, getdata(
     ))
 yscore_testing = convert(Array, predict(m,DataTable(x_testing)))
 mean(Int.(yscore_testing.>0.5).==ytrue_testing)
+
+##############################################################################
+
+num_rows = 50_000
+dataframe, label_variables, feature_variables =
+    AluthgeSinhaBase.generatefaketabulardata2(num_rows)
+
+tabular_dataset = HoldoutTabularDataset(
+    dataframe,
+    label_variables,
+    feature_variables;
+    training=0.5,
+    validation=0.2,
+    testing=0.3,
+    )
+
+logistic_binary_classifier = SingleLabelBinaryLogisticClassifier(
+    tabular_dataset,
+    :y,
+    )
+
+modelperformance_logistic_binary_classifier = ModelPerformance(
+    logistic_binary_classifier,
+    )
