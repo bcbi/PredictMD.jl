@@ -42,7 +42,7 @@ requesteddata = getdata(
 
 num_rows = 5_000_000
 dataframe, label_variables, feature_variables =
-    AluthgeSinhaBase.generatefaketabulardata(num_rows)
+    AluthgeSinhaBase.generatefaketabulardata1(num_rows)
 countmap(dataframe[:mylabel1])
 
 tabular_dataset = HoldoutTabularDataset(
