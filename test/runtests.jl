@@ -1,5 +1,9 @@
 using AluthgeSinhaBase
 using Base.Test
 
-# write your own tests here
-@test 1 == 1
+include("test_faketabulardata.jl")
+include("test_formulas.jl")
+include("test_labelcoding.jl")
+include("test_linearmodels.jl")
+include("test_tabulardatasets.jl")
+include("test_util.jl")
