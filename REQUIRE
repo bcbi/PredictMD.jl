@@ -4,5 +4,8 @@ DataFrames
 GLM
 IterableTables
 JLD
+MLBase
+NamedArrays
+ScikitLearn
 StatsBase
 StatsModels

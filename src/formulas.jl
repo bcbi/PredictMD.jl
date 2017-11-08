@@ -5,17 +5,18 @@ function generate_formula(
     feature_variables::AbstractVector{Symbol};
     intercept=true,
     )
-    if length(label_variables)==0
+    num_label_vars = length(label_variables)
+    if num_label_vars==0
         error("label_variables must be non-empty")
     end
-    if length(label_variables)>1
-        error("label_variables must not have more than one element")
-    end
-    return generate_formula(
-        label_variables[1],
-        feature_variables;
-        intercept = intercept,
-        )
+    return [
+        generate_formula(
+            label_variables[i],
+            feature_variables;
+            intercept = intercept,
+            )
+        for i=1:num_label_vars
+        ]
 end
 
 function generate_formula(
