@@ -65,3 +65,10 @@ function binaryproba_twocolstoonecol(
     end
     return m[:, 2]
 end
+
+function calculate_smote_pct_under(
+        pct_over::Real,
+        minority_to_majority_ratio::Real = 1,
+        )
+    return 100*minority_to_majority_ratio*(100+pct_over)/pct_over
+end

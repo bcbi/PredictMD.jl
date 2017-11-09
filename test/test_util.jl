@@ -101,3 +101,13 @@ b_onecol_correct_answer = [
     .95,
     ]
 @test(all(b_onecol.≈b_onecol_correct_answer))
+
+@test(calculate_smote_pct_under(100) == 200)
+
+@test(calculate_smote_pct_under(200) == 150)
+
+@test(calculate_smote_pct_under(400) == 125)
+
+@test(calculate_smote_pct_under(1000) == 110)
+
+@test(calculate_smote_pct_under(10000) == 101)
