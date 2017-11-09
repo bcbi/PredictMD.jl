@@ -101,3 +101,13 @@ b_onecol_correct_answer = [
     .95,
     ]
 @test(all(b_onecol.≈b_onecol_correct_answer))
+
+@test(AluthgeSinhaBase.calculate_smote_pct_under(100) == 200)
+
+@test(AluthgeSinhaBase.calculate_smote_pct_under(200) == 150)
+
+@test(AluthgeSinhaBase.calculate_smote_pct_under(400) == 125)
+
+@test(AluthgeSinhaBase.calculate_smote_pct_under(1000) == 110)
+
+@test(AluthgeSinhaBase.calculate_smote_pct_under(10000) == 101)
