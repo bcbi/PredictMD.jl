@@ -95,9 +95,9 @@ tabular_dataset = AluthgeSinhaBase.HoldoutTabularDataset(
     dataframe,
     label_variables,
     feature_variables;
-    training=0.5,
-    validation=0.2,
-    testing=0.3,
+    training=1/3,
+    validation=1/3,
+    testing=1/3,
     )
 
 num_iterations = 10
@@ -117,9 +117,6 @@ for i = 1:num_iterations
     validation_accuracies[i] = mp.blobs[:accuracy_validation]
     testing_accuracies[i] = mp.blobs[:accuracy_testing]
 end
-
-
-
 
 
 ##############################################################################

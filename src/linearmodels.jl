@@ -50,6 +50,9 @@ function SingleLabelBinaryLogisticClassifier(
         features = true,
         recordidlist = recordidlist_training,
         )
+    ###
+    blobs[:data_training_features] = data_training_features
+    ####
     data_training_labels = getdata(
         dataset;
         single_label = true,
@@ -59,17 +62,17 @@ function SingleLabelBinaryLogisticClassifier(
         )
     blobs[:true_labels_training] = convert(Array,data_training_labels)
 
-    model = glm(
+    internal_model = glm(
         model_formula,
         data_training_labelandfeatures,
         family,
         link,
         )
-    blobs[:internal_model] = model
+    blobs[:internal_model] = internal_model
 
-    verify_predicted_proba_training = StatsBase.predict(model)
-    predicted_proba_training_nullable = StatsBase.predict(
-        model,
+    verification_predicted_proba_training = GLM.predict(internal_model)
+    predicted_proba_training_nullable = GLM.predict(
+        internal_model,
         DataTable(data_training_features),
         )
     predicted_proba_training = convert(
@@ -77,9 +80,11 @@ function SingleLabelBinaryLogisticClassifier(
         predicted_proba_training_nullable,
         )
     # @assert(
-        # all(verify_predicted_proba_training .≈ predicted_proba_training)
-        # )
-    if !all(verify_predicted_proba_training .≈ predicted_proba_training)
+    #     all(
+    #         verification_predicted_proba_training .≈ predicted_proba_training
+    #         )
+    #     )
+    if !all(verification_predicted_proba_training .≈ predicted_proba_training)
         warn("weird stuff is happening")
     end
     blobs[:predicted_proba_training] =
@@ -114,8 +119,8 @@ function SingleLabelBinaryLogisticClassifier(
             recordidlist = recordidlist_validation,
             )
         blobs[:true_labels_validation] = convert(Array,data_validation_labels)
-        predicted_proba_validation_nullable = StatsBase.predict(
-            model,
+        predicted_proba_validation_nullable = GLM.predict(
+            internal_model,
             DataTable(data_validation_features),
             )
         predicted_proba_validation = convert(
@@ -157,8 +162,8 @@ function SingleLabelBinaryLogisticClassifier(
             recordidlist = recordidlist_testing,
             )
         blobs[:true_labels_testing] = convert(Array,data_testing_labels)
-        predicted_proba_testing_nullable = StatsBase.predict(
-            model,
+        predicted_proba_testing_nullable = GLM.predict(
+            internal_model,
             DataTable(data_testing_features),
             )
         predicted_proba_testing = convert(

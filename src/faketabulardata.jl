@@ -104,8 +104,8 @@ function generatefaketabulardata2(rng::AbstractRNG, num_rows::Integer)
     end
 
     dataframe[:y] = -99*ones(Int, num_rows)
-    pweightvector_heads = StatsBase.ProbabilityWeights([0.10, 0.90])
-    pweightvector_tails = StatsBase.ProbabilityWeights([0.89, 0.11])
+    pweightvector_heads = StatsBase.ProbabilityWeights([0.01, 0.99])
+    pweightvector_tails = StatsBase.ProbabilityWeights([0.99, 0.01])
     for i = 1:num_rows
         if dataframe[i, :x] == "heads"
             dataframe[i, :y] = StatsBase.sample(
