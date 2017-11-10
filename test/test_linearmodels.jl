@@ -89,7 +89,7 @@ mean(Int.(yscore_testing.>0.5).==ytrue_testing)
 
 num_rows = 50_000
 dataframe, label_variables, feature_variables =
-    AluthgeSinhaBase.generatefaketabulardata2(num_rows)
+        AluthgeSinhaBase.generatefaketabulardata2(num_rows)
 
 tabular_dataset = HoldoutTabularDataset(
     dataframe,
@@ -106,5 +106,28 @@ logistic_binary_classifier = SingleLabelBinaryLogisticClassifier(
     )
 
 modelperformance_logistic_binary_classifier = ModelPerformance(
+    logistic_binary_classifier,
+    )
+
+##############################################################################
+
+num_rows = 50_000
+dataframe, label_variables, feature_variables =
+    AluthgeSinhaBase.generatefaketabulardata3(num_rows)
+
+tabular_dataset = AluthgeSinhaBase.HoldoutTabularDataset(
+    dataframe,
+    label_variables,
+    feature_variables;
+    training=0.7,
+    testing=0.3,
+    )
+
+logistic_binary_classifier = AluthgeSinhaBase.SingleLabelBinaryLogisticClassifier(
+    tabular_dataset,
+    :deathoutcome,
+    )
+
+modelperformance_logistic_binary_classifier = AluthgeSinhaBase.ModelPerformance(
     logistic_binary_classifier,
     )

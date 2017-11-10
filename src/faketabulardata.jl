@@ -129,3 +129,71 @@ function generatefaketabulardata2(rng::AbstractRNG, num_rows::Integer)
 
     return dataframe, label_variables, feature_variables
 end
+
+function generatefaketabulardata3(num_rows::Integer)
+    return generatefaketabulardata3(Base.GLOBAL_RNG, num_rows)
+end
+
+function generatefaketabulardata3(rng::AbstractRNG, num_rows::Integer)
+    dataframe = DataFrame()
+
+    dataframe[:favoritecolor] = Array{String,1}(num_rows)
+    for i = 1:num_rows
+        dataframe[i, :favoritecolor] = StatsBase.sample(
+            rng,
+            ["red", "yellow", "blue"],
+            )
+    end
+    dataframe[:favoriteicecream] = Array{String,1}(num_rows)
+    for i = 1:num_rows
+        dataframe[i, :favoriteicecream] = StatsBase.sample(
+            rng,
+            ["chocolate", "vanilla"],
+            )
+    end
+
+    dataframe[:numberofbeaniebabies] = -99*ones(Int, num_rows)
+    for i = 1:num_rows
+        dataframe[i, :numberofbeaniebabies] = StatsBase.sample(
+            rng,
+            0:100,
+            )
+    end
+    dataframe[:oddsofdying] = -99*ones(Cfloat, num_rows)
+    for i = 1:num_rows
+        dataframe[i, :oddsofdying] =
+            ( dataframe[i,:favoritecolor]=="red" ? 10 : 0.10 ) *
+            ( dataframe[i,:favoriteicecream]=="chocolate" ? 2 : 0.50 ) *
+            ( dataframe[i,:numberofbeaniebabies]>90 ? 5 : 0.20 )
+    end
+
+
+    dataframe[:probaofdying] = -99*ones(Cfloat, num_rows)
+    for i = 1:num_rows
+        dataframe[i, :probaofdying] = odds_to_probability(
+            dataframe[i, :oddsofdying],
+            )
+    end
+
+    dataframe[:deathoutcome] = Array{String, 1}(num_rows)
+    for i = 1:num_rows
+        i_probaofdying = dataframe[i, :oddsofdying]
+        i_probavector = [1-i_probaofdying, i_probaofdying]
+        i_pweightvector = StatsBase.ProbabilityWeights(i_probavector)
+        dataframe[i, :deathoutcome] = StatsBase.sample(
+            ["Lived", "Died"],
+            i_pweightvector,
+            )
+    end
+
+    label_variables = [
+        :deathoutcome,
+        ]
+    feature_variables = [
+        :favoritecolor,
+        :favoriteicecream,
+        :numberofbeaniebabies,
+        ]
+
+    return dataframe, label_variables, feature_variables
+end

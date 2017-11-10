@@ -175,6 +175,20 @@ function recordidlist_to_rownumberlist(
     return row_number_for_each_record
 end
 
+function numtraining(dataset::AbstractHoldoutTabularDataset)
+    return length(dataset.blobs[:rows_training])
+end
+function numvalidation(dataset::AbstractHoldoutTabularDataset)
+    return length(dataset.blobs[:rows_validation])
+end
+function numtesting(dataset::AbstractHoldoutTabularDataset)
+    return length(dataset.blobs[:rows_testing])
+end
+
+hastraining(d::AbstractHoldoutTabularDataset) = numtraining(d) > 0
+hasvalidation(d::AbstractHoldoutTabularDataset) = numvalidation(d) > 0
+hastesting(d::AbstractHoldoutTabularDataset) = numtesting(d) > 0
+
 function getdata(
         dataset::AbstractHoldoutTabularDataset;
         training::Bool = false,
@@ -346,6 +360,16 @@ function _calculate_num_rows_partition(
     @assert(num_rows_testing >= 0)
 
     @assert(
+        isapprox(num_rows_training/num_rows, training; atol=0.1)
+        )
+    @assert(
+        isapprox(num_rows_validation/num_rows, validation; atol=0.1)
+        )
+    @assert(
+        isapprox(num_rows_testing/num_rows, testing; atol=0.1)
+        )
+
+    @assert(
         num_rows_training + num_rows_validation + num_rows_testing ==
         num_rows
         )
@@ -379,14 +403,14 @@ function _partition_rows(
         num_rows_testing;
         replace=false,
         )
-    remaining_rows = setdiff(all_rows,rows_testing)
+    all_rows_minus_testing = setdiff(all_rows,rows_testing)
     rows_validation = StatsBase.sample(
         rng,
-        remaining_rows,
+        all_rows_minus_testing,
         num_rows_validation;
         replace=false,
         )
-    rows_training = setdiff(remaining_rows, rows_validation)
+    rows_training = setdiff(all_rows_minus_testing, rows_validation)
 
     @assert(length(rows_training) == num_rows_training)
     @assert(length(rows_validation) == num_rows_validation)
@@ -394,7 +418,6 @@ function _partition_rows(
 
     assigned_rows = vcat(rows_training, rows_validation, rows_testing)
     @assert(all_rows == sort(assigned_rows))
-
 
     return rows_training, rows_validation, rows_testing
 end
