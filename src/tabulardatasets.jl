@@ -1,5 +1,4 @@
 using DataFrames
-using DataTables
 using IterableTables
 using StatsBase
 

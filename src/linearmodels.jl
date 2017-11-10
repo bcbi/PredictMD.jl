@@ -1,8 +1,6 @@
 using DataFrames
-using DataTables
 using GLM
 using MLBase
-using IterableTables
 using StatsBase
 
 struct SingleLabelBinaryLogisticClassifier <:
@@ -22,12 +20,12 @@ function SingleLabelBinaryLogisticClassifier(
 
     feature_variables = dataset.blobs[:feature_variables]
 
-    model_formula = generate_formula(
+    formula_object = generate_formula_object(
         label_variable,
         feature_variables,
         intercept = intercept,
         )
-    blobs[:model_formula] = model_formula
+    blobs[:formula_object] = formula_object
 
     if !hastraining(dataset)
         error("dataset has no training data")
@@ -63,30 +61,41 @@ function SingleLabelBinaryLogisticClassifier(
     blobs[:true_labels_training] = convert(Array,data_training_labels)
 
     internal_model = glm(
-        model_formula,
+        formula_object,
         data_training_labelandfeatures,
         family,
         link,
         )
+    @assert(typeof(internal_model) <: DataFrames.DataFrameRegressionModel)
     blobs[:internal_model] = internal_model
 
-    verification_predicted_proba_training = GLM.predict(internal_model)
-    predicted_proba_training_nullable = GLM.predict(
+    fitted_predicted_proba_training = DataFrames.predict(internal_model)
+    predicted_proba_training = DataFrames.predict(
         internal_model,
-        DataTable(data_training_features),
+        data_training_features,
         )
-    predicted_proba_training = convert(
-        Array,
-        predicted_proba_training_nullable,
-        )
-    # @assert(
-    #     all(
-    #         verification_predicted_proba_training .≈ predicted_proba_training
-    #         )
-    #     )
-    if !all(verification_predicted_proba_training .≈ predicted_proba_training)
-        warn("weird stuff is happening")
+    fitted_predicted_proba_training = zeros(predicted_proba_training)
+    if (
+            !(
+                all(
+                    isapprox(
+                        fitted_predicted_proba_training,
+                        predicted_proba_training
+                        )
+                    )
+                )
+            )
+        msg1 = "Equivalent methods for calculating predicted probabilities" *
+            "on the training set yielded different results."
+        deviations = fitted_predicted_proba_training .-
+            predicted_proba_training
+        msg2 = "\nTotal (sum) deviation: $(sum(deviations))"
+        msg3 = "\nMax deviation: $(maximum(deviations))"
+        msg4 = "\nMean deviation: $(mean(deviations))"
+        warn(msg1*msg2*msg3*msg4)
     end
+    blobs[:fitted_predicted_proba_training] =
+        fitted_predicted_proba_training
     blobs[:predicted_proba_training] =
         predicted_proba_training
     blobs[:predicted_proba_training_onecol] =
@@ -119,13 +128,9 @@ function SingleLabelBinaryLogisticClassifier(
             recordidlist = recordidlist_validation,
             )
         blobs[:true_labels_validation] = convert(Array,data_validation_labels)
-        predicted_proba_validation_nullable = GLM.predict(
+        predicted_proba_validation = GLM.predict(
             internal_model,
-            DataTable(data_validation_features),
-            )
-        predicted_proba_validation = convert(
-            Vector,
-            predicted_proba_validation_nullable,
+            data_validation_features,
             )
         blobs[:predicted_proba_validation] =
             predicted_proba_validation
@@ -162,13 +167,9 @@ function SingleLabelBinaryLogisticClassifier(
             recordidlist = recordidlist_testing,
             )
         blobs[:true_labels_testing] = convert(Array,data_testing_labels)
-        predicted_proba_testing_nullable = GLM.predict(
+        predicted_proba_testing = GLM.predict(
             internal_model,
-            DataTable(data_testing_features),
-            )
-        predicted_proba_testing = convert(
-            Vector,
-            predicted_proba_testing_nullable,
+            data_testing_features,
             )
         blobs[:predicted_proba_testing] =
             predicted_proba_testing
