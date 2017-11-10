@@ -198,8 +198,7 @@ function getdata(
         single_label::Bool = false,
         label_variable::Symbol = dataset.blobs[:label_variables][1],
         features::Bool = false,
-        # shuffle_rows::Bool = true,
-        shuffle_rows::Bool = false,
+        shuffle_rows::Bool = true,
         label_type::Symbol = :original,
         recordidlist::StatsBase.IntegerVector = Vector{Int64}(),
         )
@@ -229,8 +228,7 @@ function getdata(
         single_label::Bool = false,
         label_variable::Symbol = dataset.blobs[:label_variables][1],
         features::Bool = false,
-        # shuffle_rows::Bool = true,
-        shuffle_rows::Bool = false,
+        shuffle_rows::Bool = true,
         label_type::Symbol = :original,
         recordidlist::StatsBase.IntegerVector = Vector{Int64}(),
         )
@@ -327,6 +325,8 @@ function getdata(
             typeof(corresponding_recordidlist_array) <:
                 StatsBase.IntegerVector
             )
+        @assert(size(datatoreturn,1) == num_selected_rows)
+        @assert(length(corresponding_recordidlist_array) == num_selected_rows)
         if shuffle_rows
             permutation = shuffle(rng, 1:num_selected_rows)
             datatoreturn =
