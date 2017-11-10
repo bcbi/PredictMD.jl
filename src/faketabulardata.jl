@@ -89,6 +89,8 @@ function generatefaketabulardata1(rng::AbstractRNG, num_rows::Integer)
     return dataframe, label_variables, feature_variables
 end
 
+##############################################################################
+
 function generatefaketabulardata2(num_rows::Integer)
     return generatefaketabulardata2(Base.GLOBAL_RNG, num_rows)
 end
@@ -129,6 +131,8 @@ function generatefaketabulardata2(rng::AbstractRNG, num_rows::Integer)
 
     return dataframe, label_variables, feature_variables
 end
+
+##############################################################################
 
 function generatefaketabulardata3(num_rows::Integer)
     return generatefaketabulardata3(Base.GLOBAL_RNG, num_rows)

@@ -327,7 +327,8 @@ function getdata(
             )
         @assert(size(datatoreturn,1) == num_selected_rows)
         @assert(length(corresponding_recordidlist_array) == num_selected_rows)
-        if shuffle_rows
+        # if shuffle_rows
+        if true
             permutation = shuffle(rng, 1:num_selected_rows)
             datatoreturn =
                 datatoreturn[permutation, :]

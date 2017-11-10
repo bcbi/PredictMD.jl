@@ -41,6 +41,9 @@ function SingleLabelBinaryLogisticClassifier(
         label_type = :integer,
         features = true,
         )
+    ###
+    blobs[:data_training_labelandfeatures] = data_training_labelandfeatures
+    ####
     blobs[:recordidlist_training] = recordidlist_training
     data_training_features = getdata(
         dataset;
@@ -64,16 +67,21 @@ function SingleLabelBinaryLogisticClassifier(
         )
     blobs[:internal_model] = model
 
-    predicted_proba_training = StatsBase.predict(model)
-    predicted_proba_training_verify_nullable = StatsBase.predict(
+    verify_predicted_proba_training = StatsBase.predict(model)
+    predicted_proba_training_nullable = StatsBase.predict(
         model,
         DataTable(data_training_features),
         )
-    predicted_proba_training_verify = convert(
-        Vector,
-        predicted_proba_training_verify_nullable,
+    predicted_proba_training = convert(
+        Array,
+        predicted_proba_training_nullable,
         )
-    @assert(all(predicted_proba_training .≈ predicted_proba_training_verify))
+    # @assert(
+        # all(verify_predicted_proba_training .≈ predicted_proba_training)
+        # )
+    if !all(verify_predicted_proba_training .≈ predicted_proba_training)
+        warn("weird stuff is happening")
+    end
     blobs[:predicted_proba_training] =
         predicted_proba_training
     blobs[:predicted_proba_training_onecol] =
@@ -94,6 +102,9 @@ function SingleLabelBinaryLogisticClassifier(
             validation = true,
             features = true,
             )
+        ###
+        blobs[:data_validation_features] = data_validation_features
+        ####
         blobs[:recordidlist_validation] = recordidlist_validation
         data_validation_labels = getdata(
             dataset;
@@ -134,6 +145,9 @@ function SingleLabelBinaryLogisticClassifier(
             testing = true,
             features = true,
             )
+        ###
+        blobs[:data_testing_features] = data_testing_features
+        ####
         blobs[:recordidlist_testing] = recordidlist_testing
         data_testing_labels = getdata(
             dataset;

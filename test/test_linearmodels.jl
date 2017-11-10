@@ -91,7 +91,7 @@ num_rows = 50_000
 dataframe, label_variables, feature_variables =
         AluthgeSinhaBase.generatefaketabulardata2(num_rows)
 
-tabular_dataset = HoldoutTabularDataset(
+tabular_dataset = AluthgeSinhaBase.HoldoutTabularDataset(
     dataframe,
     label_variables,
     feature_variables;
@@ -100,14 +100,27 @@ tabular_dataset = HoldoutTabularDataset(
     testing=0.3,
     )
 
-logistic_binary_classifier = SingleLabelBinaryLogisticClassifier(
-    tabular_dataset,
-    :y,
-    )
+num_iterations = 10
+training_accuracies = -99*ones(Cfloat, num_iterations)
+validation_accuracies = -99*ones(Cfloat, num_iterations)
+testing_accuracies = -99*ones(Cfloat, num_iterations)
+for i = 1:num_iterations
+    logistic_binary_classifier = AluthgeSinhaBase.SingleLabelBinaryLogisticClassifier(
+        tabular_dataset,
+        :y,
+        )
+    modelperformance_logistic_binary_classifier = AluthgeSinhaBase.ModelPerformance(
+        logistic_binary_classifier,
+        )
+    mp = modelperformance_logistic_binary_classifier
+    training_accuracies[i] = mp.blobs[:accuracy_training]
+    validation_accuracies[i] = mp.blobs[:accuracy_validation]
+    testing_accuracies[i] = mp.blobs[:accuracy_testing]
+end
 
-modelperformance_logistic_binary_classifier = ModelPerformance(
-    logistic_binary_classifier,
-    )
+
+
+
 
 ##############################################################################
 
