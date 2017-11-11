@@ -74,7 +74,6 @@ function SingleLabelBinaryLogisticClassifier(
         internal_model,
         data_training_features,
         )
-    fitted_predicted_proba_training = zeros(predicted_proba_training)
     if (
             !(
                 all(
