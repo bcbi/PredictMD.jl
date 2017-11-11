@@ -1,9 +1,11 @@
 julia 0.6
 
 DataFrames
+DecisionTree
 GLM
 IterableTables
 JLD
+LIBSVM
 MLBase
 NamedArrays
 ScikitLearn

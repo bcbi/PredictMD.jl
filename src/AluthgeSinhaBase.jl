@@ -10,14 +10,18 @@ export AbstractDataset,
     AbstractSingleLabelClassifier,
     AbstractSingleLabelBinaryClassifier,
     AbstractRegression,
-    AbstractSingleLabelRegression,
-    AbstractModelPerformance
+    AbstractSingleLabelRegression
+
+# abstract type aliases to export:
 
 # concrete types to export:
 export HoldoutTabularDataset,
     ResampledHoldoutTabularDataset,
-    SingleLabelBinaryLogisticClassifier,
-    ModelPerformance
+    SingleLabelBinaryLogisticClassifier
+
+# concrete type aliases to export:
+export BinaryLogistic,
+    BinaryRandomForest
 
 # functions to export:
 export getdata,
@@ -27,7 +31,13 @@ export getdata,
     numtesting,
     hastraining,
     hasvalidation,
-    hastesting
+    hastesting,
+    roctraining,
+    rocvalidation,
+    roctesting,
+    precisionrecalltraining,
+    precisionrecallvalidation,
+    precisionrecalltesting
 
 include("abstracttypes.jl")
 include("faketabulardata.jl")
@@ -35,6 +45,8 @@ include("formulas.jl")
 include("labelcoding.jl")
 include("linearmodels.jl")
 include("modelevaluation.jl")
+include("randomforest.jl")
+include("svm.jl")
 include("tabulardatasets.jl")
 include("util.jl")
 include("version.jl")
