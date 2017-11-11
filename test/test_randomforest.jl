@@ -18,17 +18,17 @@ tabular_dataset = HoldoutTabularDataset(
     testing=0.3,
     )
 
-logistic_binary_classifier = BinaryLogistic(
+randomforest_binary_classifier = BinaryRandomForest(
     tabular_dataset,
     :mylabel1,
     )
 
 @test(
-    typeof(logistic_binary_classifier) <:
+    typeof(randomforest_binary_classifier) <:
         AbstractSingleLabelBinaryClassifier
     )
 
-performance(logistic_binary_classifier)
+performance(randomforest_binary_classifier)
 
 ##############################################################################
 
@@ -45,17 +45,17 @@ tabular_dataset = HoldoutTabularDataset(
     testing=1/3,
     )
 
-logistic_binary_classifier = BinaryLogistic(
+randomforest_binary_classifier = BinaryRandomForest(
     tabular_dataset,
     :y,
     )
 
 @test(
-    typeof(logistic_binary_classifier) <:
+    typeof(randomforest_binary_classifier) <:
         AbstractSingleLabelBinaryClassifier
     )
 
-performance(logistic_binary_classifier)
+x = performance(randomforest_binary_classifier)
 
 ##############################################################################
 
@@ -71,14 +71,14 @@ tabular_dataset = HoldoutTabularDataset(
     testing=0.3,
     )
 
-logistic_binary_classifier = BinaryLogistic(
+randomforest_binary_classifier = BinaryRandomForest(
     tabular_dataset,
     :deathoutcome,
     )
 
 @test(
-    typeof(logistic_binary_classifier) <:
+    typeof(randomforest_binary_classifier) <:
         AbstractSingleLabelBinaryClassifier
     )
 
-performance(logistic_binary_classifier)
+performance(randomforest_binary_classifier)
