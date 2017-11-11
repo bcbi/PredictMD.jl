@@ -23,6 +23,8 @@ abstract type AbstractSingleLabelBinaryClassifier <:
     AbstractSingleLabelClassifier
 end
 
+const AbstractBinaryClassifier = AbstractSingleLabelBinaryClassifier
+
 abstract type AbstractRegression <: AbstractModel
 end
 

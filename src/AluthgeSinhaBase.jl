@@ -13,15 +13,21 @@ export AbstractDataset,
     AbstractSingleLabelRegression
 
 # abstract type aliases to export:
+export AbstractBinaryClassifier
 
 # concrete types to export:
 export HoldoutTabularDataset,
     ResampledHoldoutTabularDataset,
-    SingleLabelBinaryLogisticClassifier
+    SingleLabelBinaryLogisticClassifier,
+    SingleLabelBinaryRandomForestClassifier,
+    SingleLabelBinarySupportVectorMachineClassifier
 
 # concrete type aliases to export:
 export BinaryLogistic,
-    BinaryRandomForest
+    BinaryRandomForest,
+    SingleLabelBinarySVMClassifier,
+    BinarySupportVectorMachine,
+    BinarySVM
 
 # functions to export:
 export getdata,

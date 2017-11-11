@@ -12,6 +12,8 @@ using ScikitLearn
 @sk_import metrics: roc_auc_score
 @sk_import metrics: roc_curve
 
+const notapplicable = "---"
+
 function performance(
         model::AbstractModel;
         kwargs...,
@@ -63,12 +65,12 @@ function performance(
             convert(Array, ypredproba_training),
             )
     else
-        numtrainingrows = 0
-        accuracy_training = "N/A"
-        auroc_training = "N/A"
-        f1_training = "N/A"
-        aupr_training = "N/A"
-        averageprecision_training = "N/A"
+        numtrainingrows = notapplicable
+        accuracy_training = notapplicable
+        auroc_training = notapplicable
+        f1_training = notapplicable
+        aupr_training = notapplicable
+        averageprecision_training = notapplicable
     end
 
     if hasvalidation(model)
@@ -99,12 +101,12 @@ function performance(
             convert(Array, ypredproba_validation),
             )
     else
-        numvalidationrows = 0
-        accuracy_validation = "N/A"
-        auroc_validation = "N/A"
-        f1_validation = "N/A"
-        aupr_validation = "N/A"
-        averageprecision_validation = "N/A"
+        numvalidationrows = notapplicable
+        accuracy_validation = notapplicable
+        auroc_validation = notapplicable
+        f1_validation = notapplicable
+        aupr_validation = notapplicable
+        averageprecision_validation = notapplicable
     end
 
     if hastesting(model)
@@ -135,12 +137,12 @@ function performance(
             convert(Array, ypredproba_testing),
             )
     else
-        numtestingrows = 0
-        accuracy_testing = "N/A"
-        auroc_testing = "N/A"
-        f1_testing = "N/A"
-        aupr_testing = "N/A"
-        averageprecision_testing = "N/A"
+        numtestingrows = notapplicable
+        accuracy_testing = notapplicable
+        auroc_testing = notapplicable
+        f1_testing = notapplicable
+        aupr_testing = notapplicable
+        averageprecision_testing = notapplicable
     end
 
     results = DataFrame()
