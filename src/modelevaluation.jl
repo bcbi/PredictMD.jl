@@ -13,119 +13,123 @@ using ScikitLearn
 @sk_import metrics: roc_auc_score
 @sk_import metrics: roc_curve
 
-struct ModelPerformance <: AbstractModelPerformance
-    blobs::T where T <: Associative
+function performance(
+        model::AbstractModel;
+        kwargs...,
+        )
+    performance(
+        STDOUT,
+        model;
+        kwargs...
+        )
 end
 
-function ModelPerformance(model::AbstractModel)
+function performance(
+        io::IO,
+        model::AbstractModel;
+        kwargs...
+        )
     error("Not yet implemented for this model type.")
 end
 
-function ModelPerformance(model::AbstractSingleLabelBinaryClassifier)
-    blobs = Dict{Symbol, Any}()
-
+function performance(
+        io::IO,
+        model::AbstractSingleLabelBinaryClassifier;
+        )
     if hastraining(model)
-        blobs[:numtraining] = numtraining(model)
+        numtrainingrows = numtraining(model)
         ytrue_training = model.blobs[:true_labels_training]
         ypredlabel_training = model.blobs[:predicted_labels_training]
         ypredproba_training = model.blobs[:predicted_proba_training]
-        blobs[:accuracy_training] = mean(
-            convert(Array, ytrue_training).==convert(Array, ypredlabel_training),
+        accuracy_training = accuracy_score(
+            convert(Array, ytrue_training),
+            convert(Array, ypredlabel_training),
             )
-        blobs[:auroc_training] = "N/A"
-        # blobs[:accuracy_training] = accuracy_score(
-        #     convert(Array, ytrue_training),
-        #     convert(Array, ypredlabel_training),
-        #     )
-        # blobs[:auroc_training] = roc_auc_score(
-        #     convert(Array, ytrue_training),
-        #     convert(Array, ypredproba_training),
-        #     )
+        auroc_training = roc_auc_score(
+            convert(Array, ytrue_training),
+            convert(Array, ypredproba_training),
+            )
     else
-        blobs[:numtraining] = 0
-        blobs[:accuracy_training] = "N/A"
-        blobs[:auroc_training] = "N/A"
+        numtrainingrows = 0
+        accuracy_training = "N/A"
+        auroc_training = "N/A"
     end
 
     if hasvalidation(model)
+        numvalidationrows = numvalidation(model)
         ytrue_validation = model.blobs[:true_labels_validation]
-        blobs[:numvalidation] = size(ytrue_validation,1)
         ypredlabel_validation = model.blobs[:predicted_labels_validation]
         ypredproba_validation = model.blobs[:predicted_proba_validation]
-        blobs[:accuracy_validation] = mean(
-            convert(Array, ytrue_validation).==convert(Array, ypredlabel_validation),
+        accuracy_validation = accuracy_score(
+            convert(Array, ytrue_validation),
+            convert(Array, ypredlabel_validation),
             )
-        blobs[:auroc_validation] = "N/A"
-        # blobs[:accuracy_validation] = accuracy_score(
-        #     convert(Array, ytrue_validation),
-        #     convert(Array, ypredlabel_validation),
-        #     )
-        # blobs[:auroc_validation] = roc_auc_score(
-        #     convert(Array, ytrue_validation),
-        #     convert(Array, ypredproba_validation),
-        #     )
+        auroc_validation = roc_auc_score(
+            convert(Array, ytrue_validation),
+            convert(Array, ypredproba_validation),
+            )
     else
-        blobs[:numvalidation] = 0
-        blobs[:accuracy_validation] = "N/A"
-        blobs[:auroc_validation] = "N/A"
+        numvalidationrows = 0
+        accuracy_validation = "N/A"
+        auroc_validation = "N/A"
     end
 
     if hastesting(model)
+        numtestingrows = numtesting(model)
         ytrue_testing = model.blobs[:true_labels_testing]
-        blobs[:numtesting] = size(ytrue_testing,1)
         ypredlabel_testing = model.blobs[:predicted_labels_testing]
         ypredproba_testing = model.blobs[:predicted_proba_testing]
-        blobs[:accuracy_testing] = mean(
-            convert(Array, ytrue_testing).==convert(Array, ypredlabel_testing),
+        accuracy_testing = accuracy_score(
+            convert(Array, ytrue_testing),
+            convert(Array, ypredlabel_testing),
             )
-        blobs[:auroc_testing] = "N/A"
-        # blobs[:accuracy_testing] = accuracy_score(
-        #     convert(Array, ytrue_testing),
-        #     convert(Array, ypredlabel_testing),
-        #     )
-        # blobs[:auroc_testing] = roc_auc_score(
-        #     convert(Array, ytrue_testing),
-        #     convert(Array, ypredproba_testing),
-        #     )
+        auroc_testing = roc_auc_score(
+            convert(Array, ytrue_testing),
+            convert(Array, ypredproba_testing),
+            )
     else
-        blobs[:numvalidation] = 0
-        blobs[:accuracy_testing] = "N/A"
-        blobs[:auroc_testing] = "N/A"
+        numvalidationrows = 0
+        accuracy_testing = "N/A"
+        auroc_testing = "N/A"
     end
 
-    return ModelPerformance(blobs)
-end
-
-function Base.show(io::IO, mp::ModelPerformance)
-    summary_table = generate_summary_table(mp)
-    println(io, "Summary: ")
-    println(io, "=======")
-    println(io, summary_table)
-end
-
-function generate_summary_table(mp::ModelPerformance)
-    unnamed_array = [
-        mp.blobs[:accuracy_training] mp.blobs[:auroc_training];
-        mp.blobs[:accuracy_validation] mp.blobs[:auroc_validation];
-        mp.blobs[:accuracy_testing] mp.blobs[:auroc_testing];
+    table_array = [
+        accuracy_training auroc_training;
+        accuracy_validation auroc_validation;
+        accuracy_testing auroc_testing;
         ]
-    summary_table = NamedArray(unnamed_array)
+    table_namedarray = NamedArray(table_array)
+    setdimnames!(
+        table_namedarray,
+        "Data subset",
+        1,
+        )
+    setdimnames!(
+        table_namedarray,
+        "Metric",
+        2,
+        )
     setnames!(
-        summary_table,
+        table_namedarray,
         [
-            "Training (n=$(mp.blobs[:numtraining]))",
-            "Validation (n=$(mp.blobs[:numvalidation]))",
-            "Testing (n=$(mp.blobs[:numtesting]))",
+            "Training (n=$(numtrainingrows))",
+            "Validation (n=$(numvalidationrows))",
+            "Testing (n=$(numtestingrows))",
             ],
         1,
         )
     setnames!(
-        summary_table,
+        table_namedarray,
         [
-            "Accuracy",
+            "Accuracy¹",
             "AUROC",
             ],
         2,
         )
-    return summary_table
+    println(io, "Classification metrics:")
+    println(io, "=======================")
+    println(io, table_namedarray)
+    println(io, "¹ = calculated at threshold=0.5")
+    println(io, TAGLINE)
+
 end

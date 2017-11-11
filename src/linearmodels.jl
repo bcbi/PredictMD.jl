@@ -8,6 +8,8 @@ struct SingleLabelBinaryLogisticClassifier <:
     blobs::T where T <: Associative
 end
 
+const BinaryLogistic = SingleLabelBinaryLogisticClassifier
+
 function SingleLabelBinaryLogisticClassifier(
         dataset::AbstractHoldoutTabularDataset,
         label_variable::Symbol;
@@ -39,18 +41,12 @@ function SingleLabelBinaryLogisticClassifier(
         label_type = :integer,
         features = true,
         )
-    ###
-    blobs[:data_training_labelandfeatures] = data_training_labelandfeatures
-    ####
     blobs[:recordidlist_training] = recordidlist_training
     data_training_features = getdata(
         dataset;
         features = true,
         recordidlist = recordidlist_training,
         )
-    ###
-    blobs[:data_training_features] = data_training_features
-    ####
     data_training_labels = getdata(
         dataset;
         single_label = true,
@@ -115,9 +111,6 @@ function SingleLabelBinaryLogisticClassifier(
             validation = true,
             features = true,
             )
-        ###
-        blobs[:data_validation_features] = data_validation_features
-        ####
         blobs[:recordidlist_validation] = recordidlist_validation
         data_validation_labels = getdata(
             dataset;
@@ -154,9 +147,6 @@ function SingleLabelBinaryLogisticClassifier(
             testing = true,
             features = true,
             )
-        ###
-        blobs[:data_testing_features] = data_testing_features
-        ####
         blobs[:recordidlist_testing] = recordidlist_testing
         data_testing_labels = getdata(
             dataset;

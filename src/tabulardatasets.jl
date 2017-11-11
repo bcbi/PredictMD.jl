@@ -150,7 +150,24 @@ function HoldoutTabularDataset(
     blobs[:label_decoding_maps_fullonehot] = label_decoding_maps_fullonehot
 
 
-    blobs[:data_features] = data_frame[:, feature_variables]
+    data_features = data_frame[:, feature_variables]
+    blobs[:data_features] = data_features
+
+    formulaobject_nointercept_firstlabel = generate_formula_object(
+        label_variables[1],
+        feature_variables;
+        intercept=false,
+        )
+    modelframe_nointercept_firstlabel = DataFrames.ModelFrame(
+        formulaobject_nointercept_firstlabel,
+        data_frame,
+        )
+    modelmatrix_nointercept_firstlabel = DataFrames.ModelMatrix(
+        modelframe_nointercept_firstlabel,
+        )
+    data_features_matrix = modelmatrix_nointercept_firstlabel.m
+    blobs[:data_features_matrix] = data_features_matrix
+
 
     blobs[:data_unusedcolumns] = data_frame[:, unused_column_names]
 
@@ -200,6 +217,7 @@ function getdata(
         shuffle_rows::Bool = true,
         label_type::Symbol = :original,
         recordidlist::StatsBase.IntegerVector = Vector{Int64}(),
+        features_format::Symbol = :original,
         )
     return getdata(
         Base.GLOBAL_RNG,
@@ -214,6 +232,7 @@ function getdata(
         shuffle_rows = shuffle_rows,
         label_type = label_type,
         recordidlist = recordidlist,
+        features_format = features_format,
         )
 end
 
@@ -230,6 +249,7 @@ function getdata(
         shuffle_rows::Bool = true,
         label_type::Symbol = :original,
         recordidlist::StatsBase.IntegerVector = Vector{Int64}(),
+        features_format::Symbol = :original,
         )
 
     recordidlist_provided = length(recordidlist) > 0
@@ -264,22 +284,42 @@ function getdata(
 
     desiredtype_labeldata = labeltype2labeldata[label_type]
 
-    allrowsselectedcolumns = DataFrame()
-
-    if all_labels
-        for l in dataset.blobs[:label_variables]
-            allrowsselectedcolumns[l] =
-                desiredtype_labeldata[l]
-        end
-    elseif single_label
-        allrowsselectedcolumns[label_variable] =
-            desiredtype_labeldata[label_variable]
+    if !(features_format == :original || features_format == :matrix)
+        error("features_format must either be :original or :matrix ")
     end
 
-    if features
-        for f in dataset.blobs[:feature_variables]
-            allrowsselectedcolumns[f] =
-                dataset.blobs[:data_features][f]
+    if features_format == :matrix
+        returndataasmatrix = true
+        if !features
+            error("If features_format==:matrix, then features must be true")
+        end
+        if all_labels || single_label
+            msg = "If features_format==:matrix, then all_labels and " *
+                "single_label must both be false."
+            error(msg)
+        end
+    else
+        returndataasmatrix = false
+    end
+
+    if returndataasmatrix
+        allrowsselectedcolumns = dataset.blobs[:data_features_matrix]
+    else
+        allrowsselectedcolumns = DataFrame()
+        if all_labels
+            for l in dataset.blobs[:label_variables]
+                allrowsselectedcolumns[l] =
+                    desiredtype_labeldata[l]
+            end
+        elseif single_label
+            allrowsselectedcolumns[label_variable] =
+                desiredtype_labeldata[label_variable]
+        end
+        if features
+            for f in dataset.blobs[:feature_variables]
+                allrowsselectedcolumns[f] =
+                    dataset.blobs[:data_features][f]
+            end
         end
     end
 
