@@ -1,7 +1,6 @@
 srand(999)
 
 using DataFrames
-using DataTables
 using StatsBase
 
 num_rows = 50_000
@@ -38,73 +37,69 @@ modelperformance_logistic_binary_classifier = ModelPerformance(
         AbstractModelPerformance
     )
 
-m = logistic_binary_classifier.blobs[:model]
+##############################################################################
 
-x_training, r_training= getdata(
-    tabular_dataset;
-    training = true,
-    features = true,
-    )
-ytrue_training= convert(Array, getdata(
-    tabular_dataset;
-    recordidlist = r_training,
-    single_label = true,
-    label_variable = :mylabel1,
-    label_type = :integer,
-    ))
-yscore_training = convert(Array, predict(m,DataTable(x_training)))
-mean(Int.(yscore_training.>0.5).==ytrue_training)
+num_rows = 50_000
+dataframe, label_variables, feature_variables =
+        AluthgeSinhaBase.generatefaketabulardata2(num_rows)
 
-x_validation, r_validation = getdata(
-    tabular_dataset;
-    validation = true,
-    features = true,
+tabular_dataset = AluthgeSinhaBase.HoldoutTabularDataset(
+    dataframe,
+    label_variables,
+    feature_variables;
+    training=1/3,
+    validation=1/3,
+    testing=1/3,
     )
-ytrue_validation = convert(Array, getdata(
-    tabular_dataset;
-    recordidlist = r_validation,
-    single_label = true,
-    label_variable = :mylabel1,
-    label_type = :integer,
-    ))
-yscore_validation = convert(Array, predict(m,DataTable(x_validation)))
-mean(Int.(yscore_validation.>0.5).==ytrue_validation)
 
-x_testing, r_testing = getdata(
-    tabular_dataset;
-    testing = true,
-    features = true,
+logistic_binary_classifier = AluthgeSinhaBase.SingleLabelBinaryLogisticClassifier(
+    tabular_dataset,
+    :y,
     )
-ytrue_testing = convert(Array, getdata(
-    tabular_dataset;
-    recordidlist = r_testing,
-    single_label = true,
-    label_variable = :mylabel1,
-    label_type = :integer,
-    ))
-yscore_testing = convert(Array, predict(m,DataTable(x_testing)))
-mean(Int.(yscore_testing.>0.5).==ytrue_testing)
+
+@test(
+    typeof(logistic_binary_classifier) <:
+        AbstractSingleLabelBinaryClassifier
+    )
+
+modelperformance_logistic_binary_classifier = AluthgeSinhaBase.ModelPerformance(
+    logistic_binary_classifier,
+    )
+
+@test(
+    typeof(modelperformance_logistic_binary_classifier) <:
+        AbstractModelPerformance
+    )
 
 ##############################################################################
 
 num_rows = 50_000
 dataframe, label_variables, feature_variables =
-    AluthgeSinhaBase.generatefaketabulardata2(num_rows)
+    AluthgeSinhaBase.generatefaketabulardata3(num_rows)
 
-tabular_dataset = HoldoutTabularDataset(
+tabular_dataset = AluthgeSinhaBase.HoldoutTabularDataset(
     dataframe,
     label_variables,
     feature_variables;
-    training=0.5,
-    validation=0.2,
+    training=0.7,
     testing=0.3,
     )
 
-logistic_binary_classifier = SingleLabelBinaryLogisticClassifier(
+logistic_binary_classifier = AluthgeSinhaBase.SingleLabelBinaryLogisticClassifier(
     tabular_dataset,
-    :y,
+    :deathoutcome,
     )
 
-modelperformance_logistic_binary_classifier = ModelPerformance(
+@test(
+    typeof(logistic_binary_classifier) <:
+        AbstractSingleLabelBinaryClassifier
+    )
+
+modelperformance_logistic_binary_classifier = AluthgeSinhaBase.ModelPerformance(
     logistic_binary_classifier,
+    )
+
+@test(
+    typeof(modelperformance_logistic_binary_classifier) <:
+        AbstractModelPerformance
     )

@@ -20,7 +20,14 @@ export HoldoutTabularDataset,
     ModelPerformance
 
 # functions to export:
-export getdata, performance
+export getdata,
+    performance,
+    numtraining,
+    numvalidation,
+    numtesting,
+    hastraining,
+    hasvalidation,
+    hastesting
 
 include("abstracttypes.jl")
 include("faketabulardata.jl")

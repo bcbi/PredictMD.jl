@@ -1,5 +1,4 @@
 using DataFrames
-using DataTables
 using IterableTables
 using StatsBase
 
@@ -175,6 +174,20 @@ function recordidlist_to_rownumberlist(
     return row_number_for_each_record
 end
 
+function numtraining(dataset::AbstractHoldoutTabularDataset)
+    return length(dataset.blobs[:rows_training])
+end
+function numvalidation(dataset::AbstractHoldoutTabularDataset)
+    return length(dataset.blobs[:rows_validation])
+end
+function numtesting(dataset::AbstractHoldoutTabularDataset)
+    return length(dataset.blobs[:rows_testing])
+end
+
+hastraining(d::AbstractHoldoutTabularDataset) = numtraining(d) > 0
+hasvalidation(d::AbstractHoldoutTabularDataset) = numvalidation(d) > 0
+hastesting(d::AbstractHoldoutTabularDataset) = numtesting(d) > 0
+
 function getdata(
         dataset::AbstractHoldoutTabularDataset;
         training::Bool = false,
@@ -184,8 +197,7 @@ function getdata(
         single_label::Bool = false,
         label_variable::Symbol = dataset.blobs[:label_variables][1],
         features::Bool = false,
-        # shuffle_rows::Bool = true,
-        shuffle_rows::Bool = false,
+        shuffle_rows::Bool = true,
         label_type::Symbol = :original,
         recordidlist::StatsBase.IntegerVector = Vector{Int64}(),
         )
@@ -215,8 +227,7 @@ function getdata(
         single_label::Bool = false,
         label_variable::Symbol = dataset.blobs[:label_variables][1],
         features::Bool = false,
-        # shuffle_rows::Bool = true,
-        shuffle_rows::Bool = false,
+        shuffle_rows::Bool = true,
         label_type::Symbol = :original,
         recordidlist::StatsBase.IntegerVector = Vector{Int64}(),
         )
@@ -313,7 +324,10 @@ function getdata(
             typeof(corresponding_recordidlist_array) <:
                 StatsBase.IntegerVector
             )
-        if shuffle_rows
+        @assert(size(datatoreturn,1) == num_selected_rows)
+        @assert(length(corresponding_recordidlist_array) == num_selected_rows)
+        # if shuffle_rows
+        if true
             permutation = shuffle(rng, 1:num_selected_rows)
             datatoreturn =
                 datatoreturn[permutation, :]
@@ -344,6 +358,16 @@ function _calculate_num_rows_partition(
     @assert(num_rows_training >= 0)
     @assert(num_rows_validation >= 0)
     @assert(num_rows_testing >= 0)
+
+    @assert(
+        isapprox(num_rows_training/num_rows, training; atol=0.1)
+        )
+    @assert(
+        isapprox(num_rows_validation/num_rows, validation; atol=0.1)
+        )
+    @assert(
+        isapprox(num_rows_testing/num_rows, testing; atol=0.1)
+        )
 
     @assert(
         num_rows_training + num_rows_validation + num_rows_testing ==
@@ -379,14 +403,14 @@ function _partition_rows(
         num_rows_testing;
         replace=false,
         )
-    remaining_rows = setdiff(all_rows,rows_testing)
+    all_rows_minus_testing = setdiff(all_rows,rows_testing)
     rows_validation = StatsBase.sample(
         rng,
-        remaining_rows,
+        all_rows_minus_testing,
         num_rows_validation;
         replace=false,
         )
-    rows_training = setdiff(remaining_rows, rows_validation)
+    rows_training = setdiff(all_rows_minus_testing, rows_validation)
 
     @assert(length(rows_training) == num_rows_training)
     @assert(length(rows_validation) == num_rows_validation)
@@ -394,7 +418,6 @@ function _partition_rows(
 
     assigned_rows = vcat(rows_training, rows_validation, rows_testing)
     @assert(all_rows == sort(assigned_rows))
-
 
     return rows_training, rows_validation, rows_testing
 end
