@@ -37,53 +37,6 @@ modelperformance_logistic_binary_classifier = ModelPerformance(
         AbstractModelPerformance
     )
 
-m = logistic_binary_classifier.blobs[:model]
-
-x_training, r_training= getdata(
-    tabular_dataset;
-    training = true,
-    features = true,
-    )
-ytrue_training= convert(Array, getdata(
-    tabular_dataset;
-    recordidlist = r_training,
-    single_label = true,
-    label_variable = :mylabel1,
-    label_type = :integer,
-    ))
-yscore_training = convert(Array, predict(m,DataTable(x_training)))
-mean(Int.(yscore_training.>0.5).==ytrue_training)
-
-x_validation, r_validation = getdata(
-    tabular_dataset;
-    validation = true,
-    features = true,
-    )
-ytrue_validation = convert(Array, getdata(
-    tabular_dataset;
-    recordidlist = r_validation,
-    single_label = true,
-    label_variable = :mylabel1,
-    label_type = :integer,
-    ))
-yscore_validation = convert(Array, predict(m,DataTable(x_validation)))
-mean(Int.(yscore_validation.>0.5).==ytrue_validation)
-
-x_testing, r_testing = getdata(
-    tabular_dataset;
-    testing = true,
-    features = true,
-    )
-ytrue_testing = convert(Array, getdata(
-    tabular_dataset;
-    recordidlist = r_testing,
-    single_label = true,
-    label_variable = :mylabel1,
-    label_type = :integer,
-    ))
-yscore_testing = convert(Array, predict(m,DataTable(x_testing)))
-mean(Int.(yscore_testing.>0.5).==ytrue_testing)
-
 ##############################################################################
 
 num_rows = 50_000
@@ -103,8 +56,19 @@ logistic_binary_classifier = AluthgeSinhaBase.SingleLabelBinaryLogisticClassifie
     tabular_dataset,
     :y,
     )
+
+@test(
+    typeof(logistic_binary_classifier) <:
+        AbstractSingleLabelBinaryClassifier
+    )
+
 modelperformance_logistic_binary_classifier = AluthgeSinhaBase.ModelPerformance(
     logistic_binary_classifier,
+    )
+
+@test(
+    typeof(modelperformance_logistic_binary_classifier) <:
+        AbstractModelPerformance
     )
 
 ##############################################################################
@@ -126,6 +90,16 @@ logistic_binary_classifier = AluthgeSinhaBase.SingleLabelBinaryLogisticClassifie
     :deathoutcome,
     )
 
+@test(
+    typeof(logistic_binary_classifier) <:
+        AbstractSingleLabelBinaryClassifier
+    )
+
 modelperformance_logistic_binary_classifier = AluthgeSinhaBase.ModelPerformance(
     logistic_binary_classifier,
+    )
+
+@test(
+    typeof(modelperformance_logistic_binary_classifier) <:
+        AbstractModelPerformance
     )

@@ -1,17 +1,17 @@
 using MLBase
 using NamedArrays
-# using ScikitLearn
+using ScikitLearn
 
-# @sk_import metrics: accuracy_score
-# @sk_import metrics: auc
-# @sk_import metrics: average_precision_score
-# @sk_import metrics: brier_score_loss
-# @sk_import metrics: f1_score
-# @sk_import metrics: precision_recall_curve
-# @sk_import metrics: precision_score
-# @sk_import metrics: recall_score
-# @sk_import metrics: roc_auc_score
-# @sk_import metrics: roc_curve
+@sk_import metrics: accuracy_score
+@sk_import metrics: auc
+@sk_import metrics: average_precision_score
+@sk_import metrics: brier_score_loss
+@sk_import metrics: f1_score
+@sk_import metrics: precision_recall_curve
+@sk_import metrics: precision_score
+@sk_import metrics: recall_score
+@sk_import metrics: roc_auc_score
+@sk_import metrics: roc_curve
 
 struct ModelPerformance <: AbstractModelPerformance
     blobs::T where T <: Associative
