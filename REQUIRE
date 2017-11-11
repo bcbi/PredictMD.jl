@@ -7,6 +7,5 @@ IterableTables
 JLD
 LIBSVM
 MLBase
-NamedArrays
 ScikitLearn
 StatsBase
