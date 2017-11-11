@@ -20,6 +20,8 @@ function SingleLabelBinaryLogisticClassifier(
 
     blobs = Dict{Symbol, Any}()
 
+    blobs[:model_name] = "Logistic regression"
+
     feature_variables = dataset.blobs[:feature_variables]
 
     formula_object = generate_formula_object(

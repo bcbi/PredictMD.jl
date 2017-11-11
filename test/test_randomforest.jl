@@ -55,7 +55,7 @@ randomforest_binary_classifier = BinaryRandomForest(
         AbstractSingleLabelBinaryClassifier
     )
 
-performance(randomforest_binary_classifier)
+x = performance(randomforest_binary_classifier)
 
 ##############################################################################
 

@@ -31,7 +31,13 @@ export getdata,
     numtesting,
     hastraining,
     hasvalidation,
-    hastesting
+    hastesting,
+    roctraining,
+    rocvalidation,
+    roctesting,
+    precisionrecalltraining,
+    precisionrecallvalidation,
+    precisionrecalltesting
 
 include("abstracttypes.jl")
 include("faketabulardata.jl")

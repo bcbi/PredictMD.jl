@@ -17,6 +17,8 @@ function SingleLabelBinaryRandomForestClassifier(
 
     blobs = Dict{Symbol, Any}()
 
+    blobs[:model_name] = "Random forest"
+
     hyperparameters = Dict{Symbol, Any}()
     hyperparameters[:nsubfeatures] = nsubfeatures
     hyperparameters[:ntrees] = ntrees

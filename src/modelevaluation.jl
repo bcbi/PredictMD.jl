@@ -1,5 +1,4 @@
-using MLBase
-using NamedArrays
+using DataFrames
 using ScikitLearn
 
 @sk_import metrics: accuracy_score
@@ -49,10 +48,27 @@ function performance(
             convert(Array, ytrue_training),
             convert(Array, ypredproba_training),
             )
+        f1_training = f1_score(
+            convert(Array, ytrue_training),
+            convert(Array, ypredlabel_training),
+            )
+        precision_training, recall_training, thresholds_training =
+            precisionrecalltraining(model)
+        aupr_training = auc(
+            recall_training,
+            precision_training,
+            )
+        averageprecision_training = average_precision_score(
+            convert(Array, ytrue_training),
+            convert(Array, ypredproba_training),
+            )
     else
         numtrainingrows = 0
         accuracy_training = "N/A"
         auroc_training = "N/A"
+        f1_training = "N/A"
+        aupr_training = "N/A"
+        averageprecision_training = "N/A"
     end
 
     if hasvalidation(model)
@@ -68,10 +84,27 @@ function performance(
             convert(Array, ytrue_validation),
             convert(Array, ypredproba_validation),
             )
+        f1_validation = f1_score(
+            convert(Array, ytrue_validation),
+            convert(Array, ypredlabel_validation),
+            )
+        precision_validation, recall_validation, thresholds_validation =
+            precisionrecallvalidation(model)
+        aupr_validation = auc(
+            recall_validation,
+            precision_validation,
+            )
+        averageprecision_validation = average_precision_score(
+            convert(Array, ytrue_validation),
+            convert(Array, ypredproba_validation),
+            )
     else
         numvalidationrows = 0
         accuracy_validation = "N/A"
         auroc_validation = "N/A"
+        f1_validation = "N/A"
+        aupr_validation = "N/A"
+        averageprecision_validation = "N/A"
     end
 
     if hastesting(model)
@@ -87,49 +120,114 @@ function performance(
             convert(Array, ytrue_testing),
             convert(Array, ypredproba_testing),
             )
+        f1_testing = f1_score(
+            convert(Array, ytrue_testing),
+            convert(Array, ypredlabel_testing),
+            )
+        precision_testing, recall_testing, thresholds_testing =
+            precisionrecalltesting(model)
+        aupr_testing = auc(
+            recall_testing,
+            precision_testing,
+            )
+        averageprecision_testing = average_precision_score(
+            convert(Array, ytrue_testing),
+            convert(Array, ypredproba_testing),
+            )
     else
-        numvalidationrows = 0
+        numtestingrows = 0
         accuracy_testing = "N/A"
         auroc_testing = "N/A"
+        f1_testing = "N/A"
+        aupr_testing = "N/A"
+        averageprecision_testing = "N/A"
     end
 
-    table_array = [
-        accuracy_training auroc_training;
-        accuracy_validation auroc_validation;
-        accuracy_testing auroc_testing;
+    results = DataFrame()
+    model_name = model.blobs[:model_name]
+    results[:Model] = [model_name, model_name, model_name]
+    results[:Subset] = ["Training", "Validation", "Testing"]
+    results[:N] = [numtrainingrows, numvalidationrows, numtestingrows]
+    results[:Accuracy] = [
+        accuracy_training,
+        accuracy_validation,
+        accuracy_testing
         ]
-    table_namedarray = NamedArray(table_array)
-    setdimnames!(
-        table_namedarray,
-        "Data subset",
-        1,
-        )
-    setdimnames!(
-        table_namedarray,
-        "Metric",
-        2,
-        )
-    setnames!(
-        table_namedarray,
-        [
-            "Training (n=$(numtrainingrows))",
-            "Validation (n=$(numvalidationrows))",
-            "Testing (n=$(numtestingrows))",
-            ],
-        1,
-        )
-    setnames!(
-        table_namedarray,
-        [
-            "Accuracy¹",
-            "AUROC",
-            ],
-        2,
-        )
-    println(io, "Classification metrics:")
-    println(io, "=======================")
-    println(io, table_namedarray)
-    println(io, "¹ = calculated at threshold=0.5")
-    println(io, TAGLINE)
+    results[:AUROC] = [auroc_training, auroc_validation, auroc_testing]
+    results[:F1_score] = [f1_training, f1_validation, f1_testing]
+    results[:AUPR] = [aupr_training, aupr_validation, aupr_testing]
+    results[:Average_precision] = [
+        averageprecision_training,
+        averageprecision_validation,
+        averageprecision_testing,
+        ]
 
+    return results
+
+end
+
+function roctraining(model::AbstractSingleLabelBinaryClassifier)
+    if !hastraining(model)
+        error("model has no training data")
+    end
+    y_true = Int.(model.blobs[:true_labels_training])
+    y_score = model.blobs[:predicted_proba_training_onecol]
+    fpr, tpr, thresholds = roc_curve(y_true, y_score)
+    return fpr, tpr, thresholds
+end
+
+function rocvalidation(model::AbstractSingleLabelBinaryClassifier)
+    if !hasvalidation(model)
+        error("model has no validation data")
+    end
+    y_true = Int.(model.blobs[:true_labels_validation])
+    y_score = model.blobs[:predicted_proba_validation_onecol]
+    fpr, tpr, thresholds = roc_curve(y_true, y_score)
+    return fpr, tpr, thresholds
+end
+
+function roctesting(model::AbstractSingleLabelBinaryClassifier)
+    if !hastesting(model)
+        error("model has no testing data")
+    end
+    y_true = Int.(model.blobs[:true_labels_testing])
+    y_score = model.blobs[:predicted_proba_testing_onecol]
+    fpr, tpr, thresholds = roc_curve(y_true, y_score)
+    return fpr, tpr, thresholds
+end
+
+function precisionrecalltraining(model::AbstractSingleLabelBinaryClassifier)
+    if !hastraining(model)
+        error("model has no training data")
+    end
+    y_true = Int.(model.blobs[:true_labels_training])
+    probas_pred = model.blobs[:predicted_proba_training_onecol]
+    precision, recall, thresholds = precision_recall_curve(
+        y_true,
+        probas_pred,
+        )
+end
+
+function precisionrecallvalidation(model::AbstractSingleLabelBinaryClassifier)
+    if !hasvalidation(model)
+        error("model has no validation data")
+    end
+    y_true = Int.(model.blobs[:true_labels_validation])
+    probas_pred = model.blobs[:predicted_proba_validation_onecol]
+    precision, recall, thresholds = precision_recall_curve(
+        y_true,
+        probas_pred,
+        )
+end
+
+function precisionrecalltesting(model::AbstractSingleLabelBinaryClassifier)
+    if !hastesting(model)
+        error("model has no testing data")
+    end
+    y_true = Int.(model.blobs[:true_labels_testing])
+    probas_pred = model.blobs[:predicted_proba_testing_onecol]
+    precision, recall, thresholds = precision_recall_curve(
+        y_true,
+        probas_pred,
+        )
 end
