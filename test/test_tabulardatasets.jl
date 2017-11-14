@@ -1,6 +1,6 @@
 srand(999)
 
-import DataFrames
+using DataFrames
 
 d = DataFrame()
 

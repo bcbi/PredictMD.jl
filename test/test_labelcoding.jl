@@ -1,6 +1,6 @@
 srand(999)
 
-import StatsBase
+using StatsBase
 
 num_rows = 1_000_000
 labels_original = Vector{String}(num_rows)

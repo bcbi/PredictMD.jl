@@ -1,13 +1,13 @@
 srand(999)
 
-import DataFrames
-import StatsBase
+using DataFrames
+using StatsBase
 
 num_rows = 50_000
 dataframe, label_variables, feature_variables =
     AluthgeSinhaBase.generatefaketabulardata1(num_rows)
 
-StatsBase.countmap(dataframe[:mylabel1])
+countmap(dataframe[:mylabel1])
 
 tabular_dataset = HoldoutTabularDataset(
     dataframe,

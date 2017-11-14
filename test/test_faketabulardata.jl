@@ -1,6 +1,6 @@
 srand(999)
 
-import DataFrames
+using DataFrames
 
 num_rows = 5_000_000
 dataframe, label_variables, feature_variables =
