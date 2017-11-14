@@ -1,4 +1,5 @@
 import DataFrames
+import Distributions
 import GLM
 import MLBase
 import StatsBase
@@ -14,8 +15,8 @@ function SingleLabelBinaryLogisticClassifier(
         dataset::AbstractHoldoutTabularDataset,
         label_variable::Symbol;
         intercept::Bool = true,
-        family::Distribution = Binomial(),
-        link::Link = LogitLink(),
+        family::Distributions.Distribution = Distributions.Binomial(),
+        link::GLM.Link = GLM.LogitLink(),
         )
 
     blobs = Dict{Symbol, Any}()
@@ -58,7 +59,14 @@ function SingleLabelBinaryLogisticClassifier(
         )
     blobs[:true_labels_training] = convert(Array,data_training_labels)
 
-    internal_model = glm(
+    # internal_model = glm(
+        # formula_object,
+        # data_training_labelandfeatures,
+        # family,
+        # link,
+        # )
+    internal_model = GLM.fit(
+        GLM.GeneralizedLinearModel,
         formula_object,
         data_training_labelandfeatures,
         family,
@@ -103,7 +111,7 @@ function SingleLabelBinaryLogisticClassifier(
     blobs[:predicted_proba_training_twocols] =
         predicted_proba_training_twocols
     predicted_labels_training =
-        classify(predicted_proba_training_twocols').-1
+        MLBase.classify(predicted_proba_training_twocols').-1
     blobs[:predicted_labels_training] = predicted_labels_training
 
     if hasvalidation(dataset)
@@ -136,7 +144,7 @@ function SingleLabelBinaryLogisticClassifier(
         blobs[:predicted_proba_validation_twocols] =
             predicted_proba_validation_twocols
         predicted_labels_validation =
-            classify(predicted_proba_validation_twocols').-1
+            MLBase.classify(predicted_proba_validation_twocols').-1
         blobs[:predicted_labels_validation] = predicted_labels_validation
     else
         blobs[:numvalidation] = 0
@@ -172,7 +180,7 @@ function SingleLabelBinaryLogisticClassifier(
         blobs[:predicted_proba_testing_twocols] =
             predicted_proba_testing_twocols
         predicted_labels_testing =
-            classify(predicted_proba_testing_twocols').-1
+            MLBase.classify(predicted_proba_testing_twocols').-1
         blobs[:predicted_labels_testing] = predicted_labels_testing
     else
         blobs[:numtesting] = 0

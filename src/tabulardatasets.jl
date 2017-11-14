@@ -47,7 +47,7 @@ function HoldoutTabularDataset(
 
     blobs = Dict{Symbol, Any}()
 
-    data_frame = DataFrame(data_original)
+    data_frame = DataFrames.DataFrame(data_original)
 
     if recordid_fieldname in names(data_frame)
         msg = "The dataset already has a column named $(recordid_fieldname)."*
@@ -305,7 +305,7 @@ function getdata(
     if returndataasmatrix
         allrowsselectedcolumns = dataset.blobs[:data_features_matrix]
     else
-        allrowsselectedcolumns = DataFrame()
+        allrowsselectedcolumns = DataFrames.DataFrame()
         if all_labels
             for l in dataset.blobs[:label_variables]
                 allrowsselectedcolumns[l] =

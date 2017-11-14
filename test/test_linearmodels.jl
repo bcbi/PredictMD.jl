@@ -28,7 +28,7 @@ logistic_binary_classifier = BinaryLogistic(
         AbstractSingleLabelBinaryClassifier
     )
 
-performance(logistic_binary_classifier)
+logistic_binary_classifier_perf = performance(logistic_binary_classifier)
 
 ##############################################################################
 
@@ -55,7 +55,7 @@ logistic_binary_classifier = BinaryLogistic(
         AbstractSingleLabelBinaryClassifier
     )
 
-performance(logistic_binary_classifier)
+logistic_binary_classifier_perf = performance(logistic_binary_classifier)
 
 ##############################################################################
 
@@ -81,4 +81,4 @@ logistic_binary_classifier = BinaryLogistic(
         AbstractSingleLabelBinaryClassifier
     )
 
-performance(logistic_binary_classifier)
+logistic_binary_classifier_perf = performance(logistic_binary_classifier)

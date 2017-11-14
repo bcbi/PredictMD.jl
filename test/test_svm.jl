@@ -28,7 +28,9 @@ svm_binary_classifier = BinarySVM(
         AbstractSingleLabelBinaryClassifier
     )
 
-performance(svm_binary_classifier)
+svm_binary_classifier_perf = performance(svm_binary_classifier)
+
+@test( typeof(svm_binary_classifier_perf) <: DataFrames.AbstractDataFrame )
 
 ##############################################################################
 
@@ -57,7 +59,9 @@ svm_binary_classifier = BinarySVM(
         AbstractSingleLabelBinaryClassifier
     )
 
-x = performance(svm_binary_classifier)
+svm_binary_classifier_perf = performance(svm_binary_classifier)
+
+@test( typeof(svm_binary_classifier_perf) <: DataFrames.AbstractDataFrame )
 
 ##############################################################################
 
@@ -85,4 +89,6 @@ svm_binary_classifier = BinarySVM(
         AbstractSingleLabelBinaryClassifier
     )
 
-performance(svm_binary_classifier)
+svm_binary_classifier_perf = performance(svm_binary_classifier)
+
+@test( typeof(svm_binary_classifier_perf) <: DataFrames.AbstractDataFrame )
