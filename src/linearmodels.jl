@@ -1,7 +1,7 @@
-using DataFrames
-using GLM
-using MLBase
-using StatsBase
+import DataFrames
+import GLM
+import MLBase
+import StatsBase
 
 struct SingleLabelBinaryLogisticClassifier <:
         AbstractSingleLabelBinaryClassifier

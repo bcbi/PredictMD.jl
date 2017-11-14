@@ -1,4 +1,4 @@
-using LIBSVM
+import LIBSVM
 
 struct SingleLabelBinarySupportVectorMachineClassifier <:
         AbstractSingleLabelBinaryClassifier

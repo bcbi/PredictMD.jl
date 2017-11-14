@@ -1,4 +1,4 @@
-using DataFrames
+import DataFrames
 
 myformulas1a = AluthgeSinhaBase.generate_formula_object(
     [:y],[:a,:b,:c],

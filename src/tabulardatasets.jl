@@ -1,6 +1,6 @@
-using DataFrames
-using IterableTables
-using StatsBase
+import DataFrames
+import IterableTables
+import StatsBase
 
 struct HoldoutTabularDataset <: AbstractHoldoutTabularDataset
     blobs::T where T <: Associative

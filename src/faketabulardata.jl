@@ -1,5 +1,5 @@
-using DataFrames
-using StatsBase
+import DataFrames
+import StatsBase
 
 function generatefaketabulardata1(num_rows::Integer)
     return generatefaketabulardata1(Base.GLOBAL_RNG, num_rows)

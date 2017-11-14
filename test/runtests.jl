@@ -1,5 +1,5 @@
-using AluthgeSinhaBase
-using Base.Test
+import AluthgeSinhaBase
+import Base.Test
 
 include("test_faketabulardata.jl")
 include("test_formulas.jl")

@@ -1,5 +1,5 @@
-using DataFrames
-using ScikitLearn
+import DataFrames
+import ScikitLearn
 
 @sk_import metrics: accuracy_score
 @sk_import metrics: auc

@@ -1,7 +1,7 @@
 srand(999)
 
-using DataFrames
-using StatsBase
+import DataFrames
+import StatsBase
 
 num_rows = 10_000
 dataframe, label_variables, feature_variables =

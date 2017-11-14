@@ -1,4 +1,4 @@
-using DecisionTree
+import DecisionTree
 
 struct SingleLabelBinaryRandomForestClassifier <:
         AbstractSingleLabelBinaryClassifier
