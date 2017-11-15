@@ -1,4 +1,4 @@
-using LIBSVM
+import LIBSVM
 
 struct SingleLabelBinarySupportVectorMachineClassifier <:
         AbstractSingleLabelBinaryClassifier
@@ -49,14 +49,14 @@ function SingleLabelBinarySupportVectorMachineClassifier(
         label_type = :integer,
         recordidlist = recordidlist_training,
         )
-    @assert(typeof(data_training_labels) <: DataFrame)
+    @assert(typeof(data_training_labels) <: DataFrames.DataFrame)
     data_training_labels = convert(Array, data_training_labels)
     @assert(typeof(data_training_labels) <: AbstractMatrix)
     @assert(size(data_training_labels,2) == 1)
     data_training_labels = data_training_labels[:,1]
     blobs[:true_labels_training] = data_training_labels
     # internal_model = build_forest(
-    internal_model = svmtrain(
+    internal_model = LIBSVM.svmtrain(
         data_training_features',
         data_training_labels;
         probability = true
@@ -64,7 +64,7 @@ function SingleLabelBinarySupportVectorMachineClassifier(
     blobs[:internal_model] = internal_model
 
     predicted_labels_training, predicted_proba_training_twocols =
-        svmpredict(
+        LIBSVM.svmpredict(
             internal_model,
             data_training_features'
             )
@@ -96,7 +96,7 @@ function SingleLabelBinarySupportVectorMachineClassifier(
             label_type = :integer,
             recordidlist = recordidlist_validation,
             )
-        @assert(typeof(data_validation_labels) <: DataFrame)
+        @assert(typeof(data_validation_labels) <: DataFrames.DataFrame)
         data_validation_labels = convert(Array, data_validation_labels)
         @assert(typeof(data_validation_labels) <: AbstractMatrix)
         @assert(size(data_validation_labels,2) == 1)
@@ -104,7 +104,7 @@ function SingleLabelBinarySupportVectorMachineClassifier(
         blobs[:true_labels_validation] = data_validation_labels
 
         predicted_labels_validation, predicted_proba_validation_twocols =
-            svmpredict(
+            LIBSVM.svmpredict(
                 internal_model,
                 data_validation_features'
                 )
@@ -139,7 +139,7 @@ function SingleLabelBinarySupportVectorMachineClassifier(
             recordidlist = recordidlist_testing,
             )
 
-        @assert(typeof(data_testing_labels) <: DataFrame)
+        @assert(typeof(data_testing_labels) <: DataFrames.DataFrame)
         data_testing_labels = convert(Array, data_testing_labels)
         @assert(typeof(data_testing_labels) <: AbstractMatrix)
         @assert(size(data_testing_labels,2) == 1)
@@ -147,7 +147,7 @@ function SingleLabelBinarySupportVectorMachineClassifier(
         blobs[:true_labels_testing] = data_testing_labels
 
         predicted_labels_testing, predicted_proba_testing_twocols =
-            svmpredict(
+            LIBSVM.svmpredict(
                 internal_model,
                 data_testing_features',
                 )

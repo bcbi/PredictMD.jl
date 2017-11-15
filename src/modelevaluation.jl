@@ -1,16 +1,16 @@
-using DataFrames
-using ScikitLearn
+import DataFrames
+import ScikitLearn
 
-@sk_import metrics: accuracy_score
-@sk_import metrics: auc
-@sk_import metrics: average_precision_score
-@sk_import metrics: brier_score_loss
-@sk_import metrics: f1_score
-@sk_import metrics: precision_recall_curve
-@sk_import metrics: precision_score
-@sk_import metrics: recall_score
-@sk_import metrics: roc_auc_score
-@sk_import metrics: roc_curve
+ScikitLearn.@sk_import metrics: accuracy_score
+ScikitLearn.@sk_import metrics: auc
+ScikitLearn.@sk_import metrics: average_precision_score
+ScikitLearn.@sk_import metrics: brier_score_loss
+ScikitLearn.@sk_import metrics: f1_score
+ScikitLearn.@sk_import metrics: precision_recall_curve
+ScikitLearn.@sk_import metrics: precision_score
+ScikitLearn.@sk_import metrics: recall_score
+ScikitLearn.@sk_import metrics: roc_auc_score
+ScikitLearn.@sk_import metrics: roc_curve
 
 const notapplicable = "---"
 
@@ -145,7 +145,7 @@ function performance(
         averageprecision_testing = notapplicable
     end
 
-    results = DataFrame()
+    results = DataFrames.DataFrame()
     model_name = model.blobs[:model_name]
     results[:Model] = [model_name, model_name, model_name]
     results[:Subset] = ["Training", "Validation", "Testing"]

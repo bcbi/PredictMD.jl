@@ -1,4 +1,4 @@
-using DecisionTree
+import DecisionTree
 
 struct SingleLabelBinaryRandomForestClassifier <:
         AbstractSingleLabelBinaryClassifier
@@ -43,13 +43,13 @@ function SingleLabelBinaryRandomForestClassifier(
         label_type = :integer,
         recordidlist = recordidlist_training,
         )
-    @assert(typeof(data_training_labels) <: DataFrame)
+    @assert(typeof(data_training_labels) <: DataFrames.DataFrame)
     data_training_labels = convert(Array, data_training_labels)
     @assert(typeof(data_training_labels) <: AbstractMatrix)
     @assert(size(data_training_labels,2) == 1)
     data_training_labels = data_training_labels[:,1]
     blobs[:true_labels_training] = data_training_labels
-    internal_model = build_forest(
+    internal_model = DecisionTree.build_forest(
         data_training_labels,
         data_training_features,
         nsubfeatures,
@@ -57,12 +57,12 @@ function SingleLabelBinaryRandomForestClassifier(
         )
     blobs[:internal_model] = internal_model
 
-    predicted_labels_training = apply_forest(
+    predicted_labels_training = DecisionTree.apply_forest(
         internal_model,
         data_training_features,
         )
     blobs[:predicted_labels_training] = Int.(predicted_labels_training)
-    predicted_proba_training_twocols = apply_forest_proba(
+    predicted_proba_training_twocols = DecisionTree.apply_forest_proba(
         internal_model,
         data_training_features,
         classes,
@@ -92,19 +92,20 @@ function SingleLabelBinaryRandomForestClassifier(
             label_type = :integer,
             recordidlist = recordidlist_validation,
             )
-        @assert(typeof(data_validation_labels) <: DataFrame)
+        @assert(typeof(data_validation_labels) <: DataFrames.DataFrame)
         data_validation_labels = convert(Array, data_validation_labels)
         @assert(typeof(data_validation_labels) <: AbstractMatrix)
         @assert(size(data_validation_labels,2) == 1)
         data_validation_labels = data_validation_labels[:,1]
         blobs[:true_labels_validation] = data_validation_labels
 
-        predicted_labels_validation = apply_forest(
+        predicted_labels_validation = DecisionTree.apply_forest(
             internal_model,
             data_validation_features,
             )
-        blobs[:predicted_labels_validation] = Int.(predicted_labels_validation)
-        predicted_proba_validation_twocols = apply_forest_proba(
+        blobs[:predicted_labels_validation] =
+            Int.(predicted_labels_validation)
+        predicted_proba_validation_twocols = DecisionTree.apply_forest_proba(
             internal_model,
             data_validation_features,
             classes,
@@ -137,19 +138,19 @@ function SingleLabelBinaryRandomForestClassifier(
             recordidlist = recordidlist_testing,
             )
 
-        @assert(typeof(data_testing_labels) <: DataFrame)
+        @assert(typeof(data_testing_labels) <: DataFrames.DataFrame)
         data_testing_labels = convert(Array, data_testing_labels)
         @assert(typeof(data_testing_labels) <: AbstractMatrix)
         @assert(size(data_testing_labels,2) == 1)
         data_testing_labels = data_testing_labels[:,1]
         blobs[:true_labels_testing] = data_testing_labels
 
-        predicted_labels_testing = apply_forest(
+        predicted_labels_testing = DecisionTree.apply_forest(
             internal_model,
             data_testing_features,
             )
         blobs[:predicted_labels_testing] = Int.(predicted_labels_testing)
-        predicted_proba_testing_twocols = apply_forest_proba(
+        predicted_proba_testing_twocols = DecisionTree.apply_forest_proba(
             internal_model,
             data_testing_features,
             classes,

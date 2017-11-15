@@ -7,7 +7,7 @@ num_rows = 50_000
 dataframe, label_variables, feature_variables =
     AluthgeSinhaBase.generatefaketabulardata1(num_rows)
 
-StatsBase.countmap(dataframe[:mylabel1])
+countmap(dataframe[:mylabel1])
 
 tabular_dataset = HoldoutTabularDataset(
     dataframe,
@@ -28,7 +28,13 @@ randomforest_binary_classifier = BinaryRandomForest(
         AbstractSingleLabelBinaryClassifier
     )
 
-performance(randomforest_binary_classifier)
+randomforest_binary_classifier_perf =
+    performance(randomforest_binary_classifier)
+
+@test(
+    typeof(randomforest_binary_classifier_perf) <:
+        DataFrames.AbstractDataFrame
+    )
 
 ##############################################################################
 
@@ -55,7 +61,13 @@ randomforest_binary_classifier = BinaryRandomForest(
         AbstractSingleLabelBinaryClassifier
     )
 
-x = performance(randomforest_binary_classifier)
+randomforest_binary_classifier_perf =
+    performance(randomforest_binary_classifier)
+
+@test(
+    typeof(randomforest_binary_classifier_perf) <:
+        DataFrames.AbstractDataFrame
+    )
 
 ##############################################################################
 
@@ -81,4 +93,10 @@ randomforest_binary_classifier = BinaryRandomForest(
         AbstractSingleLabelBinaryClassifier
     )
 
-performance(randomforest_binary_classifier)
+randomforest_binary_classifier_perf =
+    performance(randomforest_binary_classifier)
+
+@test(
+    typeof(randomforest_binary_classifier_perf) <:
+        DataFrames.AbstractDataFrame
+    )

@@ -7,7 +7,7 @@ num_rows = 10_000
 dataframe, label_variables, feature_variables =
     AluthgeSinhaBase.generatefaketabulardata1(num_rows)
 
-StatsBase.countmap(dataframe[:mylabel1])
+countmap(dataframe[:mylabel1])
 
 tabular_dataset = HoldoutTabularDataset(
     dataframe,
@@ -28,7 +28,9 @@ svm_binary_classifier = BinarySVM(
         AbstractSingleLabelBinaryClassifier
     )
 
-performance(svm_binary_classifier)
+svm_binary_classifier_perf = performance(svm_binary_classifier)
+
+@test( typeof(svm_binary_classifier_perf) <: DataFrames.AbstractDataFrame )
 
 ##############################################################################
 
@@ -57,7 +59,9 @@ svm_binary_classifier = BinarySVM(
         AbstractSingleLabelBinaryClassifier
     )
 
-x = performance(svm_binary_classifier)
+svm_binary_classifier_perf = performance(svm_binary_classifier)
+
+@test( typeof(svm_binary_classifier_perf) <: DataFrames.AbstractDataFrame )
 
 ##############################################################################
 
@@ -85,4 +89,6 @@ svm_binary_classifier = BinarySVM(
         AbstractSingleLabelBinaryClassifier
     )
 
-performance(svm_binary_classifier)
+svm_binary_classifier_perf = performance(svm_binary_classifier)
+
+@test( typeof(svm_binary_classifier_perf) <: DataFrames.AbstractDataFrame )

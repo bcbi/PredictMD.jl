@@ -7,7 +7,7 @@ num_rows = 50_000
 dataframe, label_variables, feature_variables =
     AluthgeSinhaBase.generatefaketabulardata1(num_rows)
 
-StatsBase.countmap(dataframe[:mylabel1])
+countmap(dataframe[:mylabel1])
 
 tabular_dataset = HoldoutTabularDataset(
     dataframe,
@@ -28,7 +28,7 @@ logistic_binary_classifier = BinaryLogistic(
         AbstractSingleLabelBinaryClassifier
     )
 
-performance(logistic_binary_classifier)
+logistic_binary_classifier_perf = performance(logistic_binary_classifier)
 
 ##############################################################################
 
@@ -55,7 +55,7 @@ logistic_binary_classifier = BinaryLogistic(
         AbstractSingleLabelBinaryClassifier
     )
 
-performance(logistic_binary_classifier)
+logistic_binary_classifier_perf = performance(logistic_binary_classifier)
 
 ##############################################################################
 
@@ -81,4 +81,4 @@ logistic_binary_classifier = BinaryLogistic(
         AbstractSingleLabelBinaryClassifier
     )
 
-performance(logistic_binary_classifier)
+logistic_binary_classifier_perf = performance(logistic_binary_classifier)
