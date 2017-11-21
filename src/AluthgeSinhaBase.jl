@@ -1,3 +1,5 @@
+__precompile__(false)
+
 module AluthgeSinhaBase
 
 # abstract types to export:
