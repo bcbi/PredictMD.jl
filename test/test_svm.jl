@@ -3,7 +3,7 @@ srand(999)
 using DataFrames
 using StatsBase
 
-num_rows = 10_000
+num_rows = 5_000
 dataframe, label_variables, feature_variables =
     AluthgeSinhaBase.generatefaketabulardata1(num_rows)
 
@@ -34,7 +34,7 @@ svm_binary_classifier_perf = performance(svm_binary_classifier)
 
 ##############################################################################
 
-num_rows = 10_000
+num_rows = 5_000
 dataframe, label_variables, feature_variables =
     AluthgeSinhaBase.generatefaketabulardata2(num_rows)
 
@@ -65,7 +65,7 @@ svm_binary_classifier_perf = performance(svm_binary_classifier)
 
 ##############################################################################
 
-num_rows = 10_000
+num_rows = 5_000
 dataframe, label_variables, feature_variables =
     AluthgeSinhaBase.generatefaketabulardata3(num_rows)
 

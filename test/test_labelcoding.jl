@@ -2,7 +2,7 @@ srand(999)
 
 using StatsBase
 
-num_rows = 1_000_000
+num_rows = 5_000
 labels_original = Vector{String}(num_rows)
 sample!(
     ["red", "orange", "yellow", "green", "blue", "indigo", "violet"],
