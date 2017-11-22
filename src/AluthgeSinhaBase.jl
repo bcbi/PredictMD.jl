@@ -48,6 +48,7 @@ export getdata,
     precisionrecalltesting
 
 include("abstracttypes.jl")
+include("auc.jl")
 include("faketabulardata.jl")
 include("formulas.jl")
 include("labelcoding.jl")
