@@ -1,6 +1,7 @@
 using AluthgeSinhaBase
 using Base.Test
 
+include("test_auc.jl")
 include("test_faketabulardata.jl")
 include("test_formulas.jl")
 include("test_labelcoding.jl")

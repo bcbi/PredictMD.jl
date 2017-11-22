@@ -13,6 +13,16 @@ y2 = cos.(x2)
     isapprox(
         AluthgeSinhaBase.areaundercurve(x2, y2),
         2*sin(20);
-        atol=0.00001
+        atol=0.00001,
+        )
+    )
+
+x3 = convert(Array, linspace(1e-10,1,10_000))
+y3 = x3.*sin.(1./x3)
+@test(
+    isapprox(
+        AluthgeSinhaBase.areaundercurve(x3, y3),
+        0.37853;
+        atol=0.00001,
         )
     )
