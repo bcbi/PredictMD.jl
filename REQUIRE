@@ -4,9 +4,11 @@ DataFrames
 DecisionTree
 Distributions
 GLM
+Interpolations
 IterableTables
 JLD
 LIBSVM
 MLBase
+QuadGK
 ScikitLearn
 StatsBase
