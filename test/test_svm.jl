@@ -30,7 +30,7 @@ svm_binary_classifier = BinarySVM(
 
 svm_binary_classifier_perf = performance(svm_binary_classifier)
 
-@test( typeof(svm_binary_classifier_perf) <: DataFrames.AbstractDataFrame )
+@test( typeof(svm_binary_classifier_perf) <: AbstractModelPerformanceTable )
 
 ##############################################################################
 
@@ -61,7 +61,7 @@ svm_binary_classifier = BinarySVM(
 
 svm_binary_classifier_perf = performance(svm_binary_classifier)
 
-@test( typeof(svm_binary_classifier_perf) <: DataFrames.AbstractDataFrame )
+@test( typeof(svm_binary_classifier_perf) <: AbstractModelPerformanceTable )
 
 ##############################################################################
 
@@ -91,4 +91,4 @@ svm_binary_classifier = BinarySVM(
 
 svm_binary_classifier_perf = performance(svm_binary_classifier)
 
-@test( typeof(svm_binary_classifier_perf) <: DataFrames.AbstractDataFrame )
+@test( typeof(svm_binary_classifier_perf) <: AbstractModelPerformanceTable )

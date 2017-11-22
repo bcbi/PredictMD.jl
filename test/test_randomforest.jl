@@ -33,7 +33,7 @@ randomforest_binary_classifier_perf =
 
 @test(
     typeof(randomforest_binary_classifier_perf) <:
-        DataFrames.AbstractDataFrame
+        AbstractModelPerformanceTable
     )
 
 ##############################################################################
@@ -66,7 +66,7 @@ randomforest_binary_classifier_perf =
 
 @test(
     typeof(randomforest_binary_classifier_perf) <:
-        DataFrames.AbstractDataFrame
+        AbstractModelPerformanceTable
     )
 
 ##############################################################################
@@ -98,5 +98,5 @@ randomforest_binary_classifier_perf =
 
 @test(
     typeof(randomforest_binary_classifier_perf) <:
-        DataFrames.AbstractDataFrame
+        AbstractModelPerformanceTable
     )

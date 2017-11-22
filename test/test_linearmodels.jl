@@ -30,6 +30,11 @@ logistic_binary_classifier = BinaryLogistic(
 
 logistic_binary_classifier_perf = performance(logistic_binary_classifier)
 
+@test(
+    typeof(logistic_binary_classifier_perf) <:
+        AbstractModelPerformanceTable
+    )
+
 ##############################################################################
 
 num_rows = 5_000
@@ -57,6 +62,11 @@ logistic_binary_classifier = BinaryLogistic(
 
 logistic_binary_classifier_perf = performance(logistic_binary_classifier)
 
+@test(
+    typeof(logistic_binary_classifier_perf) <:
+        AbstractModelPerformanceTable
+    )
+
 ##############################################################################
 
 num_rows = 5_000
@@ -82,3 +92,8 @@ logistic_binary_classifier = BinaryLogistic(
     )
 
 logistic_binary_classifier_perf = performance(logistic_binary_classifier)
+
+@test(
+    typeof(logistic_binary_classifier_perf) <:
+        AbstractModelPerformanceTable
+    )

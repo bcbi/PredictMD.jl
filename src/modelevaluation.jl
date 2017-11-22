@@ -21,25 +21,12 @@ end
 
 function performance(
         model::AbstractModel;
-        kwargs...,
-        )
-    performance(
-        STDOUT,
-        model;
-        kwargs...
-        )
-end
-
-function performance(
-        io::IO,
-        model::AbstractModel;
         kwargs...
         )
     error("Not yet implemented for this model type.")
 end
 
 function performance(
-        io::IO,
         model::AbstractSingleLabelBinaryClassifier;
         )
     if hastraining(model)
@@ -150,26 +137,26 @@ function performance(
         averageprecision_testing = notapplicable
     end
 
-    results = DataFrames.DataFrame()
+    table = DataFrames.DataFrame()
     model_name = model.blobs[:model_name]
-    results[:Model] = [model_name, model_name, model_name]
-    results[:Subset] = ["Training", "Validation", "Testing"]
-    results[:N] = [numtrainingrows, numvalidationrows, numtestingrows]
-    results[:Accuracy] = [
+    table[:Model] = [model_name, model_name, model_name]
+    table[:Subset] = ["Training", "Validation", "Testing"]
+    table[:N] = [numtrainingrows, numvalidationrows, numtestingrows]
+    table[:Accuracy] = [
         accuracy_training,
         accuracy_validation,
         accuracy_testing
         ]
-    results[:AUROC] = [auroc_training, auroc_validation, auroc_testing]
-    results[:F1_score] = [f1_training, f1_validation, f1_testing]
-    results[:AUPR] = [aupr_training, aupr_validation, aupr_testing]
-    results[:Average_precision] = [
+    table[:AUROC] = [auroc_training, auroc_validation, auroc_testing]
+    table[:F1_score] = [f1_training, f1_validation, f1_testing]
+    table[:AUPR] = [aupr_training, aupr_validation, aupr_testing]
+    table[:Average_precision] = [
         averageprecision_training,
         averageprecision_validation,
         averageprecision_testing,
         ]
 
-    return results
+    return ModelPerformanceTable(model, table)
 
 end
 
