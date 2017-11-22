@@ -17,6 +17,9 @@ export AbstractDataset,
 # abstract type aliases to export:
 export AbstractBinaryClassifier
 
+# abstract parametric types to export:
+export AbstractModelPerformanceTable
+
 # concrete types to export:
 export HoldoutTabularDataset,
     ResampledHoldoutTabularDataset,
@@ -30,6 +33,9 @@ export BinaryLogistic,
     SingleLabelBinarySVMClassifier,
     BinarySupportVectorMachine,
     BinarySVM
+
+# concrete parametric types to export:
+export ModelPerformanceTable
 
 # functions to export:
 export getdata,

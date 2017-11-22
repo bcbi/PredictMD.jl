@@ -14,6 +14,11 @@ ScikitLearn.@sk_import metrics: roc_curve
 
 const notapplicable = "---"
 
+struct ModelPerformanceTable{M, T} <: AbstractModelPerformanceTable{M, T}
+    model::M
+    table::T
+end
+
 function performance(
         model::AbstractModel;
         kwargs...,
