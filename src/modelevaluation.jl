@@ -14,36 +14,85 @@ import DataFrames
 
 struct ModelPerformanceTable{M, T} <:
         AbstractModelPerformanceTable{M, T}
-    model::M
     table::T
 end
 
 struct ModelPerformanceDataForPlots{M} <:
         AbstractModelPerformanceDataForPlots{M}
-    model::M
     blobs
 end
 
 struct ModelPerformancePlots{M} <:
         AbstractModelPerformancePlots{M}
-    model::M
+    blobs
 end
 
-function performance(
-        model::AbstractModel;
+function performance{M<:AbstractModelly;}(
+        model::M;
         kwargs...
         )
-    error("Not yet implemented for this model type.")
+    return ModelPerformanceTable(model; kwargs...).table
 end
 
-function performance(
-        model::AbstractSingleLabelBinaryClassifier;
+function ModelPerformanceTable{M<:AbstractModelly}(
+        model::M;
+        kwargs...
         )
+    error("Not yet implemented for model type $(M)")
+end
+
+function ModelPerformanceDataForPlots{M<:AbstractModelly}(
+        model::M;
+        kwargs...
+        )
+    error("Not yet implemented for model type $(M)")
+end
+
+function ModelPerformancePlots{M<:AbstractModelly}(
+        model::M;
+        kwargs...
+        )
+    error("Not yet implemented for model type $(M)")
+end
+
+function ModelPerformanceTable{M<:AbstractSingleLabelBinaryClassifier}(
+        model::M;
+        threshold::Real = 0.5,
+        )
+    table_training = DataFrames.DataFrame()
     if hastraining(model)
-        # numtrainingrows = numtraining(model)
-        # ytrue_training = model.blobs[:true_labels_training]
-        # ypredlabel_training = model.blobs[:predicted_labels_training]
-        # ypredproba_training = model.blobs[:predicted_proba_training]
+    end
+
+    table_validation = DataFrames.DataFrame()
+    if hasvalidation(model)
+    end
+
+    table_testing = DataFrames.DataFrame()
+    if hastesting(model)
+    end
+
+    table = vcat(
+        table_training,
+        table_validation,
+        table_testing,
+        )
+    return ModelPerformanceTable{M, DataFrames.DataFrame}(table)
+end
+
+function _modelperformancetablerow!(
+        table_subset::DataFrames.DataFrame,
+        model::M where M <: AbstractSingleLabelBinaryClassifier,
+        subset::Symbol,
+        threshold::Real,
+        )
+    numrows, ytrue, yscore = _get_numrow_sytrue_yscore(model, subset)
+end
+
+# function performance(
+        # model::M where M <: AbstractSingleLabelBinaryClassifier;
+        # )
+    # if hastraining(model)
+
         # accuracy_training = accuracy_score(
         #     convert(Array, ytrue_training),
         #     convert(Array, ypredlabel_training),
@@ -66,17 +115,17 @@ function performance(
         #     convert(Array, ytrue_training),
         #     convert(Array, ypredproba_training),
         #     )
-    end
+    # end
+    #
+    # table_validation = DataFrame()
+    # if hasvalidation(model)
+    # end
+    #
+    # table_testing = DataFrame()
+    # if hastesting(model)
+    # end
 
-    table_validation = DataFrame()
-    if hasvalidation(model)
-    end
-
-    table_testing = DataFrame()
-    if hastesting(model)
-    end
-
-    table = vcat(table_training, table_validation, table_testing)
+    # table = vcat(table_training, table_validation, table_testing)
 
     # table = DataFrames.DataFrame()
     # model_name = model.blobs[:model_name]
@@ -97,9 +146,9 @@ function performance(
     #     averageprecision_testing,
     #     ]
 
-    return ModelPerformanceTable(model, table)
+    # return ModelPerformanceTable{M}(table)
 
-end
+# end
 
 # function roctraining(model::AbstractSingleLabelBinaryClassifier)
 #     if !hastraining(model)
@@ -122,3 +171,27 @@ end
 #         probas_pred,
 #         )
 # end
+
+function _get_numrows_ytrue_yscore(
+        model::M where M <: AbstractSingleLabelBinaryClassifier,
+        subset::Symbol,
+        )
+    if subset == :training
+        numrows = numtraining(model)
+        ytrue = model.blobs[:true_labels_training]
+        yscore = model.blobs[:predicted_proba_training]
+        return numrows, ytrue, yscore
+    elseif subset == :validation
+        numrows = numvalidation(model)
+        ytrue = model.blobs[:true_labels_validation]
+        yscore = model.blobs[:predicted_proba_validation]
+        return numrows, ytrue, yscore
+    elseif subset == :testing
+        numrows = numtesting(model)
+        ytrue = model.blobs[:true_labels_testing]
+        yscore = model.blobs[:predicted_proba_testing]
+        return numrows, ytrue, yscore
+    else
+        error("subset must be one of :training, :validation, :testing")
+    end
+end

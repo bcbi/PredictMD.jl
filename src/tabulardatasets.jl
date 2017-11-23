@@ -2,12 +2,12 @@ import DataFrames
 import IterableTables
 import StatsBase
 
-struct HoldoutTabularDataset <: AbstractHoldoutTabularDataset
-    blobs::T where T <: Associative
+struct HoldoutTabularDataset{T} <: AbstractHoldoutTabularDataset{T}
+    blobs::A where A <: Associative
 end
 
-struct ResampledHoldoutTabularDataset <: AbstractHoldoutTabularDataset
-    blobs::T where T <: Associative
+struct ResampledHoldoutTabularDataset{T} <: AbstractHoldoutTabularDataset{T}
+    blobs::A where A <: Associative
 end
 
 function HoldoutTabularDataset(
@@ -171,7 +171,7 @@ function HoldoutTabularDataset(
 
     blobs[:data_unusedcolumns] = data_frame[:, unused_column_names]
 
-    return HoldoutTabularDataset(blobs)
+    return HoldoutTabularDataset{DataFrames.DataFrame}(blobs)
 end
 
 function recordidlist_to_rownumberlist(
@@ -376,7 +376,6 @@ function getdata(
         end
         return datatoreturn, corresponding_recordidlist_array
     end
-
 end
 
 function _calculate_num_rows_partition(

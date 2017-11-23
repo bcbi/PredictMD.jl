@@ -1,8 +1,8 @@
 import LIBSVM
 
-struct SingleLabelBinarySupportVectorMachineClassifier <:
-        AbstractSingleLabelBinaryClassifier
-    blobs::T where T <: Associative
+struct SingleLabelBinarySupportVectorMachineClassifier{D} <:
+        AbstractSingleLabelBinaryClassifier{D}
+    blobs::A where A <: Associative
 end
 
 const BinarySupportVectorMachine =
@@ -13,8 +13,10 @@ const BinarySVM = BinarySupportVectorMachine
 const SingleLabelBinarySVMClassifier =
     SingleLabelBinarySupportVectorMachineClassifier
 
-function SingleLabelBinarySupportVectorMachineClassifier(
-        dataset::AbstractHoldoutTabularDataset,
+function SingleLabelBinarySupportVectorMachineClassifier{
+        D<:AbstractHoldoutTabularDataset
+        }(
+        dataset::D,
         label_variable::Symbol;
         classes::StatsBase.IntegerVector = [0, 1],
         nsubfeatures::Integer = 2,
@@ -166,5 +168,5 @@ function SingleLabelBinarySupportVectorMachineClassifier(
         blobs[:numtesting] = 0
     end
 
-    return SingleLabelBinarySupportVectorMachineClassifier(blobs)
+    return SingleLabelBinarySupportVectorMachineClassifier{D}(blobs)
 end

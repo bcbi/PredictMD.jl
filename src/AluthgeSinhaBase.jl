@@ -3,26 +3,30 @@ __precompile__(false)
 module AluthgeSinhaBase
 
 # abstract types to export:
+export AbstractModelly
+
+# abstract type aliases to export:
+
+# abstract parametric types to export:
 export AbstractDataset,
     AbstractTabularDataset,
     AbstractHoldoutTabularDataset,
     AbstractKFoldTabularDataset,
-    AbstractModel,
+    AbstractSingleModel,
     AbstractClassifier,
     AbstractSingleLabelClassifier,
     AbstractSingleLabelBinaryClassifier,
     AbstractRegression,
-    AbstractSingleLabelRegression
-
-# abstract type aliases to export:
-export AbstractBinaryClassifier
-
-# abstract parametric types to export:
-export AbstractModelPerformanceTable,
+    AbstractSingleLabelRegression,
+    AbstractModelPerformanceTable,
     AbstractModelPerformanceDataForPlots,
     AbstractModelPerformancePlots
 
 # abstract parametric type aliases to export:
+export ArrayOfModels,
+    VectorOfModels,
+    MatrixOfModels,
+    AbstractBinaryClassifier
 
 # concrete types to export:
 export HoldoutTabularDataset,
@@ -32,11 +36,6 @@ export HoldoutTabularDataset,
     SingleLabelBinarySupportVectorMachineClassifier
 
 # concrete type aliases to export:
-export BinaryLogistic,
-    BinaryRandomForest,
-    SingleLabelBinarySVMClassifier,
-    BinarySupportVectorMachine,
-    BinarySVM
 
 # concrete parametric types to export:
 export ModelPerformanceTable,
@@ -44,6 +43,11 @@ export ModelPerformanceTable,
     ModelPerformancePlots
 
 # concrete parametric type aliases to export:
+export BinaryLogistic,
+    BinaryRandomForest,
+    SingleLabelBinarySVMClassifier,
+    BinarySupportVectorMachine,
+    BinarySVM
 
 # functions to export:
 export getdata,
@@ -58,6 +62,7 @@ export getdata,
 # source files to include:
 include("abstracttypes.jl")
 include("auc.jl")
+include("convenience.jl")
 include("faketabulardata.jl")
 include("formulas.jl")
 include("labelcoding.jl")

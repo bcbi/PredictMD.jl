@@ -28,9 +28,9 @@ svm_binary_classifier = BinarySVM(
         AbstractSingleLabelBinaryClassifier
     )
 
-svm_binary_classifier_perf = performance(svm_binary_classifier)
-
-@test( typeof(svm_binary_classifier_perf) <: AbstractModelPerformanceTable )
+# svm_binary_classifier_perf = performance(svm_binary_classifier)
+#
+# @test( typeof(svm_binary_classifier_perf) <: AbstractModelPerformanceTable )
 
 ##############################################################################
 
@@ -58,10 +58,10 @@ svm_binary_classifier = BinarySVM(
     typeof(svm_binary_classifier) <:
         AbstractSingleLabelBinaryClassifier
     )
-
-svm_binary_classifier_perf = performance(svm_binary_classifier)
-
-@test( typeof(svm_binary_classifier_perf) <: AbstractModelPerformanceTable )
+#
+# svm_binary_classifier_perf = performance(svm_binary_classifier)
+#
+# @test( typeof(svm_binary_classifier_perf) <: AbstractModelPerformanceTable )
 
 ##############################################################################
 
@@ -88,7 +88,7 @@ svm_binary_classifier = BinarySVM(
     typeof(svm_binary_classifier) <:
         AbstractSingleLabelBinaryClassifier
     )
-
-svm_binary_classifier_perf = performance(svm_binary_classifier)
-
-@test( typeof(svm_binary_classifier_perf) <: AbstractModelPerformanceTable )
+#
+# svm_binary_classifier_perf = performance(svm_binary_classifier)
+#
+# @test( typeof(svm_binary_classifier_perf) <: AbstractModelPerformanceTable )
