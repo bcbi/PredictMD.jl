@@ -33,3 +33,9 @@ end
 
 abstract type AbstractModelPerformanceTable{M, T}
 end
+
+abstract type AbstractModelPerformanceDataForPlots{M}
+end
+
+abstract type AbstractModelPerformancePlots{M}
+end

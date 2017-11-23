@@ -18,7 +18,11 @@ export AbstractDataset,
 export AbstractBinaryClassifier
 
 # abstract parametric types to export:
-export AbstractModelPerformanceTable
+export AbstractModelPerformanceTable,
+    AbstractModelPerformanceDataForPlots,
+    AbstractModelPerformancePlots
+
+# abstract parametric type aliases to export:
 
 # concrete types to export:
 export HoldoutTabularDataset,
@@ -35,7 +39,11 @@ export BinaryLogistic,
     BinarySVM
 
 # concrete parametric types to export:
-export ModelPerformanceTable
+export ModelPerformanceTable,
+    ModelPerformanceDataForPlots,
+    ModelPerformancePlots
+
+# concrete parametric type aliases to export:
 
 # functions to export:
 export getdata,
@@ -45,14 +53,9 @@ export getdata,
     numtesting,
     hastraining,
     hasvalidation,
-    hastesting,
-    roctraining,
-    rocvalidation,
-    roctesting,
-    precisionrecalltraining,
-    precisionrecallvalidation,
-    precisionrecalltesting
+    hastesting
 
+# source files to include:
 include("abstracttypes.jl")
 include("auc.jl")
 include("faketabulardata.jl")

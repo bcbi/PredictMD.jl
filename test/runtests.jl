@@ -1,6 +1,7 @@
 using AluthgeSinhaBase
 using Base.Test
 
+# test scripts to include:
 include("test_auc.jl")
 include("test_faketabulardata.jl")
 include("test_formulas.jl")
