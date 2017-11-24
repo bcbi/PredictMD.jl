@@ -4,15 +4,17 @@ import GLM
 import MLBase
 import StatsBase
 
-struct SingleLabelBinaryLogisticClassifier <:
-        AbstractSingleLabelBinaryClassifier
-    blobs::T where T <: Associative
+struct SingleLabelBinaryLogisticClassifier{D} <:
+        AbstractSingleLabelBinaryClassifier{D}
+    blobs::A where A <: Associative
 end
 
 const BinaryLogistic = SingleLabelBinaryLogisticClassifier
 
-function SingleLabelBinaryLogisticClassifier(
-        dataset::AbstractHoldoutTabularDataset,
+function SingleLabelBinaryLogisticClassifier{
+        D<:AbstractHoldoutTabularDataset
+        }(
+        dataset::D,
         label_variable::Symbol;
         intercept::Bool = true,
         family::Distributions.Distribution = Distributions.Binomial(),
@@ -186,20 +188,5 @@ function SingleLabelBinaryLogisticClassifier(
         blobs[:numtesting] = 0
     end
 
-    return SingleLabelBinaryLogisticClassifier(blobs)
-
+    return SingleLabelBinaryLogisticClassifier{D}(blobs)
 end
-
-function numtraining(m::AbstractSingleLabelBinaryClassifier)
-    return m.blobs[:numtraining]
-end
-function numvalidation(m::AbstractSingleLabelBinaryClassifier)
-    return m.blobs[:numvalidation]
-end
-function numtesting(m::AbstractSingleLabelBinaryClassifier)
-    return m.blobs[:numtesting]
-end
-
-hastraining(m::AbstractSingleLabelBinaryClassifier) = numtraining(m) > 0
-hasvalidation(m::AbstractSingleLabelBinaryClassifier) = numvalidation(m) > 0
-hastesting(m::AbstractSingleLabelBinaryClassifier) = numtesting(m) > 0

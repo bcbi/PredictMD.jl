@@ -1,14 +1,16 @@
 import DecisionTree
 
-struct SingleLabelBinaryRandomForestClassifier <:
-        AbstractSingleLabelBinaryClassifier
-    blobs::T where T <: Associative
+struct SingleLabelBinaryRandomForestClassifier{D} <:
+        AbstractSingleLabelBinaryClassifier{D}
+    blobs::A where A <: Associative
 end
 
 const BinaryRandomForest = SingleLabelBinaryRandomForestClassifier
 
-function SingleLabelBinaryRandomForestClassifier(
-        dataset::AbstractHoldoutTabularDataset,
+function SingleLabelBinaryRandomForestClassifier{
+        D<:AbstractHoldoutTabularDataset
+        }(
+        dataset::D,
         label_variable::Symbol;
         classes::StatsBase.IntegerVector = [0, 1],
         nsubfeatures::Integer = 2,
@@ -167,5 +169,5 @@ function SingleLabelBinaryRandomForestClassifier(
         blobs[:numtesting] = 0
     end
 
-    return SingleLabelBinaryRandomForestClassifier(blobs)
+    return SingleLabelBinaryRandomForestClassifier{D}(blobs)
 end

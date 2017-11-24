@@ -1,19 +1,54 @@
 import Interpolations
 import QuadGK
 
-function areaundercurve(
+function areaundercurveinterpolated(
         x::AbstractVector{T},
         y::AbstractVector{T},
         ) where T <: Real
-    x_min = minimum(x)
-    x_max = maximum(x)
+    if length(x) != length(y)
+        error("x and y must have the same length")
+    end
+    if length(x) < 2
+        error("x and y must each have length >=2 ")
+    end
+    #
+    sortingpermutation = sortperm(x)
+    sortedx = x[sortingpermutation]
+    sortedy = y[sortingpermutation]
+    #
+    x_min = minimum(sortedx)
+    x_max = maximum(sortedx)
     itp = Interpolations.interpolate(
-        (x,),
-        y,
+        (sortedx,),
+        sortedy,
         Interpolations.Gridded(Interpolations.Linear()),
         )
     f(t) = itp[t]
     I, E = QuadGK.quadgk(f, x_min, x_max)
-    I_correcttype = convert(T, I)
-    return I_correcttype
+    return I
+end
+
+function trapz(
+        x::AbstractVector{T},
+        y::AbstractVector{T},
+        ) where T <: Real
+    if length(x) != length(y)
+        error("x and y must have the same length")
+    end
+    if length(x) < 2
+        error("x and y must each have length >=2 ")
+    end
+    #
+    sortingpermutation = sortperm(x)
+    sortedx = x[sortingpermutation]
+    sortedy = y[sortingpermutation]
+    #
+    N = length(sortedx) - 1
+    #
+    sum = 0
+    for n = 1:N
+        sum += (sortedx[n+1] - sortedx[n]) * (sortedy[n] + sortedy[n+1])
+    end
+    I = sum/2
+    return I
 end
