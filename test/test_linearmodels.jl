@@ -28,7 +28,7 @@ plot(logistic_binary_classifier1)
 ##############################################################################
 
 num_rows2 = 5_000
-dataframe2, label_variables2, feature_variables2 =·
+dataframe2, label_variables2, feature_variables2 =
     AluthgeSinhaBase.generatefaketabulardata2(num_rows2)
 
 tabular_dataset2 = HoldoutTabularDataset(

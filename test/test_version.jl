@@ -1,3 +1,3 @@
-@test( typeof(AluthgeSinhaBase.VERSION_STRING) <: AbstractString)
+@test( typeof(AluthgeSinhaBase.VERSIONSTRING) <: AbstractString)
 
-@test( typeof(AluthgeSinhaBase.VERSION) <: VersionNumber)
+@test( typeof(AluthgeSinhaBase.VERSIONNUMBER) <: VersionNumber)
