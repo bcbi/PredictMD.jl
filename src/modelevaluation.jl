@@ -1,4 +1,5 @@
 import DataFrames
+import MLBase
 # import ScikitLearn
 
 # ScikitLearn.@sk_import metrics: accuracy_score
@@ -27,11 +28,11 @@ struct ModelPerformancePlots{M} <:
     blobs
 end
 
-function performance{M<:AbstractModelly;}(
+function performance{M<:AbstractModelly}(
         model::M;
         kwargs...
         )
-    return ModelPerformanceTable(model; kwargs...).table
+    return ModelPerformanceTable(model; kwargs...)
 end
 
 function ModelPerformanceTable{M<:AbstractModelly}(
@@ -46,6 +47,13 @@ function ModelPerformanceDataForPlots{M<:AbstractModelly}(
         kwargs...
         )
     error("Not yet implemented for model type $(M)")
+end
+
+function plot{M<:AbstractModelly}(
+        model::M;
+        kwargs...
+        )
+    return ModelPerformancePlots(model; kwargs...)
 end
 
 function ModelPerformancePlots{M<:AbstractModelly}(
@@ -85,7 +93,92 @@ function _modelperformancetablerow!(
         subset::Symbol,
         threshold::Real,
         )
+    if !(0 <== threshold <== 1)
+        error("threshold must be >==0 and <==1")
+    end
+    threshold = max(threshold, 0+eps())
+    threshold = min(threshold, 1-eps())
     numrows, ytrue, yscore = _get_numrow_sytrue_yscore(model, subset)
+    @assert(
+        all(
+            [y in [0,1] for y in ytrue]
+            )
+        )
+    @assert(
+        all(
+            0 .<= yscore .<= 1
+            )
+        )
+    selected_threshold = threshold
+    all_thresholds = sort(
+        unique(
+            vcat(
+                setdiff(yscore, [0, 1]),
+                0 + eps(),
+                1 - eps(),
+                selected_threshold,
+                )
+            )
+        )
+    @assert(
+        typeof(all_thresholds) <: AbstractVector
+        )
+    num_thresholds = length(all_thresholds)
+    all_rocnums = MLBase.roc(
+        ytrue,
+        yscore,
+        all_thresholds,
+        MLBase.Forward,
+        )
+    #
+    all_accuracy = [accuracy(r) for r in all_rocnums]
+    # replacenan!(all_accuracy, "NaN")
+    all_sensitivity = [MLBase.true_positive_rate(r) for r in all_rocnums]
+    # replacenan!(all_sensitivity, "NaN")
+    all_specificity = [MLBase.true_negative_rate(r) for r in all_rocnums]
+    # replacenan!(all_specificity, "NaN")
+    all_ppv = [ppv(r) for r in all_rocnums]
+    # replacenan!(all_ppv, "NaN")
+    all_npv = [npv(r) for r in all_rocnums]
+    # replacenan!(all_npv, "NaN")
+    all_precision = [MLBase.precision(r) for r in all_rocnums]
+    # replacenan!(all_precision, 1)
+    all_recall = [MLBase.recall(r) for r in all_rocnums]
+    # replacenan!(all_recall, "NaN")
+    all_f1score_verify = [MLBase.f1score(r) for r in all_rocnums]
+    # replacenan!(all_f1score_verify, "NaN")
+    all_f1score = [fbetascore(r,1) for r in all_rocnums]
+    # replacenan!(all_f1score, 0)
+    @assert(
+        all(
+            all_f1score_verify .≈ all_f1score
+            )
+        )
+    all_f2score = [fbetascore(r,2) for r in all_rocnums]
+    # replacenan!(all_f2score, "NaN")
+    all_f0point5score = [fbetascore(r,0.5) for r in all_rocnums]
+    # replacenan!(all_f0point5score, "NaN")
+    #
+    selected_indexes = find(all_thresholds.==0.5)
+    selected_index = selected_indexes[1]
+    #
+    selected_accuracy = all_accuracy[selected_index]
+    selected_sensitivity = all_sensitivity[selected_index]
+    selected_specificity = all_specificity[selected_index]
+    selected_ppv = all_ppv[selected_index]
+    selected_npv = all_npv[selected_index]
+    selected_precision = all_precision[selected_index]
+    selected_recall = all_recall[selected_index]
+    selected_f1score = all_f1score[selected_index]
+    selected_f2score = all_f2score[selected_index]
+    selected_f0point5score = all_f0point5score[selected_index]
+    #
+    all_tpr = all_sensitivity
+    all_fpr = 1 - all_specificity
+    auroc = trapz(all_fpr, all_tpr)
+    println("AUROC: $(auroc)")
+    aupr = trapz(all_recall, all_precision)
+    println("AUPR: $(aupr)")
 end
 
 # function performance(

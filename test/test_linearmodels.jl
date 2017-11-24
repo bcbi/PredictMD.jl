@@ -60,7 +60,7 @@ logistic_binary_classifier = BinaryLogistic(
         AbstractSingleLabelBinaryClassifier
     )
 
-logistic_binary_classifier_perf = performance(logistic_binary_classifier)
+# logistic_binary_classifier_perf = performance(logistic_binary_classifier)
 
 # @test(
 #     typeof(logistic_binary_classifier_perf) <:
@@ -91,7 +91,7 @@ logistic_binary_classifier = BinaryLogistic(
         AbstractSingleLabelBinaryClassifier
     )
 
-logistic_binary_classifier_perf = performance(logistic_binary_classifier)
+# logistic_binary_classifier_perf = performance(logistic_binary_classifier)
 
 # @test(
 #     typeof(logistic_binary_classifier_perf) <:
