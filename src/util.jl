@@ -73,41 +73,25 @@ function calculate_smote_pct_under(
     return 100*minority_to_majority_ratio*(100+pct_over)/pct_over
 end
 
-function fbetascore(precision::Real, recall::Real, β::Real)
-    return (1+β^2)*(precision*recall)/((β^2*precision)+(recall))
+function findnearest(A::AbstractArray, x)
+    exact_matches = A.==x
+    if sum(exact_matches) > 0
+        return find(exact_matches)
+    else
+        distances = abs.(A .- x)
+        minimumdistance = minimum(distances)
+        nearest_matches = distances.==minimumdistance
+        @assert( sum(nearest_matches) > 0 )
+        return find(nearest_matches)
+    end
 end
 
-function fbetascore(rocnums::MLBase.ROCNums, β::Real)
-    precision = MLBase.precision(rocnums)
-    recall = MLBase.recall(rocnums)
-    return fbetascore(precision, recall, β)
-end
+ensurevector(x::AbstractVector) = x
 
-function numtotal(rocnums::MLBase.ROCNums)
-    @assert(
-        (rocnums.tp + rocnums.fn) == (rocnums.p)
-        )
-    @assert(
-        (rocnums.tn + rocnums.fp) == (rocnums.n)
-        )
-    return rocnums.p + rocnums.n
-end
-
-function accuracy(rocnums::MLBase.ROCNums)
-    return ( rocnums.tp + rocnums.tn )/( numtotal(rocnums) )
-end
-
-ppv(rocnums::MLBase.ROCNums) = positivepredictivevalue(rocnums)
-function positivepredictivevalue(rocnums::MLBase.ROCNums)
-    return (rocnums.tp)/(rocnums.tp + rocnums.fp)
-end
-
-npv(rocnums::MLBase.ROCNums) = negativepredictivevalue(rocnums)
-function negativepredictivevalue(rocnums::MLBase.ROCNums)
-    return (rocnums.tn)/(rocnums.tn + rocnums.fn)
-end
-
-function replacenan!(A::AbstractArray, newvalue)
-    A[isnan.(A)] = newvalue
-    return A
+function ensurevector(x::AbstractMatrix)
+    if size(x,2) == 1
+        return x[:, 1]
+    else
+        error("x does not have exactly one column")
+    end
 end

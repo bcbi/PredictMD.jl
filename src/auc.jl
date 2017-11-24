@@ -43,11 +43,11 @@ function trapz(
     sortedx = x[sortingpermutation]
     sortedy = y[sortingpermutation]
     #
-    N = length(x) - 1
+    N = length(sortedx) - 1
     #
     sum = 0
     for n = 1:N
-        sum += (x[n+1] - x[n]) * (y[n] + y[n+1])
+        sum += (sortedx[n+1] - sortedx[n]) * (sortedy[n] + sortedy[n+1])
     end
     I = sum/2
     return I

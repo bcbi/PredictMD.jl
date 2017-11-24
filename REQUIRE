@@ -9,5 +9,7 @@ IterableTables
 JLD
 LIBSVM
 MLBase
+Plots
 QuadGK
+StatPlots
 StatsBase

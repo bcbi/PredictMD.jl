@@ -18,7 +18,7 @@ export AbstractDataset,
     AbstractSingleLabelBinaryClassifier,
     AbstractRegression,
     AbstractSingleLabelRegression,
-    AbstractModelPerformanceTable,
+    AbstractModelPerformance,
     AbstractModelPerformanceDataForPlots,
     AbstractModelPerformancePlots
 
@@ -38,7 +38,7 @@ export HoldoutTabularDataset,
 # concrete type aliases to export:
 
 # concrete parametric types to export:
-export ModelPerformanceTable,
+export ModelPerformance,
     ModelPerformanceDataForPlots,
     ModelPerformancePlots
 
@@ -62,11 +62,13 @@ export getdata,
 # source files to include:
 include("abstracttypes.jl")
 include("auc.jl")
+include("constants.jl")
 include("convenience.jl")
 include("faketabulardata.jl")
 include("formulas.jl")
 include("labelcoding.jl")
 include("linearmodels.jl")
+include("metrics.jl")
 include("modelevaluation.jl")
 include("randomforest.jl")
 include("svm.jl")

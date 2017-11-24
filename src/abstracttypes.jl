@@ -37,7 +37,7 @@ end
 abstract type AbstractSingleLabelRegression{D} <: AbstractRegression{D}
 end
 
-abstract type AbstractModelPerformanceTable{M, T}
+abstract type AbstractModelPerformance{M}
 end
 
 abstract type AbstractModelPerformanceDataForPlots{M}
