@@ -19,7 +19,6 @@ export AbstractDataset,
     AbstractRegression,
     AbstractSingleLabelRegression,
     AbstractModelPerformance,
-    AbstractModelPerformanceDataForPlots,
     AbstractModelPerformancePlots
 
 # abstract parametric type aliases to export:
@@ -39,7 +38,6 @@ export HoldoutTabularDataset,
 
 # concrete parametric types to export:
 export ModelPerformance,
-    ModelPerformanceDataForPlots,
     ModelPerformancePlots
 
 # concrete parametric type aliases to export:

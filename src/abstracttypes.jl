@@ -40,9 +40,6 @@ end
 abstract type AbstractModelPerformance{M}
 end
 
-abstract type AbstractModelPerformanceDataForPlots{M}
-end
-
 abstract type AbstractModelPerformancePlots{M}
 end
 

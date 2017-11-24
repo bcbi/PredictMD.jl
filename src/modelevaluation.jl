@@ -343,29 +343,29 @@ end
 
 #############################################################################
 
-struct ModelPerformanceDataForPlots{M} <:
-        AbstractModelPerformanceDataForPlots{M}
+struct ModelPerformancePlots{M} <:
+        AbstractModelPerformancePlots{M}
     blobs::A where A <: Associative
 end
 
-function ModelPerformanceDataForPlots{M<:AbstractModelly}(
+function ModelPerformancePlots{M<:AbstractModelly}(
         model::M;
         kwargs...
         )
-    return ModelPerformanceDataForPlots(
+    return ModelPerformancePlots(
         ModelPerformance(model);
         kwargs...
         )
 end
 
-function ModelPerformanceDataForPlots{M<:AbstractModelly}(
+function ModelPerformancePlots{M<:AbstractModelly}(
         mp::ModelPerformance{M};
         kwargs...
         )
     error("Not yet implemented for model type $(M)")
 end
 
-function ModelPerformanceDataForPlots{M<:AbstractSingleLabelBinaryClassifier}(
+function ModelPerformancePlots{M<:AbstractSingleLabelBinaryClassifier}(
         mp::ModelPerformance{M};
         kwargs...
         )
@@ -388,53 +388,9 @@ function ModelPerformanceDataForPlots{M<:AbstractSingleLabelBinaryClassifier}(
         testing_blobs[:tpr] = mp.blobs.subsetblobs[:validation][:all_ftr]
         blobs[:testing] = testing_blobs
     end
-    return ModelPerformanceDataForPlots{M}(blobs)
+    return ModelPerformancePlots{M}(blobs)
 end
 
 #############################################################################
-
-struct ModelPerformancePlots{M} <:
-        AbstractModelPerformancePlots{M}
-    blobs::A where A <: Associative
-end
-
-function ModelPerformancePlots{M<:AbstractModelly}(
-        model::M;
-        kwargs...
-        )
-    error("Not yet implemented for model type $(M)")
-end
-
-function ModelPerformancePlots{M<:AbstractSingleLabelBinaryClassifier}(
-        model::M;
-        kwargs...
-        )
-    mpdfp = ModelPerformanceDataForPlots(model; kwargs...)
-    println("hello 3")
-end
-
-function plot{M<:AbstractModelly}(
-        model::M;
-        kwargs...
-        )
-    return plot(
-        ModelPerformancePlots(model; kwargs...);
-        kwargs...
-        )
-end
-
-function plot{M<:AbstractModelly}(
-        mpp::ModelPerformancePlots{M};
-        kwargs...
-        )
-    error("Not yet implemented for model type $(M)")
-end
-
-function plot{M<:AbstractSingleLabelBinaryClassifier}(
-        mpp::ModelPerformancePlots{M};
-        kwargs...
-        )
-    println("hello 2")
-end
 
 #############################################################################
