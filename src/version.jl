@@ -1,7 +1,7 @@
-const VERSION_STRING = "0.2+dev"
+const VERSIONSTRING = "0.2+dev"
 
-const VERSION = try
-    convert(VersionNumber, strip(VERSION_STRING))
+const VERSIONNUMBER = try
+    convert(VersionNumber, strip(VERSIONSTRING))
 catch e
     warn("while creating AluthgeSinhaBase.VERSION, ignoring error $(e)")
     VersionNumber(0)

@@ -18,8 +18,7 @@ export AbstractDataset,
     AbstractSingleLabelBinaryClassifier,
     AbstractRegression,
     AbstractSingleLabelRegression,
-    AbstractModelPerformance,
-    AbstractModelPerformancePlots
+    AbstractModelPerformance
 
 # abstract parametric type aliases to export:
 export ArrayOfModels,
@@ -37,8 +36,7 @@ export HoldoutTabularDataset,
 # concrete type aliases to export:
 
 # concrete parametric types to export:
-export ModelPerformance,
-    ModelPerformancePlots
+export ModelPerformance
 
 # concrete parametric type aliases to export:
 export BinaryLogistic,
@@ -55,7 +53,8 @@ export getdata,
     numtesting,
     hastraining,
     hasvalidation,
-    hastesting
+    hastesting,
+    plot
 
 # source files to include:
 include("abstracttypes.jl")

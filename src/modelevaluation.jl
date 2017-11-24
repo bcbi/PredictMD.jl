@@ -9,6 +9,24 @@ struct ModelPerformance{M} <:
     blobs::A where A <: Associative
 end
 
+function hastraining{M<:AbstractSingleLabelBinaryClassifier}(
+        modelperf::ModelPerformance{M},
+        )
+    return haskey(modelperf.blobs[:subsetblobs], :training)
+end
+
+function hasvalidation{M<:AbstractSingleLabelBinaryClassifier}(
+        modelperf::ModelPerformance{M},
+        )
+    return haskey(modelperf.blobs[:subsetblobs], :validation)
+end
+
+function hastesting{M<:AbstractSingleLabelBinaryClassifier}(
+        modelperf::ModelPerformance{M},
+        )
+    return haskey(modelperf.blobs[:subsetblobs], :testing)
+end
+
 function ModelPerformance{M<:AbstractModelly}(
         model::M;
         kwargs...
@@ -97,7 +115,7 @@ function _modelperformancetablerow(
     table_subset[:F1_Score] = metricblobs[:all_f1score][ind]
     table_subset[:F2_Score] = metricblobs[:all_f2score][ind]
     table_subset[:F0pt5_Score] = metricblobs[:all_f0pt5score][ind]
-    return table_subset
+    return table_subset, metricblobs
 end
 
 function _get_numrows_y_true_y_score(
@@ -141,13 +159,16 @@ function _binaryclassifiermetrics(
         y_score::StatsBase.RealVector;
         kwargs...
         )
+    metricblobs = Dict()
+    metricblobs[:y_true] = y_true
+    metricblobs[:y_score] = y_score
+    #
     kwargs_dict = Dict(kwargs)
     if haskey(kwargs_dict, :threshold)
         additional_threshold = kwargs_dict[:threshold]
     else
         additional_threshold = 0
     end
-    metricblobs = Dict()
     if length(y_true) != length(y_score)
         error("y_true and y_score must have the same length")
     end
@@ -224,8 +245,10 @@ function _binaryclassifiermetrics(
     all_f0pt5score = fbetascore(all_precision, all_recall, 0.5)
     metricblobs[:all_f0pt5score] = all_f0pt5score
     #
-    all_fpr = 1 - all_specificity
+    all_fpr = 1 .- all_specificity
     all_tpr = all_sensitivity
+    metricblobs[:all_fpr] = all_fpr
+    metricblobs[:all_tpr] = all_tpr
     aurocc = trapz(all_fpr, all_tpr)
     metricblobs[:AUROCC] = aurocc
     #
@@ -323,74 +346,143 @@ function performance{M<:AbstractModelly}(
     return ModelPerformance(model; kwargs...).blobs[:table]
 end
 
-function hastraining(
-        mp::ModelPerformance{M<:AbstractSingleLabelBinaryClassifier}
-        )
-    return haskey(mp.blobs.subsetblobs, :training)
-end
-
-function hasvalidation(
-        mp::ModelPerformance{M<:AbstractSingleLabelBinaryClassifier}
-        )
-    return haskey(mp.blobs.subsetblobs, :validation)
-end
-
-function hastesting(
-        mp::ModelPerformance{M<:AbstractSingleLabelBinaryClassifier}
-        )
-    return haskey(mp.blobs.subsetblobs, :testing)
-end
-
 #############################################################################
 
-struct ModelPerformancePlots{M} <:
-        AbstractModelPerformancePlots{M}
-    blobs::A where A <: Associative
-end
-
-function ModelPerformancePlots{M<:AbstractModelly}(
+function plot{M<:AbstractModelly}(
         model::M;
         kwargs...
         )
-    return ModelPerformancePlots(
-        ModelPerformance(model);
-        kwargs...
-        )
+    return plot(ModelPerformance(model; kwargs...); kwargs...)
 end
 
-function ModelPerformancePlots{M<:AbstractModelly}(
-        mp::ModelPerformance{M};
+function plot{M<:AbstractModelly}(
+        modelperf::ModelPerformance{M};
         kwargs...
         )
     error("Not yet implemented for model type $(M)")
 end
 
-function ModelPerformancePlots{M<:AbstractSingleLabelBinaryClassifier}(
-        mp::ModelPerformance{M};
+function plot{M<:AbstractSingleLabelBinaryClassifier}(
+        modelperf::ModelPerformance{M};
         kwargs...
         )
-    blobs = Dict()
-    if hastraining(mp)
-        training_blobs = Dict()
-        training_blobs[:fpr] = mp.blobs.subsetblobs[:training][:all_fpr]
-        training_blobs[:tpr] = mp.blobs.subsetblobs[:training][:all_ftr]
-        blobs[:training] = training_blobs
+    #
+    kwargs_dict = Dict(kwargs)
+    if haskey(kwargs_dict, :backend)
+        backend = kwargs_dict[:backend]
+    else
+        backend = Plots.gr
     end
-    if hasvalidation(mp)
-        validation_blobs = Dict()
-        validation_blobs[:fpr] = mp.blobs.subsetblobs[:validation][:all_fpr]
-        validation_blobs[:tpr] = mp.blobs.subsetblobs[:validation][:all_ftr]
-        blobs[:validation] = validation_blobs
+    #
+    backend()
+    #
+    if hastraining(modelperf)
+        training_all_fpr =
+            modelperf.blobs[:subsetblobs][:training][:all_fpr]
+        training_all_tpr =
+            modelperf.blobs[:subsetblobs][:training][:all_tpr]
+        training_all_precision =
+            modelperf.blobs[:subsetblobs][:training][:all_precision]
+        training_all_recall =
+            modelperf.blobs[:subsetblobs][:training][:all_recall]
+    else
+        training_all_fpr = []
+        training_all_tpr = []
+        training_all_precision = []
+        training_all_recall = []
     end
-    if hastesting(mp)
-        testing_blobs = Dict()
-        testing_blobs[:fpr] = mp.blobs.subsetblobs[:validation][:all_fpr]
-        testing_blobs[:tpr] = mp.blobs.subsetblobs[:validation][:all_ftr]
-        blobs[:testing] = testing_blobs
+    #
+    if hasvalidation(modelperf)
+        validation_all_fpr =
+            modelperf.blobs[:subsetblobs][:validation][:all_fpr]
+        validation_all_tpr =
+            modelperf.blobs[:subsetblobs][:validation][:all_tpr]
+        validation_all_precision =
+            modelperf.blobs[:subsetblobs][:validation][:all_precision]
+        validation_all_recall =
+            modelperf.blobs[:subsetblobs][:validation][:all_recall]
+    else
+        validation_all_fpr = []
+        validation_all_tpr = []
+        validation_all_precision = []
+        validation_all_recall = []
     end
-    return ModelPerformancePlots{M}(blobs)
+    #
+    if hastesting(modelperf)
+        testing_all_fpr =
+            modelperf.blobs[:subsetblobs][:testing][:all_fpr]
+        testing_all_tpr =
+            modelperf.blobs[:subsetblobs][:testing][:all_tpr]
+        testing_all_precision =
+            modelperf.blobs[:subsetblobs][:testing][:all_precision]
+        testing_all_recall =
+            modelperf.blobs[:subsetblobs][:testing][:all_recall]
+    else
+        testing_all_fpr = []
+        testing_all_tpr = []
+        testing_all_precision = []
+        testing_all_recall = []
+    end
+    #
+    p_training_rocc = Plots.plot(
+        training_all_fpr,
+        training_all_tpr,
+        legend = false,
+        title = "ROC curve (training)",
+        xlabel = "1 - specificity",
+        ylabel = "sensitivity",
+        )
+    p_validation_rocc = Plots.plot(
+        validation_all_fpr,
+        validation_all_tpr,
+        legend = false,
+        title = "ROC curve (validation)",
+        xlabel = "1 - specificity",
+        ylabel = "sensitivity",
+        )
+    p_testing_rocc = Plots.plot(
+        testing_all_fpr,
+        testing_all_tpr,
+        legend = false,
+        title = "ROC curve (testing)",
+        xlabel = "1 - specificity",
+        ylabel = "sensitivity",
+        )
+    #
+    p_training_prc = Plots.plot(
+        training_all_recall,
+        training_all_precision,
+        legend = false,
+        title = "PR curve (training)",
+        xlabel = "recall",
+        ylabel = "precision",
+        )
+    p_validation_prc = Plots.plot(
+        validation_all_recall,
+        validation_all_precision,
+        legend = false,
+        title = "PR curve (validation)",
+        xlabel = "recall",
+        ylabel = "precision",
+        )
+    p_testing_prc = Plots.plot(
+        testing_all_recall,
+        testing_all_precision,
+        legend = false,
+        title = "PR curve (testing)",
+        xlabel = "recall",
+        ylabel = "precision",
+        )
+    p = Plots.plot(
+        p_training_rocc,
+        p_validation_rocc,
+        p_testing_rocc,
+        p_training_prc,
+        p_validation_prc,
+        p_testing_prc,
+        layout = (2,3),
+        )
+    return p
 end
-
-#############################################################################
 
 #############################################################################
