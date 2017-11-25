@@ -18,14 +18,29 @@ function SingleLabelBinarySupportVectorMachineClassifier{
         }(
         dataset::D,
         label_variable::Symbol;
+        dotraining::Bool = true,
+        dovalidation::Bool = false,
+        dotesting::Bool = true,
+        name::AbstractString = "svm",
         classes::StatsBase.IntegerVector = [0, 1],
         nsubfeatures::Integer = 2,
         ntrees::Integer = 20,
         )
 
+    modelrequirestraining = true
+    modelsupportsvalidation = false
+    _check_holdout_model_arguments(
+        dataset;
+        dotraining = dotraining,
+        dovalidation = dovalidation,
+        dotesting = dotesting,
+        modelrequirestraining = modelrequirestraining,
+        modelsupportsvalidation = modelsupportsvalidation,
+        )
+
     blobs = Dict{Symbol, Any}()
 
-    blobs[:model_name] = "Support vector machine"
+    blobs[:name] = name
 
     hyperparameters = Dict{Symbol, Any}()
     hyperparameters[:nsubfeatures] = nsubfeatures

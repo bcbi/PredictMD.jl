@@ -16,14 +16,29 @@ function SingleLabelBinaryLogisticClassifier{
         }(
         dataset::D,
         label_variable::Symbol;
+        dotraining::Bool = true,
+        dovalidation::Bool = false,
+        dotesting::Bool = true,
+        name::AbstractString = "logistic",
         intercept::Bool = true,
         family::Distributions.Distribution = Distributions.Binomial(),
         link::GLM.Link = GLM.LogitLink(),
         )
 
+    modelrequirestraining = true
+    modelsupportsvalidation = false
+    _check_holdout_model_arguments(
+        dataset;
+        dotraining = dotraining,
+        dovalidation = dovalidation,
+        dotesting = dotesting,
+        modelrequirestraining = modelrequirestraining,
+        modelsupportsvalidation = modelsupportsvalidation,
+        )
+
     blobs = Dict{Symbol, Any}()
 
-    blobs[:model_name] = "Logistic regression"
+    blobs[:name] = name
 
     feature_variables = dataset.blobs[:feature_variables]
 

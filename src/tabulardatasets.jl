@@ -460,3 +460,28 @@ function _partition_rows(
 
     return rows_training, rows_validation, rows_testing
 end
+
+function _check_holdout_model_arguments(
+        dataset::AbstractHoldoutTabularDataset;
+        dotraining::Bool = false,
+        dovalidation::Bool = false,
+        dotesting::Bool = false,
+        modelrequirestraining::Bool = true,
+        modelsupportsvalidation::Bool = false,
+        )
+    if dotraining && !hastraining(dataset)
+        error("dotraining is true but dataset doesn't have training data")
+    end
+    if dovalidation && !hasvalidation(dataset)
+        error("dovalidation is true but dataset doesn't have validation data")
+    end
+    if dotesting && !hastesting(dataset)
+        error("dotesting is true but dataset doesn't have testing data")
+    end
+    if modelrequirestraining && !dotraining
+        error("model requires training phase but dotraining is false")
+    end
+    if dovalidation && !modelsupportsvalidation
+        error("dovalidation is true but model does not support validation")
+    end
+end
