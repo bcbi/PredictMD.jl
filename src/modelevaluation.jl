@@ -248,10 +248,10 @@ function _binaryclassifiermetrics(
     all_tpr = all_sensitivity
     metricblobs[:all_fpr] = all_fpr
     metricblobs[:all_tpr] = all_tpr
-    aurocc = trapz(all_fpr, all_tpr)
+    aurocc = trapz(; x=all_fpr, y=all_tpr)
     metricblobs[:AUROCC] = aurocc
     #
-    auprc = trapz(all_recall, all_precision)
+    auprc = trapz(; x=all_recall, y=all_precision)
     metricblobs[:AUPRC] = auprc
     #
     return metricblobs
@@ -338,12 +338,17 @@ function _selectbinaryclassifierthreshold(
     return threshold, ind
 end
 
-function performance{M<:AbstractModelly}(
-        model::M;
-        kwargs...
+function Base.show(
+        io::IO,
+        mp::ModelPerformance,
         )
-    return ModelPerformance(model; kwargs...).blobs[:table]
+    separator = repeat("*", 79)
+    println(io, separator)
+    println(io, typeof(mp))
+    println(io, separator)
+    return DataFrames.showall(io,mp.blobs[:table],false,Symbol(""),false)
 end
+
 
 #############################################################################
 
@@ -354,7 +359,21 @@ function plot{M<:AbstractModelly}(
     return plot(ModelPerformance(model; kwargs...); kwargs...)
 end
 
+function classifierhistogram{M<:AbstractModelly}(
+        model::M;
+        kwargs...
+        )
+    return classifierhistogram(ModelPerformance(model; kwargs...); kwargs...)
+end
+
 function plot{M<:AbstractModelly}(
+        modelperf::ModelPerformance{M};
+        kwargs...
+        )
+    error("Not yet implemented for model type $(M)")
+end
+
+function classifierhistogram{M<:AbstractModelly}(
         modelperf::ModelPerformance{M};
         kwargs...
         )

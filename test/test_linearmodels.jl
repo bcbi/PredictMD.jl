@@ -22,8 +22,14 @@ logistic_binary_classifier1 = BinaryLogistic(
     :mylabel1,
     )
 
-performance(logistic_binary_classifier1)
+logistic_binary_classifier1_perf =
+    ModelPerformance(logistic_binary_classifier1)
+
+# classifierhistogram(logistic_binary_classifier1)
+# classifierhistogram(logistic_binary_classifier1_perf)
+
 plot(logistic_binary_classifier1)
+plot(logistic_binary_classifier1_perf)
 
 ##############################################################################
 
@@ -45,8 +51,14 @@ logistic_binary_classifier2 = BinaryLogistic(
     :y,
     )
 
-performance(logistic_binary_classifier2)
+logistic_binary_classifier2_perf =
+    ModelPerformance(logistic_binary_classifier2)
+
+# classifierhistogram(logistic_binary_classifier2)
+# classifierhistogram(logistic_binary_classifier2_perf)
+
 plot(logistic_binary_classifier2)
+plot(logistic_binary_classifier2_perf)
 
 ##############################################################################
 
@@ -67,5 +79,11 @@ logistic_binary_classifier3 = BinaryLogistic(
     :deathoutcome,
     )
 
-performance(logistic_binary_classifier3)
+logistic_binary_classifier3_perf =
+    ModelPerformance(logistic_binary_classifier3)
+
+# classifierhistogram(logistic_binary_classifier3)
+# classifierhistogram(logistic_binary_classifier3_perf)
+
 plot(logistic_binary_classifier3)
+plot(logistic_binary_classifier3_perf)

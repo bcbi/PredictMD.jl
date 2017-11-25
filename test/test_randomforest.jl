@@ -23,8 +23,14 @@ randomforest_binary_classifier1 = BinaryRandomForest(
     :mylabel1,
     )
 
-performance(randomforest_binary_classifier1)
+randomforest_binary_classifier1_perf =
+    ModelPerformance(randomforest_binary_classifier1)
+
+# classifierhistogram(randomforest_binary_classifier1)
+# classifierhistogram(randomforest_binary_classifier1_perf)
+
 plot(randomforest_binary_classifier1)
+plot(randomforest_binary_classifier1_perf)
 
 ##############################################################################
 
@@ -46,8 +52,14 @@ randomforest_binary_classifier2 = BinaryRandomForest(
     :y,
     )
 
-performance(randomforest_binary_classifier2)
+randomforest_binary_classifier2_perf =
+    ModelPerformance(randomforest_binary_classifier2)
+
+# classifierhistogram(randomforest_binary_classifier2)
+# classifierhistogram(randomforest_binary_classifier2_perf)
+
 plot(randomforest_binary_classifier2)
+plot(randomforest_binary_classifier2_perf)
 
 ##############################################################################
 
@@ -68,5 +80,11 @@ randomforest_binary_classifier3 = BinaryRandomForest(
     :deathoutcome,
     )
 
-performance(randomforest_binary_classifier3)
+randomforest_binary_classifier3_perf =
+    ModelPerformance(randomforest_binary_classifier3)
+
+# classifierhistogram(randomforest_binary_classifier3)
+# classifierhistogram(randomforest_binary_classifier3_perf)
+
 plot(randomforest_binary_classifier3)
+plot(randomforest_binary_classifier3_perf)

@@ -23,8 +23,14 @@ svm_binary_classifier1 = BinarySVM(
     :mylabel1,
     )
 
-performance(svm_binary_classifier1)
+svm_binary_classifier1_perf =
+    ModelPerformance(svm_binary_classifier1)
+
+# classifierhistogram(svm_binary_classifier1)
+# classifierhistogram(svm_binary_classifier1_perf)
+
 plot(svm_binary_classifier1)
+plot(svm_binary_classifier1_perf)
 
 ##############################################################################
 
@@ -48,8 +54,14 @@ svm_binary_classifier2 = BinarySVM(
     :y,
     )
 
-performance(svm_binary_classifier2)
+svm_binary_classifier2_perf =
+    ModelPerformance(svm_binary_classifier2)
+
+# classifierhistogram(svm_binary_classifier2)
+# classifierhistogram(svm_binary_classifier2_perf)
+
 plot(svm_binary_classifier2)
+plot(svm_binary_classifier2_perf)
 
 ##############################################################################
 
@@ -72,5 +84,11 @@ svm_binary_classifier3 = BinarySVM(
     :deathoutcome,
     )
 
-performance(svm_binary_classifier3)
+svm_binary_classifier3_perf =
+    ModelPerformance(svm_binary_classifier3)
+
+# classifierhistogram(svm_binary_classifier3)
+# classifierhistogram(svm_binary_classifier3_perf)
+
 plot(svm_binary_classifier3)
+plot(svm_binary_classifier3_perf)

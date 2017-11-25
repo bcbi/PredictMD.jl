@@ -18,4 +18,3 @@ include("test_svm.jl")
 include("test_tabulardatasets.jl")
 include("test_util.jl")
 include("test_version.jl")
-

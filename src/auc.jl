@@ -2,8 +2,9 @@ import Interpolations
 import QuadGK
 
 function areaundercurveinterpolated(
-        x::AbstractVector{T},
-        y::AbstractVector{T},
+        ;
+        x::AbstractVector{T} = [],
+        y::AbstractVector{T} = [],
         ) where T <: Real
     if length(x) != length(y)
         error("x and y must have the same length")
@@ -29,8 +30,9 @@ function areaundercurveinterpolated(
 end
 
 function trapz(
-        x::AbstractVector{T},
-        y::AbstractVector{T},
+        ;
+        x::AbstractVector{T} = [],
+        y::AbstractVector{T} = [],
         ) where T <: Real
     if length(x) != length(y)
         error("x and y must have the same length")

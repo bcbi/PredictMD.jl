@@ -47,7 +47,6 @@ export BinaryLogistic,
 
 # functions to export:
 export getdata,
-    performance,
     numtraining,
     numvalidation,
     numtesting,

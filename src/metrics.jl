@@ -80,19 +80,28 @@ end
 function fbetascore(
         precision::Real,
         recall::Real,
-        β::Real,
+        beta::Real,
         )
-    return (1+β^2)*(precision*recall)/((β^2*precision)+(recall))
+    if !(0 <= precision <= 1)
+        error("precision must be >=0 and <=1")
+    end
+    if !(0 <= recall <= 1)
+        error("recall must be >=0 and <=1")
+    end
+    if !(beta > 0)
+        error("beta must be >0")
+    end
+    return (1+beta^2)*(precision*recall)/((beta^2*precision)+(recall))
 end
 
 function fbetascore(
         precisions_list::StatsBase.RealVector,
         recalls_list::StatsBase.RealVector,
-        β::Real,
+        beta::Real,
         )
     if length(precisions_list) != length(recalls_list)
         error("precisions_list and recalls_list must have the same length")
     end
     n = length(precisions_list)
-    return [fbetascore(precisions_list[i], recalls_list[i], β) for i = 1:n]
+    return [fbetascore(precisions_list[i],recalls_list[i],beta) for i = 1:n]
 end
