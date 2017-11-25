@@ -13,9 +13,7 @@ const BinarySVM = BinarySupportVectorMachine
 const SingleLabelBinarySVMClassifier =
     SingleLabelBinarySupportVectorMachineClassifier
 
-function SingleLabelBinarySupportVectorMachineClassifier{
-        D<:AbstractHoldoutTabularDataset
-        }(
+function SingleLabelBinarySupportVectorMachineClassifier(
         dataset::D,
         label_variable::Symbol;
         dotraining::Bool = true,
@@ -25,7 +23,7 @@ function SingleLabelBinarySupportVectorMachineClassifier{
         classes::StatsBase.IntegerVector = [0, 1],
         nsubfeatures::Integer = 2,
         ntrees::Integer = 20,
-        )
+        ) where D <: AbstractHoldoutTabularDataset
 
     modelrequirestraining = true
     modelsupportsvalidation = false

@@ -19,9 +19,9 @@ d[:a] = [
 d[:b] = 1:10:81
 
 dataset = HoldoutTabularDataset(
-    d,
-    [:b],
-    [:a];
+    d;
+    label_variables = [:b],
+    feature_variables = [:a],
     training = 1.0,
     )
 
@@ -46,9 +46,9 @@ dataframe, label_variables, feature_variables =
 countmap(dataframe[:mylabel1])
 
 tabular_dataset = HoldoutTabularDataset(
-    dataframe,
-    label_variables,
-    feature_variables;
+    dataframe;
+    label_variables = label_variables,
+    feature_variables = feature_variables,
     training=0.5,
     validation=0.2,
     testing=0.3,

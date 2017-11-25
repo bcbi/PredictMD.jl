@@ -101,6 +101,7 @@ function _modelperformancetablerow(
     table_subset[:N] = numrows
     table_subset[:AUROCC] = metricblobs[:AUROCC]
     table_subset[:AUPRC] = metricblobs[:AUPRC]
+    table_subset[:Average_Precision] = metricblobs[:Average_Precision]
     threshold, ind = _selectbinaryclassifierthreshold(
         metricblobs;
         kwargs...
@@ -254,6 +255,8 @@ function _binaryclassifiermetrics(
     auprc = trapz(; x=all_recall, y=all_precision)
     metricblobs[:AUPRC] = auprc
     #
+    average_precision = "not_calculated"
+    metricblobs[:Average_Precision] = average_precision
     return metricblobs
 end
 
@@ -349,158 +352,186 @@ function Base.show(
     return DataFrames.showall(io,mp.blobs[:table],false,Symbol(""),false)
 end
 
+#############################################################################
+
+function classifierhistograms{M<:AbstractModelly}(
+        modelperf::ModelPerformance{M};
+        kwargs...
+        )
+    error("not yet implemented for model type $(M)")
+end
+
+function classifierhistograms(
+        modelperf::ModelPerformance{M};
+        kwargs...
+        ) where
+        M<:AbstractSingleLabelBinaryClassifier
+    println("TODO: finish this function")
+end
 
 #############################################################################
 
-function plot{M<:AbstractModelly}(
-        model::M;
+# function plots(
+#         varargs::Vararg{T, N};
+#         kwargs...
+#         ) where
+#         T<:ModelPerformance{M} where
+#         M<:AbstractModelly where
+#         N <: Integer
+#     result = plots(
+#         vcat(varargs...);
+#         kwargs...
+#         )
+#     return result
+# end
+
+function plots(
+        thingone::T;
+        kwargs...
+        ) where
+        T<:ModelPerformance{M} where
+        M<:AbstractModelly
+    result = plots(
+        vcat(thingone);
         kwargs...
         )
-    return plot(ModelPerformance(model; kwargs...); kwargs...)
+    return result
 end
 
-function classifierhistogram{M<:AbstractModelly}(
-        model::M;
+function plots(
+        mpvector::AbstractVector{T};
         kwargs...
-        )
-    return classifierhistogram(ModelPerformance(model; kwargs...); kwargs...)
+        ) where
+        T<:ModelPerformance{M} where
+        M<:AbstractModelly
+    error("not yet implemented for model type $(M)")
 end
 
-function plot{M<:AbstractModelly}(
-        modelperf::ModelPerformance{M};
+function plots(
+        mpvector::AbstractVector{T};
         kwargs...
-        )
-    error("Not yet implemented for model type $(M)")
+        ) where
+        T<:ModelPerformance{M} where
+        M<:AbstractSingleLabelBinaryClassifier
+    num_plots = length(mpvector)
+    if num_plots == 0
+        error("mpvector must be nonempty")
+    end
+    println("TODO: finish this function")
 end
 
-function classifierhistogram{M<:AbstractModelly}(
-        modelperf::ModelPerformance{M};
-        kwargs...
-        )
-    error("Not yet implemented for model type $(M)")
-end
-
-function plot{M<:AbstractSingleLabelBinaryClassifier}(
-        modelperf::ModelPerformance{M};
-        kwargs...
-        )
+# function plot{M<:AbstractSingleLabelBinaryClassifier}(
+#         modelperf::ModelPerformance{M};
+#         kwargs...
+#         )
     #
-    kwargs_dict = Dict(kwargs)
-    if haskey(kwargs_dict, :backend)
-        backend = kwargs_dict[:backend]
-    else
-        backend = Plots.gr
-    end
+    # if hastraining(modelperf)
+    #     training_all_fpr =
+    #         modelperf.blobs[:subsetblobs][:training][:all_fpr]
+    #     training_all_tpr =
+    #         modelperf.blobs[:subsetblobs][:training][:all_tpr]
+    #     training_all_precision =
+    #         modelperf.blobs[:subsetblobs][:training][:all_precision]
+    #     training_all_recall =
+    #         modelperf.blobs[:subsetblobs][:training][:all_recall]
+    # else
+    #     training_all_fpr = []
+    #     training_all_tpr = []
+    #     training_all_precision = []
+    #     training_all_recall = []
+    # end
     #
-    backend()
+    # if hasvalidation(modelperf)
+    #     validation_all_fpr =
+    #         modelperf.blobs[:subsetblobs][:validation][:all_fpr]
+    #     validation_all_tpr =
+    #         modelperf.blobs[:subsetblobs][:validation][:all_tpr]
+    #     validation_all_precision =
+    #         modelperf.blobs[:subsetblobs][:validation][:all_precision]
+    #     validation_all_recall =
+    #         modelperf.blobs[:subsetblobs][:validation][:all_recall]
+    # else
+    #     validation_all_fpr = []
+    #     validation_all_tpr = []
+    #     validation_all_precision = []
+    #     validation_all_recall = []
+    # end
     #
-    if hastraining(modelperf)
-        training_all_fpr =
-            modelperf.blobs[:subsetblobs][:training][:all_fpr]
-        training_all_tpr =
-            modelperf.blobs[:subsetblobs][:training][:all_tpr]
-        training_all_precision =
-            modelperf.blobs[:subsetblobs][:training][:all_precision]
-        training_all_recall =
-            modelperf.blobs[:subsetblobs][:training][:all_recall]
-    else
-        training_all_fpr = []
-        training_all_tpr = []
-        training_all_precision = []
-        training_all_recall = []
-    end
+    # if hastesting(modelperf)
+    #     testing_all_fpr =
+    #         modelperf.blobs[:subsetblobs][:testing][:all_fpr]
+    #     testing_all_tpr =
+    #         modelperf.blobs[:subsetblobs][:testing][:all_tpr]
+    #     testing_all_precision =
+    #         modelperf.blobs[:subsetblobs][:testing][:all_precision]
+    #     testing_all_recall =
+    #         modelperf.blobs[:subsetblobs][:testing][:all_recall]
+    # else
+    #     testing_all_fpr = []
+    #     testing_all_tpr = []
+    #     testing_all_precision = []
+    #     testing_all_recall = []
+    # end
     #
-    if hasvalidation(modelperf)
-        validation_all_fpr =
-            modelperf.blobs[:subsetblobs][:validation][:all_fpr]
-        validation_all_tpr =
-            modelperf.blobs[:subsetblobs][:validation][:all_tpr]
-        validation_all_precision =
-            modelperf.blobs[:subsetblobs][:validation][:all_precision]
-        validation_all_recall =
-            modelperf.blobs[:subsetblobs][:validation][:all_recall]
-    else
-        validation_all_fpr = []
-        validation_all_tpr = []
-        validation_all_precision = []
-        validation_all_recall = []
-    end
+    # p_training_rocc = Plots.plot(
+    #     training_all_fpr,
+    #     training_all_tpr,
+    #     legend = false,
+    #     title = "ROC curve (training)",
+    #     xlabel = "1 - specificity",
+    #     ylabel = "sensitivity",
+    #     )
+    # p_validation_rocc = Plots.plot(
+    #     validation_all_fpr,
+    #     validation_all_tpr,
+    #     legend = false,
+    #     title = "ROC curve (validation)",
+    #     xlabel = "1 - specificity",
+    #     ylabel = "sensitivity",
+    #     )
+    # p_testing_rocc = Plots.plot(
+    #     testing_all_fpr,
+    #     testing_all_tpr,
+    #     legend = false,
+    #     title = "ROC curve (testing)",
+    #     xlabel = "1 - specificity",
+    #     ylabel = "sensitivity",
+    #     )
     #
-    if hastesting(modelperf)
-        testing_all_fpr =
-            modelperf.blobs[:subsetblobs][:testing][:all_fpr]
-        testing_all_tpr =
-            modelperf.blobs[:subsetblobs][:testing][:all_tpr]
-        testing_all_precision =
-            modelperf.blobs[:subsetblobs][:testing][:all_precision]
-        testing_all_recall =
-            modelperf.blobs[:subsetblobs][:testing][:all_recall]
-    else
-        testing_all_fpr = []
-        testing_all_tpr = []
-        testing_all_precision = []
-        testing_all_recall = []
-    end
-    #
-    p_training_rocc = Plots.plot(
-        training_all_fpr,
-        training_all_tpr,
-        legend = false,
-        title = "ROC curve (training)",
-        xlabel = "1 - specificity",
-        ylabel = "sensitivity",
-        )
-    p_validation_rocc = Plots.plot(
-        validation_all_fpr,
-        validation_all_tpr,
-        legend = false,
-        title = "ROC curve (validation)",
-        xlabel = "1 - specificity",
-        ylabel = "sensitivity",
-        )
-    p_testing_rocc = Plots.plot(
-        testing_all_fpr,
-        testing_all_tpr,
-        legend = false,
-        title = "ROC curve (testing)",
-        xlabel = "1 - specificity",
-        ylabel = "sensitivity",
-        )
-    #
-    p_training_prc = Plots.plot(
-        training_all_recall,
-        training_all_precision,
-        legend = false,
-        title = "PR curve (training)",
-        xlabel = "recall",
-        ylabel = "precision",
-        )
-    p_validation_prc = Plots.plot(
-        validation_all_recall,
-        validation_all_precision,
-        legend = false,
-        title = "PR curve (validation)",
-        xlabel = "recall",
-        ylabel = "precision",
-        )
-    p_testing_prc = Plots.plot(
-        testing_all_recall,
-        testing_all_precision,
-        legend = false,
-        title = "PR curve (testing)",
-        xlabel = "recall",
-        ylabel = "precision",
-        )
-    p = Plots.plot(
-        p_training_rocc,
-        p_validation_rocc,
-        p_testing_rocc,
-        p_training_prc,
-        p_validation_prc,
-        p_testing_prc,
-        layout = (2,3),
-        )
-    return p
-end
+    # p_training_prc = Plots.plot(
+    #     training_all_recall,
+    #     training_all_precision,
+    #     legend = false,
+    #     title = "PR curve (training)",
+    #     xlabel = "recall",
+    #     ylabel = "precision",
+    #     )
+    # p_validation_prc = Plots.plot(
+    #     validation_all_recall,
+    #     validation_all_precision,
+    #     legend = false,
+    #     title = "PR curve (validation)",
+    #     xlabel = "recall",
+    #     ylabel = "precision",
+    #     )
+    # p_testing_prc = Plots.plot(
+    #     testing_all_recall,
+    #     testing_all_precision,
+    #     legend = false,
+    #     title = "PR curve (testing)",
+    #     xlabel = "recall",
+    #     ylabel = "precision",
+    #     )
+    # p = Plots.plot(
+    #     p_training_rocc,
+    #     p_validation_rocc,
+    #     p_testing_rocc,
+    #     p_training_prc,
+    #     p_validation_prc,
+    #     p_testing_prc,
+    #     layout = (2,3),
+    #     )
+    # return p
+# end
 
 #############################################################################

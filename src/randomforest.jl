@@ -7,9 +7,7 @@ end
 
 const BinaryRandomForest = SingleLabelBinaryRandomForestClassifier
 
-function SingleLabelBinaryRandomForestClassifier{
-        D<:AbstractHoldoutTabularDataset
-        }(
+function SingleLabelBinaryRandomForestClassifier(
         dataset::D,
         label_variable::Symbol;
         dotraining::Bool = true,
@@ -19,7 +17,7 @@ function SingleLabelBinaryRandomForestClassifier{
         classes::StatsBase.IntegerVector = [0, 1],
         nsubfeatures::Integer = 2,
         ntrees::Integer = 20,
-        )
+        ) where D <: AbstractHoldoutTabularDataset
 
     modelrequirestraining = true
     modelsupportsvalidation = false

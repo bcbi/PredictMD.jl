@@ -11,9 +11,7 @@ end
 
 const BinaryLogistic = SingleLabelBinaryLogisticClassifier
 
-function SingleLabelBinaryLogisticClassifier{
-        D<:AbstractHoldoutTabularDataset
-        }(
+function SingleLabelBinaryLogisticClassifier(
         dataset::D,
         label_variable::Symbol;
         dotraining::Bool = true,
@@ -23,7 +21,7 @@ function SingleLabelBinaryLogisticClassifier{
         intercept::Bool = true,
         family::Distributions.Distribution = Distributions.Binomial(),
         link::GLM.Link = GLM.LogitLink(),
-        )
+        ) where D<:AbstractHoldoutTabularDataset
 
     modelrequirestraining = true
     modelsupportsvalidation = false

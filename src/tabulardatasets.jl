@@ -11,20 +11,22 @@ struct ResampledHoldoutTabularDataset{T} <: AbstractHoldoutTabularDataset{T}
 end
 
 function HoldoutTabularDataset(
-        data_original,
-        label_variables::T2 where T2 <: AbstractVector{Symbol},
-        feature_variables::T3 where T3 <: AbstractVector{Symbol};
+        data_original;
+        label_variables::T2 = Vector{Symbol}(),
+        feature_variables::T3 = Vector{Symbol}(),
         training::Real = 0.0,
         validation::Real = 0.0,
         testing::Real = 0.0,
         shuffle_rows::Bool = true,
         recordid_fieldname::Symbol = :recordid,
-        )
+        ) where
+        T2 <: AbstractVector{Symbol} where
+        T3 <: AbstractVector{Symbol}
     return HoldoutTabularDataset(
         Base.GLOBAL_RNG,
-        data_original,
-        label_variables,
-        feature_variables;
+        data_original;
+        label_variables = label_variables,
+        feature_variables = feature_variables,
         training = training,
         validation = validation,
         testing = testing,
@@ -35,15 +37,17 @@ end
 
 function HoldoutTabularDataset(
         rng::AbstractRNG,
-        data_original,
-        label_variables::T2 where T2 <: AbstractVector{Symbol},
-        feature_variables::T3 where T3 <: AbstractVector{Symbol};
+        data_original;
+        label_variables::T2 = Vector{Symbol}(),
+        feature_variables::T3 = Vector{Symbol}(),
         training::Real = 0.0,
         validation::Real = 0.0,
         testing::Real = 0.0,
         shuffle_rows::Bool = true,
         recordid_fieldname::Symbol = :recordid,
-        )
+        ) where
+        T2 <: AbstractVector{Symbol} where
+        T3 <: AbstractVector{Symbol}
 
     blobs = Dict{Symbol, Any}()
 

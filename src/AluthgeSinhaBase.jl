@@ -53,7 +53,8 @@ export getdata,
     hastraining,
     hasvalidation,
     hastesting,
-    plot
+    plots,
+    classifierhistograms
 
 # source files to include:
 include("abstracttypes.jl")
