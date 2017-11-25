@@ -194,7 +194,6 @@ function _binaryclassifiermetrics(
             vcat(
                 y_score,
                 additional_threshold,
-                DEFAULTBINARYTHRESHOLD,
                 0 - eps(),
                 0,
                 0 + eps(),
@@ -263,6 +262,12 @@ function _getparametertouseforselectingthreshold(
         kwargs...
         )
     kwargs_dict = Dict(kwargs)
+    possible_to_maximize = [
+        :precision,
+        :f1score,
+        :f2score,
+        :f0pt5score,
+        ]
     possible_parameters = [
         :maximize,
         :threshold,
@@ -280,17 +285,11 @@ function _getparametertouseforselectingthreshold(
     end
     num_parameters_actuallyprovided = sum(parameters_provided)
     if num_parameters_actuallyprovided == 0
-        return :threshold, DEFAULTBINARYTHRESHOLD
+        return :sensitivity, 0.9
     elseif num_parameters_actuallyprovided == 1
         sel_param_index = find(parameters_provided)[1]
         sel_param = possible_parameters[sel_param_index]
         sel_param_val = kwargs_dict[sel_param]
-        possible_to_maximize = [
-            :precision,
-            :f1score,
-            :f2score,
-            :f0pt5score,
-            ]
         if sel_param==:maximize && !(sel_param_val in possible_to_maximize)
             error("$(sel_param_val) is not a valid value for :maximize")
         end
