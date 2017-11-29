@@ -382,6 +382,10 @@ function classifierhistograms(
         error("showtesting is true but model doesn't have testing data")
     end
     #
+    if showtraining + showvalidation + showtesting == 0
+        error("must select at least one of training, validation, testing")
+    end
+    #
     if hastraining(modelperf)
         y_true_training =
             modelperf.blobs[:subsetblobs][:training][:y_true]
@@ -424,7 +428,7 @@ function classifierhistograms(
             title = "Scores (training set)",
             xlabel = "score",
             ylabel = "frequency",
-            legend = :outertopright,
+            # legend = :outertopright,
             bins = bins,
             )
         Plots.histogram!(
@@ -436,6 +440,22 @@ function classifierhistograms(
         push!(subplots_arr, h_training)
     end
     if showvalidation && hasvalidation(modelperf)
+        h_validation = Plots.histogram(
+            y_score_validation[ y_true_validation .== classes[1] ],
+            label = "class = " * string(classes[1]),
+            title = "Scores (validation set)",
+            xlabel = "score",
+            ylabel = "frequency",
+            # legend = :outertopright,
+            bins = bins,
+            )
+        Plots.histogram!(
+            h_validation,
+            y_score_validation[ y_true_validation .== classes[2] ],
+            label = "class = " * string(classes[2]),
+            bins = bins,
+            )
+        push!(subplots_arr, h_validation)
     end
     if showtesting && hastesting(modelperf)
         h_testing = Plots.histogram(
@@ -444,7 +464,7 @@ function classifierhistograms(
             title = "Scores (testing set)",
             xlabel = "score",
             ylabel = "frequency",
-            legend = :outertopright,
+            # legend = :outertopright,
             bins = bins,
             )
         Plots.histogram!(
@@ -456,6 +476,7 @@ function classifierhistograms(
         push!(subplots_arr, h_testing)
     end
     num_subplots = length(subplots_arr)
+    @assert(num_subplots == showtraining + showvalidation + showtesting)
     finalplot = Plots.plot(subplots_arr...)
     return finalplot
 end
