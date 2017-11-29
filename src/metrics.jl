@@ -1,77 +1,100 @@
-function numtotal(rocnums::MLBase.ROCNums)
+function numtotal(
+        rocnums::MLBase.ROCNums
+        )
     @assert(rocnums.p == rocnums.tp + rocnums.fn)
     @assert(rocnums.n == rocnums.tn + rocnums.fp)
     return rocnums.p + rocnums.n
 end
 
-function accuracy_nanfixed(rocnums::MLBase.ROCNums)
+function accuracy_nanfixed(
+        rocnums::MLBase.ROCNums,
+        value::AbstractFloat = 0.0,
+        )
     if numtotal(rocnums) == 0
-        return 0.
+        return value
     else
         return ( rocnums.tp + rocnums.tn )/( numtotal(rocnums) )
     end
 end
 
-function true_positive_rate_nanfixed(rocnums::MLBase.ROCNums)
+function true_positive_rate_nanfixed(
+        rocnums::MLBase.ROCNums,
+        value::AbstractFloat = 0.0,
+        )
     if rocnums.p == 0
-        return 0.
+        return value
     else
         return MLBase.true_positive_rate(rocnums)
     end
 end
 
-sensitivity_nanfixed(rocnums::MLBase.ROCNums) =
-    true_positive_rate_nanfixed(rocnums)
+sensitivity_nanfixed(varargs...) = true_positive_rate_nanfixed(varargs...)
 
-function true_negative_rate_nanfixed(rocnums::MLBase.ROCNums)
+function true_negative_rate_nanfixed(
+        rocnums::MLBase.ROCNums,
+        value::AbstractFloat = 0.0,
+        )
     if rocnums.n == 0
-        return 0.
+        return value
     else
         return MLBase.true_negative_rate(rocnums)
     end
 end
 
-specificity_nanfixed(rocnums::MLBase.ROCNums) =
-    true_negative_rate_nanfixed(rocnums)
+specificity_nanfixed(varargs...) = true_negative_rate_nanfixed(varargs...)
 
-function false_positive_rate_nanfixed(rocnums::MLBase.ROCNums)
+function false_positive_rate_nanfixed(
+        rocnums::MLBase.ROCNums,
+        value::AbstractFloat = 0.0,
+        )
     if rocnums.n == 0
-        return 0.
+        return value
     else
         return MLBase.false_positive_rate(rocnums)
     end
 end
 
-function false_negative_rate_nanfixed(rocnums::MLBase.ROCNums)
+function false_negative_rate_nanfixed(
+        rocnums::MLBase.ROCNums,
+        value::AbstractFloat = 0.0,
+        )
     if rocnums.p == 0
-        return 0.
+        return value
     else
         return MLBase.false_negative_rate(rocnums)
     end
 end
 
-function precision_nanfixed(rocnums::MLBase.ROCNums)
+function precision_nanfixed(
+        rocnums::MLBase.ROCNums,
+        value::AbstractFloat = 1.0,
+        )
     if rocnums.tp + rocnums.fp == 0
-        return 0.
+        return value
     else
         return MLBase.precision(rocnums)
     end
 end
 
-recall_nanfixed(rocnums::MLBase.ROCNums) =
-    true_positive_rate_nanfixed(rocnums)
+recall_nanfixed(varargs...) = true_positive_rate_nanfixed(varargs...)
 
-function positive_predictive_value_nanfixed(rocnums::MLBase.ROCNums)
+function positive_predictive_value_nanfixed(
+        rocnums::MLBase.ROCNums,
+        value::AbstractFloat = 0.0,
+        )
     if rocnums.tp + rocnums.fp == 0
-        return 0.
+        return value
     else
         return ( rocnums.tp )/( rocnums.tp + rocnums.fp )
     end
 end
 
-function negative_predictive_value_nanfixed(rocnums::MLBase.ROCNums)
+function negative_predictive_value_nanfixed(
+        rocnums::MLBase.ROCNums,
+        value::AbstractFloat = 0.0,
+        )
     if rocnums.tn + rocnums.fn == 0
-        return 0.
+        return value
     else
         return ( rocnums.tn )/( rocnums.tn + rocnums.fn )
     end
