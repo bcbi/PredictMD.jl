@@ -28,6 +28,9 @@ function hastesting{M<:AbstractSingleLabelBinaryClassifier}(
     return haskey(modelperf.blobs[:subsetblobs], :testing)
 end
 
+dataname(perf::ModelPerformance) = perf.blobs[:data_name]
+modelname(perf::ModelPerformance) = perf.blobs[:model_name]
+
 function ModelPerformance{M<:AbstractModelly}(
         model::M;
         kwargs...
@@ -83,6 +86,8 @@ function ModelPerformance{M<:AbstractSingleLabelBinaryClassifier}(
     blobs = Dict()
     blobs[:table] = table
     blobs[:subsetblobs] = subsetblobs
+    blobs[:model_name] = modelname(model)
+    blobs[:data_name] = dataname(model)
     return ModelPerformance{M}(blobs)
 end
 
@@ -158,7 +163,7 @@ end
 
 function _binaryclassifiermetrics(
         y_true::StatsBase.IntegerVector,
-        y_score::StatsBase.RealVector;
+        y_score::StatsBase.RealVector,
         kwargs...
         )
     metricblobs = Dict()
@@ -422,7 +427,7 @@ function classifierhistograms(
     #
     subplots_arr = []
     if showtraining && hastraining(modelperf)
-        h_training = Plots.histogram(
+        h = Plots.histogram(
             y_score_training[ y_true_training .== classes[1] ],
             label = "class = " * string(classes[1]),
             title = "Scores (training set)",
@@ -432,15 +437,15 @@ function classifierhistograms(
             bins = bins,
             )
         Plots.histogram!(
-            h_training,
+            h,
             y_score_training[ y_true_training .== classes[2] ],
             label = "class = " * string(classes[2]),
             bins = bins,
             )
-        push!(subplots_arr, h_training)
+        push!(subplots_arr, h)
     end
     if showvalidation && hasvalidation(modelperf)
-        h_validation = Plots.histogram(
+        h = Plots.histogram(
             y_score_validation[ y_true_validation .== classes[1] ],
             label = "class = " * string(classes[1]),
             title = "Scores (validation set)",
@@ -450,15 +455,15 @@ function classifierhistograms(
             bins = bins,
             )
         Plots.histogram!(
-            h_validation,
+            h,
             y_score_validation[ y_true_validation .== classes[2] ],
             label = "class = " * string(classes[2]),
             bins = bins,
             )
-        push!(subplots_arr, h_validation)
+        push!(subplots_arr, h)
     end
     if showtesting && hastesting(modelperf)
-        h_testing = Plots.histogram(
+        h = Plots.histogram(
             y_score_testing[ y_true_testing .== classes[1] ],
             label = "class = " * string(classes[1]),
             title = "Scores (testing set)",
@@ -468,15 +473,13 @@ function classifierhistograms(
             bins = bins,
             )
         Plots.histogram!(
-            h_testing,
+            h,
             y_score_testing[ y_true_testing .== classes[2] ],
             label = "class = " * string(classes[2]),
             bins = bins,
             )
-        push!(subplots_arr, h_testing)
+        push!(subplots_arr, h)
     end
-    num_subplots = length(subplots_arr)
-    @assert(num_subplots == showtraining + showvalidation + showtesting)
     finalplot = Plots.plot(subplots_arr...)
     return finalplot
 end
@@ -497,140 +500,134 @@ function plots(
 end
 
 function plots(
-        mpvector::AbstractVector{T};
+        perflist::AbstractVector{T};
         kwargs...
         ) where
         T<:ModelPerformance{M} where
         M<:AbstractModelly
+    #
+    num_perfs = length(perflist)
+    if num_perfs == 0
+        error("perflist must be nonempty")
+    end
+    #
     error("not implemented for model type $(M)")
 end
 
 function plots(
-        mpvector::AbstractVector{T};
-        kwargs...
+        perflist::AbstractVector{T};
+        showtraining::Bool = false,
+        showvalidation::Bool = false,
+        showtesting::Bool = true,
+        roccurve::Bool = true,
+        prcurve::Bool = true,
         ) where
         T<:ModelPerformance{M} where
         M<:AbstractSingleLabelBinaryClassifier
-    num_plots = length(mpvector)
-    if num_plots == 0
-        error("mpvector must be nonempty")
+    #
+    num_perfs = length(perflist)
+    if num_perfs == 0
+        error("perflist must be nonempty")
     end
-    println("TODO: finish writing the plots() function")
+    #
+    if showtraining + showvalidation + showtesting == 0
+        error("must select at least one of training, validation, testing")
+    end
+    if roccurve + prcurve == 0
+        error("at least one of roccurve, prcurve must be true")
+    end
+    #
+    if showtraining && !all([hastraining(perf) for perf in perflist])
+        error("showtraining is true but not all models have training data")
+    end
+    if showvalidation && !all([hasvalidation(perf) for perf in perflist])
+        error("showvalidation is true but not all models have validation data")
+    end
+    if showtesting && !all([hastesting(perf) for perf in perflist])
+        error("showtesting is true but not all models have testing data")
+    end
+    #
+    subplots_arr = []
+    #
+    if roccurve
+        if showtraining
+            perf = perflist[1]
+            model_name = modelname(perf)
+            fpr = perf.blobs[:subsetblobs][:training][:all_fpr]
+            tpr = perf.blobs[:subsetblobs][:training][:all_tpr]
+            p = Plots.plot(
+                fpr,
+                tpr,
+                label = string(model_name),
+                title = "ROC curve (training set)",
+                xlabel = "1 - specificity",
+                ylabel = "sensitivity",
+                )
+            if num_perfs > 1
+                for i = 2:num_perfs
+                end
+            end
+            push!(subplots_arr, p)
+        end
+        if showvalidation
+            # if i = 1
+            if num_perfs > 1
+                for i = 2:num_perfs
+                end
+            end
+            push!(subplots_arr, p)
+        end
+        if showtesting
+            # if i = 1
+            if num_perfs > 1
+                for i = 2:num_perfs
+                end
+            end
+            push!(subplots_arr, p)
+        end
+    end
+    #
+    if prcurve
+        if showtraining
+            perf = perflist[1]
+            model_name = modelname(perf)
+            recall = perf.blobs[:subsetblobs][:training][:all_recall]
+            precision = perf.blobs[:subsetblobs][:training][:all_precision]
+            p = Plots.plot(
+                recall,
+                precision,
+                label = string(model_name),
+                title = "PR curve (training set)",
+                xlabel = "1 - specificity",
+                ylabel = "sensitivity",
+                )
+            if num_perfs > 1
+                for i = 2:num_perfs
+                end
+            end
+            push!(subplots_arr, p)
+        end
+        if showvalidation
+            # if i = 1
+            if num_perfs > 1
+                for i = 2:num_perfs
+                end
+            end
+            push!(subplots_arr, p)
+        end
+        if showtesting
+            # if i = 1
+            if num_perfs > 1
+                for i = 2:num_perfs
+                end
+            end
+            push!(subplots_arr, p)
+        end
+    end
+    #
+    finalplot = Plots.plot(subplots_arr...)
+    return finalplot
 end
-
-# function plot{M<:AbstractSingleLabelBinaryClassifier}(
-#         modelperf::ModelPerformance{M};
-#         kwargs...
-#         )
-    #
-    # if hastraining(modelperf)
-    #     training_all_fpr =
-    #         modelperf.blobs[:subsetblobs][:training][:all_fpr]
-    #     training_all_tpr =
-    #         modelperf.blobs[:subsetblobs][:training][:all_tpr]
-    #     training_all_precision =
-    #         modelperf.blobs[:subsetblobs][:training][:all_precision]
-    #     training_all_recall =
-    #         modelperf.blobs[:subsetblobs][:training][:all_recall]
-    # else
-    #     training_all_fpr = []
-    #     training_all_tpr = []
-    #     training_all_precision = []
-    #     training_all_recall = []
-    # end
-    #
-    # if hasvalidation(modelperf)
-    #     validation_all_fpr =
-    #         modelperf.blobs[:subsetblobs][:validation][:all_fpr]
-    #     validation_all_tpr =
-    #         modelperf.blobs[:subsetblobs][:validation][:all_tpr]
-    #     validation_all_precision =
-    #         modelperf.blobs[:subsetblobs][:validation][:all_precision]
-    #     validation_all_recall =
-    #         modelperf.blobs[:subsetblobs][:validation][:all_recall]
-    # else
-    #     validation_all_fpr = []
-    #     validation_all_tpr = []
-    #     validation_all_precision = []
-    #     validation_all_recall = []
-    # end
-    #
-    # if hastesting(modelperf)
-    #     testing_all_fpr =
-    #         modelperf.blobs[:subsetblobs][:testing][:all_fpr]
-    #     testing_all_tpr =
-    #         modelperf.blobs[:subsetblobs][:testing][:all_tpr]
-    #     testing_all_precision =
-    #         modelperf.blobs[:subsetblobs][:testing][:all_precision]
-    #     testing_all_recall =
-    #         modelperf.blobs[:subsetblobs][:testing][:all_recall]
-    # else
-    #     testing_all_fpr = []
-    #     testing_all_tpr = []
-    #     testing_all_precision = []
-    #     testing_all_recall = []
-    # end
-    #
-    # p_training_rocc = Plots.plot(
-    #     training_all_fpr,
-    #     training_all_tpr,
-    #     legend = false,
-    #     title = "ROC curve (training)",
-    #     xlabel = "1 - specificity",
-    #     ylabel = "sensitivity",
-    #     )
-    # p_validation_rocc = Plots.plot(
-    #     validation_all_fpr,
-    #     validation_all_tpr,
-    #     legend = false,
-    #     title = "ROC curve (validation)",
-    #     xlabel = "1 - specificity",
-    #     ylabel = "sensitivity",
-    #     )
-    # p_testing_rocc = Plots.plot(
-    #     testing_all_fpr,
-    #     testing_all_tpr,
-    #     legend = false,
-    #     title = "ROC curve (testing)",
-    #     xlabel = "1 - specificity",
-    #     ylabel = "sensitivity",
-    #     )
-    #
-    # p_training_prc = Plots.plot(
-    #     training_all_recall,
-    #     training_all_precision,
-    #     legend = false,
-    #     title = "PR curve (training)",
-    #     xlabel = "recall",
-    #     ylabel = "precision",
-    #     )
-    # p_validation_prc = Plots.plot(
-    #     validation_all_recall,
-    #     validation_all_precision,
-    #     legend = false,
-    #     title = "PR curve (validation)",
-    #     xlabel = "recall",
-    #     ylabel = "precision",
-    #     )
-    # p_testing_prc = Plots.plot(
-    #     testing_all_recall,
-    #     testing_all_precision,
-    #     legend = false,
-    #     title = "PR curve (testing)",
-    #     xlabel = "recall",
-    #     ylabel = "precision",
-    #     )
-    # p = Plots.plot(
-    #     p_training_rocc,
-    #     p_validation_rocc,
-    #     p_testing_rocc,
-    #     p_training_prc,
-    #     p_validation_prc,
-    #     p_testing_prc,
-    #     layout = (2,3),
-    #     )
-    # return p
-# end
 
 #############################################################################
 

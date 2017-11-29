@@ -27,7 +27,7 @@ logistic_binary_classifier1_perf =
 
 classifierhistograms(logistic_binary_classifier1_perf)
 
-plots(logistic_binary_classifier1_perf)
+plots(logistic_binary_classifier1_perf; showtraining=true)
 
 ##############################################################################
 

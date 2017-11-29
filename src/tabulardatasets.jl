@@ -12,6 +12,7 @@ end
 
 function HoldoutTabularDataset(
         data_original;
+        data_name::AbstractString = "Untitled Data Set",
         label_variables::T2 = Vector{Symbol}(),
         feature_variables::T3 = Vector{Symbol}(),
         training::Real = 0.0,
@@ -38,6 +39,7 @@ end
 function HoldoutTabularDataset(
         rng::AbstractRNG,
         data_original;
+        data_name::AbstractString = "Untitled Data Set",
         label_variables::T2 = Vector{Symbol}(),
         feature_variables::T3 = Vector{Symbol}(),
         training::Real = 0.0,
@@ -50,6 +52,8 @@ function HoldoutTabularDataset(
         T3 <: AbstractVector{Symbol}
 
     blobs = Dict{Symbol, Any}()
+
+    blobs[:data_name] = data_name
 
     data_frame = DataFrames.DataFrame(data_original)
 
@@ -195,19 +199,18 @@ function recordidlist_to_rownumberlist(
     return row_number_for_each_record
 end
 
-function numtraining(dataset::AbstractHoldoutTabularDataset)
-    return length(dataset.blobs[:rows_training])
-end
-function numvalidation(dataset::AbstractHoldoutTabularDataset)
-    return length(dataset.blobs[:rows_validation])
-end
-function numtesting(dataset::AbstractHoldoutTabularDataset)
-    return length(dataset.blobs[:rows_testing])
-end
+numtraining(d::AbstractHoldoutTabularDataset) =
+    length(d.blobs[:rows_training])
+numvalidation(d::AbstractHoldoutTabularDataset) =
+    length(d.blobs[:rows_validation])
+numtesting(d::AbstractHoldoutTabularDataset) =
+    length(d.blobs[:rows_testing])
 
 hastraining(d::AbstractHoldoutTabularDataset) = numtraining(d) > 0
 hasvalidation(d::AbstractHoldoutTabularDataset) = numvalidation(d) > 0
 hastesting(d::AbstractHoldoutTabularDataset) = numtesting(d) > 0
+
+dataname(d::AbstractHoldoutTabularDataset) = d.blobs[:data_name]
 
 function getdata(
         dataset::AbstractHoldoutTabularDataset;

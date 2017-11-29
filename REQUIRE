@@ -12,6 +12,7 @@ JLD
 LIBSVM
 MLBase
 PGFPlots
+PlotlyJS
 Plots
 QuadGK
 ROCAnalysis

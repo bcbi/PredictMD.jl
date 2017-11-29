@@ -53,6 +53,9 @@ export getdata,
     hastraining,
     hasvalidation,
     hastesting,
+    dataname,
+    modelname,
+    ensemblename,
     plots,
     classifierhistograms
 
@@ -68,7 +71,7 @@ include("labelcoding.jl")
 include("linearmodels.jl")
 include("loss.jl")
 include("metrics.jl")
-include("modelevaluation.jl")
+include("modelperformance.jl")
 include("randomforest.jl")
 include("smote.jl")
 include("svm.jl")

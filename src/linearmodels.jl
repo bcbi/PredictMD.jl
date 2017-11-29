@@ -17,7 +17,7 @@ function SingleLabelBinaryLogisticClassifier(
         dotraining::Bool = true,
         dovalidation::Bool = false,
         dotesting::Bool = true,
-        name::AbstractString = "logistic",
+        model_name::AbstractString = "Untitled Logistic",
         intercept::Bool = true,
         family::Distributions.Distribution = Distributions.Binomial(),
         link::GLM.Link = GLM.LogitLink(),
@@ -36,7 +36,8 @@ function SingleLabelBinaryLogisticClassifier(
 
     blobs = Dict{Symbol, Any}()
 
-    blobs[:name] = name
+    blobs[:data_name] = dataname(dataset)
+    blobs[:model_name] = model_name
 
     feature_variables = dataset.blobs[:feature_variables]
 
@@ -47,9 +48,6 @@ function SingleLabelBinaryLogisticClassifier(
         )
     blobs[:formula_object] = formula_object
 
-    if !hastraining(dataset)
-        error("dataset has no training data")
-    end
     blobs[:numtraining] = numtraining(dataset)
     data_training_labelandfeatures, recordidlist_training = getdata(
         dataset;
@@ -129,7 +127,7 @@ function SingleLabelBinaryLogisticClassifier(
         MLBase.classify(predicted_proba_training_twocols').-1
     blobs[:predicted_labels_training] = predicted_labels_training
 
-    if hasvalidation(dataset)
+    if dovalidation && hasvalidation(dataset)
         blobs[:numvalidation] = numvalidation(dataset)
         data_validation_features, recordidlist_validation = getdata(
             dataset;
@@ -165,7 +163,7 @@ function SingleLabelBinaryLogisticClassifier(
         blobs[:numvalidation] = 0
     end
 
-    if hastesting(dataset)
+    if dotesting && hastesting(dataset)
         blobs[:numtesting] = numtesting(dataset)
         data_testing_features, recordidlist_testing = getdata(
             dataset;

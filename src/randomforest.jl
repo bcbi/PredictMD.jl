@@ -13,7 +13,7 @@ function SingleLabelBinaryRandomForestClassifier(
         dotraining::Bool = true,
         dovalidation::Bool = false,
         dotesting::Bool = true,
-        name::AbstractString = "randomforest",
+        model_name::AbstractString = "Untitled Random Forest",
         classes::StatsBase.IntegerVector = [0, 1],
         nsubfeatures::Integer = 2,
         ntrees::Integer = 20,
@@ -32,7 +32,8 @@ function SingleLabelBinaryRandomForestClassifier(
 
     blobs = Dict{Symbol, Any}()
 
-    blobs[:name] = name
+    blobs[:data_name] = dataname(dataset)
+    blobs[:model_name] = model_name
 
     hyperparameters = Dict{Symbol, Any}()
     hyperparameters[:nsubfeatures] = nsubfeatures
@@ -41,9 +42,6 @@ function SingleLabelBinaryRandomForestClassifier(
 
     feature_variables = dataset.blobs[:feature_variables]
 
-    if !hastraining(dataset)
-        error("dataset has no training data")
-    end
     blobs[:numtraining] = numtraining(dataset)
     data_training_features, recordidlist_training = getdata(
         dataset;
@@ -92,7 +90,7 @@ function SingleLabelBinaryRandomForestClassifier(
     blobs[:predicted_proba_training] = predicted_proba_training
 
 
-    if hasvalidation(dataset)
+    if dovalidation && hasvalidation(dataset)
         blobs[:numvalidation] = numtraining(dataset)
         data_validation_features, recordidlist_validation = getdata(
             dataset;
@@ -137,7 +135,7 @@ function SingleLabelBinaryRandomForestClassifier(
         blobs[:numvalidation] = 0
     end
 
-    if hastesting(dataset)
+    if dotesting && hastesting(dataset)
         blobs[:numtesting] = numtraining(dataset)
         data_testing_features, recordidlist_testing = getdata(
             dataset;
