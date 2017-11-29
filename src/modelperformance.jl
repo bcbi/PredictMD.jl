@@ -4,6 +4,8 @@ import MLBase
 import Plots
 import ScikitLearn
 
+ScikitLearn.@sk_import metrics: auc
+
 #############################################################################
 
 struct ModelPerformance{M} <:
