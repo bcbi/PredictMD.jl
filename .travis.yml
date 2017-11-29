@@ -27,6 +27,7 @@ addons:
 
 before_script:
   - julia -e 'Pkg.clone("https://github.com/bcbi/ClassImbalance.jl")'
+  - julia -e 'Pkg.clone("https://github.com/bcbi/AUC.jl")'
 
 after_success:
   # push coverage results to Coveralls
