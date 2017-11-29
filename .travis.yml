@@ -25,15 +25,8 @@ addons:
     packages:
     - hdf5-tools
 
-#before_script: # homebrew for mac
-#  - if [ $TRAVIS_OS_NAME = osx ]; then brew install gcc; fi
-
 before_script:
   - julia -e 'Pkg.clone("https://github.com/bcbi/ClassImbalance.jl")'
-
-## uncomment the following lines to override the default test script
-#script:
-#  - julia -e 'Pkg.clone(pwd()); Pkg.build("AluthgeSinhaBase"); Pkg.test("AluthgeSinhaBase"; coverage=true)'
 
 after_success:
   # push coverage results to Coveralls
