@@ -95,3 +95,14 @@ function ensurevector(x::AbstractMatrix)
         error("x does not have exactly one column")
     end
 end
+
+function plural(word::AbstractString, n::Integer)
+    suffix = endswith(word, "s") ? "es" : "s"
+    if n > 1 || n == 0
+        return word*suffix
+    elseif n == 1
+        return word
+    else
+        error("n must be a non-negative integer")
+    end
+end

@@ -10,9 +10,9 @@ dataframe1, label_variables1, feature_variables1 =
 countmap(dataframe1[:mylabel1])
 
 tabular_dataset1 = HoldoutTabularDataset(
-    dataframe1,
-    label_variables1,
-    feature_variables1;
+    dataframe1;
+    label_variables = label_variables1,
+    feature_variables = feature_variables1,
     training=0.5,
     validation=0.2,
     testing=0.3,
@@ -23,8 +23,12 @@ svm_binary_classifier1 = BinarySVM(
     :mylabel1,
     )
 
-performance(svm_binary_classifier1)
-plot(svm_binary_classifier1)
+svm_binary_classifier1_perf =
+    ModelPerformance(svm_binary_classifier1)
+
+classifierhistograms(svm_binary_classifier1_perf)
+
+plots(svm_binary_classifier1_perf)
 
 ##############################################################################
 
@@ -35,9 +39,9 @@ dataframe2, label_variables2, feature_variables2 =
 StatsBase.countmap(dataframe2[:y])
 
 tabular_dataset2 = HoldoutTabularDataset(
-    dataframe2,
-    label_variables2,
-    feature_variables2;
+    dataframe2;
+    label_variables = label_variables2,
+    feature_variables = feature_variables2,
     training=1/3,
     validation=1/3,
     testing=1/3,
@@ -48,8 +52,12 @@ svm_binary_classifier2 = BinarySVM(
     :y,
     )
 
-performance(svm_binary_classifier2)
-plot(svm_binary_classifier2)
+svm_binary_classifier2_perf =
+    ModelPerformance(svm_binary_classifier2)
+
+classifierhistograms(svm_binary_classifier2_perf)
+
+plots(svm_binary_classifier2_perf)
 
 ##############################################################################
 
@@ -60,9 +68,9 @@ dataframe3, label_variables3, feature_variables3 =
 StatsBase.countmap(dataframe3[:deathoutcome])
 
 tabular_dataset3 = HoldoutTabularDataset(
-    dataframe3,
-    label_variables3,
-    feature_variables3;
+    dataframe3;
+    label_variables = label_variables3,
+    feature_variables = feature_variables3,
     training=0.7,
     testing=0.3,
     )
@@ -72,5 +80,9 @@ svm_binary_classifier3 = BinarySVM(
     :deathoutcome,
     )
 
-performance(svm_binary_classifier3)
-plot(svm_binary_classifier3)
+svm_binary_classifier3_perf =
+    ModelPerformance(svm_binary_classifier3)
+
+classifierhistograms(svm_binary_classifier3_perf)
+
+plots(svm_binary_classifier3_perf)

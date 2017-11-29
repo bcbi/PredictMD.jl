@@ -1,19 +1,18 @@
 julia 0.6
 
+AUC
+ClassImbalance
 DataFrames
 DecisionTree
 Distributions
 GLM
-GR
 Interpolations
 IterableTables
 JLD
 LIBSVM
 MLBase
-PlotlyJS
-PlotRecipes
+PGFPlots
 Plots
 QuadGK
-ROCAnalysis
-StatPlots
+ScikitLearn
 StatsBase

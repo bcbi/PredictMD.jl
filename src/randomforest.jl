@@ -7,19 +7,33 @@ end
 
 const BinaryRandomForest = SingleLabelBinaryRandomForestClassifier
 
-function SingleLabelBinaryRandomForestClassifier{
-        D<:AbstractHoldoutTabularDataset
-        }(
+function SingleLabelBinaryRandomForestClassifier(
         dataset::D,
         label_variable::Symbol;
+        dotraining::Bool = true,
+        dovalidation::Bool = false,
+        dotesting::Bool = true,
+        model_name::AbstractString = "Untitled Random Forest",
         classes::StatsBase.IntegerVector = [0, 1],
         nsubfeatures::Integer = 2,
         ntrees::Integer = 20,
+        ) where D <: AbstractHoldoutTabularDataset
+
+    modelrequirestraining = true
+    modelsupportsvalidation = false
+    _check_holdout_model_arguments(
+        dataset;
+        dotraining = dotraining,
+        dovalidation = dovalidation,
+        dotesting = dotesting,
+        modelrequirestraining = modelrequirestraining,
+        modelsupportsvalidation = modelsupportsvalidation,
         )
 
     blobs = Dict{Symbol, Any}()
 
-    blobs[:model_name] = "Random forest"
+    blobs[:data_name] = dataname(dataset)
+    blobs[:model_name] = model_name
 
     hyperparameters = Dict{Symbol, Any}()
     hyperparameters[:nsubfeatures] = nsubfeatures
@@ -28,9 +42,6 @@ function SingleLabelBinaryRandomForestClassifier{
 
     feature_variables = dataset.blobs[:feature_variables]
 
-    if !hastraining(dataset)
-        error("dataset has no training data")
-    end
     blobs[:numtraining] = numtraining(dataset)
     data_training_features, recordidlist_training = getdata(
         dataset;
@@ -79,7 +90,7 @@ function SingleLabelBinaryRandomForestClassifier{
     blobs[:predicted_proba_training] = predicted_proba_training
 
 
-    if hasvalidation(dataset)
+    if dovalidation && hasvalidation(dataset)
         blobs[:numvalidation] = numtraining(dataset)
         data_validation_features, recordidlist_validation = getdata(
             dataset;
@@ -124,7 +135,7 @@ function SingleLabelBinaryRandomForestClassifier{
         blobs[:numvalidation] = 0
     end
 
-    if hastesting(dataset)
+    if dotesting && hastesting(dataset)
         blobs[:numtesting] = numtraining(dataset)
         data_testing_features, recordidlist_testing = getdata(
             dataset;

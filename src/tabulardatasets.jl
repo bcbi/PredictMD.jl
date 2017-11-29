@@ -11,20 +11,23 @@ struct ResampledHoldoutTabularDataset{T} <: AbstractHoldoutTabularDataset{T}
 end
 
 function HoldoutTabularDataset(
-        data_original,
-        label_variables::T2 where T2 <: AbstractVector{Symbol},
-        feature_variables::T3 where T3 <: AbstractVector{Symbol};
+        data_original;
+        data_name::AbstractString = "Untitled Data Set",
+        label_variables::T2 = Vector{Symbol}(),
+        feature_variables::T3 = Vector{Symbol}(),
         training::Real = 0.0,
         validation::Real = 0.0,
         testing::Real = 0.0,
         shuffle_rows::Bool = true,
         recordid_fieldname::Symbol = :recordid,
-        )
+        ) where
+        T2 <: AbstractVector{Symbol} where
+        T3 <: AbstractVector{Symbol}
     return HoldoutTabularDataset(
         Base.GLOBAL_RNG,
-        data_original,
-        label_variables,
-        feature_variables;
+        data_original;
+        label_variables = label_variables,
+        feature_variables = feature_variables,
         training = training,
         validation = validation,
         testing = testing,
@@ -35,17 +38,22 @@ end
 
 function HoldoutTabularDataset(
         rng::AbstractRNG,
-        data_original,
-        label_variables::T2 where T2 <: AbstractVector{Symbol},
-        feature_variables::T3 where T3 <: AbstractVector{Symbol};
+        data_original;
+        data_name::AbstractString = "Untitled Data Set",
+        label_variables::T2 = Vector{Symbol}(),
+        feature_variables::T3 = Vector{Symbol}(),
         training::Real = 0.0,
         validation::Real = 0.0,
         testing::Real = 0.0,
         shuffle_rows::Bool = true,
         recordid_fieldname::Symbol = :recordid,
-        )
+        ) where
+        T2 <: AbstractVector{Symbol} where
+        T3 <: AbstractVector{Symbol}
 
     blobs = Dict{Symbol, Any}()
+
+    blobs[:data_name] = data_name
 
     data_frame = DataFrames.DataFrame(data_original)
 
@@ -191,19 +199,18 @@ function recordidlist_to_rownumberlist(
     return row_number_for_each_record
 end
 
-function numtraining(dataset::AbstractHoldoutTabularDataset)
-    return length(dataset.blobs[:rows_training])
-end
-function numvalidation(dataset::AbstractHoldoutTabularDataset)
-    return length(dataset.blobs[:rows_validation])
-end
-function numtesting(dataset::AbstractHoldoutTabularDataset)
-    return length(dataset.blobs[:rows_testing])
-end
+numtraining(d::AbstractHoldoutTabularDataset) =
+    length(d.blobs[:rows_training])
+numvalidation(d::AbstractHoldoutTabularDataset) =
+    length(d.blobs[:rows_validation])
+numtesting(d::AbstractHoldoutTabularDataset) =
+    length(d.blobs[:rows_testing])
 
 hastraining(d::AbstractHoldoutTabularDataset) = numtraining(d) > 0
 hasvalidation(d::AbstractHoldoutTabularDataset) = numvalidation(d) > 0
 hastesting(d::AbstractHoldoutTabularDataset) = numtesting(d) > 0
+
+dataname(d::AbstractHoldoutTabularDataset) = d.blobs[:data_name]
 
 function getdata(
         dataset::AbstractHoldoutTabularDataset;
@@ -459,4 +466,29 @@ function _partition_rows(
     @assert(all_rows == sort(assigned_rows))
 
     return rows_training, rows_validation, rows_testing
+end
+
+function _check_holdout_model_arguments(
+        dataset::AbstractHoldoutTabularDataset;
+        dotraining::Bool = false,
+        dovalidation::Bool = false,
+        dotesting::Bool = false,
+        modelrequirestraining::Bool = true,
+        modelsupportsvalidation::Bool = false,
+        )
+    if dotraining && !hastraining(dataset)
+        error("dotraining is true but dataset doesn't have training data")
+    end
+    if dovalidation && !hasvalidation(dataset)
+        error("dovalidation is true but dataset doesn't have validation data")
+    end
+    if dotesting && !hastesting(dataset)
+        error("dotesting is true but dataset doesn't have testing data")
+    end
+    if modelrequirestraining && !dotraining
+        error("model requires training phase but dotraining is false")
+    end
+    if dovalidation && !modelsupportsvalidation
+        error("dovalidation is true but model does not support validation")
+    end
 end

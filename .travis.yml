@@ -11,8 +11,7 @@ notifications:
 git:
   depth: 99999999
 
-## uncomment the following lines to allow failures on nightly julia
-## (tests will run but not make your overall status red)
+## Allow failures on nightly julia:
 matrix:
   allow_failures:
   - julia: nightly
@@ -21,18 +20,20 @@ env:
   global:
   - PYTHON=conda
 
-## uncomment and modify the following lines to manually install system packages
 addons:
-  apt: # apt-get for linux
+  apt:
     packages:
-#    - gfortran
     - hdf5-tools
-#before_script: # homebrew for mac
-#  - if [ $TRAVIS_OS_NAME = osx ]; then brew install gcc; fi
+    - pdf2svg
+    - texlive-latex-base
+    - texlive-binaries
+    - texlive-pictures
+    - texlive-latex-extra
 
-## uncomment the following lines to override the default test script
-#script:
-#  - julia -e 'Pkg.clone(pwd()); Pkg.build("AluthgeSinhaBase"); Pkg.test("AluthgeSinhaBase"; coverage=true)'
+before_script:
+  - julia -e 'Pkg.clone("https://github.com/bcbi/ClassImbalance.jl.git")'
+  - julia -e 'Pkg.clone("https://github.com/bcbi/AUC.jl.git")'
+
 after_success:
   # push coverage results to Coveralls
   - julia -e 'cd(Pkg.dir("AluthgeSinhaBase")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'

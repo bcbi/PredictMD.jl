@@ -47,27 +47,34 @@ export BinaryLogistic,
 
 # functions to export:
 export getdata,
-    performance,
     numtraining,
     numvalidation,
     numtesting,
     hastraining,
     hasvalidation,
     hastesting,
-    plot
+    dataname,
+    modelname,
+    ensemblename,
+    plots,
+    classifierhistograms,
+    learningcurves
 
 # source files to include:
 include("abstracttypes.jl")
 include("auc.jl")
-include("constants.jl")
 include("convenience.jl")
+include("ensembles.jl")
+include("env.jl")
 include("faketabulardata.jl")
 include("formulas.jl")
 include("labelcoding.jl")
 include("linearmodels.jl")
+include("loss.jl")
 include("metrics.jl")
-include("modelevaluation.jl")
+include("modelperformance.jl")
 include("randomforest.jl")
+include("smote.jl")
 include("svm.jl")
 include("tabulardatasets.jl")
 include("util.jl")

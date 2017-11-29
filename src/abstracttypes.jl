@@ -40,16 +40,14 @@ end
 abstract type AbstractModelPerformance{M}
 end
 
-function numtraining(m::AbstractSingleLabelBinaryClassifier)
-    return m.blobs[:numtraining]
-end
-function numvalidation(m::AbstractSingleLabelBinaryClassifier)
-    return m.blobs[:numvalidation]
-end
-function numtesting(m::AbstractSingleLabelBinaryClassifier)
-    return m.blobs[:numtesting]
-end
+numtraining(m::AbstractSingleLabelBinaryClassifier) = m.blobs[:numtraining]
+numvalidation(m::AbstractSingleLabelBinaryClassifier) = m.blobs[:numvalidation]
+
+numtesting(m::AbstractSingleLabelBinaryClassifier) = m.blobs[:numtesting]
 
 hastraining(m::AbstractSingleLabelBinaryClassifier) = numtraining(m) > 0
 hasvalidation(m::AbstractSingleLabelBinaryClassifier) = numvalidation(m) > 0
 hastesting(m::AbstractSingleLabelBinaryClassifier) = numtesting(m) > 0
+
+dataname(m::AbstractSingleLabelBinaryClassifier) = m.blobs[:data_name]
+modelname(m::AbstractSingleLabelBinaryClassifier) = m.blobs[:model_name]
