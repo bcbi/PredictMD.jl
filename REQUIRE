@@ -6,16 +6,13 @@ DataFrames
 DecisionTree
 Distributions
 GLM
-GR
 Interpolations
 IterableTables
 JLD
 LIBSVM
 MLBase
-PlotlyJS
-PlotRecipes
+PGFPlots
 Plots
 QuadGK
 ROCAnalysis
-StatPlots
 StatsBase

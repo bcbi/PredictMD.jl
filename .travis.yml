@@ -24,10 +24,15 @@ addons:
   apt:
     packages:
     - hdf5-tools
+    - pdf2svg
+    - texlive-latex-base
+    - texlive-binaries
+    - texlive-pictures
+    - texlive-latex-extra
 
 before_script:
-  - julia -e 'Pkg.clone("https://github.com/bcbi/ClassImbalance.jl")'
-  - julia -e 'Pkg.clone("https://github.com/bcbi/AUC.jl")'
+  - julia -e 'Pkg.clone("https://github.com/bcbi/ClassImbalance.jl.git")'
+  - julia -e 'Pkg.clone("https://github.com/bcbi/AUC.jl.git")'
 
 after_success:
   # push coverage results to Coveralls

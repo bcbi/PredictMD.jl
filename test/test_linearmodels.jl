@@ -25,7 +25,8 @@ logistic_binary_classifier1 = BinaryLogistic(
 logistic_binary_classifier1_perf =
     ModelPerformance(logistic_binary_classifier1)
 
-classifierhistograms(logistic_binary_classifier1_perf)
+classifierhistograms(logistic_binary_classifier1_perf,
+    showtraining=true,showtesting=true)
 
 plots(logistic_binary_classifier1_perf)
 

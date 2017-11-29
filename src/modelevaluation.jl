@@ -32,7 +32,7 @@ function ModelPerformance{M<:AbstractModelly}(
         model::M;
         kwargs...
         )
-    error("Not yet implemented for model type $(M)")
+    error("not implemented for model type $(M)")
 end
 
 function ModelPerformance{M<:AbstractSingleLabelBinaryClassifier}(
@@ -100,8 +100,8 @@ function _modelperformancetablerow(
         )
     table_subset[:Subset] = string(subset)
     table_subset[:N] = numrows
-    table_subset[:AUROCC] = metricblobs[:AUROCC]
-    table_subset[:AUPRC] = metricblobs[:AUPRC]
+    table_subset[:AUROCC_trapz] = metricblobs[:AUROCC_trapz]
+    table_subset[:AUPRC_trapz] = metricblobs[:AUPRC_trapz]
     table_subset[:Average_Precision] = metricblobs[:Average_Precision]
     threshold, ind = _selectbinaryclassifierthreshold(
         metricblobs;
@@ -131,7 +131,7 @@ function _get_numrows_y_true_y_score(
             y_score = model.blobs[:predicted_proba_training]
             return numrows, y_true, y_score
         else
-            error("model does not have a training subset")
+            error("model doesn't have a training subset")
         end
     elseif subset == :Validation
         if hasvalidation(model)
@@ -140,7 +140,7 @@ function _get_numrows_y_true_y_score(
             y_score = model.blobs[:predicted_proba_validation]
             return numrows, y_true, y_score
         else
-            error("model does not have a validation subset")
+            error("model doesn't have a validation subset")
         end
     elseif subset == :Testing
         if hastesting(model)
@@ -149,7 +149,7 @@ function _get_numrows_y_true_y_score(
             y_score = model.blobs[:predicted_proba_testing]
             return numrows, y_true, y_score
         else
-            error("model does not have a testing subset")
+            error("model doesn't have a testing subset")
         end
     else
         error("subset must be one of :Training, :Validation, :Testing")
@@ -251,10 +251,10 @@ function _binaryclassifiermetrics(
     metricblobs[:all_fpr] = all_fpr
     metricblobs[:all_tpr] = all_tpr
     aurocc = trapz(; x=all_fpr, y=all_tpr)
-    metricblobs[:AUROCC] = aurocc
+    metricblobs[:AUROCC_trapz] = aurocc
     #
     auprc = trapz(; x=all_recall, y=all_precision)
-    metricblobs[:AUPRC] = auprc
+    metricblobs[:AUPRC_trapz] = auprc
     #
     average_precision = "not_calculated"
     metricblobs[:Average_Precision] = average_precision
@@ -346,10 +346,10 @@ function Base.show(
         io::IO,
         mp::ModelPerformance,
         )
-    separator = repeat("*", 79)
-    println(io, separator)
+    hrule = repeat("*", 79)
+    println(io, hrule)
     println(io, typeof(mp))
-    println(io, separator)
+    println(io, hrule)
     return DataFrames.showall(io,mp.blobs[:table],false,Symbol(""),false)
 end
 
@@ -359,41 +359,117 @@ function classifierhistograms{M<:AbstractModelly}(
         modelperf::ModelPerformance{M};
         kwargs...
         )
-    error("not yet implemented for model type $(M)")
+    error("not implemented for model type $(M)")
 end
 
 function classifierhistograms(
         modelperf::ModelPerformance{M};
-        kwargs...
+        showtraining = hastraining(modelperf),
+        showvalidation = hasvalidation(modelperf),
+        showtesting = hastesting(modelperf),
+        numbins = 50,
+        bins = linspace(0, 1, numbins),
         ) where
         M<:AbstractSingleLabelBinaryClassifier
-    println("TODO: finish this function")
+    #
+    if showtraining && !hastraining(modelperf)
+        error("showtraining is true but model doesn't have training data")
+    end
+    if showvalidation && !hasvalidation(modelperf)
+        error("showvalidation is true but model doesn't have validation data")
+    end
+    if showtesting && !hastesting(modelperf)
+        error("showtesting is true but model doesn't have testing data")
+    end
+    #
+    if hastraining(modelperf)
+        y_true_training =
+            modelperf.blobs[:subsetblobs][:training][:y_true]
+        y_score_training =
+            modelperf.blobs[:subsetblobs][:training][:y_score]
+    else
+        y_true_training = []
+        y_score_training = []
+    end
+    if hasvalidation(modelperf)
+        y_true_validation =
+            modelperf.blobs[:subsetblobs][:validation][:y_true]
+        y_score_validation =
+            modelperf.blobs[:subsetblobs][:validation][:y_score]
+    else
+        y_true_validation = []
+        y_score_validation = []
+    end
+    if hastesting(modelperf)
+        y_true_testing =
+            modelperf.blobs[:subsetblobs][:testing][:y_true]
+        y_score_testing =
+            modelperf.blobs[:subsetblobs][:testing][:y_score]
+    else
+        y_true_testing = []
+        y_score_testing = []
+    end
+    y_true_all = vcat(y_true_training, y_true_validation, y_true_testing)
+    classes = sort(collect(unique(y_true_all)))
+    num_classes = length(classes)
+    if num_classes != 2
+        error("num_classes != 2")
+    end
+    #
+    subplots_arr = []
+    if showtraining && hastraining(modelperf)
+        h_training = Plots.histogram(
+            y_score_training[ y_true_training .== classes[1] ],
+            label = "class = " * string(classes[1]),
+            title = "Scores (training set)",
+            xlabel = "score",
+            ylabel = "frequency",
+            legend = :outertopright,
+            bins = bins,
+            )
+        Plots.histogram!(
+            h_training,
+            y_score_training[ y_true_training .== classes[2] ],
+            label = "class = " * string(classes[2]),
+            bins = bins,
+            )
+        push!(subplots_arr, h_training)
+    end
+    if showvalidation && hasvalidation(modelperf)
+    end
+    if showtesting && hastesting(modelperf)
+        h_testing = Plots.histogram(
+            y_score_testing[ y_true_testing .== classes[1] ],
+            label = "class = " * string(classes[1]),
+            title = "Scores (testing set)",
+            xlabel = "score",
+            ylabel = "frequency",
+            legend = :outertopright,
+            bins = bins,
+            )
+        Plots.histogram!(
+            h_testing,
+            y_score_testing[ y_true_testing .== classes[2] ],
+            label = "class = " * string(classes[2]),
+            bins = bins,
+            )
+        push!(subplots_arr, h_testing)
+    end
+    num_subplots = length(subplots_arr)
+    finalplot = Plots.plot(subplots_arr...)
+    return finalplot
 end
 
 #############################################################################
 
-# function plots(
-#         varargs::Vararg{T, N};
-#         kwargs...
-#         ) where
-#         T<:ModelPerformance{M} where
-#         M<:AbstractModelly where
-#         N <: Integer
-#     result = plots(
-#         vcat(varargs...);
-#         kwargs...
-#         )
-#     return result
-# end
-
 function plots(
-        thingone::T;
+        mp::T;
         kwargs...
         ) where
         T<:ModelPerformance{M} where
         M<:AbstractModelly
     result = plots(
-        vcat(thingone);
+        vcat(mp);
         kwargs...
         )
     return result
@@ -405,7 +481,7 @@ function plots(
         ) where
         T<:ModelPerformance{M} where
         M<:AbstractModelly
-    error("not yet implemented for model type $(M)")
+    error("not implemented for model type $(M)")
 end
 
 function plots(
@@ -418,7 +494,7 @@ function plots(
     if num_plots == 0
         error("mpvector must be nonempty")
     end
-    println("TODO: finish this function")
+    println("TODO: finish writing the plots() function")
 end
 
 # function plot{M<:AbstractSingleLabelBinaryClassifier}(
@@ -534,5 +610,14 @@ end
     #     )
     # return p
 # end
+
+#############################################################################
+
+function learningcurves{M<:AbstractModelly}(
+        modelperf::ModelPerformance{M};
+        kwargs...
+        )
+    error("not implemented for model type $(M)")
+end
 
 #############################################################################
