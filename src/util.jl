@@ -72,3 +72,37 @@ function calculate_smote_pct_under(
         )
     return 100*minority_to_majority_ratio*(100+pct_over)/pct_over
 end
+
+function findnearest(A::AbstractArray, x)
+    exact_matches = A.==x
+    if sum(exact_matches) > 0
+        return find(exact_matches)
+    else
+        distances = abs.(A .- x)
+        minimumdistance = minimum(distances)
+        nearest_matches = distances.==minimumdistance
+        @assert( sum(nearest_matches) > 0 )
+        return find(nearest_matches)
+    end
+end
+
+ensurevector(x::AbstractVector) = x
+
+function ensurevector(x::AbstractMatrix)
+    if size(x,2) == 1
+        return x[:, 1]
+    else
+        error("x does not have exactly one column")
+    end
+end
+
+function plural(word::AbstractString, n::Integer)
+    suffix = endswith(word, "s") ? "es" : "s"
+    if n > 1 || n == 0
+        return word*suffix
+    elseif n == 1
+        return word
+    else
+        error("n must be a non-negative integer")
+    end
+end

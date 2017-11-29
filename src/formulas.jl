@@ -1,4 +1,4 @@
-using DataFrames
+import DataFrames
 
 function generate_formula_object(
     label_variables::AbstractVector{Symbol},

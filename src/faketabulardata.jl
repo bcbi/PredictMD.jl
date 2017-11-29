@@ -1,12 +1,12 @@
-using DataFrames
-using StatsBase
+import DataFrames
+import StatsBase
 
 function generatefaketabulardata1(num_rows::Integer)
     return generatefaketabulardata1(Base.GLOBAL_RNG, num_rows)
 end
 
 function generatefaketabulardata1(rng::AbstractRNG, num_rows::Integer)
-    dataframe = DataFrame()
+    dataframe = DataFrames.DataFrame()
 
     dataframe[:catfeat1] = Vector{String}(num_rows)
     dataframe[:catfeat2] = Vector{String}(num_rows)
@@ -49,7 +49,9 @@ function generatefaketabulardata1(rng::AbstractRNG, num_rows::Integer)
     for i = 1:num_rows
         proba_classone = dataframe[i, :probabilityofbeingclassone]
         proba_classzero = 1 - proba_classone
-        pweightvector = ProbabilityWeights([proba_classzero, proba_classone])
+        pweightvector = StatsBase.ProbabilityWeights(
+            [proba_classzero, proba_classone]
+            )
         dataframe[i, :mylabel1] = StatsBase.sample(
             ["classzero", "classone"],
             pweightvector,
@@ -96,7 +98,7 @@ function generatefaketabulardata2(num_rows::Integer)
 end
 
 function generatefaketabulardata2(rng::AbstractRNG, num_rows::Integer)
-    dataframe = DataFrame()
+    dataframe = DataFrames.DataFrame()
 
     dataframe[:x] = Vector{String}(num_rows)
     for i = 1:num_rows
@@ -139,7 +141,7 @@ function generatefaketabulardata3(num_rows::Integer)
 end
 
 function generatefaketabulardata3(rng::AbstractRNG, num_rows::Integer)
-    dataframe = DataFrame()
+    dataframe = DataFrames.DataFrame()
 
     dataframe[:favoritecolor] = Array{String,1}(num_rows)
     for i = 1:num_rows

@@ -1,26 +1,43 @@
-using DataFrames
-using GLM
-using MLBase
-using StatsBase
+import DataFrames
+import Distributions
+import GLM
+import MLBase
+import StatsBase
 
-struct SingleLabelBinaryLogisticClassifier <:
-        AbstractSingleLabelBinaryClassifier
-    blobs::T where T <: Associative
+struct SingleLabelBinaryLogisticClassifier{D} <:
+        AbstractSingleLabelBinaryClassifier{D}
+    blobs::A where A <: Associative
 end
 
 const BinaryLogistic = SingleLabelBinaryLogisticClassifier
 
 function SingleLabelBinaryLogisticClassifier(
-        dataset::AbstractHoldoutTabularDataset,
+        dataset::D,
         label_variable::Symbol;
+        dotraining::Bool = true,
+        dovalidation::Bool = false,
+        dotesting::Bool = true,
+        model_name::AbstractString = "Untitled Logistic",
         intercept::Bool = true,
-        family::Distribution = Binomial(),
-        link::Link = LogitLink(),
+        family::Distributions.Distribution = Distributions.Binomial(),
+        link::GLM.Link = GLM.LogitLink(),
+        ) where D<:AbstractHoldoutTabularDataset
+
+    modelrequirestraining = true
+    modelsupportsvalidation = false
+    _check_holdout_model_arguments(
+        dataset;
+        dotraining = dotraining,
+        dovalidation = dovalidation,
+        dotesting = dotesting,
+        modelrequirestraining = modelrequirestraining,
+        modelsupportsvalidation = modelsupportsvalidation,
         )
 
     blobs = Dict{Symbol, Any}()
 
-    blobs[:model_name] = "Logistic regression"
+    blobs[:data_name] = dataname(dataset)
+    blobs[:model_name] = model_name
 
     feature_variables = dataset.blobs[:feature_variables]
 
@@ -31,9 +48,6 @@ function SingleLabelBinaryLogisticClassifier(
         )
     blobs[:formula_object] = formula_object
 
-    if !hastraining(dataset)
-        error("dataset has no training data")
-    end
     blobs[:numtraining] = numtraining(dataset)
     data_training_labelandfeatures, recordidlist_training = getdata(
         dataset;
@@ -58,7 +72,14 @@ function SingleLabelBinaryLogisticClassifier(
         )
     blobs[:true_labels_training] = convert(Array,data_training_labels)
 
-    internal_model = glm(
+    # internal_model = glm(
+        # formula_object,
+        # data_training_labelandfeatures,
+        # family,
+        # link,
+        # )
+    internal_model = GLM.fit(
+        GLM.GeneralizedLinearModel,
         formula_object,
         data_training_labelandfeatures,
         family,
@@ -103,10 +124,10 @@ function SingleLabelBinaryLogisticClassifier(
     blobs[:predicted_proba_training_twocols] =
         predicted_proba_training_twocols
     predicted_labels_training =
-        classify(predicted_proba_training_twocols').-1
+        MLBase.classify(predicted_proba_training_twocols').-1
     blobs[:predicted_labels_training] = predicted_labels_training
 
-    if hasvalidation(dataset)
+    if dovalidation && hasvalidation(dataset)
         blobs[:numvalidation] = numvalidation(dataset)
         data_validation_features, recordidlist_validation = getdata(
             dataset;
@@ -136,13 +157,13 @@ function SingleLabelBinaryLogisticClassifier(
         blobs[:predicted_proba_validation_twocols] =
             predicted_proba_validation_twocols
         predicted_labels_validation =
-            classify(predicted_proba_validation_twocols').-1
+            MLBase.classify(predicted_proba_validation_twocols').-1
         blobs[:predicted_labels_validation] = predicted_labels_validation
     else
         blobs[:numvalidation] = 0
     end
 
-    if hastesting(dataset)
+    if dotesting && hastesting(dataset)
         blobs[:numtesting] = numtesting(dataset)
         data_testing_features, recordidlist_testing = getdata(
             dataset;
@@ -172,26 +193,11 @@ function SingleLabelBinaryLogisticClassifier(
         blobs[:predicted_proba_testing_twocols] =
             predicted_proba_testing_twocols
         predicted_labels_testing =
-            classify(predicted_proba_testing_twocols').-1
+            MLBase.classify(predicted_proba_testing_twocols').-1
         blobs[:predicted_labels_testing] = predicted_labels_testing
     else
         blobs[:numtesting] = 0
     end
 
-    return SingleLabelBinaryLogisticClassifier(blobs)
-
+    return SingleLabelBinaryLogisticClassifier{D}(blobs)
 end
-
-function numtraining(m::AbstractSingleLabelBinaryClassifier)
-    return m.blobs[:numtraining]
-end
-function numvalidation(m::AbstractSingleLabelBinaryClassifier)
-    return m.blobs[:numvalidation]
-end
-function numtesting(m::AbstractSingleLabelBinaryClassifier)
-    return m.blobs[:numtesting]
-end
-
-hastraining(m::AbstractSingleLabelBinaryClassifier) = numtraining(m) > 0
-hasvalidation(m::AbstractSingleLabelBinaryClassifier) = numvalidation(m) > 0
-hastesting(m::AbstractSingleLabelBinaryClassifier) = numtesting(m) > 0
