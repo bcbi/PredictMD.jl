@@ -57,7 +57,8 @@ export getdata,
     modelname,
     ensemblename,
     plots,
-    classifierhistograms
+    classifierhistograms,
+    learningcurves
 
 # source files to include:
 include("abstracttypes.jl")

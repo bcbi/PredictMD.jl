@@ -163,7 +163,7 @@ end
 
 function _binaryclassifiermetrics(
         y_true::StatsBase.IntegerVector,
-        y_score::StatsBase.RealVector,
+        y_score::StatsBase.RealVector;
         kwargs...
         )
     metricblobs = Dict()
@@ -565,22 +565,74 @@ function plots(
                 )
             if num_perfs > 1
                 for i = 2:num_perfs
+                    perf = perflist[i]
+                    model_name = modelname(perf)
+                    fpr = perf.blobs[:subsetblobs][:training][:all_fpr]
+                    tpr = perf.blobs[:subsetblobs][:training][:all_tpr]
+                    Plots.plot!(
+                        p,
+                        fpr,
+                        tpr,
+                        label = string(model_name),
+                        )
                 end
             end
             push!(subplots_arr, p)
         end
         if showvalidation
-            # if i = 1
+            perf = perflist[1]
+            model_name = modelname(perf)
+            fpr = perf.blobs[:subsetblobs][:validation][:all_fpr]
+            tpr = perf.blobs[:subsetblobs][:validation][:all_tpr]
+            p = Plots.plot(
+                fpr,
+                tpr,
+                label = string(model_name),
+                title = "ROC curve (validation set)",
+                xlabel = "1 - specificity",
+                ylabel = "sensitivity",
+                )
             if num_perfs > 1
                 for i = 2:num_perfs
+                    perf = perflist[i]
+                    model_name = modelname(perf)
+                    fpr = perf.blobs[:subsetblobs][:validation][:all_fpr]
+                    tpr = perf.blobs[:subsetblobs][:validation][:all_tpr]
+                    Plots.plot!(
+                        p,
+                        fpr,
+                        tpr,
+                        label = string(model_name),
+                        )
                 end
             end
             push!(subplots_arr, p)
         end
         if showtesting
-            # if i = 1
+            perf = perflist[1]
+            model_name = modelname(perf)
+            fpr = perf.blobs[:subsetblobs][:testing][:all_fpr]
+            tpr = perf.blobs[:subsetblobs][:testing][:all_tpr]
+            p = Plots.plot(
+                fpr,
+                tpr,
+                label = string(model_name),
+                title = "ROC curve (testing set)",
+                xlabel = "1 - specificity",
+                ylabel = "sensitivity",
+                )
             if num_perfs > 1
                 for i = 2:num_perfs
+                    perf = perflist[i]
+                    model_name = modelname(perf)
+                    fpr = perf.blobs[:subsetblobs][:testing][:all_fpr]
+                    tpr = perf.blobs[:subsetblobs][:testing][:all_tpr]
+                    Plots.plot!(
+                        p,
+                        fpr,
+                        tpr,
+                        label = string(model_name),
+                        )
                 end
             end
             push!(subplots_arr, p)
@@ -598,27 +650,81 @@ function plots(
                 precision,
                 label = string(model_name),
                 title = "PR curve (training set)",
-                xlabel = "1 - specificity",
-                ylabel = "sensitivity",
+                xlabel = "recall",
+                ylabel = "precision",
                 )
             if num_perfs > 1
                 for i = 2:num_perfs
+                    perf = perflist[i]
+                    model_name = modelname(perf)
+                    recall = perf.blobs[:subsetblobs][:training][:all_recall]
+                    precision = perf.blobs[:subsetblobs][:training][:all_precision]
+                    Plots.plot!(
+                        p,
+                        recall,
+                        precision,
+                        label = string(model_name),
+                        )
                 end
             end
             push!(subplots_arr, p)
         end
         if showvalidation
-            # if i = 1
+            perf = perflist[1]
+            model_name = modelname(perf)
+            recall = perf.blobs[:subsetblobs][:validation][:all_recall]
+            precision = perf.blobs[:subsetblobs][:validation][:all_precision]
+            p = Plots.plot(
+                recall,
+                precision,
+                label = string(model_name),
+                title = "PR curve (validation set)",
+                xlabel = "recall",
+                ylabel = "precision",
+                )
             if num_perfs > 1
                 for i = 2:num_perfs
+                    perf = perflist[i]
+                    model_name = modelname(perf)
+                    recall = perf.blobs[:subsetblobs][:validation][:all_recall]
+                    precision = perf.blobs[:subsetblobs][:validation][:all_precision]
+                    Plots.plot!(
+                        p,
+                        recall,
+                        precision,
+                        label = string(model_name),
+                        title = "PR curve (validation set)",
+                        )
                 end
             end
             push!(subplots_arr, p)
         end
         if showtesting
-            # if i = 1
+            perf = perflist[1]
+            model_name = modelname(perf)
+            recall = perf.blobs[:subsetblobs][:testing][:all_recall]
+            precision = perf.blobs[:subsetblobs][:testing][:all_precision]
+            p = Plots.plot(
+                recall,
+                precision,
+                label = string(model_name),
+                title = "PR curve (testing set)",
+                xlabel = "recall",
+                ylabel = "precision",
+                )
             if num_perfs > 1
                 for i = 2:num_perfs
+                    perf = perflist[i]
+                    model_name = modelname(perf)
+                    recall = perf.blobs[:subsetblobs][:testing][:all_recall]
+                    precision = perf.blobs[:subsetblobs][:testing][:all_precision]
+                    Plots.plot!(
+                        p,
+                        recall,
+                        precision,
+                        label = string(model_name),
+                        title = "PR curve (testing set)",
+                        )
                 end
             end
             push!(subplots_arr, p)
