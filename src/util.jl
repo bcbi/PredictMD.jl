@@ -1,3 +1,5 @@
+import DataFrames
+
 function odds_to_probability(odds)
     return odds/(1 + odds)
 end
@@ -105,4 +107,16 @@ function plural(word::AbstractString, n::Integer)
     else
         error("n must be a non-negative integer")
     end
+end
+
+function make_string!(df::DataFrames.AbstractDataFrame,symb_list::AbstractVector{T}) where T <: Symbol
+  num_symbs = length(symb_list)
+  num_symbs == 0 && error("Symb_list should not be empty")
+  for i=1:num_symbs
+    col = df[symb_list[i]]
+    DataFrames.delete!(df,symb_list[i])
+    new_col = string.(col)
+    df[symb_list[i]] = new_col
+  end
+  return df
 end
