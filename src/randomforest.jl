@@ -91,7 +91,7 @@ function SingleLabelBinaryRandomForestClassifier(
 
 
     if dovalidation && hasvalidation(dataset)
-        blobs[:numvalidation] = numtraining(dataset)
+        blobs[:numvalidation] = numvalidation(dataset)
         data_validation_features, recordidlist_validation = getdata(
             dataset;
             validation=true,
@@ -136,7 +136,7 @@ function SingleLabelBinaryRandomForestClassifier(
     end
 
     if dotesting && hastesting(dataset)
-        blobs[:numtesting] = numtraining(dataset)
+        blobs[:numtesting] = numtesting(dataset)
         data_testing_features, recordidlist_testing = getdata(
             dataset;
             testing=true,
