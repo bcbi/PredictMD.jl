@@ -1,3 +1,5 @@
+using DataFrames
+
 @test(AluthgeSinhaBase.odds_to_probability(1) == 0.5)
 @test(AluthgeSinhaBase.odds_to_probability(2/3) == 0.4)
 @test(AluthgeSinhaBase.odds_to_probability(10/5) == 2/3)
@@ -111,3 +113,10 @@ b_onecol_correct_answer = [
 @test(AluthgeSinhaBase.calculate_smote_pct_under(1000) == 110)
 
 @test(AluthgeSinhaBase.calculate_smote_pct_under(10000) == 101)
+
+df = DataFrame()
+df[:Ishan] = [4,2,0]
+df[:Dilum] = [1,6,6]
+
+AluthgeSinhaBase.make_string!(df,[:Ishan,:Dilum])
+@test(df[:Ishan] == ["4","2","0"] && df[:Dilum] == ["1","6","6"])
