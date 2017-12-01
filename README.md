@@ -1,5 +1,7 @@
 # AluthgeSinhaBase.jl
 
+## Build Status
+
 <table>
     <thead>
         <tr>

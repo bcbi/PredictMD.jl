@@ -16,3 +16,4 @@ Plots
 QuadGK
 ScikitLearn
 StatsBase
+StatsModels
