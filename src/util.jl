@@ -120,3 +120,7 @@ function make_string!(df::DataFrames.AbstractDataFrame,symb_list::AbstractVector
   end
   return df
 end
+
+function timestamp(datetime::DateTime = now())
+    return replace(string(datetime), r"[T\-:.]", s"")
+end
