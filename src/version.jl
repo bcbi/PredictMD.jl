@@ -6,3 +6,6 @@ catch e
     warn("while creating AluthgeSinhaBase.VERSION, ignoring error $(e)")
     VersionNumber(0)
 end
+
+const VERSION = VERSIONNUMBER
+
