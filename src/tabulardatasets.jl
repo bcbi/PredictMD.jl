@@ -57,6 +57,13 @@ function HoldoutTabularDataset(
 
     data_frame = DataFrames.DataFrame(data_original)
 
+    col_has_missings = any.(
+        [DataFrames.isna.(data_frame[col]) for col in names(data_frame)]
+        )
+    if any(col_has_missings)
+        error("input data contains missing data")
+    end
+
     if recordid_fieldname in names(data_frame)
         msg = "The dataset already has a column named $(recordid_fieldname)."*
             "Please select a different name for the recordid column."
