@@ -69,25 +69,25 @@ function HoldoutTabularDataset(
         percent_missing = num_missing/num_rows * 100.
         if num_missing > 0
             error(
-                "Column \"$(col)\" has $(num_missing) missing " *
+                "Column \"$(col_name)\" has $(num_missing) missing " *
                     "values ($(percent_missing) percent)"
                 )
         end
         if col_numuniquevalues == 0
             error(
-                "Column \"$(col)\" has zero unique values" *
+                "Column \"$(col_name)\" has zero unique values" *
                     "(eltype: $(col_eltype))"
                 )
         end
         if col_numuniquevalues == 1
             if col_eltype <: Real
                 warn(
-                    "Column \"$(col)\" only has one unique value" *
+                    "Column \"$(col_name)\" only has one unique value" *
                         "(eltype: $(col_eltype), value: $(col_eltype))"
                     )
             else
                 warn(
-                    "Column \"$(col)\" only has one unique value" *
+                    "Column \"$(col_name)\" only has one unique value" *
                         "(eltype: $(col_eltype), value: $(col_eltype))"
                     )
             end
