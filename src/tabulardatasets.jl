@@ -57,11 +57,41 @@ function HoldoutTabularDataset(
 
     data_frame = DataFrames.DataFrame(data_original)
 
-    col_has_missings = any.(
-        [DataFrames.isna.(data_frame[col]) for col in names(data_frame)]
-        )
-    if any(col_has_missings)
-        error("input data contains missing data")
+    num_rows = size(data_frame, 1)
+    blobs[:num_rows] = num_rows
+
+    for col_name in names(data_frame)
+        col_values = data_frame[col_name]
+        col_uniquevalues = sort( unique( col_values ) )
+        col_numuniquevalues = length(col_uniquevalues)
+        col_eltype = eltype(col_values)
+        num_missing = sum( DataFrames.isna.( col_values ) )
+        percent_missing = num_missing/num_rows * 100.
+        if num_missing > 0
+            error(
+                "Column \"$(col)\" has $(num_missing) missing " *
+                    "values ($(percent_missing) percent)"
+                )
+        end
+        if col_numuniquevalues == 0
+            error(
+                "Column \"$(col)\" has zero unique values" *
+                    "(eltype: $(col_eltype))"
+                )
+        end
+        if col_numuniquevalues == 1
+            if col_eltype <: Real
+                warn(
+                    "Column \"$(col)\" only has one unique value" *
+                        "(eltype: $(col_eltype), value: $(col_eltype))"
+                    )
+            else
+                warn(
+                    "Column \"$(col)\" only has one unique value" *
+                        "(eltype: $(col_eltype), value: $(col_eltype))"
+                    )
+            end
+        end
     end
 
     if recordid_fieldname in names(data_frame)
@@ -69,11 +99,7 @@ function HoldoutTabularDataset(
             "Please select a different name for the recordid column."
         error(msg)
     end
-
     blobs[:recordid_fieldname] = recordid_fieldname
-
-    num_rows = size(data_frame, 1)
-    blobs[:num_rows] = num_rows
     data_frame[recordid_fieldname] = 1:num_rows
 
     if shuffle_rows
