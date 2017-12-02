@@ -121,5 +121,4 @@ df[:Dilum] = [1,6,6]
 AluthgeSinhaBase.make_string!(df,[:Ishan,:Dilum])
 @test(df[:Ishan] == ["4","2","0"] && df[:Dilum] == ["1","6","6"])
 
-println(AluthgeSinhaBase.timestamp())
 @test(typeof(AluthgeSinhaBase.timestamp()) <: AbstractString)
