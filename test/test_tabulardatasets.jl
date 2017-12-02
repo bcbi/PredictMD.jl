@@ -58,3 +58,22 @@ tabular_dataset = HoldoutTabularDataset(
 @test(typeof(tabular_dataset) <: AbstractTabularDataset)
 @test(typeof(tabular_dataset) <: AbstractHoldoutTabularDataset)
 @test(typeof(tabular_dataset) <: HoldoutTabularDataset)
+
+##############################################################################
+
+dataframe = DataFrame()
+dataframe[:a] = [1,2,3,4,5]
+dataframe[:b] = [6,7,8,9,10]
+dataframe[:y] = [11,12,13,14,15]
+dataframe[4,:b] = NA
+@test_throws(
+    ErrorException,
+    HoldoutTabularDataset(
+        dataframe;
+        label_variables = [:y],
+        feature_variables = [:a, :b],
+        training=0.5,
+        validation=0.2,
+        testing=0.3,
+        ),
+    )
