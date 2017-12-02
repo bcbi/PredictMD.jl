@@ -80,6 +80,7 @@ function HoldoutTabularDataset(
                 )
         end
         if col_numuniquevalues == 1
+            singleval = col_uniquevalues[1]
             if col_eltype <: Real
                 warn(
                     "Column \"$(col_name)\" only has one unique value" *
@@ -88,7 +89,7 @@ function HoldoutTabularDataset(
             else
                 warn(
                     "Column \"$(col_name)\" only has one unique value" *
-                        "(eltype: $(col_eltype), value: $(col_eltype))"
+                        "(eltype: $(col_eltype), value: $(singleval))"
                     )
             end
         end
