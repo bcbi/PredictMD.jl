@@ -26,28 +26,28 @@
 
 ## Installation
 
-Step 1: Update your package directory:
+**Step 1: Update your package directory:**
 ```julia
 Pkg.update()
 ```
 
-Step 2: Install unregistered dependencies:
+**Step 2: Install unregistered dependencies:**
 ```julia
 Pkg.clone("https://github.com/bcbi/AUC.jl.git")
 Pkg.clone("https://github.com/bcbi/ClassImbalance.jl.git")
 ```
 
-Step 3: Install AluthgeSinhaBase:
+**Step 3: Install AluthgeSinhaBase:**
 ```julia
 Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git")
 ```
 
-Step 4: Checkout the master branch of AluthgeSinhaBase, which gives you the latest stable version:
+**Step 4: Checkout the master branch of AluthgeSinhaBase, which gives you the latest stable version:**
 ```julia
 Pkg.checkout("AluthgeSinhaBase", "master")
 ```
 
-Step 5: Run the test suite: **(this step is not optional!)**
+**Step 5: Run the test suite:**
 ```julia
 Pkg.test("AluthgeSinhaBase")
 ```
