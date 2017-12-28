@@ -16,9 +16,9 @@ matrix:
   allow_failures:
   - julia: nightly
 
-env:
-  global:
-  - PYTHON=conda
+# env:
+#   global:
+#   - PYTHON=conda
 
 addons:
   apt:
