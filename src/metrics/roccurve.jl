@@ -3,11 +3,9 @@ import MLBase
 import StatsBase
 
 function roccurve(
-        ytrue::T1,
-        yscore::T2
-        ) where
-        T1 <: StatsBase.IntegerVector where
-        T2 <: StatsBase.RealVector
+        ytrue::StatsBase.IntegerVector,
+        yscore::StatsBase.RealVector,
+        )
     allrocnums, allthresholds = getallrocnums(
         ytrue,
         yscore,

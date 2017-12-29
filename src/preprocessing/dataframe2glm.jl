@@ -9,13 +9,10 @@ struct DataFrame2GLMjlTransformer <: AbstractDataFrame2GLMjlTransformer
 end
 
 function transform(
-        transformer::T1,
-        featuresdf::T2,
-        labelsdf::T3,
-        ) where
-        T1 <: AbstractDataFrame2GLMjlTransformer where
-        T2 <: DataFrames.AbstractDataFrame where
-        T3 <: DataFrames.AbstractDataFrame
+        transformer::AbstractDataFrame2GLMjlTransformer,
+        featuresdf::DataFrames.AbstractDataFrame,
+        labelsdf::DataFrames.AbstractDataFrame,
+        )
     transformedlabelsdf = DataFrames.DataFrame()
     label = transformer.label
     positiveclass = transformer.positiveclass
@@ -26,30 +23,23 @@ function transform(
 end
 
 function transform(
-        transformer::T1,
-        featuresdf::T2,
-        ) where
-        T1 <: AbstractDataFrame2GLMjlTransformer where
-        T2 <: DataFrames.AbstractDataFrame
+        transformer::AbstractDataFrame2GLMjlTransformer,
+        featuresdf::DataFrames.AbstractDataFrame,
+        )
     return featuresdf
 end
 
 function fit!(
-        transformer::T1,
-        featuresdf::T2,
-        labelsdf::T3,
-        ) where
-        T1 <: AbstractDataFrame2GLMjlTransformer where
-        T2 <: DataFrames.AbstractDataFrame where
-        T3 <: DataFrames.AbstractDataFrame
+        transformer::AbstractDataFrame2GLMjlTransformer,
+        featuresdf::DataFrames.AbstractDataFrame,
+        labelsdf::DataFrames.AbstractDataFrame,
+        )
     return transform(transformer, featuresdf, labelsdf)
 end
 
 function predict_proba(
-        transformer::T1,
-        featuresdf::T2,
-        ) where
-        T1 <: AbstractDataFrame2GLMjlTransformer where
-        T2 <: DataFrames.AbstractDataFrame
+        transformer::AbstractDataFrame2GLMjlTransformer,
+        featuresdf::DataFrames.AbstractDataFrame,
+        )
     return transform(transformer, featuresdf)
 end

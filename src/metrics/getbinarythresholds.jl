@@ -1,11 +1,9 @@
 import StatsBase
 
 function getbinarythresholds(
-        yscore::T2;
-        additionalthreshold::T3 = 0.5,
-        ) where
-        T2 <: StatsBase.RealVector where
-        T3 <: Real
+        yscore::StatsBase.RealVector;
+        additionalthreshold::Real = 0.5,
+        )
     if !all(0 .<= yscore .<= 1)
         error("not all scores are in [0,1]")
     end

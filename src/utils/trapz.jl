@@ -1,9 +1,7 @@
 function trapz(
-        x::T1,
-        y::T2,
-        ) where
-        T1 <: AbstractVector where
-        T2 <: AbstractVector
+        x::AbstractVector,
+        y::AbstractVector,
+        )
     if length(x) != length(y)
         error("length(x) != length(y)")
     end

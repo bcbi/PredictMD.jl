@@ -2,13 +2,10 @@ import MLBase
 import StatsBase
 
 function getallrocnums(
-        ytrue::T1,
-        yscore::T2;
-        additionalthreshold::T3 = 0.5,
-        ) where
-        T1 <: StatsBase.IntegerVector where
-        T2 <: StatsBase.RealVector where
-        T3 <: Real
+        ytrue::StatsBase.IntegerVector,
+        yscore::StatsBase.RealVector;
+        additionalthreshold::Real = 0.5,
+        )
     allthresholds = getbinarythresholds(
         yscore;
         additionalthreshold = additionalthreshold,
@@ -21,32 +18,32 @@ function getallrocnums(
     return allrocnums, allthresholds
 end
 
-function accuracy(x::T) where T <: MLBase.ROCNums
+function accuracy(x::MLBase.ROCNums)
     result = (x.tp + x.tn)/(x.p + x.n)
     return result
 end
 
-function tpr(x::T) where T <: MLBase.ROCNums
+function tpr(x::MLBase.ROCNums)
     result = (x.tp)/(x.p)
     return result
 end
 
-function tnr(x::T) where T <: MLBase.ROCNums
+function tnr(x::MLBase.ROCNums)
     result = (x.tn)/(x.n)
     return result
 end
 
-function fpr(x::T) where T <: MLBase.ROCNums
+function fpr(x::MLBase.ROCNums)
     result = (x.fp)/(x.n)
     return result
 end
 
-function fnr(x::T) where T <: MLBase.ROCNums
+function fnr(x::MLBase.ROCNums)
     result = (x.fn)/(x.p)
     return result
 end
 
-function ppv(x::T) where T <: MLBase.ROCNums
+function ppv(x::MLBase.ROCNums)
     if (x.tp == 0) && (x.tp + x.fp == 0)
         result = 1
     elseif (x.tp !== 0) && (x.tp + x.fp == 0)
@@ -57,7 +54,7 @@ function ppv(x::T) where T <: MLBase.ROCNums
     return result
 end
 
-function npv(x::T) where T <: MLBase.ROCNums
+function npv(x::MLBase.ROCNums)
     if (x.tn == 0) && (x.tn + x.fn ==0)
         result = 1
     elseif (x.tn !== 0) && (x.tn + x.fn == 0)
@@ -68,28 +65,26 @@ function npv(x::T) where T <: MLBase.ROCNums
     return result
 end
 
-function sensitivity(x::T) where T <: MLBase.ROCNums
+function sensitivity(x::MLBase.ROCNums)
     return tpr(x)
 end
 
-function specificity(x::T) where T <: MLBase.ROCNums
+function specificity(x::MLBase.ROCNums)
     return tnr(x)
 end
 
-function precision(x::T) where T <: MLBase.ROCNums
+function precision(x::MLBase.ROCNums)
     return ppv(x)
 end
 
-function recall(x::T) where T <: MLBase.ROCNums
+function recall(x::MLBase.ROCNums)
     return tpr(x)
 end
 
 function fbetascore(
-        x::T1,
-        beta::T2,
-        ) where
-        T1 <: MLBase.ROCNums where
-        T2 <: Real
+        x::MLBase.ROCNums,
+        beta::Real,
+        )
     p = precision(x)
     r = recall(x)
     result = ( 1 + beta^2 ) * ( p*r ) / ( ((beta^2) * p) + r )
@@ -97,8 +92,7 @@ function fbetascore(
 end
 
 function f1score(
-        x::T1,
-        ) where
-        T1 <: MLBase.ROCNums
+        x::MLBase.ROCNums,
+        )
     return fbetascore(x, 1)
 end

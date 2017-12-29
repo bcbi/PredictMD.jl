@@ -6,6 +6,7 @@ DataFrames 0.11.3
 DecisionTree
 GLM
 MLBase
+PGFPlots
 RDatasets
 StatsBase
 StatsModels 0.2.1

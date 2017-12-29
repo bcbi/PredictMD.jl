@@ -2,11 +2,9 @@ import MLBase
 import StatsBase
 
 function auprc(
-        ytrue::T1,
-        yscore::T2
-        ) where
-        T1 <: StatsBase.IntegerVector where
-        T2 <: StatsBase.RealVector
+        ytrue::StatsBase.IntegerVector,
+        yscore::StatsBase.RealVector,
+        )
     allprecisions, allrecalls, allthresholds = prcurve(
         ytrue,
         yscore,

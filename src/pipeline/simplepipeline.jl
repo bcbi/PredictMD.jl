@@ -2,15 +2,13 @@ abstract type AbstractSimplePipeline <: AbstractPipeline
 end
 
 struct SimplePipeline <: AbstractSimplePipeline
-    name::N where N <: AbstractString
-    objectsvector::T1 where T1 <: VectorOfAbstractASBObjects
+    name::T1 where T1 <: AbstractString
+    objectsvector::T2 where T2 <: VectorOfAbstractASBObjects
 
     function SimplePipeline(
-            objectsvector::TT1;
-            name::NN = "",
-            ) where
-            TT1 <: VectorOfAbstractASBObjects where
-            NN <: AbstractString
+            objectsvector::VectorOfAbstractASBObjects;
+            name::AbstractString = "",
+            )
         if length(objectsvector) == 0
             error("input vector must be non-empty")
         end
@@ -19,22 +17,18 @@ struct SimplePipeline <: AbstractSimplePipeline
 end
 
 function underlying(
-        simplepipeline::T1,
-        ) where
-        T1 <: AbstractSimplePipeline
+        simplepipeline::AbstractSimplePipeline,
+        )
     objectsvector = simplepipeline.objectsvector
     result = [underlying(x) for x in objectsvector]
     return result
 end
 
 function fit!(
-        simplepipeline::T1,
-        features::T2,
-        labels::T3,
-        ) where
-        T1 <: SimplePipeline where
-        T2 where
-        T3
+        simplepipeline::SimplePipeline,
+        features,
+        labels,
+        )
     pipelineobjects = simplepipeline.objectsvector
     numpipelineobjects = length(pipelineobjects)
     if numpipelineobjects==0
@@ -52,11 +46,9 @@ function fit!(
 end
 
 function predict(
-        simplepipeline::T1,
-        features::T2,
-        ) where
-        T1 <: SimplePipeline where
-        T2
+        simplepipeline::SimplePipeline,
+        features,
+        )
     pipelineobjects = simplepipeline.objectsvector
     numpipelineobjects = length(pipelineobjects)
     if numpipelineobjects==0
@@ -74,11 +66,9 @@ function predict(
 end
 
 function predict_proba(
-        simplepipeline::T1,
-        features::T2,
-        ) where
-        T1 <: SimplePipeline where
-        T2
+        simplepipeline::SimplePipeline,
+        features,
+        )
     pipelineobjects = simplepipeline.objectsvector
     numpipelineobjects = length(pipelineobjects)
     if numpipelineobjects==0

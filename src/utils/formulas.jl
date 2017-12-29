@@ -1,13 +1,10 @@
 import StatsModels
 
 function makeformula(
-        labelnames::T1,
-        featurenames::T2;
-        intercept::T3 = true,
-        ) where
-        T1 <: AbstractVector where
-        T2 <: AbstractVector where
-        T3 <: Bool
+        labelnames::AbstractVector,
+        featurenames::AbstractVector;
+        intercept::Bool = true,
+        )
     if length(labelnames) == 0
         error("length(labelnames) == 0")
     end

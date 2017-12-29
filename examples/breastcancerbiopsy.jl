@@ -59,7 +59,7 @@ logistic = asb.binarylogisticclassifier(
     singlelabelname,
     positiveclass;
     package = :GLMjl, # optional
-    intercept = true, # optional
+    intercept = true, # optional, defaults to true if not specified
     name = "Logistic classifier", # optional
     )
 asb.fit!(
@@ -78,28 +78,28 @@ asb.binaryclassificationmetrics(
     )
 
 # Set up and train a RandomForest
-# logistic = asb.binarylogisticclassifier(
-#     featurenames,
-#     singlelabelname,
-#     positiveclass;
-#     package = :GLMjl, # optional
-#     intercept = true, # optional
-#     name = "Logistic classifier", # optional
-#     )
-# asb.fit!(
-#     logistic,
-#     trainingfeaturesdf,
-#     traininglabelsdf,
-#     )
-# # Evaluate the performance of the logistic on the testing set
-# asb.binaryclassificationmetrics(
-#     logistic,
-#     testingfeaturesdf,
-#     testinglabelsdf,
-#     singlelabelname,
-#     positiveclass;
-#     sensitivity = 0.99,
-#     )
+randomforest = asb.randomforestclassifier(
+    featurenames,
+    singlelabelname,
+    levels,
+    trainingfeaturesdf;
+    package = :DecisionTreejl, # optional
+    name = "Random forest classifier" # optional
+    )
+asb.fit!(
+    randomforest,
+    trainingfeaturesdf,
+    traininglabelsdf,
+    )
+# Evaluate the performance of the logistic on the testing set
+asb.binaryclassificationmetrics(
+    randomforest,
+    testingfeaturesdf,
+    testinglabelsdf,
+    singlelabelname,
+    positiveclass;
+    sensitivity = 0.99,
+    )
 
 # Set up and train an SVM
 # logistic = asb.binarylogisticclassifier(

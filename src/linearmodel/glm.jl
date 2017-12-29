@@ -7,7 +7,7 @@ abstract type AbstractASBGLMjlGeneralizedLinearModelClassifier <:
 end
 
 abstract type AbstractASBGLMjlGeneralizedLinearModelRegression <:
-        AbstractClassifier
+        AbstractRegression
 end
 
 mutable struct ASBGLMjlGeneralizedLinearModelClassifier <:
@@ -21,13 +21,10 @@ mutable struct ASBGLMjlGeneralizedLinearModelClassifier <:
     glm::T4 where T4
 
     function ASBGLMjlGeneralizedLinearModelClassifier(
-            formula::TT1,
-            family::TT2,
-            link::TT3,
-            ) where
-            TT1 <: StatsModels.Formula where
-            TT2 <: GLM.Distribution where
-            TT3 <: GLM.Link
+            formula::StatsModels.Formula,
+            family::GLM.Distribution,
+            link::GLM.Link,
+            )
         return new(formula, family, link)
     end
 end
@@ -43,38 +40,30 @@ mutable struct ASBGLMjlGeneralizedLinearModelRegression <:
     glm::T4 where T4
 
     function ASBGLMjlGeneralizedLinearModelRegression(
-            formula::TT1,
-            family::TT2,
-            link::TT3,
-            ) where
-            TT1 <: StatsModels.Formula where
-            TT2 <: GLM.Distribution where
-            TT3 <: GLM.Link
+            formula::StatsModels.Formula,
+            family::GLM.Distribution,
+            link::GLM.Link,
+            )
         return new(formula, family, link)
     end
 end
 
 function underlying(
-        x::T,
-        ) where
-        T <: AbstractASBGLMjlGeneralizedLinearModelClassifier
+        x::AbstractASBGLMjlGeneralizedLinearModelClassifier,
+        )
     return Nullable(x.glm)
 end
 function underlying(
-        x::T,
-        ) where
-        T <: AbstractASBGLMjlGeneralizedLinearModelRegression
+        x::AbstractASBGLMjlGeneralizedLinearModelRegression,
+        )
     return Nullable(x.glm)
 end
 
 function fit!(
-        estimator::T1,
-        featuresdf::T2,
-        labelsdf::T3,
-        ) where
-        T1 <: AbstractASBGLMjlGeneralizedLinearModelClassifier where
-        T2 <: DataFrames.AbstractDataFrame where
-        T3 <: DataFrames.AbstractDataFrame
+        estimator::AbstractASBGLMjlGeneralizedLinearModelClassifier,
+        featuresdf::DataFrames.AbstractDataFrame,
+        labelsdf::DataFrames.AbstractDataFrame,
+        )
     labelsandfeaturesdf = hcat(labelsdf, featuresdf)
     glm = GLM.glm(
         estimator.formula,
@@ -87,11 +76,9 @@ function fit!(
 end
 
 function predict_proba(
-        estimator::T1,
-        featuresdf::T2,
-        ) where
-        T1 <: AbstractASBGLMjlGeneralizedLinearModelClassifier where
-        T2 <: DataFrames.AbstractDataFrame
+        estimator::AbstractASBGLMjlGeneralizedLinearModelClassifier,
+        featuresdf::DataFrames.AbstractDataFrame,
+        )
     glmpredictoutput = GLM.predict(
         estimator.glm,
         featuresdf,
@@ -107,13 +94,10 @@ function predict_proba(
 end
 
 function fit!(
-        estimator::T1,
-        featuresdf::T2,
-        labelsdf::T3,
-        ) where
-        T1 <: AbstractASBGLMjlGeneralizedLinearModelRegression where
-        T2 <: DataFrames.AbstractDataFrame where
-        T3 <: DataFrames.AbstractDataFrame
+        estimator::AbstractASBGLMjlGeneralizedLinearModelRegression,
+        featuresdf::DataFrames.AbstractDataFrame,
+        labelsdf::DataFrames.AbstractDataFrame,
+        )
     labelsandfeaturesdf = hcat(labelsdf, featuresdf)
     glm = GLM.glm(
         estimator.formula,
@@ -125,26 +109,13 @@ function fit!(
     return estimator
 end
 
-# function predict(
-#         estimator::T1,
-#         featuresdf::T2,
-#         ) where
-#         T1 <: AbstractASBGLMjlGeneralizedLinearModelRegression where
-#         T2 <: DataFrames.AbstractDataFrame
-# end
-
 function _singlelabelbinarylogisticclassifier_glmjl(
-        featurenames::T1,
-        singlelabelname::T2,
-        singlelabelpositiveclass::T3;
-        intercept::T5 = true,
-        name::N = "",
-        ) where
-        T1 <: AbstractVector where
-        T2 <: Symbol where
-        T3 <: AbstractString where
-        T5 <: Bool where
-        N <: AbstractString
+        featurenames::AbstractVector,
+        singlelabelname::Symbol,
+        singlelabelpositiveclass::AbstractString;
+        intercept::Bool = true,
+        name::AbstractString = "",
+        )
     formula = makeformula(
         [singlelabelname],
         featurenames;
@@ -165,19 +136,13 @@ function _singlelabelbinarylogisticclassifier_glmjl(
 end
 
 function singlelabelbinarylogisticclassifier(
-        featurenames::T1,
-        singlelabelname::T2,
-        singlelabelpositiveclass::T3;
-        package::T4 = :GLMjl,
-        intercept::T5 = true,
-        name::N = "",
-        ) where
-        T1 <: AbstractVector where
-        T2 <: Symbol where
-        T3 <: AbstractString where
-        T4 <: Symbol where
-        T5 <: Bool where
-        N <: AbstractString
+        featurenames::AbstractVector,
+        singlelabelname::Symbol,
+        singlelabelpositiveclass::AbstractString;
+        package::Symbol = :GLMjl,
+        intercept::Bool = true,
+        name::AbstractString = "",
+        )
     if package == :GLMjl
         result =_singlelabelbinarylogisticclassifier_glmjl(
             featurenames,

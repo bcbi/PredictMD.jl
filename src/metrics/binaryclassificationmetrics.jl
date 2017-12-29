@@ -4,26 +4,20 @@ import MLBase
 import StatsBase
 
 function binaryytrue(
-        labelsdf::T1,
-        singlelabelname::T2,
-        positiveclass::T3,
-        ) where
-        T1 <: DataFrames.AbstractDataFrame where
-        T2 <: Symbol where
-        T3 <: AbstractString
+        labelsdf::DataFrames.AbstractDataFrame,
+        singlelabelname::Symbol,
+        positiveclass::AbstractString,
+        )
     singlelabelcolumn = labelsdf[singlelabelname]
     singlelabelcolumnasbinary = Int.(singlelabelcolumn .== positiveclass)
     return singlelabelcolumnasbinary
 end
 
 function binaryyscore(
-        predict_proba_results::T1,
-        singlelabelname::T2,
-        positiveclass::T3,
-        ) where
-        T1 <: Associative where
-        T2 <: Symbol where
-        T3 <: AbstractString
+        predict_proba_results::Associative,
+        singlelabelname::Symbol,
+        positiveclass::AbstractString,
+        )
     singlelabel_predict_proba_results = predict_proba_results[singlelabelname]
     if haskey(singlelabel_predict_proba_results, positiveclass)
         singlelabel_probabilityofclass1 =
@@ -38,18 +32,13 @@ function binaryyscore(
 end
 
 function binaryclassificationmetrics(
-        estimator::T1,
-        featuresdf::T2,
-        labelsdf::T3,
-        singlelabelname::T4,
-        positiveclass::T5;
+        estimator::AbstractASBObject,
+        featuresdf::DataFrames.AbstractDataFrame,
+        labelsdf::DataFrames.AbstractDataFrame,
+        singlelabelname::Symbol,
+        positiveclass::AbstractString;
         kwargs...
-        ) where
-        T1 <: AbstractASBObject where
-        T2 <: DataFrames.AbstractDataFrame where
-        T3 <: DataFrames.AbstractDataFrame where
-        T4 <: Symbol where
-        T5 <: AbstractString
+        )
     kwargsdict = Dict(kwargs)
     tunableparameters = [
         :threshold,
@@ -144,18 +133,13 @@ function binaryclassificationmetrics(
 end
 
 function binaryclassificationmetrics(
-        vectorofestimators::V1,
-        featuresdf::T2,
-        labelsdf::T3,
-        singlelabelname::T4,
-        positiveclass::T5;
+        vectorofestimators::VectorOfAbstractASBObjects,
+        featuresdf::DataFrames.AbstractDataFrame,
+        labelsdf::DataFrames.AbstractDataFrame,
+        singlelabelname::Symbol,
+        positiveclass::AbstractString;
         kwargs...
-        ) where
-        V1 <: VectorOfAbstractASBObjects where
-        T2 <: DataFrames.AbstractDataFrame where
-        T3 <: DataFrames.AbstractDataFrame where
-        T4 <: Symbol where
-        T5 <: AbstractString
+        )
     numestimators = length(vectorofestimators)
     metricsforeachestimator = [
         binaryclassificationmetrics(

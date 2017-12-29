@@ -2,11 +2,9 @@ import MLBase
 import StatsBase
 
 function _calculateaverageprecisionfromprecisionrecallcurve(
-        allprecisions::T1,
-        allrecalls::T2,
-        ) where
-        T1 <: StatsBase.RealVector where
-        T2 <: StatsBase.RealVector
+        allprecisions::StatsBase.RealVector,
+        allrecalls::StatsBase.RealVector,
+        )
     if length(allprecisions) != length(allrecalls)
         error("length(allprecisions) != length(allrecalls)")
     end
@@ -25,11 +23,9 @@ function _calculateaverageprecisionfromprecisionrecallcurve(
 end
 
 function averageprecisionscore(
-        ytrue::T1,
-        yscore::T2
-        ) where
-        T1 <: StatsBase.IntegerVector where
-        T2 <: StatsBase.RealVector
+        ytrue::StatsBase.IntegerVector,
+        yscore::StatsBase.RealVector,
+        )
     allprecisions, allrecalls, allthresholds = prcurve(
         ytrue,
         yscore,

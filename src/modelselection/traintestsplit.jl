@@ -2,15 +2,11 @@ import DataFrames
 import StatsBase
 
 function train_test_split(
-        featuresdf::T2,
-        labelsdf::T3;
-        training::T4 = 0.0,
-        testing::T5 = 0.0,
-        ) where
-        T2 <: DataFrames.AbstractDataFrame where
-        T3 <: DataFrames.AbstractDataFrame where
-        T4 <: Real where
-        T5 <: Real
+        featuresdf::DataFrames.AbstractDataFrame,
+        labelsdf::DataFrames.AbstractDataFrame;
+        training::Real = 0.0,
+        testing::Real = 0.0,
+        )
     result = train_test_split(
         Base.GLOBAL_RNG,
         featuresdf,
@@ -22,17 +18,12 @@ function train_test_split(
 end
 
 function train_test_split(
-        rng::T1,
-        featuresdf::T2,
-        labelsdf::T3;
-        training::T4 = 0.0,
-        testing::T5 = 0.0,
-        ) where
-        T1 <: AbstractRNG where
-        T2 <: DataFrames.AbstractDataFrame where
-        T3 <: DataFrames.AbstractDataFrame where
-        T4 <: Real where
-        T5 <: Real
+        rng::AbstractRNG,
+        featuresdf::DataFrames.AbstractDataFrame,
+        labelsdf::DataFrames.AbstractDataFrame;
+        training::Real = 0.0,
+        testing::Real = 0.0,
+        )
     if !(training + testing == 1.0)
         error("training + testing must equal 1.0")
     end

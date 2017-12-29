@@ -3,11 +3,9 @@ import MLBase
 import StatsBase
 
 function _ASB_aurocc(
-        ytrue::T1,
-        yscore::T2
-        ) where
-        T1 <: StatsBase.IntegerVector where
-        T2 <: StatsBase.RealVector
+        ytrue::StatsBase.IntegerVector,
+        yscore::StatsBase.RealVector,
+        )
     allfpr, alltpr, allthresholds = roccurve(
         ytrue,
         yscore,
@@ -19,11 +17,9 @@ function _ASB_aurocc(
 end
 
 function aurocc(
-        ytrue::T1,
-        yscore::T2
-        ) where
-        T1 <: StatsBase.IntegerVector where
-        T2 <: StatsBase.RealVector
+        ytrue::StatsBase.IntegerVector,
+        yscore::StatsBase.RealVector,
+        )
     Aluthge_aurocc = _ASB_aurocc(
         ytrue,
         yscore,
