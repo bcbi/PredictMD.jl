@@ -1,7 +1,7 @@
 # __precompile__(false)
-#
-# module AluthgeSinhaBase
-#
+
+module AluthgeSinhaBase
+
 # # abstract types to export:
 # export AbstractModelly
 #
@@ -79,5 +79,5 @@
 # include("tabulardatasets.jl")
 # include("util.jl")
 # include("version.jl")
-#
-# end # end module AluthgeSinhaBase
+
+end # end module AluthgeSinhaBase
