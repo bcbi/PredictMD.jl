@@ -1,5 +1,10 @@
 # AluthgeSinhaBase.jl
 
+| Table of Contents                  |
+| ---------------------------------- |
+| 1. [Build Status](#build-status)   |      
+| 2. [Installation](#installation)   |
+
 ## Build Status
 
 <table>
