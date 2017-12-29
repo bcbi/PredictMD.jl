@@ -74,7 +74,7 @@ asb.binaryclassificationmetrics(
     testinglabelsdf,
     singlelabelname,
     positiveclass;
-    sensitivity = 0.99,
+    sensitivity = 0.95,
     )
 
 # Set up and train a RandomForest
@@ -98,7 +98,7 @@ asb.binaryclassificationmetrics(
     testinglabelsdf,
     singlelabelname,
     positiveclass;
-    sensitivity = 0.99,
+    sensitivity = 0.95,
     )
 
 # Set up and train an SVM
