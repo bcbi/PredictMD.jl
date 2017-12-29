@@ -115,7 +115,7 @@ function binaryclassificationmetrics(
     elseif selectedtunableparameter == :sensitivity
         selectedsensitivity = kwargsdict[:sensitivity]
         allsensitivity = [sensitivity(x) for x in allrocnums]
-        bestindex = indmin(abs(allsensitivity - selectedsensitivity))
+        bestindex = indmin(abs.(allsensitivity - selectedsensitivity))
     elseif selectedtunableparameter == :specificity
         selectedspecificity = kwargsdict[:specificity]
         allspecificity = [specificity(x) for x in allrocnums]
