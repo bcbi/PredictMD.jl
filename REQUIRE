@@ -4,6 +4,7 @@ AUC
 ClassImbalance
 DataFrames 0.11.3
 DecisionTree
+FFTW
 GLM
 MLBase
 PGFPlots
