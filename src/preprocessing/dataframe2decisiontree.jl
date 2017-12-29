@@ -77,12 +77,12 @@ function transform(
     featurecontrasts = transformer.featurecontrasts
     modelframe = StatsModels.ModelFrame(
         modelformula,
-        df;
+        featuresdf;
         contrasts = featurecontrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     featuresarray = modelmatrix.m
-    return featuresarray, labelsarray
+    return featuresarray
 end
 
 function fit!(

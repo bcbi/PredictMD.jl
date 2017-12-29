@@ -57,8 +57,8 @@ function predict_proba(
         estimator.levels,
         )
     labelresult = Dict()
-    for i = 1:length(levels)
-        labelresult[levels[i]] = predictedprobabilities[:, i]
+    for i = 1:length(estimator.levels)
+        labelresult[estimator.levels[i]] = predictedprobabilities[:, i]
     end
     allresults = Dict()
     allresults[estimator.singlelabelname] = labelresult

@@ -58,8 +58,8 @@ logistic = asb.binarylogisticclassifier(
     featurenames,
     singlelabelname,
     positiveclass;
-    package = :GLMjl, # optional
-    intercept = true, # optional, defaults to true if not specified
+    package = :GLMjl, # optional, defaults to :GLMjl
+    intercept = true, # optional, defaults to true
     name = "Logistic classifier", # optional
     )
 asb.fit!(
@@ -83,7 +83,9 @@ randomforest = asb.randomforestclassifier(
     singlelabelname,
     levels,
     trainingfeaturesdf;
-    package = :DecisionTreejl, # optional
+    nsubfeatures = 2, # number of subfeatures; defaults to 2
+    ntrees = 20, # number of trees; defaults to 10
+    package = :DecisionTreejl, # optional, defaults to :DecisionTreejl
     name = "Random forest classifier" # optional
     )
 asb.fit!(
@@ -151,11 +153,12 @@ asb.binaryclassificationmetrics(
 
 
 # Compare the performance of all four of our models
-# asb.binaryclassificationmetrics(
-#     [logistic, randomforest, svm, neuralnet],
-#     testingfeaturesdf,
-#     testinglabelsdf,
-#     singlelabelname,
-#     positiveclass;
-#     sensitivity = 0.99,
-#     )
+asb.binaryclassificationmetrics(
+    # [logistic, randomforest, svm, neuralnet,],
+    [logistic, randomforest,],
+    testingfeaturesdf,
+    testinglabelsdf,
+    singlelabelname,
+    positiveclass;
+    sensitivity = 0.99,
+    )

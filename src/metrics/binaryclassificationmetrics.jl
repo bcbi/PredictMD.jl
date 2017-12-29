@@ -152,33 +152,33 @@ function binaryclassificationmetrics(
             )
             for est in vectorofestimators
         ]
-    allresults = []
+    # allresults = []
+    result = DataFrames.DataFrame()
+    result[:metric] = [
+        "AUROCC",
+        "AUPRC",
+        "Average precision",
+        "Threshold*",
+        "Accuracy*",
+        "Sensitivity*",
+        "Specificity*",
+        "Precision*",
+        "Recall*",
+        "F1 score*",
+        ]
     for i = 1:numestimators
-        result_i = DataFrames.DataFrame()
-        result_i[:Name] =
-            vectorofestimators[i].name
-        result_i[:AUROCC] =
-            metricsforeachestimator[i][:AUROCC]
-        result_i[:AUPRC] =
-            metricsforeachestimator[i][:AUPRC]
-        result_i[:AveragePrecision] =
-            metricsforeachestimator[i][:AveragePrecision]
-        result_i[:threshold] =
-            metricsforeachestimator[i][:threshold]
-        result_i[:accuracy] =
-            metricsforeachestimator[i][:accuracy]
-        result_i[:sensitivity] =
-            metricsforeachestimator[i][:sensitivity]
-        result_i[:specificity] =
-            metricsforeachestimator[i][:specificity]
-        result_i[:precision] =
-            metricsforeachestimator[i][:precision]
-        result_i[:recall] =
-            metricsforeachestimator[i][:recall]
-        result_i[:f1score] =
-            metricsforeachestimator[i][:f1score]
-        push!(allresults, result_i)
+        result[Symbol(vectorofestimators[i].name)] = [
+            metricsforeachestimator[i][:AUROCC],
+             metricsforeachestimator[i][:AUPRC],
+            metricsforeachestimator[i][:AveragePrecision],
+            metricsforeachestimator[i][:threshold],
+            metricsforeachestimator[i][:accuracy],
+            metricsforeachestimator[i][:sensitivity],
+            metricsforeachestimator[i][:specificity],
+            metricsforeachestimator[i][:precision],
+            metricsforeachestimator[i][:recall],
+            metricsforeachestimator[i][:f1score],
+            ]
     end
-    finalresult = vcat(allresults...)
-    return finalresult
+    return result
 end
