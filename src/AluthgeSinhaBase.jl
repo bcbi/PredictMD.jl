@@ -2,6 +2,8 @@ __precompile__(true)
 
 module AluthgeSinhaBase
 
+include("version.jl")
+
 # # abstract types to export:
 # export AbstractModelly
 #
