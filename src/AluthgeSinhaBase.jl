@@ -19,6 +19,8 @@ include("neuralnetwork.jl")
 include("pipeline.jl")
 include("plotting.jl")
 include("preprocessing.jl")
+include("scikitlearnapi.jl")
+include("tree.jl")
 include("utils.jl")
 include("version.jl")
 

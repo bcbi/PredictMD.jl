@@ -1,6 +1,19 @@
 import StatsModels
 
 function makeformula(
+        singlelabelname::Symbol,
+        featurenames::AbstractVector;
+        intercept::Bool = true,
+        )
+    result = makeformula(
+        [singlelabelname],
+        featurenames;
+        intercept = intercept;
+        )
+    return result
+end
+
+function makeformula(
         labelnames::AbstractVector,
         featurenames::AbstractVector;
         intercept::Bool = true,

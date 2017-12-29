@@ -10,7 +10,7 @@ struct DataFrame2DecisionTreejlTransformer <:
     featurenames::T1 where T1 <: AbstractVector
     featurecontrasts::T2 where T2 <: Associative
     singlelabelname::T3 where T3 <: Symbol
-    levels::T4 where T4 <: AbstractString
+    levels::T4 where T4 <: AbstractVector
 end
 
 function DataFrame2DecisionTreejlTransformer(
@@ -23,7 +23,7 @@ function DataFrame2DecisionTreejlTransformer(
         error("length(featurenames) == 0")
     end
     modelformula = makeformula(
-        featurenames,
+        featurenames[1],
         featurenames;
         intercept = false
         )
@@ -50,14 +50,14 @@ function transform(
     labelsarray = convert(Array, labelsdf[singlelabelname])
     @assert(typeof(labelsarray) <: AbstractVector)
     modelformula = makeformula(
-        featurenames,
-        featurenames;
+        transformer.featurenames[1],
+        transformer.featurenames;
         intercept = false
         )
     featurecontrasts = transformer.featurecontrasts
     modelframe = StatsModels.ModelFrame(
         modelformula,
-        df;
+        featuresdf;
         contrasts = featurecontrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
@@ -70,8 +70,8 @@ function transform(
         featuresdf::DataFrames.AbstractDataFrame,
         )
     modelformula = makeformula(
-        featurenames,
-        featurenames;
+        transformer.featurenames[1],
+        transformer.featurenames;
         intercept = false
         )
     featurecontrasts = transformer.featurecontrasts

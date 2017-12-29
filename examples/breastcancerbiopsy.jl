@@ -77,7 +77,7 @@ asb.binaryclassificationmetrics(
     sensitivity = 0.95,
     )
 
-# Set up and train a RandomForest
+# Set up and train a random forest
 randomforest = asb.randomforestclassifier(
     featurenames,
     singlelabelname,
@@ -91,7 +91,7 @@ asb.fit!(
     trainingfeaturesdf,
     traininglabelsdf,
     )
-# Evaluate the performance of the logistic on the testing set
+# Evaluate the performance of the random forest on the testing set
 asb.binaryclassificationmetrics(
     randomforest,
     testingfeaturesdf,

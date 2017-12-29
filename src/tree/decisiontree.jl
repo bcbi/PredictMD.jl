@@ -106,8 +106,11 @@ function singlelabelrandomforestclassifier(
         result = _singlelabelrandomforestclassifier_decisiontreejl(
             featurenames,
             singlelabelname,
-            levels;
+            levels,
+            df;
             name = name,
+            nsubfeatures = nsubfeatures,
+            ntrees = ntrees,
         )
         return result
     else
