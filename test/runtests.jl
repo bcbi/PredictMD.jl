@@ -1,7 +1,11 @@
-# using AluthgeSinhaBase
-# using Base.Test
-#
-# # test scripts to run:
+import AluthgeSinhaBase
+const asb = AluthgeSinhaBase
+import Base.Test
+
+include("test_version.jl")
+
+include("test_examples.jl")
+
 # include("test_abstracttypes.jl")
 # include("test_auc.jl")
 # include("test_convenience.jl")
@@ -19,4 +23,3 @@
 # include("test_svm.jl")
 # include("test_tabulardatasets.jl")
 # include("test_util.jl")
-# include("test_version.jl")

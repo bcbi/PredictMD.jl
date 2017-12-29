@@ -2,13 +2,15 @@ __precompile__(true)
 
 module AluthgeSinhaBase
 
-include("base.jl")
+include("common.jl")
+
 include("calibration.jl")
 include("cluster.jl")
 include("datasets.jl")
 include("decomposition.jl")
 include("ensemble.jl")
 include("linearmodel.jl")
+include("metrics.jl")
 include("modelselection.jl")
 include("multiclass.jl")
 include("multioutput.jl")
@@ -17,83 +19,5 @@ include("pipeline.jl")
 include("preprocessing.jl")
 include("utils.jl")
 include("version.jl")
-
-# # abstract types to export:
-# export AbstractModelly
-#
-# # abstract type aliases to export:
-#
-# # abstract parametric types to export:
-# export AbstractDataset,
-#     AbstractTabularDataset,
-#     AbstractHoldoutTabularDataset,
-#     AbstractKFoldTabularDataset,
-#     AbstractSingleModel,
-#     AbstractClassifier,
-#     AbstractSingleLabelClassifier,
-#     AbstractSingleLabelBinaryClassifier,
-#     AbstractRegression,
-#     AbstractSingleLabelRegression,
-#     AbstractModelPerformance
-#
-# # abstract parametric type aliases to export:
-# export ArrayOfModels,
-#     VectorOfModels,
-#     MatrixOfModels,
-#     AbstractBinaryClassifier
-#
-# # concrete types to export:
-# export HoldoutTabularDataset,
-#     ResampledHoldoutTabularDataset,
-#     SingleLabelBinaryLogisticClassifier,
-#     SingleLabelBinaryRandomForestClassifier,
-#     SingleLabelBinarySupportVectorMachineClassifier
-#
-# # concrete type aliases to export:
-#
-# # concrete parametric types to export:
-# export ModelPerformance
-#
-# # concrete parametric type aliases to export:
-# export BinaryLogistic,
-#     BinaryRandomForest,
-#     SingleLabelBinarySVMClassifier,
-#     BinarySupportVectorMachine,
-#     BinarySVM
-#
-# # functions to export:
-# export getdata,
-#     numtraining,
-#     numvalidation,
-#     numtesting,
-#     hastraining,
-#     hasvalidation,
-#     hastesting,
-#     dataname,
-#     modelname,
-#     ensemblename,
-#     plots,
-#     classifierhistograms,
-#     learningcurves
-#
-# # source files to include:
-# include("abstracttypes.jl")
-# include("auc.jl")
-# include("convenience.jl")
-# include("ensembles.jl")
-# include("env.jl")
-# include("faketabulardata.jl")
-# include("formulas.jl")
-# include("labelcoding.jl")
-# include("linearmodels.jl")
-# include("loss.jl")
-# include("metrics.jl")
-# include("modelperformance.jl")
-# include("randomforest.jl")
-# include("smote.jl")
-# include("svm.jl")
-# include("tabulardatasets.jl")
-# include("util.jl")
-# include("version.jl")
 
 end # end module AluthgeSinhaBase

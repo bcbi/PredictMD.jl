@@ -1,3 +1,12 @@
+include("metrics/auprc.jl")
+include("metrics/aurocc.jl")
+include("metrics/averageprecisionscore.jl")
+include("metrics/binaryclassificationmetrics.jl")
+include("metrics/getbinarythresholds.jl")
+include("metrics/prcurve.jl")
+include("metrics/roccurve.jl")
+include("metrics/rocnumsmetrics.jl")
+
 # function numtotal(
 #         rocnums::MLBase.ROCNums
 #         )

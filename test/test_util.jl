@@ -1,4 +1,4 @@
-# using DataFrames
+# import DataFrames
 #
 # @test(AluthgeSinhaBase.odds_to_probability(1) == 0.5)
 # @test(AluthgeSinhaBase.odds_to_probability(2/3) == 0.4)

@@ -1,6 +1,6 @@
 # srand(999)
 #
-# using DataFrames
+# import DataFrames
 #
 # num_rows = 5_000
 # dataframe, label_variables, feature_variables =

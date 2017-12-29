@@ -1,6 +1,6 @@
 # srand(999)
 #
-# using DataFrames
+# import DataFrames
 #
 # d = DataFrame()
 #

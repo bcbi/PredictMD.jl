@@ -1,6 +1,6 @@
 # srand(999)
 #
-# using StatsBase
+# import StatsBase
 #
 # num_rows = 5_000
 # labels_original = Vector{String}(num_rows)
