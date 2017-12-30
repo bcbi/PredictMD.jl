@@ -31,7 +31,7 @@ function binaryyscore(
     return singlelabel_probabilityofclass1
 end
 
-function binaryclassificationmetrics(
+function _binaryclassificationmetrics(
         estimator::AbstractASBObject,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
@@ -133,6 +133,26 @@ function binaryclassificationmetrics(
 end
 
 function binaryclassificationmetrics(
+        estimator::AbstractASBObject,
+        featuresdf::DataFrames.AbstractDataFrame,
+        labelsdf::DataFrames.AbstractDataFrame,
+        singlelabelname::Symbol,
+        positiveclass::AbstractString;
+        kwargs...
+        )
+    vectorofestimators = [estimator]
+    result = binaryclassificationmetrics(
+        vectorofestimators,
+        featuresdf,
+        labelsdf,
+        singlelabelname,
+        positiveclass;
+        kwargs...
+        )
+    return result
+end
+
+function binaryclassificationmetrics(
         vectorofestimators::VectorOfAbstractASBObjects,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
@@ -142,7 +162,7 @@ function binaryclassificationmetrics(
         )
     numestimators = length(vectorofestimators)
     metricsforeachestimator = [
-        binaryclassificationmetrics(
+        _binaryclassificationmetrics(
             est,
             featuresdf,
             labelsdf,

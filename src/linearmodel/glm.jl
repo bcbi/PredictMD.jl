@@ -12,40 +12,43 @@ end
 
 mutable struct ASBGLMjlGeneralizedLinearModelClassifier <:
         AbstractASBGLMjlGeneralizedLinearModelClassifier
+    name::T1 where T1 <: AbstractString
+
     # hyperparameters (not learned from data):
-    formula::T1 where T1 <: StatsModels.Formula
-    family::T2 where T2 <: GLM.Distribution
-    link::T3 where T3 <: GLM.Link
+    formula::T2 where T2 <: StatsModels.Formula
+    family::T3 where T3 <: GLM.Distribution
+    link::T4 where T4 <: GLM.Link
 
     # parameters (learned from data):
-    glm::T4 where T4
+    glm::T5 where T5
 
     function ASBGLMjlGeneralizedLinearModelClassifier(
             formula::StatsModels.Formula,
             family::GLM.Distribution,
-            link::GLM.Link,
+            link::GLM.Link;
+            name::AbstractString = "",
             )
-        return new(formula, family, link)
+        return new(name, formula, family, link)
     end
 end
 
 mutable struct ASBGLMjlGeneralizedLinearModelRegression <:
         AbstractASBGLMjlGeneralizedLinearModelRegression
-    # hyperparameters (not learned from data):
-    formula::T1 where T1 <: StatsModels.Formula
-    family::T2 where T2 <: GLM.Distribution
-    link::T3 where T3 <: GLM.Link
-
-    # parameters (learned from data):
-    glm::T4 where T4
-
-    function ASBGLMjlGeneralizedLinearModelRegression(
-            formula::StatsModels.Formula,
-            family::GLM.Distribution,
-            link::GLM.Link,
-            )
-        return new(formula, family, link)
-    end
+#     # hyperparameters (not learned from data):
+#     formula::T1 where T1 <: StatsModels.Formula
+#     family::T2 where T2 <: GLM.Distribution
+#     link::T3 where T3 <: GLM.Link
+#
+#     # parameters (learned from data):
+#     glm::T4 where T4
+#
+#     function ASBGLMjlGeneralizedLinearModelRegression(
+#             formula::StatsModels.Formula,
+#             family::GLM.Distribution,
+#             link::GLM.Link,
+#             )
+#         return new(formula, family, link)
+#     end
 end
 
 function underlying(
