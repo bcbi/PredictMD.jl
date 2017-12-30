@@ -25,6 +25,7 @@ addons:
     - texlive-binaries
     - texlive-pictures
     - texlive-latex-extra
+    - pgf
 
 before_script:
   - julia -e 'Pkg.clone("https://github.com/bcbi/AUC.jl.git")'
