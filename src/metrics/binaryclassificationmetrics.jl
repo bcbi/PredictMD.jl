@@ -85,6 +85,8 @@ function _binaryclassificationmetrics(
             )
         )
     results = Dict()
+    results[:ytrue] = ytrue
+    results[:yscore] = yscore
     results[:AUROCC] = aurocc(ytrue, yscore)
     results[:AUPRC] = auprc(ytrue, yscore)
     results[:AveragePrecision] = averageprecisionscore(ytrue, yscore)
@@ -120,6 +122,9 @@ function _binaryclassificationmetrics(
     else
         error("this is another error that should never happen")
     end
+    results[:allrocnums] = allrocnums
+    results[:allthresholds] = allthresholds
+    results[:bestindex] = bestindex
     bestrocnums = allrocnums[bestindex]
     bestthreshold = allthresholds[bestindex]
     results[:threshold] = bestthreshold

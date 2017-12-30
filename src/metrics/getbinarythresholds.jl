@@ -19,7 +19,8 @@ function getbinarythresholds(
                 additionalthreshold,
                 unique(yscore),
                 )
-            )
+            );
+        rev = false,
         )
     @assert(typeof(result) <: AbstractVector)
     return result

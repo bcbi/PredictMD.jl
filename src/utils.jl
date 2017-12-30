@@ -1,3 +1,5 @@
 include("utils/formulas.jl")
+include("utils/openbrowserwindow.jl")
 include("utils/shufflerows.jl")
+include("utils/tikzpictures.jl")
 include("utils/trapz.jl")
