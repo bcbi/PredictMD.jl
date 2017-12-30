@@ -102,7 +102,7 @@ function _binaryclassificationmetrics(
         )
     if selectedtunableparameter == :threshold
         selectedthreshold = kwargsdict[:threshold]
-        bestindex = indmin(abs(allthresholds - selectedthreshold))
+        bestindex = indmin(abs.(allthresholds - selectedthreshold))
     elseif selectedtunableparameter == :sensitivity
         selectedsensitivity = kwargsdict[:sensitivity]
         allsensitivity = [sensitivity(x) for x in allrocnums]
@@ -110,7 +110,7 @@ function _binaryclassificationmetrics(
     elseif selectedtunableparameter == :specificity
         selectedspecificity = kwargsdict[:specificity]
         allspecificity = [specificity(x) for x in allrocnums]
-        bestindex = indmin(abs(allspecificity - selectedspecificity))
+        bestindex = indmin(abs.(allspecificity - selectedspecificity))
     elseif selectedtunableparameter == :maximize
         parametertomaximize = kwargsdict[:maximize]
         if parametertomaximize == :f1score
