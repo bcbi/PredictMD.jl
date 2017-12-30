@@ -28,12 +28,17 @@ addons:
     - texlive-pictures
 
 before_install:
+  # update homebrew
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+  # install basictex
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install basictex; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH=/Library/TeX/texbin:"$PATH"; fi
+  # update tlmgr
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr update --self; fi
+  # install necessary tex packages
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install pgfplots; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install standalone; fi
+  # install pdf2svg
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install pdf2svg; fi
 
 before_script:
