@@ -2,9 +2,13 @@ import AluthgeSinhaBase
 const asb = AluthgeSinhaBase
 import Base.Test
 
+ENV["RUNNINGTESTS"] = "true"
+
 include("test_version.jl")
 
 include("test_examples.jl")
+
+ENV["RUNNINGTESTS"] = "false"
 
 # include("test_abstracttypes.jl")
 # include("test_auc.jl")
