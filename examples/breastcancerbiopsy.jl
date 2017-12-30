@@ -110,16 +110,16 @@ asb.binaryclassificationmetrics(
 #     positiveclass;
 #     package = :GLMjl, # optional
 #     intercept = true, # optional
-#     name = "Logistic classifier", # optional
+#     name = "SVM classifier", # optional
 #     )
 # asb.fit!(
-#     logistic,
+#     svm,
 #     trainingfeaturesdf,
 #     traininglabelsdf,
 #     )
-# # Evaluate the performance of the logistic on the testing set
+# # Evaluate the performance of the SVM on the testing set
 # asb.binaryclassificationmetrics(
-#     logistic,
+#     svm,
 #     testingfeaturesdf,
 #     testinglabelsdf,
 #     singlelabelname,
@@ -128,22 +128,22 @@ asb.binaryclassificationmetrics(
 #     )
 
 # Set up and train a neural net
-# logistic = asb.binarylogisticclassifier(
+# neuralnet = asb.binarylogisticclassifier(
 #     featurenames,
 #     singlelabelname,
 #     positiveclass;
 #     package = :GLMjl, # optional
 #     intercept = true, # optional
-#     name = "Logistic classifier", # optional
+#     name = "Neural network classifier", # optional
 #     )
 # asb.fit!(
-#     logistic,
+#     neuralnet,
 #     trainingfeaturesdf,
 #     traininglabelsdf,
 #     )
-# # Evaluate the performance of the logistic on the testing set
+# # Evaluate the performance of the neural net on the testing set
 # asb.binaryclassificationmetrics(
-#     logistic,
+#     neuralnet,
 #     testingfeaturesdf,
 #     testinglabelsdf,
 #     singlelabelname,
@@ -152,13 +152,35 @@ asb.binaryclassificationmetrics(
 #     )
 
 
-# Compare the performance of all four of our models
+# Compare the performance of all four models on the testing set
 asb.binaryclassificationmetrics(
-    # [logistic, randomforest, svm, neuralnet,],
-    [logistic, randomforest,],
+    # [logistic, randomforest, svm, neuralnet],
+    [logistic, randomforest],
     testingfeaturesdf,
     testinglabelsdf,
     singlelabelname,
     positiveclass;
     sensitivity = 0.99,
     )
+
+# Plot receiver operating characteristic curves for all four models
+rocplot = asb.plotroccurves(
+    # [logistic, randomforest, svm, neuralnet],
+    [logistic, randomforest],
+    testingfeaturesdf,
+    testinglabelsdf,
+    singlelabelname,
+    positiveclass,
+    )
+asb.open(rocplot)
+
+# Plot precision-recall curves for all four models
+prplot = asb.plotprcurves(
+    # [logistic, randomforest, svm, neuralnet],
+    [logistic, randomforest],
+    testingfeaturesdf,
+    testinglabelsdf,
+    singlelabelname,
+    positiveclass,
+    )
+asb.open(prplot)

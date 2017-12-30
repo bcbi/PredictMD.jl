@@ -1,8 +1,17 @@
+import MLBase
+
+const ArrayOfMLBaseROCNums =
+    AbstractArray{T, N} where T <: MLBase.ROCNums where N
+const VectorOfMLBaseROCNums =
+    AbstractArray{T, 1} where T <: MLBase.ROCNums
+const MatrixOfMLBaseROCNums =
+    AbstractArray{T, 2} where T <: MLBase.ROCNums
+
 abstract type AbstractASBObject
 end
 
 const ArrayOfAbstractASBObjects =
-    AbstractArray{T, N} where T <: AbstractASBObject where N <: Integer
+    AbstractArray{T, N} where T <: AbstractASBObject where N
 const VectorOfAbstractASBObjects =
     AbstractArray{T, 1} where T <: AbstractASBObject
 const MatrixOfAbstractASBObjects =

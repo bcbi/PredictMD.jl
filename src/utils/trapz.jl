@@ -9,7 +9,7 @@ function trapz(
         error("length(x) == 0")
     end
     N = length(x)
-    if !all(x .== sort(x))
+    if !all(x .== sort(x; rev = false))
         error("x needs to be sorted in ascending order")
     end
     twoI = 0

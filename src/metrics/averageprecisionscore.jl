@@ -4,6 +4,7 @@ import StatsBase
 function _calculateaverageprecisionfromprecisionrecallcurve(
         allprecisions::StatsBase.RealVector,
         allrecalls::StatsBase.RealVector,
+        allthresholds::StatsBase.RealVector,
         )
     if length(allprecisions) != length(allrecalls)
         error("length(allprecisions) != length(allrecalls)")
@@ -11,9 +12,11 @@ function _calculateaverageprecisionfromprecisionrecallcurve(
     if length(allprecisions) < 2
         error("length(allprecisions) < 2")
     end
-    permutation = sortperm(allprecisions; rev = true)
+    #
+    permutation = sortperm(allthresholds; rev = false)
     allprecisions = allprecisions[permutation]
     allrecalls = allrecalls[permutation]
+    #
     N = length(allprecisions)
     result = 0
     for k = 2:N
@@ -35,6 +38,7 @@ function averageprecisionscore(
     avgprecision = _calculateaverageprecisionfromprecisionrecallcurve(
         allprecisions,
         allrecalls,
+        allthresholds,
         )
     return avgprecision
 end

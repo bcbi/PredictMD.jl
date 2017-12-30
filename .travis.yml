@@ -21,10 +21,22 @@ addons:
     packages:
     - hdf5-tools
     - pdf2svg
-    - texlive-latex-base
+    - pgf
     - texlive-binaries
-    - texlive-pictures
+    - texlive-latex-base
     - texlive-latex-extra
+    - texlive-pictures
+
+before_install:
+  # update homebrew
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+  # install mactex
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install mactex; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH=/Library/TeX/texbin:"$PATH"; fi
+  # update tlmgr
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr update --self; fi
+  # install pdf2svg
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install pdf2svg; fi
 
 before_script:
   - julia -e 'Pkg.clone("https://github.com/bcbi/AUC.jl.git")'

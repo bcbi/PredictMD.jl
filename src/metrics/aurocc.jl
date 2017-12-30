@@ -10,6 +10,12 @@ function _ASB_aurocc(
         ytrue,
         yscore,
         )
+    #
+    permutation = sortperm(allthresholds; rev=true)
+    allfpr = allfpr[permutation]
+    alltpr = alltpr[permutation]
+    allthresholds = allthresholds[permutation]
+    #
     x = allfpr
     y = alltpr
     areaunderroccurve = trapz(x, y)
