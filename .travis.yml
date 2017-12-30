@@ -35,11 +35,6 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH=/Library/TeX/texbin:"$PATH"; fi
   # update tlmgr
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr update --self; fi
-  # install necessary tex packages
-  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install luatex; fi
-  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install luatex85; fi
-  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install pgfplots; fi
-  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install standalone; fi
   # install pdf2svg
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install pdf2svg; fi
 
