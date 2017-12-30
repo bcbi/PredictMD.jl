@@ -16,10 +16,6 @@ matrix:
   allow_failures:
   - julia: nightly
 
-env:
-  global:
-  - PYTHON=conda
-
 addons:
   apt:
     packages:
@@ -31,8 +27,9 @@ addons:
     - texlive-latex-extra
 
 before_script:
-  - julia -e 'Pkg.clone("https://github.com/bcbi/ClassImbalance.jl.git")'
   - julia -e 'Pkg.clone("https://github.com/bcbi/AUC.jl.git")'
+  - julia -e 'Pkg.clone("https://github.com/bcbi/ClassImbalance.jl.git")'
+  - julia -e 'Pkg.clone("https://github.com/johnmyleswhite/RDatasets.jl")'
 
 after_success:
   # push coverage results to Coveralls

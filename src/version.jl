@@ -8,4 +8,3 @@ catch e
 end
 
 const VERSION = VERSIONNUMBER
-

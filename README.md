@@ -1,5 +1,10 @@
 # AluthgeSinhaBase.jl
 
+| Table of Contents                  |
+| ---------------------------------- |
+| 1. [Build Status](#build-status)   |      
+| 2. [Installation](#installation)   |
+
 ## Build Status
 
 <table>
@@ -35,6 +40,7 @@ Pkg.update()
 ```julia
 Pkg.clone("https://github.com/bcbi/AUC.jl.git")
 Pkg.clone("https://github.com/bcbi/ClassImbalance.jl.git")
+Pkg.clone("https://github.com/johnmyleswhite/RDatasets.jl")
 ```
 
 **Step 3: Install AluthgeSinhaBase:**
