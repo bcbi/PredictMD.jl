@@ -30,14 +30,11 @@ addons:
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install basictex; fi
-  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ls /usr/local/texlive/2017basic/bin; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo $PATH ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH=/Library/TeX/texbin:"$PATH"; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo $PATH ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr update --self; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install latex; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install pgf; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install pgfplots; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then false; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install pdf2svg; fi
 
 before_script:
