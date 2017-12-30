@@ -5,7 +5,7 @@ function openbrowserwindow(filename::AbstractString)
         # skip opening file during Travis builds
         warn(
             string(
-                "Skipping opening file during Travis build.\n",
+                "Skipping opening file during Travis build. ",
                 "filename: ",
                 filename,
                 )
