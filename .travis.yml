@@ -30,7 +30,7 @@ addons:
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install basictex; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ls /usr/texbin; fi
+  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ls /usr/texbin; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ls /usr/local; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ls /usr/local/texlive; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ls /Library; fi
