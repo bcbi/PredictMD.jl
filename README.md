@@ -5,6 +5,7 @@
 | 1. [Build Status](#build-status)   |      
 | 2. [Installation](#installation)   |
 | 3. [LaTeX](#latex)                 |
+| 4. [pdf2svg](#pdf2svg)             |
 
 ## Build Status
 
@@ -54,29 +55,41 @@ Compiled with xpdf version 3.04
 ```
 If you receive an error (e.g. "command not found"), see the [LaTeX](#latex) section for instructions on installing LaTeX.
 
-#### Step 2: Update your Julia package directory:
+#### Step 2: Make sure that pdf2svg is installed on your system:
+Open a shell and run the following command:
+```bash
+pdf2svg
+```
+
+You should see an output message that looks something like this:
+```
+Usage: pdf2svg <in file.pdf> <out file.svg> [<page no>]
+```
+If you receive an error (e.g. "command not found"), see the [pdf2svg](#pdf2svg) section for instructions on installing pdf2svg.
+
+#### Step 3: Update your Julia package directory:
 ```julia
 julia> Pkg.update()
 ```
 
-#### Step 3: Install unregistered dependencies:
+#### Step 4: Install unregistered dependencies:
 ```julia
 julia> Pkg.clone("https://github.com/bcbi/AUC.jl.git")
 julia> Pkg.clone("https://github.com/bcbi/ClassImbalance.jl.git")
 julia> Pkg.clone("https://github.com/johnmyleswhite/RDatasets.jl")
 ```
 
-#### Step 4: Install AluthgeSinhaBase:
+#### Step 5: Install AluthgeSinhaBase:
 ```julia
 julia> Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git")
 ```
 
-#### Step 5: Checkout the master branch of AluthgeSinhaBase, which gives you the latest stable version:
+#### Step 6: Checkout the master branch of AluthgeSinhaBase, which gives you the latest stable version:
 ```julia
 julia> Pkg.checkout("AluthgeSinhaBase", "master")
 ```
 
-#### Step 6: Run the test suite:
+#### Step 7: Run the test suite:
 ```julia
 julia> Pkg.test("AluthgeSinhaBase")
 ```
@@ -86,3 +99,9 @@ AluthgeSinhaBase requires LaTeX for generating plots. If LaTeX is not installed 
 * Windows: [https://www.tug.org/protext/](https://www.tug.org/protext/)
 * macOS: [https://www.tug.org/mactex/](https://www.tug.org/mactex/)
 * GNU/Linux: [https://www.tug.org/texlive/](https://www.tug.org/texlive/)
+
+## pdf2svg
+AluthgeSinhaBase requires pdf2svg for generating SVG images. If pdf2svg is not installed on your system, download and install it from the appropriate link below:
+* Windows: [https://github.com/jalios/pdf2svg-windows](https://github.com/jalios/pdf2svg-windows)
+* macOS: [http://brewinstall.org/Install-pdf2svg-on-Mac-with-Brew/](http://brewinstall.org/Install-pdf2svg-on-Mac-with-Brew/)
+* GNU/Linux: [https://github.com/dawbarton/pdf2svg](https://github.com/dawbarton/pdf2svg)
