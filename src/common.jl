@@ -1,10 +1,6 @@
 abstract type AbstractASBObject
 end
 
-function underlying(x::T) where T <: AbstractASBObject
-    return Nullable()
-end
-
 const ArrayOfAbstractASBObjects =
     AbstractArray{T, N} where T <: AbstractASBObject where N <: Integer
 const VectorOfAbstractASBObjects =

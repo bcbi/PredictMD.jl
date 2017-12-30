@@ -51,17 +51,6 @@ mutable struct ASBGLMjlGeneralizedLinearModelRegression <:
 #     end
 end
 
-function underlying(
-        x::AbstractASBGLMjlGeneralizedLinearModelClassifier,
-        )
-    return Nullable(x.glm)
-end
-function underlying(
-        x::AbstractASBGLMjlGeneralizedLinearModelRegression,
-        )
-    return Nullable(x.glm)
-end
-
 function fit!(
         estimator::AbstractASBGLMjlGeneralizedLinearModelClassifier,
         featuresdf::DataFrames.AbstractDataFrame,

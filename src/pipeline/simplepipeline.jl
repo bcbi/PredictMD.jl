@@ -16,14 +16,6 @@ struct SimplePipeline <: AbstractSimplePipeline
     end
 end
 
-function underlying(
-        simplepipeline::AbstractSimplePipeline,
-        )
-    objectsvector = simplepipeline.objectsvector
-    result = [underlying(x) for x in objectsvector]
-    return result
-end
-
 function fit!(
         simplepipeline::SimplePipeline,
         features,
