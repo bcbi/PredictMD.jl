@@ -2,8 +2,10 @@ __precompile__(true)
 
 module AluthgeSinhaBase
 
-include("common.jl")
+# load base.jl first:
+include("base.jl")
 
+# then load the remaining the source files:
 include("calibration.jl")
 include("cluster.jl")
 include("datasets.jl")
@@ -18,9 +20,9 @@ include("neuralnetwork.jl")
 include("pipeline.jl")
 include("plotting.jl")
 include("preprocessing.jl")
-include("scikitlearnapi.jl")
+include("scikitlearn.jl")
+include("svm.jl")
 include("tree.jl")
 include("utils.jl")
-include("version.jl")
 
 end # end module AluthgeSinhaBase

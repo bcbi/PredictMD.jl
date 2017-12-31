@@ -26,7 +26,7 @@ function binaryyscore(
         singlelabel_probabilityofclass1 =
             singlelabel_predict_proba_results[1]
     else
-        error("couldn't figure out how to get proba for positive class")
+        error("could not figure out how to get the positive class")
     end
     return singlelabel_probabilityofclass1
 end
@@ -48,6 +48,7 @@ function _binaryclassificationmetrics(
         ]
     maximizableparameters = [
         :f1score,
+        :cohenkappa,
         ]
     kwargshastunableparameter = [
         haskey(kwargsdict, x) for x in tunableparameters
@@ -116,6 +117,9 @@ function _binaryclassificationmetrics(
         if parametertomaximize == :f1score
             allf1score = [fbetascore(x, 1) for x in allrocnums]
             bestindex = indmax(allf1score)
+        elseif parametertomaximize == :cohenkappa
+            allcohenkappa = [cohenkappa(x) for x in allrocnums]
+            bestindex = indmax(allcohenkappa)
         else
             error("this is an error that should never happen")
         end
@@ -134,6 +138,7 @@ function _binaryclassificationmetrics(
     results[:precision] = precision(bestrocnums)
     results[:recall] = recall(bestrocnums)
     results[:f1score] = f1score(bestrocnums)
+    results[:cohenkappa] = cohenkappa(bestrocnums)
     return results
 end
 
@@ -177,32 +182,33 @@ function binaryclassificationmetrics(
             )
             for est in vectorofestimators
         ]
-    # allresults = []
     result = DataFrames.DataFrame()
     result[:metric] = [
-        "AUROCC",
         "AUPRC",
+        "AUROCC",
         "Average precision",
         "Threshold*",
         "Accuracy*",
-        "Sensitivity*",
-        "Specificity*",
+        "Cohen's Kappa statistic*",
+        "F1 score*",
         "Precision*",
         "Recall*",
-        "F1 score*",
+        "Sensitivity*",
+        "Specificity*",
         ]
     for i = 1:numestimators
         result[Symbol(vectorofestimators[i].name)] = [
+            metricsforeachestimator[i][:AUPRC],
             metricsforeachestimator[i][:AUROCC],
-             metricsforeachestimator[i][:AUPRC],
             metricsforeachestimator[i][:AveragePrecision],
             metricsforeachestimator[i][:threshold],
             metricsforeachestimator[i][:accuracy],
-            metricsforeachestimator[i][:sensitivity],
-            metricsforeachestimator[i][:specificity],
+            metricsforeachestimator[i][:cohenkappa],
+            metricsforeachestimator[i][:f1score],
             metricsforeachestimator[i][:precision],
             metricsforeachestimator[i][:recall],
-            metricsforeachestimator[i][:f1score],
+            metricsforeachestimator[i][:sensitivity],
+            metricsforeachestimator[i][:specificity],
             ]
     end
     return result

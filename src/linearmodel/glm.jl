@@ -101,7 +101,7 @@ function fit!(
     return estimator
 end
 
-function _singlelabelbinarylogisticclassifier_glmjl(
+function _singlelabelbinarylogisticclassifier_GLMjl(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabelpositiveclass::AbstractString;
@@ -131,12 +131,12 @@ function singlelabelbinarylogisticclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabelpositiveclass::AbstractString;
-        package::Symbol = :GLMjl,
+        package::Symbol = :none,
         intercept::Bool = true,
         name::AbstractString = "",
         )
     if package == :GLMjl
-        result =_singlelabelbinarylogisticclassifier_glmjl(
+        result =_singlelabelbinarylogisticclassifier_GLMjl(
             featurenames,
             singlelabelname,
             singlelabelpositiveclass;
