@@ -59,7 +59,7 @@ function predict_proba(
         )
     decisionvaluestransposed = transpose(decisionvalues)
     result = Dict()
-    for i = length(estimator.svmmodel.labels)
+    for i = 1:length(estimator.svmmodel.labels)
         result[estimator.svmmodel.labels[i]] = decisionvaluestransposed[:, i]
     end
     return result
