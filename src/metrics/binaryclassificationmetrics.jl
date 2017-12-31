@@ -15,6 +15,7 @@ function binaryyscore(
         singlelabelprobabilities::Associative,
         positiveclass::AbstractString,
         )
+    println(keys(singlelabelprobabilities))
     result = singlelabelprobabilities[positiveclass]
     return result
 end
