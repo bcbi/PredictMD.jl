@@ -13,7 +13,7 @@ function _calculateaverageprecisionfromprecisionrecallcurve(
         error("length(allprecisions) < 2")
     end
     #
-    permutation = sortperm(allthresholds; rev = false)
+    permutation = sortperm(allthresholds; rev = true)
     allprecisions = allprecisions[permutation]
     allrecalls = allrecalls[permutation]
     #

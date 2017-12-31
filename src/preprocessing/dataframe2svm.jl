@@ -19,7 +19,7 @@ function transform(
 end
 
 function transform(
-        transformer::AbstractArray,
+        transformer::AbstractFeatureArrayTransposerTransformer,
         featuresarray::AbstractMatrix,
         )
     featuresarraytransposed = transpose(featuresarray)

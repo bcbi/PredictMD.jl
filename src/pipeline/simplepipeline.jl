@@ -34,7 +34,7 @@ function fit!(
         end
         output = fit!(pipelineobjects[i], input...)
     end
-    return simplepipeline
+    return output
 end
 
 function predict(

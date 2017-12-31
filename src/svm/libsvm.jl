@@ -38,6 +38,8 @@ function fit!(
         probability = true,
         )
     estimator.svmmodel = svmmodel
+    @assert(typeof(estimator.svmmodel.labels) <: AbstractVector)
+    estimator.levels = estimator.svmmodel.labels
     return estimator
 end
 
@@ -51,8 +53,9 @@ function predict_proba(
         )
     decisionvaluestransposed = transpose(decisionvalues)
     labelresult = Dict()
-    for i = 1:length(estimator.levels)
-        labelresult[estimator.levels[i]] = decisionvaluestransposed[:, i]
+    for i = 1:length(estimator.svmmodel.labels)
+        labelresult[estimator.svmmodel.labels[i]] =
+            decisionvaluestransposed[:, i]
     end
     allresults = Dict()
     allresults[estimator.singlelabelname] = labelresult
@@ -82,7 +85,7 @@ function _singlelabelsvmclassifier_LIBSVMjl(
     return finalpipeline
 end
 
-function singlelabelrandomforestclassifier(
+function singlelabelsvmclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         levels::AbstractVector,
@@ -90,15 +93,13 @@ function singlelabelrandomforestclassifier(
         name::AbstractString = "",
         package::Symbol = :none,
         )
-    if package == :LIBSVM
-        result = _singlelabelrandomforestclassifier_LIBSVMjl(
+    if package == :LIBSVMjl
+        result = _singlelabelsvmclassifier_LIBSVMjl(
             featurenames,
             singlelabelname,
             levels,
             df;
             name = name,
-            nsubfeatures = nsubfeatures,
-            ntrees = ntrees,
         )
         return result
     else
