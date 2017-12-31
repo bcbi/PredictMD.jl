@@ -2,7 +2,7 @@ __precompile__(true)
 
 module AluthgeSinhaBase
 
-include("common.jl")
+include("base.jl")
 
 include("calibration.jl")
 include("cluster.jl")
@@ -21,6 +21,5 @@ include("preprocessing.jl")
 include("scikitlearnapi.jl")
 include("tree.jl")
 include("utils.jl")
-include("version.jl")
 
 end # end module AluthgeSinhaBase
