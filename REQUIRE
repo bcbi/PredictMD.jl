@@ -6,6 +6,7 @@ DataFrames 0.11.3
 DecisionTree
 GLM
 LaTeXStrings
+LIBSVM
 MLBase
 PGFPlots
 RDatasets
@@ -13,3 +14,4 @@ ScikitLearnBase
 StatsBase
 StatsModels 0.2.1
 TikzPictures
+TrackedValues
