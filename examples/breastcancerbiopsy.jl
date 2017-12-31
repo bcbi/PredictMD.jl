@@ -137,8 +137,8 @@ function knetmlp_predict(w, x)
     return result
 end
 
-function knetmlp_loss(w, x, ygold, predict; L1 = 10, L2 = 0)
-    loss = Knet.nll(predict(w, x), ygold)
+function knetmlp_loss(w, x, ygold; L1 = 0, L2 = 0)
+    loss = Knet.nll(knetmlp_predict(w, x), ygold)
     if L1 !== 0
         loss += L1 * sum(sum(abs, w_i)  for w_i in w[1:2:end])
     end
@@ -153,7 +153,7 @@ knetmlp = asb.knetclassifier(
     labelname,
     labellevels,
     trainingfeaturesdf;
-    name = "Knet MLP with 2 hidden layers",
+    name = "Knet MLP",
     predict = knetmlp_predict,
     loss = knetmlp_loss,
     maxepochs = 1_000,
@@ -177,7 +177,6 @@ asb.binaryclassificationmetrics(
     positiveclass;
     maximize = :f1score,
     )
-
 
 # Compare the performance of all four models on the testing set
 showall(asb.binaryclassificationmetrics(
