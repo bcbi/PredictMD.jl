@@ -27,27 +27,18 @@ continuousfeaturenames = Symbol[
     :V8,
     :V9,
     ]
-featurenames = vcat(
-    categoricalfeaturenames,
-    continuousfeaturenames,
-    )
-singlelabelname = :Class
-singlelabelnegativeclass = "benign"
-singlelabelpositiveclass = "malignant"
-singlelabellevels = [
-    singlelabelnegativeclass,
-    singlelabelpositiveclass
-    ]
-labelnames = [singlelabelname]
-labellevels = Dict()
-labellevels[singlelabelname] = singlelabellevels
+featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
+labelname = :Class
+negativeclass = "benign"
+positiveclass = "malignant"
+labellevels = [negativeclass, positiveclass]
 
 # Examine the counts of each level
-StatsBase.countmap(df[singlelabelname])
+StatsBase.countmap(df[labelname])
 
 # Put the features and labels in separate dataframes
 featuresdf = df[featurenames]
-labelsdf = df[labelnames]
+labelsdf = df[[labelname]]
 
 # Split the data into training set (70%) and testing set (30%)
 trainingfeaturesdf,
@@ -63,8 +54,8 @@ trainingfeaturesdf,
 # Set up and train a binary logistic classifier
 logistic = asb.binarylogisticclassifier(
     featurenames,
-    singlelabelname,
-    singlelabellevels;
+    labelname,
+    labellevels;
     package = :GLMjl,
     intercept = true, # optional, defaults to true
     name = "Logistic classifier", # optional
@@ -81,16 +72,16 @@ asb.binaryclassificationmetrics(
     logistic,
     testingfeaturesdf,
     testinglabelsdf,
-    singlelabelname,
-    singlelabelpositiveclass;
+    labelname,
+    positiveclass;
     maximize = :f1score,
     )
 
 # Set up and train a random forest
 randomforest = asb.randomforestclassifier(
     featurenames,
-    singlelabelname,
-    singlelabellevels,
+    labelname,
+    labellevels,
     trainingfeaturesdf;
     nsubfeatures = 2, # number of subfeatures; defaults to 2
     ntrees = 20, # number of trees; defaults to 10
@@ -107,16 +98,16 @@ asb.binaryclassificationmetrics(
     randomforest,
     testingfeaturesdf,
     testinglabelsdf,
-    singlelabelname,
-    singlelabelpositiveclass;
+    labelname,
+    positiveclass;
     maximize = :f1score,
     )
 
 # Set up and train an SVM
 svm = asb.svmclassifier(
     featurenames,
-    singlelabelname,
-    singlelabellevels,
+    labelname,
+    labellevels,
     trainingfeaturesdf;
     package = :LIBSVMjl,
     name = "SVM classifier",
@@ -131,35 +122,45 @@ asb.binaryclassificationmetrics(
     svm,
     testingfeaturesdf,
     testinglabelsdf,
-    singlelabelname,
-    singlelabelpositiveclass;
+    labelname,
+    positiveclass;
     maximize = :f1score,
     )
 
 # Set up and train a multilayer perceptron (i.e. a fully connected feedforward neural network)
+
 function knetmlp_predict(w, x)
     for i = 1:2:(length(w) - 2)
-        x = relu.( w[i]*x .+ w[i+1] )
+        x = Knet.relu.( w[i]*x .+ w[i+1] )
     end
-    return w[end-1]*x .+ w[end]
+    result = w[end-1]*x .+ w[end]
+    return result
 end
-function knetmlp_loss(w, x, ygold)
-    return Knet.nll(knetmlp_predict(w, x), ygold)
+
+function knetmlp_loss(w, x, ygold, predict; L1 = 10, L2 = 0)
+    loss = Knet.nll(predict(w, x), ygold)
+    if L1 !== 0
+        loss += L1 * sum(sum(abs, w_i)  for w_i in w[1:2:end])
+    end
+    if L2 !== 0
+        loss += L2 * sum(sum(abs2, w_i) for w_i in w[1:2:end])
+    end
+    return loss
 end
 
 knetmlp = asb.knetclassifier(
     featurenames,
-    singlelabelname,
-    singlelabellevels,
+    labelname,
+    labellevels,
     trainingfeaturesdf;
     name = "Knet MLP with 2 hidden layers",
     predict = knetmlp_predict,
     loss = knetmlp_loss,
-    maxepochs = 10,
-    batchsize  = 256,
+    maxepochs = 1_000,
+    batchsize  = 24,
     model = Any[
-        0.1f0*randn(Float32,64,784), zeros(Float32,64,1),
-        0.1f0*randn(Float32,10,64), zeros(Float32,10,1)
+        0.1f0*randn(Float32,64,9), zeros(Float32,64,1),
+        0.1f0*randn(Float32,2,64), zeros(Float32,2,1)
         ],
     )
 asb.fit!(
@@ -172,7 +173,7 @@ asb.binaryclassificationmetrics(
     knetmlp,
     testingfeaturesdf,
     testinglabelsdf,
-    singlelabelname,
+    labelname,
     positiveclass;
     maximize = :f1score,
     )
@@ -183,7 +184,7 @@ showall(asb.binaryclassificationmetrics(
     [logistic, randomforest, svm, knetmlp],
     testingfeaturesdf,
     testinglabelsdf,
-    singlelabelname,
+    labelname,
     positiveclass;
     maximize = :f1score,
     ))
@@ -193,7 +194,7 @@ rocplot = asb.plotroccurves(
     [logistic, randomforest, svm, knetmlp],
     testingfeaturesdf,
     testinglabelsdf,
-    singlelabelname,
+    labelname,
     positiveclass,
     )
 asb.open(rocplot)
@@ -203,7 +204,7 @@ prplot = asb.plotprcurves(
     [logistic, randomforest, svm, knetmlp],
     testingfeaturesdf,
     testinglabelsdf,
-    singlelabelname,
+    labelname,
     positiveclass,
     )
 asb.open(prplot)

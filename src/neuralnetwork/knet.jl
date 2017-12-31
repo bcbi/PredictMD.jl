@@ -1,4 +1,5 @@
 import Knet
+import StatsFuns
 import ValueHistories
 
 abstract type AbstractASBKnetjlKnetClassifier <:
@@ -105,12 +106,15 @@ function fit!(
         featuresarray::AbstractArray,
         labelsarray::AbstractVector,
         )
+    featuresarray = Cfloat.(featuresarray)
+    labelsarray = Int.(labelsarray)
     trainingdata = Knet.minibatch(
         featuresarray,
         labelsarray,
         estimator.batchsize,
         )
     lossgradient = Knet.grad(estimator.loss)
+    info("Starting to train Knet model...")
     while estimator.lastepoch < estimator.maxepochs
         for (x,y) in trainingdata
             grads = lossgradient(
@@ -120,7 +124,7 @@ function fit!(
             Knet.update!(
                 estimator.model,
                 grads,
-                estimators.optimizers,
+                estimator.optimizers,
                 )
         end # end for
         estimator.lastepoch += 1
@@ -149,6 +153,7 @@ function fit!(
             currentloss,
             )
     end # end while
+    info("Finished training Knet model.")
     return estimator
 end
 
@@ -161,19 +166,21 @@ function predict_proba(
         featuresarray,
         )
     outputtransposed = transpose(output)
-    numclasses = size(outputtransposed, 2)
+    ###
+    outputtransposedandsoftmaxed = zeros(outputtransposed)
+    for i = 1:size(outputtransposedandsoftmaxed, 1)
+        outputtransposedandsoftmaxed[i, :] =
+            StatsFuns.softmax(outputtransposed[i, :])
+    end
+    ###
+    numclasses = size(outputtransposedandsoftmaxed, 2)
     @assert(numclasses > 0)
     result = Dict()
     for i = 1:numclasses
-        result[i] = outputtransposed[:, i]
+        result[i] = outputtransposedandsoftmaxed[:, i]
     end
     return result
 end
-
-# (
-#         ;
-
-#         )
 
 function singlelabelknetclassifier(
         featurenames::AbstractVector,

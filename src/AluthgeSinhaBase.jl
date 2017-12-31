@@ -7,6 +7,7 @@ include("base.jl")
 
 # then load the remaining the source files:
 include("calibration.jl")
+include("classimbalance.jl")
 include("cluster.jl")
 include("datasets.jl")
 include("decomposition.jl")

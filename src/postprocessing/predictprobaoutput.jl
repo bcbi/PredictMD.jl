@@ -20,7 +20,11 @@ function fit!(
         transformer::AbstractPredictProbaSingleLabelInt2StringTransformer,
         varargs...
         )
-    return varargs
+    if length(varargs) == 1
+        return varargs[1]
+    else
+        return varargs
+    end
 end
 
 function predict_proba(

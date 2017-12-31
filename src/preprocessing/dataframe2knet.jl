@@ -11,7 +11,7 @@ struct DataFrame2KnetjlTransformer <:
     featurecontrasts::T2 where T2 <: Associative
     labelnames::T3 where T3 <: VectorOfSymbols
     labellevels::T4 where T4 <: Associative
-    index::T5 where T5 <: Associative
+    index::T5 where T5 <: Integer
     transposefeatures::T6 where T6 <: Bool
 end
 
@@ -54,16 +54,30 @@ function transform(
         )
     labelsarraynumrows = size(labelsdf, 1)
     labelsarraynumcols = length(transformer.labelnames)
-    labelsarray = -99 * ones(labelsarraynumrows, labelsarraynumcols)
-    for j = 1:length(transformer.labelnames)
-        label_j = transformer.labelnames[j]
-        levels_j = transformer.labellevels[label_j]
-        labelstring2intmap_j = _getlabelstring2intmap(
-            levels_j,
+    if labelsarraynumcols == 0
+        error("length(transformer.labelnames) == 0")
+    elseif labelsarraynumcols == 1
+        label_1 = transformer.labelnames[1]
+        levels_1 = transformer.labellevels[label_1]
+        labelstring2intmap_1 = _getlabelstring2intmap(
+            levels_1,
             transformer.index,
             )
-        labelsarray[:, j] =
-            [labelstring2intmap_j[y] for y in labelsdf[label_j]]
+        labelsarray = [labelstring2intmap_1[y] for y in labelsdf[label_1]]
+        @assert(typeof(labelsarray) <: AbstractVector)
+        @assert(length(labelsarray) == labelsarraynumrows)
+    else
+        labelsarray = -99 * ones(labelsarraynumrows, labelsarraynumcols)
+        for j = 1:length(transformer.labelnames)
+            label_j = transformer.labelnames[j]
+            levels_j = transformer.labellevels[label_j]
+            labelstring2intmap_j = _getlabelstring2intmap(
+                levels_j,
+                transformer.index,
+                )
+            labelsarray[:, j] =
+                [labelstring2intmap_j[y] for y in labelsdf[label_j]]
+        end
     end
     modelformula = makeformula(
         transformer.featurenames[1],
