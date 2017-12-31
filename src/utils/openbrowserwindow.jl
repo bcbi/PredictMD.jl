@@ -11,7 +11,7 @@ function openbrowserwindow(filename::AbstractString)
                 )
             )
     else
-        info(string("Attempting to open file: ", filename))
+        info(string("Opening file: ", filename))
         if is_apple()
             result = run(`open $(filename)`)
             return result
@@ -25,7 +25,7 @@ function openbrowserwindow(filename::AbstractString)
             result = run(`xdg-open $(filename)`)
             return result
         else
-            error("Unknown operating system; cannot open browser window.")
+            error("Unknown operating system; cannot open file.")
         end
     end
 end
