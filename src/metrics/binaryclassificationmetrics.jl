@@ -26,7 +26,7 @@ function binaryyscore(
         singlelabel_probabilityofclass1 =
             singlelabel_predict_proba_results[1]
     else
-        error("couldn't figure out how to get proba for positive class")
+        error("could not figure out how to get the positive class")
     end
     return singlelabel_probabilityofclass1
 end

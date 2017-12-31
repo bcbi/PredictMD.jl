@@ -65,7 +65,7 @@ function predict_proba(
     return allresults
 end
 
-function _singlelabelrandomforestclassifier_decisiontreejl(
+function _singlelabelrandomforestclassifier_DecisionTreejl(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         levels::AbstractVector,
@@ -98,12 +98,12 @@ function singlelabelrandomforestclassifier(
         levels::AbstractVector,
         df::DataFrames.AbstractDataFrame;
         name::AbstractString = "",
-        package::Symbol = :DecisionTreejl,
+        package::Symbol = :none,
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
         )
     if package == :DecisionTreejl
-        result = _singlelabelrandomforestclassifier_decisiontreejl(
+        result = _singlelabelrandomforestclassifier_DecisionTreejl(
             featurenames,
             singlelabelname,
             levels,

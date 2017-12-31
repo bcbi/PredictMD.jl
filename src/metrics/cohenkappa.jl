@@ -64,7 +64,7 @@ end
 function _contingencytableforcohenkappa(
         rocnums::MLBase.ROCNums,
         )
-    # we'll arbitrarily set rows = predicted, columns = true/gold
+    # we will arbitrarily set rows = predicted, columns = true/gold
     contingencytable = [rocnums.tp rocnums.fp; rocnums.fn rocnums.tp]
     return contingencytable
 end
