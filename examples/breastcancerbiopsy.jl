@@ -1,6 +1,7 @@
 import AluthgeSinhaBase
 const asb = AluthgeSinhaBase
 import DataFrames
+import Knet
 import RDatasets
 import StatsBase
 
@@ -31,10 +32,15 @@ featurenames = vcat(
     continuousfeaturenames,
     )
 singlelabelname = :Class
-negativeclass = "benign"
-positiveclass = "malignant"
-levels = [negativeclass, positiveclass]
+singlelabelnegativeclass = "benign"
+singlelabelpositiveclass = "malignant"
+singlelabellevels = [
+    singlelabelnegativeclass,
+    singlelabelpositiveclass
+    ]
 labelnames = [singlelabelname]
+labellevels = Dict()
+labellevels[singlelabelname] = singlelabellevels
 
 # Examine the counts of each level
 StatsBase.countmap(df[singlelabelname])
@@ -58,7 +64,7 @@ trainingfeaturesdf,
 logistic = asb.binarylogisticclassifier(
     featurenames,
     singlelabelname,
-    positiveclass;
+    singlelabellevels;
     package = :GLMjl,
     intercept = true, # optional, defaults to true
     name = "Logistic classifier", # optional
@@ -68,21 +74,23 @@ asb.fit!(
     trainingfeaturesdf,
     traininglabelsdf,
     )
-# Evaluate the performance of the logistic on the testing set
+# View the coefficients and p values for the logistic classifier
+asb.underlying(logistic)
+# Evaluate the performance of the logistic classifier on the testing set
 asb.binaryclassificationmetrics(
     logistic,
     testingfeaturesdf,
     testinglabelsdf,
     singlelabelname,
-    positiveclass;
-    sensitivity = 0.99,
+    singlelabelpositiveclass;
+    maximize = :f1score,
     )
 
 # Set up and train a random forest
 randomforest = asb.randomforestclassifier(
     featurenames,
     singlelabelname,
-    levels,
+    singlelabellevels,
     trainingfeaturesdf;
     nsubfeatures = 2, # number of subfeatures; defaults to 2
     ntrees = 20, # number of trees; defaults to 10
@@ -100,15 +108,15 @@ asb.binaryclassificationmetrics(
     testingfeaturesdf,
     testinglabelsdf,
     singlelabelname,
-    positiveclass;
-    sensitivity = 0.99,
+    singlelabelpositiveclass;
+    maximize = :f1score,
     )
 
 # Set up and train an SVM
 svm = asb.svmclassifier(
     featurenames,
     singlelabelname,
-    levels,
+    singlelabellevels,
     trainingfeaturesdf;
     package = :LIBSVMjl,
     name = "SVM classifier",
@@ -124,50 +132,65 @@ asb.binaryclassificationmetrics(
     testingfeaturesdf,
     testinglabelsdf,
     singlelabelname,
-    positiveclass;
-    sensitivity = 0.99,
+    singlelabelpositiveclass;
+    maximize = :f1score,
     )
 
-# # Set up and train a multilayer perceptron (i.e. a fully connected feedforward neural network)
-# knetmlp = asb.XXXXXXrandomforestclassifierXXXXX(
-#     featurenames,
-#     singlelabelname,
-#     levels,
-#     trainingfeaturesdf;
-#     XXXXXnsubfeatures = 2, # number of subfeatures; defaults to 2
-#     XXXXXntrees = 20, # number of trees; defaults to 10
-#     package = :Knetjl,
-#     name = "XXXXXlayerneuralnetwork" # optional
-#     )
-# asb.fit!(
-#     knetmlp,
-#     trainingfeaturesdf,
-#     traininglabelsdf,
-#     )
-# # Evaluate the performance of the multilayer perceptron on the testing set
-# asb.binaryclassificationmetrics(
-#     knetmlp,
-#     testingfeaturesdf,
-#     testinglabelsdf,
-#     singlelabelname,
-#     positiveclass;
-#     sensitivity = 0.99,
-#     )
+# Set up and train a multilayer perceptron (i.e. a fully connected feedforward neural network)
+function knetmlp_predict(w, x)
+    for i = 1:2:(length(w) - 2)
+        x = relu.( w[i]*x .+ w[i+1] )
+    end
+    return w[end-1]*x .+ w[end]
+end
+function knetmlp_loss(w, x, ygold)
+    return Knet.nll(knetmlp_predict(w, x), ygold)
+end
 
-
-# Compare the performance of all four models on the testing set
-showall(asb.binaryclassificationmetrics(
-    [logistic, randomforest, svm],
+knetmlp = asb.knetclassifier(
+    featurenames,
+    singlelabelname,
+    singlelabellevels,
+    trainingfeaturesdf;
+    name = "Knet MLP with 2 hidden layers",
+    predict = knetmlp_predict,
+    loss = knetmlp_loss,
+    maxepochs = 10,
+    batchsize  = 256,
+    model = Any[
+        0.1f0*randn(Float32,64,784), zeros(Float32,64,1),
+        0.1f0*randn(Float32,10,64), zeros(Float32,10,1)
+        ],
+    )
+asb.fit!(
+    knetmlp,
+    trainingfeaturesdf,
+    traininglabelsdf,
+    )
+# Evaluate the performance of the multilayer perceptron on the testing set
+asb.binaryclassificationmetrics(
+    knetmlp,
     testingfeaturesdf,
     testinglabelsdf,
     singlelabelname,
     positiveclass;
-    sensitivity = 0.99,
+    maximize = :f1score,
+    )
+
+
+# Compare the performance of all four models on the testing set
+showall(asb.binaryclassificationmetrics(
+    [logistic, randomforest, svm, knetmlp],
+    testingfeaturesdf,
+    testinglabelsdf,
+    singlelabelname,
+    positiveclass;
+    maximize = :f1score,
     ))
 
 # Plot receiver operating characteristic curves for all four models
 rocplot = asb.plotroccurves(
-    [logistic, randomforest, svm],
+    [logistic, randomforest, svm, knetmlp],
     testingfeaturesdf,
     testinglabelsdf,
     singlelabelname,
@@ -177,7 +200,7 @@ asb.open(rocplot)
 
 # Plot precision-recall curves for all four models
 prplot = asb.plotprcurves(
-    [logistic, randomforest, svm],
+    [logistic, randomforest, svm, knetmlp],
     testingfeaturesdf,
     testinglabelsdf,
     singlelabelname,

@@ -32,23 +32,9 @@ mutable struct ASBGLMjlGeneralizedLinearModelClassifier <:
     end
 end
 
-mutable struct ASBGLMjlGeneralizedLinearModelRegression <:
-        AbstractASBGLMjlGeneralizedLinearModelRegression
-#     # hyperparameters (not learned from data):
-#     formula::T1 where T1 <: StatsModels.Formula
-#     family::T2 where T2 <: GLM.Distribution
-#     link::T3 where T3 <: GLM.Link
-#
-#     # parameters (learned from data):
-#     glm::T4 where T4
-#
-#     function ASBGLMjlGeneralizedLinearModelRegression(
-#             formula::StatsModels.Formula,
-#             family::GLM.Distribution,
-#             link::GLM.Link,
-#             )
-#         return new(formula, family, link)
-#     end
+function underlying(x::AbstractASBGLMjlGeneralizedLinearModelClassifier)
+    result = x.glm
+    return result
 end
 
 function fit!(
@@ -75,14 +61,10 @@ function predict_proba(
         estimator.glm,
         featuresdf,
         )
-    labelresult = Dict()
-    labelresult[1] = glmpredictoutput
-    labelresult[0] = 1 - glmpredictoutput
-    label = estimator.formula.lhs
-    @assert(typeof(label) <: Symbol)
-    allresults = Dict()
-    allresults[label] = labelresult
-    return allresults
+    result = Dict()
+    result[1] = glmpredictoutput
+    result[0] = 1 - glmpredictoutput
+    return result
 end
 
 function fit!(
@@ -104,10 +86,18 @@ end
 function _singlelabelbinarylogisticclassifier_GLMjl(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        singlelabelpositiveclass::AbstractString;
+        singlelabellevels::AbstractVector;
         intercept::Bool = true,
         name::AbstractString = "",
         )
+    if length(singlelabellevels) !== length(unique(singlelabellevels))
+        error("singlelabellevels has duplicates")
+    end
+    if length(singlelabellevels) !== 2
+        error("length(singlelabellevels) !== 2")
+    end
+    negativeclass = singlelabellevels[1]
+    positiveclass = singlelabellevels[2]
     formula = makeformula(
         [singlelabelname],
         featurenames;
@@ -115,22 +105,37 @@ function _singlelabelbinarylogisticclassifier_GLMjl(
         )
     dftransformer = DataFrame2GLMjlTransformer(
         singlelabelname,
-        singlelabelpositiveclass,
+        positiveclass,
         )
     glmestimator = ASBGLMjlGeneralizedLinearModelClassifier(
         formula,
         GLM.Binomial(),
         GLM.LogitLink(),
         )
-    finalobjectsvector = [dftransformer, glmestimator]
-    finalpipeline = SimplePipeline(finalobjectsvector; name = name)
+    predprobafixer = PredictProbaSingleLabelInt2StringTransformer(
+        0,
+        singlelabellevels,
+        )
+    probapackager = PackageSingleLabelPredictProbaTransformer(
+        singlelabelname,
+        )
+    finalpipeline = SimplePipeline(
+        [
+            dftransformer,
+            glmestimator,
+            predprobafixer,
+            probapackager,
+            ];
+        name = name,
+        underlyingobjectindex = 2,
+        )
     return finalpipeline
 end
 
 function singlelabelbinarylogisticclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        singlelabelpositiveclass::AbstractString;
+        singlelabellevels::AbstractVector;
         package::Symbol = :none,
         intercept::Bool = true,
         name::AbstractString = "",
@@ -139,7 +144,7 @@ function singlelabelbinarylogisticclassifier(
         result =_singlelabelbinarylogisticclassifier_GLMjl(
             featurenames,
             singlelabelname,
-            singlelabelpositiveclass;
+            singlelabellevels;
             intercept = intercept,
             name = name,
             )

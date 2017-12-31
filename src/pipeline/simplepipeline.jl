@@ -4,15 +4,53 @@ end
 struct SimplePipeline <: AbstractSimplePipeline
     name::T1 where T1 <: AbstractString
     objectsvector::T2 where T2 <: VectorOfAbstractASBObjects
+    underlyingobjectindex::T3 where T3 <: Integer
+    learningcurvesobjectindex::T4 where T4 <: Integer
 
     function SimplePipeline(
             objectsvector::VectorOfAbstractASBObjects;
             name::AbstractString = "",
+            underlyingobjectindex::Integer = 0,
+            valuehistoriesobjectindex::Integer = 0,
             )
         if length(objectsvector) == 0
             error("input vector must be non-empty")
         end
-        return new(name, objectsvector)
+        result = new(
+            name,
+            objectsvector,
+            underlyingobjectindex,
+            valuehistoriesobjectindex,
+            )
+        return result
+    end
+end
+
+function underlying(x::AbstractSimplePipeline)
+    if x.underlyingobjectindex > 0
+        result = underlying(x.objectsvector[x.underlyingobjectindex])
+        return result
+    else
+        error(
+            string(
+                "Sorry, I could not access the underlying object ",
+                "for this pipeline.",
+                )
+            )
+    end
+end
+
+function valuehistories(x::AbstractSimplePipeline)
+    if x.valuehistoriesobjectindex > 0
+        result = valuehistories(x.objectsvector[x.underlyingobjectindex])
+        return result
+    else
+        error(
+            string(
+                "Sorry, I could not access value histories ",
+                "for this pipeline.",
+                )
+            )
     end
 end
 

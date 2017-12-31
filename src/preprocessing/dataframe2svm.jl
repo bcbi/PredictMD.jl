@@ -55,10 +55,7 @@ function DataFrame2LIBSVMjlTransformer(
         )
     featuretransposetransformer = FeatureArrayTransposerTransformer()
     result = SimplePipeline(
-        [
-            df2decisiontreetransformer,
-            featuretransposetransformer,
-            ],
+        [df2decisiontreetransformer,featuretransposetransformer,],
         )
     return result
 end

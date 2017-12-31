@@ -4,31 +4,19 @@ import MLBase
 import StatsBase
 
 function binaryytrue(
-        labelsdf::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol,
+        labels::AbstractVector,
         positiveclass::AbstractString,
         )
-    singlelabelcolumn = labelsdf[singlelabelname]
-    singlelabelcolumnasbinary = Int.(singlelabelcolumn .== positiveclass)
-    return singlelabelcolumnasbinary
+    result = Int.(labels .== positiveclass)
+    return result
 end
 
 function binaryyscore(
-        predict_proba_results::Associative,
-        singlelabelname::Symbol,
+        singlelabelprobabilities::Associative,
         positiveclass::AbstractString,
         )
-    singlelabel_predict_proba_results = predict_proba_results[singlelabelname]
-    if haskey(singlelabel_predict_proba_results, positiveclass)
-        singlelabel_probabilityofclass1 =
-            singlelabel_predict_proba_results[positiveclass]
-    elseif haskey(singlelabel_predict_proba_results, 1)
-        singlelabel_probabilityofclass1 =
-            singlelabel_predict_proba_results[1]
-    else
-        error("could not figure out how to get the positive class")
-    end
-    return singlelabel_probabilityofclass1
+    result = singlelabelprobabilities[positiveclass]
+    return result
 end
 
 function _binaryclassificationmetrics(
@@ -60,7 +48,7 @@ function _binaryclassificationmetrics(
     end
 
     if length(tunableparameters[kwargshastunableparameter]) !== 1
-        error("oh boy you should never see this error message")
+        error("oh boy you definitely should never see this error message")
     end
     selectedtunableparameter =
         tunableparameters[kwargshastunableparameter][1]
@@ -74,14 +62,13 @@ function _binaryclassificationmetrics(
     end
     yscore = Cfloat.(
         binaryyscore(
-            predict_proba(estimator, featuresdf),
-            singlelabelname,positiveclass,
+            predict_proba(estimator, featuresdf)[singlelabelname],
+            positiveclass,
             )
         )
     ytrue = Int.(
         binaryytrue(
-            labelsdf,
-            singlelabelname,
+            labelsdf[singlelabelname],
             positiveclass,
             )
         )
