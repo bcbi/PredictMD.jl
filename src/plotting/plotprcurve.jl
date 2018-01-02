@@ -45,22 +45,19 @@ function plotprcurve(
         allprecisions, allrecalls, allthresholds = prcurve(
             ytrue_i,
             yscore_i,
-            )
-        name_i = estimator_i.name
-        @assert(typeof(name_i) <: AbstractString)
-        legendentry_i = LaTeXStrings.LaTeXString(name_i)
+            ) 
         linearplotobject_i = PGFPlots.Plots.Linear(
             allrecalls,
             allprecisions,
-            legendentry = legendentry_i,
+            legendentry = LaTeXStrings.LaTeXString(estimator_i.name),
             mark = "none",
             )
         push!(alllinearplotobjects, linearplotobject_i)
     end
     axisobject = PGFPlots.Axis(
         [alllinearplotobjects...],
-        xlabel = "Recall",
-        ylabel = "Precision",
+        xlabel = LaTeXStrings.LaTeXString("Recall"),
+        ylabel = LaTeXStrings.LaTeXString("Precision"),
         legendPos = "south west",
         )
     tikzpicture = PGFPlots.plot(axisobject)

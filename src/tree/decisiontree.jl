@@ -30,6 +30,11 @@ mutable struct ASBDecisionTreejlRandomForestClassifier <:
     end
 end
 
+function underlying(x::AbstractASBDecisionTreejlRandomForestClassifier)
+    result = x.randomforest
+    return result
+end
+
 function fit!(
         estimator::AbstractASBDecisionTreejlRandomForestClassifier,
         featuresarray::AbstractArray,
@@ -56,19 +61,17 @@ function predict_proba(
         featuresarray,
         estimator.levels,
         )
-    labelresult = Dict()
+    result = Dict()
     for i = 1:length(estimator.levels)
-        labelresult[estimator.levels[i]] = predictedprobabilities[:, i]
+        result[estimator.levels[i]] = predictedprobabilities[:, i]
     end
-    allresults = Dict()
-    allresults[estimator.singlelabelname] = labelresult
-    return allresults
+    return result
 end
 
 function _singlelabelrandomforestclassifier_DecisionTreejl(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        levels::AbstractVector,
+        singlelabellevels::AbstractVector,
         df::DataFrames.AbstractDataFrame;
         name::AbstractString = "",
         nsubfeatures::Integer = 2,
@@ -77,25 +80,35 @@ function _singlelabelrandomforestclassifier_DecisionTreejl(
     dftransformer = DataFrame2DecisionTreejlTransformer(
         featurenames,
         singlelabelname,
-        levels,
+        singlelabellevels,
         df,
         )
     randomforestestimator = ASBDecisionTreejlRandomForestClassifier(
         singlelabelname,
-        levels;
+        singlelabellevels;
         name = name,
         nsubfeatures = nsubfeatures,
         ntrees = ntrees,
         )
-    finalobjectsvector = [dftransformer, randomforestestimator]
-    finalpipeline = SimplePipeline(finalobjectsvector; name = name)
+    probapackager = PackageSingleLabelPredictProbaTransformer(
+        singlelabelname,
+        )
+    finalpipeline = SimplePipeline(
+        [
+            dftransformer,
+            randomforestestimator,
+            probapackager,
+            ];
+        name = name,
+        underlyingobjectindex = 2,
+        )
     return finalpipeline
 end
 
 function singlelabelrandomforestclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        levels::AbstractVector,
+        singlelabellevels::AbstractVector,
         df::DataFrames.AbstractDataFrame;
         name::AbstractString = "",
         package::Symbol = :none,
@@ -106,7 +119,7 @@ function singlelabelrandomforestclassifier(
         result = _singlelabelrandomforestclassifier_DecisionTreejl(
             featurenames,
             singlelabelname,
-            levels,
+            singlelabellevels,
             df;
             name = name,
             nsubfeatures = nsubfeatures,

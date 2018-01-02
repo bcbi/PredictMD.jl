@@ -1,5 +1,12 @@
 import MLBase
 
+const ArrayOfSymbols =
+    AbstractArray{T, N} where T <: Symbol where N
+const VectorOfSymbols =
+    AbstractArray{T, 1} where T <: Symbol
+const MatrixOfSymbolms =
+    AbstractArray{T, 2} where T <: Symbol
+
 const ArrayOfMLBaseROCNums =
     AbstractArray{T, N} where T <: MLBase.ROCNums where N
 const VectorOfMLBaseROCNums =

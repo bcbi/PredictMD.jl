@@ -46,21 +46,18 @@ function plotroccurve(
             ytrue_i,
             yscore_i,
             )
-        name_i = estimator_i.name
-        @assert(typeof(name_i) <: AbstractString)
-        legendentry_i = LaTeXStrings.LaTeXString(name_i)
         linearplotobject_i = PGFPlots.Plots.Linear(
             allfpr_i,
             alltpr_i,
-            legendentry = legendentry_i,
+            legendentry = LaTeXStrings.LaTeXString(estimator_i.name),
             mark = "none",
             )
         push!(alllinearplotobjects, linearplotobject_i)
     end
     axisobject = PGFPlots.Axis(
         [alllinearplotobjects...],
-        xlabel = "False positive rate",
-        ylabel = "True positive rate",
+        xlabel = LaTeXStrings.LaTeXString("False positive rate"),
+        ylabel = LaTeXStrings.LaTeXString("True positive rate"),
         legendPos = "south east",
         )
     tikzpicture = PGFPlots.plot(axisobject)

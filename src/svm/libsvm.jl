@@ -11,20 +11,25 @@ end
 mutable struct ASBLIBSVMjlSVMClassifier <:
         AbstractASBLIBSVMjlSVMClassifier
     name::T1 where T1 <: AbstractString
-    singlelabelname::T2 where T2 <: Symbol
-    levels::T3 where T3 <: AbstractVector
+    levels::T2 where T2 <: AbstractVector
+
     # hyperparameters (not learned from data):
     # TODO: add SVM hyperparameters here
+
     # parameters (learned from data):
-    svmmodel::T4 where T4
+    svmmodel::T3 where T3
 
     function ASBLIBSVMjlSVMClassifier(
-            singlelabelname::Symbol,
-            levels::AbstractVector;
+            singlelabellevels::AbstractVector;
             name::AbstractString = "",
             )
-        return new(name, singlelabelname, levels)
+        return new(name, singlelabellevels)
     end
+end
+
+function underlying(x::AbstractASBLIBSVMjlSVMClassifier)
+    result = x.svmmodel
+    return result
 end
 
 function fit!(
@@ -47,48 +52,55 @@ function predict_proba(
         estimator::AbstractASBLIBSVMjlSVMClassifier,
         featuresarray::AbstractArray,
         )
+    estimator.levels = estimator.svmmodel.labels
     predictedlabels, decisionvalues = LIBSVM.svmpredict(
         estimator.svmmodel,
         featuresarray,
         )
     decisionvaluestransposed = transpose(decisionvalues)
-    labelresult = Dict()
+    result = Dict()
     for i = 1:length(estimator.svmmodel.labels)
-        labelresult[estimator.svmmodel.labels[i]] =
-            decisionvaluestransposed[:, i]
+        result[estimator.svmmodel.labels[i]] = decisionvaluestransposed[:, i]
     end
-    allresults = Dict()
-    allresults[estimator.singlelabelname] = labelresult
-    return allresults
+    return result
 end
 
 function _singlelabelsvmclassifier_LIBSVMjl(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        levels::AbstractVector,
+        singlelabellevels::AbstractVector,
         df::DataFrames.AbstractDataFrame;
         name::AbstractString = "",
         )
     dftransformer = DataFrame2LIBSVMjlTransformer(
         featurenames,
         singlelabelname,
-        levels,
+        singlelabellevels,
         df,
         )
     svmestimator = ASBLIBSVMjlSVMClassifier(
-        singlelabelname,
-        levels;
+        singlelabellevels;
         name = name,
         )
-    finalobjectsvector = [dftransformer, svmestimator]
-    finalpipeline = SimplePipeline(finalobjectsvector; name = name)
+    probapackager = PackageSingleLabelPredictProbaTransformer(
+        singlelabelname,
+        )
+    finalpipeline = SimplePipeline(
+        [
+            dftransformer,
+            svmestimator,
+            probapackager,
+            ];
+        name = name,
+        underlyingobjectindex = 2,
+        )
     return finalpipeline
 end
 
 function singlelabelsvmclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        levels::AbstractVector,
+        singlelabellevels::AbstractVector,
         df::DataFrames.AbstractDataFrame;
         name::AbstractString = "",
         package::Symbol = :none,
@@ -97,7 +109,7 @@ function singlelabelsvmclassifier(
         result = _singlelabelsvmclassifier_LIBSVMjl(
             featurenames,
             singlelabelname,
-            levels,
+            singlelabellevels,
             df;
             name = name,
         )
