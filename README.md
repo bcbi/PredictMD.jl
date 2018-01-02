@@ -75,7 +75,7 @@ julia> Pkg.update()
 #### Step 4: Install unregistered dependencies:
 ```julia
 julia> Pkg.clone("https://github.com/bcbi/AUC.jl.git")
-julia> Pkg.clone("https://github.com/bcbi/ClassImbalance.jl.git")
+julia> Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl")
 julia> Pkg.clone("https://github.com/johnmyleswhite/RDatasets.jl")
 ```
 

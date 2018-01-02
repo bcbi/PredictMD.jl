@@ -33,9 +33,6 @@ negativeclass = "benign"
 positiveclass = "malignant"
 labellevels = [negativeclass, positiveclass]
 
-# Examine the counts of each level
-StatsBase.countmap(df[labelname])
-
 # Put the features and labels in separate dataframes
 featuresdf = df[featurenames]
 labelsdf = df[[labelname]]
@@ -53,6 +50,36 @@ trainingfeaturesdf,
 
 ##############################################################################
 
+# Examine the prevalence of each class in the training set
+StatsBase.countmap(traininglabelsdf[labelname])
+
+# We see that malignant is the minority class and benign is the majority class.
+# The ratio of malignant:benign is somewhere between 1:2.5 and 1:3 (depending
+# on the random seed). We would like that ratio to be 1:1. We will use SMOTE
+# to generate synthetic minority class samples. We will also undersample the
+# minority class. The result will be a balanced training set.
+majorityclass = "benign"
+minorityclass = "malignant"
+
+smotedtrainingfeaturesdf, smotedtraininglabelsdf = asb.smote(
+    trainingfeaturesdf,
+    traininglabelsdf,
+    featurenames,
+    labelname;
+    majorityclass = majorityclass,
+    minorityclass = minorityclass,
+    pct_over = 100,
+    minority_to_majority_ratio = 1.0,
+    k = 5,
+    )
+
+# Examine the prevalence of each class in the smoted training set
+StatsBase.countmap(smotedtraininglabelsdf[labelname])
+
+# Now we have a ratio of malignant:benign that is 1:1.
+
+##############################################################################
+
 # Set up and train a binary logistic classifier
 logistic = asb.binarylogisticclassifier(
     featurenames,
@@ -64,10 +91,10 @@ logistic = asb.binarylogisticclassifier(
     )
 asb.fit!(
     logistic,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    smotedtrainingfeaturesdf,
+    smotedtraininglabelsdf,
     )
-# View the coefficients and p values for the logistic classifier
+# View the coefficients, p values, etc. for the logistic classifier
 asb.underlying(logistic)
 # Evaluate the performance of the logistic classifier on the testing set
 asb.binaryclassificationmetrics(
@@ -86,7 +113,7 @@ randomforest = asb.randomforestclassifier(
     featurenames,
     labelname,
     labellevels,
-    trainingfeaturesdf;
+    smotedtrainingfeaturesdf;
     nsubfeatures = 2, # number of subfeatures; defaults to 2
     ntrees = 20, # number of trees; defaults to 10
     package = :DecisionTreejl,
@@ -94,8 +121,8 @@ randomforest = asb.randomforestclassifier(
     )
 asb.fit!(
     randomforest,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    smotedtrainingfeaturesdf,
+    smotedtraininglabelsdf,
     )
 # Evaluate the performance of the random forest on the testing set
 asb.binaryclassificationmetrics(
@@ -107,19 +134,21 @@ asb.binaryclassificationmetrics(
     maximize = :f1score,
     )
 
+##############################################################################
+
 # Set up and train an SVM
 svm = asb.svmclassifier(
     featurenames,
     labelname,
     labellevels,
-    trainingfeaturesdf;
+    smotedtrainingfeaturesdf;
     package = :LIBSVMjl,
     name = "SVM",
     )
 asb.fit!(
     svm,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    smotedtrainingfeaturesdf,
+    smotedtraininglabelsdf,
     )
 # # Evaluate the performance of the SVM on the testing set
 asb.binaryclassificationmetrics(
@@ -198,7 +227,7 @@ knetmlp = asb.knetclassifier(
     featurenames,
     labelname,
     labellevels,
-    trainingfeaturesdf;
+    smotedtrainingfeaturesdf;
     name = "Knet MLP",
     predict = knetmlp_predict,
     loss = knetmlp_loss,
@@ -210,8 +239,8 @@ knetmlp = asb.knetclassifier(
     )
 asb.fit!(
     knetmlp,
-    trainingfeaturesdf,
-    traininglabelsdf;
+    smotedtrainingfeaturesdf,
+    smotedtraininglabelsdf;
     maxepochs = 2_000,
     printlosseverynepochs = 1, # if 0, will not print at all
     )
