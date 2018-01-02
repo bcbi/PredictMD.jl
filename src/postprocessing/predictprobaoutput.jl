@@ -18,7 +18,8 @@ end
 
 function fit!(
         transformer::AbstractPredictProbaSingleLabelInt2StringTransformer,
-        varargs...
+        varargs...;
+        kwargs...
         )
     if length(varargs) == 1
         return varargs[1]
@@ -29,7 +30,8 @@ end
 
 function predict_proba(
         transformer::AbstractPredictProbaSingleLabelInt2StringTransformer,
-        singlelabelprobabilities::Associative,
+        singlelabelprobabilities::Associative;
+        kwargs...
         )
     labelint2stringmap = _getlabelint2stringmap(
         transformer.levels,

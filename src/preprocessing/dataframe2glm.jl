@@ -11,7 +11,8 @@ end
 function transform(
         transformer::AbstractDataFrame2GLMjlTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        labelsdf::DataFrames.AbstractDataFrame;
+        kwargs...
         )
     transformedlabelsdf = DataFrames.DataFrame()
     label = transformer.label
@@ -24,7 +25,8 @@ end
 
 function transform(
         transformer::AbstractDataFrame2GLMjlTransformer,
-        featuresdf::DataFrames.AbstractDataFrame,
+        featuresdf::DataFrames.AbstractDataFrame;
+        kwargs...
         )
     return featuresdf
 end
@@ -32,14 +34,16 @@ end
 function fit!(
         transformer::AbstractDataFrame2GLMjlTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        labelsdf::DataFrames.AbstractDataFrame;
+        kwargs...
         )
     return transform(transformer, featuresdf, labelsdf)
 end
 
 function predict_proba(
         transformer::AbstractDataFrame2GLMjlTransformer,
-        featuresdf::DataFrames.AbstractDataFrame,
+        featuresdf::DataFrames.AbstractDataFrame;
+        kwargs...
         )
     return transform(transformer, featuresdf)
 end

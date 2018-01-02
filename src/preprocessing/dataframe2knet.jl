@@ -50,7 +50,8 @@ end
 function transform(
         transformer::AbstractDataFrame2KnetjlTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        labelsdf::DataFrames.AbstractDataFrame;
+        kwargs...
         )
     labelsarraynumrows = size(labelsdf, 1)
     labelsarraynumcols = length(transformer.labelnames)
@@ -103,6 +104,7 @@ end
 function transform(
         transformer::AbstractDataFrame2KnetjlTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
+        kwargs...
         )
     modelformula = makeformula(
         transformer.featurenames[1],
@@ -128,14 +130,16 @@ end
 function fit!(
         transformer::AbstractDataFrame2KnetjlTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        labelsdf::DataFrames.AbstractDataFrame;
+        kwargs...
         )
     return transform(transformer, featuresdf, labelsdf)
 end
 
 function predict_proba(
         transformer::AbstractDataFrame2KnetjlTransformer,
-        featuresdf::DataFrames.AbstractDataFrame,
+        featuresdf::DataFrames.AbstractDataFrame;
+        kwargs...
         )
     return transform(transformer, featuresdf)
 end

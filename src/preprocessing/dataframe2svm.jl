@@ -12,7 +12,8 @@ end
 function transform(
         transformer::AbstractFeatureArrayTransposerTransformer,
         featuresarray::AbstractMatrix,
-        labelsarray::AbstractArray,
+        labelsarray::AbstractArray;
+        kwargs...
         )
     featuresarraytransposed = transpose(featuresarray)
     return featuresarraytransposed, labelsarray
@@ -20,7 +21,8 @@ end
 
 function transform(
         transformer::AbstractFeatureArrayTransposerTransformer,
-        featuresarray::AbstractMatrix,
+        featuresarray::AbstractMatrix;
+        kwargs...
         )
     featuresarraytransposed = transpose(featuresarray)
     return featuresarraytransposed
@@ -29,14 +31,16 @@ end
 function fit!(
         transformer::AbstractFeatureArrayTransposerTransformer,
         featuresarray::AbstractMatrix,
-        labelsarray::AbstractArray,
+        labelsarray::AbstractArray;
+        kwargs...
         )
     return transform(transformer, featuresarray, labelsarray)
 end
 
 function predict_proba(
         transformer::AbstractFeatureArrayTransposerTransformer,
-        featuresarray::AbstractMatrix,
+        featuresarray::AbstractMatrix;
+        kwargs...
         )
     return transform(transformer, featuresarray)
 end

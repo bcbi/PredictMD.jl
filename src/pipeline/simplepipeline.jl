@@ -5,7 +5,7 @@ struct SimplePipeline <: AbstractSimplePipeline
     name::T1 where T1 <: AbstractString
     objectsvector::T2 where T2 <: VectorOfAbstractASBObjects
     underlyingobjectindex::T3 where T3 <: Integer
-    learningcurvesobjectindex::T4 where T4 <: Integer
+    valuehistoriesobjectindex::T4 where T4 <: Integer
 
     function SimplePipeline(
             objectsvector::VectorOfAbstractASBObjects;
@@ -42,7 +42,8 @@ end
 
 function valuehistories(x::AbstractSimplePipeline)
     if x.valuehistoriesobjectindex > 0
-        result = valuehistories(x.objectsvector[x.underlyingobjectindex])
+        result =
+            valuehistories(x.objectsvector[x.valuehistoriesobjectindex])
         return result
     else
         error(
@@ -57,47 +58,50 @@ end
 function fit!(
         simplepipeline::SimplePipeline,
         features,
-        labels,
+        labels;
+        kwargs...
         )
     pipelineobjects = simplepipeline.objectsvector
     numpipelineobjects = length(pipelineobjects)
     if numpipelineobjects==0
         error("numpipelineobjects==0")
     end
-    output = fit!(pipelineobjects[1], features, labels)
+    output = fit!(pipelineobjects[1], features, labels; kwargs...)
     for i = 2:numpipelineobjects
         input = output
         if !(typeof(input) <: Tuple)
             input = tuple(input)
         end
-        output = fit!(pipelineobjects[i], input...)
+        output = fit!(pipelineobjects[i], input...; kwargs...)
     end
     return output
 end
 
 function predict(
         simplepipeline::SimplePipeline,
-        features,
+        features;
+        kwargs...
         )
     pipelineobjects = simplepipeline.objectsvector
     numpipelineobjects = length(pipelineobjects)
     if numpipelineobjects==0
         error("numpipelineobjects==0")
     end
-    output = predict(pipelineobjects[1], features)
+    output = predict(pipelineobjects[1], features; kwargs...)
     for i = 2:numpipelineobjects
         input = output
         if !(typeof(input) <: Tuple)
             input = tuple(input)
         end
-        output = predict(pipelineobjects[i], input...)
+        output = predict(pipelineobjects[i], input...; kwargs...)
     end
     return output
 end
 
 function predict_proba(
         simplepipeline::SimplePipeline,
-        features,
+        features;
+        kwargs...
         )
     pipelineobjects = simplepipeline.objectsvector
     numpipelineobjects = length(pipelineobjects)
@@ -110,7 +114,7 @@ function predict_proba(
         if !(typeof(input) <: Tuple)
             input = tuple(input)
         end
-        output = predict_proba(pipelineobjects[i], input...)
+        output = predict_proba(pipelineobjects[i], input...; kwargs...)
     end
     return output
 end

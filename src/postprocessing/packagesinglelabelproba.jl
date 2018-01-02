@@ -9,7 +9,8 @@ end
 
 function fit!(
         transformer::AbstractPackageSingleLabelPredictProbaTransformer,
-        varargs...
+        varargs...;
+        kwargs...
         )
     if length(varargs) == 1
         return varargs[1]
@@ -20,7 +21,8 @@ end
 
 function predict_proba(
         transformer::AbstractPackageSingleLabelPredictProbaTransformer,
-        singlelabelprobabilities::Associative,
+        singlelabelprobabilities::Associative;
+        kwargs...
         )
     result = Dict()
     result[transformer.singlelabelname] = singlelabelprobabilities
