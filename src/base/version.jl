@@ -1,4 +1,4 @@
-const VERSIONSTRING = "0.3.1+dev"
+const VERSIONSTRING = "0.4"
 
 const VERSIONNUMBER = try
     convert(VersionNumber, strip(VERSIONSTRING))
