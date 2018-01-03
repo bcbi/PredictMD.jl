@@ -31,7 +31,9 @@ before_install:
   # update homebrew
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
   # install mactex
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install mactex; fi
+  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install mactex; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then wget ctan.math.washington.edu/tex-archive/systems/mac/mactex/MacTeX.pkg -O /tmp/MacTex.pkg; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo installer -pkg /tmp/MacTex.pkg -target /; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH=/Library/TeX/texbin:"$PATH"; fi
   # update tlmgr
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr update --self; fi
