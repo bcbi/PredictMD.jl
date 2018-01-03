@@ -19,6 +19,80 @@ function binaryyscore(
     return result
 end
 
+function _binaryclassificationmetrics_tunableparam(
+        kwargsassoc::Associative,
+        )
+    tunableparams = [
+        :threshold,
+        :sensitivity,
+        :specificity,
+        :maximize,
+        ]
+    maximizableparams = [
+        :f1score,
+        :cohenkappa,
+        ]
+    kwargshastunableparam = [
+        haskey(kwargsassoc, x) for x in tunableparams
+        ]
+    if sum(kwargshastunableparam) !== 1
+        msg = "you must specify one (and only one) of the following: " *
+            join(tunableparams, ", ")
+        error(msg)
+    end
+    if length(tunableparams[kwargshastunableparam]) !== 1
+        error("oh boy you definitely should never see this error message")
+    end
+    selectedtunableparam =
+        tunableparams[kwargshastunableparam][1]
+    if selectedtunableparam == :maximize
+        selectedparamtomax = kwargsassoc[:maximize]
+        if !in(selectedparamtomax, maximizableparams)
+            msg = "Cannot max $(selectedparamtomax). Select one " *
+                "of the following: " * join(maximizableparams, ", ")
+            error(msg)
+        end
+    else
+        selectedparamtomax = :notapplicable
+    end
+    #
+    metricprintnames = Dict()
+    metricprintnames[:AUPRC] = string("AUPRC")
+    metricprintnames[:AUROCC] = string("AUROCC")
+    metricprintnames[:AveragePrecision] = string("Average precision")
+    if selectedtunableparam == :threshold
+        metricprintnames[:threshold] = string("[fix] * Threshold")
+    else
+        metricprintnames[:threshold] = string("* Threshold")
+    end
+    metricprintnames[:accuracy] = string("* Accuracy")
+    if selectedtunableparam == :maximize && selectedparamtomax == :cohenkappa
+        metricprintnames[:cohenkappa] =
+            string("[max] * Cohen's Kappa statistic")
+    else
+        metricprintnames[:cohenkappa] =
+            string("* Cohen's Kappa statistic")
+    end
+    if selectedtunableparam == :maximize && selectedparamtomax == :f1score
+        metricprintnames[:f1score] = string("[max] * F1 score")
+    else
+        metricprintnames[:f1score] = string("* F1 Score")
+    end
+    metricprintnames[:precision] = string("* Precision")
+    metricprintnames[:recall] = string("* Recall")
+    if selectedtunableparam == :sensitivity
+        metricprintnames[:sensitivity] = string("[fix] * Sensitivity")
+    else
+        metricprintnames[:sensitivity] = string("* Sensitivity")
+    end
+    if selectedtunableparam == :specificity
+        metricprintnames[:specificity] = string("[fix] * Specificity")
+    else
+        metricprintnames[:specificity] = string("* Specificity")
+    end
+    return selectedtunableparam, selectedparamtomax, metricprintnames
+end
+
 function _binaryclassificationmetrics(
         estimator::AbstractASBObject,
         featuresdf::DataFrames.AbstractDataFrame,
@@ -27,39 +101,11 @@ function _binaryclassificationmetrics(
         positiveclass::AbstractString;
         kwargs...
         )
+    #
     kwargsdict = Dict(kwargs)
-    tunableparameters = [
-        :threshold,
-        :sensitivity,
-        :specificity,
-        :maximize,
-        ]
-    maximizableparameters = [
-        :f1score,
-        :cohenkappa,
-        ]
-    kwargshastunableparameter = [
-        haskey(kwargsdict, x) for x in tunableparameters
-        ]
-    if sum(kwargshastunableparameter) !== 1
-        msg = "you must specify one (and only one) of the following: " *
-            join(tunableparameters, ", ")
-        error(msg)
-    end
-
-    if length(tunableparameters[kwargshastunableparameter]) !== 1
-        error("oh boy you definitely should never see this error message")
-    end
-    selectedtunableparameter =
-        tunableparameters[kwargshastunableparameter][1]
-    if selectedtunableparameter == :maximize
-        parametertomaximize = kwargsdict[:maximize]
-        if !in(parametertomaximize, maximizableparameters)
-            msg = "Cannot maximize $(parametertomaximize). Select one " *
-                "of the following: " * join(maximizableparameters, ", ")
-            error(msg)
-        end
-    end
+    selectedtunableparam, selectedparamtomax, metricprintnames =
+        _binaryclassificationmetrics_tunableparam(kwargsdict)
+    #
     yscore = Cfloat.(
         binaryyscore(
             predict_proba(estimator, featuresdf)[singlelabelname],
@@ -78,7 +124,7 @@ function _binaryclassificationmetrics(
     results[:AUROCC] = aurocc(ytrue, yscore)
     results[:AUPRC] = auprc(ytrue, yscore)
     results[:AveragePrecision] = averageprecisionscore(ytrue, yscore)
-    if selectedtunableparameter == :threshold
+    if selectedtunableparam == :threshold
         additionalthreshold = kwargsdict[:threshold]
     else
         additionalthreshold = 0.5
@@ -88,23 +134,23 @@ function _binaryclassificationmetrics(
         yscore;
         additionalthreshold = additionalthreshold,
         )
-    if selectedtunableparameter == :threshold
+    if selectedtunableparam == :threshold
         selectedthreshold = kwargsdict[:threshold]
         bestindex = indmin(abs.(allthresholds - selectedthreshold))
-    elseif selectedtunableparameter == :sensitivity
+    elseif selectedtunableparam == :sensitivity
         selectedsensitivity = kwargsdict[:sensitivity]
         allsensitivity = [sensitivity(x) for x in allrocnums]
         bestindex = indmin(abs.(allsensitivity - selectedsensitivity))
-    elseif selectedtunableparameter == :specificity
+    elseif selectedtunableparam == :specificity
         selectedspecificity = kwargsdict[:specificity]
         allspecificity = [specificity(x) for x in allrocnums]
         bestindex = indmin(abs.(allspecificity - selectedspecificity))
-    elseif selectedtunableparameter == :maximize
-        parametertomaximize = kwargsdict[:maximize]
-        if parametertomaximize == :f1score
+    elseif selectedtunableparam == :maximize
+        selectedparamtomax = kwargsdict[:maximize]
+        if selectedparamtomax == :f1score
             allf1score = [fbetascore(x, 1) for x in allrocnums]
             bestindex = indmax(allf1score)
-        elseif parametertomaximize == :cohenkappa
+        elseif selectedparamtomax == :cohenkappa
             allcohenkappa = [cohenkappa(x) for x in allrocnums]
             bestindex = indmax(allcohenkappa)
         else
@@ -113,6 +159,7 @@ function _binaryclassificationmetrics(
     else
         error("this is another error that should never happen")
     end
+
     results[:allrocnums] = allrocnums
     results[:allthresholds] = allthresholds
     results[:bestindex] = bestindex
@@ -157,6 +204,9 @@ function binaryclassificationmetrics(
         positiveclass::AbstractString;
         kwargs...
         )
+    kwargsdict = Dict(kwargs)
+    selectedtunableparam, selectedparamtomax, metricprintnames =
+        _binaryclassificationmetrics_tunableparam(kwargsdict)
     numestimators = length(vectorofestimators)
     metricsforeachestimator = [
         _binaryclassificationmetrics(
@@ -171,17 +221,17 @@ function binaryclassificationmetrics(
         ]
     result = DataFrames.DataFrame()
     result[:metric] = [
-        "AUPRC",
-        "AUROCC",
-        "Average precision",
-        "Threshold*",
-        "Accuracy*",
-        "Cohen's Kappa statistic*",
-        "F1 score*",
-        "Precision*",
-        "Recall*",
-        "Sensitivity*",
-        "Specificity*",
+        metricprintnames[:AUPRC],
+        metricprintnames[:AUROCC],
+        metricprintnames[:AveragePrecision],
+        metricprintnames[:threshold],
+        metricprintnames[:accuracy],
+        metricprintnames[:cohenkappa],
+        metricprintnames[:f1score],
+        metricprintnames[:precision],
+        metricprintnames[:recall],
+        metricprintnames[:sensitivity],
+        metricprintnames[:specificity],
         ]
     for i = 1:numestimators
         result[Symbol(vectorofestimators[i].name)] = [

@@ -94,7 +94,7 @@ asb.fit!(
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
     )
-# View the coefficients, p values, etc. for the logistic classifier
+# View the coefficients, p values, etc. for the underlying logisic regression
 asb.underlying(logistic)
 # Evaluate the performance of the logistic classifier on the testing set
 asb.binaryclassificationmetrics(
@@ -103,7 +103,7 @@ asb.binaryclassificationmetrics(
     testinglabelsdf,
     labelname,
     positiveclass;
-    maximize = :f1score,
+    sensitivity = 0.95,
     )
 
 ##############################################################################
@@ -131,7 +131,7 @@ asb.binaryclassificationmetrics(
     testinglabelsdf,
     labelname,
     positiveclass;
-    maximize = :f1score,
+    sensitivity = 0.95,
     )
 
 ##############################################################################
@@ -157,7 +157,7 @@ asb.binaryclassificationmetrics(
     testinglabelsdf,
     labelname,
     positiveclass;
-    maximize = :f1score,
+    sensitivity = 0.95,
     )
 
 ##############################################################################
@@ -265,12 +265,20 @@ asb.binaryclassificationmetrics(
     testinglabelsdf,
     labelname,
     positiveclass;
-    maximize = :f1score,
+    sensitivity = 0.95,
     )
 
 ##############################################################################
 
 # Compare the performance of all four models on the testing set
+showall(asb.binaryclassificationmetrics(
+    [logistic, randomforest, svm, knetmlp],
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    sensitivity = 0.95,
+    ))
 showall(asb.binaryclassificationmetrics(
     [logistic, randomforest, svm, knetmlp],
     testingfeaturesdf,
