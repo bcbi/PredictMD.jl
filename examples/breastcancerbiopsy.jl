@@ -103,7 +103,7 @@ asb.binaryclassificationmetrics(
     testinglabelsdf,
     labelname,
     positiveclass;
-    maximize = :f1score,
+    sensitivity = 0.99,
     )
 
 ##############################################################################
@@ -131,7 +131,7 @@ asb.binaryclassificationmetrics(
     testinglabelsdf,
     labelname,
     positiveclass;
-    maximize = :f1score,
+    sensitivity = 0.99,
     )
 
 ##############################################################################
@@ -157,7 +157,7 @@ asb.binaryclassificationmetrics(
     testinglabelsdf,
     labelname,
     positiveclass;
-    maximize = :f1score,
+    sensitivity = 0.99,
     )
 
 ##############################################################################
@@ -265,12 +265,20 @@ asb.binaryclassificationmetrics(
     testinglabelsdf,
     labelname,
     positiveclass;
-    maximize = :f1score,
+    sensitivity = 0.99,
     )
 
 ##############################################################################
 
 # Compare the performance of all four models on the testing set
+showall(asb.binaryclassificationmetrics(
+    [logistic, randomforest, svm, knetmlp],
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    sensitivity = 0.99,
+    ))
 showall(asb.binaryclassificationmetrics(
     [logistic, randomforest, svm, knetmlp],
     testingfeaturesdf,
