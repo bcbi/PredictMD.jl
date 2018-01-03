@@ -39,6 +39,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install pgf; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install pgfplots; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install standalone; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install luatex85; fi
   # install pdf2svg
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install pdf2svg; fi
 
