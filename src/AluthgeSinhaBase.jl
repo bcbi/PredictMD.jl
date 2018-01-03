@@ -1,83 +1,30 @@
-__precompile__(false)
+__precompile__(true)
 
 module AluthgeSinhaBase
 
-# abstract types to export:
-export AbstractModelly
+# load base.jl first:
+include("base.jl")
 
-# abstract type aliases to export:
-
-# abstract parametric types to export:
-export AbstractDataset,
-    AbstractTabularDataset,
-    AbstractHoldoutTabularDataset,
-    AbstractKFoldTabularDataset,
-    AbstractSingleModel,
-    AbstractClassifier,
-    AbstractSingleLabelClassifier,
-    AbstractSingleLabelBinaryClassifier,
-    AbstractRegression,
-    AbstractSingleLabelRegression,
-    AbstractModelPerformance
-
-# abstract parametric type aliases to export:
-export ArrayOfModels,
-    VectorOfModels,
-    MatrixOfModels,
-    AbstractBinaryClassifier
-
-# concrete types to export:
-export HoldoutTabularDataset,
-    ResampledHoldoutTabularDataset,
-    SingleLabelBinaryLogisticClassifier,
-    SingleLabelBinaryRandomForestClassifier,
-    SingleLabelBinarySupportVectorMachineClassifier
-
-# concrete type aliases to export:
-
-# concrete parametric types to export:
-export ModelPerformance
-
-# concrete parametric type aliases to export:
-export BinaryLogistic,
-    BinaryRandomForest,
-    SingleLabelBinarySVMClassifier,
-    BinarySupportVectorMachine,
-    BinarySVM
-
-# functions to export:
-export getdata,
-    numtraining,
-    numvalidation,
-    numtesting,
-    hastraining,
-    hasvalidation,
-    hastesting,
-    dataname,
-    modelname,
-    ensemblename,
-    plots,
-    classifierhistograms,
-    learningcurves
-
-# source files to include:
-include("abstracttypes.jl")
-include("auc.jl")
-include("convenience.jl")
-include("ensembles.jl")
-include("env.jl")
-include("faketabulardata.jl")
-include("formulas.jl")
-include("labelcoding.jl")
-include("linearmodels.jl")
-include("loss.jl")
+# then load the remaining the source files:
+include("calibration.jl")
+include("classimbalance.jl")
+include("cluster.jl")
+include("datasets.jl")
+include("decomposition.jl")
+include("ensemble.jl")
+include("linearmodel.jl")
 include("metrics.jl")
-include("modelperformance.jl")
-include("randomforest.jl")
-include("smote.jl")
+include("modelselection.jl")
+include("multiclass.jl")
+include("multioutput.jl")
+include("neuralnetwork.jl")
+include("pipeline.jl")
+include("plotting.jl")
+include("postprocessing.jl")
+include("preprocessing.jl")
+include("scikitlearn.jl")
 include("svm.jl")
-include("tabulardatasets.jl")
-include("util.jl")
-include("version.jl")
+include("tree.jl")
+include("utils.jl")
 
 end # end module AluthgeSinhaBase
