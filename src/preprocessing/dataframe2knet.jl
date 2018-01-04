@@ -1,44 +1,37 @@
 import DataFrames
 import StatsModels
 
-abstract type AbstractDataFrame2KnetjlTransformer <:
+abstract type AbstractDataFrame2KnetTransformer <:
         AbstractTransformer
 end
 
-struct DataFrame2KnetjlTransformer <:
-        AbstractDataFrame2KnetjlTransformer
+struct DataFrame2KnetTransformer <:
+        AbstractDataFrame2KnetTransformer
     featurenames::T1 where T1 <: AbstractVector
-    featurecontrasts::T2 where T2 <: Associative
+    dffeaturecontrasts::T2 where T2 <: ImmutableDataFrameFeatureContrasts
     labelnames::T3 where T3 <: VectorOfSymbols
     labellevels::T4 where T4 <: Associative
     index::T5 where T5 <: Integer
     transposefeatures::T6 where T6 <: Bool
+    transposelabels::T7 where T7 <: Bool
 end
 
-function DataFrame2KnetjlTransformer(
+function DataFrame2KnetTransformer(
         featurenames::AbstractVector,
         labelnames::VectorOfSymbols,
         labellevels::Associative,
         index::Integer,
         df::DataFrames.AbstractDataFrame;
         transposefeatures::Bool = true,
+        transposelabels::Bool = false,
         )
-    if length(featurenames) == 0
-        error("length(featurenames) == 0")
-    end
-    modelformula = makeformula(
-        featurenames[1],
-        featurenames;
-        intercept = false
-        )
-    modelframe = StatsModels.ModelFrame(
-        modelformula,
+    dffeaturecontrasts = ImmutableDataFrameFeatureContrasts(
         df,
+        featurenames
         )
-    featurecontrasts = modelframe.contrasts
-    result = DataFrame2KnetjlTransformer(
+    result = DataFrame2KnetTransformer(
         featurenames,
-        featurecontrasts,
+        dffeaturecontrasts,
         labelnames,
         labellevels,
         index,
@@ -48,7 +41,7 @@ function DataFrame2KnetjlTransformer(
 end
 
 function transform(
-        transformer::AbstractDataFrame2KnetjlTransformer,
+        transformer::AbstractDataFrame2KnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...
@@ -85,24 +78,24 @@ function transform(
         transformer.featurenames;
         intercept = false
         )
-    featurecontrasts = transformer.featurecontrasts
     modelframe = StatsModels.ModelFrame(
         modelformula,
         featuresdf;
-        contrasts = featurecontrasts,
+        contrasts = transformer.dffeaturecontrasts.featurecontrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     featuresarray = modelmatrix.m
     if transformer.transposefeatures
-        featuresarraytransposed = transpose(featuresarray)
-        return featuresarraytransposed, labelsarray
-    else
-        return featuresarray, labelsarray
+        featuresarray = transpose(featuresarray)
     end
+    if transformer.transposelabels
+        labelsarray = transpose(labelsarray)
+    end
+    return featuresarray, labelsarray
 end
 
 function transform(
-        transformer::AbstractDataFrame2KnetjlTransformer,
+        transformer::AbstractDataFrame2KnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         kwargs...
         )
@@ -111,24 +104,21 @@ function transform(
         transformer.featurenames;
         intercept = false
         )
-    featurecontrasts = transformer.featurecontrasts
     modelframe = StatsModels.ModelFrame(
         modelformula,
         featuresdf;
-        contrasts = featurecontrasts,
+        contrasts = transformer.dffeaturecontrasts.featurecontrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     featuresarray = modelmatrix.m
     if transformer.transposefeatures
-        featuresarraytransposed = transpose(featuresarray)
-        return featuresarraytransposed
-    else
-        return featuresarray
+        featuresarray = transpose(featuresarray)
     end
+    return featuresarray
 end
 
 function fit!(
-        transformer::AbstractDataFrame2KnetjlTransformer,
+        transformer::AbstractDataFrame2KnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...
@@ -137,7 +127,7 @@ function fit!(
 end
 
 function predict_proba(
-        transformer::AbstractDataFrame2KnetjlTransformer,
+        transformer::AbstractDataFrame2KnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )

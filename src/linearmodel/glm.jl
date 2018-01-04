@@ -2,43 +2,38 @@ import DataFrames
 import GLM
 import StatsModels
 
-abstract type AbstractASBGLMjlGeneralizedLinearModelClassifier <:
-        AbstractClassifier
-end
 
-abstract type AbstractASBGLMjlGeneralizedLinearModelRegression <:
-        AbstractRegression
-end
-
-mutable struct ASBGLMjlGeneralizedLinearModelClassifier <:
-        AbstractASBGLMjlGeneralizedLinearModelClassifier
+mutable struct MutableGLMEstimator <: AbstractPrimitiveObject
     name::T1 where T1 <: AbstractString
+    isclassificationmodel::T2 where T2 <: Bool
+    isregressionmodel::T3 where T3 <: Bool
 
-    # hyperparameters (not learned from data):
-    formula::T2 where T2 <: StatsModels.Formula
-    family::T3 where T3 <: GLM.Distribution
-    link::T4 where T4 <: GLM.Link
+    formula::T4 where T4 <: StatsModels.Formula
+    family::T5 where T5 <: GLM.Distribution
+    link::T6 where T6 <: GLM.Link
 
     # parameters (learned from data):
-    glm::T5 where T5
+    underlyingglm::T where T
 
-    function ASBGLMjlGeneralizedLinearModelClassifier(
+    function MutableGLMEstimator(
             formula::StatsModels.Formula,
             family::GLM.Distribution,
             link::GLM.Link;
             name::AbstractString = "",
             )
-        return new(name, formula, family, link)
+        result = new(
+            )
+        return result
     end
 end
 
-function underlying(x::AbstractASBGLMjlGeneralizedLinearModelClassifier)
+function underlying(x::AbstractASBGLMGeneralizedLinearModelClassifier)
     result = x.glm
     return result
 end
 
 function fit!(
-        estimator::AbstractASBGLMjlGeneralizedLinearModelClassifier,
+        estimator::AbstractASBGLMGeneralizedLinearModelClassifier,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         )
@@ -54,7 +49,7 @@ function fit!(
 end
 
 function predict_proba(
-        estimator::AbstractASBGLMjlGeneralizedLinearModelClassifier,
+        estimator::AbstractASBGLMGeneralizedLinearModelClassifier,
         featuresdf::DataFrames.AbstractDataFrame,
         )
     glmpredictoutput = GLM.predict(
@@ -68,7 +63,7 @@ function predict_proba(
 end
 
 function fit!(
-        estimator::AbstractASBGLMjlGeneralizedLinearModelRegression,
+        estimator::AbstractASBGLMGeneralizedLinearModelRegression,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         )
@@ -83,7 +78,7 @@ function fit!(
     return estimator
 end
 
-function _singlelabelbinarylogisticclassifier_GLMjl(
+function _singlelabelbinarylogisticclassifier_GLM(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -103,11 +98,11 @@ function _singlelabelbinarylogisticclassifier_GLMjl(
         featurenames;
         intercept = intercept,
         )
-    dftransformer = DataFrame2GLMjlTransformer(
+    dftransformer = DataFrame2GLMTransformer(
         singlelabelname,
         positiveclass,
         )
-    glmestimator = ASBGLMjlGeneralizedLinearModelClassifier(
+    glmestimator = ASBGLMGeneralizedLinearModelClassifier(
         formula,
         GLM.Binomial(),
         GLM.LogitLink(),
@@ -140,8 +135,8 @@ function singlelabelbinarylogisticclassifier(
         intercept::Bool = true,
         name::AbstractString = "",
         )
-    if package == :GLMjl
-        result =_singlelabelbinarylogisticclassifier_GLMjl(
+    if package == :GLM
+        result =_singlelabelbinarylogisticclassifier_GLM(
             featurenames,
             singlelabelname,
             singlelabellevels;

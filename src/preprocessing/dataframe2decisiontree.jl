@@ -1,40 +1,31 @@
 import DataFrames
 import StatsModels
 
-abstract type AbstractDataFrame2DecisionTreejlTransformer <:
+abstract type AbstractDataFrame2DecisionTreeTransformer <:
         AbstractTransformer
 end
 
-struct DataFrame2DecisionTreejlTransformer <:
-        AbstractDataFrame2DecisionTreejlTransformer
+struct DataFrame2DecisionTreeTransformer <:
+        AbstractDataFrame2DecisionTreeTransformer
     featurenames::T1 where T1 <: AbstractVector
-    featurecontrasts::T2 where T2 <: Associative
+    dffeaturecontrasts::T2 where T2 <: ImmutableDataFrameFeatureContrasts
     singlelabelname::T3 where T3 <: Symbol
     levels::T4 where T4 <: AbstractVector
 end
 
-function DataFrame2DecisionTreejlTransformer(
+function DataFrame2DecisionTreeTransformer(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         levels::AbstractVector,
         df::DataFrames.AbstractDataFrame,
         )
-    if length(featurenames) == 0
-        error("length(featurenames) == 0")
-    end
-    modelformula = makeformula(
-        featurenames[1],
-        featurenames;
-        intercept = false
-        )
-    modelframe = StatsModels.ModelFrame(
-        modelformula,
+    dffeaturecontrasts = ImmutableDataFrameFeatureContrasts(
         df,
-        )
-    featurecontrasts = modelframe.contrasts
-    result = DataFrame2DecisionTreejlTransformer(
         featurenames,
-        featurecontrasts,
+        )
+    result = DataFrame2DecisionTreeTransformer(
+        featurenames,
+        dffeaturecontrasts,
         singlelabelname,
         levels,
         )
@@ -42,7 +33,7 @@ function DataFrame2DecisionTreejlTransformer(
 end
 
 function transform(
-        transformer::AbstractDataFrame2DecisionTreejlTransformer,
+        transformer::AbstractDataFrame2DecisionTreeTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...
@@ -55,11 +46,10 @@ function transform(
         transformer.featurenames;
         intercept = false
         )
-    featurecontrasts = transformer.featurecontrasts
     modelframe = StatsModels.ModelFrame(
         modelformula,
         featuresdf;
-        contrasts = featurecontrasts,
+        contrasts = transformer.dffeaturecontrasts.featurecontrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     featuresarray = modelmatrix.m
@@ -67,7 +57,7 @@ function transform(
 end
 
 function transform(
-        transformer::AbstractDataFrame2DecisionTreejlTransformer,
+        transformer::AbstractDataFrame2DecisionTreeTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )
@@ -76,11 +66,10 @@ function transform(
         transformer.featurenames;
         intercept = false
         )
-    featurecontrasts = transformer.featurecontrasts
     modelframe = StatsModels.ModelFrame(
         modelformula,
         featuresdf;
-        contrasts = featurecontrasts,
+        contrasts = transformer.dffeaturecontrasts.featurecontrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     featuresarray = modelmatrix.m
@@ -88,7 +77,7 @@ function transform(
 end
 
 function fit!(
-        transformer::AbstractDataFrame2DecisionTreejlTransformer,
+        transformer::AbstractDataFrame2DecisionTreeTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...
@@ -97,7 +86,7 @@ function fit!(
 end
 
 function predict_proba(
-        transformer::AbstractDataFrame2DecisionTreejlTransformer,
+        transformer::AbstractDataFrame2DecisionTreeTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )

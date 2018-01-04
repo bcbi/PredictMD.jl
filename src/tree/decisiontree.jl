@@ -1,42 +1,40 @@
 import DecisionTree
 
-abstract type AbstractASBDecisionTreejlRandomForestClassifier <:
-        AbstractClassifier
-end
-
-abstract type AbstractASBDecisionTreejlRandomForestRegression <:
-        AbstractRegression
-end
-
-mutable struct ASBDecisionTreejlRandomForestClassifier <:
-        AbstractASBDecisionTreejlRandomForestClassifier
+mutable struct MutableDecisionTreeRandomForestEstimator <:
+        AbstractPrimitiveObject
     name::T1 where T1 <: AbstractString
-    singlelabelname::T2 where T2 <: Symbol
-    levels::T3 where T3 <: AbstractVector
-    # hyperparameters (not learned from data):
-    nsubfeatures::T4 where T4 <: Integer
-    ntrees::T5 where T5 <: Integer
-    # parameters (learned from data):
-    randomforest::T6 where T6
+    isclassificationmodel::T2 where T2 <: Bool
+    isregressionmodel::T3 where T3 <: Bool
 
-    function ASBDecisionTreejlRandomForestClassifier(
+    singlelabelname::T4 where T4 <: Symbol
+    levels::T5 where T5 <: AbstractVector
+
+    # hyperparameters (not learned from data):
+    hyperparameters::T6 where T6 <: Associative
+
+    # parameters (learned from data):
+    underlyingrandomforest::T7 where T7
+
+    function MutableDecisionTreeRandomForestEstimator(
             singlelabelname::Symbol,
             levels::AbstractVector;
             name::AbstractString = "",
             nsubfeatures::Integer = 2,
-            ntrees::Integer = 10
+            ntrees::Integer = 20,
             )
-        return new(name, singlelabelname, levels, nsubfeatures, ntrees)
+        result = new(
+            )
+        return result
     end
 end
 
-function underlying(x::AbstractASBDecisionTreejlRandomForestClassifier)
+function underlying(x::AbstractASBDecisionTreeRandomForestClassifier)
     result = x.randomforest
     return result
 end
 
 function fit!(
-        estimator::AbstractASBDecisionTreejlRandomForestClassifier,
+        estimator::AbstractASBDecisionTreeRandomForestClassifier,
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
@@ -53,7 +51,7 @@ function fit!(
 end
 
 function predict_proba(
-        estimator::AbstractASBDecisionTreejlRandomForestClassifier,
+        estimator::AbstractASBDecisionTreeRandomForestClassifier,
         featuresarray::AbstractArray,
         )
     predictedprobabilities = DecisionTree.apply_forest_proba(
@@ -68,7 +66,7 @@ function predict_proba(
     return result
 end
 
-function _singlelabelrandomforestclassifier_DecisionTreejl(
+function _singlelabelrandomforestclassifier_DecisionTree(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector,
@@ -77,13 +75,13 @@ function _singlelabelrandomforestclassifier_DecisionTreejl(
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
         )
-    dftransformer = DataFrame2DecisionTreejlTransformer(
+    dftransformer = DataFrame2DecisionTreeTransformer(
         featurenames,
         singlelabelname,
         singlelabellevels,
         df,
         )
-    randomforestestimator = ASBDecisionTreejlRandomForestClassifier(
+    randomforestestimator = ASBDecisionTreeRandomForestClassifier(
         singlelabelname,
         singlelabellevels;
         name = name,
@@ -115,8 +113,8 @@ function singlelabelrandomforestclassifier(
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
         )
-    if package == :DecisionTreejl
-        result = _singlelabelrandomforestclassifier_DecisionTreejl(
+    if package == :DecisionTree
+        result = _singlelabelrandomforestclassifier_DecisionTree(
             featurenames,
             singlelabelname,
             singlelabellevels,

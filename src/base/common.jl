@@ -1,43 +1,19 @@
 import MLBase
 
-const ArrayOfSymbols =
-    AbstractArray{T, N} where T <: Symbol where N
-const VectorOfSymbols =
-    AbstractArray{T, 1} where T <: Symbol
-const MatrixOfSymbolms =
-    AbstractArray{T, 2} where T <: Symbol
+abstract type AbstractObject end
 
-const ArrayOfMLBaseROCNums =
-    AbstractArray{T, N} where T <: MLBase.ROCNums where N
-const VectorOfMLBaseROCNums =
-    AbstractArray{T, 1} where T <: MLBase.ROCNums
-const MatrixOfMLBaseROCNums =
-    AbstractArray{T, 2} where T <: MLBase.ROCNums
+abstract type AbstractPrimitiveObject <: AbstractObject end
 
-abstract type AbstractASBObject
-end
+abstract type AbstractCompositeObject <: AbstractObject end
 
-const ArrayOfAbstractASBObjects =
-    AbstractArray{T, N} where T <: AbstractASBObject where N
-const VectorOfAbstractASBObjects =
-    AbstractArray{T, 1} where T <: AbstractASBObject
-const MatrixOfAbstractASBObjects =
-    AbstractArray{T, 2} where T <: AbstractASBObject
+const AbstractObjectArray = AbstractArray{T} where T <: AbstractObject
+const AbstractObjectVector = AbstractVector{T} where T <: AbstractObject
+const AbstractObjectMatrix = AbstractMatrix{T} where T <: AbstractObject
 
-abstract type AbstractEnsemble <: AbstractASBObject
-end
+const ROCNumsArray = AbstractArray{T} where T <: MLBase.ROCNums
+const ROCNumsVector = AbstractVector{T} where T <: MLBase.ROCNums
+const ROCNumsMatrix = AbstractMatrix{T} where T <: MLBase.ROCNums
 
-abstract type AbstractPipeline <: AbstractASBObject
-end
-
-abstract type AbstractTransformer <: AbstractASBObject
-end
-
-abstract type AbstractEstimator <: AbstractASBObject
-end
-
-abstract type AbstractClassifier <: AbstractEstimator
-end
-
-abstract type AbstractRegression <: AbstractEstimator
-end
+const SymbolArray = AbstractArray{T} where T <: Symbol
+const SymbolVector = AbstractVector{T} where T <: Symbol
+const SymbolMatrix = AbstractMatrix{T} where T <: Symbol

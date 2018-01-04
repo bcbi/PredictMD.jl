@@ -2,6 +2,7 @@ import AluthgeSinhaBase
 const asb = AluthgeSinhaBase
 import DataFrames
 import Knet
+import LIBSVM
 import RDatasets
 import StatsBase
 

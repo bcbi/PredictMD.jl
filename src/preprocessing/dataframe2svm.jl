@@ -45,13 +45,13 @@ function predict_proba(
     return transform(transformer, featuresarray)
 end
 
-function DataFrame2LIBSVMjlTransformer(
+function DataFrame2LIBSVMTransformer(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         levels::AbstractVector,
         df::DataFrames.AbstractDataFrame,
         )
-    df2decisiontreetransformer = DataFrame2DecisionTreejlTransformer(
+    df2decisiontreetransformer = DataFrame2DecisionTreeTransformer(
         featurenames,
         singlelabelname,
         levels,

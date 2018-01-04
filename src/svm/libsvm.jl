@@ -1,39 +1,35 @@
 import LIBSVM
 
-abstract type AbstractASBLIBSVMjlSVMClassifier <:
-        AbstractClassifier
-end
-
-abstract type AbstractASBLIBSVMjlSVMtRegression <:
-        AbstractRegression
-end
-
-mutable struct ASBLIBSVMjlSVMClassifier <:
-        AbstractASBLIBSVMjlSVMClassifier
+mutable struct MutableLIBSVMEstimator <: AbstractPrimitiveObject
     name::T1 where T1 <: AbstractString
-    levels::T2 where T2 <: AbstractVector
+    isclassificationmodel::T2 where T2 <: Bool
+    isregressionmodel::T3 where T3 <: Bool
+
+    levels::T4 where T4 <: AbstractVector
 
     # hyperparameters (not learned from data):
-    # TODO: add SVM hyperparameters here
+    hyperparameters::T5 where T5 <: Associative
 
     # parameters (learned from data):
-    svmmodel::T3 where T3
+    underlyingsvm::T6 where T6
 
-    function ASBLIBSVMjlSVMClassifier(
+    function MutableLIBSVMEstimator(
             singlelabellevels::AbstractVector;
             name::AbstractString = "",
             )
-        return new(name, singlelabellevels)
+        result = new(
+            )
+        return result
     end
 end
 
-function underlying(x::AbstractASBLIBSVMjlSVMClassifier)
+function underlying(x::AbstractASBLIBSVMSVMClassifier)
     result = x.svmmodel
     return result
 end
 
 function fit!(
-        estimator::AbstractASBLIBSVMjlSVMClassifier,
+        estimator::AbstractASBLIBSVMSVMClassifier,
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
@@ -49,7 +45,7 @@ function fit!(
 end
 
 function predict_proba(
-        estimator::AbstractASBLIBSVMjlSVMClassifier,
+        estimator::AbstractASBLIBSVMSVMClassifier,
         featuresarray::AbstractArray,
         )
     estimator.levels = estimator.svmmodel.labels
@@ -65,20 +61,20 @@ function predict_proba(
     return result
 end
 
-function _singlelabelsvmclassifier_LIBSVMjl(
+function _singlelabelsvmclassifier_LIBSVM(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector,
         df::DataFrames.AbstractDataFrame;
         name::AbstractString = "",
         )
-    dftransformer = DataFrame2LIBSVMjlTransformer(
+    dftransformer = DataFrame2LIBSVMTransformer(
         featurenames,
         singlelabelname,
         singlelabellevels,
         df,
         )
-    svmestimator = ASBLIBSVMjlSVMClassifier(
+    svmestimator = ASBLIBSVMSVMClassifier(
         singlelabellevels;
         name = name,
         )
@@ -105,8 +101,8 @@ function singlelabelsvmclassifier(
         name::AbstractString = "",
         package::Symbol = :none,
         )
-    if package == :LIBSVMjl
-        result = _singlelabelsvmclassifier_LIBSVMjl(
+    if package == :LIBSVM
+        result = _singlelabelsvmclassifier_LIBSVM(
             featurenames,
             singlelabelname,
             singlelabellevels,

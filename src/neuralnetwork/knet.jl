@@ -2,43 +2,33 @@ import Knet
 import StatsFuns
 import ValueHistories
 
-abstract type AbstractASBKnetjlKnetClassifier <:
-        AbstractClassifier
-end
-
-abstract type AbstractASBKnetjlKnetSingleLabelClassifier <:
-        AbstractClassifier
-end
-
-abstract type AbstractASBKnetjlKnetRegression <:
-        AbstractRegression
-end
-
 function _emptyfunction()
 end
 
-mutable struct ASBKnetjlKnetSingleLabelClassifier <:
-        AbstractASBKnetjlKnetSingleLabelClassifier
+mutable struct MutableKnetEstimator <: AbstractPrimitiveObject
     name::T1 where T1 <: AbstractString
+    isclassificationmodel::T2 where T2 <: Bool
+    isregressionmodel::T3 where T3 <: Bool
 
     # hyperparameters (not learned from data):
-    predict::T2 where T2 <: Function
-    loss::T3 where T3 <: Function
-    losshyperparameters::T4 where T4 <: Associative
-    optimizationalgorithm::T5 where T5 <: Symbol
-    optimizerhyperparameters::T6 where T6 <: Associative
-    batchsize::T7 where T7 <: Integer
+    predict::T4 where T4 <: Function
+    loss::T5 where T5 <: Function
+    losshyperparameters::T6 where T6 <: Associative
+    optimizationalgorithm::T7 where T7 <: Symbol
+    optimizerhyperparameters::T8 where T8 <: Associative
+    batchsize::T9 where T <: Integer
+    maxepochs::T10 where T <: Integer
 
     # parameters (learned from data):
-    modelweights::T8 where T8 <: AbstractArray
-    modelweightoptimizers::T9 where T9 <: Any
+    modelweights::T11 where T <: AbstractArray
+    modelweightoptimizers::T12 where T
 
     # learning state
-    lastepoch::T10 where T10 <: Integer
-    lastiteration::T11 where T11 <: Integer
-    multivaluehistory::T12 where T12 <: ValueHistories.MultivalueHistory
+    lastepoch::T13 where T13 <: Integer
+    lastiteration::T14 where T14 <: Integer
+    valuehistories::T15 where T15 <: ValueHistories.MultivalueHistory
 
-    function ASBKnetjlKnetSingleLabelClassifier(
+    function MutableKnetEstimator(
             ;
             name::AbstractString = "",
             predict::Function = _emptyfunction,
@@ -49,26 +39,6 @@ mutable struct ASBKnetjlKnetSingleLabelClassifier <:
             batchsize::Integer = 0,
             modelweights::AbstractArray = [],
             )
-        if predict == _emptyfunction
-            msg = string(
-                "you need to specify a prediction function of the form ",
-                "predict = predict(modelweights, x; training)"
-                )
-            error(msg)
-        end
-        if loss == _emptyfunction
-            msg = string(
-                "you need to specify a loss function of the form ",
-                "loss = loss(predict, modelweights, x, ygold)"
-                )
-            error(msg)
-        end
-        if !(batchsize > 0)
-            error("batchsize must be >0")
-        end
-        if length(modelweights) == 0
-            error("modelweights must be non-empty")
-        end
         optimizersymbol2type = Dict()
         optimizersymbol2type[:Sgd] = Knet.Sgd
         optimizersymbol2type[:Momentum] = Knet.Momentum
@@ -77,53 +47,32 @@ mutable struct ASBKnetjlKnetSingleLabelClassifier <:
         optimizersymbol2type[:Adagrad] = Knet.Adagrad
         optimizersymbol2type[:Adadelta] = Knet.Adadelta
         optimizersymbol2type[:Adam] = Knet.Adam
-        if haskey(optimizersymbol2type, optimizationalgorithm)
-            modelweightoptimizers = Knet.optimizers(
-                modelweights,
-                optimizersymbol2type[optimizationalgorithm];
-                optimizerhyperparameters...
-                )
-        else
-            msg = string(
-                "optimizationalgorithm must be one of the following: ",
-                collect(keys(optimizersymbol2type)),
-                )
-            error(msg)
-        end
-
+        modelweightoptimizers = Knet.optimizers(
+            modelweights,
+            optimizersymbol2type[optimizationalgorithm];
+            optimizerhyperparameters...
+            )
         lastepoch = 0
         lastiteration = 0
-        multivaluehistory = ValueHistories.MVHistory()
+        valuehistories = ValueHistories.MVHistory()
         result = new(
-            name,
-            predict,
-            loss,
-            losshyperparameters,
-            optimizationalgorithm,
-            optimizerhyperparameters,
-            batchsize,
-            modelweights,
-            modelweightoptimizers,
-            lastepoch,
-            lastiteration,
-            multivaluehistory,
             )
         return result
     end
 end
 
-function underlying(x::AbstractASBKnetjlKnetSingleLabelClassifier)
+function underlying(x::AbstractASBKnetKnetSingleLabelClassifier)
     result = (predictfunction, modelweightsmodelweights)
     return result
 end
 
-function valuehistories(x::AbstractASBKnetjlKnetSingleLabelClassifier)
-    result = x.multivaluehistory
+function valuehistories(x::AbstractASBKnetKnetSingleLabelClassifier)
+    result = x.valuehistories
     return result
 end
 
 function fit!(
-        estimator::AbstractASBKnetjlKnetSingleLabelClassifier,
+        estimator::AbstractASBKnetKnetSingleLabelClassifier,
         featuresarray::AbstractArray,
         labelsarray::AbstractVector;
         maxepochs::Integer = 0,
@@ -168,7 +117,7 @@ function fit!(
                 estimator.losshyperparameters...
                 )
             ValueHistories.push!(
-                estimator.multivaluehistory,
+                estimator.valuehistories,
                 :lossatiteration,
                 estimator.lastiteration,
                 currentiterationloss,
@@ -176,7 +125,7 @@ function fit!(
         end # end for
         estimator.lastepoch += 1
         ValueHistories.push!(
-            estimator.multivaluehistory,
+            estimator.valuehistories,
             :epochatiteration,
             estimator.lastiteration,
             estimator.lastepoch,
@@ -189,7 +138,7 @@ function fit!(
             estimator.losshyperparameters...
             )
         ValueHistories.push!(
-            estimator.multivaluehistory,
+            estimator.valuehistories,
             :lossatepoch,
             estimator.lastepoch,
             currentepochloss,
@@ -213,7 +162,7 @@ function fit!(
 end
 
 function predict_proba(
-        estimator::AbstractASBKnetjlKnetSingleLabelClassifier,
+        estimator::AbstractASBKnetKnetSingleLabelClassifier,
         featuresarray::AbstractArray,
         )
     output = estimator.predict(
@@ -249,7 +198,7 @@ function singlelabelknetclassifier(
     labelnames = [singlelabelname]
     labellevels = Dict()
     labellevels[singlelabelname] = singlelabellevels
-    dftransformer = DataFrame2KnetjlTransformer(
+    dftransformer = DataFrame2KnetTransformer(
         featurenames,
         labelnames,
         labellevels,
@@ -257,7 +206,7 @@ function singlelabelknetclassifier(
         df;
         transposefeatures = true,
         )
-    knetestimator = ASBKnetjlKnetSingleLabelClassifier(
+    knetestimator = ASBKnetKnetSingleLabelClassifier(
         ;
         name = name,
         predict = predict,
@@ -280,7 +229,7 @@ function singlelabelknetclassifier(
             dftransformer,
             knetestimator,
             predprobafixer,
-            probapackager
+            probapackager,
             ];
         name = name,
         underlyingobjectindex = 2,
