@@ -20,15 +20,23 @@ mutable struct MutableGLMEstimator <: AbstractPrimitiveObject
             family::GLM.Distribution,
             link::GLM.Link;
             name::AbstractString = "",
+            isclassificationmodel::Bool = false,
+            isregressionmodel::Bool = false,
             )
         result = new(
+            name,
+            isclassificationmodel,
+            isregressionmodel,
+            formula,
+            family,
+            link,
             )
         return result
     end
 end
 
 function underlying(x::MutableGLMEstimator)
-    result = x.glm
+    result = x.underlyingglm
     return result
 end
 
@@ -44,7 +52,7 @@ function fit!(
         estimator.family,
         estimator.link,
         )
-    estimator.glm = glm
+    estimator.underlyingglm = glm
     return estimator
 end
 
@@ -67,7 +75,7 @@ function predict_proba(
         )
     if estimator.isclassificationmodel
         glmpredictoutput = GLM.predict(
-            estimator.glm,
+            estimator.underlyingglm,
             featuresdf,
             )
         result = Dict()
@@ -80,22 +88,6 @@ function predict_proba(
         error("unable to predict_proba")
     end
 
-end
-
-function fit!(
-        estimator::MutableGLMEstimator,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
-        )
-    labelsandfeaturesdf = hcat(labelsdf, featuresdf)
-    glm = GLM.glm(
-        estimator.formula,
-        labelsandfeaturesdf,
-        estimator.family,
-        estimator.link,
-        )
-    estimator.glm = glm
-    return estimator
 end
 
 function _singlelabelbinarylogisticclassifier_GLM(
@@ -112,23 +104,25 @@ function _singlelabelbinarylogisticclassifier_GLM(
         featurenames;
         intercept = intercept,
         )
-    dftransformer = DataFrame2GLMTransformer(
+    dftransformer = ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer(
         singlelabelname,
         positiveclass,
         )
     glmestimator = MutableGLMEstimator(
         formula,
         GLM.Binomial(),
-        GLM.LogitLink(),
+        GLM.LogitLink();
+        isclassificationmodel = true,
+        isregressionmodel = false,
         )
-    predprobafixer = PredictProbaSingleLabelInt2StringTransformer(
+    predprobafixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
         0,
         singlelabellevels,
         )
-    probapackager = PackageSingleLabelPredictProbaTransformer(
+    probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         singlelabelname,
         )
-    finalpipeline = SimplePipeline(
+    finalpipeline = ImmutableSimpleLinearPipeline(
         [
             dftransformer,
             glmestimator,
@@ -136,7 +130,6 @@ function _singlelabelbinarylogisticclassifier_GLM(
             probapackager,
             ];
         name = name,
-        underlyingobjectindex = 2,
         )
     return finalpipeline
 end
@@ -165,6 +158,75 @@ end
 
 const binarylogisticclassifier = singlelabelbinarylogisticclassifier
 
+function _singlelabelbinaryprobitclassifier_GLM(
+        featurenames::AbstractVector,
+        singlelabelname::Symbol,
+        singlelabellevels::AbstractVector;
+        intercept::Bool = true,
+        name::AbstractString = "",
+        )
+    negativeclass = singlelabellevels[1]
+    positiveclass = singlelabellevels[2]
+    formula = makeformula(
+        [singlelabelname],
+        featurenames;
+        intercept = intercept,
+        )
+    dftransformer = ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer(
+        singlelabelname,
+        positiveclass,
+        )
+    glmestimator = MutableGLMEstimator(
+        formula,
+        GLM.Binomial(),
+        GLM.ProbitLink();
+        isclassificationmodel = true,
+        isregressionmodel = false,
+        )
+    predprobafixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
+        0,
+        singlelabellevels,
+        )
+    probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
+        singlelabelname,
+        )
+    finalpipeline = ImmutableSimpleLinearPipeline(
+        [
+            dftransformer,
+            glmestimator,
+            predprobafixer,
+            probapackager,
+            ];
+        name = name,
+        )
+    return finalpipeline
+end
+
+function singlelabelbinaryprobitclassifier(
+        featurenames::AbstractVector,
+        singlelabelname::Symbol,
+        singlelabellevels::AbstractVector;
+        package::Symbol = :none,
+        intercept::Bool = true,
+        name::AbstractString = "",
+        )
+    if package == :GLM
+        result =_singlelabelbinaryprobitclassifier_GLM(
+            featurenames,
+            singlelabelname,
+            singlelabellevels;
+            intercept = intercept,
+            name = name,
+            )
+        return result
+    else
+        error("$(package) is not a valid value for package")
+    end
+end
+
+const binaryprobitclassifier = singlelabelbinaryprobitclassifier
+
+
 function _singlelabellinearregression_GLM(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
@@ -179,7 +241,9 @@ function _singlelabellinearregression_GLM(
     glmestimator = MutableGLMEstimator(
         formula,
         GLM.Normal(),
-        GLM.IdentityLink(),
+        GLM.IdentityLink();
+        isclassificationmodel = false,
+        isregressionmodel = true,
         )
     probapackager = PackageSingleLabelPredictProbaTransformer(
         singlelabelname,

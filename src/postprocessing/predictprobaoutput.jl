@@ -4,6 +4,10 @@ immutable ImmutablePredictProbaSingleLabelInt2StringTransformer <:
     levels::T2 where T2 <: AbstractVector
 end
 
+function underlying(::ImmutablePredictProbaSingleLabelInt2StringTransformer)
+    return nothing
+end
+
 function fit!(
         transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer,
         varargs...;

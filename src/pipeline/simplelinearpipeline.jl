@@ -15,15 +15,32 @@ function ImmutableSimpleLinearPipeline(
 end
 
 function underlying(x::ImmutableSimpleLinearPipeline)
-    allunderlyings = [underlying(o) for o in x.objectsvector]
-    result = allunderlyings[find(allunderlyings .!= nothing)]
-    return result
+    allunderlyings =
+        [underlying(o) for o in x.objectsvector]
+    allunderlyingsminusnothings =
+        allunderlyings[find(allunderlyings .!= nothing)]
+    if length(allunderlyingsminusnothings) == 0
+        return nothing
+    elseif length(allunderlyingsminusnothings) == 1
+        return allunderlyingsminusnothings[1]
+    else
+        return allunderlyingsminusnothings
+    end
+    # return result
 end
 
 function valuehistories(x::ImmutableSimpleLinearPipeline)
-    allvaluehistories = [valuehistories(o) for i in x.objectsvector]
-    result = allvaluehistories[find(allvaluehistories .!= nothing)]
-    return result
+    allvaluehistories =
+        [valuehistories(o) for i in x.objectsvector]
+    allvaluehistoriesminusnothings =
+        allvaluehistories[find(allvaluehistories .!= nothing)]
+    if length(allvaluehistoriesminusnothings) == 0
+        return []
+    elseif length(allvaluehistoriesminusnothings) == 1
+        return allvaluehistoriesminusnothings[1]
+    else
+        return allvaluehistoriesminusnothings
+    end
 end
 
 function fit!(

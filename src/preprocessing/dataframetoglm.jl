@@ -6,6 +6,10 @@ struct ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer <:
     positiveclass::T2 where T2 <: AbstractString
 end
 
+function underlying(::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer)
+    return nothing
+end
+
 function transform(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         featuresdf::DataFrames.AbstractDataFrame,

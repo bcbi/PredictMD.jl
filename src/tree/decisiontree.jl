@@ -16,16 +16,24 @@ mutable struct MutableDecisionTreeRandomForestEstimator <:
     underlyingrandomforest::T7 where T7
 
     function MutableDecisionTreeRandomForestEstimator(
-            singlelabelname::Symbol,
-            levels::AbstractVector;
+            singlelabelname::Symbol;
             name::AbstractString = "",
             nsubfeatures::Integer = 2,
             ntrees::Integer = 20,
+            isclassificationmodel::Bool = false,
+            isregressionmodel::Bool = false,
+            levels::AbstractVector = [],
             )
         hyperparameters = Dict()
-        hyperparameters[:nsubfeatures] =
-        hyperparameters[:ntrees] =
+        hyperparameters[:nsubfeatures] = nsubfeatures
+        hyperparameters[:ntrees] = ntrees
         result = new(
+            name,
+            isclassificationmodel,
+            isregressionmodel,
+            singlelabelname,
+            levels,
+            hyperparameters,
             )
         return result
     end
@@ -41,15 +49,13 @@ function fit!(
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
-    nsubfeatures = estimator.nsubfeatures
-    ntrees = estimator.ntrees
     randomforest = DecisionTree.build_forest(
         labelsarray,
         featuresarray,
-        nsubfeatures,
-        ntrees,
+        estimator.hyperparameters[:nsubfeatures],
+        estimator.hyperparameters[:ntrees],
         )
-    estimator.randomforest = randomforest
+    estimator.underlyingrandomforest = randomforest
     return estimator
 end
 
@@ -71,7 +77,7 @@ function predict_proba(
         )
     if estimator.isclassificationmodel
         predictedprobabilities = DecisionTree.apply_forest_proba(
-            estimator.randomforest,
+            estimator.underlyingrandomforest,
             featuresarray,
             estimator.levels,
             )
@@ -91,35 +97,36 @@ function _singlelabelrandomforestclassifier_DecisionTree(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector,
-        df::DataFrames.AbstractDataFrame;
+        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
         name::AbstractString = "",
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
         )
-    dftransformer = DataFrame2DecisionTreeTransformer(
+    dftransformer = ImmutableDataFrame2DecisionTreeTransformer(
         featurenames,
+        dffeaturecontrasts,
         singlelabelname,
         singlelabellevels,
-        df,
         )
     randomforestestimator = MutableDecisionTreeRandomForestEstimator(
-        singlelabelname,
-        singlelabellevels;
+        singlelabelname;
         name = name,
         nsubfeatures = nsubfeatures,
         ntrees = ntrees,
+        isclassificationmodel = true,
+        isregressionmodel = false,
+        levels = singlelabellevels,
         )
-    probapackager = PackageSingleLabelPredictProbaTransformer(
+    probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         singlelabelname,
         )
-    finalpipeline = SimplePipeline(
+    finalpipeline = ImmutableSimpleLinearPipeline(
         [
             dftransformer,
             randomforestestimator,
             probapackager,
             ];
         name = name,
-        underlyingobjectindex = 2,
         )
     return finalpipeline
 end
@@ -128,7 +135,7 @@ function singlelabelrandomforestclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector,
-        df::DataFrames.AbstractDataFrame;
+        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
         name::AbstractString = "",
         package::Symbol = :none,
         nsubfeatures::Integer = 2,
@@ -139,7 +146,7 @@ function singlelabelrandomforestclassifier(
             featurenames,
             singlelabelname,
             singlelabellevels,
-            df;
+            dffeaturecontrasts;
             name = name,
             nsubfeatures = nsubfeatures,
             ntrees = ntrees,

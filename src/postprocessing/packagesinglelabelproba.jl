@@ -3,6 +3,10 @@ immutable ImmutablePackageSingleLabelPredictProbaTransformer <:
     singlelabelname::T1 where T1 <: Symbol
 end
 
+function underlying(::ImmutablePackageSingleLabelPredictProbaTransformer)
+    return nothing
+end
+
 function fit!(
         transformer::ImmutablePackageSingleLabelPredictProbaTransformer,
         varargs...;

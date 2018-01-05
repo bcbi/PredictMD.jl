@@ -5,7 +5,7 @@ struct ImmutableDataFrame2KnetTransformer <:
         AbstractPrimitiveObject
     featurenames::T1 where T1 <: AbstractVector
     dffeaturecontrasts::T2 where T2 <: ImmutableDataFrameFeatureContrasts
-    labelnames::T3 where T3 <: VectorOfSymbols
+    labelnames::T3 where T3 <: SymbolVector
     labellevels::T4 where T4 <: Associative
     index::T5 where T5 <: Integer
     transposefeatures::T6 where T6 <: Bool
@@ -14,7 +14,7 @@ end
 
 function ImmutableDataFrame2KnetTransformer(
         featurenames::AbstractVector,
-        labelnames::VectorOfSymbols,
+        labelnames::SymbolVector,
         labellevels::Associative,
         index::Integer,
         df::DataFrames.AbstractDataFrame;
@@ -87,6 +87,11 @@ function transform(
     if transformer.transposelabels
         labelsarray = transpose(labelsarray)
     end
+    if typeof(labelsarray) <: AbstractMatrix
+        if size(labelsarray, 1) == 1 | size(labelsarray, 2) == 1
+            labelsarray = convert(Vector, vec(labelsarray))
+        end
+    end
     return featuresarray, labelsarray
 end
 
@@ -123,7 +128,7 @@ function fit!(
 end
 
 function predict_proba(
-        transformer::AbstractDataFrame2KnetTransformer,
+        transformer::ImmutableDataFrame2KnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )

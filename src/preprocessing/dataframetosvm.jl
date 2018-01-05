@@ -45,16 +45,16 @@ function DataFrame2LIBSVMTransformer(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         levels::AbstractVector,
-        df::DataFrames.AbstractDataFrame,
+        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts,
         )
-    df2decisiontreetransformer = DataFrame2DecisionTreeTransformer(
+    df2decisiontreetransformer = ImmutableDataFrame2DecisionTreeTransformer(
         featurenames,
+        dffeaturecontrasts,
         singlelabelname,
         levels,
-        df,
         )
     featuretransposetransformer = ImmutableFeatureArrayTransposerTransformer()
-    result = SimplePipeline(
+    result = ImmutableSimpleLinearPipeline(
         [
             df2decisiontreetransformer,
             featuretransposetransformer,

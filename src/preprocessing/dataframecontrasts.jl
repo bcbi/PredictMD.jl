@@ -1,16 +1,17 @@
 import DataFrames
 
-immutable ImmutableDataFrameFeatureContrasts <: AbstractPrimitiveObject
+immutable ImmutableDataFrameFeatureContrasts <: AbstractContrastsObject
     featurenames::T1 where T1 <: SymbolVector
-    numdataframefeatures::T2 where T <: Integer
+    numdataframefeatures::T2 where T2 <: Integer
     featurecontrasts::T3 where T3 <: Associative
-    numarrayfeatures::T4 where T <: Integer
+    numarrayfeatures::T4 where T4 <: Integer
 end
 
 function ImmutableDataFrameFeatureContrasts(
-        df::DataFrames.AbstractDataFrames,
+        df::DataFrames.AbstractDataFrame,
         featurenames::SymbolVector,
         )
+    numdataframefeatures = length(unique(featurenames))
     modelformula = makeformula(
         featurenames[1],
         featurenames;
@@ -20,11 +21,11 @@ function ImmutableDataFrameFeatureContrasts(
         modelformula,
         df,
         )
-    featurecontrasts = modelframe.constrasts
+    featurecontrasts = modelframe.contrasts
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     featuresarray = modelmatrix.m
     numarrayfeatures = size(featuresarray, 2)
-    result = ImmutableDataFrameContrasts(
+    result = ImmutableDataFrameFeatureContrasts(
         featurenames,
         numdataframefeatures,
         featurecontrasts,
@@ -34,7 +35,7 @@ function ImmutableDataFrameFeatureContrasts(
 end
 
 function featurecontrasts(
-        df::DataFrames.AbstractDataFrames,
+        df::DataFrames.AbstractDataFrame,
         featurenames::SymbolVector,
         )
     result = ImmutableDataFrameFeatureContrasts(
