@@ -49,7 +49,7 @@ function fit!(
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
-    info(string("Starting to train DecisionTree random forest model..."))
+    info(string("Starting to train DecisionTree random forest model."))
     randomforest = DecisionTree.build_forest(
         labelsarray,
         featuresarray,
@@ -65,16 +65,16 @@ function predict(
         estimator::MutableDecisionTreejlRandomForestEstimator,
         featuresarray::AbstractArray,
         )
-    if estimator.isclassificationmodel
+    if estimator.isclassificationmodel && !estimator.isregressionmodel
         error("predict is not defined for classification models")
-    elseif estimator.isregressionmodel
+    elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         output = DecisionTree.apply_forest(
             estimator.underlyingrandomforest,
             featuresarray,
             )
         return output
     else
-        error("unable to predict")
+        error("Could not figure out if model is classification or regression")
     end
 end
 
@@ -82,7 +82,7 @@ function predict_proba(
         estimator::MutableDecisionTreejlRandomForestEstimator,
         featuresarray::AbstractArray,
         )
-    if estimator.isclassificationmodel
+    if estimator.isclassificationmodel && !estimator.isregressionmodel
         predictedprobabilities = DecisionTree.apply_forest_proba(
             estimator.underlyingrandomforest,
             featuresarray,
@@ -93,10 +93,10 @@ function predict_proba(
             result[estimator.levels[i]] = predictedprobabilities[:, i]
         end
         return result
-    elseif estimator.isregressionmodel
+    elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         error("predict_proba is not defined for regression models")
     else
-        error("unable to predict_proba")
+        error("Could not figure out if model is classification or regression")
     end
 end
 
@@ -124,14 +124,14 @@ function _singlelabelrandomforestclassifier_DecisionTree(
         isregressionmodel = false,
         levels = singlelabellevels,
         )
-    predpackager = ImmutablePackageSingleLabelPredictionTransformer(
+    probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         singlelabelname,
         )
     finalpipeline = ImmutableSimpleLinearPipeline(
         [
             dftransformer,
             randomforestestimator,
-            predpackager,
+            probapackager,
             ];
         name = name,
         )

@@ -47,7 +47,7 @@ function fit!(
         labelsdf::DataFrames.AbstractDataFrame,
         )
     labelsandfeaturesdf = hcat(labelsdf, featuresdf)
-    info(string("Starting to train GLM.jl model..."))
+    info(string("Starting to train GLM.jl model."))
     glm = GLM.glm(
         estimator.formula,
         labelsandfeaturesdf,
@@ -63,9 +63,9 @@ function predict(
         estimator::MutableGLMjlGeneralizedLinearModelEstimator,
         featuresdf::DataFrames.AbstractDataFrame,
         )
-    if estimator.isclassificationmodel
+    if estimator.isclassificationmodel && !estimator.isregressionmodel
         error("predict is not defined for classification models")
-    elseif estimator.isregressionmodel
+    elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         glmpredictoutput = GLM.predict(
             estimator.underlyingglm,
             featuresdf,
@@ -76,7 +76,7 @@ function predict(
         result[labelname] = glmpredictoutput
         return result
     else
-        error("unable to predict")
+        error("Could not figure out if model is classification or regression")
     end
 
 end
@@ -85,7 +85,7 @@ function predict_proba(
         estimator::MutableGLMjlGeneralizedLinearModelEstimator,
         featuresdf::DataFrames.AbstractDataFrame,
         )
-    if estimator.isclassificationmodel
+    if estimator.isclassificationmodel && !estimator.isregressionmodel
         glmpredictoutput = GLM.predict(
             estimator.underlyingglm,
             featuresdf,
@@ -94,10 +94,10 @@ function predict_proba(
         result[1] = glmpredictoutput
         result[0] = 1 - glmpredictoutput
         return result
-    elseif estimator.isregressionmodel
+    elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         error("predict_proba is not defined for regression models")
     else
-        error("unable to predict_proba")
+        error("Could not figure out if model is classification or regression")
     end
 
 end
@@ -222,7 +222,7 @@ function singlelabelbinaryprobitclassifier(
         intercept::Bool = true,
         name::AbstractString = "",
         )
-    if package == :GLM
+    if package == :GLMjl
         result =_singlelabelbinaryprobitclassifier_GLM(
             featurenames,
             singlelabelname,

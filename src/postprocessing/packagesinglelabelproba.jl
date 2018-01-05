@@ -7,6 +7,10 @@ function underlying(::ImmutablePackageSingleLabelPredictProbaTransformer)
     return nothing
 end
 
+function valuehistories(::ImmutablePackageSingleLabelPredictProbaTransformer)
+    return nothing
+end
+
 function fit!(
         transformer::ImmutablePackageSingleLabelPredictProbaTransformer,
         varargs...;

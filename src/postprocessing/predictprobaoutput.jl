@@ -8,6 +8,10 @@ function underlying(::ImmutablePredictProbaSingleLabelInt2StringTransformer)
     return nothing
 end
 
+function valuehistories(::ImmutablePredictProbaSingleLabelInt2StringTransformer)
+    return nothing
+end
+
 function fit!(
         transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer,
         varargs...;

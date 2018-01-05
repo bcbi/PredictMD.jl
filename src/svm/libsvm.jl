@@ -68,14 +68,14 @@ function fit!(
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
-    if estimator.isclassificationmodel
+    if estimator.isclassificationmodel && !estimator.isregressionmodel
         probability = true
-    elseif estimator.isregressionmodel
+    elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         probability = false
     else
-        error("model is neither classification nor regression")
+        error("Could not figure out if model is classification or regression")
     end
-    info(string("Starting to train LIBSVM.jl model..."))
+    info(string("Starting to train LIBSVM.jl model."))
     svm = LIBSVM.svmtrain(
         featuresarray,
         labelsarray;
@@ -93,9 +93,9 @@ function predict(
         estimator::MutableLIBSVMjlSVMEstimator,
         featuresarray::AbstractArray,
         )
-    if estimator.isclassificationmodel
+    if estimator.isclassificationmodel && !estimator.isregressionmodel
         error("predict is not defined for classification models")
-    elseif estimator.isregressionmodel
+    elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         predictedvalues, decisionvalues = LIBSVM.svmpredict(
             estimator.underlyingsvm,
             featuresarray,
@@ -106,9 +106,6 @@ function predict(
         @assert(ndims(decisionvalues) == 2)
         @assert(size(predictedvalues, 1) == size(decisionvalues, 2))
         @assert(size(decisionvalues, 1) == 2)
-        # @assert(
-        #     sum([2, :]) == 0
-        #     )
         if !( isapprox(sum(abs, decisionvalues[2, :]), 0.0) )
             msg = string(
                 "sum(abs, decisionvalues[2, :]) is not approx zero. ",
@@ -142,7 +139,7 @@ function predict(
         result = convert(Vector, vec(predictedvalues))
         return result
     else
-        error("unable to predict")
+        error("Could not figure out if model is classification or regression")
     end
 end
 
@@ -150,7 +147,7 @@ function predict_proba(
         estimator::MutableLIBSVMjlSVMEstimator,
         featuresarray::AbstractArray,
         )
-    if estimator.isclassificationmodel
+    if estimator.isclassificationmodel && !estimator.isregressionmodel
         estimator.levels = estimator.underlyingsvm.labels
         predictedlabels, decisionvalues = LIBSVM.svmpredict(
             estimator.underlyingsvm,
@@ -163,10 +160,10 @@ function predict_proba(
                 decisionvaluestransposed[:, i]
         end
         return result
-    elseif estimator.isregressionmodel
+    elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         error("predict_proba is not defined for regression models")
     else
-        error("unable to predict")
+        error("Could not figure out if model is classification or regression")
     end
 end
 
@@ -193,8 +190,8 @@ function _singlelabelsvmclassifier_LIBSVM(
     dftransformer = DataFrame2LIBSVMTransformer(
         featurenames,
         singlelabelname,
-        singlelabellevels,
-        dffeaturecontrasts,
+        dffeaturecontrasts;
+        levels = singlelabellevels,
         )
     svmestimator = MutableLIBSVMjlSVMEstimator(
         dffeaturecontrasts;

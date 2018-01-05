@@ -98,7 +98,13 @@ function fit!(
         labelsarray::AbstractArray,
         )
     featuresarray = Cfloat.(featuresarray)
-    labelsarray = Cfloat.(labelsarray)
+    if estimator.isclassificationmodel && !estimator.isregressionmodel
+        labelsarray = Int.(labelsarray)
+    elseif !estimator.isclassificationmodel && estimator.isregressionmodel
+        labelsarray = Cfloat.(labelsarray)
+    else
+        error("Could not figure out if model is classification or regression")
+    end
     trainingdata = Knet.minibatch(
         featuresarray,
         labelsarray,
@@ -120,10 +126,12 @@ function fit!(
         lossbeforetrainingstarts,
         )
     info(
-        string("Max epochs: "),
-        estimator.maxepochs,
+        string(
+            "Starting to train Knet.jl model. Max epochs: ",
+            estimator.maxepochs,
+            ".",
+            )
         )
-    info(string("Starting to train Knet.jl model..."))
     while estimator.lastepoch < estimator.maxepochs
         for (x,y) in trainingdata
             grads = lossgradient(
@@ -280,7 +288,6 @@ function _singlelabelknetclassifier_Knet(
         isclassificationmodel = true,
         isregressionmodel = false,
         printlosseverynepochs = printlosseverynepochs,
-        io = io,
         maxepochs = maxepochs,
         )
     predprobafixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
@@ -334,7 +341,6 @@ function singlelabelknetclassifier(
             batchsize = batchsize,
             modelweights = modelweights,
             printlosseverynepochs = printlosseverynepochs,
-            io = io,
             maxepochs = maxepochs,
             )
         return result
