@@ -8,25 +8,25 @@ end
 mutable struct MutableKnetEstimator <: AbstractPrimitiveObject
     name::T1 where T1 <: AbstractString
     isclassificationmodel::T2 where T2 <: Bool
-    isregressionmodel::T3 where T3 <: Bool
+    isregressionmodel::T2 where T2 <: Bool
 
     # hyperparameters (not learned from data):
-    predict::T4 where T4 <: Function
-    loss::T5 where T5 <: Function
-    losshyperparameters::T6 where T6 <: Associative
-    optimizationalgorithm::T7 where T7 <: Symbol
-    optimizerhyperparameters::T8 where T8 <: Associative
-    batchsize::T9 where T <: Integer
-    maxepochs::T10 where T <: Integer
+    predict::T3 where T3 <: Function
+    loss::T4 where T4 <: Function
+    losshyperparameters::T5 where T5 <: Associative
+    optimizationalgorithm::T6 where T6 <: Symbol
+    optimizerhyperparameters::T7 where T7 <: Associative
+    batchsize::T8 where T8 <: Integer
+    maxepochs::T9 where T9 <: Integer
 
     # parameters (learned from data):
-    modelweights::T11 where T <: AbstractArray
-    modelweightoptimizers::T12 where T
+    modelweights::T10 where T10 <: AbstractArray
+    modelweightoptimizers::T11 where T11
 
     # learning state
-    lastepoch::T13 where T13 <: Integer
-    lastiteration::T14 where T14 <: Integer
-    valuehistories::T15 where T15 <: ValueHistories.MultivalueHistory
+    lastepoch::T12 where T12 <: Integer
+    lastiteration::T13 where T13 <: Integer
+    valuehistories::T14 where T14 <: ValueHistories.MultivalueHistory
 
     function MutableKnetEstimator(
             ;
@@ -61,27 +61,23 @@ mutable struct MutableKnetEstimator <: AbstractPrimitiveObject
     end
 end
 
-function underlying(x::AbstractASBKnetKnetSingleLabelClassifier)
+function underlying(x::MutableKnetEstimator)
     result = (predictfunction, modelweightsmodelweights)
     return result
 end
 
-function valuehistories(x::AbstractASBKnetKnetSingleLabelClassifier)
+function valuehistories(x::MutableKnetEstimator)
     result = x.valuehistories
     return result
 end
 
 function fit!(
-        estimator::AbstractASBKnetKnetSingleLabelClassifier,
+        estimator::MutableKnetEstimator,
         featuresarray::AbstractArray,
         labelsarray::AbstractVector;
-        maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
         io::IO = Base.STDOUT,
         )
-    if !(maxepochs > 0)
-        error("maxepochs must be >0")
-    end
     featuresarray = Cfloat.(featuresarray)
     labelsarray = Int.(labelsarray)
     trainingdata = Knet.minibatch(
@@ -94,7 +90,7 @@ function fit!(
         2,
         )
     info("Starting to train Knet model...")
-    while estimator.lastepoch < maxepochs
+    while estimator.lastepoch < estimator.maxepochs
         for (x,y) in trainingdata
             grads = lossgradient(
                 estimator.predict,
@@ -161,23 +157,41 @@ function fit!(
     return estimator
 end
 
-function predict_proba(
-        estimator::AbstractASBKnetKnetSingleLabelClassifier,
+function predict(
+        estimator::MutableKnetEstimator,
         featuresarray::AbstractArray,
         )
-    output = estimator.predict(
-        estimator.modelweights,
-        featuresarray;
-        training = false,
-        )
-    outputtransposed = transpose(output)
-    numclasses = size(outputtransposed, 2)
-    @assert(numclasses > 0)
-    result = Dict()
-    for i = 1:numclasses
-        result[i] = outputtransposed[:, i]
+    if estimator.isclassificationmodel
+        error("predict is not defined for classification models")
+    elseif estimator.isregressionmodel
+    else
+        error("unable to predict")
     end
-    return result
+end
+
+function predict_proba(
+        estimator::MutableKnetEstimator,
+        featuresarray::AbstractArray,
+        )
+    if estimator.isclassificationmodel
+        output = estimator.predict(
+            estimator.modelweights,
+            featuresarray;
+            training = false,
+            )
+        outputtransposed = transpose(output)
+        numclasses = size(outputtransposed, 2)
+        @assert(numclasses > 0)
+        result = Dict()
+        for i = 1:numclasses
+            result[i] = outputtransposed[:, i]
+        end
+        return result
+    elseif estimator.isregressionmodel
+        error("predict_proba is not defined for regression models")
+    else
+        error("unable to predict")
+    end
 end
 
 function singlelabelknetclassifier(
@@ -206,7 +220,7 @@ function singlelabelknetclassifier(
         df;
         transposefeatures = true,
         )
-    knetestimator = ASBKnetKnetSingleLabelClassifier(
+    knetestimator = MutableKnetEstimator(
         ;
         name = name,
         predict = predict,

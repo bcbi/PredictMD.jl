@@ -3,7 +3,7 @@ import DataFrames
 import MLBase
 import StatsBase
 
-function binaryytrue(
+function singlelabelbinaryytrue(
         labels::AbstractVector,
         positiveclass::AbstractString,
         )
@@ -11,7 +11,7 @@ function binaryytrue(
     return result
 end
 
-function binaryyscore(
+function singlelabelbinaryyscore(
         singlelabelprobabilities::Associative,
         positiveclass::AbstractString,
         )
@@ -19,7 +19,7 @@ function binaryyscore(
     return result
 end
 
-function _binaryclassificationmetrics_tunableparam(
+function _singlelabelbinaryclassificationmetrics_tunableparam(
         kwargsassoc::Associative,
         )
     tunableparams = [
@@ -93,8 +93,8 @@ function _binaryclassificationmetrics_tunableparam(
     return selectedtunableparam, selectedparamtomax, metricprintnames
 end
 
-function _binaryclassificationmetrics(
-        estimator::AbstractASBObject,
+function _singlelabelbinaryclassificationmetrics(
+        estimator::AbstractObject,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
@@ -104,16 +104,16 @@ function _binaryclassificationmetrics(
     #
     kwargsdict = Dict(kwargs)
     selectedtunableparam, selectedparamtomax, metricprintnames =
-        _binaryclassificationmetrics_tunableparam(kwargsdict)
+        _singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
     #
     yscore = Cfloat.(
-        binaryyscore(
+        singlelabelbinaryyscore(
             predict_proba(estimator, featuresdf)[singlelabelname],
             positiveclass,
             )
         )
     ytrue = Int.(
-        binaryytrue(
+        singlelabelbinaryytrue(
             labelsdf[singlelabelname],
             positiveclass,
             )
@@ -176,8 +176,8 @@ function _binaryclassificationmetrics(
     return results
 end
 
-function binaryclassificationmetrics(
-        estimator::AbstractASBObject,
+function singlelabelbinaryclassificationmetrics(
+        estimator::AbstractObject,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
@@ -185,7 +185,7 @@ function binaryclassificationmetrics(
         kwargs...
         )
     vectorofestimators = [estimator]
-    result = binaryclassificationmetrics(
+    result = singlelabelbinaryclassificationmetrics(
         vectorofestimators,
         featuresdf,
         labelsdf,
@@ -196,8 +196,8 @@ function binaryclassificationmetrics(
     return result
 end
 
-function binaryclassificationmetrics(
-        vectorofestimators::VectorOfAbstractASBObjects,
+function singlelabelbinaryclassificationmetrics(
+        vectorofestimators::AbstractObjectVector,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
@@ -206,10 +206,10 @@ function binaryclassificationmetrics(
         )
     kwargsdict = Dict(kwargs)
     selectedtunableparam, selectedparamtomax, metricprintnames =
-        _binaryclassificationmetrics_tunableparam(kwargsdict)
+        _singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
     numestimators = length(vectorofestimators)
     metricsforeachestimator = [
-        _binaryclassificationmetrics(
+        _singlelabelbinaryclassificationmetrics(
             est,
             featuresdf,
             labelsdf,
@@ -250,3 +250,5 @@ function binaryclassificationmetrics(
     end
     return result
 end
+
+const binaryclassificationmetrics = singlelabelbinaryclassificationmetrics

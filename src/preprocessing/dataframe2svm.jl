@@ -1,16 +1,12 @@
 import DataFrames
 import StatsModels
 
-abstract type AbstractFeatureArrayTransposerTransformer <:
-        AbstractTransformer
-end
-
-struct FeatureArrayTransposerTransformer <:
-        AbstractFeatureArrayTransposerTransformer
+immutable ImmutableFeatureArrayTransposerTransformer <:
+        AbstractPrimitiveObject
 end
 
 function transform(
-        transformer::AbstractFeatureArrayTransposerTransformer,
+        transformer::ImmutableFeatureArrayTransposerTransformer,
         featuresarray::AbstractMatrix,
         labelsarray::AbstractArray;
         kwargs...
@@ -20,7 +16,7 @@ function transform(
 end
 
 function transform(
-        transformer::AbstractFeatureArrayTransposerTransformer,
+        transformer::ImmutableFeatureArrayTransposerTransformer,
         featuresarray::AbstractMatrix;
         kwargs...
         )
@@ -29,7 +25,7 @@ function transform(
 end
 
 function fit!(
-        transformer::AbstractFeatureArrayTransposerTransformer,
+        transformer::ImmutableFeatureArrayTransposerTransformer,
         featuresarray::AbstractMatrix,
         labelsarray::AbstractArray;
         kwargs...
@@ -38,7 +34,7 @@ function fit!(
 end
 
 function predict_proba(
-        transformer::AbstractFeatureArrayTransposerTransformer,
+        transformer::ImmutableFeatureArrayTransposerTransformer,
         featuresarray::AbstractMatrix;
         kwargs...
         )
@@ -57,9 +53,12 @@ function DataFrame2LIBSVMTransformer(
         levels,
         df,
         )
-    featuretransposetransformer = FeatureArrayTransposerTransformer()
+    featuretransposetransformer = ImmutableFeatureArrayTransposerTransformer()
     result = SimplePipeline(
-        [df2decisiontreetransformer,featuretransposetransformer,],
+        [
+            df2decisiontreetransformer,
+            featuretransposetransformer,
+            ],
         )
     return result
 end

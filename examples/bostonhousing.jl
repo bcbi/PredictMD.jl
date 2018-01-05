@@ -54,33 +54,9 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 
 ##############################################################################
 
-# Set up and train a binary logistic classifier
+# Set up and train a linear regression
 
-##############################################################################
-
-# Set up and train a random forest
-
-##############################################################################
-
-# Set up and train an SVM
-
-##############################################################################
-
-# Set up and train a multilayer perceptron (i.e. a fully connected feedforward
-# neural network)
-
-##############################################################################
-
-# Compare the performance of all five models on the testing set
-
-
-###########################################################################
-###########################################################################
-###########################################################################
-###########################################################################
-###########################################################################
-
-# logistic = asb.binarylogisticclassifier(
+# linear = asb.binarylinearclassifier(
 #     featurenames,
 #     labelname,
 #     labellevels;
@@ -89,23 +65,24 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 #     name = "Logistic", # optional
 #     )
 # asb.fit!(
-#     logistic,
+#     linear,
 #     smotedtrainingfeaturesdf,
 #     smotedtraininglabelsdf,
 #     )
-# # View the coefficients, p values, etc. for the underlying logisic regression
-# asb.underlying(logistic)
-# # Evaluate the performance of the logistic classifier on the testing set
+# # View the coefficients, p values, etc. for the underlying linear regression
+# asb.underlying(linear)
+# # Evaluate the performance of the linear regression on the testing set
 # asb.binaryclassificationmetrics(
-#     logistic,
+#     linear,
 #     testingfeaturesdf,
 #     testinglabelsdf,
 #     labelname,
-#     positiveclass;
-#     sensitivity = 0.95,
+#     positiveclass,
 #     )
 
+##############################################################################
 
+# Set up and train a random forest
 # randomforest = asb.randomforestclassifier(
 #     featurenames,
 #     labelname,
@@ -127,11 +104,12 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 #     testingfeaturesdf,
 #     testinglabelsdf,
 #     labelname,
-#     positiveclass;
-#     sensitivity = 0.95,
+#     positiveclass,
 #     )
 
+##############################################################################
 
+# Set up and train an SVM
 # svm = asb.svmclassifier(
 #     featurenames,
 #     labelname,
@@ -151,11 +129,36 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 #     testingfeaturesdf,
 #     testinglabelsdf,
 #     labelname,
-#     positiveclass;
-#     sensitivity = 0.95,
+#     positiveclass,
 #     )
 
+# Set up and train an SVM
+# svm = asb.svmclassifier(
+#     featurenames,
+#     labelname,
+#     labellevels,
+#     smotedtrainingfeaturesdf;
+#     package = :LIBSVMjl,
+#     name = "SVM",
+#     )
+# asb.fit!(
+#     svm,
+#     smotedtrainingfeaturesdf,
+#     smotedtraininglabelsdf,
+#     )
+# # # Evaluate the performance of the SVM on the testing set
+# asb.binaryclassificationmetrics(
+#     svm,
+#     testingfeaturesdf,
+#     testinglabelsdf,
+#     labelname,
+#     positiveclass,
+#     )
 
+##############################################################################
+
+# Set up and train a multilayer perceptron (i.e. a fully connected feedforward
+# neural network)
 
 # function knetmlp_predict(
 #         w, # don't put a type annotation on this
@@ -256,44 +259,24 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 #     testingfeaturesdf,
 #     testinglabelsdf,
 #     labelname,
-#     positiveclass;
-#     sensitivity = 0.95,
+#     positiveclass,
 #     )
 
+##############################################################################
+
+# Compare the performance of all five models on the testing set
 
 # showall(asb.binaryclassificationmetrics(
-#     [logistic, randomforest, svm, knetmlp],
-#     testingfeaturesdf,
-#     testinglabelsdf,
-#     labelname,
-#     positiveclass;
-#     sensitivity = 0.95,
-#     ))
-# showall(asb.binaryclassificationmetrics(
-#     [logistic, randomforest, svm, knetmlp],
-#     testingfeaturesdf,
-#     testinglabelsdf,
-#     labelname,
-#     positiveclass;
-#     maximize = :f1score,
-#     ))
-
-# # Plot receiver operating characteristic curves for all four models
-# rocplot = asb.plotroccurves(
-#     [logistic, randomforest, svm, knetmlp],
+#     [linear, randomforest, svm, knetmlp],
 #     testingfeaturesdf,
 #     testinglabelsdf,
 #     labelname,
 #     positiveclass,
-#     )
-# asb.open(rocplot)
-
-# # Plot precision-recall curves for all four models
-# prplot = asb.plotprcurves(
-#     [logistic, randomforest, svm, knetmlp],
+#     ))
+# showall(asb.binaryclassificationmetrics(
+#     [linear, randomforest, svm, knetmlp],
 #     testingfeaturesdf,
 #     testinglabelsdf,
 #     labelname,
 #     positiveclass,
-#     )
-# asb.open(prplot)
+#     ))

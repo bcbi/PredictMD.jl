@@ -95,7 +95,7 @@ asb.fit!(
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
     )
-# View the coefficients, p values, etc. for the underlying logisic regression
+# View the coefficients, p values, etc. for the underlying logistic regression
 asb.underlying(logistic)
 # Evaluate the performance of the logistic classifier on the testing set
 asb.binaryclassificationmetrics(

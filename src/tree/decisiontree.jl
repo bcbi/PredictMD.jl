@@ -22,19 +22,22 @@ mutable struct MutableDecisionTreeRandomForestEstimator <:
             nsubfeatures::Integer = 2,
             ntrees::Integer = 20,
             )
+        hyperparameters = Dict()
+        hyperparameters[:nsubfeatures] =
+        hyperparameters[:ntrees] =
         result = new(
             )
         return result
     end
 end
 
-function underlying(x::AbstractASBDecisionTreeRandomForestClassifier)
+function underlying(x::MutableDecisionTreeRandomForestEstimator)
     result = x.randomforest
     return result
 end
 
 function fit!(
-        estimator::AbstractASBDecisionTreeRandomForestClassifier,
+        estimator::MutableDecisionTreeRandomForestEstimator,
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
@@ -44,26 +47,44 @@ function fit!(
         labelsarray,
         featuresarray,
         nsubfeatures,
-        ntrees
+        ntrees,
         )
     estimator.randomforest = randomforest
     return estimator
 end
 
-function predict_proba(
-        estimator::AbstractASBDecisionTreeRandomForestClassifier,
+function predict(
+        estimator::MutableDecisionTreeRandomForestEstimator,
         featuresarray::AbstractArray,
         )
-    predictedprobabilities = DecisionTree.apply_forest_proba(
-        estimator.randomforest,
-        featuresarray,
-        estimator.levels,
-        )
-    result = Dict()
-    for i = 1:length(estimator.levels)
-        result[estimator.levels[i]] = predictedprobabilities[:, i]
+    if estimator.isclassificationmodel
+        error("predict is not defined for classification models")
+    elseif estimator.isregressionmodel
+    else
+        error("unable to predict")
     end
-    return result
+end
+
+function predict_proba(
+        estimator::MutableDecisionTreeRandomForestEstimator,
+        featuresarray::AbstractArray,
+        )
+    if estimator.isclassificationmodel
+        predictedprobabilities = DecisionTree.apply_forest_proba(
+            estimator.randomforest,
+            featuresarray,
+            estimator.levels,
+            )
+        result = Dict()
+        for i = 1:length(estimator.levels)
+            result[estimator.levels[i]] = predictedprobabilities[:, i]
+        end
+        return result
+    elseif estimator.isregressionmodel
+        error("predict_proba is not defined for regression models")
+    else
+        error("unable to predict_proba")
+    end
 end
 
 function _singlelabelrandomforestclassifier_DecisionTree(
@@ -81,7 +102,7 @@ function _singlelabelrandomforestclassifier_DecisionTree(
         singlelabellevels,
         df,
         )
-    randomforestestimator = ASBDecisionTreeRandomForestClassifier(
+    randomforestestimator = MutableDecisionTreeRandomForestEstimator(
         singlelabelname,
         singlelabellevels;
         name = name,

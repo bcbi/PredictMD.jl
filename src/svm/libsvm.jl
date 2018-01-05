@@ -17,19 +17,20 @@ mutable struct MutableLIBSVMEstimator <: AbstractPrimitiveObject
             singlelabellevels::AbstractVector;
             name::AbstractString = "",
             )
+        hyperparameters = Dict()
         result = new(
             )
         return result
     end
 end
 
-function underlying(x::AbstractASBLIBSVMSVMClassifier)
+function underlying(x::MutableLIBSVMEstimator)
     result = x.svmmodel
     return result
 end
 
 function fit!(
-        estimator::AbstractASBLIBSVMSVMClassifier,
+        estimator::MutableLIBSVMEstimator,
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
@@ -44,21 +45,39 @@ function fit!(
     return estimator
 end
 
-function predict_proba(
-        estimator::AbstractASBLIBSVMSVMClassifier,
+function predict(
+        estimator::MutableLIBSVMEstimator,
         featuresarray::AbstractArray,
         )
-    estimator.levels = estimator.svmmodel.labels
-    predictedlabels, decisionvalues = LIBSVM.svmpredict(
-        estimator.svmmodel,
-        featuresarray,
-        )
-    decisionvaluestransposed = transpose(decisionvalues)
-    result = Dict()
-    for i = 1:length(estimator.svmmodel.labels)
-        result[estimator.svmmodel.labels[i]] = decisionvaluestransposed[:, i]
+    if estimator.isclassificationmodel
+        error("predict is not defined for classification models")
+    elseif estimator.isregressionmodel
+    else
+        error("unable to predict")
     end
-    return result
+end
+
+function predict_proba(
+        estimator::MutableLIBSVMEstimator,
+        featuresarray::AbstractArray,
+        )
+    if estimator.isclassificationmodel
+        estimator.levels = estimator.svmmodel.labels
+        predictedlabels, decisionvalues = LIBSVM.svmpredict(
+            estimator.svmmodel,
+            featuresarray,
+            )
+        decisionvaluestransposed = transpose(decisionvalues)
+        result = Dict()
+        for i = 1:length(estimator.svmmodel.labels)
+            result[estimator.svmmodel.labels[i]] = decisionvaluestransposed[:, i]
+        end
+        return result
+    elseif estimator.isregressionmodel
+        error("predict_proba is not defined for regression models")
+    else
+        error("unable to predict")
+    end
 end
 
 function _singlelabelsvmclassifier_LIBSVM(
@@ -74,7 +93,7 @@ function _singlelabelsvmclassifier_LIBSVM(
         singlelabellevels,
         df,
         )
-    svmestimator = ASBLIBSVMSVMClassifier(
+    svmestimator = MutableLIBSVMEstimator(
         singlelabellevels;
         name = name,
         )

@@ -1,29 +1,25 @@
 import DataFrames
 import StatsModels
 
-abstract type AbstractDataFrame2DecisionTreeTransformer <:
-        AbstractTransformer
-end
-
-struct DataFrame2DecisionTreeTransformer <:
-        AbstractDataFrame2DecisionTreeTransformer
+immutable ImmutableDataFrame2DecisionTreeTransformer <:
+        AbstractPrimitiveObject
     featurenames::T1 where T1 <: AbstractVector
     dffeaturecontrasts::T2 where T2 <: ImmutableDataFrameFeatureContrasts
     singlelabelname::T3 where T3 <: Symbol
     levels::T4 where T4 <: AbstractVector
 end
 
-function DataFrame2DecisionTreeTransformer(
+function ImmutableDataFrame2DecisionTreeTransformer(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         levels::AbstractVector,
         df::DataFrames.AbstractDataFrame,
         )
-    dffeaturecontrasts = ImmutableDataFrameFeatureContrasts(
+    dffeaturecontrasts = ImmutableDataFrame2DecisionTreeTransformer(
         df,
         featurenames,
         )
-    result = DataFrame2DecisionTreeTransformer(
+    result = ImmutableDataFrame2DecisionTreeTransformer(
         featurenames,
         dffeaturecontrasts,
         singlelabelname,
@@ -33,7 +29,7 @@ function DataFrame2DecisionTreeTransformer(
 end
 
 function transform(
-        transformer::AbstractDataFrame2DecisionTreeTransformer,
+        transformer::ImmutableDataFrame2DecisionTreeTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...
@@ -57,7 +53,7 @@ function transform(
 end
 
 function transform(
-        transformer::AbstractDataFrame2DecisionTreeTransformer,
+        transformer::ImmutableDataFrame2DecisionTreeTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )
@@ -77,7 +73,7 @@ function transform(
 end
 
 function fit!(
-        transformer::AbstractDataFrame2DecisionTreeTransformer,
+        transformer::ImmutableDataFrame2DecisionTreeTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...
@@ -86,7 +82,7 @@ function fit!(
 end
 
 function predict_proba(
-        transformer::AbstractDataFrame2DecisionTreeTransformer,
+        transformer::ImmutableDataFrame2DecisionTreeTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )

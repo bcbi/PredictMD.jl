@@ -2,7 +2,7 @@ import LaTeXStrings
 import PGFPlots
 
 function plotroccurve(
-        estimator::AbstractASBObject,
+        estimator::AbstractObject,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
@@ -20,7 +20,7 @@ function plotroccurve(
 end
 
 function plotroccurve(
-        vectorofestimators::VectorOfAbstractASBObjects,
+        vectorofestimators::AbstractObjectVector,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,

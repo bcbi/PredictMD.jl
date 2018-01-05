@@ -27,13 +27,13 @@ mutable struct MutableGLMEstimator <: AbstractPrimitiveObject
     end
 end
 
-function underlying(x::AbstractASBGLMGeneralizedLinearModelClassifier)
+function underlying(x::MutableGLMEstimator)
     result = x.glm
     return result
 end
 
 function fit!(
-        estimator::AbstractASBGLMGeneralizedLinearModelClassifier,
+        estimator::MutableGLMEstimator,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         )
@@ -48,22 +48,42 @@ function fit!(
     return estimator
 end
 
-function predict_proba(
-        estimator::AbstractASBGLMGeneralizedLinearModelClassifier,
+function predict(
+        estimator::MutableGLMEstimator,
         featuresdf::DataFrames.AbstractDataFrame,
         )
-    glmpredictoutput = GLM.predict(
-        estimator.glm,
-        featuresdf,
+    if estimator.isclassificationmodel
+        error("predict is not defined for classification models")
+    elseif estimator.isregressionmodel
+    else
+        error("unable to predict")
+    end
+
+end
+
+function predict_proba(
+        estimator::MutableGLMEstimator,
+        featuresdf::DataFrames.AbstractDataFrame,
         )
-    result = Dict()
-    result[1] = glmpredictoutput
-    result[0] = 1 - glmpredictoutput
-    return result
+    if estimator.isclassificationmodel
+        glmpredictoutput = GLM.predict(
+            estimator.glm,
+            featuresdf,
+            )
+        result = Dict()
+        result[1] = glmpredictoutput
+        result[0] = 1 - glmpredictoutput
+        return result
+    elseif estimator.isregressionmodel
+        error("predict_proba is not defined for regression models")
+    else
+        error("unable to predict_proba")
+    end
+
 end
 
 function fit!(
-        estimator::AbstractASBGLMGeneralizedLinearModelRegression,
+        estimator::MutableGLMEstimator,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         )
@@ -85,12 +105,6 @@ function _singlelabelbinarylogisticclassifier_GLM(
         intercept::Bool = true,
         name::AbstractString = "",
         )
-    if length(singlelabellevels) !== length(unique(singlelabellevels))
-        error("singlelabellevels has duplicates")
-    end
-    if length(singlelabellevels) !== 2
-        error("length(singlelabellevels) !== 2")
-    end
     negativeclass = singlelabellevels[1]
     positiveclass = singlelabellevels[2]
     formula = makeformula(
@@ -102,7 +116,7 @@ function _singlelabelbinarylogisticclassifier_GLM(
         singlelabelname,
         positiveclass,
         )
-    glmestimator = ASBGLMGeneralizedLinearModelClassifier(
+    glmestimator = MutableGLMEstimator(
         formula,
         GLM.Binomial(),
         GLM.LogitLink(),
@@ -150,3 +164,56 @@ function singlelabelbinarylogisticclassifier(
 end
 
 const binarylogisticclassifier = singlelabelbinarylogisticclassifier
+
+function _singlelabellinearregression_GLM(
+        featurenames::AbstractVector,
+        singlelabelname::Symbol,
+        intercept::Bool = true,
+        name::AbstractString = "",
+        )
+    formula = makeformula(
+        [singlelabelname],
+        featurenames;
+        intercept = intercept,
+        )
+    glmestimator = MutableGLMEstimator(
+        formula,
+        GLM.Normal(),
+        GLM.IdentityLink(),
+        )
+    probapackager = PackageSingleLabelPredictProbaTransformer(
+        singlelabelname,
+        )
+    finalpipeline = SimplePipeline(
+        [
+            glmestimator,
+            predprobafixer,
+            probapackager,
+            ];
+        name = name,
+        underlyingobjectindex = 2,
+        )
+    return finalpipeline
+end
+
+function singlelabellinearregression(
+        featurenames::AbstractVector,
+        singlelabelname::Symbol;
+        package::Symbol = :none,
+        intercept::Bool = true,
+        name::AbstractString = "",
+        )
+    if package == :GLM
+        result =_singlelabellinearregression_GLM(
+            featurenames,
+            singlelabelname;
+            intercept = intercept,
+            name = name,
+            )
+        return result
+    else
+        error("$(package) is not a valid value for package")
+    end
+end
+
+const linearregression = singlelabellinearregression

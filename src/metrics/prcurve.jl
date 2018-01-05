@@ -17,7 +17,7 @@ function prcurve(
 end
 
 function prcurve(
-    allrocnums::VectorOfMLBaseROCNums,
+    allrocnums::ROCNumsVector,
     allthresholds::StatsBase.RealVector,
     )
     allprecisions = [precision(x) for x in allrocnums]

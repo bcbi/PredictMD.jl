@@ -1,23 +1,11 @@
-abstract type AbstractPredictProbaLabelsInt2StringTransformer <:
-        AbstractTransformer
-end
-
-abstract type AbstractPredictProbaSingleLabelInt2StringTransformer <:
-        AbstractPredictProbaLabelsInt2StringTransformer
-end
-
-abstract type AbstractPredictProbaMultipleLabelsInt2StringTransformer <:
-        AbstractPredictProbaLabelsInt2StringTransformer
-end
-
-struct PredictProbaSingleLabelInt2StringTransformer <:
-        AbstractPredictProbaSingleLabelInt2StringTransformer
+immutable ImmutablePredictProbaSingleLabelInt2StringTransformer <:
+        AbstractPrimitiveObject
     index::T1 where T1 <: Integer
     levels::T2 where T2 <: AbstractVector
 end
 
 function fit!(
-        transformer::AbstractPredictProbaSingleLabelInt2StringTransformer,
+        transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer,
         varargs...;
         kwargs...
         )
@@ -29,7 +17,7 @@ function fit!(
 end
 
 function predict_proba(
-        transformer::AbstractPredictProbaSingleLabelInt2StringTransformer,
+        transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer,
         singlelabelprobabilities::Associative;
         kwargs...
         )

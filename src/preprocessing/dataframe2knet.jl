@@ -1,12 +1,8 @@
 import DataFrames
 import StatsModels
 
-abstract type AbstractDataFrame2KnetTransformer <:
-        AbstractTransformer
-end
-
-struct DataFrame2KnetTransformer <:
-        AbstractDataFrame2KnetTransformer
+struct ImmutableDataFrame2KnetTransformer <:
+        AbstractPrimitiveObject
     featurenames::T1 where T1 <: AbstractVector
     dffeaturecontrasts::T2 where T2 <: ImmutableDataFrameFeatureContrasts
     labelnames::T3 where T3 <: VectorOfSymbols
@@ -16,7 +12,7 @@ struct DataFrame2KnetTransformer <:
     transposelabels::T7 where T7 <: Bool
 end
 
-function DataFrame2KnetTransformer(
+function ImmutableDataFrame2KnetTransformer(
         featurenames::AbstractVector,
         labelnames::VectorOfSymbols,
         labellevels::Associative,
@@ -29,7 +25,7 @@ function DataFrame2KnetTransformer(
         df,
         featurenames
         )
-    result = DataFrame2KnetTransformer(
+    result = ImmutableDataFrame2KnetTransformer(
         featurenames,
         dffeaturecontrasts,
         labelnames,
@@ -41,7 +37,7 @@ function DataFrame2KnetTransformer(
 end
 
 function transform(
-        transformer::AbstractDataFrame2KnetTransformer,
+        transformer::ImmutableDataFrame2KnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...
@@ -95,7 +91,7 @@ function transform(
 end
 
 function transform(
-        transformer::AbstractDataFrame2KnetTransformer,
+        transformer::ImmutableDataFrame2KnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         kwargs...
         )
@@ -118,7 +114,7 @@ function transform(
 end
 
 function fit!(
-        transformer::AbstractDataFrame2KnetTransformer,
+        transformer::ImmutableDataFrame2KnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...

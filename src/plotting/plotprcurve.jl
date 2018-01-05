@@ -2,7 +2,7 @@ import LaTeXStrings
 import PGFPlots
 
 function plotprcurve(
-        estimator::AbstractASBObject,
+        estimator::AbstractObject,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
@@ -20,7 +20,7 @@ function plotprcurve(
 end
 
 function plotprcurve(
-        vectorofestimators::VectorOfAbstractASBObjects,
+        vectorofestimators::AbstractObjectVector,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
@@ -45,7 +45,7 @@ function plotprcurve(
         allprecisions, allrecalls, allthresholds = prcurve(
             ytrue_i,
             yscore_i,
-            ) 
+            )
         linearplotobject_i = PGFPlots.Plots.Linear(
             allrecalls,
             allprecisions,

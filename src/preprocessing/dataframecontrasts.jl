@@ -9,7 +9,7 @@ end
 
 function ImmutableDataFrameFeatureContrasts(
         df::DataFrames.AbstractDataFrames,
-        featurenames::SymbolVector
+        featurenames::SymbolVector,
         )
     modelformula = makeformula(
         featurenames[1],
@@ -29,6 +29,17 @@ function ImmutableDataFrameFeatureContrasts(
         numdataframefeatures,
         featurecontrasts,
         numarrayfeatures,
+        )
+    return result
+end
+
+function featurecontrasts(
+        df::DataFrames.AbstractDataFrames,
+        featurenames::SymbolVector,
+        )
+    result = ImmutableDataFrameFeatureContrasts(
+        df,
+        featurenames,
         )
     return result
 end
