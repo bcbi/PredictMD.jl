@@ -19,7 +19,7 @@ end
 function smote(
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
-        featurenames::VectorOfSymbols,
+        featurenames::SymbolVector,
         labelname::Symbol;
         majorityclass::AbstractString = "",
         minorityclass::AbstractString = "",
@@ -46,7 +46,7 @@ function smote(
         rng::AbstractRNG,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
-        featurenames::VectorOfSymbols,
+        featurenames::SymbolVector,
         labelname::Symbol;
         majorityclass::AbstractString = "",
         minorityclass::AbstractString = "",

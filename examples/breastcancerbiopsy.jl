@@ -1,7 +1,10 @@
+srand(999)
+
 import AluthgeSinhaBase
 const asb = AluthgeSinhaBase
 import DataFrames
 import Knet
+import LIBSVM
 import RDatasets
 import StatsBase
 
@@ -14,7 +17,7 @@ DataFrames.dropmissing!(df)
 # Shuffle the rows
 asb.shufflerows!(df)
 
-# Define features and labels
+# Define features
 categoricalfeaturenames = Symbol[]
 continuousfeaturenames = Symbol[
     :V1,
@@ -28,6 +31,9 @@ continuousfeaturenames = Symbol[
     :V9,
     ]
 featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
+featurecontrasts = asb.featurecontrasts(df, featurenames)
+
+# Define labels
 labelname = :Class
 negativeclass = "benign"
 positiveclass = "malignant"
@@ -91,10 +97,9 @@ logistic = asb.binarylogisticclassifier(
     )
 asb.fit!(
     logistic,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    smotedtrainingfeaturesdf, smotedtraininglabelsdf,
     )
-# View the coefficients, p values, etc. for the underlying logisic regression
+# View the coefficients, p values, etc. for the underlying logistic regression
 asb.underlying(logistic)
 # Evaluate the performance of the logistic classifier on the testing set
 asb.binaryclassificationmetrics(
@@ -105,6 +110,65 @@ asb.binaryclassificationmetrics(
     positiveclass;
     sensitivity = 0.95,
     )
+asb.binaryclassificationmetrics(
+    logistic,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    specificity = 0.95,
+    )
+asb.binaryclassificationmetrics(
+    logistic,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    maximize = :f1score,
+    )
+
+##############################################################################
+
+# Set up and train a binary probit classifier
+probit = asb.binaryprobitclassifier(
+    featurenames,
+    labelname,
+    labellevels;
+    package = :GLMjl,
+    intercept = true, # optional, defaults to true
+    name = "Probit", # optional
+    )
+asb.fit!(
+    probit,
+    smotedtrainingfeaturesdf, smotedtraininglabelsdf,
+    )
+# View the coefficients, p values, etc. for the underlying probit regression
+asb.underlying(probit)
+# Evaluate the performance of the logistic classifier on the testing set
+asb.binaryclassificationmetrics(
+    probit,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    sensitivity = 0.95,
+    )
+asb.binaryclassificationmetrics(
+    probit,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    specificity = 0.95,
+    )
+asb.binaryclassificationmetrics(
+    probit,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    maximize = :f1score,
+    )
 
 ##############################################################################
 
@@ -113,7 +177,7 @@ randomforest = asb.randomforestclassifier(
     featurenames,
     labelname,
     labellevels,
-    smotedtrainingfeaturesdf;
+    featurecontrasts;
     nsubfeatures = 2, # number of subfeatures; defaults to 2
     ntrees = 20, # number of trees; defaults to 10
     package = :DecisionTreejl,
@@ -133,6 +197,22 @@ asb.binaryclassificationmetrics(
     positiveclass;
     sensitivity = 0.95,
     )
+asb.binaryclassificationmetrics(
+    randomforest,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    specificity = 0.95,
+    )
+asb.binaryclassificationmetrics(
+    randomforest,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    maximize = :f1score,
+    )
 
 ##############################################################################
 
@@ -141,16 +221,17 @@ svm = asb.svmclassifier(
     featurenames,
     labelname,
     labellevels,
-    smotedtrainingfeaturesdf;
-    package = :LIBSVMjl,
+    featurecontrasts; package = :LIBSVMjl,
+    svmtype = LIBSVM.SVC,
     name = "SVM",
+    verbose = true,
     )
 asb.fit!(
     svm,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
     )
-# # Evaluate the performance of the SVM on the testing set
+# Evaluate the performance of the SVM on the testing set
 asb.binaryclassificationmetrics(
     svm,
     testingfeaturesdf,
@@ -159,10 +240,26 @@ asb.binaryclassificationmetrics(
     positiveclass;
     sensitivity = 0.95,
     )
+asb.binaryclassificationmetrics(
+    svm,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    specificity = 0.95,
+    )
+asb.binaryclassificationmetrics(
+    svm,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    maximize = :f1score,
+    )
 
 ##############################################################################
 
-# Set up and train a multilayer perceptron (i.e. a fully connected feedforward
+# Set up and train a multilayer perceptron (i.e. fully connected feedforward
 # neural network)
 
 function knetmlp_predict(
@@ -205,16 +302,17 @@ function knetmlp_loss(
     end
     return loss
 end
-knet_losshyperparameters = Dict()
-knet_losshyperparameters[:L1] = Cfloat(0.000001)
-knet_losshyperparameters[:L2] = Cfloat(0.000001)
-knet_optimizationalgorithm = :Momentum
-knet_optimizerhyperparameters = Dict()
-knet_mlpbatchsize = 48
+knetmlp_losshyperparameters = Dict()
+knetmlp_losshyperparameters[:L1] = Cfloat(0.00001)
+knetmlp_losshyperparameters[:L2] = Cfloat(0.00001)
+knetmlp_optimizationalgorithm = :Momentum
+knetmlp_optimizerhyperparameters = Dict()
+knetmlp_batchsize = 48
+knetmlp_maxepochs = 500
 knetmlp_modelweights = Any[
-    # input layer has 9 features
+    # input layer has featurecontrasts.numarrayfeatures features
     # first hidden layer (64 neurons):
-    Cfloat.(0.1f0*randn(Cfloat,64,9)), # weights
+    Cfloat.(0.1f0*randn(Cfloat,64,featurecontrasts.numarrayfeatures)),#weights
     Cfloat.(zeros(Cfloat,64,1)), # biases
     # second hidden layer (32 neurons):
     Cfloat.(0.1f0*randn(Cfloat,32,64)), # weights
@@ -227,22 +325,23 @@ knetmlp = asb.knetclassifier(
     featurenames,
     labelname,
     labellevels,
-    smotedtrainingfeaturesdf;
+    featurecontrasts;
+    package = :Knetjl,
     name = "Knet MLP",
     predict = knetmlp_predict,
     loss = knetmlp_loss,
-    losshyperparameters = knet_losshyperparameters,
-    optimizationalgorithm = knet_optimizationalgorithm,
-    optimizerhyperparameters = knet_optimizerhyperparameters,
-    batchsize = knet_mlpbatchsize,
+    losshyperparameters = knetmlp_losshyperparameters,
+    optimizationalgorithm = knetmlp_optimizationalgorithm,
+    optimizerhyperparameters = knetmlp_optimizerhyperparameters,
+    batchsize = knetmlp_batchsize,
     modelweights = knetmlp_modelweights,
+    printlosseverynepochs = 50, # if 0, will not print at all
+    maxepochs = knetmlp_maxepochs,
     )
 asb.fit!(
     knetmlp,
     smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf;
-    maxepochs = 2_000,
-    printlosseverynepochs = 1, # if 0, will not print at all
+    smotedtraininglabelsdf,
     )
 knetmlp_learningcurve_lossvsepoch = asb.plotlearningcurve(
     knetmlp,
@@ -267,12 +366,35 @@ asb.binaryclassificationmetrics(
     positiveclass;
     sensitivity = 0.95,
     )
+asb.binaryclassificationmetrics(
+    knetmlp,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    specificity = 0.95,
+    )
+asb.binaryclassificationmetrics(
+    knetmlp,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    maximize = :f1score
+    )
 
 ##############################################################################
 
-# Compare the performance of all four models on the testing set
+# Compare the performance of all models on the testing set
+allmodels = [
+    logistic,
+    probit,
+    randomforest,
+    svm,
+    knetmlp,
+    ]
 showall(asb.binaryclassificationmetrics(
-    [logistic, randomforest, svm, knetmlp],
+    allmodels,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -280,7 +402,15 @@ showall(asb.binaryclassificationmetrics(
     sensitivity = 0.95,
     ))
 showall(asb.binaryclassificationmetrics(
-    [logistic, randomforest, svm, knetmlp],
+    allmodels,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    specificity = 0.95,
+    ))
+showall(asb.binaryclassificationmetrics(
+    allmodels,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -288,9 +418,9 @@ showall(asb.binaryclassificationmetrics(
     maximize = :f1score,
     ))
 
-# Plot receiver operating characteristic curves for all four models
+# Plot receiver operating characteristic curves for all models
 rocplot = asb.plotroccurves(
-    [logistic, randomforest, svm, knetmlp],
+    allmodels,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -298,9 +428,9 @@ rocplot = asb.plotroccurves(
     )
 asb.open(rocplot)
 
-# Plot precision-recall curves for all four models
+# Plot precision-recall curves for all models
 prplot = asb.plotprcurves(
-    [logistic, randomforest, svm, knetmlp],
+    allmodels,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,

@@ -1,14 +1,18 @@
-abstract type AbstractPackageSingleLabelPredictProbaTransformer <:
-        AbstractTransformer
-end
-
-struct PackageSingleLabelPredictProbaTransformer <:
-        AbstractPackageSingleLabelPredictProbaTransformer
+immutable ImmutablePackageSingleLabelPredictProbaTransformer <:
+        AbstractPrimitiveObject
     singlelabelname::T1 where T1 <: Symbol
 end
 
+function underlying(::ImmutablePackageSingleLabelPredictProbaTransformer)
+    return nothing
+end
+
+function valuehistories(::ImmutablePackageSingleLabelPredictProbaTransformer)
+    return nothing
+end
+
 function fit!(
-        transformer::AbstractPackageSingleLabelPredictProbaTransformer,
+        transformer::ImmutablePackageSingleLabelPredictProbaTransformer,
         varargs...;
         kwargs...
         )
@@ -20,7 +24,7 @@ function fit!(
 end
 
 function predict_proba(
-        transformer::AbstractPackageSingleLabelPredictProbaTransformer,
+        transformer::ImmutablePackageSingleLabelPredictProbaTransformer,
         singlelabelprobabilities::Associative;
         kwargs...
         )

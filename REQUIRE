@@ -1,15 +1,18 @@
 julia 0.6
 
 AUC
+CSV
 ClassImbalance
 DataFrames 0.11.3
 DecisionTree
 GLM
+GZip
 Knet
 LaTeXStrings
 LIBSVM
 MLBase
 PGFPlots
+RData
 RDatasets
 ScikitLearnBase
 StatsBase

@@ -1,1 +1,1 @@
-include("pipeline/simplepipeline.jl")
+include("pipeline/simplelinearpipeline.jl")
