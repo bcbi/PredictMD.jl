@@ -300,13 +300,13 @@ function knetmlp_loss(
     end
     return loss
 end
-knet_losshyperparameters = Dict()
-knet_losshyperparameters[:L1] = Cfloat(0.00001)
-knet_losshyperparameters[:L2] = Cfloat(0.00001)
-knet_optimizationalgorithm = :Momentum
-knet_optimizerhyperparameters = Dict()
-knet_mlpbatchsize = 48
-knet_mlpmaxepochs = 500
+knetmlp_losshyperparameters = Dict()
+knetmlp_losshyperparameters[:L1] = Cfloat(0.00001)
+knetmlp_losshyperparameters[:L2] = Cfloat(0.00001)
+knetmlp_optimizationalgorithm = :Momentum
+knetmlp_optimizerhyperparameters = Dict()
+knetmlp_batchsize = 48
+knetmlp_maxepochs = 500
 knetmlp_modelweights = Any[
     # input layer has 9 features
     # first hidden layer (64 neurons):
@@ -328,13 +328,13 @@ knetmlp = asb.knetclassifier(
     name = "Knet MLP",
     predict = knetmlp_predict,
     loss = knetmlp_loss,
-    losshyperparameters = knet_losshyperparameters,
-    optimizationalgorithm = knet_optimizationalgorithm,
-    optimizerhyperparameters = knet_optimizerhyperparameters,
-    batchsize = knet_mlpbatchsize,
+    losshyperparameters = knetmlp_losshyperparameters,
+    optimizationalgorithm = knetmlp_optimizationalgorithm,
+    optimizerhyperparameters = knetmlp_optimizerhyperparameters,
+    batchsize = knetmlp_batchsize,
     modelweights = knetmlp_modelweights,
-    printlosseverynepochs = 1, # if 0, will not print at all
-    maxepochs = knet_mlpmaxepochs,
+    printlosseverynepochs = 50, # if 0, will not print at all
+    maxepochs = knetmlp_maxepochs,
     )
 asb.fit!(
     knetmlp,

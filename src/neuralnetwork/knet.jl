@@ -111,7 +111,18 @@ function fit!(
         estimator.loss,
         2,
         )
-    info("Starting to train Knet model...")
+    lossbeforetrainingstarts = estimator.loss(
+        estimator.predict,
+        estimator.modelweights,
+        featuresarray,
+        labelsarray;
+        estimator.losshyperparameters...
+        )
+    info(
+        "Loss before training starts: ",
+        lossbeforetrainingstarts,
+        )
+    info(string("Starting to train Knet model..."))
     while estimator.lastepoch < estimator.maxepochs
         for (x,y) in trainingdata
             grads = lossgradient(
@@ -176,7 +187,7 @@ function fit!(
                 )
         end
     end # end while
-    info("Finished training Knet model.")
+    info(string("Finished training Knet model."))
     return estimator
 end
 
