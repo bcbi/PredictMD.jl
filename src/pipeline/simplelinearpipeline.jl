@@ -31,7 +31,7 @@ end
 
 function valuehistories(x::ImmutableSimpleLinearPipeline)
     allvaluehistories =
-        [valuehistories(o) for i in x.objectsvector]
+        [valuehistories(o) for o in x.objectsvector]
     allvaluehistoriesminusnothings =
         allvaluehistories[find(allvaluehistories .!= nothing)]
     if length(allvaluehistoriesminusnothings) == 0

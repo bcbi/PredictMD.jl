@@ -88,7 +88,7 @@ function transform(
         labelsarray = transpose(labelsarray)
     end
     if typeof(labelsarray) <: AbstractMatrix
-        if size(labelsarray, 1) == 1 | size(labelsarray, 2) == 1
+        if size(labelsarray, 1) == 1 || size(labelsarray, 2) == 1
             labelsarray = convert(Vector, vec(labelsarray))
         end
     end

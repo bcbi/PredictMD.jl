@@ -27,7 +27,7 @@ mutable struct MutableKnetEstimator <: AbstractPrimitiveObject
     lastepoch::T12 where T12 <: Integer
     lastiteration::T13 where T13 <: Integer
     valuehistories::T14 where T14 <: ValueHistories.MultivalueHistory
-    printlossnepochs::T15 where T15 <: Integer
+    printlosseverynepochs::T15 where T15 <: Integer
     io::T16 where T16 <: IO
 
     function MutableKnetEstimator(
@@ -42,7 +42,7 @@ mutable struct MutableKnetEstimator <: AbstractPrimitiveObject
             modelweights::AbstractArray = [],
             isclassificationmodel::Bool = false,
             isregressionmodel::Bool = false,
-            printlossnepochs::Integer = 0,
+            printlosseverynepochs::Integer = 0,
             io::IO = Base.STDOUT,
             maxepochs::Integer = 0,
             )
@@ -78,7 +78,7 @@ mutable struct MutableKnetEstimator <: AbstractPrimitiveObject
             lastepoch,
             lastiteration,
             valuehistories,
-            printlossnepochs,
+            printlosseverynepochs,
             io,
             )
         return result
@@ -162,7 +162,8 @@ function fit!(
             currentepochloss,
             )
         if (estimator.printlosseverynepochs > 0) &&
-                ( (estimator.lastepoch % printlosseverynepochs) == 0 )
+                ( (estimator.lastepoch %
+                    estimator.printlosseverynepochs) == 0 )
             info(
                 estimator.io,
                 string(
