@@ -170,8 +170,7 @@ function knetmlp_predict(
         training::Bool = false,
         )
     x1 = Knet.relu.( w[1]*x0 .+ w[2] )
-    x2 = Knet.relu.( w[3]*x1 .+ w[4] )
-    x3 = w[5]*x1 .+ w[6]
+    x3 = w[3]*x1 .+ w[4]
     return x3
 end
 function knetmlp_loss(
@@ -202,17 +201,14 @@ knetmlp_losshyperparameters[:L2] = Cfloat(0.00001)
 knetmlp_optimizationalgorithm = :Momentum
 knetmlp_optimizerhyperparameters = Dict()
 knetmlp_batchsize = 48
-knetmlp_maxepochs = 1_000
+knetmlp_maxepochs = 500 # you will definitely want to make this much bigger
 knetmlp_modelweights = Any[
     # input layer has featurecontrasts.numarrayfeatures features
     # first hidden layer (64 neurons):
-    Cfloat.(0.1f0*randn(Cfloat,64,featurecontrasts.numarrayfeatures)),#weights
-    Cfloat.(zeros(Cfloat,64,1)), # biases
-    # second hidden layer (32 neurons):
-    Cfloat.(0.1f0*randn(Cfloat,32,64)), # weights
-    Cfloat.(zeros(Cfloat,32,1)), # biases
+    Cfloat.(0.1f0*randn(Cfloat,10,featurecontrasts.numarrayfeatures)),#weights
+    Cfloat.(zeros(Cfloat,10,1)), # biases
     # output layer (2 neurons, same as number of classes):
-    Cfloat.(0.1f0*randn(Cfloat,1,64)), # weights
+    Cfloat.(0.1f0*randn(Cfloat,1,10)), # weights
     Cfloat.(zeros(Cfloat,1,1)), # biases
     ]
 knetmlp = asb.knetregression(
@@ -262,7 +258,7 @@ asb.regressionmetrics(
 
 # Compare the performance of all five models on the testing set
 allmodels = [
-    linear,
+    linearregression,
     randomforestregression,
     epsilonsvmregression,
     nusvmregression,
@@ -271,6 +267,5 @@ allmodels = [
 showall(asb.regressionmetrics(
     allmodels,
     testingfeaturesdf,
-    testinglabelsdf,
-    labelname,
+    testinglabelsdf, labelname,
     ))

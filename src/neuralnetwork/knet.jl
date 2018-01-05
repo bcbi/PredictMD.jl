@@ -119,7 +119,11 @@ function fit!(
         "Loss before training starts: ",
         lossbeforetrainingstarts,
         )
-    info(string("Starting to train Knet model..."))
+    info(
+        string("Max epochs: "),
+        estimator.maxepochs,
+        )
+    info(string("Starting to train Knet.jl model..."))
     while estimator.lastepoch < estimator.maxepochs
         for (x,y) in trainingdata
             grads = lossgradient(
@@ -183,7 +187,7 @@ function fit!(
                 )
         end
     end # end while
-    info(string("Finished training Knet model."))
+    info(string("Finished training Knet.jl model."))
     return estimator
 end
 
@@ -194,6 +198,14 @@ function predict(
     if estimator.isclassificationmodel
         error("predict is not defined for classification models")
     elseif estimator.isregressionmodel
+        output = estimator.predict(
+            estimator.modelweights,
+            featuresarray;
+            training = false,
+            )
+        outputtransposed = transpose(output)
+        result = convert(Array, outputtransposed)
+        return result
     else
         error("unable to predict")
     end
@@ -369,13 +381,13 @@ function _singlelabelknetregression_Knet(
         optimizerhyperparameters = optimizerhyperparameters,
         batchsize = batchsize,
         modelweights = modelweights,
-        isclassificationmodel = true,
-        isregressionmodel = false,
+        isclassificationmodel = false,
+        isregressionmodel = true,
         printlosseverynepochs = printlosseverynepochs,
         maxepochs = maxepochs,
         )
-    predpackager = ImmutablePackageSingleLabelPredictProbaTransformer(
-        singlelabelname,
+    predpackager = ImmutablePackageMultiLabelPredictionTransformer(
+        [singlelabelname,],
         )
     finalpipeline = ImmutableSimpleLinearPipeline(
         [

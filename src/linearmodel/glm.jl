@@ -47,14 +47,14 @@ function fit!(
         labelsdf::DataFrames.AbstractDataFrame,
         )
     labelsandfeaturesdf = hcat(labelsdf, featuresdf)
-    info(string("Starting to train GLM model..."))
+    info(string("Starting to train GLM.jl model..."))
     glm = GLM.glm(
         estimator.formula,
         labelsandfeaturesdf,
         estimator.family,
         estimator.link,
         )
-    info(string("Finished training GLM model."))
+    info(string("Finished training GLM.jl model."))
     estimator.underlyingglm = glm
     return estimator
 end

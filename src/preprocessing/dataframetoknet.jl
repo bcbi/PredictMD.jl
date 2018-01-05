@@ -12,6 +12,10 @@ struct ImmutableDataFrame2ClassificationKnetTransformer <:
     transposelabels::T7 where T7 <: Bool
 end
 
+function valuehistories(x::ImmutableDataFrame2ClassificationKnetTransformer)
+    return nothing
+end
+
 function ImmutableDataFrame2ClassificationKnetTransformer(
         featurenames::AbstractVector,
         dffeaturecontrasts::AbstractContrastsObject,
@@ -119,6 +123,14 @@ function fit!(
     return transform(transformer, featuresdf, labelsdf)
 end
 
+function predict(
+        transformer::ImmutableDataFrame2ClassificationKnetTransformer,
+        featuresdf::DataFrames.AbstractDataFrame;
+        kwargs...
+        )
+    return transform(transformer, featuresdf)
+end
+
 function predict_proba(
         transformer::ImmutableDataFrame2ClassificationKnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
@@ -134,6 +146,10 @@ struct ImmutableDataFrame2RegressionKnetTransformer <:
     labelnames::T3 where T3 <: SymbolVector
     transposefeatures::T4 where T4 <: Bool
     transposelabels::T5 where T5 <: Bool
+end
+
+function valuehistories(x::ImmutableDataFrame2RegressionKnetTransformer)
+    return nothing
 end
 
 function ImmutableDataFrame2RegressionKnetTransformer(
@@ -217,6 +233,14 @@ function fit!(
         kwargs...
         )
     return transform(transformer, featuresdf, labelsdf)
+end
+
+function predict(
+        transformer::ImmutableDataFrame2RegressionKnetTransformer,
+        featuresdf::DataFrames.AbstractDataFrame;
+        kwargs...
+        )
+    return transform(transformer, featuresdf)
 end
 
 function predict_proba(

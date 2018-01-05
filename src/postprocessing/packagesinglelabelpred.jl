@@ -3,6 +3,10 @@ immutable ImmutablePackageSingleLabelPredictionTransformer <:
     singlelabelname::T1 where T1 <: Symbol
 end
 
+function valuehistories(x::ImmutablePackageSingleLabelPredictionTransformer)
+    return nothing
+end
+
 function fit!(
         transformer::ImmutablePackageSingleLabelPredictionTransformer,
         varargs...;
