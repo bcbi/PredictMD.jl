@@ -33,6 +33,14 @@ function fit!(
     return transform(transformer, featuresarray, labelsarray)
 end
 
+function predict(
+        transformer::ImmutableFeatureArrayTransposerTransformer,
+        featuresarray::AbstractMatrix;
+        kwargs...
+        )
+    return transform(transformer, featuresarray)
+end
+
 function predict_proba(
         transformer::ImmutableFeatureArrayTransposerTransformer,
         featuresarray::AbstractMatrix;
@@ -44,14 +52,14 @@ end
 function DataFrame2LIBSVMTransformer(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        levels::AbstractVector,
-        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts,
+        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
+        levels::AbstractVector = [],
         )
     df2decisiontreetransformer = ImmutableDataFrame2DecisionTreeTransformer(
         featurenames,
         dffeaturecontrasts,
-        singlelabelname,
-        levels,
+        singlelabelname;
+        levels = levels,
         )
     featuretransposetransformer = ImmutableFeatureArrayTransposerTransformer()
     result = ImmutableSimpleLinearPipeline(

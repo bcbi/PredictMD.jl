@@ -3,7 +3,8 @@ import GLM
 import StatsModels
 
 
-mutable struct MutableGLMEstimator <: AbstractPrimitiveObject
+mutable struct MutableGLMjlGeneralizedLinearModelEstimator <:
+        AbstractPrimitiveObject
     name::T1 where T1 <: AbstractString
     isclassificationmodel::T2 where T2 <: Bool
     isregressionmodel::T3 where T3 <: Bool
@@ -15,7 +16,7 @@ mutable struct MutableGLMEstimator <: AbstractPrimitiveObject
     # parameters (learned from data):
     underlyingglm::T where T
 
-    function MutableGLMEstimator(
+    function MutableGLMjlGeneralizedLinearModelEstimator(
             formula::StatsModels.Formula,
             family::GLM.Distribution,
             link::GLM.Link;
@@ -35,34 +36,45 @@ mutable struct MutableGLMEstimator <: AbstractPrimitiveObject
     end
 end
 
-function underlying(x::MutableGLMEstimator)
+function underlying(x::MutableGLMjlGeneralizedLinearModelEstimator)
     result = x.underlyingglm
     return result
 end
 
 function fit!(
-        estimator::MutableGLMEstimator,
+        estimator::MutableGLMjlGeneralizedLinearModelEstimator,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         )
     labelsandfeaturesdf = hcat(labelsdf, featuresdf)
+    info(string("Starting to train GLM model..."))
     glm = GLM.glm(
         estimator.formula,
         labelsandfeaturesdf,
         estimator.family,
         estimator.link,
         )
+    info(string("Finished training GLM model."))
     estimator.underlyingglm = glm
     return estimator
 end
 
 function predict(
-        estimator::MutableGLMEstimator,
+        estimator::MutableGLMjlGeneralizedLinearModelEstimator,
         featuresdf::DataFrames.AbstractDataFrame,
         )
     if estimator.isclassificationmodel
         error("predict is not defined for classification models")
     elseif estimator.isregressionmodel
+        glmpredictoutput = GLM.predict(
+            estimator.underlyingglm,
+            featuresdf,
+            )
+        result = DataFrames.DataFrame()
+        labelname = estimator.formula.lhs
+        @assert(typeof(labelname) <: Symbol)
+        result[labelname] = glmpredictoutput
+        return result
     else
         error("unable to predict")
     end
@@ -70,7 +82,7 @@ function predict(
 end
 
 function predict_proba(
-        estimator::MutableGLMEstimator,
+        estimator::MutableGLMjlGeneralizedLinearModelEstimator,
         featuresdf::DataFrames.AbstractDataFrame,
         )
     if estimator.isclassificationmodel
@@ -108,7 +120,7 @@ function _singlelabelbinarylogisticclassifier_GLM(
         singlelabelname,
         positiveclass,
         )
-    glmestimator = MutableGLMEstimator(
+    glmestimator = MutableGLMjlGeneralizedLinearModelEstimator(
         formula,
         GLM.Binomial(),
         GLM.LogitLink();
@@ -176,7 +188,7 @@ function _singlelabelbinaryprobitclassifier_GLM(
         singlelabelname,
         positiveclass,
         )
-    glmestimator = MutableGLMEstimator(
+    glmestimator = MutableGLMjlGeneralizedLinearModelEstimator(
         formula,
         GLM.Binomial(),
         GLM.ProbitLink();
@@ -229,7 +241,7 @@ const binaryprobitclassifier = singlelabelbinaryprobitclassifier
 
 function _singlelabellinearregression_GLM(
         featurenames::AbstractVector,
-        singlelabelname::Symbol,
+        singlelabelname::Symbol;
         intercept::Bool = true,
         name::AbstractString = "",
         )
@@ -238,24 +250,18 @@ function _singlelabellinearregression_GLM(
         featurenames;
         intercept = intercept,
         )
-    glmestimator = MutableGLMEstimator(
+    glmestimator = MutableGLMjlGeneralizedLinearModelEstimator(
         formula,
         GLM.Normal(),
         GLM.IdentityLink();
         isclassificationmodel = false,
         isregressionmodel = true,
         )
-    probapackager = PackageSingleLabelPredictProbaTransformer(
-        singlelabelname,
-        )
-    finalpipeline = SimplePipeline(
+    finalpipeline = ImmutableSimpleLinearPipeline(
         [
             glmestimator,
-            predprobafixer,
-            probapackager,
             ];
         name = name,
-        underlyingobjectindex = 2,
         )
     return finalpipeline
 end
@@ -267,7 +273,7 @@ function singlelabellinearregression(
         intercept::Bool = true,
         name::AbstractString = "",
         )
-    if package == :GLM
+    if package == :GLMjl
         result =_singlelabellinearregression_GLM(
             featurenames,
             singlelabelname;

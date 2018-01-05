@@ -5,17 +5,25 @@ import StatsBase
 
 function singlelabelbinaryytrue(
         labels::AbstractVector,
-        positiveclass::AbstractString,
+        positiveclass::AbstractString;
+        inttype::Type = Int,
         )
-    result = Int.(labels .== positiveclass)
+    if !(inttype <: Integer)
+        error("!(inttype <: Integer)")
+    end
+    result = inttype.(labels .== positiveclass)
     return result
 end
 
 function singlelabelbinaryyscore(
         singlelabelprobabilities::Associative,
-        positiveclass::AbstractString,
+        positiveclass::AbstractString;
+        floattype::Type = Cfloat,
         )
-    result = singlelabelprobabilities[positiveclass]
+    if !(floattype <: AbstractFloat)
+        error("!(floattype <: AbstractFloat)")
+    end
+    result = floattype.(singlelabelprobabilities[positiveclass])
     return result
 end
 
@@ -106,9 +114,10 @@ function _singlelabelbinaryclassificationmetrics(
     selectedtunableparam, selectedparamtomax, metricprintnames =
         _singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
     #
+    predictedprobabilitiesalllabels = predict_proba(estimator, featuresdf)
     yscore = Cfloat.(
         singlelabelbinaryyscore(
-            predict_proba(estimator, featuresdf)[singlelabelname],
+            predictedprobabilitiesalllabels[singlelabelname],
             positiveclass,
             )
         )
@@ -207,7 +216,6 @@ function singlelabelbinaryclassificationmetrics(
     kwargsdict = Dict(kwargs)
     selectedtunableparam, selectedparamtomax, metricprintnames =
         _singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
-    numestimators = length(vectorofestimators)
     metricsforeachestimator = [
         _singlelabelbinaryclassificationmetrics(
             est,
@@ -233,7 +241,7 @@ function singlelabelbinaryclassificationmetrics(
         metricprintnames[:sensitivity],
         metricprintnames[:specificity],
         ]
-    for i = 1:numestimators
+    for i = 1:length(vectorofestimators)
         result[Symbol(vectorofestimators[i].name)] = [
             metricsforeachestimator[i][:AUPRC],
             metricsforeachestimator[i][:AUROCC],

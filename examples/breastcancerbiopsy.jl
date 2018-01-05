@@ -89,7 +89,7 @@ logistic = asb.binarylogisticclassifier(
     featurenames,
     labelname,
     labellevels;
-    package = :GLM,
+    package = :GLMjl,
     intercept = true, # optional, defaults to true
     name = "Logistic", # optional
     )
@@ -132,7 +132,7 @@ probit = asb.binaryprobitclassifier(
     featurenames,
     labelname,
     labellevels;
-    package = :GLM,
+    package = :GLMjl,
     intercept = true, # optional, defaults to true
     name = "Probit", # optional
     )
@@ -178,7 +178,7 @@ randomforest = asb.randomforestclassifier(
     featurecontrasts;
     nsubfeatures = 2, # number of subfeatures; defaults to 2
     ntrees = 20, # number of trees; defaults to 10
-    package = :DecisionTree,
+    package = :DecisionTreejl,
     name = "Random forest" # optional
     )
 asb.fit!(
@@ -219,7 +219,7 @@ svm = asb.svmclassifier(
     featurenames,
     labelname,
     labellevels,
-    featurecontrasts; package = :LIBSVM,
+    featurecontrasts; package = :LIBSVMjl,
     svmtype = LIBSVM.SVC,
     name = "SVM",
     verbose = true,
@@ -308,9 +308,9 @@ knetmlp_optimizerhyperparameters = Dict()
 knetmlp_batchsize = 48
 knetmlp_maxepochs = 500
 knetmlp_modelweights = Any[
-    # input layer has 9 features
+    # input layer has featurecontrasts.numarrayfeatures features
     # first hidden layer (64 neurons):
-    Cfloat.(0.1f0*randn(Cfloat,64,9)), # weights
+    Cfloat.(0.1f0*randn(Cfloat,64,featurecontrasts.numarrayfeatures)),#weights
     Cfloat.(zeros(Cfloat,64,1)), # biases
     # second hidden layer (32 neurons):
     Cfloat.(0.1f0*randn(Cfloat,32,64)), # weights
@@ -324,7 +324,7 @@ knetmlp = asb.knetclassifier(
     labelname,
     labellevels,
     featurecontrasts;
-    package = :Knet,
+    package = :Knetjl,
     name = "Knet MLP",
     predict = knetmlp_predict,
     loss = knetmlp_loss,

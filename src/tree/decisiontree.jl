@@ -1,6 +1,6 @@
 import DecisionTree
 
-mutable struct MutableDecisionTreeRandomForestEstimator <:
+mutable struct MutableDecisionTreejlRandomForestEstimator <:
         AbstractPrimitiveObject
     name::T1 where T1 <: AbstractString
     isclassificationmodel::T2 where T2 <: Bool
@@ -15,7 +15,7 @@ mutable struct MutableDecisionTreeRandomForestEstimator <:
     # parameters (learned from data):
     underlyingrandomforest::T7 where T7
 
-    function MutableDecisionTreeRandomForestEstimator(
+    function MutableDecisionTreejlRandomForestEstimator(
             singlelabelname::Symbol;
             name::AbstractString = "",
             nsubfeatures::Integer = 2,
@@ -39,40 +39,47 @@ mutable struct MutableDecisionTreeRandomForestEstimator <:
     end
 end
 
-function underlying(x::MutableDecisionTreeRandomForestEstimator)
+function underlying(x::MutableDecisionTreejlRandomForestEstimator)
     result = x.randomforest
     return result
 end
 
 function fit!(
-        estimator::MutableDecisionTreeRandomForestEstimator,
+        estimator::MutableDecisionTreejlRandomForestEstimator,
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
+    info(string("Starting to train DecisionTree random forest model..."))
     randomforest = DecisionTree.build_forest(
         labelsarray,
         featuresarray,
         estimator.hyperparameters[:nsubfeatures],
         estimator.hyperparameters[:ntrees],
         )
+    info(string("Finished training DecisionTree random forest model."))
     estimator.underlyingrandomforest = randomforest
     return estimator
 end
 
 function predict(
-        estimator::MutableDecisionTreeRandomForestEstimator,
+        estimator::MutableDecisionTreejlRandomForestEstimator,
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel
         error("predict is not defined for classification models")
     elseif estimator.isregressionmodel
+        output = DecisionTree.apply_forest(
+            estimator.underlyingrandomforest,
+            featuresarray,
+            )
+        return output
     else
         error("unable to predict")
     end
 end
 
 function predict_proba(
-        estimator::MutableDecisionTreeRandomForestEstimator,
+        estimator::MutableDecisionTreejlRandomForestEstimator,
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel
@@ -108,7 +115,7 @@ function _singlelabelrandomforestclassifier_DecisionTree(
         singlelabelname,
         singlelabellevels,
         )
-    randomforestestimator = MutableDecisionTreeRandomForestEstimator(
+    randomforestestimator = MutableDecisionTreejlRandomForestEstimator(
         singlelabelname;
         name = name,
         nsubfeatures = nsubfeatures,
@@ -117,14 +124,14 @@ function _singlelabelrandomforestclassifier_DecisionTree(
         isregressionmodel = false,
         levels = singlelabellevels,
         )
-    probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
+    predpackager = ImmutablePackageSingleLabelPredictionTransformer(
         singlelabelname,
         )
     finalpipeline = ImmutableSimpleLinearPipeline(
         [
             dftransformer,
             randomforestestimator,
-            probapackager,
+            predpackager,
             ];
         name = name,
         )
@@ -141,7 +148,7 @@ function singlelabelrandomforestclassifier(
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
         )
-    if package == :DecisionTree
+    if package == :DecisionTreejl
         result = _singlelabelrandomforestclassifier_DecisionTree(
             featurenames,
             singlelabelname,
@@ -158,3 +165,64 @@ function singlelabelrandomforestclassifier(
 end
 
 const randomforestclassifier = singlelabelrandomforestclassifier
+
+function _singlelabelrandomforestregression_DecisionTree(
+        featurenames::AbstractVector,
+        singlelabelname::Symbol,
+        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
+        name::AbstractString = "",
+        nsubfeatures::Integer = 2,
+        ntrees::Integer = 10,
+        )
+    dftransformer = ImmutableDataFrame2DecisionTreeTransformer(
+        featurenames,
+        dffeaturecontrasts,
+        singlelabelname,
+        )
+    randomforestestimator = MutableDecisionTreejlRandomForestEstimator(
+        singlelabelname;
+        name = name,
+        nsubfeatures = nsubfeatures,
+        ntrees = ntrees,
+        isclassificationmodel = false,
+        isregressionmodel = true,
+        )
+    predpackager = ImmutablePackageSingleLabelPredictionTransformer(
+        singlelabelname,
+        )
+    finalpipeline = ImmutableSimpleLinearPipeline(
+        [
+            dftransformer,
+            randomforestestimator,
+            predpackager,
+            ];
+        name = name,
+        )
+    return finalpipeline
+end
+
+function singlelabelrandomforestregression(
+        featurenames::AbstractVector,
+        singlelabelname::Symbol,
+        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
+        name::AbstractString = "",
+        package::Symbol = :none,
+        nsubfeatures::Integer = 2,
+        ntrees::Integer = 10,
+        )
+    if package == :DecisionTreejl
+        result = _singlelabelrandomforestregression_DecisionTree(
+            featurenames,
+            singlelabelname,
+            dffeaturecontrasts;
+            name = name,
+            nsubfeatures = nsubfeatures,
+            ntrees = ntrees,
+        )
+        return result
+    else
+        error("$(package) is not a valid value for package")
+    end
+end
+
+const randomforestregression = singlelabelrandomforestregression

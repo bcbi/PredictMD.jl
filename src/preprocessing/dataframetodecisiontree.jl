@@ -11,13 +11,9 @@ end
 
 function ImmutableDataFrame2DecisionTreeTransformer(
         featurenames::AbstractVector,
-        singlelabelname::Symbol,
-        levels::AbstractVector,
-        df::DataFrames.AbstractDataFrame,
-        )
-    dffeaturecontrasts = ImmutableDataFrame2DecisionTreeTransformer(
-        df,
-        featurenames,
+        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts,
+        singlelabelname::Symbol;
+        levels::AbstractVector = [],
         )
     result = ImmutableDataFrame2DecisionTreeTransformer(
         featurenames,
@@ -79,6 +75,14 @@ function fit!(
         kwargs...
         )
     return transform(transformer, featuresdf, labelsdf)
+end
+
+function predict(
+        transformer::ImmutableDataFrame2DecisionTreeTransformer,
+        featuresdf::DataFrames.AbstractDataFrame;
+        kwargs...
+        )
+    return transform(transformer, featuresdf)
 end
 
 function predict_proba(

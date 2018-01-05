@@ -9,7 +9,9 @@ import StatsBase
 
 # Import Boston housing data
 df = CSV.read(
-    GZip.gzopen(joinpath(Pkg.dir("RDatasets"),"data","MASS","Boston.csv.gz")),
+    GZip.gzopen(
+        joinpath(Pkg.dir("RDatasets"),"data","MASS","Boston.csv.gz")
+        ),
     DataFrames.DataFrame,
     )
 
@@ -37,6 +39,7 @@ continuousfeaturenames = Symbol[
     :LStat,
     ]
 featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
+featurecontrasts = asb.featurecontrasts(df, featurenames)
 
 # Define labels
 labelname = :MedV
@@ -44,6 +47,9 @@ labelname = :MedV
 # Put the features and labels in separate dataframes
 featuresdf = df[featurenames]
 labelsdf = df[[labelname]]
+
+# View summary statistics for the label variable
+StatsBase.summarystats(labelsdf[labelname])
 
 # Split the data into training set (70%) and testing set (30%)
 trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
@@ -57,23 +63,23 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 ##############################################################################
 
 # Set up and train a linear regression
-linear = asb.binarylinearregression(
+linearregression = asb.linearregression(
     featurenames,
     labelname;
-    package = :GLM,
+    package = :GLMjl,
     intercept = true, # optional, defaults to true
     name = "Linear regression", # optional
     )
 asb.fit!(
-    linear,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    linearregression,
+    trainingfeaturesdf,
+    traininglabelsdf,
     )
 # View the coefficients, p values, etc. for the underlying linear regression
-asb.underlying(linear)
+asb.underlying(linearregression)
 # Evaluate the performance of the linear regression on the testing set
 asb.regressionmetrics(
-    linear,
+    linearregression,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -85,17 +91,16 @@ asb.regressionmetrics(
 randomforestregression = asb.randomforestregression(
     featurenames,
     labelname,
-    labellevels,
-    smotedtrainingfeaturesdf;
+    featurecontrasts;
     nsubfeatures = 2, # number of subfeatures; defaults to 2
     ntrees = 20, # number of trees; defaults to 10
-    package = :DecisionTree,
+    package = :DecisionTreejl,
     name = "Random forest" # optional
     )
 asb.fit!(
     randomforestregression,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    trainingfeaturesdf,
+    traininglabelsdf,
     )
 # Evaluate the performance of the random forest on the testing set
 asb.regressionmetrics(
@@ -107,48 +112,49 @@ asb.regressionmetrics(
 
 ##############################################################################
 
-# Set up and train a nu-SVM
-nusvmregression = asb.svmregressionregression(
+# Set up and train an epsilon-SVR
+epsilonsvmregression = asb.svmregression(
     featurenames,
     labelname,
-    labellevels,
-    smotedtrainingfeaturesdf;
-    package = :LIBSVM,
-    name = "nu-SVM",
+    featurecontrasts;
+    package = :LIBSVMjl,
+    svmtype = LIBSVM.EpsilonSVR,
+    name = "epsilon-SVM",
+    kernel = LIBSVM.Kernel.Linear,
     )
 asb.fit!(
-    nusvmregression,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    epsilonsvmregression,
+    trainingfeaturesdf,
+    traininglabelsdf,
     )
-# Evaluate the performance of the SVM on the testing set
+# Evaluate the performance of the epsilon-SVM on the testing set
 asb.regressionmetrics(
-    nusvmregression,
+    epsilonsvmregression,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
-    positiveclass,
     )
 
 ##############################################################################
 
-# Set up and train an epsilon-SVM
-epsilonsvmregression = asb.svmregressionregression(
+# Set up and train a nu-SVR
+nusvmregression = asb.svmregression(
     featurenames,
     labelname,
-    labellevels,
-    smotedtrainingfeaturesdf;
-    package = :LIBSVM,
-    name = "epsilon-SVM",
+    featurecontrasts;
+    package = :LIBSVMjl,
+    svmtype = LIBSVM.NuSVR,
+    name = "nu-SVM",
+    kernel = LIBSVM.Kernel.Linear,
     )
 asb.fit!(
-    epsilonsvmregression,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    nusvmregression,
+    trainingfeaturesdf,
+    traininglabelsdf,
     )
-# Evaluate the performance of the epsilon-SVM on the testing set
+# Evaluate the performance of the SVM on the testing set
 asb.regressionmetrics(
-    svmregression,
+    nusvmregression,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -176,9 +182,11 @@ function knetmlp_loss(
         L1::Real = Cfloat(0),
         L2::Real = Cfloat(0),
         )
+    # println("size(ytrue): ", size(ytrue))
+    # println("size(predict(modelweights, x))", size(predict(modelweights, x)))
     loss = mean(
         abs2,
-        ytrue - predict(modelweights, x)
+        ytrue - predict(modelweights, x),
         )
     if L1 !== 0
         loss += L1 * sum(sum(abs, w_i) for w_i in modelweights[1:2:end])
@@ -188,16 +196,17 @@ function knetmlp_loss(
     end
     return loss
 end
-knet_losshyperparameters = Dict()
-knet_losshyperparameters[:L1] = Cfloat(0.00001)
-knet_losshyperparameters[:L2] = Cfloat(0.00001)
-knet_optimizationalgorithm = :Momentum
-knet_optimizerhyperparameters = Dict()
-knet_mlpbatchsize = 48
+knetmlp_losshyperparameters = Dict()
+knetmlp_losshyperparameters[:L1] = Cfloat(0.00001)
+knetmlp_losshyperparameters[:L2] = Cfloat(0.00001)
+knetmlp_optimizationalgorithm = :Momentum
+knetmlp_optimizerhyperparameters = Dict()
+knetmlp_batchsize = 48
+knetmlp_maxepochs = 1_000
 knetmlp_modelweights = Any[
-    # input layer has 9 features
+    # input layer has featurecontrasts.numarrayfeatures features
     # first hidden layer (64 neurons):
-    Cfloat.(0.1f0*randn(Cfloat,64,9)), # weights
+    Cfloat.(0.1f0*randn(Cfloat,64,featurecontrasts.numarrayfeatures)),#weights
     Cfloat.(zeros(Cfloat,64,1)), # biases
     # second hidden layer (32 neurons):
     Cfloat.(0.1f0*randn(Cfloat,32,64)), # weights
@@ -209,22 +218,23 @@ knetmlp_modelweights = Any[
 knetmlp = asb.knetregression(
     featurenames,
     labelname,
-    smotedtrainingfeaturesdf;
+    featurecontrasts;
+    package = :Knetjl,
     name = "Knet MLP",
     predict = knetmlp_predict,
     loss = knetmlp_loss,
-    losshyperparameters = knet_losshyperparameters,
-    optimizationalgorithm = knet_optimizationalgorithm,
-    optimizerhyperparameters = knet_optimizerhyperparameters,
-    batchsize = knet_mlpbatchsize,
+    losshyperparameters = knetmlp_losshyperparameters,
+    optimizationalgorithm = knetmlp_optimizationalgorithm,
+    optimizerhyperparameters = knetmlp_optimizerhyperparameters,
+    batchsize = knetmlp_batchsize,
     modelweights = knetmlp_modelweights,
+    maxepochs = knetmlp_maxepochs,
+    printlosseverynepochs = 1, # if 0, will not print at all
     )
 asb.fit!(
     knetmlp,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf;
-    maxepochs = 2_000,
-    printlosseverynepochs = 1, # if 0, will not print at all
+    trainingfeaturesdf,
+    traininglabelsdf,
     )
 knetmlp_learningcurve_lossvsepoch = asb.plotlearningcurve(
     knetmlp,
@@ -254,8 +264,8 @@ asb.regressionmetrics(
 allmodels = [
     linear,
     randomforestregression,
-    nusvmregression,
     epsilonsvmregression,
+    nusvmregression,
     knetmlp,
     ]
 showall(asb.regressionmetrics(
