@@ -154,7 +154,7 @@ function singlelabelbinarylogisticclassifier(
         intercept::Bool = true,
         name::AbstractString = "",
         )
-    if package == :GLM
+    if package == :GLMjl
         result =_singlelabelbinarylogisticclassifier_GLM(
             featurenames,
             singlelabelname,

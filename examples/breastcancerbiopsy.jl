@@ -1,3 +1,5 @@
+srand(999)
+
 import AluthgeSinhaBase
 const asb = AluthgeSinhaBase
 import DataFrames
