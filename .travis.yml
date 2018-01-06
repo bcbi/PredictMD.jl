@@ -43,6 +43,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install pdf2svg; fi
 
 before_script:
+  - julia -e 'Pkg.update()'
   - julia -e 'Pkg.clone("https://github.com/bcbi/AUC.jl.git")'
   - julia -e 'Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl.git")'
   - julia -e 'Pkg.clone("https://github.com/johnmyleswhite/RDatasets.jl")'
