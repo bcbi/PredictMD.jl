@@ -19,6 +19,7 @@ MLBase 0.7.0
 MLDataPattern 0.3.0
 MLDataUtils 0.2.0
 MLLabelUtils 0.2.0
+NNlib 0.2.1
 PGFPlots 2.2.2
 PenaltyFunctions 0.0.2
 RData
