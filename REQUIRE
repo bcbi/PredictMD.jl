@@ -5,6 +5,7 @@ CSV 0.2.0
 ClassImbalance
 DataFrames 0.11.3
 DecisionTree 0.6.5
+Flux 0.4.0
 GLM 0.10.1
 GZip 0.3.0
 Knet 0.9.0
