@@ -12,6 +12,7 @@ LIBLINEAR 0.3.0
 LIBSVM 0.1.1
 LaTeXStrings 0.3.0
 LearnBase 0.1.6
+LearningStrategies 0.2.0
 MLBase 0.7.0
 PGFPlots 2.2.2
 RData
