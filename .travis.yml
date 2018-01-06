@@ -31,8 +31,6 @@ addons:
 before_install:
   # update homebrew
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
-  # install gfortran
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gfortran; fi
   # install mactex
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install basictex; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH=/Library/TeX/texbin:"$PATH"; fi
