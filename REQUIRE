@@ -11,6 +11,7 @@ Distributions 0.15.0
 Flux 0.4.0
 ForwardDiff 0.7.0
 GLM 0.10.1
+GLMNet 0.3.0
 GZip 0.3.0
 Knet 0.9.0
 LIBLINEAR 0.3.0
