@@ -87,6 +87,7 @@ julia> Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git")
 #### Step 6: Checkout the master branch of AluthgeSinhaBase, which gives you the latest stable version:
 ```julia
 julia> Pkg.checkout("AluthgeSinhaBase", "master")
+julia> Pkg.update()
 ```
 
 #### Step 7: Run the test suite:
