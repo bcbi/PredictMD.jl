@@ -17,7 +17,7 @@ RData
 RDatasets
 ScikitLearnBase 0.3.0
 StatsBase 0.19.4
-StatsFuns
+StatsFuns 0.5.0
 StatsModels
 TikzPictures
 ValueHistories
