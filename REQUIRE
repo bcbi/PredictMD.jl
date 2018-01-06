@@ -26,7 +26,7 @@ PGFPlots 2.2.2
 RData
 RDatasets
 #Reinforce 0.0.1
-#ReverseDiff 0.2.0
+ReverseDiff 0.2.0
 #ReverseDiffSource 0.3.0
 ScikitLearnBase 0.3.0
 StatsBase 0.19.4
