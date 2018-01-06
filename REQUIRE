@@ -11,7 +11,7 @@ Knet 0.9.0
 LIBLINEAR 0.3.0
 LIBSVM 0.1.1
 LaTeXStrings 0.3.0
-MLBase
+MLBase 0.7.0
 PGFPlots
 RData
 RDatasets
