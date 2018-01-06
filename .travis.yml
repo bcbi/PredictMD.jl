@@ -44,12 +44,9 @@ before_install:
 
 before_script:
   - julia -e 'Pkg.update()'
-  - julia -e 'Pkg.add("RDatasets")'
-  - julia -e 'Pkg.status("RDatasets")'
-  - julia -e 'Pkg.checkout("RDatasets", "master")'
-  - julia -e 'Pkg.status("RDatasets")'
-  - julia -e 'Pkg.clone("https://github.com/bcbi/AUC.jl.git")'
-  - julia -e 'Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl.git")'
+  - julia -e 'Pkg.clone("https://github.com/dilumaluthge/AUC.jl")'
+  - julia -e 'Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl")'
+  - julia -e 'Pkg.clone("https://github.com/dilumaluthge/RDatasets.jl")'
 
 after_success:
   # push coverage results to Coveralls
