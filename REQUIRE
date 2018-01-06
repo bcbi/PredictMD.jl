@@ -21,6 +21,7 @@ PGFPlots 2.2.2
 PenaltyFunctions 0.0.2
 RData
 RDatasets
+Reinforce 0.0.1
 ScikitLearnBase 0.3.0
 StatsBase 0.19.4
 StatsFuns 0.5.0
