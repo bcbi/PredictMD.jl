@@ -15,7 +15,7 @@ MLBase 0.7.0
 PGFPlots 2.2.2
 RData
 RDatasets
-ScikitLearnBase
+ScikitLearnBase 0.3.0
 StatsBase
 StatsFuns
 StatsModels
