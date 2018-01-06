@@ -72,7 +72,7 @@ If you receive an error (e.g. "command not found"), see the [pdf2svg](#pdf2svg) 
 julia> Pkg.update()
 ```
 
-#### Step 4: Install unregistered dependencies:
+#### Step 4: There are three dependencies that need to be installed manually:
 ```julia
 julia> Pkg.clone("https://github.com/dilumaluthge/AUC.jl")
 julia> Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl")
