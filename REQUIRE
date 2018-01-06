@@ -5,29 +5,29 @@ CSV 0.2.0
 ClassImbalance
 DataFrames 0.11.3
 DecisionTree 0.6.5
-Flux 0.4.0
-ForwardDiff 0.7.0
+#Flux 0.4.0
+#ForwardDiff 0.7.0
 GLM 0.10.1
 GZip 0.3.0
 Knet 0.9.0
 LIBLINEAR 0.3.0
 LIBSVM 0.1.1
 LaTeXStrings 0.3.0
-LearnBase 0.1.6
-LearningStrategies 0.2.0
-LossFunctions 0.2.0
+#LearnBase 0.1.6
+#LearningStrategies 0.2.0
+#LossFunctions 0.2.0
 MLBase 0.7.0
-MLDataPattern 0.3.0
-MLDataUtils 0.2.0
-MLLabelUtils 0.2.0
-NNlib 0.2.1
+#MLDataPattern 0.3.0
+#MLDataUtils 0.2.0
+#MLLabelUtils 0.2.0
+#NNlib 0.2.1
 PGFPlots 2.2.2
-PenaltyFunctions 0.0.2
+#PenaltyFunctions 0.0.2
 RData
 RDatasets
-Reinforce 0.0.1
-ReverseDiff 0.2.0
-ReverseDiffSource 0.3.0
+#Reinforce 0.0.1
+#ReverseDiff 0.2.0
+#ReverseDiffSource 0.3.0
 ScikitLearnBase 0.3.0
 StatsBase 0.19.4
 StatsFuns 0.5.0
