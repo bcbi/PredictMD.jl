@@ -12,7 +12,7 @@ LIBLINEAR 0.3.0
 LIBSVM 0.1.1
 LaTeXStrings 0.3.0
 MLBase 0.7.0
-PGFPlots
+PGFPlots 2.2.2
 RData
 RDatasets
 ScikitLearnBase
