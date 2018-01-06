@@ -1,7 +1,7 @@
 julia 0.6.2
 
 AUC
-CSV
+CSV 0.2.0
 ClassImbalance
 DataFrames
 DecisionTree
