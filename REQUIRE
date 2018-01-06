@@ -16,7 +16,7 @@ PGFPlots 2.2.2
 RData
 RDatasets
 ScikitLearnBase 0.3.0
-StatsBase
+StatsBase 0.19.4
 StatsFuns
 StatsModels
 TikzPictures
