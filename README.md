@@ -72,11 +72,11 @@ If you receive an error (e.g. "command not found"), see the [pdf2svg](#pdf2svg) 
 julia> Pkg.update()
 ```
 
-#### Step 4: Install unregistered dependencies:
+#### Step 4: There are three dependencies that need to be installed manually:
 ```julia
-julia> Pkg.clone("https://github.com/bcbi/AUC.jl.git")
+julia> Pkg.clone("https://github.com/dilumaluthge/AUC.jl")
 julia> Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl")
-julia> Pkg.clone("https://github.com/johnmyleswhite/RDatasets.jl")
+julia> Pkg.clone("https://github.com/dilumaluthge/RDatasets.jl")
 ```
 
 #### Step 5: Install AluthgeSinhaBase:
@@ -87,6 +87,7 @@ julia> Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git")
 #### Step 6: Checkout the master branch of AluthgeSinhaBase, which gives you the latest stable version:
 ```julia
 julia> Pkg.checkout("AluthgeSinhaBase", "master")
+julia> Pkg.update()
 ```
 
 #### Step 7: Run the test suite:

@@ -19,6 +19,7 @@ matrix:
 addons:
   apt:
     packages:
+    - gfortran
     - hdf5-tools
     - pdf2svg
     - pgf
@@ -41,11 +42,13 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install standalone; fi
   # install pdf2svg
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install pdf2svg; fi
+  - which -a gcc
 
 before_script:
-  - julia -e 'Pkg.clone("https://github.com/bcbi/AUC.jl.git")'
-  - julia -e 'Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl.git")'
-  - julia -e 'Pkg.clone("https://github.com/johnmyleswhite/RDatasets.jl")'
+  - julia -e 'Pkg.update()'
+  - julia -e 'Pkg.clone("https://github.com/dilumaluthge/AUC.jl")'
+  - julia -e 'Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl")'
+  - julia -e 'Pkg.clone("https://github.com/dilumaluthge/RDatasets.jl")'
 
 after_success:
   # push coverage results to Coveralls
