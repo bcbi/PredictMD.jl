@@ -74,9 +74,9 @@ julia> Pkg.update()
 
 #### Step 4: Install unregistered dependencies:
 ```julia
-julia> Pkg.clone("https://github.com/bcbi/AUC.jl.git")
+julia> Pkg.clone("https://github.com/dilumaluthge/AUC.jl")
 julia> Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl")
-julia> Pkg.clone("https://github.com/johnmyleswhite/RDatasets.jl")
+julia> Pkg.clone("https://github.com/dilumaluthge/RDatasets.jl")
 ```
 
 #### Step 5: Install AluthgeSinhaBase:
