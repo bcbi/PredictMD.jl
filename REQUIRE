@@ -13,6 +13,7 @@ ForwardDiff 0.7.0
 GLM 0.10.1
 GLMNet 0.3.0
 GZip 0.3.0
+HypothesisTests 0.6.0
 Knet 0.9.0
 LIBLINEAR 0.3.0
 LIBSVM 0.1.1
