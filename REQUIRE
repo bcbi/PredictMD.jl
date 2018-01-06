@@ -1,6 +1,7 @@
 julia 0.6.2
 
 AUC
+Lasso 0.1.0
 AutoGrad 0.0.10
 CSV 0.2.0
 ClassImbalance
