@@ -57,7 +57,7 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 
 ##############################################################################
 ##############################################################################
-### Section 2: SMOTE training data #######################################
+### Section 2: Apply the SMOTE algorithm to the training set #################
 ##############################################################################
 ##############################################################################
 
@@ -79,8 +79,8 @@ smotedtrainingfeaturesdf, smotedtraininglabelsdf = asb.smote(
     labelname;
     majorityclass = majorityclass,
     minorityclass = minorityclass,
-    pct_over = 100,
-    minority_to_majority_ratio = 1.0,
+    pct_over = 100, # how much to oversample the minority class
+    minority_to_majority_ratio = 1.0, # desired minority:majority ratio
     k = 5,
     )
 
@@ -106,7 +106,7 @@ logisticclassifier = asb.binarylogisticclassifier(
     labellevels;
     package = :GLMjl,
     intercept = true, # optional, defaults to true
-    name = "Logistic", # optional
+    name = "Logistic regression", # optional
     )
 
 # Train logistic classifier model on smoted training set
@@ -150,7 +150,7 @@ probitclassifier = asb.binaryprobitclassifier(
     labellevels;
     package = :GLMjl,
     intercept = true, # optional, defaults to true
-    name = "Probit", # optional
+    name = "Probit regression", # optional
     )
 
 # Train probit classifier model on smoted training set
@@ -193,8 +193,8 @@ randomforestclassifier = asb.randomforestclassifier(
     labelname,
     labellevels,
     featurecontrasts;
-    nsubfeatures = 2, # number of subfeatures; defaults to 2
-    ntrees = 20, # number of trees; defaults to 10
+    nsubfeatures = 4, # number of subfeatures; defaults to 2
+    ntrees = 200, # number of trees; defaults to 10
     package = :DecisionTreejl,
     name = "Random forest" # optional
     )
@@ -226,7 +226,6 @@ asb.binaryclassificationmetrics(
     sensitivity = 0.95,
     )
 
-
 ##############################################################################
 ## Support vector machine (C support vector classification) #################
 ##############################################################################
@@ -238,7 +237,7 @@ csvc_svmclassifier = asb.svmclassifier(
     labellevels,
     featurecontrasts; package = :LIBSVMjl,
     svmtype = LIBSVM.SVC,
-    name = "SVM",
+    name = "SVM (C-SVC)",
     verbose = true,
     )
 
@@ -280,7 +279,7 @@ nusvc_svmclassifier = asb.svmclassifier(
     labellevels,
     featurecontrasts; package = :LIBSVMjl,
     svmtype = LIBSVM.NuSVC,
-    name = "SVM",
+    name = "SVM (nu-SVC)",
     verbose = true,
     )
 
@@ -312,12 +311,11 @@ asb.binaryclassificationmetrics(
     )
 
 ##############################################################################
-## Multilayer perceptron (fully connected feedforward neural network) ########
+## Multilayer perceptron (i.e. fully connected feedforward neural network) ###
 ##############################################################################
 
-# Set up and train a multilayer perceptron (i.e. fully connected feedforward
-# neural network)
 
+# Define predict function
 function knetmlpclassifier_predict(
         w, # don't put a type annotation on this
         x0::AbstractArray;
@@ -337,6 +335,8 @@ function knetmlpclassifier_predict(
         return normalizedprobs
     end
 end
+
+# Define loss function
 function knetmlpclassifier_loss(
         predict::Function,
         modelweights, # don't put a type annotation on this
@@ -358,13 +358,28 @@ function knetmlpclassifier_loss(
     end
     return loss
 end
+
+# Define loss hyperparameters
 knetmlpclassifier_losshyperparameters = Dict()
 knetmlpclassifier_losshyperparameters[:L1] = Cfloat(0.00001)
 knetmlpclassifier_losshyperparameters[:L2] = Cfloat(0.00001)
+
+# Select optimization algorithm
 knetmlpclassifier_optimizationalgorithm = :Momentum
+
+# Set optimization hyperparameters
 knetmlpclassifier_optimizerhyperparameters = Dict()
-knetmlpclassifier_batchsize = 48
+
+# Set the minibatch size
+knetmlpclassifier_minibatchsize = 48
+
+# Set the max number of epochs. After training, look at the learning curve. If
+# it looks like the model has not yet converged, raise maxepochs. If it looks
+# like the loss has hit a plateau and you are worried about overfitting, lower
+# maxepochs.
 knetmlpclassifier_maxepochs = 500
+
+# Randomly initialize model weights
 knetmlpclassifier_modelweights = Any[
     # input layer has featurecontrasts.numarrayfeatures features
     # first hidden layer (64 neurons):
@@ -377,6 +392,8 @@ knetmlpclassifier_modelweights = Any[
     Cfloat.(0.1f0*randn(Cfloat,2,64)), # weights
     Cfloat.(zeros(Cfloat,2,1)), # biases
     ]
+
+# Set up multilayer perceptron model
 knetmlpclassifier = asb.knetclassifier(
     featurenames,
     labelname,
@@ -389,27 +406,32 @@ knetmlpclassifier = asb.knetclassifier(
     losshyperparameters = knetmlpclassifier_losshyperparameters,
     optimizationalgorithm = knetmlpclassifier_optimizationalgorithm,
     optimizerhyperparameters = knetmlpclassifier_optimizerhyperparameters,
-    batchsize = knetmlpclassifier_batchsize,
+    minibatchsize = knetmlpclassifier_minibatchsize,
     modelweights = knetmlpclassifier_modelweights,
     printlosseverynepochs = 50, # if 0, will not print at all
     maxepochs = knetmlpclassifier_maxepochs,
     )
+
+# Train multilayer perceptron model on training set
 asb.fit!(
     knetmlpclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
     )
+
+# Plot learning curve: loss vs. epoch
 knetmlpclassifier_learningcurve_lossvsepoch = asb.plotlearningcurve(
     knetmlpclassifier,
     :lossvsepoch;
-    window = 50,
     sampleevery = 1,
     )
 asb.open(knetmlpclassifier_learningcurve_lossvsepoch)
+
+# Plot learning curve: loss vs. iteration
 knetmlpclassifier_learningcurve_lossvsiteration = asb.plotlearningcurve(
     knetmlpclassifier,
     :lossvsiteration;
-    window = 50,
+    window = 32,
     sampleevery = 10,
     )
 asb.open(knetmlpclassifier_learningcurve_lossvsiteration)
@@ -519,24 +541,24 @@ showall(asb.binaryclassificationmetrics(
     ))
 
 # Plot receiver operating characteristic curves for all models on testing set.
-rocplot = asb.plotroccurves(
+rocplottesting = asb.plotroccurves(
     allmodels,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
     positiveclass,
     )
-asb.open(rocplot)
+asb.open(rocplottesting)
 
 # Plot precision-recall curves for all models on testing set.
-prplot = asb.plotprcurves(
+prplottesting = asb.plotprcurves(
     allmodels,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
     positiveclass,
     )
-asb.open(prplot)
+asb.open(prplottesting)
 
 ##############################################################################
 ##############################################################################
@@ -563,8 +585,8 @@ asb.predict_proba(csvc_svmclassifier,testingfeaturesdf,)
 asb.predict_proba(nusvc_svmclassifier,testingfeaturesdf,)
 asb.predict_proba(knetmlpclassifier,testingfeaturesdf,)
 
-# If we want to get the predicted classes instead of probabilities, we can use
-# the asb.predict() function to get the class predictions output by each of the
+# If we want to get predicted classes instead of probabilities, we can use the
+# asb.predict() function to get the class predictions output by each of the
 # classification models. For each sample, asb.predict() will select the class
 # with the highest probability. In the case of binary classification, this is
 # equivalent to using a threshold of 0.5.

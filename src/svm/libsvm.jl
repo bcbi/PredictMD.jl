@@ -224,11 +224,15 @@ function _singlelabelsvmclassifier_LIBSVM(
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         singlelabelname,
         )
+    predpackager = ImmutablePackageSingleLabelPredictionTransformer(
+        singlelabelname,
+        )
     finalpipeline = ImmutableSimpleLinearPipeline(
         [
             dftransformer,
             svmestimator,
             probapackager,
+            predpackager,
             ];
         name = name,
         )

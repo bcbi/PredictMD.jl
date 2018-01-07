@@ -71,7 +71,11 @@ function predict(
         predictionsvector = singlelabelprobabilitiestopredictions(
             probabilitiesassoc
             )
-        return predictionsvector
+        result = DataFrames.DataFrame()
+        labelname = estimator.formula.lhs
+        @assert(typeof(labelname) <: Symbol)
+        result[labelname] = predictionsvector
+        return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         glmpredictoutput = GLM.predict(
             estimator.underlyingglm,
@@ -134,6 +138,10 @@ function _singlelabelbinarylogisticclassifier_GLM(
         isclassificationmodel = true,
         isregressionmodel = false,
         )
+    predictlabelfixer = ImmutablePredictionsSingleLabelInt2StringTransformer(
+        0,
+        singlelabellevels,
+        )
     predprobalabelfixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
         0,
         singlelabellevels,
@@ -145,6 +153,7 @@ function _singlelabelbinarylogisticclassifier_GLM(
         [
             dftransformer,
             glmestimator,
+            predictlabelfixer,
             predprobalabelfixer,
             probapackager,
             ];
@@ -202,6 +211,10 @@ function _singlelabelbinaryprobitclassifier_GLM(
         isclassificationmodel = true,
         isregressionmodel = false,
         )
+    predictlabelfixer = ImmutablePredictionsSingleLabelInt2StringTransformer(
+        0,
+        singlelabellevels,
+        )
     predprobalabelfixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
         0,
         singlelabellevels,
@@ -213,6 +226,7 @@ function _singlelabelbinaryprobitclassifier_GLM(
         [
             dftransformer,
             glmestimator,
+            predictlabelfixer,
             predprobalabelfixer,
             probapackager,
             ];

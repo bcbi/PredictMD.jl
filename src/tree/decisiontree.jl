@@ -134,11 +134,15 @@ function _singlelabelrandomforestclassifier_DecisionTree(
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         singlelabelname,
         )
+    predpackager = ImmutablePackageSingleLabelPredictionTransformer(
+        singlelabelname,
+        )
     finalpipeline = ImmutableSimpleLinearPipeline(
         [
             dftransformer,
             randomforestestimator,
             probapackager,
+            predpackager,
             ];
         name = name,
         )

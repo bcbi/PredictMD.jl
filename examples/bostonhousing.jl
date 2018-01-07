@@ -109,7 +109,7 @@ asb.regressionmetrics(
 ##############################################################################
 
 # Set up random forest regression model
-randomforestregression = asb.randomforest(
+randomforestregression = asb.randomforestregression(
     featurenames,
     labelname,
     featurecontrasts;
@@ -142,18 +142,18 @@ asb.regressionmetrics(
 ## Support vector machine (epsilon support vector regression) ################
 ##############################################################################
 
-# Set up model
+# Set up epsilon-SVR model
 epsilonsvr_svmregression = asb.svmregression(
     featurenames,
     labelname,
     featurecontrasts;
     package = :LIBSVMjl,
     svmtype = LIBSVM.EpsilonSVR,
-    name = "epsilon-SVM",
+    name = "SVM (epsilon-SVR)",
     kernel = LIBSVM.Kernel.Linear,
     )
 
-# Train model on training set
+# Train epsilon-SVR model on training set
 asb.fit!(epsilonsvr_svmregression,trainingfeaturesdf,traininglabelsdf,)
 
 # Evaluate performance of epsilon-SVR on training set
@@ -166,7 +166,7 @@ asb.regressionmetrics(
 
 # Evaluate performance of epsilon-SVR on testing set
 asb.regressionmetrics(
-    epsilonsvr,
+    epsilonsvr_svmregression,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -176,18 +176,18 @@ asb.regressionmetrics(
 ## Support vector machine (epsilon support vector regression) ################
 ##############################################################################
 
-# Set up model
+# Set up nu-SVR model
 nusvr_svmregression = asb.svmregression(
     featurenames,
     labelname,
     featurecontrasts;
     package = :LIBSVMjl,
     svmtype = LIBSVM.NuSVR,
-    name = "nu-SVM",
+    name = "SVM (nu-SVR)",
     kernel = LIBSVM.Kernel.Linear,
     )
 
-# Train model
+# Train nu-SVR model
 asb.fit!(nusvr_svmregression,trainingfeaturesdf,traininglabelsdf,)
 
 # Evaluate performance of nu-SVR on training set
@@ -200,7 +200,7 @@ asb.regressionmetrics(
 
 # Evaluate performance of nu-SVR on testing set
 asb.regressionmetrics(
-    nusvr,
+    nusvr_svmregression,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -243,14 +243,25 @@ function knetmlp_loss(
     return loss
 end
 
-# Define hyperparameters
+# Define loss hyperparameters
 knetmlp_losshyperparameters = Dict()
 knetmlp_losshyperparameters[:L1] = Cfloat(0.00001)
 knetmlp_losshyperparameters[:L2] = Cfloat(0.00001)
+
+# Select optimization algorithm
 knetmlp_optimizationalgorithm = :Momentum
+
+# Set optimization hyperparameters
 knetmlp_optimizerhyperparameters = Dict()
-knetmlp_batchsize = 48
-knetmlp_maxepochs = 500 # you will definitely want to make this much bigger
+
+# Set the minibatch size
+knetmlp_minibatchsize = 48
+
+# Set the max number of epochs. After training, look at the learning curve. If
+# it looks like the model has not yet converged, raise maxepochs. If it looks
+# like the loss has hit a plateau and you are worried about overfitting, lower
+# maxepochs.
+knetmlp_maxepochs = 500
 
 # Randomly initialize model weights
 knetmlp_modelweights = Any[
@@ -263,7 +274,7 @@ knetmlp_modelweights = Any[
     Cfloat.(zeros(Cfloat,1,1)), # biases
     ]
 
-# Set up model
+# Set up multilayer perceptron model
 knetmlpregression = asb.knetregression(
     featurenames,
     labelname,
@@ -275,13 +286,13 @@ knetmlpregression = asb.knetregression(
     losshyperparameters = knetmlp_losshyperparameters,
     optimizationalgorithm = knetmlp_optimizationalgorithm,
     optimizerhyperparameters = knetmlp_optimizerhyperparameters,
-    batchsize = knetmlp_batchsize,
+    minibatchsize = knetmlp_minibatchsize,
     modelweights = knetmlp_modelweights,
     maxepochs = knetmlp_maxepochs,
     printlosseverynepochs = 50, # if 0, will not print at all
     )
 
-# Train model on training set
+# Train multilayer perceptron model on training set
 asb.fit!(knetmlpregression,trainingfeaturesdf,traininglabelsdf,)
 
 # Plot learning curve: loss vs. epoch
@@ -295,7 +306,7 @@ asb.open(knetmlp_learningcurve_lossvsepoch)
 
 # Plot learning curve: loss vs. iteration
 knetmlp_learningcurve_lossvsiteration = asb.plotlearningcurve(
-    knetmlp,
+    knetmlpregression,
     :lossvsiteration;
     window = 50,
     sampleevery = 10,
@@ -312,7 +323,7 @@ asb.regressionmetrics(
 
 # Evaluate performance of multilayer perceptron on testing set
 asb.regressionmetrics(
-    knetmlp,
+    knetmlpregression,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -328,7 +339,7 @@ allmodels = [
     linearregression,
     randomforestregression,
     epsilonsvr_svmregression,
-    nusvmregression,
+    nusvr_svmregression,
     knetmlpregression,
     ]
 
@@ -362,12 +373,12 @@ showall(asb.regressionmetrics(
 asb.predict(linearregression,trainingfeaturesdf,)
 asb.predict(randomforestregression,trainingfeaturesdf,)
 asb.predict(epsilonsvr_svmregression,trainingfeaturesdf,)
-asb.predict(nusvmregression,trainingfeaturesdf,)
+asb.predict(nusvr_svmregression,trainingfeaturesdf,)
 asb.predict(knetmlpregression,trainingfeaturesdf,)
 
 # Get real-valued predictions from each model for testing set
 asb.predict(linearregression,testingfeaturesdf,)
 asb.predict(randomforestregression,testingfeaturesdf,)
 asb.predict(epsilonsvr_svmregression,testingfeaturesdf,)
-asb.predict(nusvmregression,testingfeaturesdf,)
+asb.predict(nusvr_svmregression,testingfeaturesdf,)
 asb.predict(knetmlpregression,testingfeaturesdf,)
