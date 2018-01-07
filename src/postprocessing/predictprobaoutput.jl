@@ -24,6 +24,18 @@ function fit!(
     end
 end
 
+function predict(
+        transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer,
+        varargs...;
+        kwargs...
+        )
+    if length(varargs) == 1
+        return varargs[1]
+    else
+        return varargs
+    end
+end
+
 function predict_proba(
         transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer,
         singlelabelprobabilities::Associative;

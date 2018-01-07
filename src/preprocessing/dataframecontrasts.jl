@@ -1,6 +1,6 @@
 import DataFrames
 
-immutable ImmutableDataFrameFeatureContrasts <: AbstractContrastsObject
+immutable ImmutableDataFrameFeatureContrasts <: AbstractFeatureContrasts
     featurenames::T1 where T1 <: SymbolVector
     numdataframefeatures::T2 where T2 <: Integer
     featurecontrasts::T3 where T3 <: Associative

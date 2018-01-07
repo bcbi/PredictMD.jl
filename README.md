@@ -4,8 +4,9 @@
 | ---------------------------------- |
 | 1. [Build Status](#build-status)   |      
 | 2. [Installation](#installation)   |
-| 3. [LaTeX](#latex)                 |
-| 4. [pdf2svg](#pdf2svg)             |
+| 3. [Examples](#examples)           |
+| 4. [LaTeX](#latex)                 |
+| 5. [pdf2svg](#pdf2svg)             |
 
 ## Build Status
 
@@ -105,6 +106,14 @@ julia> Pkg.update()
 ```julia
 julia> Pkg.test("AluthgeSinhaBase")
 ```
+
+## Examples
+The `examples/` folder contains several files that illustrate the usage of AluthgeSinhaBase:
+
+| Filename | Problem type | Problem description | Dataset |
+| -------- | ------------ | ------------------- | ------- |
+| `examples/bostonhousing.jl` | Single label regression | Predict the median value of houses | [Boston housing dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/Boston.rst) |
+| `examples/breastcancerbiopsy.jl` | Single label binary classification | Classify a tumor as benign or malignant | [Wisconsin breast cancer biopsy dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/biopsy.rst) |
 
 ## LaTeX
 AluthgeSinhaBase requires LaTeX for generating plots. If LaTeX is not installed on your system, download and install a TeX distribution from the appropriate link below:

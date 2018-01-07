@@ -29,3 +29,15 @@ function predict(
     end
     return result
 end
+
+function predict_proba(
+        transformer::ImmutablePackageMultiLabelPredictionTransformer,
+        varargs...;
+        kwargs...
+        )
+    if length(varargs) == 1
+        return varargs[1]
+    else
+        return varargs
+    end
+end

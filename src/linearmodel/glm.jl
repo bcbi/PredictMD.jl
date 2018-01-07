@@ -64,7 +64,18 @@ function predict(
         featuresdf::DataFrames.AbstractDataFrame,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
-        error("predict is not defined for classification models")
+        probabilitiesassoc = predict_proba(
+            estimator,
+            featuresdf,
+            )
+        predictionsvector = singlelabelprobabilitiestopredictions(
+            probabilitiesassoc
+            )
+        result = DataFrames.DataFrame()
+        labelname = estimator.formula.lhs
+        @assert(typeof(labelname) <: Symbol)
+        result[labelname] = predictionsvector
+        return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         glmpredictoutput = GLM.predict(
             estimator.underlyingglm,
@@ -127,7 +138,11 @@ function _singlelabelbinarylogisticclassifier_GLM(
         isclassificationmodel = true,
         isregressionmodel = false,
         )
-    predprobafixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
+    predictlabelfixer = ImmutablePredictionsSingleLabelInt2StringTransformer(
+        0,
+        singlelabellevels,
+        )
+    predprobalabelfixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
         0,
         singlelabellevels,
         )
@@ -138,7 +153,8 @@ function _singlelabelbinarylogisticclassifier_GLM(
         [
             dftransformer,
             glmestimator,
-            predprobafixer,
+            predictlabelfixer,
+            predprobalabelfixer,
             probapackager,
             ];
         name = name,
@@ -195,7 +211,11 @@ function _singlelabelbinaryprobitclassifier_GLM(
         isclassificationmodel = true,
         isregressionmodel = false,
         )
-    predprobafixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
+    predictlabelfixer = ImmutablePredictionsSingleLabelInt2StringTransformer(
+        0,
+        singlelabellevels,
+        )
+    predprobalabelfixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
         0,
         singlelabellevels,
         )
@@ -206,7 +226,8 @@ function _singlelabelbinaryprobitclassifier_GLM(
         [
             dftransformer,
             glmestimator,
-            predprobafixer,
+            predictlabelfixer,
+            predprobalabelfixer,
             probapackager,
             ];
         name = name,

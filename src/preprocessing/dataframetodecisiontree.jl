@@ -4,14 +4,14 @@ import StatsModels
 immutable ImmutableDataFrame2DecisionTreeTransformer <:
         AbstractPrimitiveObject
     featurenames::T1 where T1 <: AbstractVector
-    dffeaturecontrasts::T2 where T2 <: ImmutableDataFrameFeatureContrasts
+    dffeaturecontrasts::T2 where T2 <: AbstractContrasts
     singlelabelname::T3 where T3 <: Symbol
     levels::T4 where T4 <: AbstractVector
 end
 
 function ImmutableDataFrame2DecisionTreeTransformer(
         featurenames::AbstractVector,
-        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts,
+        dffeaturecontrasts::AbstractContrasts,
         singlelabelname::Symbol;
         levels::AbstractVector = [],
         )

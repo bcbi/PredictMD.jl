@@ -18,7 +18,7 @@ end
 
 function ImmutableDataFrame2ClassificationKnetTransformer(
         featurenames::AbstractVector,
-        dffeaturecontrasts::AbstractContrastsObject,
+        dffeaturecontrasts::AbstractContrasts,
         labelnames::SymbolVector,
         labellevels::Associative,
         index::Integer;
@@ -142,7 +142,7 @@ end
 struct ImmutableDataFrame2RegressionKnetTransformer <:
         AbstractPrimitiveObject
     featurenames::T1 where T1 <: AbstractVector
-    dffeaturecontrasts::T2 where T2 <: AbstractContrastsObject
+    dffeaturecontrasts::T2 where T2 <: AbstractContrasts
     labelnames::T3 where T3 <: SymbolVector
     transposefeatures::T4 where T4 <: Bool
     transposelabels::T5 where T5 <: Bool
@@ -154,7 +154,7 @@ end
 
 function ImmutableDataFrame2RegressionKnetTransformer(
         featurenames::AbstractVector,
-        dffeaturecontrasts::AbstractContrastsObject,
+        dffeaturecontrasts::AbstractContrasts,
         labelnames::SymbolVector;
         transposefeatures::Bool = true,
         transposelabels::Bool = false,

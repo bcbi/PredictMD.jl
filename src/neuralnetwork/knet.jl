@@ -16,7 +16,7 @@ mutable struct MutableKnetjlNeuralNetworkEstimator <: AbstractPrimitiveObject
     losshyperparameters::T5 where T5 <: Associative
     optimizationalgorithm::T6 where T6 <: Symbol
     optimizerhyperparameters::T7 where T7 <: Associative
-    batchsize::T8 where T8 <: Integer
+    minibatchsize::T8 where T8 <: Integer
     maxepochs::T9 where T9 <: Integer
 
     # parameters (learned from data):
@@ -37,7 +37,7 @@ mutable struct MutableKnetjlNeuralNetworkEstimator <: AbstractPrimitiveObject
             losshyperparameters::Associative = Dict(),
             optimizationalgorithm::Symbol = :nothing,
             optimizerhyperparameters::Associative = Dict(),
-            batchsize::Integer = 0,
+            minibatchsize::Integer = 0,
             modelweights::AbstractArray = [],
             isclassificationmodel::Bool = false,
             isregressionmodel::Bool = false,
@@ -69,7 +69,7 @@ mutable struct MutableKnetjlNeuralNetworkEstimator <: AbstractPrimitiveObject
             losshyperparameters,
             optimizationalgorithm,
             optimizerhyperparameters,
-            batchsize,
+            minibatchsize,
             maxepochs,
             modelweights,
             modelweightoptimizers,
@@ -108,7 +108,7 @@ function fit!(
     trainingdata = Knet.minibatch(
         featuresarray,
         labelsarray,
-        estimator.batchsize,
+        estimator.minibatchsize,
         )
     lossgradient = Knet.grad(
         estimator.loss,
@@ -204,7 +204,14 @@ function predict(
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel
-        error("predict is not defined for classification models")
+        probabilitiesassoc = predict_proba(
+            estimator,
+            featuresarray,
+            )
+        predictionsvector = singlelabelprobabilitiestopredictions(
+            probabilitiesassoc
+            )
+        return predictionsvector
     elseif estimator.isregressionmodel
         output = estimator.predict(
             estimator.modelweights,
@@ -248,14 +255,14 @@ function _singlelabelknetclassifier_Knet(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector,
-        dffeaturecontrasts::AbstractContrastsObject;
+        dffeaturecontrasts::AbstractContrasts;
         name::AbstractString = "",
         predict::Function = _emptyfunction,
         loss::Function =_emptyfunction,
         losshyperparameters::Associative = Dict(),
         optimizationalgorithm::Symbol = :nothing,
         optimizerhyperparameters::Associative = Dict(),
-        batchsize::Integer = 0,
+        minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
         printlosseverynepochs::Integer = 0,
         maxepochs::Integer = 0,
@@ -283,26 +290,35 @@ function _singlelabelknetclassifier_Knet(
         losshyperparameters = losshyperparameters,
         optimizationalgorithm = optimizationalgorithm,
         optimizerhyperparameters = optimizerhyperparameters,
-        batchsize = batchsize,
+        minibatchsize = minibatchsize,
         modelweights = modelweights,
         isclassificationmodel = true,
         isregressionmodel = false,
         printlosseverynepochs = printlosseverynepochs,
         maxepochs = maxepochs,
         )
-    predprobafixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
+    predprobalabelfixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
+        1,
+        singlelabellevels
+        )
+    predictlabelfixer = ImmutablePredictionsSingleLabelInt2StringTransformer(
         1,
         singlelabellevels
         )
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         singlelabelname,
         )
+    predpackager = ImmutablePackageSingleLabelPredictionTransformer(
+        singlelabelname,
+        )
     finalpipeline = ImmutableSimpleLinearPipeline(
         [
             dftransformer,
             knetestimator,
-            predprobafixer,
+            predprobalabelfixer,
+            predictlabelfixer,
             probapackager,
+            predpackager
             ];
         name = name,
         )
@@ -313,7 +329,7 @@ function singlelabelknetclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector,
-        dffeaturecontrasts::AbstractContrastsObject;
+        dffeaturecontrasts::AbstractContrasts;
         package::Symbol = :none,
         name::AbstractString = "",
         predict::Function = _emptyfunction,
@@ -321,7 +337,7 @@ function singlelabelknetclassifier(
         losshyperparameters::Associative = Dict(),
         optimizationalgorithm::Symbol = :nothing,
         optimizerhyperparameters::Associative = Dict(),
-        batchsize::Integer = 0,
+        minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
         printlosseverynepochs::Integer = 0,
         maxepochs::Integer = 0,
@@ -338,7 +354,7 @@ function singlelabelknetclassifier(
             losshyperparameters = losshyperparameters,
             optimizationalgorithm = optimizationalgorithm,
             optimizerhyperparameters = optimizerhyperparameters,
-            batchsize = batchsize,
+            minibatchsize = minibatchsize,
             modelweights = modelweights,
             printlosseverynepochs = printlosseverynepochs,
             maxepochs = maxepochs,
@@ -354,14 +370,14 @@ const knetclassifier = singlelabelknetclassifier
 function _singlelabelknetregression_Knet(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        dffeaturecontrasts::AbstractContrastsObject;
+        dffeaturecontrasts::AbstractContrasts;
         name::AbstractString = "",
         predict::Function = _emptyfunction,
         loss::Function =_emptyfunction,
         losshyperparameters::Associative = Dict(),
         optimizationalgorithm::Symbol = :nothing,
         optimizerhyperparameters::Associative = Dict(),
-        batchsize::Integer = 0,
+        minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
         printlosseverynepochs::Integer = 0,
         maxepochs::Integer = 0,
@@ -385,7 +401,7 @@ function _singlelabelknetregression_Knet(
         losshyperparameters = losshyperparameters,
         optimizationalgorithm = optimizationalgorithm,
         optimizerhyperparameters = optimizerhyperparameters,
-        batchsize = batchsize,
+        minibatchsize = minibatchsize,
         modelweights = modelweights,
         isclassificationmodel = false,
         isregressionmodel = true,
@@ -409,7 +425,7 @@ end
 function singlelabelknetregression(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        dffeaturecontrasts::AbstractContrastsObject;
+        dffeaturecontrasts::AbstractContrasts;
         package::Symbol = :none,
         name::AbstractString = "",
         predict::Function = _emptyfunction,
@@ -417,7 +433,7 @@ function singlelabelknetregression(
         losshyperparameters::Associative = Dict(),
         optimizationalgorithm::Symbol = :nothing,
         optimizerhyperparameters::Associative = Dict(),
-        batchsize::Integer = 0,
+        minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
         printlosseverynepochs::Integer = 0,
         maxepochs::Integer = 0,
@@ -433,7 +449,7 @@ function singlelabelknetregression(
             losshyperparameters = losshyperparameters,
             optimizationalgorithm = optimizationalgorithm,
             optimizerhyperparameters = optimizerhyperparameters,
-            batchsize = batchsize,
+            minibatchsize = minibatchsize,
             modelweights = modelweights,
             printlosseverynepochs = printlosseverynepochs,
             maxepochs = maxepochs,

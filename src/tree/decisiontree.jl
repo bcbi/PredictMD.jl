@@ -66,7 +66,14 @@ function predict(
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
-        error("predict is not defined for classification models")
+        probabilitiesassoc = predict_proba(
+            estimator,
+            featuresarray,
+            )
+        predictionsvector = singlelabelprobabilitiestopredictions(
+            probabilitiesassoc
+            )
+        return predictionsvector
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         output = DecisionTree.apply_forest(
             estimator.underlyingrandomforest,
@@ -127,11 +134,15 @@ function _singlelabelrandomforestclassifier_DecisionTree(
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         singlelabelname,
         )
+    predpackager = ImmutablePackageSingleLabelPredictionTransformer(
+        singlelabelname,
+        )
     finalpipeline = ImmutableSimpleLinearPipeline(
         [
             dftransformer,
             randomforestestimator,
             probapackager,
+            predpackager,
             ];
         name = name,
         )

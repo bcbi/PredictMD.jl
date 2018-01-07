@@ -42,6 +42,15 @@ function fit!(
     return transform(transformer, featuresdf, labelsdf)
 end
 
+function predict(
+        transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
+        featuresdf::DataFrames.AbstractDataFrame;
+        kwargs...
+        )
+    return transform(transformer, featuresdf)
+end
+
+
 function predict_proba(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
