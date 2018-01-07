@@ -435,7 +435,6 @@ knetmlpclassifier_learningcurve_lossvsiteration = asb.plotlearningcurve(
     )
 asb.open(knetmlpclassifier_learningcurve_lossvsiteration)
 
-
 # Evaluate performance of multilayer perceptron on smoted training set
 asb.binaryclassificationmetrics(
     knetmlpclassifier,
