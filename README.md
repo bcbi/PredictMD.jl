@@ -4,8 +4,9 @@
 | ---------------------------------- |
 | 1. [Build Status](#build-status)   |      
 | 2. [Installation](#installation)   |
-| 3. [LaTeX](#latex)                 |
-| 4. [pdf2svg](#pdf2svg)             |
+| 3. [Examples](#examples)           |
+| 4. [LaTeX](#latex)                 |
+| 5. [pdf2svg](#pdf2svg)             |
 
 ## Build Status
 
@@ -33,7 +34,18 @@
 
 ## Installation
 
-#### Step 1: Make sure that LaTex is installed on your system:
+#### Step 1: Make sure that your version of Julia is at least 0.6.2
+Open a shell and run the following command:
+```bash
+julia -v
+```
+You should see an output message that looks something like this:
+```
+julia version 0.6.2
+```
+If you receive an error (e.g. "command not found"), or if your version of Julia is less than 0.6.2, go to [https://julialang.org/downloads/](https://julialang.org/downloads/) and follow the instructions to install an appropriately recent version of Julia.
+
+#### Step 2: Make sure that LaTex is installed on your system:
 Open a shell and run the following command:
 ```bash
 latex -v
@@ -55,7 +67,7 @@ Compiled with xpdf version 3.04
 ```
 If you receive an error (e.g. "command not found"), see the [LaTeX](#latex) section for instructions on installing LaTeX.
 
-#### Step 2: Make sure that pdf2svg is installed on your system:
+#### Step 3: Make sure that pdf2svg is installed on your system:
 Open a shell and run the following command:
 ```bash
 pdf2svg
@@ -67,32 +79,41 @@ Usage: pdf2svg <in file.pdf> <out file.svg> [<page no>]
 ```
 If you receive an error (e.g. "command not found"), see the [pdf2svg](#pdf2svg) section for instructions on installing pdf2svg.
 
-#### Step 3: Update your Julia package directory:
+#### Step 4: Update your Julia package directory:
 ```julia
 julia> Pkg.update()
 ```
 
-#### Step 4: Install unregistered dependencies:
+#### Step 5: There are three dependencies that need to be installed manually:
 ```julia
-julia> Pkg.clone("https://github.com/bcbi/AUC.jl.git")
+julia> Pkg.clone("https://github.com/dilumaluthge/AUC.jl")
 julia> Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl")
-julia> Pkg.clone("https://github.com/johnmyleswhite/RDatasets.jl")
+julia> Pkg.clone("https://github.com/dilumaluthge/RDatasets.jl")
 ```
 
-#### Step 5: Install AluthgeSinhaBase:
+#### Step 6: Install AluthgeSinhaBase:
 ```julia
 julia> Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git")
 ```
 
-#### Step 6: Checkout the master branch of AluthgeSinhaBase, which gives you the latest stable version:
+#### Step 7: Checkout the master branch of AluthgeSinhaBase, which gives you the latest stable version:
 ```julia
 julia> Pkg.checkout("AluthgeSinhaBase", "master")
+julia> Pkg.update()
 ```
 
-#### Step 7: Run the test suite:
+#### Step 8: Run the test suite:
 ```julia
 julia> Pkg.test("AluthgeSinhaBase")
 ```
+
+## Examples
+The `examples/` folder contains several files that illustrate the usage of AluthgeSinhaBase:
+
+| Filename | Problem type | Problem description | Dataset |
+| -------- | ------------ | ------------------- | ------- |
+| `examples/bostonhousing.jl` | Single label regression | Predict the median value of houses | [Boston housing dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/Boston.rst) |
+| `examples/breastcancerbiopsy.jl` | Single label binary classification | Classify a tumor as benign or malignant | [Wisconsin breast cancer biopsy dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/biopsy.rst) |
 
 ## LaTeX
 AluthgeSinhaBase requires LaTeX for generating plots. If LaTeX is not installed on your system, download and install a TeX distribution from the appropriate link below:

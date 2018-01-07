@@ -18,7 +18,7 @@ function roccurve(
 end
 
 function roccurve(
-        allrocnums::VectorOfMLBaseROCNums,
+        allrocnums::ROCNumsVector,
         allthresholds::StatsBase.RealVector,
         )
     allfpr = [fpr(x) for x in allrocnums]

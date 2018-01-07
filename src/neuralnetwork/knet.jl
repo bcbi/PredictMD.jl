@@ -2,43 +2,34 @@ import Knet
 import StatsFuns
 import ValueHistories
 
-abstract type AbstractASBKnetjlKnetClassifier <:
-        AbstractClassifier
-end
-
-abstract type AbstractASBKnetjlKnetSingleLabelClassifier <:
-        AbstractClassifier
-end
-
-abstract type AbstractASBKnetjlKnetRegression <:
-        AbstractRegression
-end
-
 function _emptyfunction()
 end
 
-mutable struct ASBKnetjlKnetSingleLabelClassifier <:
-        AbstractASBKnetjlKnetSingleLabelClassifier
+mutable struct MutableKnetjlNeuralNetworkEstimator <: AbstractPrimitiveObject
     name::T1 where T1 <: AbstractString
+    isclassificationmodel::T2 where T2 <: Bool
+    isregressionmodel::T2 where T2 <: Bool
 
     # hyperparameters (not learned from data):
-    predict::T2 where T2 <: Function
-    loss::T3 where T3 <: Function
-    losshyperparameters::T4 where T4 <: Associative
-    optimizationalgorithm::T5 where T5 <: Symbol
-    optimizerhyperparameters::T6 where T6 <: Associative
-    batchsize::T7 where T7 <: Integer
+    predict::T3 where T3 <: Function
+    loss::T4 where T4 <: Function
+    losshyperparameters::T5 where T5 <: Associative
+    optimizationalgorithm::T6 where T6 <: Symbol
+    optimizerhyperparameters::T7 where T7 <: Associative
+    minibatchsize::T8 where T8 <: Integer
+    maxepochs::T9 where T9 <: Integer
 
     # parameters (learned from data):
-    modelweights::T8 where T8 <: AbstractArray
-    modelweightoptimizers::T9 where T9 <: Any
+    modelweights::T10 where T10 <: AbstractArray
+    modelweightoptimizers::T11 where T11
 
     # learning state
-    lastepoch::T10 where T10 <: Integer
-    lastiteration::T11 where T11 <: Integer
-    multivaluehistory::T12 where T12 <: ValueHistories.MultivalueHistory
+    lastepoch::T12 where T12 <: Integer
+    lastiteration::T13 where T13 <: Integer
+    valuehistories::T14 where T14 <: ValueHistories.MultivalueHistory
+    printlosseverynepochs::T15 where T15 <: Integer
 
-    function ASBKnetjlKnetSingleLabelClassifier(
+    function MutableKnetjlNeuralNetworkEstimator(
             ;
             name::AbstractString = "",
             predict::Function = _emptyfunction,
@@ -46,29 +37,13 @@ mutable struct ASBKnetjlKnetSingleLabelClassifier <:
             losshyperparameters::Associative = Dict(),
             optimizationalgorithm::Symbol = :nothing,
             optimizerhyperparameters::Associative = Dict(),
-            batchsize::Integer = 0,
+            minibatchsize::Integer = 0,
             modelweights::AbstractArray = [],
+            isclassificationmodel::Bool = false,
+            isregressionmodel::Bool = false,
+            printlosseverynepochs::Integer = 0,
+            maxepochs::Integer = 0,
             )
-        if predict == _emptyfunction
-            msg = string(
-                "you need to specify a prediction function of the form ",
-                "predict = predict(modelweights, x; training)"
-                )
-            error(msg)
-        end
-        if loss == _emptyfunction
-            msg = string(
-                "you need to specify a loss function of the form ",
-                "loss = loss(predict, modelweights, x, ygold)"
-                )
-            error(msg)
-        end
-        if !(batchsize > 0)
-            error("batchsize must be >0")
-        end
-        if length(modelweights) == 0
-            error("modelweights must be non-empty")
-        end
         optimizersymbol2type = Dict()
         optimizersymbol2type[:Sgd] = Knet.Sgd
         optimizersymbol2type[:Momentum] = Knet.Momentum
@@ -77,75 +52,87 @@ mutable struct ASBKnetjlKnetSingleLabelClassifier <:
         optimizersymbol2type[:Adagrad] = Knet.Adagrad
         optimizersymbol2type[:Adadelta] = Knet.Adadelta
         optimizersymbol2type[:Adam] = Knet.Adam
-        if haskey(optimizersymbol2type, optimizationalgorithm)
-            modelweightoptimizers = Knet.optimizers(
-                modelweights,
-                optimizersymbol2type[optimizationalgorithm];
-                optimizerhyperparameters...
-                )
-        else
-            msg = string(
-                "optimizationalgorithm must be one of the following: ",
-                collect(keys(optimizersymbol2type)),
-                )
-            error(msg)
-        end
-
+        modelweightoptimizers = Knet.optimizers(
+            modelweights,
+            optimizersymbol2type[optimizationalgorithm];
+            optimizerhyperparameters...
+            )
         lastepoch = 0
         lastiteration = 0
-        multivaluehistory = ValueHistories.MVHistory()
+        valuehistories = ValueHistories.MVHistory()
         result = new(
             name,
+            isclassificationmodel,
+            isregressionmodel,
             predict,
             loss,
             losshyperparameters,
             optimizationalgorithm,
             optimizerhyperparameters,
-            batchsize,
+            minibatchsize,
+            maxepochs,
             modelweights,
             modelweightoptimizers,
             lastepoch,
             lastiteration,
-            multivaluehistory,
+            valuehistories,
+            printlosseverynepochs,
             )
         return result
     end
 end
 
-function underlying(x::AbstractASBKnetjlKnetSingleLabelClassifier)
+function underlying(x::MutableKnetjlNeuralNetworkEstimator)
     result = (predictfunction, modelweightsmodelweights)
     return result
 end
 
-function valuehistories(x::AbstractASBKnetjlKnetSingleLabelClassifier)
-    result = x.multivaluehistory
+function valuehistories(x::MutableKnetjlNeuralNetworkEstimator)
+    result = x.valuehistories
     return result
 end
 
 function fit!(
-        estimator::AbstractASBKnetjlKnetSingleLabelClassifier,
+        estimator::MutableKnetjlNeuralNetworkEstimator,
         featuresarray::AbstractArray,
-        labelsarray::AbstractVector;
-        maxepochs::Integer = 0,
-        printlosseverynepochs::Integer = 0,
-        io::IO = Base.STDOUT,
+        labelsarray::AbstractArray,
         )
-    if !(maxepochs > 0)
-        error("maxepochs must be >0")
-    end
     featuresarray = Cfloat.(featuresarray)
-    labelsarray = Int.(labelsarray)
+    if estimator.isclassificationmodel && !estimator.isregressionmodel
+        labelsarray = Int.(labelsarray)
+    elseif !estimator.isclassificationmodel && estimator.isregressionmodel
+        labelsarray = Cfloat.(labelsarray)
+    else
+        error("Could not figure out if model is classification or regression")
+    end
     trainingdata = Knet.minibatch(
         featuresarray,
         labelsarray,
-        estimator.batchsize,
+        estimator.minibatchsize,
         )
     lossgradient = Knet.grad(
         estimator.loss,
         2,
         )
-    info("Starting to train Knet model...")
-    while estimator.lastepoch < maxepochs
+    lossbeforetrainingstarts = estimator.loss(
+        estimator.predict,
+        estimator.modelweights,
+        featuresarray,
+        labelsarray;
+        estimator.losshyperparameters...
+        )
+    info(
+        "Loss before training starts: ",
+        lossbeforetrainingstarts,
+        )
+    info(
+        string(
+            "Starting to train Knet.jl model. Max epochs: ",
+            estimator.maxepochs,
+            ".",
+            )
+        )
+    while estimator.lastepoch < estimator.maxepochs
         for (x,y) in trainingdata
             grads = lossgradient(
                 estimator.predict,
@@ -168,7 +155,7 @@ function fit!(
                 estimator.losshyperparameters...
                 )
             ValueHistories.push!(
-                estimator.multivaluehistory,
+                estimator.valuehistories,
                 :lossatiteration,
                 estimator.lastiteration,
                 currentiterationloss,
@@ -176,7 +163,7 @@ function fit!(
         end # end for
         estimator.lastepoch += 1
         ValueHistories.push!(
-            estimator.multivaluehistory,
+            estimator.valuehistories,
             :epochatiteration,
             estimator.lastiteration,
             estimator.lastepoch,
@@ -189,15 +176,15 @@ function fit!(
             estimator.losshyperparameters...
             )
         ValueHistories.push!(
-            estimator.multivaluehistory,
+            estimator.valuehistories,
             :lossatepoch,
             estimator.lastepoch,
             currentepochloss,
             )
-        if (printlosseverynepochs > 0) &&
-                ( (estimator.lastepoch % printlosseverynepochs) == 0 )
+        if (estimator.printlosseverynepochs > 0) &&
+                ( (estimator.lastepoch %
+                    estimator.printlosseverynepochs) == 0 )
             info(
-                io,
                 string(
                     "Epoch: ",
                     estimator.lastepoch,
@@ -208,56 +195,94 @@ function fit!(
                 )
         end
     end # end while
-    info("Finished training Knet model.")
+    info(string("Finished training Knet.jl model."))
     return estimator
 end
 
-function predict_proba(
-        estimator::AbstractASBKnetjlKnetSingleLabelClassifier,
+function predict(
+        estimator::MutableKnetjlNeuralNetworkEstimator,
         featuresarray::AbstractArray,
         )
-    output = estimator.predict(
-        estimator.modelweights,
-        featuresarray;
-        training = false,
-        )
-    outputtransposed = transpose(output)
-    numclasses = size(outputtransposed, 2)
-    @assert(numclasses > 0)
-    result = Dict()
-    for i = 1:numclasses
-        result[i] = outputtransposed[:, i]
+    if estimator.isclassificationmodel
+        probabilitiesassoc = predict_proba(
+            estimator,
+            featuresarray,
+            )
+        predictionsvector = singlelabelprobabilitiestopredictions(
+            probabilitiesassoc
+            )
+        return predictionsvector
+    elseif estimator.isregressionmodel
+        output = estimator.predict(
+            estimator.modelweights,
+            featuresarray;
+            training = false,
+            )
+        outputtransposed = transpose(output)
+        result = convert(Array, outputtransposed)
+        return result
+    else
+        error("unable to predict")
     end
-    return result
 end
 
-function singlelabelknetclassifier(
+function predict_proba(
+        estimator::MutableKnetjlNeuralNetworkEstimator,
+        featuresarray::AbstractArray,
+        )
+    if estimator.isclassificationmodel
+        output = estimator.predict(
+            estimator.modelweights,
+            featuresarray;
+            training = false,
+            )
+        outputtransposed = transpose(output)
+        numclasses = size(outputtransposed, 2)
+        @assert(numclasses > 0)
+        result = Dict()
+        for i = 1:numclasses
+            result[i] = outputtransposed[:, i]
+        end
+        return result
+    elseif estimator.isregressionmodel
+        error("predict_proba is not defined for regression models")
+    else
+        error("unable to predict")
+    end
+end
+
+function _singlelabelknetclassifier_Knet(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector,
-        df::DataFrames.AbstractDataFrame;
+        dffeaturecontrasts::AbstractContrasts;
         name::AbstractString = "",
         predict::Function = _emptyfunction,
         loss::Function =_emptyfunction,
         losshyperparameters::Associative = Dict(),
         optimizationalgorithm::Symbol = :nothing,
         optimizerhyperparameters::Associative = Dict(),
-        maxepochs::Integer = 0,
-        batchsize::Integer = 0,
+        minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
+        printlosseverynepochs::Integer = 0,
+        maxepochs::Integer = 0,
         )
     labelnames = [singlelabelname]
     labellevels = Dict()
     labellevels[singlelabelname] = singlelabellevels
-    dftransformer = DataFrame2KnetjlTransformer(
+    dftransformer_index = 1
+    dftransformer_transposefeatures = true
+    dftransformer_transposelabels = true
+    dftransformer = ImmutableDataFrame2ClassificationKnetTransformer(
         featurenames,
+        dffeaturecontrasts,
         labelnames,
         labellevels,
-        1,
-        df;
-        transposefeatures = true,
+        dftransformer_index,
+        dftransformer_transposefeatures,
+        dftransformer_transposelabels,
         )
-    knetestimator = ASBKnetjlKnetSingleLabelClassifier(
+    knetestimator = MutableKnetjlNeuralNetworkEstimator(
         ;
         name = name,
         predict = predict,
@@ -265,28 +290,174 @@ function singlelabelknetclassifier(
         losshyperparameters = losshyperparameters,
         optimizationalgorithm = optimizationalgorithm,
         optimizerhyperparameters = optimizerhyperparameters,
-        batchsize = batchsize,
+        minibatchsize = minibatchsize,
         modelweights = modelweights,
+        isclassificationmodel = true,
+        isregressionmodel = false,
+        printlosseverynepochs = printlosseverynepochs,
+        maxepochs = maxepochs,
         )
-    predprobafixer = PredictProbaSingleLabelInt2StringTransformer(
+    predprobalabelfixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
         1,
         singlelabellevels
         )
-    probapackager = PackageSingleLabelPredictProbaTransformer(
+    predictlabelfixer = ImmutablePredictionsSingleLabelInt2StringTransformer(
+        1,
+        singlelabellevels
+        )
+    probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         singlelabelname,
         )
-    finalpipeline = SimplePipeline(
+    predpackager = ImmutablePackageSingleLabelPredictionTransformer(
+        singlelabelname,
+        )
+    finalpipeline = ImmutableSimpleLinearPipeline(
         [
             dftransformer,
             knetestimator,
-            predprobafixer,
-            probapackager
+            predprobalabelfixer,
+            predictlabelfixer,
+            probapackager,
+            predpackager
             ];
         name = name,
-        underlyingobjectindex = 2,
-        valuehistoriesobjectindex = 2,
         )
     return finalpipeline
 end
 
+function singlelabelknetclassifier(
+        featurenames::AbstractVector,
+        singlelabelname::Symbol,
+        singlelabellevels::AbstractVector,
+        dffeaturecontrasts::AbstractContrasts;
+        package::Symbol = :none,
+        name::AbstractString = "",
+        predict::Function = _emptyfunction,
+        loss::Function =_emptyfunction,
+        losshyperparameters::Associative = Dict(),
+        optimizationalgorithm::Symbol = :nothing,
+        optimizerhyperparameters::Associative = Dict(),
+        minibatchsize::Integer = 0,
+        modelweights::AbstractArray = [],
+        printlosseverynepochs::Integer = 0,
+        maxepochs::Integer = 0,
+        )
+    if package == :Knetjl
+        result = _singlelabelknetclassifier_Knet(
+            featurenames,
+            singlelabelname,
+            singlelabellevels,
+            dffeaturecontrasts;
+            name = name,
+            predict = predict,
+            loss = loss,
+            losshyperparameters = losshyperparameters,
+            optimizationalgorithm = optimizationalgorithm,
+            optimizerhyperparameters = optimizerhyperparameters,
+            minibatchsize = minibatchsize,
+            modelweights = modelweights,
+            printlosseverynepochs = printlosseverynepochs,
+            maxepochs = maxepochs,
+            )
+        return result
+    else
+        error("$(package) is not a valid value for package")
+    end
+end
+
 const knetclassifier = singlelabelknetclassifier
+
+function _singlelabelknetregression_Knet(
+        featurenames::AbstractVector,
+        singlelabelname::Symbol,
+        dffeaturecontrasts::AbstractContrasts;
+        name::AbstractString = "",
+        predict::Function = _emptyfunction,
+        loss::Function =_emptyfunction,
+        losshyperparameters::Associative = Dict(),
+        optimizationalgorithm::Symbol = :nothing,
+        optimizerhyperparameters::Associative = Dict(),
+        minibatchsize::Integer = 0,
+        modelweights::AbstractArray = [],
+        printlosseverynepochs::Integer = 0,
+        maxepochs::Integer = 0,
+        )
+    labelnames = [singlelabelname]
+    dftransformer_index = 1
+    dftransformer_transposefeatures = true
+    dftransformer_transposelabels = true
+    dftransformer = ImmutableDataFrame2RegressionKnetTransformer(
+        featurenames,
+        dffeaturecontrasts,
+        labelnames;
+        transposefeatures = true,
+        transposelabels = true,
+        )
+    knetestimator = MutableKnetjlNeuralNetworkEstimator(
+        ;
+        name = name,
+        predict = predict,
+        loss = loss,
+        losshyperparameters = losshyperparameters,
+        optimizationalgorithm = optimizationalgorithm,
+        optimizerhyperparameters = optimizerhyperparameters,
+        minibatchsize = minibatchsize,
+        modelweights = modelweights,
+        isclassificationmodel = false,
+        isregressionmodel = true,
+        printlosseverynepochs = printlosseverynepochs,
+        maxepochs = maxepochs,
+        )
+    predpackager = ImmutablePackageMultiLabelPredictionTransformer(
+        [singlelabelname,],
+        )
+    finalpipeline = ImmutableSimpleLinearPipeline(
+        [
+            dftransformer,
+            knetestimator,
+            predpackager,
+            ];
+        name = name,
+        )
+    return finalpipeline
+end
+
+function singlelabelknetregression(
+        featurenames::AbstractVector,
+        singlelabelname::Symbol,
+        dffeaturecontrasts::AbstractContrasts;
+        package::Symbol = :none,
+        name::AbstractString = "",
+        predict::Function = _emptyfunction,
+        loss::Function =_emptyfunction,
+        losshyperparameters::Associative = Dict(),
+        optimizationalgorithm::Symbol = :nothing,
+        optimizerhyperparameters::Associative = Dict(),
+        minibatchsize::Integer = 0,
+        modelweights::AbstractArray = [],
+        printlosseverynepochs::Integer = 0,
+        maxepochs::Integer = 0,
+        )
+    if package == :Knetjl
+        result = _singlelabelknetregression_Knet(
+            featurenames,
+            singlelabelname,
+            dffeaturecontrasts;
+            name = name,
+            predict = predict,
+            loss = loss,
+            losshyperparameters = losshyperparameters,
+            optimizationalgorithm = optimizationalgorithm,
+            optimizerhyperparameters = optimizerhyperparameters,
+            minibatchsize = minibatchsize,
+            modelweights = modelweights,
+            printlosseverynepochs = printlosseverynepochs,
+            maxepochs = maxepochs,
+            )
+        return result
+    else
+        error("$(package) is not a valid value for package")
+    end
+end
+
+const knetregression = singlelabelknetregression

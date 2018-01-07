@@ -1,98 +1,240 @@
+import LIBLINEAR
 import LIBSVM
 
-abstract type AbstractASBLIBSVMjlSVMClassifier <:
-        AbstractClassifier
-end
-
-abstract type AbstractASBLIBSVMjlSVMtRegression <:
-        AbstractRegression
-end
-
-mutable struct ASBLIBSVMjlSVMClassifier <:
-        AbstractASBLIBSVMjlSVMClassifier
+mutable struct MutableLIBSVMjlSVMEstimator <: AbstractPrimitiveObject
     name::T1 where T1 <: AbstractString
-    levels::T2 where T2 <: AbstractVector
+    isclassificationmodel::T2 where T2 <: Bool
+    isregressionmodel::T3 where T3 <: Bool
+
+    levels::T4 where T4 <: AbstractVector
 
     # hyperparameters (not learned from data):
-    # TODO: add SVM hyperparameters here
+    hyperparameters::T5 where T5 <: Associative
 
     # parameters (learned from data):
-    svmmodel::T3 where T3
+    underlyingsvm::T6 where T6
 
-    function ASBLIBSVMjlSVMClassifier(
-            singlelabellevels::AbstractVector;
+    function MutableLIBSVMjlSVMEstimator(
+            dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
+            singlelabellevels::AbstractVector = [],
             name::AbstractString = "",
+            isclassificationmodel::Bool = false,
+            isregressionmodel::Bool = false,
+            svmtype::Type = LIBSVM.SVC,
+            kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
+            degree::Integer = 3,
+            gamma::AbstractFloat = 1.0/dffeaturecontrasts.numarrayfeatures,
+            coef0::AbstractFloat = 0.0,
+            cost::AbstractFloat = 1.0,
+            nu::AbstractFloat = 0.5,
+            epsilon::AbstractFloat = 0.1,
+            tolerance::AbstractFloat = 0.001,
+            shrinking::Bool = true,
+            weights::Union{Dict, Void} = nothing,
+            cachesize::AbstractFloat = 100.0,
+            verbose::Bool = true,
             )
-        return new(name, singlelabellevels)
+        hyperparameters = Dict()
+        hyperparameters[:svmtype] = svmtype
+        hyperparameters[:kernel] = kernel
+        hyperparameters[:degree] = degree
+        hyperparameters[:gamma] = gamma
+        hyperparameters[:coef0] = coef0
+        hyperparameters[:cost] = cost
+        hyperparameters[:nu] = nu
+        hyperparameters[:epsilon] = epsilon
+        hyperparameters[:tolerance] = tolerance
+        hyperparameters[:shrinking] = shrinking
+        hyperparameters[:weights] = weights
+        hyperparameters[:cachesize] = cachesize
+        hyperparameters[:verbose] = verbose
+        result = new(
+            name,
+            isclassificationmodel,
+            isregressionmodel,
+            singlelabellevels,
+            hyperparameters,
+            )
+        return result
     end
 end
 
-function underlying(x::AbstractASBLIBSVMjlSVMClassifier)
-    result = x.svmmodel
+function underlying(x::MutableLIBSVMjlSVMEstimator)
+    result = x.svm
     return result
 end
 
 function fit!(
-        estimator::AbstractASBLIBSVMjlSVMClassifier,
+        estimator::MutableLIBSVMjlSVMEstimator,
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
-    svmmodel = LIBSVM.svmtrain(
+    if estimator.isclassificationmodel && !estimator.isregressionmodel
+        probability = true
+    elseif !estimator.isclassificationmodel && estimator.isregressionmodel
+        probability = false
+    else
+        error("Could not figure out if model is classification or regression")
+    end
+    info(string("Starting to train LIBSVM.jl model."))
+    svm = LIBSVM.svmtrain(
         featuresarray,
         labelsarray;
-        probability = true,
+        probability = probability,
+        estimator.hyperparameters...
         )
-    estimator.svmmodel = svmmodel
-    @assert(typeof(estimator.svmmodel.labels) <: AbstractVector)
-    estimator.levels = estimator.svmmodel.labels
+    info(string("Finished training LIBSVM.jl model."))
+    estimator.underlyingsvm = svm
+    @assert(typeof(estimator.underlyingsvm.labels) <: AbstractVector)
+    estimator.levels = estimator.underlyingsvm.labels
     return estimator
 end
 
-function predict_proba(
-        estimator::AbstractASBLIBSVMjlSVMClassifier,
+function predict(
+        estimator::MutableLIBSVMjlSVMEstimator,
         featuresarray::AbstractArray,
         )
-    estimator.levels = estimator.svmmodel.labels
-    predictedlabels, decisionvalues = LIBSVM.svmpredict(
-        estimator.svmmodel,
-        featuresarray,
-        )
-    decisionvaluestransposed = transpose(decisionvalues)
-    result = Dict()
-    for i = 1:length(estimator.svmmodel.labels)
-        result[estimator.svmmodel.labels[i]] = decisionvaluestransposed[:, i]
+    if estimator.isclassificationmodel && !estimator.isregressionmodel
+        probabilitiesassoc = predict_proba(
+            estimator,
+            featuresarray,
+            )
+        predictionsvector = singlelabelprobabilitiestopredictions(
+            probabilitiesassoc
+            )
+        return predictionsvector
+    elseif !estimator.isclassificationmodel && estimator.isregressionmodel
+        predictedvalues, decisionvalues = LIBSVM.svmpredict(
+            estimator.underlyingsvm,
+            featuresarray,
+            )
+        @assert(typeof(predictedvalues) <: AbstractVector)
+        @assert(ndims(predictedvalues) == 1)
+        @assert(typeof(decisionvalues) <: AbstractMatrix)
+        @assert(ndims(decisionvalues) == 2)
+        @assert(size(predictedvalues, 1) == size(decisionvalues, 2))
+        @assert(size(decisionvalues, 1) == 2)
+        if !( isapprox(sum(abs, decisionvalues[2, :]), 0.0) )
+            msg = string(
+                "sum(abs, decisionvalues[2, :]) is not approx zero. ",
+                "sum abs: ",
+                sum(abs, decisionvalues[2, :]),
+                ". mean abs: ",
+                mean(abs, decisionvalues[2, :]),
+                ".",
+                )
+            warn(msg)
+        end
+        if !(
+                all(
+                    isapprox.(
+                        predictedvalues[:],
+                        decisionvalues[1, :]
+                        )
+                    )
+                )
+            differences = predictedvalues[:] .- decisionvalues[1, :]
+            msg = string(
+                "not all predictedvalues[:] are approx equal to ",
+                "decisionvalues[1, :]. sum abs difference: ",
+                sum(abs, differences),
+                ". mean abs difference: ",
+                mean(abs, differences),
+                "."
+                )
+            warn(msg)
+        end
+        result = convert(Vector, vec(predictedvalues))
+        return result
+    else
+        error("Could not figure out if model is classification or regression")
     end
-    return result
 end
 
-function _singlelabelsvmclassifier_LIBSVMjl(
+function predict_proba(
+        estimator::MutableLIBSVMjlSVMEstimator,
+        featuresarray::AbstractArray,
+        )
+    if estimator.isclassificationmodel && !estimator.isregressionmodel
+        estimator.levels = estimator.underlyingsvm.labels
+        predictedlabels, decisionvalues = LIBSVM.svmpredict(
+            estimator.underlyingsvm,
+            featuresarray,
+            )
+        decisionvaluestransposed = transpose(decisionvalues)
+        result = Dict()
+        for i = 1:length(estimator.underlyingsvm.labels)
+            result[estimator.underlyingsvm.labels[i]] =
+                decisionvaluestransposed[:, i]
+        end
+        return result
+    elseif !estimator.isclassificationmodel && estimator.isregressionmodel
+        error("predict_proba is not defined for regression models")
+    else
+        error("Could not figure out if model is classification or regression")
+    end
+end
+
+function _singlelabelsvmclassifier_LIBSVM(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector,
-        df::DataFrames.AbstractDataFrame;
+        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
         name::AbstractString = "",
+        svmtype::Type = LIBSVM.SVC,
+        kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
+        degree::Integer = 3,
+        gamma::AbstractFloat = 1.0/dffeaturecontrasts.numarrayfeatures,
+        coef0::AbstractFloat = 0.0,
+        cost::AbstractFloat = 1.0,
+        nu::AbstractFloat = 0.5,
+        epsilon::AbstractFloat = 0.1,
+        tolerance::AbstractFloat = 0.001,
+        shrinking::Bool = true,
+        weights::Union{Dict, Void} = nothing,
+        cachesize::AbstractFloat = 100.0,
+        verbose::Bool = true,
         )
-    dftransformer = DataFrame2LIBSVMjlTransformer(
+    dftransformer = DataFrame2LIBSVMTransformer(
         featurenames,
         singlelabelname,
-        singlelabellevels,
-        df,
+        dffeaturecontrasts;
+        levels = singlelabellevels,
         )
-    svmestimator = ASBLIBSVMjlSVMClassifier(
-        singlelabellevels;
+    svmestimator = MutableLIBSVMjlSVMEstimator(
+        dffeaturecontrasts;
         name = name,
+        singlelabellevels = singlelabellevels,
+        isclassificationmodel = true,
+        isregressionmodel = false,
+        svmtype = svmtype,
+        kernel = kernel,
+        degree = degree,
+        gamma = gamma,
+        coef0 = coef0,
+        cost = cost,
+        nu = nu,
+        epsilon = epsilon,
+        tolerance = tolerance,
+        shrinking = shrinking,
+        weights = weights,
+        cachesize = cachesize,
+        verbose = verbose,
         )
-    probapackager = PackageSingleLabelPredictProbaTransformer(
+    probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         singlelabelname,
         )
-    finalpipeline = SimplePipeline(
+    predpackager = ImmutablePackageSingleLabelPredictionTransformer(
+        singlelabelname,
+        )
+    finalpipeline = ImmutableSimpleLinearPipeline(
         [
             dftransformer,
             svmestimator,
             probapackager,
+            predpackager,
             ];
         name = name,
-        underlyingobjectindex = 2,
         )
     return finalpipeline
 end
@@ -101,17 +243,43 @@ function singlelabelsvmclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector,
-        df::DataFrames.AbstractDataFrame;
-        name::AbstractString = "",
+        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
         package::Symbol = :none,
+        name::AbstractString = "",
+        svmtype::Type = LIBSVM.SVC,
+        kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
+        degree::Integer = 3,
+        gamma::AbstractFloat = 1.0/dffeaturecontrasts.numarrayfeatures,
+        coef0::AbstractFloat = 0.0,
+        cost::AbstractFloat = 1.0,
+        nu::AbstractFloat = 0.5,
+        epsilon::AbstractFloat = 0.1,
+        tolerance::AbstractFloat = 0.001,
+        shrinking::Bool = true,
+        weights::Union{Dict, Void} = nothing,
+        cachesize::AbstractFloat = 100.0,
+        verbose::Bool = true,
         )
     if package == :LIBSVMjl
-        result = _singlelabelsvmclassifier_LIBSVMjl(
+        result = _singlelabelsvmclassifier_LIBSVM(
             featurenames,
             singlelabelname,
             singlelabellevels,
-            df;
+            dffeaturecontrasts;
             name = name,
+            svmtype = svmtype,
+            kernel = kernel,
+            degree = degree,
+            gamma = gamma,
+            coef0 = coef0,
+            cost = cost,
+            nu = nu,
+            epsilon = epsilon,
+            tolerance = tolerance,
+            shrinking = shrinking,
+            weights = weights,
+            cachesize = cachesize,
+            verbose = verbose,
         )
         return result
     else
@@ -120,3 +288,108 @@ function singlelabelsvmclassifier(
 end
 
 const svmclassifier = singlelabelsvmclassifier
+
+function _singlelabelsvmregression_LIBSVM(
+        featurenames::AbstractVector,
+        singlelabelname::Symbol,
+        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
+        name::AbstractString = "",
+        svmtype::Type = LIBSVM.EpsilonSVR,
+        kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
+        degree::Integer = 3,
+        gamma::AbstractFloat = 1.0/dffeaturecontrasts.numarrayfeatures,
+        coef0::AbstractFloat = 0.0,
+        cost::AbstractFloat = 1.0,
+        nu::AbstractFloat = 0.5,
+        epsilon::AbstractFloat = 0.1,
+        tolerance::AbstractFloat = 0.001,
+        shrinking::Bool = true,
+        weights::Union{Dict, Void} = nothing,
+        cachesize::AbstractFloat = 100.0,
+        verbose::Bool = true,
+        )
+    dftransformer = DataFrame2LIBSVMTransformer(
+        featurenames,
+        singlelabelname,
+        dffeaturecontrasts,
+        )
+    svmestimator = MutableLIBSVMjlSVMEstimator(
+        dffeaturecontrasts;
+        name = name,
+        isclassificationmodel = false,
+        isregressionmodel = true,
+        svmtype = svmtype,
+        kernel = kernel,
+        degree = degree,
+        gamma = gamma,
+        coef0 = coef0,
+        cost = cost,
+        nu = nu,
+        epsilon = epsilon,
+        tolerance = tolerance,
+        shrinking = shrinking,
+        weights = weights,
+        cachesize = cachesize,
+        verbose = verbose,
+        )
+    predpackager = ImmutablePackageSingleLabelPredictionTransformer(
+        singlelabelname,
+        )
+    finalpipeline = ImmutableSimpleLinearPipeline(
+        [
+            dftransformer,
+            svmestimator,
+            predpackager,
+            ];
+        name = name,
+        )
+    return finalpipeline
+end
+
+function singlelabelsvmregression(
+        featurenames::AbstractVector,
+        singlelabelname::Symbol,
+        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
+        package::Symbol = :none,
+        name::AbstractString = "",
+        svmtype::Type = LIBSVM.EpsilonSVR,
+        kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
+        degree::Integer = 3,
+        gamma::AbstractFloat = 1.0/dffeaturecontrasts.numarrayfeatures,
+        coef0::AbstractFloat = 0.0,
+        cost::AbstractFloat = 1.0,
+        nu::AbstractFloat = 0.5,
+        epsilon::AbstractFloat = 0.1,
+        tolerance::AbstractFloat = 0.001,
+        shrinking::Bool = true,
+        weights::Union{Dict, Void} = nothing,
+        cachesize::AbstractFloat = 100.0,
+        verbose::Bool = true,
+        )
+    if package == :LIBSVMjl
+        result = _singlelabelsvmregression_LIBSVM(
+            featurenames,
+            singlelabelname,
+            dffeaturecontrasts;
+            name = name,
+            svmtype = svmtype,
+            kernel = kernel,
+            degree = degree,
+            gamma = gamma,
+            coef0 = coef0,
+            cost = cost,
+            nu = nu,
+            epsilon = epsilon,
+            tolerance = tolerance,
+            shrinking = shrinking,
+            weights = weights,
+            cachesize = cachesize,
+            verbose = verbose,
+        )
+        return result
+    else
+        error("$(package) is not a valid value for package")
+    end
+end
+
+const svmregression = singlelabelsvmregression

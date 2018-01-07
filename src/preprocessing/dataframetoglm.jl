@@ -1,15 +1,17 @@
 import DataFrames
 
-abstract type AbstractDataFrame2GLMjlTransformer <: AbstractTransformer
-end
-
-struct DataFrame2GLMjlTransformer <: AbstractDataFrame2GLMjlTransformer
+struct ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer <:
+        AbstractPrimitiveObject
     label::T1 where T1 <: Symbol
     positiveclass::T2 where T2 <: AbstractString
 end
 
+function underlying(::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer)
+    return nothing
+end
+
 function transform(
-        transformer::AbstractDataFrame2GLMjlTransformer,
+        transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...
@@ -24,7 +26,7 @@ function transform(
 end
 
 function transform(
-        transformer::AbstractDataFrame2GLMjlTransformer,
+        transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )
@@ -32,7 +34,7 @@ function transform(
 end
 
 function fit!(
-        transformer::AbstractDataFrame2GLMjlTransformer,
+        transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...
@@ -40,8 +42,17 @@ function fit!(
     return transform(transformer, featuresdf, labelsdf)
 end
 
+function predict(
+        transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
+        featuresdf::DataFrames.AbstractDataFrame;
+        kwargs...
+        )
+    return transform(transformer, featuresdf)
+end
+
+
 function predict_proba(
-        transformer::AbstractDataFrame2GLMjlTransformer,
+        transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )
