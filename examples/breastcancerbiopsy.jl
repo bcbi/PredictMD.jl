@@ -1,4 +1,5 @@
-srand(999) # set random seed
+# set the seed of the random number generator
+srand(999)
 
 # import required packages
 import AluthgeSinhaBase
