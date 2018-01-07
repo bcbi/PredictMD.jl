@@ -1,6 +1,7 @@
 include("utils/formulas.jl")
 include("utils/labelstringintmaps.jl")
 include("utils/openbrowserwindow.jl")
+include("utils/probabilitiestopredictions.jl")
 include("utils/shufflerows.jl")
 include("utils/simplemovingaverage.jl")
 include("utils/tikzpictures.jl")
