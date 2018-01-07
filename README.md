@@ -4,8 +4,9 @@
 | ---------------------------------- |
 | 1. [Build Status](#build-status)   |      
 | 2. [Installation](#installation)   |
-| 3. [LaTeX](#latex)                 |
-| 4. [pdf2svg](#pdf2svg)             |
+| 3. [Examples](#examples)             |
+| 4. [LaTeX](#latex)                 |
+| 5. [pdf2svg](#pdf2svg)             |
 
 ## Build Status
 
@@ -105,6 +106,8 @@ julia> Pkg.update()
 ```julia
 julia> Pkg.test("AluthgeSinhaBase")
 ```
+
+## Examples
 
 ## LaTeX
 AluthgeSinhaBase requires LaTeX for generating plots. If LaTeX is not installed on your system, download and install a TeX distribution from the appropriate link below:

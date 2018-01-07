@@ -204,7 +204,14 @@ function predict(
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel
-        error("predict is not defined for classification models")
+        probabilitiesassoc = predict_proba(
+            estimator,
+            featuresarray,
+            )
+        predictionsvector = singlelabelprobabilitiestopredictions(
+            probabilitiesassoc
+            )
+        return predictionsvector
     elseif estimator.isregressionmodel
         output = estimator.predict(
             estimator.modelweights,
@@ -248,7 +255,7 @@ function _singlelabelknetclassifier_Knet(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector,
-        dffeaturecontrasts::AbstractContrastsObject;
+        dffeaturecontrasts::AbstractContrasts;
         name::AbstractString = "",
         predict::Function = _emptyfunction,
         loss::Function =_emptyfunction,
@@ -313,7 +320,7 @@ function singlelabelknetclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector,
-        dffeaturecontrasts::AbstractContrastsObject;
+        dffeaturecontrasts::AbstractContrasts;
         package::Symbol = :none,
         name::AbstractString = "",
         predict::Function = _emptyfunction,
@@ -354,7 +361,7 @@ const knetclassifier = singlelabelknetclassifier
 function _singlelabelknetregression_Knet(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        dffeaturecontrasts::AbstractContrastsObject;
+        dffeaturecontrasts::AbstractContrasts;
         name::AbstractString = "",
         predict::Function = _emptyfunction,
         loss::Function =_emptyfunction,
@@ -409,7 +416,7 @@ end
 function singlelabelknetregression(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        dffeaturecontrasts::AbstractContrastsObject;
+        dffeaturecontrasts::AbstractContrasts;
         package::Symbol = :none,
         name::AbstractString = "",
         predict::Function = _emptyfunction,

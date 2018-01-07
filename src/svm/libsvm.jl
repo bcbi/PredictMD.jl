@@ -95,7 +95,14 @@ function predict(
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
-        error("predict is not defined for classification models")
+        probabilitiesassoc = predict_proba(
+            estimator,
+            featuresarray,
+            )
+        predictionsvector = singlelabelprobabilitiestopredictions(
+            probabilitiesassoc
+            )
+        return predictionsvector
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         predictedvalues, decisionvalues = LIBSVM.svmpredict(
             estimator.underlyingsvm,

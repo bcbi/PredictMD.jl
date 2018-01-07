@@ -563,22 +563,24 @@ asb.predict_proba(csvc_svmclassifier,testingfeaturesdf,)
 asb.predict_proba(nusvc_svmclassifier,testingfeaturesdf,)
 asb.predict_proba(knetmlpclassifier,testingfeaturesdf,)
 
-# If we want to get actual class predictions instead of probabilities, we can
-# use the asb.predict() function to get the class predictions output by each
-# of the classification models.
+# If we want to get the predicted classes instead of probabilities, we can use
+# the asb.predict() function to get the class predictions output by each of the
+# classification models. For each sample, asb.predict() will select the class
+# with the highest probability. In the case of binary classification, this is
+# equivalent to using a threshold of 0.5.
 
 # Get class predictions from each model for smoted training set
-# asb.predict(logisticclassifier,smotedtrainingfeaturesdf,)
-# asb.predict(probitclassifier,smotedtrainingfeaturesdf,)
-# asb.predict(randomforestclassifier,smotedtrainingfeaturesdf,)
-# asb.predict(csvc_svmclassifier,smotedtrainingfeaturesdf,)
-# asb.predict(nusvc_svmclassifier,smotedtrainingfeaturesdf,)
-# asb.predict(knetmlpclassifier,smotedtrainingfeaturesdf,)
+asb.predict(logisticclassifier,smotedtrainingfeaturesdf,)
+asb.predict(probitclassifier,smotedtrainingfeaturesdf,)
+asb.predict(randomforestclassifier,smotedtrainingfeaturesdf,)
+asb.predict(csvc_svmclassifier,smotedtrainingfeaturesdf,)
+asb.predict(nusvc_svmclassifier,smotedtrainingfeaturesdf,)
+asb.predict(knetmlpclassifier,smotedtrainingfeaturesdf,)
 
 # Get class predictions from each model for testing set
-# asb.predict(logisticclassifier,testingfeaturesdf,)
-# asb.predict(probitclassifier,testingfeaturesdf,)
-# asb.predict(randomforestclassifier,testingfeaturesdf,)
-# asb.predict(csvc_svmclassifier,testingfeaturesdf,)
-# asb.predict(nusvc_svmclassifier,testingfeaturesdf,)
-# asb.predict(knetmlpclassifier,testingfeaturesdf,)
+asb.predict(logisticclassifier,testingfeaturesdf,)
+asb.predict(probitclassifier,testingfeaturesdf,)
+asb.predict(randomforestclassifier,testingfeaturesdf,)
+asb.predict(csvc_svmclassifier,testingfeaturesdf,)
+asb.predict(nusvc_svmclassifier,testingfeaturesdf,)
+asb.predict(knetmlpclassifier,testingfeaturesdf,)

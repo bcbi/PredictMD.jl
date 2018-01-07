@@ -28,3 +28,15 @@ function predict(
     result[labelname] = singlelabelpredictions
     return result
 end
+
+function predict_proba(
+        transformer::ImmutablePackageSingleLabelPredictionTransformer,
+        varargs...;
+        kwargs...
+        )
+    if length(varargs) == 1
+        return varargs[1]
+    else
+        return varargs
+    end
+end

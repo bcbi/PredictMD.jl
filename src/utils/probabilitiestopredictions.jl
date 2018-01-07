@@ -1,11 +1,9 @@
-import DataFrames
-
 function multilabelprobabilitiestopredictions(
-        probabilitiesassoc::Associative,
-        labelnames::SymbolVector;
+        probabilitiesassoc::Associative;
         floattype::Type = Cfloat,
         )
-    result = DataFrames.DataFrame()
+    result = Dict()
+    labelnames = sort(unique(collect(keys(probabilitiesassoc))))
     for j = 1:length(labelnames)
         result[labelnames[j]] = singlelabelprobabilitiestopredictions(
             probabilitiesassoc[labelnames[j]];
