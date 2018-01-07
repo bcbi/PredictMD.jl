@@ -314,7 +314,6 @@ asb.binaryclassificationmetrics(
 ## Multilayer perceptron (i.e. fully connected feedforward neural network) ###
 ##############################################################################
 
-
 # Define predict function
 function knetmlpclassifier_predict(
         w, # don't put a type annotation on this

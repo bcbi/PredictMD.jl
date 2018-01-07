@@ -365,7 +365,6 @@ showall(asb.regressionmetrics(
 ##############################################################################
 ##############################################################################
 
-
 # We can use the asb.predict() function to get the real-valued predictions
 # output by each of regression models.
 
