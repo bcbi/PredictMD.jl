@@ -5,6 +5,7 @@ srand(999)
 import AluthgeSinhaBase
 const asb = AluthgeSinhaBase
 import DataFrames
+import JLD
 import Knet
 import LIBSVM
 import RDatasets
@@ -673,3 +674,9 @@ asb.predict(randomforestclassifier,testingfeaturesdf,)
 asb.predict(csvc_svmclassifier,testingfeaturesdf,)
 asb.predict(nusvc_svmclassifier,testingfeaturesdf,)
 asb.predict(knetmlpclassifier,testingfeaturesdf,)
+
+##############################################################################
+##############################################################################
+## Appendix B: Save models to file and load models from file #################
+##############################################################################
+##############################################################################

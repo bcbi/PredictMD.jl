@@ -7,6 +7,7 @@ const asb = AluthgeSinhaBase
 import CSV
 import DataFrames
 import GZip
+import JLD
 import Knet
 import LIBSVM
 import StatsBase
@@ -393,3 +394,9 @@ asb.predict(randomforestregression,testingfeaturesdf,)
 asb.predict(epsilonsvr_svmregression,testingfeaturesdf,)
 asb.predict(nusvr_svmregression,testingfeaturesdf,)
 asb.predict(knetmlpregression,testingfeaturesdf,)
+
+##############################################################################
+##############################################################################
+## Appendix B: Save models to file and load models from file #################
+##############################################################################
+##############################################################################
