@@ -8,6 +8,7 @@ Clustering 0.9.1
 DataFrames 0.11.3
 DecisionTree 0.6.5
 Distributions 0.15.0
+FileIO 0.6.1
 Flux 0.4.0
 ForwardDiff 0.7.0
 GLM 0.10.1
