@@ -7,7 +7,6 @@ const asb = AluthgeSinhaBase
 import CSV
 import DataFrames
 import GZip
-import JLD
 import Knet
 import LIBSVM
 import StatsBase
