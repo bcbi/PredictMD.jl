@@ -7,6 +7,7 @@ const asb = AluthgeSinhaBase
 import CSV
 import DataFrames
 import GZip
+import JLD
 import Knet
 import LIBSVM
 import StatsBase
@@ -249,7 +250,7 @@ knetmlp_losshyperparameters[:L1] = Cfloat(0.00001)
 knetmlp_losshyperparameters[:L2] = Cfloat(0.00001)
 
 # Select optimization algorithm
-knetmlp_optimizationalgorithm = :Momentum
+knetmlp_optimizationalgorithm = :Adam
 
 # Set optimization hyperparameters
 knetmlp_optimizerhyperparameters = Dict()
@@ -299,8 +300,15 @@ asb.fit!(knetmlpregression,trainingfeaturesdf,traininglabelsdf,)
 knetmlp_learningcurve_lossvsepoch = asb.plotlearningcurve(
     knetmlpregression,
     :lossvsepoch;
-    window = 50,
-    sampleevery = 1,
+    )
+asb.open(knetmlp_learningcurve_lossvsepoch)
+
+# Plot learning curve: loss vs. epoch, skip the first 10 epochs
+knetmlp_learningcurve_lossvsepoch = asb.plotlearningcurve(
+    knetmlpregression,
+    :lossvsepoch;
+    startat = 10,
+    endat = :end,
     )
 asb.open(knetmlp_learningcurve_lossvsepoch)
 
@@ -335,17 +343,16 @@ asb.regressionmetrics(
 ##############################################################################
 ##############################################################################
 
-allmodels = [
-    linearregression,
-    randomforestregression,
-    epsilonsvr_svmregression,
-    nusvr_svmregression,
-    knetmlpregression,
-    ]
 
 # Compare performance of all five models on training set
 showall(asb.regressionmetrics(
-    allmodels,
+    [
+        linearregression,
+        randomforestregression,
+        epsilonsvr_svmregression,
+        nusvr_svmregression,
+        knetmlpregression,
+        ],
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
@@ -353,7 +360,13 @@ showall(asb.regressionmetrics(
 
 # Compare performance of all models on testing set
 showall(asb.regressionmetrics(
-    allmodels,
+    [
+        linearregression,
+        randomforestregression,
+        epsilonsvr_svmregression,
+        nusvr_svmregression,
+        knetmlpregression,
+        ],
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -381,3 +394,9 @@ asb.predict(randomforestregression,testingfeaturesdf,)
 asb.predict(epsilonsvr_svmregression,testingfeaturesdf,)
 asb.predict(nusvr_svmregression,testingfeaturesdf,)
 asb.predict(knetmlpregression,testingfeaturesdf,)
+
+##############################################################################
+##############################################################################
+## Appendix B: Save models to file and load models from file #################
+##############################################################################
+##############################################################################

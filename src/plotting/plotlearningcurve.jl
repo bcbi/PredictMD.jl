@@ -9,6 +9,8 @@ function plotlearningcurve(
         window::Integer = 0,
         legendPos::AbstractString = "north east",
         sampleevery::Integer = 1,
+        startat::Union{Integer, Symbol} = :start,
+        endat::Union{Integer, Symbol} = :end,
         )
     inputobjectvaluehistories = valuehistories(inputobject)
     result = plotlearningcurve(
@@ -17,6 +19,8 @@ function plotlearningcurve(
         window = window,
         legendPos = legendPos,
         sampleevery = sampleevery,
+        startat = startat,
+        endat = endat,
         )
     return result
 end
@@ -27,6 +31,8 @@ function plotlearningcurve(
         window::Integer = 0,
         legendPos::AbstractString = "north east",
         sampleevery::Integer = 1,
+        startat::Union{Integer, Symbol} = :start,
+        endat::Union{Integer, Symbol} = :end,
         )
     if curvetype == :lossvsiteration
         xlabel = "Iteration"
@@ -47,6 +53,24 @@ function plotlearningcurve(
     else
         error("curvetype must be one of: :lossvsiteration, :lossvsepoch")
     end
+    if length(xvalues) != length(yvalues)
+        error("length(xvalues) != length(yvalues)")
+    end
+    if startat == :start
+        startat = 1
+    elseif typeof(startat) <: Symbol
+        error("$(startat) is not a valid value for startat")
+    end
+    if endat == :end
+        endat = length(xvalues)
+    elseif typeof(endat) <: Symbol
+        error("$(endat) is not a valid value for endat")
+    end
+    if startat > endat
+        error("startat > endat")
+    end
+    xvalues = xvalues[startat:endat]
+    yvalues = yvalues[startat:endat]
     result = plotlearningcurve(
         xvalues,
         yvalues,

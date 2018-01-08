@@ -8,12 +8,16 @@ Clustering 0.9.1
 DataFrames 0.11.3
 DecisionTree 0.6.5
 Distributions 0.15.0
+FileIO 0.6.1
 Flux 0.4.0
 ForwardDiff 0.7.0
 GLM 0.10.1
 GLMNet 0.3.0
 GZip 0.3.0
+HDF5 0.8.8
 HypothesisTests 0.6.0
+JLD 0.8.3
+JLD2 0.0.5
 Knet 0.9.0
 LARS 0.0.3
 LIBLINEAR 0.3.0

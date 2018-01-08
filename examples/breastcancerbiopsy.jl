@@ -5,6 +5,7 @@ srand(999)
 import AluthgeSinhaBase
 const asb = AluthgeSinhaBase
 import DataFrames
+import JLD
 import Knet
 import LIBSVM
 import RDatasets
@@ -421,8 +422,16 @@ asb.fit!(
 # Plot learning curve: loss vs. epoch
 knetmlpclassifier_learningcurve_lossvsepoch = asb.plotlearningcurve(
     knetmlpclassifier,
+    :lossvsepoch,
+    )
+asb.open(knetmlpclassifier_learningcurve_lossvsepoch)
+
+# Plot learning curve: loss vs. epoch, skip the first 10 epochs
+knetmlpclassifier_learningcurve_lossvsepoch = asb.plotlearningcurve(
+    knetmlpclassifier,
     :lossvsepoch;
-    sampleevery = 1,
+    startat = 10,
+    endat = :end,
     )
 asb.open(knetmlpclassifier_learningcurve_lossvsepoch)
 
@@ -461,18 +470,16 @@ asb.binaryclassificationmetrics(
 ##############################################################################
 ##############################################################################
 
-allmodels = [
-    logisticclassifier,
-    probitclassifier,
-    randomforestclassifier,
-    csvc_svmclassifier,
-    nusvc_svmclassifier,
-    knetmlpclassifier,
-    ]
-
 # Compare performance of all models on smoted training set
 showall(asb.binaryclassificationmetrics(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
@@ -480,7 +487,14 @@ showall(asb.binaryclassificationmetrics(
     sensitivity = 0.95,
     ))
 showall(asb.binaryclassificationmetrics(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
@@ -488,7 +502,14 @@ showall(asb.binaryclassificationmetrics(
     specificity = 0.95,
     ))
 showall(asb.binaryclassificationmetrics(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
@@ -496,7 +517,14 @@ showall(asb.binaryclassificationmetrics(
     maximize = :f1score,
     ))
 showall(asb.binaryclassificationmetrics(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
@@ -506,7 +534,14 @@ showall(asb.binaryclassificationmetrics(
 
 # Compare performance of all models on testing set
 showall(asb.binaryclassificationmetrics(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -514,7 +549,14 @@ showall(asb.binaryclassificationmetrics(
     sensitivity = 0.95,
     ))
 showall(asb.binaryclassificationmetrics(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -522,7 +564,14 @@ showall(asb.binaryclassificationmetrics(
     specificity = 0.95,
     ))
 showall(asb.binaryclassificationmetrics(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -530,7 +579,14 @@ showall(asb.binaryclassificationmetrics(
     maximize = :f1score,
     ))
 showall(asb.binaryclassificationmetrics(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -540,7 +596,14 @@ showall(asb.binaryclassificationmetrics(
 
 # Plot receiver operating characteristic curves for all models on testing set.
 rocplottesting = asb.plotroccurves(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -550,7 +613,14 @@ asb.open(rocplottesting)
 
 # Plot precision-recall curves for all models on testing set.
 prplottesting = asb.plotprcurves(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -604,3 +674,9 @@ asb.predict(randomforestclassifier,testingfeaturesdf,)
 asb.predict(csvc_svmclassifier,testingfeaturesdf,)
 asb.predict(nusvc_svmclassifier,testingfeaturesdf,)
 asb.predict(knetmlpclassifier,testingfeaturesdf,)
+
+##############################################################################
+##############################################################################
+## Appendix B: Save models to file and load models from file #################
+##############################################################################
+##############################################################################
