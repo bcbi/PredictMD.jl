@@ -35,7 +35,7 @@
 ## Installation
 
 #### Step 1: Make sure that your version of Julia is at least 0.6.2
-Open a shell and run the following command:
+Open a terminal window and run the following command:
 ```bash
 julia -v
 ```
@@ -46,7 +46,7 @@ julia version 0.6.2
 If you receive an error (e.g. "command not found"), or if your version of Julia is less than 0.6.2, go to [https://julialang.org/downloads/](https://julialang.org/downloads/) and follow the instructions to install an appropriately recent version of Julia.
 
 #### Step 2: Make sure that LaTex is installed on your system:
-Open a shell and run the following command:
+Open a terminal window and run the following command:
 ```bash
 latex -v
 ```
@@ -68,7 +68,7 @@ Compiled with xpdf version 3.04
 If you receive an error (e.g. "command not found"), see the [LaTeX](#latex) section for instructions on installing LaTeX.
 
 #### Step 3: Make sure that pdf2svg is installed on your system:
-Open a shell and run the following command:
+Open a terminal window and run the following command:
 ```bash
 pdf2svg
 ```
