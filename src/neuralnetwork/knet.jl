@@ -114,17 +114,6 @@ function fit!(
         estimator.loss,
         2,
         )
-    lossbeforetrainingstarts = estimator.loss(
-        estimator.predict,
-        estimator.modelweights,
-        featuresarray,
-        labelsarray;
-        estimator.losshyperparameters...
-        )
-    info(
-        "Loss before training starts: ",
-        lossbeforetrainingstarts,
-        )
     info(
         string(
             "Starting to train Knet.jl model. Max epochs: ",
@@ -132,6 +121,24 @@ function fit!(
             ".",
             )
         )
+    lossbeforetrainingstarts = estimator.loss(
+        estimator.predict,
+        estimator.modelweights,
+        featuresarray,
+        labelsarray;
+        estimator.losshyperparameters...
+        )
+    if (estimator.printlosseverynepochs) > 0
+        info(
+            string(
+                "Epoch: ",
+                estimator.lastepoch,
+                ". Loss: ",
+                lossbeforetrainingstarts,
+                "."
+                )
+            )
+    end
     while estimator.lastepoch < estimator.maxepochs
         for (x,y) in trainingdata
             grads = lossgradient(
@@ -181,9 +188,11 @@ function fit!(
             estimator.lastepoch,
             currentepochloss,
             )
-        if (estimator.printlosseverynepochs > 0) &&
+        printlossthisepoch = (estimator.printlosseverynepochs > 0) &&
+            ( (estimator.lastepoch == estimator.maxepochs) ||
                 ( (estimator.lastepoch %
-                    estimator.printlosseverynepochs) == 0 )
+                    estimator.printlosseverynepochs) == 0 ) )
+        if printlossthisepoch
             info(
                 string(
                     "Epoch: ",

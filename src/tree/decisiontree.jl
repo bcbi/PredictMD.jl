@@ -49,7 +49,7 @@ function fit!(
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
-    info(string("Starting to train DecisionTree random forest model."))
+    info(string("Starting to train DecisionTree.jl random forest model."))
     randomforest = DecisionTree.build_forest(
         labelsarray,
         featuresarray,
