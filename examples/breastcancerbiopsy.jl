@@ -421,8 +421,16 @@ asb.fit!(
 # Plot learning curve: loss vs. epoch
 knetmlpclassifier_learningcurve_lossvsepoch = asb.plotlearningcurve(
     knetmlpclassifier,
+    :lossvsepoch,
+    )
+asb.open(knetmlpclassifier_learningcurve_lossvsepoch)
+
+# Plot learning curve: loss vs. epoch, skip the first 10 epochs
+knetmlpclassifier_learningcurve_lossvsepoch = asb.plotlearningcurve(
+    knetmlpclassifier,
     :lossvsepoch;
-    sampleevery = 1,
+    startat = 10,
+    endat = :end,
     )
 asb.open(knetmlpclassifier_learningcurve_lossvsepoch)
 

@@ -299,8 +299,15 @@ asb.fit!(knetmlpregression,trainingfeaturesdf,traininglabelsdf,)
 knetmlp_learningcurve_lossvsepoch = asb.plotlearningcurve(
     knetmlpregression,
     :lossvsepoch;
-    window = 50,
-    sampleevery = 1,
+    )
+asb.open(knetmlp_learningcurve_lossvsepoch)
+
+# Plot learning curve: loss vs. epoch, skip the first 10 epochs
+knetmlp_learningcurve_lossvsepoch = asb.plotlearningcurve(
+    knetmlpregression,
+    :lossvsepoch;
+    startat = 10,
+    endat = :end,
     )
 asb.open(knetmlp_learningcurve_lossvsepoch)
 
