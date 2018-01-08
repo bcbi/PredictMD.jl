@@ -118,8 +118,8 @@ The `examples/` folder contains several files that illustrate the usage of Aluth
 
 | Filename | Problem type | Problem description | Dataset |
 | -------- | ------------ | ------------------- | ------- |
-| `examples/bostonhousing.jl` | Single label regression | Predict the median value of houses | [Boston housing dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/Boston.rst) |
-| `examples/breastcancerbiopsy.jl` | Single label binary classification | Classify a tumor as benign or malignant | [Wisconsin breast cancer biopsy dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/biopsy.rst) |
+| [`examples/bostonhousing.jl`](examples/bostonhousing.jl) | Single label regression | Predict the median value of houses | [Boston housing dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/Boston.rst) |
+| [`examples/breastcancerbiopsy.jl`](examples/breastcancerbiopsy.jl) | Single label binary classification | Classify a tumor as benign or malignant | [Wisconsin breast cancer biopsy dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/biopsy.rst) |
 
 ## LaTeX
 AluthgeSinhaBase requires LaTeX for generating plots. If LaTeX is not installed on your system, download and install a TeX distribution from the appropriate link below:
