@@ -14,6 +14,7 @@ ForwardDiff 0.7.0
 GLM 0.10.1
 GLMNet 0.3.0
 GZip 0.3.0
+HDF5 0.8.8
 HypothesisTests 0.6.0
 JLD 0.8.3
 JLD2 0.0.5
