@@ -249,7 +249,7 @@ knetmlp_losshyperparameters[:L1] = Cfloat(0.00001)
 knetmlp_losshyperparameters[:L2] = Cfloat(0.00001)
 
 # Select optimization algorithm
-knetmlp_optimizationalgorithm = :Momentum
+knetmlp_optimizationalgorithm = :Adam
 
 # Set optimization hyperparameters
 knetmlp_optimizerhyperparameters = Dict()
