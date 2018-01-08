@@ -342,17 +342,16 @@ asb.regressionmetrics(
 ##############################################################################
 ##############################################################################
 
-allmodels = [
-    linearregression,
-    randomforestregression,
-    epsilonsvr_svmregression,
-    nusvr_svmregression,
-    knetmlpregression,
-    ]
 
 # Compare performance of all five models on training set
 showall(asb.regressionmetrics(
-    allmodels,
+    [
+        linearregression,
+        randomforestregression,
+        epsilonsvr_svmregression,
+        nusvr_svmregression,
+        knetmlpregression,
+        ],
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
@@ -360,7 +359,13 @@ showall(asb.regressionmetrics(
 
 # Compare performance of all models on testing set
 showall(asb.regressionmetrics(
-    allmodels,
+    [
+        linearregression,
+        randomforestregression,
+        epsilonsvr_svmregression,
+        nusvr_svmregression,
+        knetmlpregression,
+        ],
     testingfeaturesdf,
     testinglabelsdf,
     labelname,

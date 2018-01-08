@@ -469,18 +469,16 @@ asb.binaryclassificationmetrics(
 ##############################################################################
 ##############################################################################
 
-allmodels = [
-    logisticclassifier,
-    probitclassifier,
-    randomforestclassifier,
-    csvc_svmclassifier,
-    nusvc_svmclassifier,
-    knetmlpclassifier,
-    ]
-
 # Compare performance of all models on smoted training set
 showall(asb.binaryclassificationmetrics(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
@@ -488,7 +486,14 @@ showall(asb.binaryclassificationmetrics(
     sensitivity = 0.95,
     ))
 showall(asb.binaryclassificationmetrics(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
@@ -496,7 +501,14 @@ showall(asb.binaryclassificationmetrics(
     specificity = 0.95,
     ))
 showall(asb.binaryclassificationmetrics(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
@@ -504,7 +516,14 @@ showall(asb.binaryclassificationmetrics(
     maximize = :f1score,
     ))
 showall(asb.binaryclassificationmetrics(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
@@ -514,7 +533,14 @@ showall(asb.binaryclassificationmetrics(
 
 # Compare performance of all models on testing set
 showall(asb.binaryclassificationmetrics(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -522,7 +548,14 @@ showall(asb.binaryclassificationmetrics(
     sensitivity = 0.95,
     ))
 showall(asb.binaryclassificationmetrics(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -530,7 +563,14 @@ showall(asb.binaryclassificationmetrics(
     specificity = 0.95,
     ))
 showall(asb.binaryclassificationmetrics(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -538,7 +578,14 @@ showall(asb.binaryclassificationmetrics(
     maximize = :f1score,
     ))
 showall(asb.binaryclassificationmetrics(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -548,7 +595,14 @@ showall(asb.binaryclassificationmetrics(
 
 # Plot receiver operating characteristic curves for all models on testing set.
 rocplottesting = asb.plotroccurves(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -558,7 +612,14 @@ asb.open(rocplottesting)
 
 # Plot precision-recall curves for all models on testing set.
 prplottesting = asb.plotprcurves(
-    allmodels,
+    [
+        logisticclassifier,
+        probitclassifier,
+        randomforestclassifier,
+        csvc_svmclassifier,
+        nusvc_svmclassifier,
+        knetmlpclassifier,
+        ],
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
