@@ -1,40 +1,45 @@
 import DataFrames
 import StatsModels
 
-struct ImmutableDataFrame2ClassificationKnetTransformer <:
+mutable struct ImmutableDataFrame2ClassificationKnetTransformer <:
         AbstractPrimitiveObject
     featurenames::T1 where T1 <: AbstractVector
-    dffeaturecontrasts::T2 where T2 <: ImmutableDataFrameFeatureContrasts
-    labelnames::T3 where T3 <: SymbolVector
-    labellevels::T4 where T4 <: Associative
-    index::T5 where T5 <: Integer
-    transposefeatures::T6 where T6 <: Bool
-    transposelabels::T7 where T7 <: Bool
+    labelnames::T2 where T2 <: SymbolVector
+    labellevels::T3 where T3 <: Associative
+    index::T4 where T4 <: Integer
+    transposefeatures::T5 where T5 <: Bool
+    transposelabels::T6 where T6 <: Bool
+    dffeaturecontrasts::T7 where T7 <: AbstractContrasts
+    function ImmutableDataFrame2ClassificationKnetTransformer(
+            featurenames::AbstractVector,
+            labelnames::SymbolVector,
+            labellevels::Associative,
+            index::Integer;
+            transposefeatures::Bool = true,
+            transposelabels::Bool = false,
+            )
+        result = new(
+            featurenames,
+            labelnames,
+            labellevels,
+            index,
+            transposefeatures,
+            transposelabels,
+            )
+        return result
+    end
+end
+
+function setfeaturecontrasts(
+        x::ImmutableDataFrame2ClassificationKnetTransformer,
+        contrasts::AbstractContrasts,
+        )
+    x.dffeaturecontrasts = contrasts
+    return nothing
 end
 
 function valuehistories(x::ImmutableDataFrame2ClassificationKnetTransformer)
     return nothing
-end
-
-function ImmutableDataFrame2ClassificationKnetTransformer(
-        featurenames::AbstractVector,
-        dffeaturecontrasts::AbstractContrasts,
-        labelnames::SymbolVector,
-        labellevels::Associative,
-        index::Integer;
-        transposefeatures::Bool = true,
-        transposelabels::Bool = false,
-        )
-    result = ImmutableDataFrame2ClassificationKnetTransformer(
-        featurenames,
-        dffeaturecontrasts,
-        labelnames,
-        labellevels,
-        index,
-        transposefeatures,
-        transposelabels,
-        )
-    return result
 end
 
 function transform(
@@ -139,38 +144,43 @@ function predict_proba(
     return transform(transformer, featuresdf)
 end
 
-struct ImmutableDataFrame2RegressionKnetTransformer <:
+mutable struct MutableDataFrame2RegressionKnetTransformer <:
         AbstractPrimitiveObject
     featurenames::T1 where T1 <: AbstractVector
-    dffeaturecontrasts::T2 where T2 <: AbstractContrasts
-    labelnames::T3 where T3 <: SymbolVector
-    transposefeatures::T4 where T4 <: Bool
-    transposelabels::T5 where T5 <: Bool
+    labelnames::T2 where T2 <: SymbolVector
+    transposefeatures::T3 where T3 <: Bool
+    transposelabels::T4 where T4 <: Bool
+    dffeaturecontrasts::T5 where T5 <: AbstractContrasts
+    function MutableDataFrame2RegressionKnetTransformer(
+            featurenames::AbstractVector,
+            labelnames::SymbolVector;
+            transposefeatures::Bool = true,
+            transposelabels::Bool = false,
+            )
+        result = new(
+            featurenames,
+            labelnames,
+            transposefeatures,
+            transposelabels,
+            )
+        return result
+    end
 end
 
-function valuehistories(x::ImmutableDataFrame2RegressionKnetTransformer)
+function setfeaturecontrasts(
+        x::MutableDataFrame2RegressionKnetTransformer,
+        contrasts::AbstractContrasts,
+        )
+    x.dffeaturecontrasts = contrasts
     return nothing
 end
 
-function ImmutableDataFrame2RegressionKnetTransformer(
-        featurenames::AbstractVector,
-        dffeaturecontrasts::AbstractContrasts,
-        labelnames::SymbolVector;
-        transposefeatures::Bool = true,
-        transposelabels::Bool = false,
-        )
-    result = ImmutableDataFrame2RegressionKnetTransformer(
-        featurenames,
-        dffeaturecontrasts,
-        labelnames,
-        transposefeatures,
-        transposelabels,
-        )
-    return result
+function valuehistories(x::MutableDataFrame2RegressionKnetTransformer)
+    return nothing
 end
 
 function transform(
-        transformer::ImmutableDataFrame2RegressionKnetTransformer,
+        transformer::MutableDataFrame2RegressionKnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...
@@ -204,7 +214,7 @@ function transform(
 end
 
 function transform(
-        transformer::ImmutableDataFrame2RegressionKnetTransformer,
+        transformer::MutableDataFrame2RegressionKnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         kwargs...
         )
@@ -227,7 +237,7 @@ function transform(
 end
 
 function fit!(
-        transformer::ImmutableDataFrame2RegressionKnetTransformer,
+        transformer::MutableDataFrame2RegressionKnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...
@@ -236,7 +246,7 @@ function fit!(
 end
 
 function predict(
-        transformer::ImmutableDataFrame2RegressionKnetTransformer,
+        transformer::MutableDataFrame2RegressionKnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )
@@ -244,7 +254,7 @@ function predict(
 end
 
 function predict_proba(
-        transformer::ImmutableDataFrame2RegressionKnetTransformer,
+        transformer::MutableDataFrame2RegressionKnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )

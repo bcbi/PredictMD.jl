@@ -43,12 +43,12 @@ function _singlelabelbinaryclassificationmetrics_tunableparam(
     kwargshastunableparam = [
         haskey(kwargsassoc, x) for x in tunableparams
         ]
-    if sum(kwargshastunableparam) !== 1
+    if sum(kwargshastunableparam) != 1
         msg = "you must specify one (and only one) of the following: " *
             join(tunableparams, ", ")
         error(msg)
     end
-    if length(tunableparams[kwargshastunableparam]) !== 1
+    if length(tunableparams[kwargshastunableparam]) != 1
         error("oh boy you definitely should never see this error message")
     end
     selectedtunableparam =

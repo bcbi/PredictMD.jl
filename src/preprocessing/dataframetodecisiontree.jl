@@ -1,31 +1,36 @@
 import DataFrames
 import StatsModels
 
-immutable ImmutableDataFrame2DecisionTreeTransformer <:
+mutable struct MutableDataFrame2DecisionTreeTransformer <:
         AbstractPrimitiveObject
     featurenames::T1 where T1 <: AbstractVector
-    dffeaturecontrasts::T2 where T2 <: AbstractContrasts
-    singlelabelname::T3 where T3 <: Symbol
-    levels::T4 where T4 <: AbstractVector
+    singlelabelname::T2 where T2 <: Symbol
+    levels::T3 where T3 <: AbstractVector
+    dffeaturecontrasts::T4 where T4 <: AbstractContrasts
+    function MutableDataFrame2DecisionTreeTransformer(
+            featurenames::AbstractVector,
+            singlelabelname::Symbol;
+            levels::AbstractVector = [],
+            )
+        result = new(
+            featurenames,
+            singlelabelname,
+            levels,
+            )
+        return result
+    end
 end
 
-function ImmutableDataFrame2DecisionTreeTransformer(
-        featurenames::AbstractVector,
-        dffeaturecontrasts::AbstractContrasts,
-        singlelabelname::Symbol;
-        levels::AbstractVector = [],
+function setfeaturecontrasts!(
+        x::MutableDataFrame2DecisionTreeTransformer,
+        contrasts::AbstractContrasts,
         )
-    result = ImmutableDataFrame2DecisionTreeTransformer(
-        featurenames,
-        dffeaturecontrasts,
-        singlelabelname,
-        levels,
-        )
-    return result
+    x.dffeaturecontrasts = contrasts
+    return nothing
 end
 
 function transform(
-        transformer::ImmutableDataFrame2DecisionTreeTransformer,
+        transformer::MutableDataFrame2DecisionTreeTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...
@@ -49,7 +54,7 @@ function transform(
 end
 
 function transform(
-        transformer::ImmutableDataFrame2DecisionTreeTransformer,
+        transformer::MutableDataFrame2DecisionTreeTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )
@@ -69,7 +74,7 @@ function transform(
 end
 
 function fit!(
-        transformer::ImmutableDataFrame2DecisionTreeTransformer,
+        transformer::MutableDataFrame2DecisionTreeTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...
@@ -78,7 +83,7 @@ function fit!(
 end
 
 function predict(
-        transformer::ImmutableDataFrame2DecisionTreeTransformer,
+        transformer::MutableDataFrame2DecisionTreeTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )
@@ -86,7 +91,7 @@ function predict(
 end
 
 function predict_proba(
-        transformer::ImmutableDataFrame2DecisionTreeTransformer,
+        transformer::MutableDataFrame2DecisionTreeTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )

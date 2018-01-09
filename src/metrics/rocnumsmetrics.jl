@@ -46,8 +46,8 @@ end
 function ppv(x::MLBase.ROCNums)
     if (x.tp == 0) && (x.tp + x.fp == 0)
         result = 1
-    elseif (x.tp !== 0) && (x.tp + x.fp == 0)
-        error("x.tp !== 0) && (x.tp + x.fp == 0)")
+    elseif (x.tp != 0) && (x.tp + x.fp == 0)
+        error("x.tp != 0) && (x.tp + x.fp == 0)")
     else
         result = (x.tp) / (x.tp + x.fp)
     end
@@ -57,8 +57,8 @@ end
 function npv(x::MLBase.ROCNums)
     if (x.tn == 0) && (x.tn + x.fn ==0)
         result = 1
-    elseif (x.tn !== 0) && (x.tn + x.fn == 0)
-        error("(x.tn !== 0) && (x.tn + x.fn == 0)")
+    elseif (x.tn != 0) && (x.tn + x.fn == 0)
+        error("(x.tn != 0) && (x.tn + x.fn == 0)")
     else
         result = (x.tn) / (x.tn + x.fn)
     end

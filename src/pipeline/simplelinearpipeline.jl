@@ -14,19 +14,33 @@ function ImmutableSimpleLinearPipeline(
     return result
 end
 
-function underlying(x::ImmutableSimpleLinearPipeline)
-    allunderlyings =
-        [underlying(o) for o in x.objectsvector]
-    allunderlyingsminusnothings =
-        allunderlyings[find(allunderlyings .!= nothing)]
-    if length(allunderlyingsminusnothings) == 0
-        return nothing
-    elseif length(allunderlyingsminusnothings) == 1
-        return allunderlyingsminusnothings[1]
-    else
-        return allunderlyingsminusnothings
+function setfeaturecontrasts!(
+        x::ImmutableSimpleLinearPipeline,
+        contrasts::AbstractContrasts,
+        )
+    for i = 1:length(x.objectsvector)
+        setfeaturecontrasts!(x, contrasts)
     end
-    # return result
+    return nothing
+end
+
+function underlying(
+        x::ImmutableSimpleLinearPipeline;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    allunderlyingobjects = [underlying(o) for o in x.objectsvector]
+    if saving || loading
+    else
+        deletenothings!(allunderlyingobjects)
+        if length(allunderlyingobjects) == 0
+            allunderlyingobjects = nothing
+        elseif length() == 1
+            allunderlyingobjects = allunderlyingobjects[1]
+        else
+        end
+    end
+    return allunderlyingobjects
 end
 
 function valuehistories(x::ImmutableSimpleLinearPipeline)

@@ -97,8 +97,8 @@ function plotlearningcurve(
     if sampleevery < 1
         error("sampleevery must be >=1")
     end
-    if length(xvalues) !== length(yvalues)
-        error("length(xvalues) !== length(yvalues)")
+    if length(xvalues) != length(yvalues)
+        error("length(xvalues) != length(yvalues)")
     end
     if length(xvalues) == 0
         error("length(xvalues) == 0")

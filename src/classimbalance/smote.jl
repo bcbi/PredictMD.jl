@@ -65,8 +65,8 @@ function smote(
         pct_over = pct_over,
         minority_to_majority_ratio = minority_to_majority_ratio,
         )
-    if size(featuresdf, 1) !== size(labelsdf, 1)
-        error("size(featuresdf, 1) !== size(labelsdf, 1)")
+    if size(featuresdf, 1) != size(labelsdf, 1)
+        error("size(featuresdf, 1) != size(labelsdf, 1)")
     end
     if size(featuresdf, 1) == 0
         error("size(featuresdf, 1) == 0")

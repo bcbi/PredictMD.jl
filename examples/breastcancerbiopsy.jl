@@ -10,6 +10,22 @@ import LIBSVM
 import RDatasets
 import StatsBase
 
+# ENV["LOADTRAINEDMODELSFROMFILE"] = "true"
+ENV["SAVETRAINEDMODELSTOFILE"] = "true"
+
+# logisticclassifier_filename = joinpath(tempdir(), "logisticclassifier.jld2")
+# probitclassifier_filename = joinpath(tempdir(), "probitclassifier.jld2")
+# rfclassifier_filename = joinpath(tempdir(), "rfclassifier.jld2")
+# csvc_svmclassifier_filename = joinpath(tempdir(), "csvc_svmclassifier.jld2")
+# nusvc_svmclassifier_filename = joinpath(tempdir(), "nusvc_svmclassifier.jld2")
+# knetmlpclassifier_filename = joinpath(tempdir(), "knetmlpclassifier.jld2")
+logisticclassifier_filename = "/Users/dilum/Desktop/logisticclassifier.jld2"
+probitclassifier_filename = "/Users/dilum/Desktop/probitclassifier.jld2"
+rfclassifier_filename = "/Users/dilum/Desktop/rfclassifier.jld2"
+csvc_svmclassifier_filename = "/Users/dilum/Desktop/csvc_svmclassifier.jld2"
+nusvc_svmclassifier_filename = "/Users/dilum/Desktop/nusvc_svmclassifier.jld2"
+knetmlpclassifier_filename = "/Users/dilum/Desktop/knetmlpclassifier.jld2"
+
 ##############################################################################
 ##############################################################################
 ### Section 1: Prepare data ##################################################
@@ -109,15 +125,24 @@ logisticclassifier = asb.binarylogisticclassifier(
     name = "Logistic regression", # optional
     )
 
-# Train logistic classifier model on smoted training set
-asb.fit!(
-    logisticclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
-    )
+
+if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
+    asb.load(logisticclassifier_filename, logisticclassifier)
+else
+    # set feature contrasts
+    asb.setfeaturecontrasts!(logisticclassifier, featurecontrasts)
+    # Train logistic classifier model on smoted training set
+    asb.fit!(
+        logisticclassifier,
+        smotedtrainingfeaturesdf,
+        smotedtraininglabelsdf,
+        )
+end
+
+
 
 # View coefficients, p values, etc. for underlying logistic regression
-asb.underlying(logisticclassifier)
+asb.getunderlying(logisticclassifier)
 
 # Evaluate performance of logistic classifier on smoted training set
 asb.binaryclassificationmetrics(
@@ -153,15 +178,23 @@ probitclassifier = asb.binaryprobitclassifier(
     name = "Probit regression", # optional
     )
 
-# Train probit classifier model on smoted training set
-asb.fit!(
-    probitclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
-    )
+if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
+    asb.load(probitclassifier_filename, probitclassifier)
+else
+    # set feature contrasts
+    asb.setfeaturecontrasts!(probitclassifier, featurecontrasts)
+    # Train probit classifier model on smoted training set
+    asb.fit!(
+        probitclassifier,
+        smotedtrainingfeaturesdf,
+        smotedtraininglabelsdf,
+        )
+end
+
+
 
 # View coefficients, p values, etc. for underlying probit regression
-asb.underlying(probitclassifier)
+asb.getunderlying(probitclassifier)
 
 # Evaluate performance of probit classifier on smoted training set
 asb.binaryclassificationmetrics(
@@ -188,7 +221,7 @@ asb.binaryclassificationmetrics(
 ##############################################################################
 
 # Set up random forest classifier model
-randomforestclassifier = asb.randomforestclassifier(
+rfclassifier = asb.randomforestclassifier(
     featurenames,
     labelname,
     labellevels,
@@ -199,16 +232,22 @@ randomforestclassifier = asb.randomforestclassifier(
     name = "Random forest" # optional
     )
 
-# Train random forest classifier model on smoted training set
-asb.fit!(
-    randomforestclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
-    )
+if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
+    asb.load(rfclassifier_filename, rfclassifier)
+else
+    # set feature contrasts
+    asb.setfeaturecontrasts!(rfclassifier, featurecontrasts)
+    # Train random forest classifier model on smoted training set
+    asb.fit!(
+        rfclassifier,
+        smotedtrainingfeaturesdf,
+        smotedtraininglabelsdf,
+        )
+end
 
 # Evaluate performance of random forest classifier on smoted training set
 asb.binaryclassificationmetrics(
-    randomforestclassifier,
+    rfclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
     labelname,
@@ -218,7 +257,7 @@ asb.binaryclassificationmetrics(
 
 # Evaluate performance of random forest on testing set
 asb.binaryclassificationmetrics(
-    randomforestclassifier,
+    rfclassifier,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -241,12 +280,18 @@ csvc_svmclassifier = asb.svmclassifier(
     verbose = true,
     )
 
-# Train C-SVC model on smoted training set
-asb.fit!(
-    csvc_svmclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
-    )
+if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
+    asb.load(csvc_svmclassifier_filename, csvc_svmclassifier)
+else
+    # set feature contrasts
+    asb.setfeaturecontrasts!(csvc_svmclassifier, featurecontrasts)
+    # Train C-SVC model on smoted training set
+    asb.fit!(
+        csvc_svmclassifier,
+        smotedtrainingfeaturesdf,
+        smotedtraininglabelsdf,
+        )
+end
 
 # Evaluate performance of C-SVC on smoted training set
 asb.binaryclassificationmetrics(
@@ -283,12 +328,20 @@ nusvc_svmclassifier = asb.svmclassifier(
     verbose = true,
     )
 
-# Train nu-SVC model on smoted training set
-asb.fit!(
-    nusvc_svmclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
-    )
+if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
+    asb.load(nusvc_svmclassifier_filename, nusvc_svmclassifier)
+else
+    # set feature contrasts
+    asb.setfeaturecontrasts!(nusvc_svmclassifier, featurecontrasts)
+    # Train nu-SVC model on smoted training set
+    asb.fit!(
+        nusvc_svmclassifier,
+        smotedtrainingfeaturesdf,
+        smotedtraininglabelsdf,
+        )
+end
+
+
 
 # Evaluate performance of nu-SVC on smoted training set
 asb.binaryclassificationmetrics(
@@ -349,10 +402,10 @@ function knetmlpclassifier_loss(
         ytrue,
         1, # d = 1 means that instances are in columns
         )
-    if L1 !== 0
+    if L1 != 0
         loss += L1 * sum(sum(abs, w_i) for w_i in modelweights[1:2:end])
     end
-    if L2 !== 0
+    if L2 != 0
         loss += L2 * sum(sum(abs2, w_i) for w_i in modelweights[1:2:end])
     end
     return loss
@@ -411,12 +464,20 @@ knetmlpclassifier = asb.knetclassifier(
     maxepochs = knetmlpclassifier_maxepochs,
     )
 
-# Train multilayer perceptron model on training set
-asb.fit!(
-    knetmlpclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
-    )
+if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
+    asb.load(knetmlpclassifier_filename, knetmlpclassifier)
+else
+    # set feature contrasts
+    asb.setfeaturecontrasts!(knetmlpclassifier, featurecontrasts)
+    # Train multilayer perceptron model on training set
+    asb.fit!(
+        knetmlpclassifier,
+        smotedtrainingfeaturesdf,
+        smotedtraininglabelsdf,
+        )
+end
+
+
 
 # Plot learning curve: loss vs. epoch
 knetmlpclassifier_learningcurve_lossvsepoch = asb.plotlearningcurve(
@@ -474,7 +535,7 @@ showall(asb.binaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
-        randomforestclassifier,
+        rfclassifier,
         csvc_svmclassifier,
         nusvc_svmclassifier,
         knetmlpclassifier,
@@ -489,7 +550,7 @@ showall(asb.binaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
-        randomforestclassifier,
+        rfclassifier,
         csvc_svmclassifier,
         nusvc_svmclassifier,
         knetmlpclassifier,
@@ -504,7 +565,7 @@ showall(asb.binaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
-        randomforestclassifier,
+        rfclassifier,
         csvc_svmclassifier,
         nusvc_svmclassifier,
         knetmlpclassifier,
@@ -519,7 +580,7 @@ showall(asb.binaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
-        randomforestclassifier,
+        rfclassifier,
         csvc_svmclassifier,
         nusvc_svmclassifier,
         knetmlpclassifier,
@@ -536,7 +597,7 @@ showall(asb.binaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
-        randomforestclassifier,
+        rfclassifier,
         csvc_svmclassifier,
         nusvc_svmclassifier,
         knetmlpclassifier,
@@ -551,7 +612,7 @@ showall(asb.binaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
-        randomforestclassifier,
+        rfclassifier,
         csvc_svmclassifier,
         nusvc_svmclassifier,
         knetmlpclassifier,
@@ -566,7 +627,7 @@ showall(asb.binaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
-        randomforestclassifier,
+        rfclassifier,
         csvc_svmclassifier,
         nusvc_svmclassifier,
         knetmlpclassifier,
@@ -581,7 +642,7 @@ showall(asb.binaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
-        randomforestclassifier,
+        rfclassifier,
         csvc_svmclassifier,
         nusvc_svmclassifier,
         knetmlpclassifier,
@@ -598,7 +659,7 @@ rocplottesting = asb.plotroccurves(
     [
         logisticclassifier,
         probitclassifier,
-        randomforestclassifier,
+        rfclassifier,
         csvc_svmclassifier,
         nusvc_svmclassifier,
         knetmlpclassifier,
@@ -615,7 +676,7 @@ prplottesting = asb.plotprcurves(
     [
         logisticclassifier,
         probitclassifier,
-        randomforestclassifier,
+        rfclassifier,
         csvc_svmclassifier,
         nusvc_svmclassifier,
         knetmlpclassifier,
@@ -639,7 +700,7 @@ asb.open(prplottesting)
 # Get probabilities from each model for smoted training set
 asb.predict_proba(logisticclassifier,smotedtrainingfeaturesdf,)
 asb.predict_proba(probitclassifier,smotedtrainingfeaturesdf,)
-asb.predict_proba(randomforestclassifier,smotedtrainingfeaturesdf,)
+asb.predict_proba(rfclassifier,smotedtrainingfeaturesdf,)
 asb.predict_proba(csvc_svmclassifier,smotedtrainingfeaturesdf,)
 asb.predict_proba(nusvc_svmclassifier,smotedtrainingfeaturesdf,)
 asb.predict_proba(knetmlpclassifier,smotedtrainingfeaturesdf,)
@@ -647,7 +708,7 @@ asb.predict_proba(knetmlpclassifier,smotedtrainingfeaturesdf,)
 # Get probabilities from each model for testing set
 asb.predict_proba(logisticclassifier,testingfeaturesdf,)
 asb.predict_proba(probitclassifier,testingfeaturesdf,)
-asb.predict_proba(randomforestclassifier,testingfeaturesdf,)
+asb.predict_proba(rfclassifier,testingfeaturesdf,)
 asb.predict_proba(csvc_svmclassifier,testingfeaturesdf,)
 asb.predict_proba(nusvc_svmclassifier,testingfeaturesdf,)
 asb.predict_proba(knetmlpclassifier,testingfeaturesdf,)
@@ -661,7 +722,7 @@ asb.predict_proba(knetmlpclassifier,testingfeaturesdf,)
 # Get class predictions from each model for smoted training set
 asb.predict(logisticclassifier,smotedtrainingfeaturesdf,)
 asb.predict(probitclassifier,smotedtrainingfeaturesdf,)
-asb.predict(randomforestclassifier,smotedtrainingfeaturesdf,)
+asb.predict(rfclassifier,smotedtrainingfeaturesdf,)
 asb.predict(csvc_svmclassifier,smotedtrainingfeaturesdf,)
 asb.predict(nusvc_svmclassifier,smotedtrainingfeaturesdf,)
 asb.predict(knetmlpclassifier,smotedtrainingfeaturesdf,)
@@ -669,7 +730,7 @@ asb.predict(knetmlpclassifier,smotedtrainingfeaturesdf,)
 # Get class predictions from each model for testing set
 asb.predict(logisticclassifier,testingfeaturesdf,)
 asb.predict(probitclassifier,testingfeaturesdf,)
-asb.predict(randomforestclassifier,testingfeaturesdf,)
+asb.predict(rfclassifier,testingfeaturesdf,)
 asb.predict(csvc_svmclassifier,testingfeaturesdf,)
 asb.predict(nusvc_svmclassifier,testingfeaturesdf,)
 asb.predict(knetmlpclassifier,testingfeaturesdf,)
@@ -679,3 +740,13 @@ asb.predict(knetmlpclassifier,testingfeaturesdf,)
 ## Appendix B: Save models to file and load models from file #################
 ##############################################################################
 ##############################################################################
+
+if (get(ENV, "LOADTRAINEDMODELSFROMFILE", "") != "true") &&
+        (get(ENV, "SAVETRAINEDMODELSTOFILE", "") == "true")
+    asb.save(logisticclassifier_filename, logisticclassifier)
+    asb.save(probitclassifier_filename, probitclassifier)
+    asb.save(rfclassifier_filename, rfclassifier)
+    asb.save(csvc_svmclassifier_filename, csvc_svmclassifier)
+    asb.save(nusvc_svmclassifier_filename, nusvc_svmclassifier)
+    asb.save(knetmlpclassifier_filename, knetmlpclassifier)
+end

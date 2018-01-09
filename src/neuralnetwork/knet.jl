@@ -263,8 +263,7 @@ end
 function _singlelabelknetclassifier_Knet(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        singlelabellevels::AbstractVector,
-        dffeaturecontrasts::AbstractContrasts;
+        singlelabellevels::AbstractVector;
         name::AbstractString = "",
         predict::Function = _emptyfunction,
         loss::Function =_emptyfunction,
@@ -282,9 +281,8 @@ function _singlelabelknetclassifier_Knet(
     dftransformer_index = 1
     dftransformer_transposefeatures = true
     dftransformer_transposelabels = true
-    dftransformer = ImmutableDataFrame2ClassificationKnetTransformer(
+    dftransformer = MutableDataFrame2ClassificationKnetTransformer(
         featurenames,
-        dffeaturecontrasts,
         labelnames,
         labellevels,
         dftransformer_index,
@@ -337,8 +335,7 @@ end
 function singlelabelknetclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        singlelabellevels::AbstractVector,
-        dffeaturecontrasts::AbstractContrasts;
+        singlelabellevels::AbstractVector;
         package::Symbol = :none,
         name::AbstractString = "",
         predict::Function = _emptyfunction,
@@ -355,8 +352,7 @@ function singlelabelknetclassifier(
         result = _singlelabelknetclassifier_Knet(
             featurenames,
             singlelabelname,
-            singlelabellevels,
-            dffeaturecontrasts;
+            singlelabellevels;
             name = name,
             predict = predict,
             loss = loss,
@@ -378,8 +374,7 @@ const knetclassifier = singlelabelknetclassifier
 
 function _singlelabelknetregression_Knet(
         featurenames::AbstractVector,
-        singlelabelname::Symbol,
-        dffeaturecontrasts::AbstractContrasts;
+        singlelabelname::Symbol;
         name::AbstractString = "",
         predict::Function = _emptyfunction,
         loss::Function =_emptyfunction,
@@ -395,9 +390,8 @@ function _singlelabelknetregression_Knet(
     dftransformer_index = 1
     dftransformer_transposefeatures = true
     dftransformer_transposelabels = true
-    dftransformer = ImmutableDataFrame2RegressionKnetTransformer(
+    dftransformer = MutableDataFrame2RegressionKnetTransformer(
         featurenames,
-        dffeaturecontrasts,
         labelnames;
         transposefeatures = true,
         transposelabels = true,
@@ -433,8 +427,7 @@ end
 
 function singlelabelknetregression(
         featurenames::AbstractVector,
-        singlelabelname::Symbol,
-        dffeaturecontrasts::AbstractContrasts;
+        singlelabelname::Symbol;
         package::Symbol = :none,
         name::AbstractString = "",
         predict::Function = _emptyfunction,
@@ -450,8 +443,7 @@ function singlelabelknetregression(
     if package == :Knetjl
         result = _singlelabelknetregression_Knet(
             featurenames,
-            singlelabelname,
-            dffeaturecontrasts;
+            singlelabelname;
             name = name,
             predict = predict,
             loss = loss,

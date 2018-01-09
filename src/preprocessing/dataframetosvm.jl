@@ -55,9 +55,8 @@ function DataFrame2LIBSVMTransformer(
         dffeaturecontrasts::AbstractContrasts;
         levels::AbstractVector = [],
         )
-    df2decisiontreetransformer = ImmutableDataFrame2DecisionTreeTransformer(
+    df2decisiontreetransformer = MutableDataFrame2DecisionTreeTransformer(
         featurenames,
-        dffeaturecontrasts,
         singlelabelname;
         levels = levels,
         )
