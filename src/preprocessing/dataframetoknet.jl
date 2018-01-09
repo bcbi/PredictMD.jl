@@ -1,7 +1,7 @@
 import DataFrames
 import StatsModels
 
-mutable struct ImmutableDataFrame2ClassificationKnetTransformer <:
+mutable struct MutableDataFrame2ClassificationKnetTransformer <:
         AbstractPrimitiveObject
     featurenames::T1 where T1 <: AbstractVector
     labelnames::T2 where T2 <: SymbolVector
@@ -10,7 +10,7 @@ mutable struct ImmutableDataFrame2ClassificationKnetTransformer <:
     transposefeatures::T5 where T5 <: Bool
     transposelabels::T6 where T6 <: Bool
     dffeaturecontrasts::T7 where T7 <: AbstractContrasts
-    function ImmutableDataFrame2ClassificationKnetTransformer(
+    function MutableDataFrame2ClassificationKnetTransformer(
             featurenames::AbstractVector,
             labelnames::SymbolVector,
             labellevels::Associative,
@@ -30,20 +30,52 @@ mutable struct ImmutableDataFrame2ClassificationKnetTransformer <:
     end
 end
 
-function setfeaturecontrasts(
-        x::ImmutableDataFrame2ClassificationKnetTransformer,
+function setfeaturecontrasts!(
+        x::MutableDataFrame2ClassificationKnetTransformer,
         contrasts::AbstractContrasts,
         )
     x.dffeaturecontrasts = contrasts
     return nothing
 end
 
-function valuehistories(x::ImmutableDataFrame2ClassificationKnetTransformer)
+function getunderlying(
+        x::MutableDataFrame2ClassificationKnetTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    result = x.dffeaturecontrasts
+    return result
+end
+
+function setunderlying!(
+        x::MutableDataFrame2ClassificationKnetTransformer,
+        contrasts;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    x.dffeaturecontrasts = contrasts
+    return nothing
+end
+
+function gethistory(
+        x::MutableDataFrame2ClassificationKnetTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function sethistory!(
+        x::MutableDataFrame2ClassificationKnetTransformer,
+        h;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
     return nothing
 end
 
 function transform(
-        transformer::ImmutableDataFrame2ClassificationKnetTransformer,
+        transformer::MutableDataFrame2ClassificationKnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...
@@ -61,7 +93,8 @@ function transform(
         @assert(typeof(labelsarray) <: AbstractVector)
         @assert(length(labelsarray) == size(labelsdf, 1))
     else
-        labelsarray = -99 * ones(size(labelsdf, 1), length(transformer.labelnames))
+        labelsarray =
+            -99 * ones(size(labelsdf, 1), length(transformer.labelnames))
         for j = 1:length(transformer.labelnames)
             label_j = transformer.labelnames[j]
             levels_j = transformer.labellevels[label_j]
@@ -97,7 +130,7 @@ function transform(
 end
 
 function transform(
-        transformer::ImmutableDataFrame2ClassificationKnetTransformer,
+        transformer::MutableDataFrame2ClassificationKnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         kwargs...
         )
@@ -120,7 +153,7 @@ function transform(
 end
 
 function fit!(
-        transformer::ImmutableDataFrame2ClassificationKnetTransformer,
+        transformer::MutableDataFrame2ClassificationKnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...
@@ -129,7 +162,7 @@ function fit!(
 end
 
 function predict(
-        transformer::ImmutableDataFrame2ClassificationKnetTransformer,
+        transformer::MutableDataFrame2ClassificationKnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )
@@ -137,7 +170,7 @@ function predict(
 end
 
 function predict_proba(
-        transformer::ImmutableDataFrame2ClassificationKnetTransformer,
+        transformer::MutableDataFrame2ClassificationKnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )
@@ -167,7 +200,7 @@ mutable struct MutableDataFrame2RegressionKnetTransformer <:
     end
 end
 
-function setfeaturecontrasts(
+function setfeaturecontrasts!(
         x::MutableDataFrame2RegressionKnetTransformer,
         contrasts::AbstractContrasts,
         )
@@ -175,7 +208,39 @@ function setfeaturecontrasts(
     return nothing
 end
 
-function valuehistories(x::MutableDataFrame2RegressionKnetTransformer)
+function getunderlying(
+        x::MutableDataFrame2RegressionKnetTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    result = x.dffeaturecontrasts
+    return result
+end
+
+function setunderlying!(
+        x::MutableDataFrame2RegressionKnetTransformer,
+        object;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    x.dffeaturecontrasts = object
+    return nothing
+end
+
+function gethistory(
+        x::MutableDataFrame2RegressionKnetTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function sethistory!(
+        x::MutableDataFrame2RegressionKnetTransformer,
+        h;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
     return nothing
 end
 

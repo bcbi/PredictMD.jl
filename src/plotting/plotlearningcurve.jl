@@ -12,9 +12,9 @@ function plotlearningcurve(
         startat::Union{Integer, Symbol} = :start,
         endat::Union{Integer, Symbol} = :end,
         )
-    inputobjectvaluehistories = valuehistories(inputobject)
+    history = gethistory(inputobject)
     result = plotlearningcurve(
-        inputobjectvaluehistories,
+        history,
         curvetype,
         window = window,
         legendPos = legendPos,
@@ -26,7 +26,7 @@ function plotlearningcurve(
 end
 
 function plotlearningcurve(
-        inputvaluehistories::ValueHistories.MultivalueHistory,
+        history::ValueHistories.MultivalueHistory,
         curvetype::Symbol = :lossvsiteration;
         window::Integer = 0,
         legendPos::AbstractString = "north east",
@@ -39,7 +39,7 @@ function plotlearningcurve(
         ylabel = "Loss"
         legendentry = "Loss function"
         xvalues, yvalues = ValueHistories.get(
-            inputvaluehistories,
+            history,
             :lossatiteration,
             )
     elseif curvetype == :lossvsepoch
@@ -47,7 +47,7 @@ function plotlearningcurve(
         ylabel = "Loss"
         legendentry = "Loss function"
         xvalues, yvalues = ValueHistories.get(
-            inputvaluehistories,
+            history,
             :lossatepoch,
             )
     else

@@ -11,19 +11,19 @@ import Knet
 import LIBSVM
 import StatsBase
 
+# ENV["SAVETRAINEDMODELSTOFILE"] = "true"
 # ENV["LOADTRAINEDMODELSFROMFILE"] = "true"
-ENV["SAVETRAINEDMODELSTOFILE"] = "true"
 
-# linearreg_filename = joinpath(tempdir(), "linearreg.jld2")
-# randomforestreg_filename = joinpath(tempdir(), "randomforestreg.jld2")
-# epsilonsvr_svmreg_filename = joinpath(tempdir(), "epsilonsvr_svmreg.jld2")
-# nusvr_svmreg_filename = joinpath(tempdir(), "nusvr_svmreg.jld2")
-# knetmlpreg_filename = joinpath(tempdir(), "knetmlpreg.jld2")
-linearreg_filename = "/Users/dilum/Desktop/linearreg.jld2"
-randomforestreg_filename = "/Users/dilum/Desktop/randomforestreg.jld2"
-epsilonsvr_svmreg_filename = "/Users/dilum/Desktop/epsilonsvr_svmreg.jld2"
-nusvr_svmreg_filename = "/Users/dilum/Desktop/nusvr_svmreg.jld2"
-knetmlpreg_filename = "/Users/dilum/Desktop/knetmlpreg.jld2"
+linearreg_filename = joinpath(tempdir(), "linearreg.jld2")
+randomforestreg_filename = joinpath(tempdir(), "randomforestreg.jld2")
+epsilonsvr_svmreg_filename = joinpath(tempdir(), "epsilonsvr_svmreg.jld2")
+nusvr_svmreg_filename = joinpath(tempdir(), "nusvr_svmreg.jld2")
+knetmlpreg_filename = joinpath(tempdir(), "knetmlpreg.jld2")
+# linearreg_filename = "/Users/dilum/Desktop/linearreg.jld2"
+# randomforestreg_filename = "/Users/dilum/Desktop/randomforestreg.jld2"
+# epsilonsvr_svmreg_filename = "/Users/dilum/Desktop/epsilonsvr_svmreg.jld2"
+# nusvr_svmreg_filename = "/Users/dilum/Desktop/nusvr_svmreg.jld2"
+# knetmlpreg_filename = "/Users/dilum/Desktop/knetmlpreg.jld2"
 
 ##############################################################################
 ##############################################################################
@@ -70,7 +70,7 @@ labelname = :MedV
 featuresdf = df[featurenames]
 labelsdf = df[[labelname]]
 
-# View summary statistics for label variable
+# View summary statistics for label variable (mean, quartiles, etc.)
 StatsBase.summarystats(labelsdf[labelname])
 
 # Split data into training set (70%) and testing set (30%)
@@ -131,8 +131,7 @@ asb.regressionmetrics(
 # Set up random forest regression model
 randomforestreg = asb.randomforestregression(
     featurenames,
-    labelname,
-    featurecontrasts;
+    labelname;
     nsubfeatures = 2, # number of subfeatures; defaults to 2
     ntrees = 20, # number of trees; defaults to 10
     package = :DecisionTreejl,
@@ -171,14 +170,13 @@ asb.regressionmetrics(
 # Set up epsilon-SVR model
 epsilonsvr_svmreg = asb.svmregression(
     featurenames,
-    labelname,
-    featurecontrasts;
+    labelname;
     package = :LIBSVMjl,
     svmtype = LIBSVM.EpsilonSVR,
     name = "SVM (epsilon-SVR)",
     kernel = LIBSVM.Kernel.Linear,
+    verbose = false,
     )
-
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     asb.load!(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
@@ -212,12 +210,12 @@ asb.regressionmetrics(
 # Set up nu-SVR model
 nusvr_svmreg = asb.svmregression(
     featurenames,
-    labelname,
-    featurecontrasts;
+    labelname;
     package = :LIBSVMjl,
     svmtype = LIBSVM.NuSVR,
     name = "SVM (nu-SVR)",
     kernel = LIBSVM.Kernel.Linear,
+    verbose = false,
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
@@ -225,10 +223,9 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
 else
     # set feature contrasts
     asb.setfeaturecontrasts!(nusvr_svmreg, featurecontrasts)
+    # Train nu-SVR model
+    asb.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
-
-# Train nu-SVR model
-asb.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 
 # Evaluate performance of nu-SVR on training set
 asb.regressionmetrics(
@@ -261,6 +258,17 @@ function knetmlp_predict(
     return x3
 end
 
+# Randomly initialize model weights
+knetmlp_modelweights = Any[
+    # input layer has featurecontrasts.numarrayfeatures features
+    # first hidden layer (64 neurons):
+    Cfloat.(0.1f0*randn(Cfloat,10,featurecontrasts.numarrayfeatures)),#weights
+    Cfloat.(zeros(Cfloat,10,1)), # biases
+    # output layer (2 neurons, same as number of classes):
+    Cfloat.(0.1f0*randn(Cfloat,1,10)), # weights
+    Cfloat.(zeros(Cfloat,1,1)), # biases
+    ]
+
 # Define loss function
 function knetmlp_loss(
         predict::Function,
@@ -285,8 +293,8 @@ end
 
 # Define loss hyperparameters
 knetmlp_losshyperparameters = Dict()
-knetmlp_losshyperparameters[:L1] = Cfloat(0.00001)
-knetmlp_losshyperparameters[:L2] = Cfloat(0.00001)
+knetmlp_losshyperparameters[:L1] = Cfloat(0.0)
+knetmlp_losshyperparameters[:L2] = Cfloat(0.0)
 
 # Select optimization algorithm
 knetmlp_optimizationalgorithm = :Adam
@@ -303,22 +311,10 @@ knetmlp_minibatchsize = 48
 # maxepochs.
 knetmlp_maxepochs = 500
 
-# Randomly initialize model weights
-knetmlp_modelweights = Any[
-    # input layer has featurecontrasts.numarrayfeatures features
-    # first hidden layer (64 neurons):
-    Cfloat.(0.1f0*randn(Cfloat,10,featurecontrasts.numarrayfeatures)),#weights
-    Cfloat.(zeros(Cfloat,10,1)), # biases
-    # output layer (2 neurons, same as number of classes):
-    Cfloat.(0.1f0*randn(Cfloat,1,10)), # weights
-    Cfloat.(zeros(Cfloat,1,1)), # biases
-    ]
-
 # Set up multilayer perceptron model
 knetmlpreg = asb.knetregression(
     featurenames,
-    labelname,
-    featurecontrasts;
+    labelname;
     package = :Knetjl,
     name = "Knet MLP",
     predict = knetmlp_predict,
@@ -329,7 +325,7 @@ knetmlpreg = asb.knetregression(
     minibatchsize = knetmlp_minibatchsize,
     modelweights = knetmlp_modelweights,
     maxepochs = knetmlp_maxepochs,
-    printlosseverynepochs = 50, # if 0, will not print at all
+    printlosseverynepochs = 100, # if 0, will not print at all
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
@@ -445,7 +441,8 @@ asb.predict(knetmlpreg,testingfeaturesdf,)
 ##############################################################################
 ##############################################################################
 
-if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") != "true"
+if (get(ENV, "LOADTRAINEDMODELSFROMFILE", "") != "true") &&
+        (get(ENV, "SAVETRAINEDMODELSTOFILE", "") == "true")
     asb.save(linearreg_filename, linearreg)
     asb.save(randomforestreg_filename, randomforestreg)
     asb.save(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)

@@ -10,21 +10,21 @@ import LIBSVM
 import RDatasets
 import StatsBase
 
+# ENV["SAVETRAINEDMODELSTOFILE"] = "true"
 # ENV["LOADTRAINEDMODELSFROMFILE"] = "true"
-ENV["SAVETRAINEDMODELSTOFILE"] = "true"
 
-# logisticclassifier_filename = joinpath(tempdir(), "logisticclassifier.jld2")
-# probitclassifier_filename = joinpath(tempdir(), "probitclassifier.jld2")
-# rfclassifier_filename = joinpath(tempdir(), "rfclassifier.jld2")
-# csvc_svmclassifier_filename = joinpath(tempdir(), "csvc_svmclassifier.jld2")
-# nusvc_svmclassifier_filename = joinpath(tempdir(), "nusvc_svmclassifier.jld2")
-# knetmlpclassifier_filename = joinpath(tempdir(), "knetmlpclassifier.jld2")
-logisticclassifier_filename = "/Users/dilum/Desktop/logisticclassifier.jld2"
-probitclassifier_filename = "/Users/dilum/Desktop/probitclassifier.jld2"
-rfclassifier_filename = "/Users/dilum/Desktop/rfclassifier.jld2"
-csvc_svmclassifier_filename = "/Users/dilum/Desktop/csvc_svmclassifier.jld2"
-nusvc_svmclassifier_filename = "/Users/dilum/Desktop/nusvc_svmclassifier.jld2"
-knetmlpclassifier_filename = "/Users/dilum/Desktop/knetmlpclassifier.jld2"
+logisticclassifier_filename = joinpath(tempdir(), "logisticclassifier.jld2")
+probitclassifier_filename = joinpath(tempdir(), "probitclassifier.jld2")
+rfclassifier_filename = joinpath(tempdir(), "rfclassifier.jld2")
+csvc_svmclassifier_filename = joinpath(tempdir(), "csvc_svmclassifier.jld2")
+nusvc_svmclassifier_filename = joinpath(tempdir(), "nusvc_svmclassifier.jld2")
+knetmlpclassifier_filename = joinpath(tempdir(), "knetmlpclassifier.jld2")
+# logisticclassifier_filename = "/Users/dilum/Desktop/logisticclassifier.jld2"
+# probitclassifier_filename = "/Users/dilum/Desktop/probitclassifier.jld2"
+# rfclassifier_filename = "/Users/dilum/Desktop/rfclassifier.jld2"
+# csvc_svmclassifier_filename = "/Users/dilum/Desktop/csvc_svmclassifier.jld2"
+# nusvc_svmclassifier_filename = "/Users/dilum/Desktop/nusvc_svmclassifier.jld2"
+# knetmlpclassifier_filename = "/Users/dilum/Desktop/knetmlpclassifier.jld2"
 
 ##############################################################################
 ##############################################################################
@@ -125,9 +125,8 @@ logisticclassifier = asb.binarylogisticclassifier(
     name = "Logistic regression", # optional
     )
 
-
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    asb.load(logisticclassifier_filename, logisticclassifier)
+    asb.load!(logisticclassifier_filename, logisticclassifier)
 else
     # set feature contrasts
     asb.setfeaturecontrasts!(logisticclassifier, featurecontrasts)
@@ -138,8 +137,6 @@ else
         smotedtraininglabelsdf,
         )
 end
-
-
 
 # View coefficients, p values, etc. for underlying logistic regression
 asb.getunderlying(logisticclassifier)
@@ -179,7 +176,7 @@ probitclassifier = asb.binaryprobitclassifier(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    asb.load(probitclassifier_filename, probitclassifier)
+    asb.load!(probitclassifier_filename, probitclassifier)
 else
     # set feature contrasts
     asb.setfeaturecontrasts!(probitclassifier, featurecontrasts)
@@ -190,8 +187,6 @@ else
         smotedtraininglabelsdf,
         )
 end
-
-
 
 # View coefficients, p values, etc. for underlying probit regression
 asb.getunderlying(probitclassifier)
@@ -224,8 +219,7 @@ asb.binaryclassificationmetrics(
 rfclassifier = asb.randomforestclassifier(
     featurenames,
     labelname,
-    labellevels,
-    featurecontrasts;
+    labellevels;
     nsubfeatures = 4, # number of subfeatures; defaults to 2
     ntrees = 200, # number of trees; defaults to 10
     package = :DecisionTreejl,
@@ -233,7 +227,7 @@ rfclassifier = asb.randomforestclassifier(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    asb.load(rfclassifier_filename, rfclassifier)
+    asb.load!(rfclassifier_filename, rfclassifier)
 else
     # set feature contrasts
     asb.setfeaturecontrasts!(rfclassifier, featurecontrasts)
@@ -273,15 +267,15 @@ asb.binaryclassificationmetrics(
 csvc_svmclassifier = asb.svmclassifier(
     featurenames,
     labelname,
-    labellevels,
-    featurecontrasts; package = :LIBSVMjl,
+    labellevels;
+    package = :LIBSVMjl,
     svmtype = LIBSVM.SVC,
     name = "SVM (C-SVC)",
-    verbose = true,
+    verbose = false,
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    asb.load(csvc_svmclassifier_filename, csvc_svmclassifier)
+    asb.load!(csvc_svmclassifier_filename, csvc_svmclassifier)
 else
     # set feature contrasts
     asb.setfeaturecontrasts!(csvc_svmclassifier, featurecontrasts)
@@ -321,15 +315,15 @@ asb.binaryclassificationmetrics(
 nusvc_svmclassifier = asb.svmclassifier(
     featurenames,
     labelname,
-    labellevels,
-    featurecontrasts; package = :LIBSVMjl,
+    labellevels;
+    package = :LIBSVMjl,
     svmtype = LIBSVM.NuSVC,
     name = "SVM (nu-SVC)",
-    verbose = true,
+    verbose = false,
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    asb.load(nusvc_svmclassifier_filename, nusvc_svmclassifier)
+    asb.load!(nusvc_svmclassifier_filename, nusvc_svmclassifier)
 else
     # set feature contrasts
     asb.setfeaturecontrasts!(nusvc_svmclassifier, featurecontrasts)
@@ -340,8 +334,6 @@ else
         smotedtraininglabelsdf,
         )
 end
-
-
 
 # Evaluate performance of nu-SVC on smoted training set
 asb.binaryclassificationmetrics(
@@ -388,6 +380,20 @@ function knetmlpclassifier_predict(
     end
 end
 
+# Randomly initialize model weights
+knetmlpclassifier_modelweights = Any[
+    # input layer has featurecontrasts.numarrayfeatures features
+    # first hidden layer (64 neurons):
+    Cfloat.(0.1f0*randn(Cfloat,64,featurecontrasts.numarrayfeatures)),#weights
+    Cfloat.(zeros(Cfloat,64,1)), # biases
+    # second hidden layer (32 neurons):
+    Cfloat.(0.1f0*randn(Cfloat,32,64)), # weights
+    Cfloat.(zeros(Cfloat,32,1)), # biases
+    # output layer (2 neurons, same as number of classes):
+    Cfloat.(0.1f0*randn(Cfloat,2,64)), # weights
+    Cfloat.(zeros(Cfloat,2,1)), # biases
+    ]
+
 # Define loss function
 function knetmlpclassifier_loss(
         predict::Function,
@@ -413,8 +419,8 @@ end
 
 # Define loss hyperparameters
 knetmlpclassifier_losshyperparameters = Dict()
-knetmlpclassifier_losshyperparameters[:L1] = Cfloat(0.00001)
-knetmlpclassifier_losshyperparameters[:L2] = Cfloat(0.00001)
+knetmlpclassifier_losshyperparameters[:L1] = Cfloat(0.0)
+knetmlpclassifier_losshyperparameters[:L2] = Cfloat(0.0)
 
 # Select optimization algorithm
 knetmlpclassifier_optimizationalgorithm = :Momentum
@@ -431,26 +437,11 @@ knetmlpclassifier_minibatchsize = 48
 # maxepochs.
 knetmlpclassifier_maxepochs = 500
 
-# Randomly initialize model weights
-knetmlpclassifier_modelweights = Any[
-    # input layer has featurecontrasts.numarrayfeatures features
-    # first hidden layer (64 neurons):
-    Cfloat.(0.1f0*randn(Cfloat,64,featurecontrasts.numarrayfeatures)),#weights
-    Cfloat.(zeros(Cfloat,64,1)), # biases
-    # second hidden layer (32 neurons):
-    Cfloat.(0.1f0*randn(Cfloat,32,64)), # weights
-    Cfloat.(zeros(Cfloat,32,1)), # biases
-    # output layer (2 neurons, same as number of classes):
-    Cfloat.(0.1f0*randn(Cfloat,2,64)), # weights
-    Cfloat.(zeros(Cfloat,2,1)), # biases
-    ]
-
 # Set up multilayer perceptron model
 knetmlpclassifier = asb.knetclassifier(
     featurenames,
     labelname,
-    labellevels,
-    featurecontrasts;
+    labellevels;
     package = :Knetjl,
     name = "Knet MLP",
     predict = knetmlpclassifier_predict,
@@ -460,12 +451,12 @@ knetmlpclassifier = asb.knetclassifier(
     optimizerhyperparameters = knetmlpclassifier_optimizerhyperparameters,
     minibatchsize = knetmlpclassifier_minibatchsize,
     modelweights = knetmlpclassifier_modelweights,
-    printlosseverynepochs = 50, # if 0, will not print at all
+    printlosseverynepochs = 100, # if 0, will not print at all
     maxepochs = knetmlpclassifier_maxepochs,
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    asb.load(knetmlpclassifier_filename, knetmlpclassifier)
+    asb.load!(knetmlpclassifier_filename, knetmlpclassifier)
 else
     # set feature contrasts
     asb.setfeaturecontrasts!(knetmlpclassifier, featurecontrasts)
@@ -476,8 +467,6 @@ else
         smotedtraininglabelsdf,
         )
 end
-
-
 
 # Plot learning curve: loss vs. epoch
 knetmlpclassifier_learningcurve_lossvsepoch = asb.plotlearningcurve(

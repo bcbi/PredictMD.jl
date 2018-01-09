@@ -19,42 +19,99 @@ function setfeaturecontrasts!(
         contrasts::AbstractContrasts,
         )
     for i = 1:length(x.objectsvector)
-        setfeaturecontrasts!(x, contrasts)
+        setfeaturecontrasts!(x.objectsvector[i], contrasts)
     end
     return nothing
 end
 
-function underlying(
+function getunderlying(
         x::ImmutableSimpleLinearPipeline;
         saving::Bool = false,
         loading::Bool = false,
         )
-    allunderlyingobjects = [underlying(o) for o in x.objectsvector]
+    allunderlying = [
+        getunderlying(
+            o;
+            saving=saving,
+            loading=loading,
+            ) for o in x.objectsvector
+        ]
     if saving || loading
     else
-        deletenothings!(allunderlyingobjects)
-        if length(allunderlyingobjects) == 0
-            allunderlyingobjects = nothing
-        elseif length() == 1
-            allunderlyingobjects = allunderlyingobjects[1]
+        deletenothings!(allunderlying)
+        if length(allunderlying) == 0
+            allunderlying = nothing
+        elseif length(allunderlying) == 1
+            allunderlying = allunderlying[1]
         else
         end
     end
-    return allunderlyingobjects
+    return allunderlying
 end
 
-function valuehistories(x::ImmutableSimpleLinearPipeline)
-    allvaluehistories =
-        [valuehistories(o) for o in x.objectsvector]
-    allvaluehistoriesminusnothings =
-        allvaluehistories[find(allvaluehistories .!= nothing)]
-    if length(allvaluehistoriesminusnothings) == 0
-        return []
-    elseif length(allvaluehistoriesminusnothings) == 1
-        return allvaluehistoriesminusnothings[1]
-    else
-        return allvaluehistoriesminusnothings
+function setunderlying!(
+        x::ImmutableSimpleLinearPipeline,
+        object;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    if length(x.objectsvector) != length(object)
+        error("length(x) != length(object)")
     end
+    for i = 1:length(x.objectsvector)
+        setunderlying!(
+            x.objectsvector[i],
+            object[i];
+            saving=saving,
+            loading=loading,
+            )
+    end
+    return nothing
+end
+
+function gethistory(
+        x::ImmutableSimpleLinearPipeline;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    allhistory = [
+        gethistory(
+            o;
+            saving = saving,
+            loading = loading,
+            ) for o in x.objectsvector
+        ]
+    if saving || loading
+    else
+        deletenothings!(allhistory)
+        if length(allhistory) == 0
+            allhistory = nothing
+        elseif length(allhistory) == 1
+            allhistory = allhistory[1]
+        else
+        end
+    end
+    return allhistory
+end
+
+function sethistory!(
+        x::ImmutableSimpleLinearPipeline,
+        h;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    if length(x.objectsvector) != length(h)
+        error("length(x.objectsvector) != length(h)")
+    end
+    for i = 1:length(x.objectsvector)
+        sethistory!(
+            x.objectsvector[i],
+            h[i];
+            saving=saving,
+            loading=loading,
+            )
+    end
+    return nothing
 end
 
 function fit!(

@@ -29,6 +29,42 @@ function setfeaturecontrasts!(
     return nothing
 end
 
+function getunderlying(
+        x::MutableDataFrame2DecisionTreeTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    result = x.dffeaturecontrasts
+    return result
+end
+
+function setunderlying!(
+        x::MutableDataFrame2DecisionTreeTransformer,
+        object;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    x.dffeaturecontrasts = object
+    return nothing
+end
+
+function gethistory(
+        x::MutableDataFrame2DecisionTreeTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function sethistory!(
+        x::MutableDataFrame2DecisionTreeTransformer,
+        h;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
 function transform(
         transformer::MutableDataFrame2DecisionTreeTransformer,
         featuresdf::DataFrames.AbstractDataFrame,

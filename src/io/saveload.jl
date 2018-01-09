@@ -1,25 +1,29 @@
+import FileIO
 import JLD2
 
 function save(filename::AbstractString, x::AbstractObject)
-    allunderlyingobjects_tosave = getunderlying(x)
-    if allunderlyingobjects_tosave == nothing
-        error("No objects to save.")
-    else
-        JLD2.save(
-            filename,
-            Dict(:allunderlyingobjects => allunderlyingobjects_tosave),
-            )
+    if !endswith(filename, ".jld2")
+        error("filename must end in \".jld2\"")
     end
+    allunderlying = getunderlying(x;saving=true,)
+    allhistory = gethistory(x;saving=true,)
+    FileIO.save(
+        filename,
+        Dict(
+            "allunderlying" => allunderlying,
+            "allhistory" => allhistory,
+            ),
+        )
+    info(string("Saved model to file ", filename))
+    return nothing
 end
 
 function load!(filename::AbstractString, x::AbstractObject)
-    alldatasets = JLD2.load(
-        filename,
-        )
-    allunderlyingobjects_fromfile = alldatasets[:allunderlyingobjects]
-    if allunderlyingobjects_fromfile == nothing
-        error("No objects to load.")
-    else
-        setunderlying!(x, allunderlyingobjects_fromfile)
-    end
+    alldatasets = FileIO.load(filename)
+    allunderlying = alldatasets["allunderlying"]
+    allhistory = alldatasets["allhistory"]
+    setunderlying!(x,allunderlying;loading=true,)
+    sethistory!(x,allhistory;loading=true,)
+    info(string("Loaded model from file ", filename))
+    return nothing
 end

@@ -2,30 +2,24 @@
 
 function openbrowserwindow(filename::AbstractString)
     if istravisci(ENV)
-        # skip opening file during Travis builds
-        warn(
-            string(
-                "Skipping opening file during Travis build. ",
-                "filename: ",
-                filename,
-                )
-            )
+        warn(string("Skipping opening file during Travis build: ",filename,))
     else
-        info(string("Opening file: ", filename))
         if is_apple()
-            result = run(`open $(filename)`)
-            return result
+            run(`open $(filename)`)
         elseif is_linux()
-            result = run(`xdg-open $(filename)`)
-            return result
-        elseif is_windows()
-            result = run(`$(ENV["COMSPEC"]) /c start "" "$(filename)"`)
-            return result
+            run(`xdg-open $(filename)`)
         elseif is_bsd()
-            result = run(`xdg-open $(filename)`)
-            return result
+            run(`xdg-open $(filename)`)
+        elseif is_windows()
+            run(`$(ENV["COMSPEC"]) /c start "" "$(filename)"`)
         else
-            error("Unknown operating system; cannot open file.")
+            error(
+                string(
+                    "unknown operating system; could not open file ",
+                    filename,
+                    )
+                )
         end
+        info(string("Opened file ",filename,))
     end
 end

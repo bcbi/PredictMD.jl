@@ -23,7 +23,7 @@ mutable struct MutableLIBSVMjlSVMEstimator <: AbstractPrimitiveObject
             svmtype::Type = LIBSVM.SVC,
             kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
             degree::Integer = 3,
-            gamma::AbstractFloat = 0.1
+            gamma::AbstractFloat = 0.1,
             coef0::AbstractFloat = 0.0,
             cost::AbstractFloat = 1.0,
             nu::AbstractFloat = 0.5,
@@ -59,9 +59,47 @@ mutable struct MutableLIBSVMjlSVMEstimator <: AbstractPrimitiveObject
     end
 end
 
-function underlying(x::MutableLIBSVMjlSVMEstimator)
-    result = x.svm
+function setfeaturecontrasts!(
+        x::MutableLIBSVMjlSVMEstimator,
+        contrasts::AbstractContrasts,
+        )
+    return nothing
+end
+
+function getunderlying(
+        x::MutableLIBSVMjlSVMEstimator;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    result = x.underlyingsvm
     return result
+end
+
+function setunderlying!(
+        x::MutableLIBSVMjlSVMEstimator,
+        object;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    x.underlyingsvm = object
+    return nothing
+end
+
+function gethistory(
+        x::MutableLIBSVMjlSVMEstimator;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function sethistory!(
+        x::MutableLIBSVMjlSVMEstimator,
+        h;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
 end
 
 function fit!(
@@ -349,7 +387,7 @@ function singlelabelsvmregression(
         svmtype::Type = LIBSVM.EpsilonSVR,
         kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
         degree::Integer = 3,
-        gamma::AbstractFloat = 0.1
+        gamma::AbstractFloat = 0.1,
         coef0::AbstractFloat = 0.0,
         cost::AbstractFloat = 1.0,
         nu::AbstractFloat = 0.5,

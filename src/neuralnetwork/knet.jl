@@ -3,31 +3,30 @@ import StatsFuns
 import ValueHistories
 
 function _emptyfunction()
+    return nothing
 end
 
 mutable struct MutableKnetjlNeuralNetworkEstimator <: AbstractPrimitiveObject
     name::T1 where T1 <: AbstractString
     isclassificationmodel::T2 where T2 <: Bool
-    isregressionmodel::T2 where T2 <: Bool
+    isregressionmodel::T3 where T3 <: Bool
 
     # hyperparameters (not learned from data):
-    predict::T3 where T3 <: Function
-    loss::T4 where T4 <: Function
-    losshyperparameters::T5 where T5 <: Associative
-    optimizationalgorithm::T6 where T6 <: Symbol
-    optimizerhyperparameters::T7 where T7 <: Associative
-    minibatchsize::T8 where T8 <: Integer
-    maxepochs::T9 where T9 <: Integer
+    predict::T4 where T4 <: Function
+    loss::T5 where T5 <: Function
+    losshyperparameters::T6 where T6 <: Associative
+    optimizationalgorithm::T7 where T7 <: Symbol
+    optimizerhyperparameters::T8 where T8 <: Associative
+    minibatchsize::T9 where T9 <: Integer
+    maxepochs::T10 where T10 <: Integer
+    printlosseverynepochs::T11 where T11 <: Integer
 
     # parameters (learned from data):
-    modelweights::T10 where T10 <: AbstractArray
-    modelweightoptimizers::T11 where T11
+    modelweights::T12 where T12 <: AbstractArray
+    modelweightoptimizers::T13 where T13
 
     # learning state
-    lastepoch::T12 where T12 <: Integer
-    lastiteration::T13 where T13 <: Integer
-    valuehistories::T14 where T14 <: ValueHistories.MultivalueHistory
-    printlosseverynepochs::T15 where T15 <: Integer
+    history::T where T <: ValueHistories.MultivalueHistory
 
     function MutableKnetjlNeuralNetworkEstimator(
             ;
@@ -41,8 +40,8 @@ mutable struct MutableKnetjlNeuralNetworkEstimator <: AbstractPrimitiveObject
             modelweights::AbstractArray = [],
             isclassificationmodel::Bool = false,
             isregressionmodel::Bool = false,
-            printlosseverynepochs::Integer = 0,
             maxepochs::Integer = 0,
+            printlosseverynepochs::Integer = 0,
             )
         optimizersymbol2type = Dict()
         optimizersymbol2type[:Sgd] = Knet.Sgd
@@ -59,7 +58,13 @@ mutable struct MutableKnetjlNeuralNetworkEstimator <: AbstractPrimitiveObject
             )
         lastepoch = 0
         lastiteration = 0
-        valuehistories = ValueHistories.MVHistory()
+        history = ValueHistories.MVHistory()
+        ValueHistories.push!(
+            history,
+            :epochatiteration,
+            0,
+            0,
+            )
         result = new(
             name,
             isclassificationmodel,
@@ -71,25 +76,59 @@ mutable struct MutableKnetjlNeuralNetworkEstimator <: AbstractPrimitiveObject
             optimizerhyperparameters,
             minibatchsize,
             maxepochs,
+            printlosseverynepochs,
             modelweights,
             modelweightoptimizers,
-            lastepoch,
-            lastiteration,
-            valuehistories,
-            printlosseverynepochs,
+            history,
             )
         return result
     end
 end
 
-function underlying(x::MutableKnetjlNeuralNetworkEstimator)
-    result = (predictfunction, modelweightsmodelweights)
+function setfeaturecontrasts!(
+        x::MutableKnetjlNeuralNetworkEstimator,
+        contrasts::AbstractContrasts,
+        )
+    return nothing
+end
+
+function getunderlying(
+        x::MutableKnetjlNeuralNetworkEstimator;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    result = (x.modelweights, x.modelweightoptimizers,)
     return result
 end
 
-function valuehistories(x::MutableKnetjlNeuralNetworkEstimator)
-    result = x.valuehistories
+function setunderlying!(
+        x::MutableKnetjlNeuralNetworkEstimator,
+        object;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    x.modelweights = object[1]
+    x.modelweightoptimizers = object[2]
+    return nothing
+end
+
+function gethistory(
+        x::MutableKnetjlNeuralNetworkEstimator;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    result = x.history
     return result
+end
+
+function sethistory!(
+        x::MutableKnetjlNeuralNetworkEstimator,
+        h::ValueHistories.MultivalueHistory;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    x.history = h
+    return nothing
 end
 
 function fit!(
@@ -114,6 +153,12 @@ function fit!(
         estimator.loss,
         2,
         )
+    alliterationssofar, allepochssofar = ValueHistories.get(
+        estimator.history,
+        :epochatiteration,
+        )
+    lastiteration = alliterationssofar[end]
+    lastepoch = allepochssofar[end]
     info(
         string(
             "Starting to train Knet.jl model. Max epochs: ",
@@ -132,14 +177,14 @@ function fit!(
         info(
             string(
                 "Epoch: ",
-                estimator.lastepoch,
+                lastepoch,
                 ". Loss: ",
                 lossbeforetrainingstarts,
                 "."
                 )
             )
     end
-    while estimator.lastepoch < estimator.maxepochs
+    while lastepoch < estimator.maxepochs
         for (x,y) in trainingdata
             grads = lossgradient(
                 estimator.predict,
@@ -153,7 +198,7 @@ function fit!(
                 grads,
                 estimator.modelweightoptimizers,
                 )
-            estimator.lastiteration += 1
+            lastiteration += 1
             currentiterationloss = estimator.loss(
                 estimator.predict,
                 estimator.modelweights,
@@ -162,18 +207,18 @@ function fit!(
                 estimator.losshyperparameters...
                 )
             ValueHistories.push!(
-                estimator.valuehistories,
+                estimator.history,
                 :lossatiteration,
-                estimator.lastiteration,
+                lastiteration,
                 currentiterationloss,
                 )
         end # end for
-        estimator.lastepoch += 1
+        lastepoch += 1
         ValueHistories.push!(
-            estimator.valuehistories,
+            estimator.history,
             :epochatiteration,
-            estimator.lastiteration,
-            estimator.lastepoch,
+            lastiteration,
+            lastepoch,
             )
         currentepochloss = estimator.loss(
             estimator.predict,
@@ -183,20 +228,20 @@ function fit!(
             estimator.losshyperparameters...
             )
         ValueHistories.push!(
-            estimator.valuehistories,
+            estimator.history,
             :lossatepoch,
-            estimator.lastepoch,
+            lastepoch,
             currentepochloss,
             )
         printlossthisepoch = (estimator.printlosseverynepochs > 0) &&
-            ( (estimator.lastepoch == estimator.maxepochs) ||
-                ( (estimator.lastepoch %
+            ( (lastepoch == estimator.maxepochs) ||
+                ( (lastepoch %
                     estimator.printlosseverynepochs) == 0 ) )
         if printlossthisepoch
             info(
                 string(
                     "Epoch: ",
-                    estimator.lastepoch,
+                    lastepoch,
                     ". Loss: ",
                     currentepochloss,
                     ".",
@@ -272,8 +317,8 @@ function _singlelabelknetclassifier_Knet(
         optimizerhyperparameters::Associative = Dict(),
         minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
-        printlosseverynepochs::Integer = 0,
         maxepochs::Integer = 0,
+        printlosseverynepochs::Integer = 0,
         )
     labelnames = [singlelabelname]
     labellevels = Dict()
@@ -285,9 +330,9 @@ function _singlelabelknetclassifier_Knet(
         featurenames,
         labelnames,
         labellevels,
-        dftransformer_index,
-        dftransformer_transposefeatures,
-        dftransformer_transposelabels,
+        dftransformer_index;
+        transposefeatures = dftransformer_transposefeatures,
+        transposelabels = dftransformer_transposelabels,
         )
     knetestimator = MutableKnetjlNeuralNetworkEstimator(
         ;
@@ -301,8 +346,8 @@ function _singlelabelknetclassifier_Knet(
         modelweights = modelweights,
         isclassificationmodel = true,
         isregressionmodel = false,
-        printlosseverynepochs = printlosseverynepochs,
         maxepochs = maxepochs,
+        printlosseverynepochs = printlosseverynepochs,
         )
     predprobalabelfixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
         1,
@@ -345,8 +390,8 @@ function singlelabelknetclassifier(
         optimizerhyperparameters::Associative = Dict(),
         minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
-        printlosseverynepochs::Integer = 0,
         maxepochs::Integer = 0,
+        printlosseverynepochs::Integer = 0,
         )
     if package == :Knetjl
         result = _singlelabelknetclassifier_Knet(
@@ -361,8 +406,8 @@ function singlelabelknetclassifier(
             optimizerhyperparameters = optimizerhyperparameters,
             minibatchsize = minibatchsize,
             modelweights = modelweights,
-            printlosseverynepochs = printlosseverynepochs,
             maxepochs = maxepochs,
+            printlosseverynepochs = printlosseverynepochs,
             )
         return result
     else
@@ -383,8 +428,8 @@ function _singlelabelknetregression_Knet(
         optimizerhyperparameters::Associative = Dict(),
         minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
-        printlosseverynepochs::Integer = 0,
         maxepochs::Integer = 0,
+        printlosseverynepochs::Integer = 0,
         )
     labelnames = [singlelabelname]
     dftransformer_index = 1
@@ -408,8 +453,8 @@ function _singlelabelknetregression_Knet(
         modelweights = modelweights,
         isclassificationmodel = false,
         isregressionmodel = true,
-        printlosseverynepochs = printlosseverynepochs,
         maxepochs = maxepochs,
+        printlosseverynepochs = printlosseverynepochs,
         )
     predpackager = ImmutablePackageMultiLabelPredictionTransformer(
         [singlelabelname,],
@@ -437,8 +482,8 @@ function singlelabelknetregression(
         optimizerhyperparameters::Associative = Dict(),
         minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
-        printlosseverynepochs::Integer = 0,
         maxepochs::Integer = 0,
+        printlosseverynepochs::Integer = 0,
         )
     if package == :Knetjl
         result = _singlelabelknetregression_Knet(
@@ -452,8 +497,8 @@ function singlelabelknetregression(
             optimizerhyperparameters = optimizerhyperparameters,
             minibatchsize = minibatchsize,
             modelweights = modelweights,
-            printlosseverynepochs = printlosseverynepochs,
             maxepochs = maxepochs,
+            printlosseverynepochs = printlosseverynepochs,
             )
         return result
     else

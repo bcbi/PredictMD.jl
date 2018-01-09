@@ -6,7 +6,44 @@ immutable ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer <:
     positiveclass::T2 where T2 <: AbstractString
 end
 
-function underlying(::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer)
+function setfeaturecontrasts!(
+        x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
+        contrasts::AbstractContrasts,
+        )
+    return nothing
+end
+
+function getunderlying(
+        x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function setunderlying!(
+        x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
+        object;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function gethistory(
+        x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function sethistory!(
+        x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
+        h;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
     return nothing
 end
 

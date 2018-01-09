@@ -39,9 +39,51 @@ mutable struct MutableDecisionTreejlRandomForestEstimator <:
     end
 end
 
+function setfeaturecontrasts!(
+        x::MutableDecisionTreejlRandomForestEstimator,
+        contrasts::AbstractContrasts,
+        )
+    return nothing
+end
+
 function underlying(x::MutableDecisionTreejlRandomForestEstimator)
-    result = x.randomforest
+    return nothing
+end
+
+function getunderlying(
+        x::MutableDecisionTreejlRandomForestEstimator;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    result = x.underlyingrandomforest
     return result
+end
+
+function setunderlying!(
+        x::MutableDecisionTreejlRandomForestEstimator,
+        object;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    x.underlyingrandomforest = object
+    return nothing
+end
+
+function gethistory(
+        x::MutableDecisionTreejlRandomForestEstimator;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function sethistory!(
+        x::MutableDecisionTreejlRandomForestEstimator,
+        h;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
 end
 
 function fit!(
@@ -49,14 +91,14 @@ function fit!(
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
-    info(string("Starting to train DecisionTree.jl random forest model."))
+    info(string("Starting to train DecisionTree.jl model."))
     randomforest = DecisionTree.build_forest(
         labelsarray,
         featuresarray,
         estimator.hyperparameters[:nsubfeatures],
         estimator.hyperparameters[:ntrees],
         )
-    info(string("Finished training DecisionTree random forest model."))
+    info(string("Finished training DecisionTree.jl model."))
     estimator.underlyingrandomforest = randomforest
     return estimator
 end
@@ -117,8 +159,8 @@ function _singlelabelrandomforestclassifier_DecisionTree(
         )
     dftransformer = MutableDataFrame2DecisionTreeTransformer(
         featurenames,
-        singlelabelname,
-        singlelabellevels,
+        singlelabelname;
+        levels = singlelabellevels,
         )
     randomforestestimator = MutableDecisionTreejlRandomForestEstimator(
         singlelabelname;
