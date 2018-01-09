@@ -469,29 +469,40 @@ else
 end
 
 # Plot learning curve: loss vs. epoch
-knetmlpclassifier_learningcurve_lossvsepoch = asb.plotlearningcurve(
+knet_learningcurve_lossvsepoch = asb.plotlearningcurve(
     knetmlpclassifier,
-    :lossvsepoch,
+    :lossvsepoch;
     )
-asb.open(knetmlpclassifier_learningcurve_lossvsepoch)
+asb.open(knet_learningcurve_lossvsepoch)
 
 # Plot learning curve: loss vs. epoch, skip the first 10 epochs
-knetmlpclassifier_learningcurve_lossvsepoch = asb.plotlearningcurve(
+knet_learningcurve_lossvsepoch_skip10epochs = asb.plotlearningcurve(
     knetmlpclassifier,
     :lossvsepoch;
     startat = 10,
     endat = :end,
     )
-asb.open(knetmlpclassifier_learningcurve_lossvsepoch)
+asb.open(knet_learningcurve_lossvsepoch_skip10epochs)
 
 # Plot learning curve: loss vs. iteration
-knetmlpclassifier_learningcurve_lossvsiteration = asb.plotlearningcurve(
+knet_learningcurve_lossvsiteration = asb.plotlearningcurve(
     knetmlpclassifier,
     :lossvsiteration;
-    window = 32,
+    window = 50,
     sampleevery = 10,
     )
-asb.open(knetmlpclassifier_learningcurve_lossvsiteration)
+asb.open(knet_learningcurve_lossvsiteration)
+
+# Plot learning curve: loss vs. iteration, skip the first 100 iterations
+knet_learningcurve_lossvsiteration_skip100iterations = asb.plotlearningcurve(
+    knetmlpclassifier,
+    :lossvsiteration;
+    window = 50,
+    sampleevery = 10,
+    startat = 100,
+    endat = :end,
+    )
+asb.open(knet_learningcurve_lossvsiteration_skip100iterations)
 
 # Evaluate performance of multilayer perceptron on smoted training set
 asb.binaryclassificationmetrics(
