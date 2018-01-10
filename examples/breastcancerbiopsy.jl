@@ -1,5 +1,28 @@
-# set the seed of the random number generator
-srand(999)
+##############################################################################
+##############################################################################
+### Section 1: Setup #########################################################
+##############################################################################
+##############################################################################
+
+## Instructions:
+## If you are running this file for the first time and/or if you do not have
+## any trained models saved on disk, then take the following steps:
+##     1. Comment out line 39
+##     2. Uncomment line 40
+##     3. Comment out lines 42 through 47
+##     4. Uncomment lines 48 through 53 and choose appropriate filenames for
+##        saving the trained models to file.
+##     5. Run the entire file. This will train all of the models, compare their
+##        performance, generate plots, and save the trained models to file.
+## If you have trained models saved on disk and you would like to load them,
+## then take the following steps:
+##     1. Uncomment line 39
+##     2. Comment out line 40
+##     3. Comment out lines 42 through 47
+##     4. Uncomment lines 48 through 53 and set the variables to the
+##        filenames where the trained models are saved.
+##     5. Run the entire file. This will load all of the trained models from
+##        file, compare their performance, and generate plots.
 
 # import required packages
 import AluthgeSinhaBase
@@ -10,25 +33,28 @@ import LIBSVM
 import RDatasets
 import StatsBase
 
-# ENV["SAVETRAINEDMODELSTOFILE"] = "true"
+# set the seed of the global random number generator
+srand(999)
+
 # ENV["LOADTRAINEDMODELSFROMFILE"] = "true"
+# ENV["SAVETRAINEDMODELSTOFILE"] = "true"
 
 logisticclassifier_filename = joinpath(tempdir(), "logisticclassifier.jld2")
 probitclassifier_filename = joinpath(tempdir(), "probitclassifier.jld2")
 rfclassifier_filename = joinpath(tempdir(), "rfclassifier.jld2")
 csvc_svmclassifier_filename = joinpath(tempdir(), "csvc_svmclassifier.jld2")
 nusvc_svmclassifier_filename = joinpath(tempdir(), "nusvc_svmclassifier.jld2")
-knetmlpclassifier_filename = joinpath(tempdir(), "knetmlpclassifier.jld2")
+knetmlp_filename = joinpath(tempdir(), "knetmlpclassifier.jld2")
 # logisticclassifier_filename = "/Users/dilum/Desktop/logisticclassifier.jld2"
 # probitclassifier_filename = "/Users/dilum/Desktop/probitclassifier.jld2"
 # rfclassifier_filename = "/Users/dilum/Desktop/rfclassifier.jld2"
 # csvc_svmclassifier_filename = "/Users/dilum/Desktop/csvc_svmclassifier.jld2"
 # nusvc_svmclassifier_filename = "/Users/dilum/Desktop/nusvc_svmclassifier.jld2"
-# knetmlpclassifier_filename = "/Users/dilum/Desktop/knetmlpclassifier.jld2"
+# knetmlp_filename = "/Users/dilum/Desktop/knetmlpclassifier.jld2"
 
 ##############################################################################
 ##############################################################################
-### Section 1: Prepare data ##################################################
+### Section 2: Prepare data ##################################################
 ##############################################################################
 ##############################################################################
 
@@ -55,7 +81,11 @@ continuousfeaturenames = Symbol[
     :V9,
     ]
 featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
-featurecontrasts = asb.featurecontrasts(df, featurenames)
+
+if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
+else
+    featurecontrasts = asb.featurecontrasts(df, featurenames)
+end
 
 # Define labels
 labelname = :Class
@@ -73,7 +103,7 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 
 ##############################################################################
 ##############################################################################
-### Section 2: Apply the SMOTE algorithm to the training set #################
+### Section 3: Apply the SMOTE algorithm to the training set #################
 ##############################################################################
 ##############################################################################
 
@@ -107,7 +137,7 @@ StatsBase.countmap(smotedtraininglabelsdf[labelname])
 
 ##############################################################################
 ##############################################################################
-### Section 3: Set up and train models #######################################
+### Section 4: Set up and train models #######################################
 ##############################################################################
 ##############################################################################
 
@@ -360,14 +390,18 @@ asb.binaryclassificationmetrics(
 ##############################################################################
 
 # Define predict function
-function knetmlpclassifier_predict(
+function knetmlp_predict(
         w, # don't put a type annotation on this
         x0::AbstractArray;
         training::Bool = false,
         )
-    x1 = Knet.relu.( w[1]*x0 .+ w[2] )
-    x2 = Knet.relu.( w[3]*x1 .+ w[4] )
-    x3 = w[5]*x1 .+ w[6]
+    # x0 = input layer
+    # x1 = first hidden layer
+    x1 = Knet.relu.( w[1]*x0 .+ w[2] ) # w[1] = weights, w[2] = biases
+    # x2 = second hidden layer
+    x2 = Knet.relu.( w[3]*x1 .+ w[4] ) # w[3] = weights, w[4] = biases
+    # x3 = output layer
+    x3 = w[5]*x2 .+ w[6] # w[5] = weights, w[6] = biases
     unnormalizedlogprobs = x3
     if training
         return unnormalizedlogprobs
@@ -380,22 +414,42 @@ function knetmlpclassifier_predict(
     end
 end
 
-# Randomly initialize model weights
-knetmlpclassifier_modelweights = Any[
-    # input layer has featurecontrasts.numarrayfeatures features
-    # first hidden layer (64 neurons):
-    Cfloat.(0.1f0*randn(Cfloat,64,featurecontrasts.numarrayfeatures)),#weights
-    Cfloat.(zeros(Cfloat,64,1)), # biases
-    # second hidden layer (32 neurons):
-    Cfloat.(0.1f0*randn(Cfloat,32,64)), # weights
-    Cfloat.(zeros(Cfloat,32,1)), # biases
-    # output layer (2 neurons, same as number of classes):
-    Cfloat.(0.1f0*randn(Cfloat,2,64)), # weights
-    Cfloat.(zeros(Cfloat,2,1)), # biases
-    ]
+if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
+    # No need to initialize weights since we are going to load them from file
+    knetmlp_modelweights = Any[]
+else
+    # Randomly initialize model weights
+    knetmlp_modelweights = Any[
+        # input layer has dimension featurecontrasts.numarrayfeatures
+        #
+        # first hidden layer (64 neurons):
+        Cfloat.(
+            0.1f0*randn(Cfloat,64,featurecontrasts.numarrayfeatures) # weights
+            ),
+        Cfloat.(
+            zeros(Cfloat,64,1) # biases
+            ),
+        #
+        # second hidden layer (32 neurons):
+        Cfloat.(
+            0.1f0*randn(Cfloat,32,64) # weights
+            ),
+        Cfloat.(
+            zeros(Cfloat,32,1) # biases
+            ),
+        #
+        # output layer (number of neurons == number of classes):
+        Cfloat.(
+            0.1f0*randn(Cfloat,2,32) # weights
+            ),
+        Cfloat.(
+            zeros(Cfloat,2,1) # biases
+            ),
+        ]
+end
 
 # Define loss function
-function knetmlpclassifier_loss(
+function knetmlp_loss(
         predict::Function,
         modelweights, # don't put a type annotation on this
         x::AbstractArray,
@@ -418,24 +472,24 @@ function knetmlpclassifier_loss(
 end
 
 # Define loss hyperparameters
-knetmlpclassifier_losshyperparameters = Dict()
-knetmlpclassifier_losshyperparameters[:L1] = Cfloat(0.0)
-knetmlpclassifier_losshyperparameters[:L2] = Cfloat(0.0)
+knetmlp_losshyperparameters = Dict()
+knetmlp_losshyperparameters[:L1] = Cfloat(0.0)
+knetmlp_losshyperparameters[:L2] = Cfloat(0.0)
 
 # Select optimization algorithm
-knetmlpclassifier_optimizationalgorithm = :Momentum
+knetmlp_optimizationalgorithm = :Momentum
 
 # Set optimization hyperparameters
-knetmlpclassifier_optimizerhyperparameters = Dict()
+knetmlp_optimizerhyperparameters = Dict()
 
 # Set the minibatch size
-knetmlpclassifier_minibatchsize = 48
+knetmlp_minibatchsize = 48
 
 # Set the max number of epochs. After training, look at the learning curve. If
 # it looks like the model has not yet converged, raise maxepochs. If it looks
 # like the loss has hit a plateau and you are worried about overfitting, lower
 # maxepochs.
-knetmlpclassifier_maxepochs = 500
+knetmlp_maxepochs = 500
 
 # Set up multilayer perceptron model
 knetmlpclassifier = asb.knetclassifier(
@@ -444,19 +498,19 @@ knetmlpclassifier = asb.knetclassifier(
     labellevels;
     package = :Knetjl,
     name = "Knet MLP",
-    predict = knetmlpclassifier_predict,
-    loss = knetmlpclassifier_loss,
-    losshyperparameters = knetmlpclassifier_losshyperparameters,
-    optimizationalgorithm = knetmlpclassifier_optimizationalgorithm,
-    optimizerhyperparameters = knetmlpclassifier_optimizerhyperparameters,
-    minibatchsize = knetmlpclassifier_minibatchsize,
-    modelweights = knetmlpclassifier_modelweights,
+    predict = knetmlp_predict,
+    loss = knetmlp_loss,
+    losshyperparameters = knetmlp_losshyperparameters,
+    optimizationalgorithm = knetmlp_optimizationalgorithm,
+    optimizerhyperparameters = knetmlp_optimizerhyperparameters,
+    minibatchsize = knetmlp_minibatchsize,
+    modelweights = knetmlp_modelweights,
     printlosseverynepochs = 100, # if 0, will not print at all
-    maxepochs = knetmlpclassifier_maxepochs,
+    maxepochs = knetmlp_maxepochs,
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    asb.load!(knetmlpclassifier_filename, knetmlpclassifier)
+    asb.load!(knetmlp_filename, knetmlpclassifier)
 else
     # set feature contrasts
     asb.setfeaturecontrasts!(knetmlpclassifier, featurecontrasts)
@@ -526,7 +580,7 @@ asb.binaryclassificationmetrics(
 
 ##############################################################################
 ##############################################################################
-## Section 4: Compare performance of all models ##############################
+## Section 5: Compare performance of all models ##############################
 ##############################################################################
 ##############################################################################
 
@@ -690,6 +744,21 @@ asb.open(prplottesting)
 
 ##############################################################################
 ##############################################################################
+### Section 6: Save trained models to file (if desired) #######################
+##############################################################################
+##############################################################################
+
+if get(ENV, "SAVETRAINEDMODELSTOFILE", "") == "true"
+    asb.save(logisticclassifier_filename, logisticclassifier)
+    asb.save(probitclassifier_filename, probitclassifier)
+    asb.save(rfclassifier_filename, rfclassifier)
+    asb.save(csvc_svmclassifier_filename, csvc_svmclassifier)
+    asb.save(nusvc_svmclassifier_filename, nusvc_svmclassifier)
+    asb.save(knetmlp_filename, knetmlpclassifier)
+end
+
+##############################################################################
+##############################################################################
 ## Appendix A: Directly access the output of classification models ###########
 ##############################################################################
 ##############################################################################
@@ -734,19 +803,3 @@ asb.predict(rfclassifier,testingfeaturesdf,)
 asb.predict(csvc_svmclassifier,testingfeaturesdf,)
 asb.predict(nusvc_svmclassifier,testingfeaturesdf,)
 asb.predict(knetmlpclassifier,testingfeaturesdf,)
-
-##############################################################################
-##############################################################################
-## Appendix B: Save models to file and load models from file #################
-##############################################################################
-##############################################################################
-
-if (get(ENV, "LOADTRAINEDMODELSFROMFILE", "") != "true") &&
-        (get(ENV, "SAVETRAINEDMODELSTOFILE", "") == "true")
-    asb.save(logisticclassifier_filename, logisticclassifier)
-    asb.save(probitclassifier_filename, probitclassifier)
-    asb.save(rfclassifier_filename, rfclassifier)
-    asb.save(csvc_svmclassifier_filename, csvc_svmclassifier)
-    asb.save(nusvc_svmclassifier_filename, nusvc_svmclassifier)
-    asb.save(knetmlpclassifier_filename, knetmlpclassifier)
-end
