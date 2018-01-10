@@ -4,8 +4,8 @@ function R2coefficientofdetermination(
         ytrue::StatsBase.RealVector,
         ypred::StatsBase.RealVector,
         )
-    if length(ytrue) !== length(ypred)
-        error("length(ytrue) !== length(ypred)")
+    if length(ytrue) != length(ypred)
+        error("length(ytrue) != length(ypred)")
     end
     if length(ytrue) == 0
         error("length(ytrue) == 0")

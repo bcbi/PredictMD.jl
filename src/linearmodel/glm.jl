@@ -36,9 +36,47 @@ mutable struct MutableGLMjlGeneralizedLinearModelEstimator <:
     end
 end
 
-function underlying(x::MutableGLMjlGeneralizedLinearModelEstimator)
+function gethistory(
+        x::MutableGLMjlGeneralizedLinearModelEstimator;
+        saving::Bool = false,
+	loading::Bool = false,
+        )
+    return nothing
+end
+
+function sethistory!(
+        x::MutableGLMjlGeneralizedLinearModelEstimator,
+        h;
+        saving::Bool = false,
+	loading::Bool = false,
+        )
+    return nothing
+end
+
+function setfeaturecontrasts!(
+        x::MutableGLMjlGeneralizedLinearModelEstimator,
+        contrasts::AbstractContrasts,
+        )
+    return nothing
+end
+
+function getunderlying(
+        x::MutableGLMjlGeneralizedLinearModelEstimator;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
     result = x.underlyingglm
     return result
+end
+
+function setunderlying!(
+        x::MutableGLMjlGeneralizedLinearModelEstimator,
+        object;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    x.underlyingglm = object
+    return nothing
 end
 
 function fit!(

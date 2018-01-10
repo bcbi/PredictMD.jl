@@ -3,7 +3,44 @@ immutable ImmutablePackageSingleLabelPredictionTransformer <:
     singlelabelname::T1 where T1 <: Symbol
 end
 
-function valuehistories(x::ImmutablePackageSingleLabelPredictionTransformer)
+function setfeaturecontrasts!(
+        x::ImmutablePackageSingleLabelPredictionTransformer,
+        contrasts::AbstractContrasts,
+        )
+    return nothing
+end
+
+function getunderlying(
+        x::ImmutablePackageSingleLabelPredictionTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function setunderlying!(
+        x::ImmutablePackageSingleLabelPredictionTransformer,
+        object;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function gethistory(
+        x::ImmutablePackageSingleLabelPredictionTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function sethistory!(
+        x::ImmutablePackageSingleLabelPredictionTransformer,
+        h;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
     return nothing
 end
 

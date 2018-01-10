@@ -3,7 +3,44 @@ immutable ImmutablePackageMultiLabelPredictionTransformer <:
     labelnames::T1 where T1 <: SymbolVector
 end
 
-function valuehistories(x::ImmutablePackageMultiLabelPredictionTransformer)
+function setfeaturecontrasts!(
+        x::ImmutablePackageMultiLabelPredictionTransformer,
+        contrasts::AbstractContrasts,
+        )
+    return nothing
+end
+
+function getunderlying(
+        x::ImmutablePackageMultiLabelPredictionTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function setunderlying!(
+        x::ImmutablePackageMultiLabelPredictionTransformer,
+        object;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function gethistory(
+        x::ImmutablePackageMultiLabelPredictionTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function sethistory!(
+        x::ImmutablePackageMultiLabelPredictionTransformer,
+        h;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
     return nothing
 end
 
