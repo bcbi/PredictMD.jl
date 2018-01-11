@@ -1,20 +1,79 @@
-# import AluthgeSinhaBase
-# const asb = AluthgeSinhaBase
-# import Base.Test
-#
-# include("test_base.jl")
-# include("test_metrics.jl")
-#
-# include("runexamples.jl")
+import AluthgeSinhaBase
+const asb = AluthgeSinhaBase
+import Base.Test
 
-
-
-# ENV["LOADTRAINEDMODELSFROMFILE"] = "false"
-# ENV["SAVETRAINEDMODELSTOFILE"] = "true"
-# include("../examples/bostonhousing.jl")
-# include("../examples/breastcancerbiopsy.jl")
-#
-# ENV["LOADTRAINEDMODELSFROMFILE"] = "true"
-# ENV["SAVETRAINEDMODELSTOFILE"] = "false"
-# include("../examples/bostonhousing.jl")
-# include("../examples/breastcancerbiopsy.jl")
+Base.Test.@testset "AluthgeSinhaBase test suite" begin
+    info("Running AluthgeSinhaBase test suite")
+    #
+    Base.Test.@testset "Unit tests" begin
+        info("Running Unit tests")
+        #
+        Base.Test.@testset "Testing base/" begin
+            info("Testing base/")
+            #
+            Base.Test.@testset "Testing base/version.jl" begin
+                info("Testing base/version.jl")
+                include("test_base/test_version.jl")
+            end
+            #
+        end
+        #
+        Base.Test.@testset "Testing metrics/" begin
+            info("Testing metrics/")
+            #
+            Base.Test.@testset "Testing metrics/coefficientofdetermination.jl" begin
+                info("Testing metrics/coefficientofdetermination.jl")
+                include("test_metrics/test_coefficientofdetermination.jl")
+            end
+            #
+            Base.Test.@testset "Testing metrics/cohenkappa.jl" begin
+                info("Testing metrics/cohenkappa.jl")
+                include("test_metrics/test_cohenkappa.jl")
+            end
+            #
+        end
+        #
+    end
+    #
+    Base.Test.@testset "Examples" begin
+        info("Running examples")
+        #
+        Base.Test.@testset "Save trained models to file" begin
+            info("Running examples and saving trained models to file")
+            #
+            ENV["LOADTRAINEDMODELSFROMFILE"] = "false"
+            ENV["SAVETRAINEDMODELSTOFILE"] = "true"
+            #
+            Base.Test.@testset "Running ../examples/bostonhousing.jl" begin
+                info("Running ../examples/bostonhousing.jl")
+                include("../examples/bostonhousing.jl")
+            end
+            #
+            Base.Test.@testset "Running ../examples/breastcancerbiopsy.jl" begin
+                info("Running ../examples/breastcancerbiopsy.jl")
+                include("../examples/breastcancerbiopsy.jl")
+            end
+            #
+        end
+        #
+        Base.Test.@testset "Load trained models from file" begin
+            info("Running examples after loading trained models from file")
+            #
+            ENV["LOADTRAINEDMODELSFROMFILE"] = "true"
+            ENV["SAVETRAINEDMODELSTOFILE"] = "false"
+            #
+            Base.Test.@testset "Running ../examples/bostonhousing.jl" begin
+                info("Running ../examples/bostonhousing.jl")
+                include("../examples/bostonhousing.jl")
+            end
+            #
+            Base.Test.@testset "Running ../examples/breastcancerbiopsy.jl" begin
+                info("Running ../examples/breastcancerbiopsy.jl")
+                include("../examples/breastcancerbiopsy.jl")
+            end
+            #
+        end
+        #
+    end
+    #
+end

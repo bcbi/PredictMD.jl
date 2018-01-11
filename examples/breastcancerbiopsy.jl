@@ -6,7 +6,7 @@
 
 ## Instructions:
 ## If you are running this file for the first time and/or if you do not have
-## any trained models saved on disk, then take the following steps:
+## any existing trained models saved on disk, then take the following steps:
 ##     1. Comment out line 39
 ##     2. Uncomment line 40
 ##     3. Comment out lines 42 through 47
