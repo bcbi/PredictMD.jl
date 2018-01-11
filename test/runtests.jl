@@ -1,10 +1,10 @@
-info("Attempting to import Base.Test...")
+info("Attempting to import Base.Test")
 import Base.Test
-info("Successfully imported Base.Test.")
-info("Attempting to import AluthgeSinhaBase...")
+info("Successfully imported Base.Test")
+info("Attempting to import AluthgeSinhaBase")
 import AluthgeSinhaBase
 const asb = AluthgeSinhaBase
-info("Successfully imported AluthgeSinhaBase.")
+info("Successfully imported AluthgeSinhaBase")
 
 Base.Test.@testset "AluthgeSinhaBase test suite" begin
     info("Running AluthgeSinhaBase test suite")
@@ -50,12 +50,16 @@ Base.Test.@testset "AluthgeSinhaBase test suite" begin
             #
             Base.Test.@testset "Running ../examples/bostonhousing.jl" begin
                 info("Running ../examples/bostonhousing.jl")
-                include("../examples/bostonhousing.jl")
+                Base.Test.@test_nowarn(
+                    include("../examples/bostonhousing.jl")
+                    )
             end
             #
             Base.Test.@testset "Running ../examples/breastcancerbiopsy.jl" begin
                 info("Running ../examples/breastcancerbiopsy.jl")
-                include("../examples/breastcancerbiopsy.jl")
+                Base.Test.@test_nowarn(
+                    include("../examples/breastcancerbiopsy.jl")
+                    )
             end
             #
         end
@@ -68,12 +72,16 @@ Base.Test.@testset "AluthgeSinhaBase test suite" begin
             #
             Base.Test.@testset "Running ../examples/bostonhousing.jl" begin
                 info("Running ../examples/bostonhousing.jl")
-                include("../examples/bostonhousing.jl")
+                Base.Test.@test_nowarn(
+                    include("../examples/bostonhousing.jl")
+                    )
             end
             #
             Base.Test.@testset "Running ../examples/breastcancerbiopsy.jl" begin
                 info("Running ../examples/breastcancerbiopsy.jl")
-                include("../examples/breastcancerbiopsy.jl")
+                Base.Test.@test_nowarn(
+                    include("../examples/breastcancerbiopsy.jl")
+                    )
             end
             #
         end
