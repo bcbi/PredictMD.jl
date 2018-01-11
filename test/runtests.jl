@@ -1,6 +1,10 @@
+info("Attempting to import Base.Test...")
+import Base.Test
+info("Successfully imported Base.Test.")
+info("Attempting to import AluthgeSinhaBase...")
 import AluthgeSinhaBase
 const asb = AluthgeSinhaBase
-import Base.Test
+info("Successfully imported AluthgeSinhaBase.")
 
 Base.Test.@testset "AluthgeSinhaBase test suite" begin
     info("Running AluthgeSinhaBase test suite")
