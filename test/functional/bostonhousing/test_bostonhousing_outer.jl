@@ -12,7 +12,7 @@ Base.Test.@test(!isfile(ENV["knetmlpreg_filename"]))
 
 ENV["LOADTRAINEDMODELSFROMFILE"] = "false"
 ENV["SAVETRAINEDMODELSTOFILE"] = "true"
-include("functional/bostonhousing/test_bostonhousing_inner.jl")
+include("test_bostonhousing_inner.jl")
 
 Base.Test.@test(isfile(ENV["linearreg_filename"]))
 Base.Test.@test(isfile(ENV["randomforestreg_filename"]))
@@ -22,4 +22,4 @@ Base.Test.@test(isfile(ENV["knetmlpreg_filename"]))
 
 ENV["LOADTRAINEDMODELSFROMFILE"] = "true"
 ENV["SAVETRAINEDMODELSTOFILE"] = "false"
-include("functional/bostonhousing/test_bostonhousing_inner.jl")
+include("test_bostonhousing_inner.jl")
