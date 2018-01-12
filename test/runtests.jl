@@ -41,19 +41,31 @@ Base.Test.@testset "AluthgeSinhaBase test suite" begin
         Base.Test.@testset "Boston housing regression" begin
             #
             ENV["linearreg_filename"] =
-                joinpath(tempdir(), "linearreg.jld2")
+                string(tempname(), "_linearreg.jld2")
             ENV["randomforestreg_filename"] =
-                joinpath(tempdir(), "randomforestreg.jld2")
+                string(tempname(), "_randomforestreg.jld2")
             ENV["epsilonsvr_svmreg_filename"] =
-                joinpath(tempdir(), "epsilonsvr_svmreg.jld2")
+                string(tempname(), "_epsilonsvr_svmreg.jld2")
             ENV["nusvr_svmreg_filename"] =
-                joinpath(tempdir(), "nusvr_svmreg.jld2")
+                string(tempname(), "_nusvr_svmreg.jld2")
             ENV["knetmlpreg_filename"] =
-                joinpath(tempdir(), "knetmlpreg.jld2")
+                string(tempname(), "_knetmlpreg.jld2")
+            #
+            Base.Test.@test(!isfile(ENV["linearreg_filename"]))
+            Base.Test.@test(!isfile(ENV["randomforestreg_filename"]))
+            Base.Test.@test(!isfile(ENV["epsilonsvr_svmreg_filename"]))
+            Base.Test.@test(!isfile(ENV["nusvr_svmreg_filename"]))
+            Base.Test.@test(!isfile(ENV["knetmlpreg_filename"]))
             #
             ENV["LOADTRAINEDMODELSFROMFILE"] = "false"
             ENV["SAVETRAINEDMODELSTOFILE"] = "true"
             include("functional/test_bostonhousing.jl")
+            #
+            Base.Test.@test(isfile(ENV["linearreg_filename"]))
+            Base.Test.@test(isfile(ENV["randomforestreg_filename"]))
+            Base.Test.@test(isfile(ENV["epsilonsvr_svmreg_filename"]))
+            Base.Test.@test(isfile(ENV["nusvr_svmreg_filename"]))
+            Base.Test.@test(isfile(ENV["knetmlpreg_filename"]))
             #
             ENV["LOADTRAINEDMODELSFROMFILE"] = "true"
             ENV["SAVETRAINEDMODELSTOFILE"] = "false"
@@ -64,21 +76,36 @@ Base.Test.@testset "AluthgeSinhaBase test suite" begin
         Base.Test.@testset "Breast cancer biopsy classification" begin
             #
             ENV["logisticclassifier_filename"] =
-                joinpath(tempdir(), "logisticclassifier.jld2")
+                string(tempname(), "_logisticclassifier.jld2")
             ENV["probitclassifier_filename"] =
-                joinpath(tempdir(), "probitclassifier.jld2")
+                string(tempname(), "_probitclassifier.jld2")
             ENV["rfclassifier_filename"] =
-                joinpath(tempdir(), "rfclassifier.jld2")
+                string(tempname(), "_rfclassifier.jld2")
             ENV["csvc_svmclassifier_filename"] =
-                joinpath(tempdir(), "csvc_svmclassifier.jld2")
+                string(tempname(), "_csvc_svmclassifier.jld2")
             ENV["nusvc_svmclassifier_filename"] =
-                joinpath(tempdir(), "nusvc_svmclassifier.jld2")
+                string(tempname(), "_nusvc_svmclassifier.jld2")
             ENV["knetmlp_filename"] =
-                joinpath(tempdir(), "knetmlpclassifier.jld2")
+                string(tempname(), "_knetmlpclassifier.jld2")
+                # joinpath(tempdir(), "")
+            #
+            Base.Test.@test(!isfile(ENV["logisticclassifier_filename"]))
+            Base.Test.@test(!isfile(ENV["probitclassifier_filename"]))
+            Base.Test.@test(!isfile(ENV["rfclassifier_filename"]))
+            Base.Test.@test(!isfile(ENV["csvc_svmclassifier_filename"]))
+            Base.Test.@test(!isfile(ENV["nusvc_svmclassifier_filename"]))
+            Base.Test.@test(!isfile(ENV["knetmlp_filename"]))
             #
             ENV["LOADTRAINEDMODELSFROMFILE"] = "false"
             ENV["SAVETRAINEDMODELSTOFILE"] = "true"
             include("functional/test_breastcancerbiopsy.jl")
+            #
+            Base.Test.@test(isfile(ENV["logisticclassifier_filename"]))
+            Base.Test.@test(isfile(ENV["probitclassifier_filename"]))
+            Base.Test.@test(isfile(ENV["rfclassifier_filename"]))
+            Base.Test.@test(isfile(ENV["csvc_svmclassifier_filename"]))
+            Base.Test.@test(isfile(ENV["nusvc_svmclassifier_filename"]))
+            Base.Test.@test(isfile(ENV["knetmlp_filename"]))
             #
             ENV["LOADTRAINEDMODELSFROMFILE"] = "true"
             ENV["SAVETRAINEDMODELSTOFILE"] = "false"
