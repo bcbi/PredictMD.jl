@@ -2,7 +2,7 @@
 
 function openbrowserwindow(filename::AbstractString)
     if istravisci(ENV)
-        warn(string("Skipping opening file during Travis build: ",filename,))
+        info(string("Skipping opening file during Travis build: ",filename,))
     else
         if is_apple()
             run(`open $(filename)`)

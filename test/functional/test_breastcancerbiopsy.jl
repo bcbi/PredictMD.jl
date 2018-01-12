@@ -1,3 +1,10 @@
+logisticclassifier_filename = ENV["logisticclassifier_filename"]
+probitclassifier_filename = ENV["probitclassifier_filename"]
+rfclassifier_filename = ENV["rfclassifier_filename"]
+csvc_svmclassifier_filename = ENV["csvc_svmclassifier_filename"]
+nusvc_svmclassifier_filename = ENV["nusvc_svmclassifier_filename"]
+knetmlp_filename = ENV["knetmlp_filename"]
+
 ##############################################################################
 ##############################################################################
 ### Section 1: Setup #########################################################
@@ -29,7 +36,7 @@ df = RDatasets.dataset("MASS", "biopsy")
 DataFrames.dropmissing!(df)
 
 # Shuffle rows
-Base.Test.@test_nowarn asb.shufflerows!(df)
+asb.shufflerows!(df)
 
 # Define features
 categoricalfeaturenames = Symbol[]
@@ -120,12 +127,12 @@ logisticclassifier = asb.binarylogisticclassifier(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    Base.Test.@test_nowarn asb.load!(logisticclassifier_filename, logisticclassifier)
+    asb.load!(logisticclassifier_filename, logisticclassifier)
 else
     # set feature contrasts
-    Base.Test.@test_nowarn asb.setfeaturecontrasts!(logisticclassifier, featurecontrasts)
+    asb.setfeaturecontrasts!(logisticclassifier, featurecontrasts)
     # Train logistic classifier model on smoted training set
-    Base.Test.@test_nowarn asb.fit!(
+    asb.fit!(
         logisticclassifier,
         smotedtrainingfeaturesdf,
         smotedtraininglabelsdf,
@@ -133,10 +140,10 @@ else
 end
 
 # View coefficients, p values, etc. for underlying logistic regression
-Base.Test.@test_nowarn asb.getunderlying(logisticclassifier)
+asb.getunderlying(logisticclassifier)
 
 # Evaluate performance of logistic classifier on smoted training set
-Base.Test.@test_nowarn asb.binaryclassificationmetrics(
+asb.binaryclassificationmetrics(
     logisticclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -146,7 +153,7 @@ Base.Test.@test_nowarn asb.binaryclassificationmetrics(
     )
 
 # Evaluate performance of logistic classifier on testing set
-Base.Test.@test_nowarn asb.binaryclassificationmetrics(
+asb.binaryclassificationmetrics(
     logisticclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -170,12 +177,12 @@ probitclassifier = asb.binaryprobitclassifier(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    Base.Test.@test_nowarn asb.load!(probitclassifier_filename, probitclassifier)
+    asb.load!(probitclassifier_filename, probitclassifier)
 else
     # set feature contrasts
-    Base.Test.@test_nowarn asb.setfeaturecontrasts!(probitclassifier, featurecontrasts)
+    asb.setfeaturecontrasts!(probitclassifier, featurecontrasts)
     # Train probit classifier model on smoted training set
-    Base.Test.@test_nowarn asb.fit!(
+    asb.fit!(
         probitclassifier,
         smotedtrainingfeaturesdf,
         smotedtraininglabelsdf,
@@ -183,10 +190,10 @@ else
 end
 
 # View coefficients, p values, etc. for underlying probit regression
-Base.Test.@test_nowarn asb.getunderlying(probitclassifier)
+asb.getunderlying(probitclassifier)
 
 # Evaluate performance of probit classifier on smoted training set
-Base.Test.@test_nowarn asb.binaryclassificationmetrics(
+asb.binaryclassificationmetrics(
     probitclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -196,7 +203,7 @@ Base.Test.@test_nowarn asb.binaryclassificationmetrics(
     )
 
 # Evaluate performance of probit classifier on testing set
-Base.Test.@test_nowarn asb.binaryclassificationmetrics(
+asb.binaryclassificationmetrics(
     probitclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -221,12 +228,12 @@ rfclassifier = asb.randomforestclassifier(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    Base.Test.@test_nowarn asb.load!(rfclassifier_filename, rfclassifier)
+    asb.load!(rfclassifier_filename, rfclassifier)
 else
     # set feature contrasts
-    Base.Test.@test_nowarn asb.setfeaturecontrasts!(rfclassifier, featurecontrasts)
+    asb.setfeaturecontrasts!(rfclassifier, featurecontrasts)
     # Train random forest classifier model on smoted training set
-    Base.Test.@test_nowarn asb.fit!(
+    asb.fit!(
         rfclassifier,
         smotedtrainingfeaturesdf,
         smotedtraininglabelsdf,
@@ -234,7 +241,7 @@ else
 end
 
 # Evaluate performance of random forest classifier on smoted training set
-Base.Test.@test_nowarn asb.binaryclassificationmetrics(
+asb.binaryclassificationmetrics(
     rfclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -244,7 +251,7 @@ Base.Test.@test_nowarn asb.binaryclassificationmetrics(
     )
 
 # Evaluate performance of random forest on testing set
-Base.Test.@test_nowarn asb.binaryclassificationmetrics(
+asb.binaryclassificationmetrics(
     rfclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -269,12 +276,12 @@ csvc_svmclassifier = asb.svmclassifier(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    Base.Test.@test_nowarn asb.load!(csvc_svmclassifier_filename, csvc_svmclassifier)
+    asb.load!(csvc_svmclassifier_filename, csvc_svmclassifier)
 else
     # set feature contrasts
-    Base.Test.@test_nowarn asb.setfeaturecontrasts!(csvc_svmclassifier, featurecontrasts)
+    asb.setfeaturecontrasts!(csvc_svmclassifier, featurecontrasts)
     # Train C-SVC model on smoted training set
-    Base.Test.@test_nowarn asb.fit!(
+    asb.fit!(
         csvc_svmclassifier,
         smotedtrainingfeaturesdf,
         smotedtraininglabelsdf,
@@ -282,7 +289,7 @@ else
 end
 
 # Evaluate performance of C-SVC on smoted training set
-Base.Test.@test_nowarn asb.binaryclassificationmetrics(
+asb.binaryclassificationmetrics(
     csvc_svmclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -292,7 +299,7 @@ Base.Test.@test_nowarn asb.binaryclassificationmetrics(
     )
 
 # Evaluate performance of C-SVC on testing set
-Base.Test.@test_nowarn asb.binaryclassificationmetrics(
+asb.binaryclassificationmetrics(
     csvc_svmclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -317,12 +324,12 @@ nusvc_svmclassifier = asb.svmclassifier(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    Base.Test.@test_nowarn asb.load!(nusvc_svmclassifier_filename, nusvc_svmclassifier)
+    asb.load!(nusvc_svmclassifier_filename, nusvc_svmclassifier)
 else
     # set feature contrasts
-    Base.Test.@test_nowarn asb.setfeaturecontrasts!(nusvc_svmclassifier, featurecontrasts)
+    asb.setfeaturecontrasts!(nusvc_svmclassifier, featurecontrasts)
     # Train nu-SVC model on smoted training set
-    Base.Test.@test_nowarn asb.fit!(
+    asb.fit!(
         nusvc_svmclassifier,
         smotedtrainingfeaturesdf,
         smotedtraininglabelsdf,
@@ -330,7 +337,7 @@ else
 end
 
 # Evaluate performance of nu-SVC on smoted training set
-Base.Test.@test_nowarn asb.binaryclassificationmetrics(
+asb.binaryclassificationmetrics(
     nusvc_svmclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -340,7 +347,7 @@ Base.Test.@test_nowarn asb.binaryclassificationmetrics(
     )
 
 # Evaluate performance of SVM on testing set
-Base.Test.@test_nowarn asb.binaryclassificationmetrics(
+asb.binaryclassificationmetrics(
     nusvc_svmclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -474,12 +481,12 @@ knetmlpclassifier = asb.knetclassifier(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    Base.Test.@test_nowarn asb.load!(knetmlp_filename, knetmlpclassifier)
+    asb.load!(knetmlp_filename, knetmlpclassifier)
 else
     # set feature contrasts
-    Base.Test.@test_nowarn asb.setfeaturecontrasts!(knetmlpclassifier, featurecontrasts)
+    asb.setfeaturecontrasts!(knetmlpclassifier, featurecontrasts)
     # Train multilayer perceptron model on training set
-    Base.Test.@test_nowarn asb.fit!(
+    asb.fit!(
         knetmlpclassifier,
         smotedtrainingfeaturesdf,
         smotedtraininglabelsdf,
@@ -491,7 +498,7 @@ knet_learningcurve_lossvsepoch = asb.plotlearningcurve(
     knetmlpclassifier,
     :lossvsepoch;
     )
-Base.Test.@test_nowarn asb.open(knet_learningcurve_lossvsepoch)
+asb.open(knet_learningcurve_lossvsepoch)
 
 # Plot learning curve: loss vs. epoch, skip the first 10 epochs
 knet_learningcurve_lossvsepoch_skip10epochs = asb.plotlearningcurve(
@@ -500,7 +507,7 @@ knet_learningcurve_lossvsepoch_skip10epochs = asb.plotlearningcurve(
     startat = 10,
     endat = :end,
     )
-Base.Test.@test_nowarn asb.open(knet_learningcurve_lossvsepoch_skip10epochs)
+asb.open(knet_learningcurve_lossvsepoch_skip10epochs)
 
 # Plot learning curve: loss vs. iteration
 knet_learningcurve_lossvsiteration = asb.plotlearningcurve(
@@ -509,7 +516,7 @@ knet_learningcurve_lossvsiteration = asb.plotlearningcurve(
     window = 50,
     sampleevery = 10,
     )
-Base.Test.@test_nowarn asb.open(knet_learningcurve_lossvsiteration)
+asb.open(knet_learningcurve_lossvsiteration)
 
 # Plot learning curve: loss vs. iteration, skip the first 100 iterations
 knet_learningcurve_lossvsiteration_skip100iterations = asb.plotlearningcurve(
@@ -520,10 +527,10 @@ knet_learningcurve_lossvsiteration_skip100iterations = asb.plotlearningcurve(
     startat = 100,
     endat = :end,
     )
-Base.Test.@test_nowarn asb.open(knet_learningcurve_lossvsiteration_skip100iterations)
+asb.open(knet_learningcurve_lossvsiteration_skip100iterations)
 
 # Evaluate performance of multilayer perceptron on smoted training set
-Base.Test.@test_nowarn asb.binaryclassificationmetrics(
+asb.binaryclassificationmetrics(
     knetmlpclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -533,7 +540,7 @@ Base.Test.@test_nowarn asb.binaryclassificationmetrics(
     )
 
 # Evaluate performance of multilayer perceptron on testing set
-Base.Test.@test_nowarn asb.binaryclassificationmetrics(
+asb.binaryclassificationmetrics(
     knetmlpclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -549,7 +556,7 @@ Base.Test.@test_nowarn asb.binaryclassificationmetrics(
 ##############################################################################
 
 # Compare performance of all models on smoted training set
-Base.Test.@test_nowarn showall(asb.binaryclassificationmetrics(
+showall(asb.binaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -564,7 +571,7 @@ Base.Test.@test_nowarn showall(asb.binaryclassificationmetrics(
     positiveclass;
     sensitivity = 0.95,
     ))
-Base.Test.@test_nowarn showall(asb.binaryclassificationmetrics(
+showall(asb.binaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -579,7 +586,7 @@ Base.Test.@test_nowarn showall(asb.binaryclassificationmetrics(
     positiveclass;
     specificity = 0.95,
     ))
-Base.Test.@test_nowarn showall(asb.binaryclassificationmetrics(
+showall(asb.binaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -594,7 +601,7 @@ Base.Test.@test_nowarn showall(asb.binaryclassificationmetrics(
     positiveclass;
     maximize = :f1score,
     ))
-Base.Test.@test_nowarn showall(asb.binaryclassificationmetrics(
+showall(asb.binaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -611,7 +618,7 @@ Base.Test.@test_nowarn showall(asb.binaryclassificationmetrics(
     ))
 
 # Compare performance of all models on testing set
-Base.Test.@test_nowarn showall(asb.binaryclassificationmetrics(
+showall(asb.binaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -626,7 +633,7 @@ Base.Test.@test_nowarn showall(asb.binaryclassificationmetrics(
     positiveclass;
     sensitivity = 0.95,
     ))
-Base.Test.@test_nowarn showall(asb.binaryclassificationmetrics(
+showall(asb.binaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -641,7 +648,7 @@ Base.Test.@test_nowarn showall(asb.binaryclassificationmetrics(
     positiveclass;
     specificity = 0.95,
     ))
-Base.Test.@test_nowarn showall(asb.binaryclassificationmetrics(
+showall(asb.binaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -656,7 +663,7 @@ Base.Test.@test_nowarn showall(asb.binaryclassificationmetrics(
     positiveclass;
     maximize = :f1score,
     ))
-Base.Test.@test_nowarn showall(asb.binaryclassificationmetrics(
+showall(asb.binaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -687,7 +694,7 @@ rocplottesting = asb.plotroccurves(
     labelname,
     positiveclass,
     )
-Base.Test.@test_nowarn asb.open(rocplottesting)
+asb.open(rocplottesting)
 
 # Plot precision-recall curves for all models on testing set.
 prplottesting = asb.plotprcurves(
@@ -704,7 +711,7 @@ prplottesting = asb.plotprcurves(
     labelname,
     positiveclass,
     )
-Base.Test.@test_nowarn asb.open(prplottesting)
+asb.open(prplottesting)
 
 ##############################################################################
 ##############################################################################
@@ -713,12 +720,12 @@ Base.Test.@test_nowarn asb.open(prplottesting)
 ##############################################################################
 
 if get(ENV, "SAVETRAINEDMODELSTOFILE", "") == "true"
-    Base.Test.@test_nowarn asb.save(logisticclassifier_filename, logisticclassifier)
-    Base.Test.@test_nowarn asb.save(probitclassifier_filename, probitclassifier)
-    Base.Test.@test_nowarn asb.save(rfclassifier_filename, rfclassifier)
-    Base.Test.@test_nowarn asb.save(csvc_svmclassifier_filename, csvc_svmclassifier)
-    Base.Test.@test_nowarn asb.save(nusvc_svmclassifier_filename, nusvc_svmclassifier)
-    Base.Test.@test_nowarn asb.save(knetmlp_filename, knetmlpclassifier)
+    asb.save(logisticclassifier_filename, logisticclassifier)
+    asb.save(probitclassifier_filename, probitclassifier)
+    asb.save(rfclassifier_filename, rfclassifier)
+    asb.save(csvc_svmclassifier_filename, csvc_svmclassifier)
+    asb.save(nusvc_svmclassifier_filename, nusvc_svmclassifier)
+    asb.save(knetmlp_filename, knetmlpclassifier)
 end
 
 ##############################################################################
@@ -731,20 +738,20 @@ end
 # by each of the classification models.
 
 # Get probabilities from each model for smoted training set
-Base.Test.@test_nowarn asb.predict_proba(logisticclassifier,smotedtrainingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict_proba(probitclassifier,smotedtrainingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict_proba(rfclassifier,smotedtrainingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict_proba(csvc_svmclassifier,smotedtrainingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict_proba(nusvc_svmclassifier,smotedtrainingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict_proba(knetmlpclassifier,smotedtrainingfeaturesdf,)
+asb.predict_proba(logisticclassifier,smotedtrainingfeaturesdf,)
+asb.predict_proba(probitclassifier,smotedtrainingfeaturesdf,)
+asb.predict_proba(rfclassifier,smotedtrainingfeaturesdf,)
+asb.predict_proba(csvc_svmclassifier,smotedtrainingfeaturesdf,)
+asb.predict_proba(nusvc_svmclassifier,smotedtrainingfeaturesdf,)
+asb.predict_proba(knetmlpclassifier,smotedtrainingfeaturesdf,)
 
 # Get probabilities from each model for testing set
-Base.Test.@test_nowarn asb.predict_proba(logisticclassifier,testingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict_proba(probitclassifier,testingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict_proba(rfclassifier,testingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict_proba(csvc_svmclassifier,testingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict_proba(nusvc_svmclassifier,testingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict_proba(knetmlpclassifier,testingfeaturesdf,)
+asb.predict_proba(logisticclassifier,testingfeaturesdf,)
+asb.predict_proba(probitclassifier,testingfeaturesdf,)
+asb.predict_proba(rfclassifier,testingfeaturesdf,)
+asb.predict_proba(csvc_svmclassifier,testingfeaturesdf,)
+asb.predict_proba(nusvc_svmclassifier,testingfeaturesdf,)
+asb.predict_proba(knetmlpclassifier,testingfeaturesdf,)
 
 # If we want to get predicted classes instead of probabilities, we can use the
 # asb.predict() function to get the class predictions output by each of the
@@ -753,17 +760,17 @@ Base.Test.@test_nowarn asb.predict_proba(knetmlpclassifier,testingfeaturesdf,)
 # equivalent to using a threshold of 0.5.
 
 # Get class predictions from each model for smoted training set
-Base.Test.@test_nowarn asb.predict(logisticclassifier,smotedtrainingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(probitclassifier,smotedtrainingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(rfclassifier,smotedtrainingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(csvc_svmclassifier,smotedtrainingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(nusvc_svmclassifier,smotedtrainingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(knetmlpclassifier,smotedtrainingfeaturesdf,)
+asb.predict(logisticclassifier,smotedtrainingfeaturesdf,)
+asb.predict(probitclassifier,smotedtrainingfeaturesdf,)
+asb.predict(rfclassifier,smotedtrainingfeaturesdf,)
+asb.predict(csvc_svmclassifier,smotedtrainingfeaturesdf,)
+asb.predict(nusvc_svmclassifier,smotedtrainingfeaturesdf,)
+asb.predict(knetmlpclassifier,smotedtrainingfeaturesdf,)
 
 # Get class predictions from each model for testing set
-Base.Test.@test_nowarn asb.predict(logisticclassifier,testingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(probitclassifier,testingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(rfclassifier,testingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(csvc_svmclassifier,testingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(nusvc_svmclassifier,testingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(knetmlpclassifier,testingfeaturesdf,)
+asb.predict(logisticclassifier,testingfeaturesdf,)
+asb.predict(probitclassifier,testingfeaturesdf,)
+asb.predict(rfclassifier,testingfeaturesdf,)
+asb.predict(csvc_svmclassifier,testingfeaturesdf,)
+asb.predict(nusvc_svmclassifier,testingfeaturesdf,)
+asb.predict(knetmlpclassifier,testingfeaturesdf,)

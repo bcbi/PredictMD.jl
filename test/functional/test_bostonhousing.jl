@@ -1,3 +1,9 @@
+linearreg_filename = ENV["linearreg_filename"]
+randomforestreg_filename = ENV["randomforestreg_filename"]
+epsilonsvr_svmreg_filename = ENV["epsilonsvr_svmreg_filename"]
+nusvr_svmreg_filename = ENV["nusvr_svmreg_filename"]
+knetmlpreg_filename = ENV["knetmlpreg_filename"]
+
 ##############################################################################
 ##############################################################################
 ### Section 1: Setup #########################################################
@@ -17,9 +23,6 @@ import StatsBase
 # set the seed of the global random number generator
 srand(999)
 
-# set filenames for saving/loading models
-
-
 ##############################################################################
 ##############################################################################
 ### Section 2: Prepare data ##################################################
@@ -36,7 +39,7 @@ df = CSV.read(
 DataFrames.dropmissing!(df)
 
 # Shuffle rows
-Base.Test.@test_nowarn asb.shufflerows!(df)
+asb.shufflerows!(df)
 
 # Define labels
 categoricalfeaturenames = Symbol[]
@@ -96,19 +99,19 @@ linearreg = asb.linearregression(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    Base.Test.@test_nowarn asb.load!(linearreg_filename, linearreg)
+    asb.load!(linearreg_filename, linearreg)
 else
     # set feature contrasts
-    Base.Test.@test_nowarn asb.setfeaturecontrasts!(linearreg, featurecontrasts)
+    asb.setfeaturecontrasts!(linearreg, featurecontrasts)
     # Train linear regression model
-    Base.Test.@test_nowarn asb.fit!(linearreg,trainingfeaturesdf,traininglabelsdf,)
+    asb.fit!(linearreg,trainingfeaturesdf,traininglabelsdf,)
 end
 
 # View coefficients, p values, etc. for underlying linear regression
-Base.Test.@test_nowarn asb.getunderlying(linearreg)
+asb.getunderlying(linearreg)
 
 # Evaluate performance of linear regression on training set
-Base.Test.@test_nowarn asb.regressionmetrics(
+asb.regressionmetrics(
     linearreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -116,7 +119,7 @@ Base.Test.@test_nowarn asb.regressionmetrics(
     )
 
 # Evaluate performance of linear regression on testing set
-Base.Test.@test_nowarn asb.regressionmetrics(
+asb.regressionmetrics(
     linearreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -138,16 +141,16 @@ randomforestreg = asb.randomforestregression(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    Base.Test.@test_nowarn asb.load!(randomforestreg_filename, randomforestreg)
+    asb.load!(randomforestreg_filename, randomforestreg)
 else
     # set feature contrasts
-    Base.Test.@test_nowarn asb.setfeaturecontrasts!(randomforestreg, featurecontrasts)
+    asb.setfeaturecontrasts!(randomforestreg, featurecontrasts)
     # Train random forest model on training set
-    Base.Test.@test_nowarn asb.fit!(randomforestreg,trainingfeaturesdf,traininglabelsdf,)
+    asb.fit!(randomforestreg,trainingfeaturesdf,traininglabelsdf,)
 end
 
 # Evaluate performance of random forest on training set
-Base.Test.@test_nowarn asb.regressionmetrics(
+asb.regressionmetrics(
     randomforestreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -155,7 +158,7 @@ Base.Test.@test_nowarn asb.regressionmetrics(
     )
 
 # Evaluate performance of random forest on testing set
-Base.Test.@test_nowarn asb.regressionmetrics(
+asb.regressionmetrics(
     randomforestreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -178,16 +181,16 @@ epsilonsvr_svmreg = asb.svmregression(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    Base.Test.@test_nowarn asb.load!(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
+    asb.load!(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
 else
     # set feature contrasts
-    Base.Test.@test_nowarn asb.setfeaturecontrasts!(epsilonsvr_svmreg, featurecontrasts)
+    asb.setfeaturecontrasts!(epsilonsvr_svmreg, featurecontrasts)
     # Train epsilon-SVR model on training set
-    Base.Test.@test_nowarn asb.fit!(epsilonsvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
+    asb.fit!(epsilonsvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
 
 # Evaluate performance of epsilon-SVR on training set
-Base.Test.@test_nowarn asb.regressionmetrics(
+asb.regressionmetrics(
     epsilonsvr_svmreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -195,7 +198,7 @@ Base.Test.@test_nowarn asb.regressionmetrics(
     )
 
 # Evaluate performance of epsilon-SVR on testing set
-Base.Test.@test_nowarn asb.regressionmetrics(
+asb.regressionmetrics(
     epsilonsvr_svmreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -218,16 +221,16 @@ nusvr_svmreg = asb.svmregression(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    Base.Test.@test_nowarn asb.load!(nusvr_svmreg_filename, nusvr_svmreg)
+    asb.load!(nusvr_svmreg_filename, nusvr_svmreg)
 else
     # set feature contrasts
-    Base.Test.@test_nowarn asb.setfeaturecontrasts!(nusvr_svmreg, featurecontrasts)
+    asb.setfeaturecontrasts!(nusvr_svmreg, featurecontrasts)
     # Train nu-SVR model
-    Base.Test.@test_nowarn asb.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
+    asb.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
 
 # Evaluate performance of nu-SVR on training set
-Base.Test.@test_nowarn asb.regressionmetrics(
+asb.regressionmetrics(
     nusvr_svmreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -235,7 +238,7 @@ Base.Test.@test_nowarn asb.regressionmetrics(
     )
 
 # Evaluate performance of nu-SVR on testing set
-Base.Test.@test_nowarn asb.regressionmetrics(
+asb.regressionmetrics(
     nusvr_svmreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -346,12 +349,12 @@ knetmlpreg = asb.knetregression(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    Base.Test.@test_nowarn asb.load!(knetmlpreg_filename, knetmlpreg)
+    asb.load!(knetmlpreg_filename, knetmlpreg)
 else
     # set feature contrasts
-    Base.Test.@test_nowarn asb.setfeaturecontrasts!(knetmlpreg, featurecontrasts)
+    asb.setfeaturecontrasts!(knetmlpreg, featurecontrasts)
     # Train multilayer perceptron model on training set
-    Base.Test.@test_nowarn asb.fit!(knetmlpreg,trainingfeaturesdf,traininglabelsdf,)
+    asb.fit!(knetmlpreg,trainingfeaturesdf,traininglabelsdf,)
 end
 
 # Plot learning curve: loss vs. epoch
@@ -359,7 +362,7 @@ knet_learningcurve_lossvsepoch = asb.plotlearningcurve(
     knetmlpreg,
     :lossvsepoch;
     )
-Base.Test.@test_nowarn asb.open(knet_learningcurve_lossvsepoch)
+asb.open(knet_learningcurve_lossvsepoch)
 
 # Plot learning curve: loss vs. epoch, skip the first 10 epochs
 knet_learningcurve_lossvsepoch_skip10epochs = asb.plotlearningcurve(
@@ -368,7 +371,7 @@ knet_learningcurve_lossvsepoch_skip10epochs = asb.plotlearningcurve(
     startat = 10,
     endat = :end,
     )
-Base.Test.@test_nowarn asb.open(knet_learningcurve_lossvsepoch_skip10epochs)
+asb.open(knet_learningcurve_lossvsepoch_skip10epochs)
 
 # Plot learning curve: loss vs. iteration
 knet_learningcurve_lossvsiteration = asb.plotlearningcurve(
@@ -377,7 +380,7 @@ knet_learningcurve_lossvsiteration = asb.plotlearningcurve(
     window = 50,
     sampleevery = 10,
     )
-Base.Test.@test_nowarn asb.open(knet_learningcurve_lossvsiteration)
+asb.open(knet_learningcurve_lossvsiteration)
 
 # Plot learning curve: loss vs. iteration, skip the first 100 iterations
 knet_learningcurve_lossvsiteration_skip100iterations = asb.plotlearningcurve(
@@ -388,10 +391,10 @@ knet_learningcurve_lossvsiteration_skip100iterations = asb.plotlearningcurve(
     startat = 100,
     endat = :end,
     )
-Base.Test.@test_nowarn asb.open(knet_learningcurve_lossvsiteration_skip100iterations)
+asb.open(knet_learningcurve_lossvsiteration_skip100iterations)
 
 # Evaluate performance of multilayer perceptron on training set
-Base.Test.@test_nowarn asb.regressionmetrics(
+asb.regressionmetrics(
     knetmlpreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -399,7 +402,7 @@ Base.Test.@test_nowarn asb.regressionmetrics(
     )
 
 # Evaluate performance of multilayer perceptron on testing set
-Base.Test.@test_nowarn asb.regressionmetrics(
+asb.regressionmetrics(
     knetmlpreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -413,7 +416,7 @@ Base.Test.@test_nowarn asb.regressionmetrics(
 ##############################################################################
 
 # Compare performance of all five models on training set
-Base.Test.@test_nowarn showall(asb.regressionmetrics(
+showall(asb.regressionmetrics(
     [
         linearreg,
         randomforestreg,
@@ -427,7 +430,7 @@ Base.Test.@test_nowarn showall(asb.regressionmetrics(
     ))
 
 # Compare performance of all models on testing set
-Base.Test.@test_nowarn showall(asb.regressionmetrics(
+showall(asb.regressionmetrics(
     [
         linearreg,
         randomforestreg,
@@ -447,11 +450,11 @@ Base.Test.@test_nowarn showall(asb.regressionmetrics(
 ##############################################################################
 
 if get(ENV, "SAVETRAINEDMODELSTOFILE", "") == "true"
-    Base.Test.@test_nowarn asb.save(linearreg_filename, linearreg)
-    Base.Test.@test_nowarn asb.save(randomforestreg_filename, randomforestreg)
-    Base.Test.@test_nowarn asb.save(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
-    Base.Test.@test_nowarn asb.save(nusvr_svmreg_filename, nusvr_svmreg)
-    Base.Test.@test_nowarn asb.save(knetmlpreg_filename, knetmlpreg)
+    asb.save(linearreg_filename, linearreg)
+    asb.save(randomforestreg_filename, randomforestreg)
+    asb.save(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
+    asb.save(nusvr_svmreg_filename, nusvr_svmreg)
+    asb.save(knetmlpreg_filename, knetmlpreg)
 end
 
 ##############################################################################
@@ -464,15 +467,15 @@ end
 # output by each of regression models.
 
 # Get real-valued predictions from each model for training set
-Base.Test.@test_nowarn asb.predict(linearreg,trainingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(randomforestreg,trainingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(epsilonsvr_svmreg,trainingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(nusvr_svmreg,trainingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(knetmlpreg,trainingfeaturesdf,)
+asb.predict(linearreg,trainingfeaturesdf,)
+asb.predict(randomforestreg,trainingfeaturesdf,)
+asb.predict(epsilonsvr_svmreg,trainingfeaturesdf,)
+asb.predict(nusvr_svmreg,trainingfeaturesdf,)
+asb.predict(knetmlpreg,trainingfeaturesdf,)
 
 # Get real-valued predictions from each model for testing set
-Base.Test.@test_nowarn asb.predict(linearreg,testingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(randomforestreg,testingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(epsilonsvr_svmreg,testingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(nusvr_svmreg,testingfeaturesdf,)
-Base.Test.@test_nowarn asb.predict(knetmlpreg,testingfeaturesdf,)
+asb.predict(linearreg,testingfeaturesdf,)
+asb.predict(randomforestreg,testingfeaturesdf,)
+asb.predict(epsilonsvr_svmreg,testingfeaturesdf,)
+asb.predict(nusvr_svmreg,testingfeaturesdf,)
+asb.predict(knetmlpreg,testingfeaturesdf,)
