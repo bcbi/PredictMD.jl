@@ -55,9 +55,6 @@ import StatsBase
 # set the seed of the global random number generator
 srand(999)
 
-# set filenames for saving/loading models
-
-
 ##############################################################################
 ##############################################################################
 ### Section 2: Prepare data ##################################################

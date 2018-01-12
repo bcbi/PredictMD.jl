@@ -8,7 +8,7 @@
 ## any trained models saved to disk, take the following steps:
 ##     1. Uncomment lines 27 and 28
 ##     2. Comment out lines 30 and 31
-##     3. Set the variables on lines 33 through 37 to the filenames where you
+##     3. Set the variables on lines 33 through 38 to the filenames where you
 ##        would like to save your models after training them.
 ##     4. Run the entire file. This will train the models, compare their
 ##        performance, print metrics to the console, generate plots, and save
@@ -18,7 +18,7 @@
 ## models from disk, take the following steps:
 ##     1. Comment out lines 27 and 28
 ##     2. Uncomment lines 30 and 31
-##     3. Make sure the variables on lines 33 through 37 are set to the
+##     3. Make sure the variables on lines 33 through 38 are set to the
 ##        filenames where your trained models are currently saved.
 ##     4. Run the entire file. This will load the trained models from disk,
 ##        compare their performance, print metrics to the console, and generate
