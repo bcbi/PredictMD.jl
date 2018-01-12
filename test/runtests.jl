@@ -24,7 +24,7 @@ Base.Test.@testset "AluthgeSinhaBase test suite" begin
                 include("unit/metrics/test_coefficientofdetermination.jl")
             end
             #
-            Base.Test.@testset cohenkappa"" begin
+            Base.Test.@testset "cohenkappa" begin
                 include("unit/metrics/test_cohenkappa.jl")
             end
             #
