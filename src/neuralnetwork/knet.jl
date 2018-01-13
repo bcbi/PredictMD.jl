@@ -305,7 +305,7 @@ function predict_proba(
     end
 end
 
-function _singlelabelknetclassifier_Knet(
+function _singlelabelmulticlassknetclassifier_Knet(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -377,7 +377,7 @@ function _singlelabelknetclassifier_Knet(
     return finalpipeline
 end
 
-function singlelabelknetclassifier(
+function singlelabelmulticlassknetclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -394,7 +394,7 @@ function singlelabelknetclassifier(
         printlosseverynepochs::Integer = 0,
         )
     if package == :Knetjl
-        result = _singlelabelknetclassifier_Knet(
+        result = _singlelabelmulticlassknetclassifier_Knet(
             featurenames,
             singlelabelname,
             singlelabellevels;
@@ -414,8 +414,6 @@ function singlelabelknetclassifier(
         error("$(package) is not a valid value for package")
     end
 end
-
-const knetclassifier = singlelabelknetclassifier
 
 function _singlelabelknetregression_Knet(
         featurenames::AbstractVector,
@@ -505,5 +503,3 @@ function singlelabelknetregression(
         error("$(package) is not a valid value for package")
     end
 end
-
-const knetregression = singlelabelknetregression

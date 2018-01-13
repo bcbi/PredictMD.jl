@@ -149,7 +149,7 @@ function predict_proba(
     end
 end
 
-function _singlelabelrandomforestclassifier_DecisionTree(
+function _singlelabelmultilabelrandomforestclassifier_DecisionTree(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -189,7 +189,7 @@ function _singlelabelrandomforestclassifier_DecisionTree(
     return finalpipeline
 end
 
-function singlelabelrandomforestclassifier(
+function singlelabelmultilabelrandomforestclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -199,7 +199,7 @@ function singlelabelrandomforestclassifier(
         ntrees::Integer = 10,
         )
     if package == :DecisionTreejl
-        result = _singlelabelrandomforestclassifier_DecisionTree(
+        result = _singlelabelmultilabelrandomforestclassifier_DecisionTree(
             featurenames,
             singlelabelname,
             singlelabellevels;
@@ -212,8 +212,6 @@ function singlelabelrandomforestclassifier(
         error("$(package) is not a valid value for package")
     end
 end
-
-const randomforestclassifier = singlelabelrandomforestclassifier
 
 function _singlelabelrandomforestregression_DecisionTree(
         featurenames::AbstractVector,
@@ -269,5 +267,3 @@ function singlelabelrandomforestregression(
         error("$(package) is not a valid value for package")
     end
 end
-
-const randomforestregression = singlelabelrandomforestregression

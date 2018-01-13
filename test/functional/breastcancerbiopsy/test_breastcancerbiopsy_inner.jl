@@ -117,7 +117,7 @@ StatsBase.countmap(smotedtraininglabelsdf[labelname])
 ##############################################################################
 
 # Set up logistic classifier model
-logisticclassifier = asb.binarylogisticclassifier(
+logisticclassifier = asb.singlelabelbinarylogisticclassifier(
     featurenames,
     labelname,
     labellevels;
@@ -167,7 +167,7 @@ asb.binaryclassificationmetrics(
 ##############################################################################
 
 # Set up probit classifier model
-probitclassifier = asb.binaryprobitclassifier(
+probitclassifier = asb.singlelabelbinaryprobitclassifier(
     featurenames,
     labelname,
     labellevels;
@@ -217,7 +217,7 @@ asb.binaryclassificationmetrics(
 ##############################################################################
 
 # Set up random forest classifier model
-rfclassifier = asb.randomforestclassifier(
+rfclassifier = asb.singlelabelmultilabelrandomforestclassifier(
     featurenames,
     labelname,
     labellevels;
@@ -265,7 +265,7 @@ asb.binaryclassificationmetrics(
 ##############################################################################
 
 # Set up C-SVC model
-csvc_svmclassifier = asb.svmclassifier(
+csvc_svmclassifier = asb.singlelabelmulticlasssvmclassifier(
     featurenames,
     labelname,
     labellevels;
@@ -313,7 +313,7 @@ asb.binaryclassificationmetrics(
 ##############################################################################
 
 # Set up nu-SVC model
-nusvc_svmclassifier = asb.svmclassifier(
+nusvc_svmclassifier = asb.singlelabelmulticlasssvmclassifier(
     featurenames,
     labelname,
     labellevels;
@@ -463,7 +463,7 @@ knetmlp_minibatchsize = 48
 knetmlp_maxepochs = 500
 
 # Set up multilayer perceptron model
-knetmlpclassifier = asb.knetclassifier(
+knetmlpclassifier = asb.singlelabelmulticlassknetclassifier(
     featurenames,
     labelname,
     labellevels;
