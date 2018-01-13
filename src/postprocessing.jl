@@ -1,5 +1,0 @@
-include("postprocessing/packagemultilabelpred.jl")
-include("postprocessing/packagesinglelabelpred.jl")
-include("postprocessing/packagesinglelabelproba.jl")
-include("postprocessing/predictoutput.jl")
-include("postprocessing/predictprobaoutput.jl")

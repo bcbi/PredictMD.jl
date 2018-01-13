@@ -88,7 +88,7 @@ julia> Pkg.update()
 ```julia
 julia> Pkg.clone("https://github.com/dilumaluthge/AUC.jl")
 julia> Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl")
-julia> Pkg.clone("https://github.com/dilumaluthge/RDatasets.jl")
+julia> Pkg.clone("https://github.com/johnmyleswhite/RDatasets.jl")
 ```
 
 #### Step 6: Install AluthgeSinhaBase:

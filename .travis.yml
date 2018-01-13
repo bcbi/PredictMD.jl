@@ -47,5 +47,5 @@ before_script:
   - julia -e 'Pkg.update()'
   - julia -e 'Pkg.clone("https://github.com/dilumaluthge/AUC.jl")'
   - julia -e 'Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl")'
-  - julia -e 'Pkg.clone("https://github.com/dilumaluthge/RDatasets.jl")'
+  - julia -e 'Pkg.clone("https://github.com/johnmyleswhite/RDatasets.jl")'
 
