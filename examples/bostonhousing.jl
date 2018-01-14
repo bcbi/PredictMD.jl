@@ -53,6 +53,7 @@ import LIBSVM
 import StatsBase
 
 # set the seed of the global random number generator
+# this makes the results reproducible
 srand(999)
 
 ##############################################################################
@@ -122,7 +123,7 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 ##############################################################################
 
 # Set up linear regression model
-linearreg = asb.linearregression(
+linearreg = asb.singlelabellinearregression(
     featurenames,
     labelname;
     package = :GLMjl,
@@ -163,7 +164,7 @@ asb.regressionmetrics(
 ##############################################################################
 
 # Set up random forest regression model
-randomforestreg = asb.randomforestregression(
+randomforestreg = asb.singlelabelrandomforestregression(
     featurenames,
     labelname;
     nsubfeatures = 2, # number of subfeatures; defaults to 2
@@ -202,7 +203,7 @@ asb.regressionmetrics(
 ##############################################################################
 
 # Set up epsilon-SVR model
-epsilonsvr_svmreg = asb.svmregression(
+epsilonsvr_svmreg = asb.singlelabelsvmregression(
     featurenames,
     labelname;
     package = :LIBSVMjl,
@@ -242,7 +243,7 @@ asb.regressionmetrics(
 ##############################################################################
 
 # Set up nu-SVR model
-nusvr_svmreg = asb.svmregression(
+nusvr_svmreg = asb.singlelabelsvmregression(
     featurenames,
     labelname;
     package = :LIBSVMjl,
@@ -364,7 +365,7 @@ knetmlp_minibatchsize = 48
 knetmlp_maxepochs = 500
 
 # Set up multilayer perceptron model
-knetmlpreg = asb.knetregression(
+knetmlpreg = asb.singlelabelknetregression(
     featurenames,
     labelname;
     package = :Knetjl,

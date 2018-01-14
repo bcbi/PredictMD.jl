@@ -222,8 +222,6 @@ function singlelabelbinarylogisticclassifier(
     end
 end
 
-const binarylogisticclassifier = singlelabelbinarylogisticclassifier
-
 function _singlelabelbinaryprobitclassifier_GLM(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
@@ -295,9 +293,6 @@ function singlelabelbinaryprobitclassifier(
     end
 end
 
-const binaryprobitclassifier = singlelabelbinaryprobitclassifier
-
-
 function _singlelabellinearregression_GLM(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
@@ -344,5 +339,3 @@ function singlelabellinearregression(
         error("$(package) is not a valid value for package")
     end
 end
-
-const linearregression = singlelabellinearregression

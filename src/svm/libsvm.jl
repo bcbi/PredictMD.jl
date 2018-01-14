@@ -213,7 +213,7 @@ function predict_proba(
     end
 end
 
-function _singlelabelsvmclassifier_LIBSVM(
+function _singlelabelmulticlasssvmclassifier_LIBSVM(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -275,7 +275,7 @@ function _singlelabelsvmclassifier_LIBSVM(
     return finalpipeline
 end
 
-function singlelabelsvmclassifier(
+function singlelabelmulticlasssvmclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -296,7 +296,7 @@ function singlelabelsvmclassifier(
         verbose::Bool = true,
         )
     if package == :LIBSVMjl
-        result = _singlelabelsvmclassifier_LIBSVM(
+        result = _singlelabelmulticlasssvmclassifier_LIBSVM(
             featurenames,
             singlelabelname,
             singlelabellevels;
@@ -320,8 +320,6 @@ function singlelabelsvmclassifier(
         error("$(package) is not a valid value for package")
     end
 end
-
-const svmclassifier = singlelabelsvmclassifier
 
 function _singlelabelsvmregression_LIBSVM(
         featurenames::AbstractVector,
@@ -422,5 +420,3 @@ function singlelabelsvmregression(
         error("$(package) is not a valid value for package")
     end
 end
-
-const svmregression = singlelabelsvmregression
