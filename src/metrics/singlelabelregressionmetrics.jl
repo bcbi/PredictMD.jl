@@ -4,26 +4,24 @@ import MLBase
 import StatsBase
 
 function singlelabelregressionytrue(
-        dataframe::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol;
+        labels::AbstractVector;
         floattype::Type = Cfloat,
         )
     if !(floattype <: AbstractFloat)
         error("!(floattype <: AbstractFloat)")
     end
-    result = floattype.(dataframe[singlelabelname])
+    result = floattype.(labels)
     return result
 end
 
 function singlelabelregressionypred(
-        dataframe::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol;
+        labels::AbstractVector;
         floattype::Type = Cfloat,
         )
     if !(floattype <: AbstractFloat)
         error("!(floattype <: AbstractFloat)")
     end
-    result = floattype.(dataframe[singlelabelname])
+    result = floattype.(labels)
     return result
 end
 
@@ -34,13 +32,11 @@ function _singlelabelregressionmetrics(
         singlelabelname::Symbol,
         )
     ytrue = singlelabelregressionytrue(
-        labelsdf,
-        singlelabelname,
+        labelsdf[singlelabelname],
         )
     predictionsalllabels = predict(estimator, featuresdf)
     ypred = singlelabelregressionypred(
-        predictionsalllabels,
-        singlelabelname,
+        predictionsalllabels[singlelabelname],
         )
     results = Dict()
     results[:R2coefficientofdetermination] = R2coefficientofdetermination(
@@ -67,7 +63,7 @@ function singlelabelregressionmetrics(
 end
 
 function singlelabelregressionmetrics(
-        vectorofestimators,#::AbstractObjectVector,
+        vectorofestimators::AbstractObjectVector,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol;
