@@ -150,7 +150,7 @@ StatsBase.countmap(smotedtraininglabelsdf[labelname])
 ##############################################################################
 
 # Set up logistic classifier model
-logisticclassifier = asb.singlelabelbinarylogisticclassifier(
+logisticclassifier = asb.singlelabelbinaryclassdataframelogisticclassifier(
     featurenames,
     labelname,
     labellevels;
@@ -176,7 +176,7 @@ end
 asb.getunderlying(logisticclassifier)
 
 # Evaluate performance of logistic classifier on smoted training set
-asb.singlelabelbinaryclassificationmetrics(
+asb.singlelabelbinaryclassclassificationmetrics(
     logisticclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -186,7 +186,7 @@ asb.singlelabelbinaryclassificationmetrics(
     )
 
 # Evaluate performance of logistic classifier on testing set
-asb.singlelabelbinaryclassificationmetrics(
+asb.singlelabelbinaryclassclassificationmetrics(
     logisticclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -200,7 +200,7 @@ asb.singlelabelbinaryclassificationmetrics(
 ##############################################################################
 
 # Set up probit classifier model
-probitclassifier = asb.singlelabelbinaryprobitclassifier(
+probitclassifier = asb.singlelabelbinaryclassdataframeprobitclassifier(
     featurenames,
     labelname,
     labellevels;
@@ -226,7 +226,7 @@ end
 asb.getunderlying(probitclassifier)
 
 # Evaluate performance of probit classifier on smoted training set
-asb.singlelabelbinaryclassificationmetrics(
+asb.singlelabelbinaryclassclassificationmetrics(
     probitclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -236,7 +236,7 @@ asb.singlelabelbinaryclassificationmetrics(
     )
 
 # Evaluate performance of probit classifier on testing set
-asb.singlelabelbinaryclassificationmetrics(
+asb.singlelabelbinaryclassclassificationmetrics(
     probitclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -250,7 +250,7 @@ asb.singlelabelbinaryclassificationmetrics(
 ##############################################################################
 
 # Set up random forest classifier model
-rfclassifier = asb.singlelabelmulticlassrandomforestclassifier(
+rfclassifier = asb.singlelabelmulticlassdataframerandomforestclassifier(
     featurenames,
     labelname,
     labellevels;
@@ -274,7 +274,7 @@ else
 end
 
 # Evaluate performance of random forest classifier on smoted training set
-asb.singlelabelbinaryclassificationmetrics(
+asb.singlelabelbinaryclassclassificationmetrics(
     rfclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -284,7 +284,7 @@ asb.singlelabelbinaryclassificationmetrics(
     )
 
 # Evaluate performance of random forest on testing set
-asb.singlelabelbinaryclassificationmetrics(
+asb.singlelabelbinaryclassclassificationmetrics(
     rfclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -298,7 +298,7 @@ asb.singlelabelbinaryclassificationmetrics(
 ##############################################################################
 
 # Set up C-SVC model
-csvc_svmclassifier = asb.singlelabelmulticlasssvmclassifier(
+csvc_svmclassifier = asb.singlelabelmulticlassdataframesvmclassifier(
     featurenames,
     labelname,
     labellevels;
@@ -322,7 +322,7 @@ else
 end
 
 # Evaluate performance of C-SVC on smoted training set
-asb.singlelabelbinaryclassificationmetrics(
+asb.singlelabelbinaryclassclassificationmetrics(
     csvc_svmclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -332,7 +332,7 @@ asb.singlelabelbinaryclassificationmetrics(
     )
 
 # Evaluate performance of C-SVC on testing set
-asb.singlelabelbinaryclassificationmetrics(
+asb.singlelabelbinaryclassclassificationmetrics(
     csvc_svmclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -346,7 +346,7 @@ asb.singlelabelbinaryclassificationmetrics(
 ##############################################################################
 
 # Set up nu-SVC model
-nusvc_svmclassifier = asb.singlelabelmulticlasssvmclassifier(
+nusvc_svmclassifier = asb.singlelabelmulticlassdataframesvmclassifier(
     featurenames,
     labelname,
     labellevels;
@@ -370,7 +370,7 @@ else
 end
 
 # Evaluate performance of nu-SVC on smoted training set
-asb.singlelabelbinaryclassificationmetrics(
+asb.singlelabelbinaryclassclassificationmetrics(
     nusvc_svmclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -380,7 +380,7 @@ asb.singlelabelbinaryclassificationmetrics(
     )
 
 # Evaluate performance of SVM on testing set
-asb.singlelabelbinaryclassificationmetrics(
+asb.singlelabelbinaryclassclassificationmetrics(
     nusvc_svmclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -496,7 +496,7 @@ knetmlp_minibatchsize = 48
 knetmlp_maxepochs = 500
 
 # Set up multilayer perceptron model
-knetmlpclassifier = asb.singlelabelmulticlassknetclassifier(
+knetmlpclassifier = asb.singlelabelmulticlassdataframeknetclassifier(
     featurenames,
     labelname,
     labellevels;
@@ -563,7 +563,7 @@ knet_learningcurve_lossvsiteration_skip100iterations = asb.plotlearningcurve(
 asb.open(knet_learningcurve_lossvsiteration_skip100iterations)
 
 # Evaluate performance of multilayer perceptron on smoted training set
-asb.singlelabelbinaryclassificationmetrics(
+asb.singlelabelbinaryclassclassificationmetrics(
     knetmlpclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -573,7 +573,7 @@ asb.singlelabelbinaryclassificationmetrics(
     )
 
 # Evaluate performance of multilayer perceptron on testing set
-asb.singlelabelbinaryclassificationmetrics(
+asb.singlelabelbinaryclassclassificationmetrics(
     knetmlpclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -589,7 +589,7 @@ asb.singlelabelbinaryclassificationmetrics(
 ##############################################################################
 
 # Compare performance of all models on smoted training set
-showall(asb.singlelabelbinaryclassificationmetrics(
+showall(asb.singlelabelbinaryclassclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -604,7 +604,7 @@ showall(asb.singlelabelbinaryclassificationmetrics(
     positiveclass;
     sensitivity = 0.95,
     ))
-showall(asb.singlelabelbinaryclassificationmetrics(
+showall(asb.singlelabelbinaryclassclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -619,7 +619,7 @@ showall(asb.singlelabelbinaryclassificationmetrics(
     positiveclass;
     specificity = 0.95,
     ))
-showall(asb.singlelabelbinaryclassificationmetrics(
+showall(asb.singlelabelbinaryclassclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -634,7 +634,7 @@ showall(asb.singlelabelbinaryclassificationmetrics(
     positiveclass;
     maximize = :f1score,
     ))
-showall(asb.singlelabelbinaryclassificationmetrics(
+showall(asb.singlelabelbinaryclassclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -651,7 +651,7 @@ showall(asb.singlelabelbinaryclassificationmetrics(
     ))
 
 # Compare performance of all models on testing set
-showall(asb.singlelabelbinaryclassificationmetrics(
+showall(asb.singlelabelbinaryclassclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -666,7 +666,7 @@ showall(asb.singlelabelbinaryclassificationmetrics(
     positiveclass;
     sensitivity = 0.95,
     ))
-showall(asb.singlelabelbinaryclassificationmetrics(
+showall(asb.singlelabelbinaryclassclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -681,7 +681,7 @@ showall(asb.singlelabelbinaryclassificationmetrics(
     positiveclass;
     specificity = 0.95,
     ))
-showall(asb.singlelabelbinaryclassificationmetrics(
+showall(asb.singlelabelbinaryclassclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -696,7 +696,7 @@ showall(asb.singlelabelbinaryclassificationmetrics(
     positiveclass;
     maximize = :f1score,
     ))
-showall(asb.singlelabelbinaryclassificationmetrics(
+showall(asb.singlelabelbinaryclassclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,

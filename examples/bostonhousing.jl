@@ -123,7 +123,7 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 ##############################################################################
 
 # Set up linear regression model
-linearreg = asb.singlelabellinearregression(
+linearreg = asb.singlelabeldataframelinearregression(
     featurenames,
     labelname;
     package = :GLMjl,
@@ -164,7 +164,7 @@ asb.singlelabelregressionmetrics(
 ##############################################################################
 
 # Set up random forest regression model
-randomforestreg = asb.singlelabelrandomforestregression(
+randomforestreg = asb.singlelabeldataframerandomforestregression(
     featurenames,
     labelname;
     nsubfeatures = 2, # number of subfeatures; defaults to 2
@@ -203,7 +203,7 @@ asb.singlelabelregressionmetrics(
 ##############################################################################
 
 # Set up epsilon-SVR model
-epsilonsvr_svmreg = asb.singlelabelsvmregression(
+epsilonsvr_svmreg = asb.singlelabeldataframesvmregression(
     featurenames,
     labelname;
     package = :LIBSVMjl,
@@ -243,7 +243,7 @@ asb.singlelabelregressionmetrics(
 ##############################################################################
 
 # Set up nu-SVR model
-nusvr_svmreg = asb.singlelabelsvmregression(
+nusvr_svmreg = asb.singlelabeldataframesvmregression(
     featurenames,
     labelname;
     package = :LIBSVMjl,
@@ -365,7 +365,7 @@ knetmlp_minibatchsize = 48
 knetmlp_maxepochs = 500
 
 # Set up multilayer perceptron model
-knetmlpreg = asb.singlelabelknetregression(
+knetmlpreg = asb.singlelabeldataframeknetregression(
     featurenames,
     labelname;
     package = :Knetjl,

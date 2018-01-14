@@ -213,7 +213,7 @@ function predict_proba(
     end
 end
 
-function _singlelabelmulticlasssvmclassifier_LIBSVM(
+function _singlelabelmulticlassdataframesvmclassifier_LIBSVM(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -275,7 +275,7 @@ function _singlelabelmulticlasssvmclassifier_LIBSVM(
     return finalpipeline
 end
 
-function singlelabelmulticlasssvmclassifier(
+function singlelabelmulticlassdataframesvmclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -296,7 +296,7 @@ function singlelabelmulticlasssvmclassifier(
         verbose::Bool = true,
         )
     if package == :LIBSVMjl
-        result = _singlelabelmulticlasssvmclassifier_LIBSVM(
+        result = _singlelabelmulticlassdataframesvmclassifier_LIBSVM(
             featurenames,
             singlelabelname,
             singlelabellevels;
@@ -321,7 +321,7 @@ function singlelabelmulticlasssvmclassifier(
     end
 end
 
-function _singlelabelsvmregression_LIBSVM(
+function _singlelabeldataframesvmregression_LIBSVM(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
         name::AbstractString = "",
@@ -376,7 +376,7 @@ function _singlelabelsvmregression_LIBSVM(
     return finalpipeline
 end
 
-function singlelabelsvmregression(
+function singlelabeldataframesvmregression(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         ;
@@ -397,7 +397,7 @@ function singlelabelsvmregression(
         verbose::Bool = true,
         )
     if package == :LIBSVMjl
-        result = _singlelabelsvmregression_LIBSVM(
+        result = _singlelabeldataframesvmregression_LIBSVM(
             featurenames,
             singlelabelname;
             name = name,

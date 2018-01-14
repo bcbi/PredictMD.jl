@@ -305,7 +305,7 @@ function predict_proba(
     end
 end
 
-function _singlelabelmulticlassknetclassifier_Knet(
+function _singlelabelmulticlassdataframeknetclassifier_Knet(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -377,7 +377,7 @@ function _singlelabelmulticlassknetclassifier_Knet(
     return finalpipeline
 end
 
-function singlelabelmulticlassknetclassifier(
+function singlelabelmulticlassdataframeknetclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -394,7 +394,7 @@ function singlelabelmulticlassknetclassifier(
         printlosseverynepochs::Integer = 0,
         )
     if package == :Knetjl
-        result = _singlelabelmulticlassknetclassifier_Knet(
+        result = _singlelabelmulticlassdataframeknetclassifier_Knet(
             featurenames,
             singlelabelname,
             singlelabellevels;
@@ -415,7 +415,7 @@ function singlelabelmulticlassknetclassifier(
     end
 end
 
-function _singlelabelknetregression_Knet(
+function _singlelabeldataframeknetregression_Knet(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
         name::AbstractString = "",
@@ -468,7 +468,7 @@ function _singlelabelknetregression_Knet(
     return finalpipeline
 end
 
-function singlelabelknetregression(
+function singlelabeldataframeknetregression(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
         package::Symbol = :none,
@@ -484,7 +484,7 @@ function singlelabelknetregression(
         printlosseverynepochs::Integer = 0,
         )
     if package == :Knetjl
-        result = _singlelabelknetregression_Knet(
+        result = _singlelabeldataframeknetregression_Knet(
             featurenames,
             singlelabelname;
             name = name,

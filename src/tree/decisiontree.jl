@@ -149,7 +149,7 @@ function predict_proba(
     end
 end
 
-function _singlelabelmulticlassrandomforestclassifier_DecisionTree(
+function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -189,7 +189,7 @@ function _singlelabelmulticlassrandomforestclassifier_DecisionTree(
     return finalpipeline
 end
 
-function singlelabelmulticlassrandomforestclassifier(
+function singlelabelmulticlassdataframerandomforestclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -199,7 +199,7 @@ function singlelabelmulticlassrandomforestclassifier(
         ntrees::Integer = 10,
         )
     if package == :DecisionTreejl
-        result = _singlelabelmulticlassrandomforestclassifier_DecisionTree(
+        result = _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
             featurenames,
             singlelabelname,
             singlelabellevels;
@@ -213,7 +213,7 @@ function singlelabelmulticlassrandomforestclassifier(
     end
 end
 
-function _singlelabelrandomforestregression_DecisionTree(
+function _singlelabeldataframerandomforestregression_DecisionTree(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
         name::AbstractString = "",
@@ -246,7 +246,7 @@ function _singlelabelrandomforestregression_DecisionTree(
     return finalpipeline
 end
 
-function singlelabelrandomforestregression(
+function singlelabeldataframerandomforestregression(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
         name::AbstractString = "",
@@ -255,7 +255,7 @@ function singlelabelrandomforestregression(
         ntrees::Integer = 10,
         )
     if package == :DecisionTreejl
-        result = _singlelabelrandomforestregression_DecisionTree(
+        result = _singlelabeldataframerandomforestregression_DecisionTree(
             featurenames,
             singlelabelname;
             name = name,

@@ -151,7 +151,7 @@ function predict_proba(
 
 end
 
-function _singlelabelbinarylogisticclassifier_GLM(
+function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -200,7 +200,7 @@ function _singlelabelbinarylogisticclassifier_GLM(
     return finalpipeline
 end
 
-function singlelabelbinarylogisticclassifier(
+function singlelabelbinaryclassdataframelogisticclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -209,7 +209,7 @@ function singlelabelbinarylogisticclassifier(
         name::AbstractString = "",
         )
     if package == :GLMjl
-        result =_singlelabelbinarylogisticclassifier_GLM(
+        result =_singlelabelbinaryclassdataframelogisticclassifier_GLM(
             featurenames,
             singlelabelname,
             singlelabellevels;
@@ -222,7 +222,7 @@ function singlelabelbinarylogisticclassifier(
     end
 end
 
-function _singlelabelbinaryprobitclassifier_GLM(
+function _singlelabelbinaryclassdataframeprobitclassifier_GLM(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -271,7 +271,7 @@ function _singlelabelbinaryprobitclassifier_GLM(
     return finalpipeline
 end
 
-function singlelabelbinaryprobitclassifier(
+function singlelabelbinaryclassdataframeprobitclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -280,7 +280,7 @@ function singlelabelbinaryprobitclassifier(
         name::AbstractString = "",
         )
     if package == :GLMjl
-        result =_singlelabelbinaryprobitclassifier_GLM(
+        result =_singlelabelbinaryclassdataframeprobitclassifier_GLM(
             featurenames,
             singlelabelname,
             singlelabellevels;
@@ -293,7 +293,7 @@ function singlelabelbinaryprobitclassifier(
     end
 end
 
-function _singlelabellinearregression_GLM(
+function _singlelabeldataframelinearregression_GLM(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
         intercept::Bool = true,
@@ -320,7 +320,7 @@ function _singlelabellinearregression_GLM(
     return finalpipeline
 end
 
-function singlelabellinearregression(
+function singlelabeldataframelinearregression(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
         package::Symbol = :none,
@@ -328,7 +328,7 @@ function singlelabellinearregression(
         name::AbstractString = "",
         )
     if package == :GLMjl
-        result =_singlelabellinearregression_GLM(
+        result =_singlelabeldataframelinearregression_GLM(
             featurenames,
             singlelabelname;
             intercept = intercept,
