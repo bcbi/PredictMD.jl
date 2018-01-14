@@ -20,10 +20,10 @@ Base.Test.@testset "AluthgeSinhaBase test suite" begin
     Base.Test.@testset "Functional tests" begin
         info("Running functional tests")
         Base.Test.@testset "Boston housing regression" begin
-            include("functional/bostonhousing/test_bostonhousing_outer.jl")
+            include("functional/bostonhousing/setup_bostonhousing.jl")
         end
         Base.Test.@testset "Breast cancer biopsy classification" begin
-            include("functional/breastcancerbiopsy/test_breastcancerbiopsy_outer.jl")
+            include("functional/breastcancerbiopsy/setup_breastcancerbiopsy.jl")
         end
     end
 end

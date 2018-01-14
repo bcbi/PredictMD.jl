@@ -149,7 +149,7 @@ function predict_proba(
     end
 end
 
-function _singlelabelmultilabelrandomforestclassifier_DecisionTree(
+function _singlelabelmulticlassrandomforestclassifier_DecisionTree(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -189,7 +189,7 @@ function _singlelabelmultilabelrandomforestclassifier_DecisionTree(
     return finalpipeline
 end
 
-function singlelabelmultilabelrandomforestclassifier(
+function singlelabelmulticlassrandomforestclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -199,7 +199,7 @@ function singlelabelmultilabelrandomforestclassifier(
         ntrees::Integer = 10,
         )
     if package == :DecisionTreejl
-        result = _singlelabelmultilabelrandomforestclassifier_DecisionTree(
+        result = _singlelabelmulticlassrandomforestclassifier_DecisionTree(
             featurenames,
             singlelabelname,
             singlelabellevels;
