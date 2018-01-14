@@ -176,7 +176,7 @@ end
 asb.getunderlying(logisticclassifier)
 
 # Evaluate performance of logistic classifier on smoted training set
-asb.binaryclassificationmetrics(
+asb.singlelabelbinaryclassificationmetrics(
     logisticclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -186,7 +186,7 @@ asb.binaryclassificationmetrics(
     )
 
 # Evaluate performance of logistic classifier on testing set
-asb.binaryclassificationmetrics(
+asb.singlelabelbinaryclassificationmetrics(
     logisticclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -226,7 +226,7 @@ end
 asb.getunderlying(probitclassifier)
 
 # Evaluate performance of probit classifier on smoted training set
-asb.binaryclassificationmetrics(
+asb.singlelabelbinaryclassificationmetrics(
     probitclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -236,7 +236,7 @@ asb.binaryclassificationmetrics(
     )
 
 # Evaluate performance of probit classifier on testing set
-asb.binaryclassificationmetrics(
+asb.singlelabelbinaryclassificationmetrics(
     probitclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -250,7 +250,7 @@ asb.binaryclassificationmetrics(
 ##############################################################################
 
 # Set up random forest classifier model
-rfclassifier = asb.singlelabelmultilabelrandomforestclassifier(
+rfclassifier = asb.singlelabelmulticlassrandomforestclassifier(
     featurenames,
     labelname,
     labellevels;
@@ -274,7 +274,7 @@ else
 end
 
 # Evaluate performance of random forest classifier on smoted training set
-asb.binaryclassificationmetrics(
+asb.singlelabelbinaryclassificationmetrics(
     rfclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -284,7 +284,7 @@ asb.binaryclassificationmetrics(
     )
 
 # Evaluate performance of random forest on testing set
-asb.binaryclassificationmetrics(
+asb.singlelabelbinaryclassificationmetrics(
     rfclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -322,7 +322,7 @@ else
 end
 
 # Evaluate performance of C-SVC on smoted training set
-asb.binaryclassificationmetrics(
+asb.singlelabelbinaryclassificationmetrics(
     csvc_svmclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -332,7 +332,7 @@ asb.binaryclassificationmetrics(
     )
 
 # Evaluate performance of C-SVC on testing set
-asb.binaryclassificationmetrics(
+asb.singlelabelbinaryclassificationmetrics(
     csvc_svmclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -370,7 +370,7 @@ else
 end
 
 # Evaluate performance of nu-SVC on smoted training set
-asb.binaryclassificationmetrics(
+asb.singlelabelbinaryclassificationmetrics(
     nusvc_svmclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -380,7 +380,7 @@ asb.binaryclassificationmetrics(
     )
 
 # Evaluate performance of SVM on testing set
-asb.binaryclassificationmetrics(
+asb.singlelabelbinaryclassificationmetrics(
     nusvc_svmclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -563,7 +563,7 @@ knet_learningcurve_lossvsiteration_skip100iterations = asb.plotlearningcurve(
 asb.open(knet_learningcurve_lossvsiteration_skip100iterations)
 
 # Evaluate performance of multilayer perceptron on smoted training set
-asb.binaryclassificationmetrics(
+asb.singlelabelbinaryclassificationmetrics(
     knetmlpclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -573,7 +573,7 @@ asb.binaryclassificationmetrics(
     )
 
 # Evaluate performance of multilayer perceptron on testing set
-asb.binaryclassificationmetrics(
+asb.singlelabelbinaryclassificationmetrics(
     knetmlpclassifier,
     testingfeaturesdf,
     testinglabelsdf,
@@ -589,7 +589,7 @@ asb.binaryclassificationmetrics(
 ##############################################################################
 
 # Compare performance of all models on smoted training set
-showall(asb.binaryclassificationmetrics(
+showall(asb.singlelabelbinaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -604,7 +604,7 @@ showall(asb.binaryclassificationmetrics(
     positiveclass;
     sensitivity = 0.95,
     ))
-showall(asb.binaryclassificationmetrics(
+showall(asb.singlelabelbinaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -619,7 +619,7 @@ showall(asb.binaryclassificationmetrics(
     positiveclass;
     specificity = 0.95,
     ))
-showall(asb.binaryclassificationmetrics(
+showall(asb.singlelabelbinaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -634,7 +634,7 @@ showall(asb.binaryclassificationmetrics(
     positiveclass;
     maximize = :f1score,
     ))
-showall(asb.binaryclassificationmetrics(
+showall(asb.singlelabelbinaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -651,7 +651,7 @@ showall(asb.binaryclassificationmetrics(
     ))
 
 # Compare performance of all models on testing set
-showall(asb.binaryclassificationmetrics(
+showall(asb.singlelabelbinaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -666,7 +666,7 @@ showall(asb.binaryclassificationmetrics(
     positiveclass;
     sensitivity = 0.95,
     ))
-showall(asb.binaryclassificationmetrics(
+showall(asb.singlelabelbinaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -681,7 +681,7 @@ showall(asb.binaryclassificationmetrics(
     positiveclass;
     specificity = 0.95,
     ))
-showall(asb.binaryclassificationmetrics(
+showall(asb.singlelabelbinaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,
@@ -696,7 +696,7 @@ showall(asb.binaryclassificationmetrics(
     positiveclass;
     maximize = :f1score,
     ))
-showall(asb.binaryclassificationmetrics(
+showall(asb.singlelabelbinaryclassificationmetrics(
     [
         logisticclassifier,
         probitclassifier,

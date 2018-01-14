@@ -14,7 +14,7 @@ Base.Test.@test(!isfile(ENV["knetmlp_filename"]))
 
 ENV["LOADTRAINEDMODELSFROMFILE"] = "false"
 ENV["SAVETRAINEDMODELSTOFILE"] = "true"
-include("test_breastcancerbiopsy_inner.jl")
+include("run_breastcancerbiopsy.jl")
 
 Base.Test.@test(isfile(ENV["logisticclassifier_filename"]))
 Base.Test.@test(isfile(ENV["probitclassifier_filename"]))
@@ -25,4 +25,4 @@ Base.Test.@test(isfile(ENV["knetmlp_filename"]))
 
 ENV["LOADTRAINEDMODELSFROMFILE"] = "true"
 ENV["SAVETRAINEDMODELSTOFILE"] = "false"
-include("test_breastcancerbiopsy_inner.jl")
+include("run_breastcancerbiopsy.jl")

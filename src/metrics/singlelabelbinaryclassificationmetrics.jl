@@ -258,5 +258,3 @@ function singlelabelbinaryclassificationmetrics(
     end
     return result
 end
-
-const binaryclassificationmetrics = singlelabelbinaryclassificationmetrics

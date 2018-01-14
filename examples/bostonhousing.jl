@@ -144,7 +144,7 @@ end
 asb.getunderlying(linearreg)
 
 # Evaluate performance of linear regression on training set
-asb.regressionmetrics(
+asb.singlelabelregressionmetrics(
     linearreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -152,7 +152,7 @@ asb.regressionmetrics(
     )
 
 # Evaluate performance of linear regression on testing set
-asb.regressionmetrics(
+asb.singlelabelregressionmetrics(
     linearreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -183,7 +183,7 @@ else
 end
 
 # Evaluate performance of random forest on training set
-asb.regressionmetrics(
+asb.singlelabelregressionmetrics(
     randomforestreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -191,7 +191,7 @@ asb.regressionmetrics(
     )
 
 # Evaluate performance of random forest on testing set
-asb.regressionmetrics(
+asb.singlelabelregressionmetrics(
     randomforestreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -223,7 +223,7 @@ else
 end
 
 # Evaluate performance of epsilon-SVR on training set
-asb.regressionmetrics(
+asb.singlelabelregressionmetrics(
     epsilonsvr_svmreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -231,7 +231,7 @@ asb.regressionmetrics(
     )
 
 # Evaluate performance of epsilon-SVR on testing set
-asb.regressionmetrics(
+asb.singlelabelregressionmetrics(
     epsilonsvr_svmreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -263,7 +263,7 @@ else
 end
 
 # Evaluate performance of nu-SVR on training set
-asb.regressionmetrics(
+asb.singlelabelregressionmetrics(
     nusvr_svmreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -271,7 +271,7 @@ asb.regressionmetrics(
     )
 
 # Evaluate performance of nu-SVR on testing set
-asb.regressionmetrics(
+asb.singlelabelregressionmetrics(
     nusvr_svmreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -427,7 +427,7 @@ knet_learningcurve_lossvsiteration_skip100iterations = asb.plotlearningcurve(
 asb.open(knet_learningcurve_lossvsiteration_skip100iterations)
 
 # Evaluate performance of multilayer perceptron on training set
-asb.regressionmetrics(
+asb.singlelabelregressionmetrics(
     knetmlpreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -435,7 +435,7 @@ asb.regressionmetrics(
     )
 
 # Evaluate performance of multilayer perceptron on testing set
-asb.regressionmetrics(
+asb.singlelabelregressionmetrics(
     knetmlpreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -449,7 +449,7 @@ asb.regressionmetrics(
 ##############################################################################
 
 # Compare performance of all five models on training set
-showall(asb.regressionmetrics(
+showall(asb.singlelabelregressionmetrics(
     [
         linearreg,
         randomforestreg,
@@ -463,7 +463,7 @@ showall(asb.regressionmetrics(
     ))
 
 # Compare performance of all models on testing set
-showall(asb.regressionmetrics(
+showall(asb.singlelabelregressionmetrics(
     [
         linearreg,
         randomforestreg,

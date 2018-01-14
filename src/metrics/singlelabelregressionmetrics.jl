@@ -91,5 +91,3 @@ function singlelabelregressionmetrics(
     end
     return result
 end
-
-const regressionmetrics = singlelabelregressionmetrics
