@@ -1,6 +1,7 @@
 julia 0.6.2
 
 AUC
+Atom
 AutoGrad 0.0.10
 CSV 0.2.0
 ClassImbalance
@@ -16,6 +17,7 @@ GLMNet 0.3.0
 GZip 0.3.0
 HypothesisTests 0.6.0
 JLD2 0.0.5
+Juno
 Knet 0.9.0
 LARS 0.0.3
 LIBLINEAR 0.3.0

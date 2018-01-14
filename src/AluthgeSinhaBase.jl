@@ -23,6 +23,9 @@ include("datasets/rdatasets.jl")
 
 # ensemble/
 
+# integrations/ide/
+include("integrations/ide/atomjuno.jl")
+
 # io/
 include("io/fileio.jl")
 include("io/jld2.jl")
