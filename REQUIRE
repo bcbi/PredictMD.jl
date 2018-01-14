@@ -3,6 +3,7 @@ julia 0.6.2
 AUC
 Atom
 AutoGrad 0.0.10
+Blink
 CSV 0.2.0
 ClassImbalance
 Clustering 0.9.1

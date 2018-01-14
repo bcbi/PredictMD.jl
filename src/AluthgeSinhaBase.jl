@@ -23,6 +23,9 @@ include("datasets/rdatasets.jl")
 
 # ensemble/
 
+# integrations/gui/
+include("integrations/gui/blink.jl")
+
 # integrations/ide/
 include("integrations/ide/atomjuno.jl")
 
