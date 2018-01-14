@@ -21,6 +21,7 @@ import LIBSVM
 import StatsBase
 
 # set the seed of the global random number generator
+# this makes the results reproducible
 srand(999)
 
 ##############################################################################
