@@ -95,22 +95,12 @@ julia> Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl")
 julia> Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git")
 ```
 
-#### Step 7: Switch to the master branch of AluthgeSinhaBase, which gives you the latest stable version:
-```julia
-julia> Pkg.checkout("AluthgeSinhaBase", "master")
-```
-
-#### Step 8: After switching to the master branch, run Pkg.update() again:
-```julia
-julia> Pkg.update()
-```
-
-#### Step 9: Finally, run the test suite:
+#### Step 7: Run the test suite:
 ```julia
 julia> Pkg.test("AluthgeSinhaBase")
 ```
 
-Once the test suite has passed, you are ready to use AluthgeSinhaBase!
+Once the test suite has passed, you are ready to use AluthgeSinhaBase.
 
 ## Examples
 The `examples/` folder contains several files that illustrate the usage of AluthgeSinhaBase:
