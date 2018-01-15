@@ -4,11 +4,43 @@ immutable ImmutablePredictProbaSingleLabelInt2StringTransformer <:
     levels::T2 where T2 <: AbstractVector
 end
 
-function underlying(::ImmutablePredictProbaSingleLabelInt2StringTransformer)
+function setfeaturecontrasts!(
+        x::ImmutablePredictProbaSingleLabelInt2StringTransformer,
+        contrasts::AbstractContrasts,
+        )
     return nothing
 end
 
-function valuehistories(::ImmutablePredictProbaSingleLabelInt2StringTransformer)
+function getunderlying(
+        x::ImmutablePredictProbaSingleLabelInt2StringTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function setunderlying!(
+        x::ImmutablePredictProbaSingleLabelInt2StringTransformer,
+        object;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+function gethistory(
+        x::ImmutablePredictProbaSingleLabelInt2StringTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function sethistory!(
+        x::ImmutablePredictProbaSingleLabelInt2StringTransformer,
+        h;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
     return nothing
 end
 

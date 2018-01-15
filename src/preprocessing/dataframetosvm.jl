@@ -5,6 +5,47 @@ immutable ImmutableFeatureArrayTransposerTransformer <:
         AbstractPrimitiveObject
 end
 
+function setfeaturecontrasts!(
+        x::ImmutableFeatureArrayTransposerTransformer,
+        contrasts::AbstractContrasts,
+        )
+    return nothing
+end
+
+function getunderlying(
+        x::ImmutableFeatureArrayTransposerTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function setunderlying!(
+        x::ImmutableFeatureArrayTransposerTransformer,
+        object;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function gethistory(
+        x::ImmutableFeatureArrayTransposerTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function sethistory!(
+        x::ImmutableFeatureArrayTransposerTransformer,
+        h;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
 function transform(
         transformer::ImmutableFeatureArrayTransposerTransformer,
         featuresarray::AbstractMatrix,
@@ -51,13 +92,11 @@ end
 
 function DataFrame2LIBSVMTransformer(
         featurenames::AbstractVector,
-        singlelabelname::Symbol,
-        dffeaturecontrasts::AbstractContrasts;
+        singlelabelname::Symbol;
         levels::AbstractVector = [],
         )
-    df2decisiontreetransformer = ImmutableDataFrame2DecisionTreeTransformer(
+    df2decisiontreetransformer = MutableDataFrame2DecisionTreeTransformer(
         featurenames,
-        dffeaturecontrasts,
         singlelabelname;
         levels = levels,
         )

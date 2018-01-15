@@ -35,7 +35,7 @@
 ## Installation
 
 #### Step 1: Make sure that your version of Julia is at least 0.6.2
-Open a shell and run the following command:
+Open a terminal window and run the following command:
 ```bash
 julia -v
 ```
@@ -46,7 +46,7 @@ julia version 0.6.2
 If you receive an error (e.g. "command not found"), or if your version of Julia is less than 0.6.2, go to [https://julialang.org/downloads/](https://julialang.org/downloads/) and follow the instructions to install an appropriately recent version of Julia.
 
 #### Step 2: Make sure that LaTex is installed on your system:
-Open a shell and run the following command:
+Open a terminal window and run the following command:
 ```bash
 latex -v
 ```
@@ -68,7 +68,7 @@ Compiled with xpdf version 3.04
 If you receive an error (e.g. "command not found"), see the [LaTeX](#latex) section for instructions on installing LaTeX.
 
 #### Step 3: Make sure that pdf2svg is installed on your system:
-Open a shell and run the following command:
+Open a terminal window and run the following command:
 ```bash
 pdf2svg
 ```
@@ -84,11 +84,10 @@ If you receive an error (e.g. "command not found"), see the [pdf2svg](#pdf2svg) 
 julia> Pkg.update()
 ```
 
-#### Step 5: There are three dependencies that need to be installed manually:
+#### Step 5: There are two dependencies that need to be installed manually:
 ```julia
 julia> Pkg.clone("https://github.com/dilumaluthge/AUC.jl")
 julia> Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl")
-julia> Pkg.clone("https://github.com/dilumaluthge/RDatasets.jl")
 ```
 
 #### Step 6: Install AluthgeSinhaBase:
@@ -96,24 +95,20 @@ julia> Pkg.clone("https://github.com/dilumaluthge/RDatasets.jl")
 julia> Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git")
 ```
 
-#### Step 7: Checkout the master branch of AluthgeSinhaBase, which gives you the latest stable version:
-```julia
-julia> Pkg.checkout("AluthgeSinhaBase", "master")
-julia> Pkg.update()
-```
-
-#### Step 8: Run the test suite:
+#### Step 7: Run the test suite:
 ```julia
 julia> Pkg.test("AluthgeSinhaBase")
 ```
+
+Once the test suite has passed, you are ready to use AluthgeSinhaBase.
 
 ## Examples
 The `examples/` folder contains several files that illustrate the usage of AluthgeSinhaBase:
 
 | Filename | Problem type | Problem description | Dataset |
 | -------- | ------------ | ------------------- | ------- |
-| `examples/bostonhousing.jl` | Single label regression | Predict the median value of houses | [Boston housing dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/Boston.rst) |
-| `examples/breastcancerbiopsy.jl` | Single label binary classification | Classify a tumor as benign or malignant | [Wisconsin breast cancer biopsy dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/biopsy.rst) |
+| [`examples/bostonhousing.jl`](https://github.com/dilumaluthge/AluthgeSinhaBase.jl/blob/master/examples/bostonhousing.jl) | Single label regression | Predict the median value of houses | [Boston housing dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/Boston.rst) |
+| [`examples/breastcancerbiopsy.jl`](https://github.com/dilumaluthge/AluthgeSinhaBase.jl/blob/master/examples/breastcancerbiopsy.jl) | Single label binary classification | Classify a tumor as benign or malignant | [Wisconsin breast cancer biopsy dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/biopsy.rst) |
 
 ## LaTeX
 AluthgeSinhaBase requires LaTeX for generating plots. If LaTeX is not installed on your system, download and install a TeX distribution from the appropriate link below:

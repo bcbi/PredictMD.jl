@@ -39,9 +39,51 @@ mutable struct MutableDecisionTreejlRandomForestEstimator <:
     end
 end
 
+function setfeaturecontrasts!(
+        x::MutableDecisionTreejlRandomForestEstimator,
+        contrasts::AbstractContrasts,
+        )
+    return nothing
+end
+
 function underlying(x::MutableDecisionTreejlRandomForestEstimator)
-    result = x.randomforest
+    return nothing
+end
+
+function getunderlying(
+        x::MutableDecisionTreejlRandomForestEstimator;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    result = x.underlyingrandomforest
     return result
+end
+
+function setunderlying!(
+        x::MutableDecisionTreejlRandomForestEstimator,
+        object;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    x.underlyingrandomforest = object
+    return nothing
+end
+
+function gethistory(
+        x::MutableDecisionTreejlRandomForestEstimator;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function sethistory!(
+        x::MutableDecisionTreejlRandomForestEstimator,
+        h;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
 end
 
 function fit!(
@@ -49,14 +91,14 @@ function fit!(
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
-    info(string("Starting to train DecisionTree random forest model."))
+    info(string("Starting to train DecisionTree.jl model."))
     randomforest = DecisionTree.build_forest(
         labelsarray,
         featuresarray,
         estimator.hyperparameters[:nsubfeatures],
         estimator.hyperparameters[:ntrees],
         )
-    info(string("Finished training DecisionTree random forest model."))
+    info(string("Finished training DecisionTree.jl model."))
     estimator.underlyingrandomforest = randomforest
     return estimator
 end
@@ -107,20 +149,18 @@ function predict_proba(
     end
 end
 
-function _singlelabelrandomforestclassifier_DecisionTree(
+function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        singlelabellevels::AbstractVector,
-        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
+        singlelabellevels::AbstractVector;
         name::AbstractString = "",
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
         )
-    dftransformer = ImmutableDataFrame2DecisionTreeTransformer(
+    dftransformer = MutableDataFrame2DecisionTreeTransformer(
         featurenames,
-        dffeaturecontrasts,
-        singlelabelname,
-        singlelabellevels,
+        singlelabelname;
+        levels = singlelabellevels,
         )
     randomforestestimator = MutableDecisionTreejlRandomForestEstimator(
         singlelabelname;
@@ -149,22 +189,20 @@ function _singlelabelrandomforestclassifier_DecisionTree(
     return finalpipeline
 end
 
-function singlelabelrandomforestclassifier(
+function singlelabelmulticlassdataframerandomforestclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        singlelabellevels::AbstractVector,
-        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
+        singlelabellevels::AbstractVector;
         name::AbstractString = "",
         package::Symbol = :none,
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
         )
     if package == :DecisionTreejl
-        result = _singlelabelrandomforestclassifier_DecisionTree(
+        result = _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
             featurenames,
             singlelabelname,
-            singlelabellevels,
-            dffeaturecontrasts;
+            singlelabellevels;
             name = name,
             nsubfeatures = nsubfeatures,
             ntrees = ntrees,
@@ -175,19 +213,15 @@ function singlelabelrandomforestclassifier(
     end
 end
 
-const randomforestclassifier = singlelabelrandomforestclassifier
-
-function _singlelabelrandomforestregression_DecisionTree(
+function _singlelabeldataframerandomforestregression_DecisionTree(
         featurenames::AbstractVector,
-        singlelabelname::Symbol,
-        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
+        singlelabelname::Symbol;
         name::AbstractString = "",
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
         )
-    dftransformer = ImmutableDataFrame2DecisionTreeTransformer(
+    dftransformer = MutableDataFrame2DecisionTreeTransformer(
         featurenames,
-        dffeaturecontrasts,
         singlelabelname,
         )
     randomforestestimator = MutableDecisionTreejlRandomForestEstimator(
@@ -212,20 +246,18 @@ function _singlelabelrandomforestregression_DecisionTree(
     return finalpipeline
 end
 
-function singlelabelrandomforestregression(
+function singlelabeldataframerandomforestregression(
         featurenames::AbstractVector,
-        singlelabelname::Symbol,
-        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
+        singlelabelname::Symbol;
         name::AbstractString = "",
         package::Symbol = :none,
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
         )
     if package == :DecisionTreejl
-        result = _singlelabelrandomforestregression_DecisionTree(
+        result = _singlelabeldataframerandomforestregression_DecisionTree(
             featurenames,
-            singlelabelname,
-            dffeaturecontrasts;
+            singlelabelname;
             name = name,
             nsubfeatures = nsubfeatures,
             ntrees = ntrees,
@@ -235,5 +267,3 @@ function singlelabelrandomforestregression(
         error("$(package) is not a valid value for package")
     end
 end
-
-const randomforestregression = singlelabelrandomforestregression

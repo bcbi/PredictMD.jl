@@ -27,7 +27,7 @@ function singlelabelbinaryyscore(
     return result
 end
 
-function _singlelabelbinaryclassificationmetrics_tunableparam(
+function _singlelabelbinaryclassclassificationmetrics_tunableparam(
         kwargsassoc::Associative,
         )
     tunableparams = [
@@ -43,12 +43,12 @@ function _singlelabelbinaryclassificationmetrics_tunableparam(
     kwargshastunableparam = [
         haskey(kwargsassoc, x) for x in tunableparams
         ]
-    if sum(kwargshastunableparam) !== 1
+    if sum(kwargshastunableparam) != 1
         msg = "you must specify one (and only one) of the following: " *
             join(tunableparams, ", ")
         error(msg)
     end
-    if length(tunableparams[kwargshastunableparam]) !== 1
+    if length(tunableparams[kwargshastunableparam]) != 1
         error("oh boy you definitely should never see this error message")
     end
     selectedtunableparam =
@@ -101,7 +101,7 @@ function _singlelabelbinaryclassificationmetrics_tunableparam(
     return selectedtunableparam, selectedparamtomax, metricprintnames
 end
 
-function _singlelabelbinaryclassificationmetrics(
+function _singlelabelbinaryclassclassificationmetrics(
         estimator::AbstractObject,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
@@ -112,7 +112,7 @@ function _singlelabelbinaryclassificationmetrics(
     #
     kwargsdict = Dict(kwargs)
     selectedtunableparam, selectedparamtomax, metricprintnames =
-        _singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
+        _singlelabelbinaryclassclassificationmetrics_tunableparam(kwargsdict)
     #
     predictedprobabilitiesalllabels = predict_proba(estimator, featuresdf)
     yscore = Cfloat.(
@@ -185,7 +185,7 @@ function _singlelabelbinaryclassificationmetrics(
     return results
 end
 
-function singlelabelbinaryclassificationmetrics(
+function singlelabelbinaryclassclassificationmetrics(
         estimator::AbstractObject,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
@@ -194,7 +194,7 @@ function singlelabelbinaryclassificationmetrics(
         kwargs...
         )
     vectorofestimators = [estimator]
-    result = singlelabelbinaryclassificationmetrics(
+    result = singlelabelbinaryclassclassificationmetrics(
         vectorofestimators,
         featuresdf,
         labelsdf,
@@ -205,7 +205,7 @@ function singlelabelbinaryclassificationmetrics(
     return result
 end
 
-function singlelabelbinaryclassificationmetrics(
+function singlelabelbinaryclassclassificationmetrics(
         vectorofestimators::AbstractObjectVector,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
@@ -215,9 +215,9 @@ function singlelabelbinaryclassificationmetrics(
         )
     kwargsdict = Dict(kwargs)
     selectedtunableparam, selectedparamtomax, metricprintnames =
-        _singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
+        _singlelabelbinaryclassclassificationmetrics_tunableparam(kwargsdict)
     metricsforeachestimator = [
-        _singlelabelbinaryclassificationmetrics(
+        _singlelabelbinaryclassclassificationmetrics(
             est,
             featuresdf,
             labelsdf,
@@ -258,5 +258,3 @@ function singlelabelbinaryclassificationmetrics(
     end
     return result
 end
-
-const binaryclassificationmetrics = singlelabelbinaryclassificationmetrics

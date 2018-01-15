@@ -15,7 +15,7 @@ mutable struct MutableLIBSVMjlSVMEstimator <: AbstractPrimitiveObject
     underlyingsvm::T6 where T6
 
     function MutableLIBSVMjlSVMEstimator(
-            dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
+            ;
             singlelabellevels::AbstractVector = [],
             name::AbstractString = "",
             isclassificationmodel::Bool = false,
@@ -23,7 +23,7 @@ mutable struct MutableLIBSVMjlSVMEstimator <: AbstractPrimitiveObject
             svmtype::Type = LIBSVM.SVC,
             kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
             degree::Integer = 3,
-            gamma::AbstractFloat = 1.0/dffeaturecontrasts.numarrayfeatures,
+            gamma::AbstractFloat = 0.1,
             coef0::AbstractFloat = 0.0,
             cost::AbstractFloat = 1.0,
             nu::AbstractFloat = 0.5,
@@ -59,9 +59,47 @@ mutable struct MutableLIBSVMjlSVMEstimator <: AbstractPrimitiveObject
     end
 end
 
-function underlying(x::MutableLIBSVMjlSVMEstimator)
-    result = x.svm
+function setfeaturecontrasts!(
+        x::MutableLIBSVMjlSVMEstimator,
+        contrasts::AbstractContrasts,
+        )
+    return nothing
+end
+
+function getunderlying(
+        x::MutableLIBSVMjlSVMEstimator;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    result = x.underlyingsvm
     return result
+end
+
+function setunderlying!(
+        x::MutableLIBSVMjlSVMEstimator,
+        object;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    x.underlyingsvm = object
+    return nothing
+end
+
+function gethistory(
+        x::MutableLIBSVMjlSVMEstimator;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function sethistory!(
+        x::MutableLIBSVMjlSVMEstimator,
+        h;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
 end
 
 function fit!(
@@ -175,16 +213,15 @@ function predict_proba(
     end
 end
 
-function _singlelabelsvmclassifier_LIBSVM(
+function _singlelabelmulticlassdataframesvmclassifier_LIBSVM(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        singlelabellevels::AbstractVector,
-        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
+        singlelabellevels::AbstractVector;
         name::AbstractString = "",
         svmtype::Type = LIBSVM.SVC,
         kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
         degree::Integer = 3,
-        gamma::AbstractFloat = 1.0/dffeaturecontrasts.numarrayfeatures,
+        gamma::AbstractFloat = 0.1,
         coef0::AbstractFloat = 0.0,
         cost::AbstractFloat = 1.0,
         nu::AbstractFloat = 0.5,
@@ -197,12 +234,11 @@ function _singlelabelsvmclassifier_LIBSVM(
         )
     dftransformer = DataFrame2LIBSVMTransformer(
         featurenames,
-        singlelabelname,
-        dffeaturecontrasts;
+        singlelabelname;
         levels = singlelabellevels,
         )
     svmestimator = MutableLIBSVMjlSVMEstimator(
-        dffeaturecontrasts;
+        ;
         name = name,
         singlelabellevels = singlelabellevels,
         isclassificationmodel = true,
@@ -239,17 +275,16 @@ function _singlelabelsvmclassifier_LIBSVM(
     return finalpipeline
 end
 
-function singlelabelsvmclassifier(
+function singlelabelmulticlassdataframesvmclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        singlelabellevels::AbstractVector,
-        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
+        singlelabellevels::AbstractVector;
         package::Symbol = :none,
         name::AbstractString = "",
         svmtype::Type = LIBSVM.SVC,
         kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
         degree::Integer = 3,
-        gamma::AbstractFloat = 1.0/dffeaturecontrasts.numarrayfeatures,
+        gamma::AbstractFloat = 0.1,
         coef0::AbstractFloat = 0.0,
         cost::AbstractFloat = 1.0,
         nu::AbstractFloat = 0.5,
@@ -261,11 +296,10 @@ function singlelabelsvmclassifier(
         verbose::Bool = true,
         )
     if package == :LIBSVMjl
-        result = _singlelabelsvmclassifier_LIBSVM(
+        result = _singlelabelmulticlassdataframesvmclassifier_LIBSVM(
             featurenames,
             singlelabelname,
-            singlelabellevels,
-            dffeaturecontrasts;
+            singlelabellevels;
             name = name,
             svmtype = svmtype,
             kernel = kernel,
@@ -287,17 +321,14 @@ function singlelabelsvmclassifier(
     end
 end
 
-const svmclassifier = singlelabelsvmclassifier
-
-function _singlelabelsvmregression_LIBSVM(
+function _singlelabeldataframesvmregression_LIBSVM(
         featurenames::AbstractVector,
-        singlelabelname::Symbol,
-        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
+        singlelabelname::Symbol;
         name::AbstractString = "",
         svmtype::Type = LIBSVM.EpsilonSVR,
         kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
         degree::Integer = 3,
-        gamma::AbstractFloat = 1.0/dffeaturecontrasts.numarrayfeatures,
+        gamma::AbstractFloat = 0.1,
         coef0::AbstractFloat = 0.0,
         cost::AbstractFloat = 1.0,
         nu::AbstractFloat = 0.5,
@@ -311,10 +342,9 @@ function _singlelabelsvmregression_LIBSVM(
     dftransformer = DataFrame2LIBSVMTransformer(
         featurenames,
         singlelabelname,
-        dffeaturecontrasts,
         )
     svmestimator = MutableLIBSVMjlSVMEstimator(
-        dffeaturecontrasts;
+        ;
         name = name,
         isclassificationmodel = false,
         isregressionmodel = true,
@@ -346,16 +376,16 @@ function _singlelabelsvmregression_LIBSVM(
     return finalpipeline
 end
 
-function singlelabelsvmregression(
+function singlelabeldataframesvmregression(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
-        dffeaturecontrasts::ImmutableDataFrameFeatureContrasts;
+        ;
         package::Symbol = :none,
         name::AbstractString = "",
         svmtype::Type = LIBSVM.EpsilonSVR,
         kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
         degree::Integer = 3,
-        gamma::AbstractFloat = 1.0/dffeaturecontrasts.numarrayfeatures,
+        gamma::AbstractFloat = 0.1,
         coef0::AbstractFloat = 0.0,
         cost::AbstractFloat = 1.0,
         nu::AbstractFloat = 0.5,
@@ -367,10 +397,9 @@ function singlelabelsvmregression(
         verbose::Bool = true,
         )
     if package == :LIBSVMjl
-        result = _singlelabelsvmregression_LIBSVM(
+        result = _singlelabeldataframesvmregression_LIBSVM(
             featurenames,
-            singlelabelname,
-            dffeaturecontrasts;
+            singlelabelname;
             name = name,
             svmtype = svmtype,
             kernel = kernel,
@@ -391,5 +420,3 @@ function singlelabelsvmregression(
         error("$(package) is not a valid value for package")
     end
 end
-
-const svmregression = singlelabelsvmregression

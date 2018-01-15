@@ -36,9 +36,47 @@ mutable struct MutableGLMjlGeneralizedLinearModelEstimator <:
     end
 end
 
-function underlying(x::MutableGLMjlGeneralizedLinearModelEstimator)
+function gethistory(
+        x::MutableGLMjlGeneralizedLinearModelEstimator;
+        saving::Bool = false,
+	loading::Bool = false,
+        )
+    return nothing
+end
+
+function sethistory!(
+        x::MutableGLMjlGeneralizedLinearModelEstimator,
+        h;
+        saving::Bool = false,
+	loading::Bool = false,
+        )
+    return nothing
+end
+
+function setfeaturecontrasts!(
+        x::MutableGLMjlGeneralizedLinearModelEstimator,
+        contrasts::AbstractContrasts,
+        )
+    return nothing
+end
+
+function getunderlying(
+        x::MutableGLMjlGeneralizedLinearModelEstimator;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
     result = x.underlyingglm
     return result
+end
+
+function setunderlying!(
+        x::MutableGLMjlGeneralizedLinearModelEstimator,
+        object;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    x.underlyingglm = object
+    return nothing
 end
 
 function fit!(
@@ -113,7 +151,7 @@ function predict_proba(
 
 end
 
-function _singlelabelbinarylogisticclassifier_GLM(
+function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -162,7 +200,7 @@ function _singlelabelbinarylogisticclassifier_GLM(
     return finalpipeline
 end
 
-function singlelabelbinarylogisticclassifier(
+function singlelabelbinaryclassdataframelogisticclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -171,7 +209,7 @@ function singlelabelbinarylogisticclassifier(
         name::AbstractString = "",
         )
     if package == :GLMjl
-        result =_singlelabelbinarylogisticclassifier_GLM(
+        result =_singlelabelbinaryclassdataframelogisticclassifier_GLM(
             featurenames,
             singlelabelname,
             singlelabellevels;
@@ -184,9 +222,7 @@ function singlelabelbinarylogisticclassifier(
     end
 end
 
-const binarylogisticclassifier = singlelabelbinarylogisticclassifier
-
-function _singlelabelbinaryprobitclassifier_GLM(
+function _singlelabelbinaryclassdataframeprobitclassifier_GLM(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -235,7 +271,7 @@ function _singlelabelbinaryprobitclassifier_GLM(
     return finalpipeline
 end
 
-function singlelabelbinaryprobitclassifier(
+function singlelabelbinaryclassdataframeprobitclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -244,7 +280,7 @@ function singlelabelbinaryprobitclassifier(
         name::AbstractString = "",
         )
     if package == :GLMjl
-        result =_singlelabelbinaryprobitclassifier_GLM(
+        result =_singlelabelbinaryclassdataframeprobitclassifier_GLM(
             featurenames,
             singlelabelname,
             singlelabellevels;
@@ -257,10 +293,7 @@ function singlelabelbinaryprobitclassifier(
     end
 end
 
-const binaryprobitclassifier = singlelabelbinaryprobitclassifier
-
-
-function _singlelabellinearregression_GLM(
+function _singlelabeldataframelinearregression_GLM(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
         intercept::Bool = true,
@@ -287,7 +320,7 @@ function _singlelabellinearregression_GLM(
     return finalpipeline
 end
 
-function singlelabellinearregression(
+function singlelabeldataframelinearregression(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
         package::Symbol = :none,
@@ -295,7 +328,7 @@ function singlelabellinearregression(
         name::AbstractString = "",
         )
     if package == :GLMjl
-        result =_singlelabellinearregression_GLM(
+        result =_singlelabeldataframelinearregression_GLM(
             featurenames,
             singlelabelname;
             intercept = intercept,
@@ -306,5 +339,3 @@ function singlelabellinearregression(
         error("$(package) is not a valid value for package")
     end
 end
-
-const linearregression = singlelabellinearregression

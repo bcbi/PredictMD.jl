@@ -3,11 +3,44 @@ immutable ImmutablePackageSingleLabelPredictProbaTransformer <:
     singlelabelname::T1 where T1 <: Symbol
 end
 
-function underlying(::ImmutablePackageSingleLabelPredictProbaTransformer)
+function setfeaturecontrasts!(
+        x::ImmutablePackageSingleLabelPredictProbaTransformer,
+        contrasts::AbstractContrasts,
+        )
     return nothing
 end
 
-function valuehistories(::ImmutablePackageSingleLabelPredictProbaTransformer)
+function getunderlying(
+        x::ImmutablePackageSingleLabelPredictProbaTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function setunderlying!(
+        x::ImmutablePackageSingleLabelPredictProbaTransformer,
+        object;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function gethistory(
+        x::ImmutablePackageSingleLabelPredictProbaTransformer;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
+    return nothing
+end
+
+function sethistory!(
+        x::ImmutablePackageSingleLabelPredictProbaTransformer,
+        h;
+        saving::Bool = false,
+        loading::Bool = false,
+        )
     return nothing
 end
 
