@@ -239,7 +239,7 @@ asb.singlelabelregressionmetrics(
     )
 
 ##############################################################################
-## Support vector machine (epsilon support vector regression) ################
+## Support vector machine (nu support vector regression) ################
 ##############################################################################
 
 # Set up nu-SVR model

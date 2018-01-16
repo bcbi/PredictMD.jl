@@ -146,7 +146,7 @@ StatsBase.countmap(smotedtraininglabelsdf[labelname])
 ##############################################################################
 
 ##############################################################################
-## Logistic regression classifier ############################################
+## Logistic "regression" classifier ##########################################
 ##############################################################################
 
 # Set up logistic classifier model
@@ -196,7 +196,7 @@ asb.singlelabelbinaryclassclassificationmetrics(
     )
 
 ##############################################################################
-## Probit regression classifier ##############################################
+## Probit "regression" classifier ############################################
 ##############################################################################
 
 # Set up probit classifier model
@@ -246,7 +246,7 @@ asb.singlelabelbinaryclassclassificationmetrics(
     )
 
 ##############################################################################
-## Random forest #############################################################
+## Random forest classifier ##################################################
 ##############################################################################
 
 # Set up random forest classifier model
@@ -294,7 +294,7 @@ asb.singlelabelbinaryclassclassificationmetrics(
     )
 
 ##############################################################################
-## Support vector machine (C support vector classification) #################
+## Support vector machine (C support vector classifier) ######################
 ##############################################################################
 
 # Set up C-SVC model
@@ -342,7 +342,7 @@ asb.singlelabelbinaryclassclassificationmetrics(
     )
 
 ##############################################################################
-## Support vector machine (nu support vector classification) #################
+## Support vector machine (nu support vector classifier) #####################
 ##############################################################################
 
 # Set up nu-SVC model

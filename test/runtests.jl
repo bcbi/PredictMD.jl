@@ -1,10 +1,9 @@
-info("Attempting to import Base.Test")
+info(string("Running julia ", Base.VERSION))
 import Base.Test
-info("Successfully imported Base.Test")
 info("Attempting to import AluthgeSinhaBase")
 import AluthgeSinhaBase
 const asb = AluthgeSinhaBase
-info("Successfully imported AluthgeSinhaBase")
+info(string("Successfully imported AluthgeSinhaBase ", asb.VERSION))
 
 Base.Test.@testset "AluthgeSinhaBase test suite" begin
     Base.Test.@testset "Unit tests" begin
