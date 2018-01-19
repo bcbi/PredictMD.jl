@@ -7,6 +7,7 @@ Blink
 CSV 0.2.0
 ClassImbalance
 Clustering 0.9.1
+DataFlow 0.2.1
 DataFrames 0.11.3
 DecisionTree 0.6.5
 Distributions 0.15.0
