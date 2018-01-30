@@ -1,14 +1,14 @@
 # AluthgeSinhaBase.jl
 
-| Table of Contents                                                  | |
-| -------------------------------------                              |-|
-| 1. [Build Status](#build-status)                                   | |  
-| 2. [Installation](#installation)                                   | |
-| 3. [Examples](#examples)                                           | |
-| | 3.1. [Statistics examples](#statistics-examples)                   |
-| | 3.2. [Machine learning examples](#machine-learning-examples)       |
-| 4. [LaTeX](#latex)                                                 | |
-| 5. [pdf2svg](#pdf2svg)                                             | |
+| Table of Contents                                                        | |
+| -------------------------------------                                    |-|
+| 1. [Build Status](#1-build-status)                                       | |  
+| 2. [Installation](#2-installation)                                       | |
+| 3. [Examples](#3-examples)                                               | |
+| | 3.1. [Statistics examples](#31-statistics-examples)                      |
+| | 3.2. [Machine learning examples](#32-machine-learning-examples)          |
+| 4. [LaTeX](#4-latex)                                                     | |
+| 5. [pdf2svg](#5-pdf2svg)                                                 | |
 
 ## 1. Build Status
 
