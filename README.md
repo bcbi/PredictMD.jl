@@ -10,7 +10,7 @@
 | 4. [LaTeX](#latex)                                                 | |
 | 5. [pdf2svg](#pdf2svg)                                             | |
 
-## Build Status
+## 1. Build Status
 
 <table>
     <thead>
@@ -34,7 +34,7 @@
     <tbody>
 </table>
 
-## Installation
+## 2. Installation
 
 #### Step 1: Make sure that your version of Julia is at least 0.6.
 Open a terminal window and run the following command:
@@ -104,27 +104,27 @@ julia> Pkg.test("AluthgeSinhaBase")
 
 Once the test suite has passed, you are ready to use AluthgeSinhaBase.
 
-## Examples
+## 3. Examples
 The `examples/` folder contains several files that illustrate the usage of AluthgeSinhaBase.
 
-### Statistics examples
+### 3.1. Statistics examples
 
 TODO.
 
-### Machine learning examples
+### 3.2. Machine learning examples
 
 | Filename | Problem type | Problem description | Dataset |
 | -------- | ------------ | ------------------- | ------- |
 | [`examples/bostonhousing.jl`](examples/bostonhousing.jl) | Single label regression | Predict the median value of houses | [Boston housing dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/Boston.rst) |
 | [`examples/breastcancerbiopsy.jl`](examples/breastcancerbiopsy.jl) | Single label binary classification | Classify a tumor as benign or malignant | [Wisconsin breast cancer biopsy dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/biopsy.rst) |
 
-## LaTeX
+## 4. LaTeX
 AluthgeSinhaBase requires LaTeX for generating plots. If LaTeX is not installed on your system, download and install a TeX distribution from the appropriate link below:
 * Windows: [https://www.tug.org/protext/](https://www.tug.org/protext/)
 * macOS: [https://www.tug.org/mactex/](https://www.tug.org/mactex/)
 * GNU/Linux: [https://www.tug.org/texlive/](https://www.tug.org/texlive/)
 
-## pdf2svg
+## 5. pdf2svg
 AluthgeSinhaBase requires pdf2svg for generating SVG images. If pdf2svg is not installed on your system, download and install it from the appropriate link below:
 * Windows: [https://github.com/jalios/pdf2svg-windows](https://github.com/jalios/pdf2svg-windows)
 * macOS: [http://brewinstall.org/Install-pdf2svg-on-Mac-with-Brew/](http://brewinstall.org/Install-pdf2svg-on-Mac-with-Brew/)
