@@ -1,12 +1,14 @@
 # AluthgeSinhaBase.jl
 
-| Table of Contents                  |
-| ---------------------------------- |
-| 1. [Build Status](#build-status)   |      
-| 2. [Installation](#installation)   |
-| 3. [Examples](#examples)           |
-| 4. [LaTeX](#latex)                 |
-| 5. [pdf2svg](#pdf2svg)             |
+| Table of Contents                                            | |
+| -------------------------------------                        |-|
+| 1. [Build Status](#build-status)                             | |  
+| 2. [Installation](#installation)                             | |
+| 3. [Examples](#examples)                                     | |
+| | 3.1. [Statistics examples](#examples)                        |
+| | 3.2. [Machine learning examples](#examples)                  |
+| 4. [LaTeX](#latex)                                           | |
+| 5. [pdf2svg](#pdf2svg)                                       | |
 
 ## Build Status
 
@@ -34,7 +36,7 @@
 
 ## Installation
 
-#### Step 1: Make sure that your version of Julia is at least 0.6.2
+#### Step 1: Make sure that your version of Julia is at least 0.6.
 Open a terminal window and run the following command:
 ```bash
 julia -v
@@ -43,9 +45,9 @@ You should see an output message that looks something like this:
 ```
 julia version 0.6.2
 ```
-If you receive an error (e.g. "command not found"), or if your version of Julia is less than 0.6.2, go to [https://julialang.org/downloads/](https://julialang.org/downloads/) and follow the instructions to install an appropriately recent version of Julia.
+If you receive an error (e.g. "command not found"), or if your version of Julia is less than 0.6, go to [https://julialang.org/downloads/](https://julialang.org/downloads/) and follow the instructions to install an appropriately recent version of Julia.
 
-#### Step 2: Make sure that LaTex is installed on your system:
+#### Step 2: Make sure that LaTex is installed on your system.
 Open a terminal window and run the following command:
 ```bash
 latex -v
@@ -67,7 +69,7 @@ Compiled with xpdf version 3.04
 ```
 If you receive an error (e.g. "command not found"), see the [LaTeX](#latex) section for instructions on installing LaTeX.
 
-#### Step 3: Make sure that pdf2svg is installed on your system:
+#### Step 3: Make sure that pdf2svg is installed on your system.
 Open a terminal window and run the following command:
 ```bash
 pdf2svg
@@ -79,23 +81,23 @@ Usage: pdf2svg <in file.pdf> <out file.svg> [<page no>]
 ```
 If you receive an error (e.g. "command not found"), see the [pdf2svg](#pdf2svg) section for instructions on installing pdf2svg.
 
-#### Step 4: Update your Julia package directory:
+#### Step 4: Update your Julia package directory.
 ```julia
 julia> Pkg.update()
 ```
 
-#### Step 5: There are two dependencies that need to be installed manually:
+#### Step 5: There are two dependencies that need to be installed manually.
 ```julia
 julia> Pkg.clone("https://github.com/dilumaluthge/AUC.jl")
 julia> Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl")
 ```
 
-#### Step 6: Install AluthgeSinhaBase:
+#### Step 6: Install AluthgeSinhaBase.
 ```julia
 julia> Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git")
 ```
 
-#### Step 7: Run the test suite:
+#### Step 7: Run the test suite.
 ```julia
 julia> Pkg.test("AluthgeSinhaBase")
 ```
@@ -103,7 +105,13 @@ julia> Pkg.test("AluthgeSinhaBase")
 Once the test suite has passed, you are ready to use AluthgeSinhaBase.
 
 ## Examples
-The `examples/` folder contains several files that illustrate the usage of AluthgeSinhaBase:
+The `examples/` folder contains several files that illustrate the usage of AluthgeSinhaBase.
+
+### Statistics examples
+
+TODO.
+
+### Machine learning examples
 
 | Filename | Problem type | Problem description | Dataset |
 | -------- | ------------ | ------------------- | ------- |
