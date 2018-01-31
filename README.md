@@ -5,20 +5,26 @@
     <tbody>
         <tr>
             <td align="left"><a href="#1-build-status">1. Build Status</a></td>
+            <td align="left"></td>
         </tr>
         <tr>
             <td align="left"><a href="#2-prerequisites">2. Prerequisites</a></td>
+            <td align="left"></td>
         </tr>
         <tr>
             <td align="left"><a href="#3-installation">3. Installation</a></td>
+            <td align="left"></td>
         </tr>
         <tr>
             <td align="left"><a href="#4-examples">4. Examples</a></td>
+            <td align="left"></td>
         </tr>
         <tr>
+            <td align="left"></td>
             <td align="left"><a href="#41-statistics-examples">4.1. Statistics examples</a></td>
         </tr>
         <tr>
+            <td align="left"></td>
             <td align="left"><a href="#42-machine-learning-examples">4.2 Machine learning examples</a></td>
         </tr>
     </tbody>
