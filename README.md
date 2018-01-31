@@ -3,23 +3,23 @@
 ## Table of Contents
 <table>
     <tbody>
-        <tr>1.[Build status](#1-build-status)
-            <td align="left"><a href="">1. Build Status</a></td>
+        <tr>
+            <td align="left"><a href="#1-build-status">1. Build Status</a></td>
         </tr>
-        <tr>[Prerequisites](#2-prerequisites)
-            <td align="left"><a href="">2. Prerequisites</a></td>
+        <tr>
+            <td align="left"><a href="#2-prerequisites">2. Prerequisites</a></td>
         </tr>
-        <tr>[Installation](#3-installation)
-            <td align="left"><a href="">3. Installation</a></td>
+        <tr>
+            <td align="left"><a href="#3-installation">3. Installation</a></td>
         </tr>
-        <tr>[Examples](#4-examples)
-            <td align="left"><a href="">4. Examples</a></td>
+        <tr>
+            <td align="left"><a href="#4-examples">4. Examples</a></td>
         </tr>
-        <tr>[Statistics examples](#41-statistics-examples)
-            <td align="left"><a href="">4.1. Statistics examples</a></td>
+        <tr>
+            <td align="left"><a href="#41-statistics-examples">4.1. Statistics examples</a></td>
         </tr>
-        <tr>[Machine learning examples](#42-machine-learning-examples)
-            <td align="left"><a href="">4.2 Machine learning examples</a></td>
+        <tr>
+            <td align="left"><a href="#42-machine-learning-examples">4.2 Machine learning examples</a></td>
         </tr>
     </tbody>
 </table>
