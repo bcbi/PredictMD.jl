@@ -57,7 +57,7 @@ In order to run AluthgeSinhaBase, you need to have all of the following software
 
 ### 2.1 Julia
 
-In order to check your installed version of Julia, start a new Julia session (e.g. open a terminal window, type ```bash julia```, and press enter). You should see a welcome message that looks something like this:
+In order to check your installed version of Julia, start a new Julia session (e.g. open a terminal window, type ```julia```, and press enter). You should see a welcome message that looks something like this:
 ```
                _
    _       _ _(_)_     |  A fresh approach to technical computing
@@ -115,7 +115,7 @@ If you receive an error (e.g. "command not found"), download and install pdf2svg
 
 ## 3. Installation
 
-Start a new Julia session (e.g. open a terminal window, type ```bash julia```, and press enter). Then, paste the following lines into Julia and press enter:
+Start a new Julia session (e.g. open a terminal window, type ```julia```, and press enter). Then, paste the following lines into Julia and press enter:
 ```julia
 Pkg.update()
 Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl")
