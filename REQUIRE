@@ -4,6 +4,7 @@ AUC
 Adapt 0.2
 Atom 0.6
 AutoGrad 0.0.10
+BioMedQuery 0.3
 Blink 0.6
 CSV 0.2
 CategoricalArrays 0.3
