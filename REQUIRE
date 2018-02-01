@@ -43,6 +43,7 @@ LIBLINEAR 0.3
 LIBSVM 0.1
 LaTeXStrings 0.3
 Lasso 0.1
+Lazy 0.12
 LearnBase 0.1
 LearningStrategies 0.2
 Loess 0.3
