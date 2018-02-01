@@ -51,6 +51,7 @@ LossFunctions 0.2
 MLBase 0.7
 MNIST 0.0.2
 MacroTools 0.4
+Merlin 0.0.3
 Missings 0.2
 MultivariateStats 0.4
 NNlib 0.2
