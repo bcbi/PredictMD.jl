@@ -41,11 +41,13 @@ LossFunctions 0.2
 MLBase 0.7
 MNIST 0.0.2
 MacroTools 0.4
+Missings 0.2
 MultivariateStats 0.4
 NNlib 0.2
 PGFPlots 2.2
 PenaltyFunctions 0.0.2
 ProgressMeter 0.5
+QuadGK 0.2
 RData 0.3
 RDatasets 0.3
 ReverseDiff 0.2
