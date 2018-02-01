@@ -32,6 +32,7 @@ GZip 0.3
 Git 0.2
 HypothesisTests 0.6
 IterTools 0.2
+IterableTables 0.6
 JLD2 0.0.5
 JuMP 0.18
 Juno 0.4
