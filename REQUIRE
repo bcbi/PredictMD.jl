@@ -55,6 +55,7 @@ ProgressMeter 0.5
 QuadGK 0.2
 RData 0.3
 RDatasets 0.3
+RMath 0.3
 ReverseDiff 0.2
 ReverseDiffSource 0.3
 ScikitLearnBase 0.3
