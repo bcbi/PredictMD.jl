@@ -33,6 +33,7 @@ Git 0.2
 HypothesisTests 0.6
 IterTools 0.2
 JLD2 0.0.5
+JuMP 0.18
 Juno 0.4
 KernelDensity 0.4
 Knet 0.9
