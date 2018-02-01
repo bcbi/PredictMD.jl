@@ -1,53 +1,53 @@
 julia 0.6
 
 AUC
-Adapt
-Atom
-AutoGrad
-Blink
-CSV
+Adapt 0.2
+Atom 0.6
+AutoGrad 0.0.10
+Blink 0.6
+CSV 0.2
 ClassImbalance
-Clustering
-DataFlow
-DataFrames
-DecisionTree
-Devectorize
-Distributions
-FileIO
-Flux
-ForwardDiff
-GLM
-GLMNet
-GZip
-HypothesisTests
-JLD2
-Juno
-Knet
-LARS
-LIBLINEAR
-LIBSVM
-LaTeXStrings
-Lasso
-LearnBase
-LearningStrategies
-LossFunctions
-MLBase
-MNIST
-MacroTools
-MultivariateStats
-NNlib
-PGFPlots
-PenaltyFunctions
-ProgressMeter
-RData
-RDatasets
-ReverseDiff
-ReverseDiffSource
-ScikitLearnBase
-StatsBase
-StatsFuns
-StatsModels
-TaylorSeries
-TikzGraphs
-TikzPictures
-ValueHistories
+Clustering 0.9
+DataFlow 0.3
+DataFrames 0.11
+DecisionTree 0.6
+Devectorize 0.4
+Distributions 0.15
+FileIO 0.6
+Flux 0.4
+ForwardDiff 0.7
+GLM 0.10
+GLMNet 0.3
+GZip 0.3
+HypothesisTests 0.6
+JLD2 0.0.5
+Juno 0.4
+Knet 0.9
+LARS 0.0.3
+LIBLINEAR 0.3
+LIBSVM 0.1
+LaTeXStrings 0.3
+Lasso 0.1
+LearnBase 0.1
+LearningStrategies 0.2
+LossFunctions 0.2
+MLBase 0.7
+MNIST 0.0.2
+MacroTools 0.4
+MultivariateStats 0.4
+NNlib 0.2
+PGFPlots 2.2
+PenaltyFunctions 0.0.2
+ProgressMeter 0.5
+RData 0.3
+RDatasets 0.3
+ReverseDiff 0.2
+ReverseDiffSource 0.3
+ScikitLearnBase 0.3
+StatsBase 0.19
+StatsFuns 0.5
+StatsModels 0.2
+TaylorSeries 0.7
+TikzGraphs 0.5
+TikzPictures 1.2
+ValueHistories 0.4
