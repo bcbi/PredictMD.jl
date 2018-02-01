@@ -6,6 +6,7 @@ Atom 0.6
 AutoGrad 0.0.10
 BioMedQuery 0.3
 BinaryBuilder 0.0.1
+BinaryProvider 0.1
 Blink 0.6
 CSV 0.2
 CategoricalArrays 0.3
