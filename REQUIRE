@@ -1,53 +1,53 @@
-julia 0.6.2
+julia
 
 AUC
-Adapt 0.2.0
+Adapt
 Atom
-AutoGrad 0.0.10
+AutoGrad
 Blink
-CSV 0.2.0
+CSV
 ClassImbalance
-Clustering 0.9.1
-DataFlow 0.2.1
-DataFrames 0.11.3
-DecisionTree 0.6.5
-Devectorize 0.4.2
-Distributions 0.15.0
-FileIO 0.6.1
-Flux 0.4.1
-ForwardDiff 0.7.0
-GLM 0.10.1
-GLMNet 0.3.0
-GZip 0.3.0
-HypothesisTests 0.6.0
-JLD2 0.0.5
+Clustering
+DataFlow
+DataFrames
+DecisionTree
+Devectorize
+Distributions
+FileIO
+Flux
+ForwardDiff
+GLM
+GLMNet
+GZip
+HypothesisTests
+JLD2
 Juno
-Knet 0.9.0
-LARS 0.0.3
-LIBLINEAR 0.3.0
-LIBSVM 0.1.1
-LaTeXStrings 0.3.0
-Lasso 0.1.0
-LearnBase 0.1.6
-LearningStrategies 0.2.0
-LossFunctions 0.2.0
-MLBase 0.7.0
-MNIST 0.0.2
-MacroTools 0.4.0
-MultivariateStats 0.4.0
-NNlib 0.2.1
-PGFPlots 2.2.2
-PenaltyFunctions 0.0.2
-ProgressMeter 0.5.3
-RData 0.3.0
-RDatasets 0.3.0
-ReverseDiff 0.2.0
-ReverseDiffSource 0.3.0
-ScikitLearnBase 0.3.0
-StatsBase 0.19.4
-StatsFuns 0.5.0
-StatsModels 0.2.1
-TaylorSeries 0.7.1
-TikzGraphs 0.5.1
-TikzPictures 1.2.0
-ValueHistories 0.4.0
+Knet
+LARS
+LIBLINEAR
+LIBSVM
+LaTeXStrings
+Lasso
+LearnBase
+LearningStrategies
+LossFunctions
+MLBase
+MNIST
+MacroTools
+MultivariateStats
+NNlib
+PGFPlots
+PenaltyFunctions
+ProgressMeter
+RData
+RDatasets
+ReverseDiff
+ReverseDiffSource
+ScikitLearnBase
+StatsBase
+StatsFuns
+StatsModels
+TaylorSeries
+TikzGraphs
+TikzPictures
+ValueHistories
