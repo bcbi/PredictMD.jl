@@ -11,6 +11,7 @@ Clustering 0.9
 Compat
 DataFlow 0.3
 DataFrames 0.11
+DataFramesMeta 0.3
 DecisionTree 0.6
 Devectorize 0.4
 Distributions 0.15
