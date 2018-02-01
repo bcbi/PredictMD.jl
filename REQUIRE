@@ -15,6 +15,7 @@ DataFramesMeta 0.3
 DecisionTree 0.6
 Devectorize 0.4
 Distributions 0.15
+Documenter 0.13
 FileIO 0.6
 Flux 0.4
 ForwardDiff 0.7
