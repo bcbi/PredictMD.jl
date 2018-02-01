@@ -134,7 +134,7 @@ The `examples/` folder contains several files that illustrate the usage of Aluth
 
 ### 4.1. Statistics examples
 
-TODO.
+TODO: Add statistics examples.
 
 ### 4.2. Machine learning examples
 
