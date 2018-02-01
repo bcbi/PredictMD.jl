@@ -6,6 +6,7 @@ Atom 0.6
 AutoGrad 0.0.10
 Blink 0.6
 CSV 0.2
+CategoricalArrays 0.3
 ClassImbalance
 Clustering 0.9
 Compat
