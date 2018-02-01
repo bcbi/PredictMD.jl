@@ -56,6 +56,7 @@ QuadGK 0.2
 RData 0.3
 RDatasets 0.3
 RMath 0.3
+ROCAnalysis 0.2
 Reinforce 0.0.1
 ReverseDiff 0.2
 ReverseDiffSource 0.3
