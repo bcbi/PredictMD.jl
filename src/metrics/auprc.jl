@@ -1,4 +1,5 @@
 import MLBase
+import NumericalIntegration
 import StatsBase
 
 function auprc(
