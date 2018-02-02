@@ -124,7 +124,7 @@ If you receive an error (e.g. "command not found"), download and install pdf2svg
 Start a new Julia session (e.g. open a terminal window, type ```julia```, and press enter). Then, paste the following lines into Julia and press enter:
 ```julia
 Pkg.update()
-Pkg.clone("https://github.com/dilumaluthge/ClassImbalance.jl")
+Pkg.clone("https://github.com/bcbi/ClassImbalance.jl")
 Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git")
 Pkg.test("AluthgeSinhaBase")
 ```
