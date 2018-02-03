@@ -1,5 +1,6 @@
 import AUC
 import MLBase
+import NumericalIntegration
 import StatsBase
 
 function _ASB_aurocc(
