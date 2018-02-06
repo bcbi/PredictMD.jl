@@ -9,6 +9,7 @@ BenchmarkTools 0.2
 BioMedQuery 0.3
 BinDeps 0.8
 Blink 0.6
+CLArrays 0.1
 CSV 0.2
 CategoricalArrays 0.3
 ClassImbalance
