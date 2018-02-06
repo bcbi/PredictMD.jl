@@ -11,7 +11,7 @@ BinDeps 0.8
 Blink 0.6
 CLArrays 0.1
 CSV 0.2
-#CUDAapi 0.4
+CUDAapi
 CUDAdrv
 #CUDAnative 0.6
 CUDNN
