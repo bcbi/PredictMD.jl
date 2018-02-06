@@ -13,7 +13,7 @@ CLArrays 0.1
 CSV 0.2
 CUDAapi
 CUDAdrv
-#CUDAnative 0.6
+CUDAnative
 CUDNN
 CategoricalArrays 0.3
 ClassImbalance
