@@ -14,7 +14,7 @@ CSV 0.2
 #CUDAapi 0.4
 #CUDAdrv
 #CUDAnative 0.6
-#CUDNN 0.4
+CUDNN
 CategoricalArrays 0.3
 ClassImbalance
 Clustering 0.9
