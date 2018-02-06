@@ -68,6 +68,7 @@ Reinforce 0.0.1
 ReverseDiff 0.2
 ReverseDiffSource 0.3
 ScikitLearnBase 0.3
+StaticArrays 0.6
 StatsBase 0.19
 StatsFuns 0.5
 StatsModels 0.2
