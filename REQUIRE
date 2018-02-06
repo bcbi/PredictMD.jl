@@ -12,7 +12,7 @@ Blink 0.6
 CLArrays 0.1
 CSV 0.2
 #CUDAapi 0.4
-#CUDAdrv
+CUDAdrv
 #CUDAnative 0.6
 CUDNN
 CategoricalArrays 0.3
