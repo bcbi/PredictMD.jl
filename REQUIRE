@@ -13,6 +13,7 @@ CLArrays 0.1
 CSV 0.2
 CUDAapi 0.4
 CUDAdrv 0.8
+CUDAnative 0.6
 CategoricalArrays 0.3
 ClassImbalance
 Clustering 0.9
