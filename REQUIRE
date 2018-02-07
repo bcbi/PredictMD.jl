@@ -2,19 +2,24 @@ julia 0.6
 
 AUC
 Adapt 0.2
+ArrayFire 0.1
 Atom 0.6
 AutoGrad 0.0.10
 BenchmarkTools 0.2
 BioMedQuery 0.3
-BinaryBuilder 0.0.1
-BinaryProvider 0.1
-BinDeps 0.8
+BinDeps
 Blink 0.6
+CLArrays 0.1
 CSV 0.2
+CUDAapi
+CUDAdrv
+CUDAnative
+CUDNN
 CategoricalArrays 0.3
 ClassImbalance
 Clustering 0.9
 Compat
+CuArrays 0.4
 DataFlow 0.3
 DataFrames 0.11
 DataFramesMeta 0.3
@@ -28,6 +33,7 @@ Flux 0.4
 ForwardDiff 0.7
 GLM 0.10
 GLMNet 0.3
+GPUArrays 0.2
 GZip 0.3
 Git 0.2
 HypothesisTests 0.6
@@ -57,6 +63,7 @@ Missings 0.2
 MultivariateStats 0.4
 NNlib 0.2
 NumericalIntegration 0.0.3
+OpenCL 0.7
 PGFPlots 2.2
 PenaltyFunctions 0.0.2
 ProgressMeter 0.5
@@ -70,6 +77,7 @@ Reinforce 0.0.1
 ReverseDiff 0.2
 ReverseDiffSource 0.3
 ScikitLearnBase 0.3
+StaticArrays 0.6
 StatsBase 0.19
 StatsFuns 0.5
 StatsModels 0.2
