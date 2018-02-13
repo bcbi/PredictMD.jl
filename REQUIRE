@@ -90,6 +90,7 @@ StaticArrays 0.6
 StatsBase 0.19
 StatsFuns 0.5
 StatsModels 0.2
+StatsPlots 0.7
 TaylorSeries 0.7
 TikzGraphs 0.5
 TikzPictures 1.2
