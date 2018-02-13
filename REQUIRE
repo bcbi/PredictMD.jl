@@ -73,6 +73,7 @@ PenaltyFunctions 0.0.2
 PlotRecipes 0.3
 PlotThemes 0.2
 PlotlyJS 0.10
+Plots
 ProgressMeter 0.5
 QuadGK 0.2
 Query 0.9
