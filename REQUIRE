@@ -70,6 +70,7 @@ NumericalIntegration 0.0.3
 OpenCL 0.7
 PGFPlots 2.2
 PenaltyFunctions 0.0.2
+PlotRecipes 0.3
 ProgressMeter 0.5
 QuadGK 0.2
 Query 0.9
