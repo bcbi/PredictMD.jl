@@ -44,10 +44,10 @@ function plotsinglelabelbinaryclassclassifierhistogram(
         )
     axisobject = PGFPlots.Axis(
         [
-            histogramobjectnegativeclass,
-            PGFPlots.Plots.Command("\\addlegendentry{$(negativeclass)}"),
             histogramobjectpositiveclass,
             PGFPlots.Plots.Command("\\addlegendentry{$(positiveclass)}"),
+            histogramobjectnegativeclass,
+            PGFPlots.Plots.Command("\\addlegendentry{$(negativeclass)}"),
             ],
         xlabel = LaTeXStrings.LaTeXString("Classifier score"),
         ylabel = LaTeXStrings.LaTeXString("Frequency"),
