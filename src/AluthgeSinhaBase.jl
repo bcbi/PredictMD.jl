@@ -58,7 +58,10 @@ include("modelselection/traintestsplit.jl")
 # multioutput/
 
 # neuralnetwork/
+include("neuralnetwork/autograd.jl")
+include("neuralnetwork/flux.jl")
 include("neuralnetwork/knet.jl")
+include("neuralnetwork/nnlib.jl")
 
 # pipeline/
 include("pipeline/simplelinearpipeline.jl")
@@ -67,6 +70,8 @@ include("pipeline/simplelinearpipeline.jl")
 include("plotting/plotlearningcurve.jl")
 include("plotting/plotprcurve.jl")
 include("plotting/plotroccurve.jl")
+include("plotting/plotsinglelabelregressiontruevspredicted.jl")
+include("plotting/plotsinglelabelbinaryclassclassifierhistograms.jl")
 
 # postprocessing/
 include("postprocessing/packagemultilabelpred.jl")

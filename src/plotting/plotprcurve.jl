@@ -58,7 +58,7 @@ function plotprcurve(
         [alllinearplotobjects...],
         xlabel = LaTeXStrings.LaTeXString("Recall"),
         ylabel = LaTeXStrings.LaTeXString("Precision"),
-        legendPos = "south west",
+        legendPos = "outer north east",
         )
     tikzpicture = PGFPlots.plot(axisobject)
     return tikzpicture

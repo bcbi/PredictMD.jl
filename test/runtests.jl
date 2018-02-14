@@ -1,9 +1,14 @@
-info(string("Running julia ", Base.VERSION))
 import Base.Test
+
+info("Printing Julia version info:")
+versioninfo(true)
+
 info("Attempting to import AluthgeSinhaBase")
 import AluthgeSinhaBase
 const asb = AluthgeSinhaBase
-info(string("Successfully imported AluthgeSinhaBase ", asb.VERSION))
+info("Successfully imported AluthgeSinhaBase")
+info("Printing AluthgeSinhaBase version info:")
+println(string("AluthgeSinhaBase Version ", asb.VERSION))
 
 Base.Test.@testset "AluthgeSinhaBase test suite" begin
     Base.Test.@testset "Unit tests" begin
