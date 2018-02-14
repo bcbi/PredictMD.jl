@@ -154,6 +154,6 @@ The `examples/` folder contains several files that illustrate the usage of Aluth
     <tbody>
 </table>
 
-## 4. Contributing
+## 5. Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
