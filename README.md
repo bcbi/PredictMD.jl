@@ -56,7 +56,7 @@ In order to run AluthgeSinhaBase, you need to have all of the following software
 * LaTeX
 * pdf2svg.
 
-### 2.1 Julia
+### 2.1. Julia
 
 In order to check your installed version of Julia, start a new Julia session (e.g. open a terminal window, type ```julia```, and press enter). You should see a welcome message that looks something like this:
 ```
@@ -71,7 +71,7 @@ In order to check your installed version of Julia, start a new Julia session (e.
 ```
 If you receive an error (e.g. "command not found"), or if your version of Julia is less than 0.6, go to [https://julialang.org/downloads/](https://julialang.org/downloads/) and follow the instructions to install an appropriately recent version of Julia.
 
-### 2.2 LaTeX
+### 2.2. LaTeX
 
 To confirm that LaTeX is installed on your system, open a terminal window and run the following command:
 ```bash
@@ -98,7 +98,7 @@ If you receive an error (e.g. "command not found"), download and install a TeX d
 * macOS: [https://www.tug.org/mactex/](https://www.tug.org/mactex/)
 * GNU/Linux: [https://www.tug.org/texlive/](https://www.tug.org/texlive/)
 
-### 2.3 pdf2svg
+### 2.3. pdf2svg
 
 To confirm that pdf2svg is installed on your system, open a terminal window and run the following command:
 ```bash
