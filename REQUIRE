@@ -1,6 +1,5 @@
 julia 0.6
 
-AUC
 Adapt 0.2
 ArrayFire 0.1
 Atom 0.6
@@ -18,6 +17,10 @@ CUDNN
 CategoricalArrays 0.3
 ClassImbalance
 Clustering 0.9
+ColorBrewer 0.3
+ColorSchemes 1.5
+ColorTypes 0.6
+Colors 0.8
 Compat
 CuArrays 0.4
 DataFlow 0.3
@@ -26,6 +29,7 @@ DataFramesMeta 0.3
 DataStreams 0.3
 DecisionTree 0.6
 Devectorize 0.4
+Discretizers 2.1
 Distributions 0.15
 Documenter 0.13
 FileIO 0.6
@@ -36,6 +40,7 @@ GLMNet 0.3
 GPUArrays 0.2
 GZip 0.3
 Git 0.2
+GroupedErrors 0.1
 HypothesisTests 0.6
 IterTools 0.2
 IterableTables 0.6
@@ -66,6 +71,10 @@ NumericalIntegration 0.0.3
 OpenCL 0.7
 PGFPlots 2.2
 PenaltyFunctions 0.0.2
+PlotRecipes 0.3
+PlotThemes 0.2
+PlotlyJS 0.10
+Plots 0.15
 ProgressMeter 0.5
 QuadGK 0.2
 Query 0.9
@@ -73,6 +82,8 @@ RData 0.3
 RDatasets 0.3
 Rmath 0.3
 ROCAnalysis 0.2
+RecipesBase 0.2
+Reel 1.0
 Reinforce 0.0.1
 ReverseDiff 0.2
 ReverseDiffSource 0.3
@@ -81,6 +92,7 @@ StaticArrays 0.6
 StatsBase 0.19
 StatsFuns 0.5
 StatsModels 0.2
+StatPlots 0.7
 TaylorSeries 0.7
 TikzGraphs 0.5
 TikzPictures 1.2

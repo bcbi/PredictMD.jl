@@ -111,6 +111,25 @@ end
 # View coefficients, p values, etc. for underlying linear regression
 asb.getunderlying(linearreg)
 
+# Plot true values versus predicted values for linear regression on training set
+linearreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
+    linearreg,
+    trainingfeaturesdf,
+    traininglabelsdf,
+    labelname,
+    )
+asb.open(linearreg_plot_training)
+
+# Plot true values versus predicted values for linear regression on testing set
+linearreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
+    linearreg,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname;
+    includeorigin = true,
+    )
+asb.open(linearreg_plot_testing)
+
 # Evaluate performance of linear regression on training set
 asb.singlelabelregressionmetrics(
     linearreg,
@@ -149,6 +168,24 @@ else
     # Train random forest model on training set
     asb.fit!(randomforestreg,trainingfeaturesdf,traininglabelsdf,)
 end
+
+# Plot true values versus predicted values for random forest on training set
+randomforestreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
+    randomforestreg,
+    trainingfeaturesdf,
+    traininglabelsdf,
+    labelname,
+    )
+asb.open(randomforestreg_plot_training)
+
+# Plot true values versus predicted values for random forest on testing set
+randomforestreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
+    randomforestreg,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    )
+asb.open(randomforestreg_plot_testing)
 
 # Evaluate performance of random forest on training set
 asb.singlelabelregressionmetrics(
@@ -190,6 +227,24 @@ else
     asb.fit!(epsilonsvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
 
+# Plot true values versus predicted values for epsilon-SVR on training set
+epsilonsvr_svmreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
+    epsilonsvr_svmreg,
+    trainingfeaturesdf,
+    traininglabelsdf,
+    labelname,
+    )
+asb.open(epsilonsvr_svmreg_plot_training)
+
+# Plot true values versus predicted values for epsilon-SVR on testing set
+epsilonsvr_svmreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
+    epsilonsvr_svmreg,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    )
+asb.open(epsilonsvr_svmreg_plot_testing)
+
 # Evaluate performance of epsilon-SVR on training set
 asb.singlelabelregressionmetrics(
     epsilonsvr_svmreg,
@@ -229,6 +284,24 @@ else
     # Train nu-SVR model
     asb.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
+
+# Plot true values versus predicted values for nu-SVR on training set
+nusvr_svmreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
+    nusvr_svmreg,
+    trainingfeaturesdf,
+    traininglabelsdf,
+    labelname,
+    )
+asb.open(nusvr_svmreg_plot_training)
+
+# Plot true values versus predicted values for nu-SVR on testing set
+nusvr_svmreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
+    nusvr_svmreg,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    )
+asb.open(nusvr_svmreg_plot_testing)
 
 # Evaluate performance of nu-SVR on training set
 asb.singlelabelregressionmetrics(
@@ -393,6 +466,24 @@ knet_learningcurve_lossvsiteration_skip100iterations = asb.plotlearningcurve(
     endat = :end,
     )
 asb.open(knet_learningcurve_lossvsiteration_skip100iterations)
+
+# Plot true values versus predicted values for multilayer perceptron on training set
+knetmlpreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
+    knetmlpreg,
+    trainingfeaturesdf,
+    traininglabelsdf,
+    labelname,
+    )
+asb.open(knetmlpreg_plot_training)
+
+# Plot true values versus predicted values for multilayer perceptron on testing set
+knetmlpreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
+    knetmlpreg,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    )
+asb.open(knetmlpreg_plot_testing)
 
 # Evaluate performance of multilayer perceptron on training set
 asb.singlelabelregressionmetrics(

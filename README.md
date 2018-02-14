@@ -1,42 +1,37 @@
 # AluthgeSinhaBase.jl
 
-## Table of Contents
 <table>
+    <thead>
+        <tr>
+            <th>Table of Contents</th>
+        </tr>
+    </thead>
     <tbody>
         <tr>
             <td align="left"><a href="#1-build-status">1. Build Status</a></td>
-            <td align="left"></td>
         </tr>
         <tr>
             <td align="left"><a href="#2-prerequisites">2. Prerequisites</a></td>
-            <td align="left"></td>
         </tr>
         <tr>
             <td align="left"><a href="#3-installation">3. Installation</a></td>
-            <td align="left"></td>
         </tr>
         <tr>
             <td align="left"><a href="#4-examples">4. Examples</a></td>
-            <td align="left"></td>
         </tr>
         <tr>
-            <td align="left"></td>
-            <td align="left"><a href="#41-statistics-examples">4.1. Statistics examples</a></td>
-        </tr>
-        <tr>
-            <td align="left"></td>
-            <td align="left"><a href="#42-machine-learning-examples">4.2 Machine learning examples</a></td>
+            <td align="left"><a href="#5-contributing">5. Contributing</a></td>
         </tr>
     </tbody>
 </table>
 
-## 1. Build status
+## 1. Build Status
 
 <table>
     <thead>
         <tr>
             <th>Branch</th>
-            <th>Build status</th>
+            <th>Build status on Travis</th>
         </tr>
     </thead>
     <tbody>
@@ -49,7 +44,7 @@
             <td align="center"><a href="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl/branches"><img alt="Build Status (develop)" title="Build Status (develop)" src="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl.svg?token=dMqeEKHqcnWSXz982pdf&branch=develop"></a></td>
         </tr>
         <tr>
-            <td align="center" colspan="2"><a href="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl/branches">View build status for all branches</a></td>
+            <td align="center" colspan="2"><a href="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl">View this project on Travis</a></td>
         </tr>
     <tbody>
 </table>
@@ -61,7 +56,7 @@ In order to run AluthgeSinhaBase, you need to have all of the following software
 * LaTeX
 * pdf2svg.
 
-### 2.1 Julia
+### 2.1. Julia
 
 In order to check your installed version of Julia, start a new Julia session (e.g. open a terminal window, type ```julia```, and press enter). You should see a welcome message that looks something like this:
 ```
@@ -76,7 +71,7 @@ In order to check your installed version of Julia, start a new Julia session (e.
 ```
 If you receive an error (e.g. "command not found"), or if your version of Julia is less than 0.6, go to [https://julialang.org/downloads/](https://julialang.org/downloads/) and follow the instructions to install an appropriately recent version of Julia.
 
-### 2.2 LaTeX
+### 2.2. LaTeX
 
 To confirm that LaTeX is installed on your system, open a terminal window and run the following command:
 ```bash
@@ -103,7 +98,7 @@ If you receive an error (e.g. "command not found"), download and install a TeX d
 * macOS: [https://www.tug.org/mactex/](https://www.tug.org/mactex/)
 * GNU/Linux: [https://www.tug.org/texlive/](https://www.tug.org/texlive/)
 
-### 2.3 pdf2svg
+### 2.3. pdf2svg
 
 To confirm that pdf2svg is installed on your system, open a terminal window and run the following command:
 ```bash
@@ -121,7 +116,7 @@ If you receive an error (e.g. "command not found"), download and install pdf2svg
 
 ## 3. Installation
 
-Start a new Julia session (e.g. open a terminal window, type ```julia```, and press enter). Then, paste the following lines into Julia and press enter:
+Start a new Julia session (e.g. open a terminal window, type ```julia```, and press enter). Then, enter the following lines into Julia and press enter:
 ```julia
 Pkg.update()
 Pkg.clone("https://github.com/bcbi/ClassImbalance.jl")
@@ -130,13 +125,9 @@ Pkg.test("AluthgeSinhaBase")
 ```
 
 ## 4. Examples
-The `examples/` folder contains several files that illustrate the usage of AluthgeSinhaBase.
+The `examples/` folder contains several files that illustrate the usage of AluthgeSinhaBase:
 
-### 4.1. Statistics examples
-
-TODO: Add statistics examples.
-
-### 4.2. Machine learning examples
+### 4.1. Machine Learning Examples
 
 <table>
     <thead>
@@ -162,3 +153,7 @@ TODO: Add statistics examples.
         </tr>
     <tbody>
 </table>
+
+## 5. Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
