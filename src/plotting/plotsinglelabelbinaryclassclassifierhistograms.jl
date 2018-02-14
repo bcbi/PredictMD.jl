@@ -33,22 +33,23 @@ function plotsinglelabelbinaryclassclassifierhistogram(
     histogramobjectnegativeclass = PGFPlots.Plots.Histogram(
         yscore[ytrue .== 0],
         bins = numbins,
-        # style = "blue,fill=blue!10",
-        style = "blue,fill=blue",
+        # style = "blue,fill=blue",
+        style = "blue,fill=blue!10",
         )
     histogramobjectpositiveclass = PGFPlots.Plots.Histogram(
         yscore[ytrue .== 1],
         bins = numbins,
-        # style = "red,fill=red!10",
-        style = "red,fill=red",
+        # style = "red,fill=red",
+        style = "red,fill=red!10",
         )
     axisobject = PGFPlots.Axis(
         [
-            histogramobjectpositiveclass,
-            PGFPlots.Plots.Command("\\addlegendentry{$(positiveclass)}"),
             histogramobjectnegativeclass,
             PGFPlots.Plots.Command("\\addlegendentry{$(negativeclass)}"),
+            histogramobjectpositiveclass,
+            PGFPlots.Plots.Command("\\addlegendentry{$(positiveclass)}"),
             ],
+        style = "reverse legend",
         xlabel = LaTeXStrings.LaTeXString("Classifier score"),
         ylabel = LaTeXStrings.LaTeXString("Frequency"),
         legendPos = "outer north east",
