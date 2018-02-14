@@ -136,16 +136,16 @@ The `examples/` folder contains several files that illustrate the usage of Aluth
     </thead>
     <tbody>
         <tr>
-            <td align="left">[examples/bostonhousing.jl](examples/bostonhousing.jl)</td>
+            <td align="left"><a href="examples/bostonhousing.jl">examples/bostonhousing.jl</a></td>
             <td align="left">Single label regression</td>
             <td align="left">Predict the median value of houses</td>
-            <td align="left">[Boston housing dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/Boston.rst)</td>
+            <td align="left"><a href="https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/Boston.rst">Boston housing dataset</a></td>
         </tr>
         <tr>
-            <td align="left">[examples/breastcancerbiopsy.jl](examples/breastcancerbiopsy.jl)</td>
+            <td align="left"><a href="examples/breastcancerbiopsy.jl">examples/breastcancerbiopsy.jl</a></td>
             <td align="left">Single label binary classification</td>
             <td align="left">Classify a tumor as benign or malignant</td>
-            <td align="left">[Wisconsin breast cancer biopsy dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/biopsy.rst)</td>
+            <td align="left"><a href="https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/biopsy.rst">Wisconsin breast cancer biopsy dataset</a></td>
         </tr>
     <tbody>
 </table>
