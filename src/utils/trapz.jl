@@ -35,7 +35,7 @@ function trapz(
         y,
         NumericalIntegration.Trapezoidal(),
         )
-    if !isapprox(result_aluthgetrapz, result_numericalintegration)
+    if !isapprox(result_aluthgetrapz, result_numericalintegration; atol=0.00000001)
         msg = string(
             "result_aluthgetrapz!=result_numericalintegration. ",
             "result_aluthgetrapz=$(result_aluthgetrapz). ",
