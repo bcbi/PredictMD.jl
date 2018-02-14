@@ -25,13 +25,13 @@
     </tbody>
 </table>
 
-## 1. Build status
+## 1. Build Status
 
 <table>
     <thead>
         <tr>
             <th>Branch</th>
-            <th>Build status</th>
+            <th>Build status on Travis</th>
         </tr>
     </thead>
     <tbody>
@@ -44,7 +44,7 @@
             <td align="center"><a href="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl/branches"><img alt="Build Status (develop)" title="Build Status (develop)" src="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl.svg?token=dMqeEKHqcnWSXz982pdf&branch=develop"></a></td>
         </tr>
         <tr>
-            <td align="center" colspan="2"><a href="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl/branches">View build status for all branches</a></td>
+            <td align="center" colspan="2"><a href="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl">View this project on Travis</a></td>
         </tr>
     <tbody>
 </table>
@@ -127,7 +127,7 @@ Pkg.test("AluthgeSinhaBase")
 ## 4. Examples
 The `examples/` folder contains several files that illustrate the usage of AluthgeSinhaBase:
 
-### 4.1. Machine learning examples
+### 4.1. Machine Learning Examples
 
 <table>
     <thead>
