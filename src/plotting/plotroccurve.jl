@@ -58,7 +58,7 @@ function plotroccurve(
         [alllinearplotobjects...],
         xlabel = LaTeXStrings.LaTeXString("False positive rate"),
         ylabel = LaTeXStrings.LaTeXString("True positive rate"),
-        legendPos = "south east",
+        legendPos = "outer north east",
         )
     tikzpicture = PGFPlots.plot(axisobject)
     return tikzpicture

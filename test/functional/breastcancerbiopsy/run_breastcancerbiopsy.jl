@@ -144,29 +144,34 @@ end
 asb.getunderlying(logisticclassifier)
 
 # Plot classifier histogram for logistic classifier on smoted training set
-logisticclasshisttraining = asb.singlelabelbinaryclassclassifierhistogram(
+logistic_hist_training = asb.plotsinglelabelbinaryclassclassifierhistogram(
     logisticclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
     labelname,
     labellevels,
     )
-asb.open(logisticclasshisttraining)
+asb.open(logistic_hist_training)
 
 # Plot classifier histogram for logistic classifier on testing set
+logistic_hist_testing = asb.plotsinglelabelbinaryclassclassifierhistogram(
+    logisticclassifier,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    labellevels,
+    )
+asb.open(logistic_hist_testing)
 
 # Evaluate performance of logistic classifier on smoted training set
-logisticclasshisttesting = asb.singlelabelbinaryclassclassificationmetrics(
+asb.singlelabelbinaryclassclassificationmetrics(
     logisticclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    testingfeaturesdf,
+    testinglabelsdf,
     labelname,
     positiveclass;
     sensitivity = 0.95,
     )
-asb.open(logisticclasshisttesting)
-
-error("stopping here.")
 
 # Evaluate performance of logistic classifier on testing set
 asb.singlelabelbinaryclassclassificationmetrics(
@@ -207,6 +212,27 @@ end
 
 # View coefficients, p values, etc. for underlying probit regression
 asb.getunderlying(probitclassifier)
+
+### TODO
+# Plot classifier histogram for  on smoted training set
+_hist_training = asb.plotsinglelabelbinaryclassclassifierhistogram(
+    ,
+    smotedtrainingfeaturesdf,
+    smotedtraininglabelsdf,
+    labelname,
+    labellevels,
+    )
+asb.open(_hist_training)
+
+# Plot classifier histogram for  on testing set
+_hist_testing = asb.plotsinglelabelbinaryclassclassifierhistogram(
+    ,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    labellevels,
+    )
+asb.open(_hist_testing)
 
 # Evaluate performance of probit classifier on smoted training set
 asb.singlelabelbinaryclassclassificationmetrics(
@@ -256,6 +282,27 @@ else
         )
 end
 
+### TODO
+# Plot classifier histogram for  on smoted training set
+_hist_training = asb.plotsinglelabelbinaryclassclassifierhistogram(
+    ,
+    smotedtrainingfeaturesdf,
+    smotedtraininglabelsdf,
+    labelname,
+    labellevels,
+    )
+asb.open(_hist_training)
+
+# Plot classifier histogram for  on testing set
+_hist_testing = asb.plotsinglelabelbinaryclassclassifierhistogram(
+    ,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    labellevels,
+    )
+asb.open(_hist_testing)
+
 # Evaluate performance of random forest classifier on smoted training set
 asb.singlelabelbinaryclassclassificationmetrics(
     rfclassifier,
@@ -304,6 +351,27 @@ else
         )
 end
 
+### TODO
+# Plot classifier histogram for  on smoted training set
+_hist_training = asb.plotsinglelabelbinaryclassclassifierhistogram(
+    ,
+    smotedtrainingfeaturesdf,
+    smotedtraininglabelsdf,
+    labelname,
+    labellevels,
+    )
+asb.open(_hist_training)
+
+# Plot classifier histogram for  on testing set
+_hist_testing = asb.plotsinglelabelbinaryclassclassifierhistogram(
+    ,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    labellevels,
+    )
+asb.open(_hist_testing)
+
 # Evaluate performance of C-SVC on smoted training set
 asb.singlelabelbinaryclassclassificationmetrics(
     csvc_svmclassifier,
@@ -351,6 +419,27 @@ else
         smotedtraininglabelsdf,
         )
 end
+
+### TODO
+# Plot classifier histogram for  on smoted training set
+_hist_training = asb.plotsinglelabelbinaryclassclassifierhistogram(
+    ,
+    smotedtrainingfeaturesdf,
+    smotedtraininglabelsdf,
+    labelname,
+    labellevels,
+    )
+asb.open(_hist_training)
+
+# Plot classifier histogram for  on testing set
+_hist_testing = asb.plotsinglelabelbinaryclassclassifierhistogram(
+    ,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    labellevels,
+    )
+asb.open(_hist_testing)
 
 # Evaluate performance of nu-SVC on smoted training set
 asb.singlelabelbinaryclassclassificationmetrics(
@@ -544,6 +633,27 @@ knet_learningcurve_lossvsiteration_skip100iterations = asb.plotlearningcurve(
     endat = :end,
     )
 asb.open(knet_learningcurve_lossvsiteration_skip100iterations)
+
+### TODO
+# Plot classifier histogram for  on smoted training set
+_hist_training = asb.plotsinglelabelbinaryclassclassifierhistogram(
+    ,
+    smotedtrainingfeaturesdf,
+    smotedtraininglabelsdf,
+    labelname,
+    labellevels,
+    )
+asb.open(_hist_training)
+
+# Plot classifier histogram for  on testing set
+_hist_testing = asb.plotsinglelabelbinaryclassclassifierhistogram(
+    ,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    labellevels,
+    )
+asb.open(_hist_testing)
 
 # Evaluate performance of multilayer perceptron on smoted training set
 asb.singlelabelbinaryclassclassificationmetrics(

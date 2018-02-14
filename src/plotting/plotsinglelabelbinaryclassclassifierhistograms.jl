@@ -1,12 +1,13 @@
 import LaTeXStrings
 import PGFPlots
 
-function singlelabelbinaryclassclassifierhistogram(
+function plotsinglelabelbinaryclassclassifierhistogram(
         estimator::AbstractObject,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
-        singlelabellevels::SymbolVector,
+        singlelabellevels::StringVector;
+        numbins::Integer = 25,
         )
     if length(singlelabellevels) != length(unique(singlelabellevels))
         error("there are duplicate values in singlelabellevels")
@@ -31,14 +32,23 @@ function singlelabelbinaryclassclassifierhistogram(
         )
     histogramobjectnegativeclass = PGFPlots.Plots.Histogram(
         yscore[ytrue .== 0],
-        legendentry = LaTeXStrings.LaTeXString(negativeclass)
+        bins = numbins,
+        # style = "blue,fill=blue!10",
+        style = "blue,fill=blue",
         )
     histogramobjectpositiveclass = PGFPlots.Plots.Histogram(
         yscore[ytrue .== 1],
-        legendentry = LaTeXStrings.LaTeXString(positiveclass)
+        bins = numbins,
+        # style = "red,fill=red!10",
+        style = "red,fill=red",
         )
     axisobject = PGFPlots.Axis(
-        [histogramobjectnegativeclass, histogramobjectpositiveclass,],
+        [
+            histogramobjectnegativeclass,
+            PGFPlots.Plots.Command("\\addlegendentry{$(negativeclass)}"),
+            histogramobjectpositiveclass,
+            PGFPlots.Plots.Command("\\addlegendentry{$(positiveclass)}"),
+            ],
         xlabel = LaTeXStrings.LaTeXString("Classifier score"),
         ylabel = LaTeXStrings.LaTeXString("Frequency"),
         legendPos = "outer north east",
