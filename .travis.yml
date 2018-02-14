@@ -45,5 +45,4 @@ before_install:
 
 before_script:
   - julia -e 'Pkg.update()'
-  - julia -e 'Pkg.clone("https://github.com/bcbi/AUC.jl")'
   - julia -e 'Pkg.clone("https://github.com/bcbi/ClassImbalance.jl")'
