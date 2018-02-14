@@ -19,6 +19,7 @@ ClassImbalance
 Clustering 0.9
 ColorBrewer 0.3
 ColorSchemes 1.5
+ColorTypes 0.6
 Colors 0.8
 Compat
 CuArrays 0.4
