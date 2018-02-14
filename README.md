@@ -5,27 +5,18 @@
     <tbody>
         <tr>
             <td align="left"><a href="#1-build-status">1. Build Status</a></td>
-            <td align="left"></td>
         </tr>
         <tr>
             <td align="left"><a href="#2-prerequisites">2. Prerequisites</a></td>
-            <td align="left"></td>
         </tr>
         <tr>
             <td align="left"><a href="#3-installation">3. Installation</a></td>
-            <td align="left"></td>
         </tr>
         <tr>
             <td align="left"><a href="#4-examples">4. Examples</a></td>
-            <td align="left"></td>
         </tr>
         <tr>
-            <td align="left"></td>
-            <td align="left"><a href="#41-statistics-examples">4.1. Statistics examples</a></td>
-        </tr>
-        <tr>
-            <td align="left"></td>
-            <td align="left"><a href="#42-machine-learning-examples">4.2 Machine learning examples</a></td>
+            <td align="left"><a href="#5-contributing">5. Contributing</a></td>
         </tr>
     </tbody>
 </table>
@@ -121,7 +112,7 @@ If you receive an error (e.g. "command not found"), download and install pdf2svg
 
 ## 3. Installation
 
-Start a new Julia session (e.g. open a terminal window, type ```julia```, and press enter). Then, paste the following lines into Julia and press enter:
+Start a new Julia session (e.g. open a terminal window, type ```julia```, and press enter). Then, enter the following lines into Julia and press enter:
 ```julia
 Pkg.update()
 Pkg.clone("https://github.com/bcbi/ClassImbalance.jl")
@@ -130,13 +121,9 @@ Pkg.test("AluthgeSinhaBase")
 ```
 
 ## 4. Examples
-The `examples/` folder contains several files that illustrate the usage of AluthgeSinhaBase.
+The `examples/` folder contains several files that illustrate the usage of AluthgeSinhaBase:
 
-### 4.1. Statistics examples
-
-TODO: Add statistics examples.
-
-### 4.2. Machine learning examples
+### 4.1. Machine learning examples
 
 <table>
     <thead>
@@ -149,16 +136,20 @@ TODO: Add statistics examples.
     </thead>
     <tbody>
         <tr>
-            <td align="left"><a href="examples/bostonhousing.jl">examples/bostonhousing.jl</a></td>
+            <td align="left">[examples/bostonhousing.jl](examples/bostonhousing.jl)</td>
             <td align="left">Single label regression</td>
             <td align="left">Predict the median value of houses</td>
-            <td align="left"><a href="https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/Boston.rst">Boston housing dataset</a></td>
+            <td align="left">[Boston housing dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/Boston.rst)</td>
         </tr>
         <tr>
-            <td align="left"><a href="examples/breastcancerbiopsy.jl">examples/breastcancerbiopsy.jl</a></td>
+            <td align="left">[examples/breastcancerbiopsy.jl](examples/breastcancerbiopsy.jl)</td>
             <td align="left">Single label binary classification</td>
             <td align="left">Classify a tumor as benign or malignant</td>
-            <td align="left"><a href="https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/biopsy.rst">Wisconsin breast cancer biopsy dataset</a></td>
+            <td align="left">[Wisconsin breast cancer biopsy dataset](https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/biopsy.rst)</td>
         </tr>
     <tbody>
 </table>
+
+## 4. Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
