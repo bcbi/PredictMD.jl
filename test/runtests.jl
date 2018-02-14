@@ -7,7 +7,7 @@ info("Attempting to import AluthgeSinhaBase")
 import AluthgeSinhaBase
 const asb = AluthgeSinhaBase
 info("Successfully imported AluthgeSinhaBase")
-info(string("AluthgeSinhaBase version:", asb.VERSION))
+info(string("AluthgeSinhaBase version: ", asb.VERSION))
 
 Base.Test.@testset "AluthgeSinhaBase test suite" begin
     Base.Test.@testset "Unit tests" begin
