@@ -10,6 +10,8 @@ knetmlpreg_filename = ENV["knetmlpreg_filename"]
 ##############################################################################
 ##############################################################################
 
+error("going to skip this test for now.")
+
 # import required packages
 import AluthgeSinhaBase
 const asb = AluthgeSinhaBase

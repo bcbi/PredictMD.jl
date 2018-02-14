@@ -143,8 +143,20 @@ end
 # View coefficients, p values, etc. for underlying logistic regression
 asb.getunderlying(logisticclassifier)
 
+# Plot classifier histogram for logistic classifier on smoted training set
+logisticclasshisttraining = asb.singlelabelbinaryclassclassifierhistogram(
+    logisticclassifier,
+    smotedtrainingfeaturesdf,
+    smotedtraininglabelsdf,
+    labelname,
+    labellevels,
+    )
+asb.open(logisticclasshisttraining)
+
+# Plot classifier histogram for logistic classifier on testing set
+
 # Evaluate performance of logistic classifier on smoted training set
-asb.singlelabelbinaryclassclassificationmetrics(
+logisticclasshisttesting = asb.singlelabelbinaryclassclassificationmetrics(
     logisticclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
@@ -152,6 +164,9 @@ asb.singlelabelbinaryclassclassificationmetrics(
     positiveclass;
     sensitivity = 0.95,
     )
+asb.open(logisticclasshisttesting)
+
+error("stopping here.")
 
 # Evaluate performance of logistic classifier on testing set
 asb.singlelabelbinaryclassclassificationmetrics(

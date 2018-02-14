@@ -70,6 +70,8 @@ include("pipeline/simplelinearpipeline.jl")
 include("plotting/plotlearningcurve.jl")
 include("plotting/plotprcurve.jl")
 include("plotting/plotroccurve.jl")
+include("plotting/plotsinglelabelregressiontruevspredicted.jl")
+include("plotting/plotsinglelabelbinaryclassclassifierhistograms.jl")
 
 # postprocessing/
 include("postprocessing/packagemultilabelpred.jl")
