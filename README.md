@@ -1,7 +1,11 @@
 # AluthgeSinhaBase.jl
 
-## Table of Contents
 <table>
+    <thead>
+        <tr>
+            <th>Table of Contents</th>
+        </tr>
+    </thead>
     <tbody>
         <tr>
             <td align="left"><a href="#1-build-status">1. Build Status</a></td>
