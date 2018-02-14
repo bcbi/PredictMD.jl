@@ -24,8 +24,7 @@ end
 
 function trapz(
         x::AbstractVector,
-        y::AbstractVector;
-        atol::Real = 0.001,
+        y::AbstractVector,
         )
     result_aluthgetrapz = _aluthgetrapz(
         x,
@@ -36,7 +35,7 @@ function trapz(
         y,
         NumericalIntegration.Trapezoidal(),
         )
-    if isapprox(result_aluthgetrapz, result_numericalintegration; atol=atol,)
+    if !isapprox(result_aluthgetrapz, result_numericalintegration)
         msg = string(
             "result_aluthgetrapz!=result_numericalintegration. ",
             "result_aluthgetrapz=$(result_aluthgetrapz). ",
