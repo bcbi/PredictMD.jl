@@ -125,8 +125,7 @@ linearreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
     linearreg,
     testingfeaturesdf,
     testinglabelsdf,
-    labelname;
-    includeorigin = true,
+    labelname
     )
 asb.open(linearreg_plot_testing)
 
