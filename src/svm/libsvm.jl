@@ -161,7 +161,7 @@ function predict(
                 mean(abs, decisionvalues[2, :]),
                 ".",
                 )
-            warn(msg)
+            error(msg)
         end
         if !(
                 all(
