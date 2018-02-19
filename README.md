@@ -116,14 +116,14 @@ If you receive an error (e.g. "command not found"), download and install pdf2svg
 
 ## 3. Installation
 
-Start a new Julia session (e.g. open a terminal window, type ```julia```, and press enter). Then, paste the following lines into Julia and press enter:
+First, start a new Julia session (e.g. open a terminal window, type ```julia```, and press enter). Next, paste the following line into Julia and press enter:
 ```julia
-Pkg.update()
-Pkg.clone("https://github.com/bcbi/ClassImbalance.jl")
-Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git")
-Pkg.test("AluthgeSinhaBase")
-
+Pkg.update(); Pkg.clone("https://github.com/bcbi/ClassImbalance.jl"); Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git"); Pkg.test("AluthgeSinhaBase");
 ```
+If you receive the message "INFO: AluthgeSinhaBase tests passed", then you have successfully installed AluthgeSinhaBase. If the tests do not pass or if you see an error message, then try the following:
+1. Make sure that you have followed all of the instructions in [Section 2 (Prerequisites)](#2-prerequisites). Then, re-run the installation commands.
+2. Open a terminal window, type ```mv ~/.julia ~/.julia.backup```, and press enter. Then, re-run the installation commands.
+3. If the tests still do not pass or if you still receive an error message, go to [https://github.com/dilumaluthge/AluthgeSinhaBase.jl/issues/new](https://github.com/dilumaluthge/AluthgeSinhaBase.jl/issues/new) and submit a new issue.
 
 ## 4. Examples
 The `examples/` folder contains several files that illustrate the usage of AluthgeSinhaBase:

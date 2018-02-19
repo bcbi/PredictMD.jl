@@ -7,7 +7,12 @@ end
 
 function open(tp::TikzPictures.TikzPicture)
     tempsvgfilename = string(tempname(), ".svg")
-    saveresult = savesvg(tp, tempsvgfilename)
-    openresult = openbrowserwindow(tempsvgfilename)
+    result = open(tp, tempsvgfilename)
+    return result
+end
+
+function open(tp::TikzPictures.TikzPicture, fn::AbstractString)
+    saveresult = savesvg(tp, fn)
+    openresult = open(fn)
     return openresult
 end

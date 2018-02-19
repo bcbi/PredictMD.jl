@@ -10,6 +10,8 @@ info("Successfully imported AluthgeSinhaBase")
 info("Printing AluthgeSinhaBase version info:")
 println(string("AluthgeSinhaBase Version ", asb.VERSION))
 
+ENV["ALUTHGESINHABASE_RUNTESTS"] = "true"
+
 Base.Test.@testset "AluthgeSinhaBase test suite" begin
     Base.Test.@testset "Unit tests" begin
         info("Running unit tests")
