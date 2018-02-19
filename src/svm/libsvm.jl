@@ -180,7 +180,7 @@ function predict(
                 mean(abs, differences),
                 "."
                 )
-            warn(msg)
+            error(msg)
         end
         result = convert(Vector, vec(predictedvalues))
         return result
