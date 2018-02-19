@@ -165,7 +165,7 @@ function predict(
         end
         if !(
                 all(
-                    isapprox.(
+                    isequal.(
                         predictedvalues[:],
                         decisionvalues[1, :]
                         )
