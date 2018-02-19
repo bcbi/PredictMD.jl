@@ -8,21 +8,18 @@ function openbrowserwindow(filename::AbstractString)
         info(string("Skipping opening file during package tests: ",filename,))
         return nothing
     else
+        info(string("Opening file ",filename,))
         if is_apple()
             result = run(`open $(filename)`)
-            info(string("Opened file ",filename,))
             return result
         elseif is_linux()
             result = run(`xdg-open $(filename)`)
-            info(string("Opened file ",filename,))
             return result
         elseif is_bsd()
             result = run(`xdg-open $(filename)`)
-            info(string("Opened file ",filename,))
             return result
         elseif is_windows()
             result = run(`$(ENV["COMSPEC"]) /c start "" "$(filename)"`)
-            info(string("Opened file ",filename,))
             return result
         else
             error(
