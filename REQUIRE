@@ -2,6 +2,7 @@ julia 0.6
 
 Adapt 0.2
 ArgCheck 0.4
+ArgParse 0.5
 ArrayFire 0.1
 Atom 0.6
 AutoGrad 0.0.10
