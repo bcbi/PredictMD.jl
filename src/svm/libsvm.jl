@@ -152,7 +152,7 @@ function predict(
         @assert(ndims(decisionvalues) == 2)
         @assert(size(predictedvalues, 1) == size(decisionvalues, 2))
         @assert(size(decisionvalues, 1) == 2)
-        if !( isapprox(sum(abs, decisionvalues[2, :]), 0.0) )
+        if !( isequal(sum(abs, decisionvalues[2, :]), 0.0) )
             msg = string(
                 "sum(abs, decisionvalues[2, :]) is not approx zero. ",
                 "sum abs: ",
