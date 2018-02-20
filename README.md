@@ -15,7 +15,7 @@
     </tbody>
 </table>
 
-[AluthgeSinhaBase](https://github.com/dilumaluthge/AluthgeSinhaBase.jl) is a [Julia](https://julialang.org/) package that provides a uniform interface for using multiple different statistics and machine learning packages. This document (README.md) describes how to install and use AluthgeSinhaBase.
+AluthgeSinhaBase is a [Julia](https://julialang.org/) package that provides a uniform interface for using multiple different statistics and machine learning packages. This document (README.md) describes how to install and use AluthgeSinhaBase.
 
 <table>
     <thead>
