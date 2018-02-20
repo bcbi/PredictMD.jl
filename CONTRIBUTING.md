@@ -20,7 +20,7 @@ This document provides information on contributing to the AluthgeSinhaBase sourc
 
 ## 1. Prerequisites
 
-You need to have a GitHub account. You also need to have the following tools installed and configured:
+You need to have a GitHub account (with two-factor authentication enabled). You also need to have the following tools installed and configured:
 - git (with SSH public key authentication)
 - git-flow
 - GPG
