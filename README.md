@@ -156,4 +156,4 @@ The `examples/` folder contains several files that illustrate the usage of Aluth
 
 ## 4. Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+If you would like to contribute to the AluthgeSinhaBase source code, please see [CONTRIBUTING.md](CONTRIBUTING.md).
