@@ -145,5 +145,5 @@ If you do, then go to Step 2. If you instead see an error, download and install 
 **Step 3:**
 
 ```bash
-cd ~/.julia/v0.6/AluthgeSinhaBase && git checkout master && git checkout develop && git flow init -d && git config commit.gpgsign true
+cd ~/.julia/v0.6/AluthgeSinhaBase && git config commit.gpgsign true && git checkout master && git checkout develop && git flow init -d
 ```
