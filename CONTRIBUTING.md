@@ -52,14 +52,12 @@ If you do, proceed to Step 2. If you instead receive an error message, download 
 - GNU/Linux: [https://git-scm.com/download/linux](https://git-scm.com/download/linux)
 
 **Step 2:**
-```
-bash
+```bash
 git config --global user.name "Myfirstname Mylastname"
 ```
 
 **Step 3:**
-```
-bash
+```bash
 git config user.email "myemailaddress@example.com"
 ```
 
