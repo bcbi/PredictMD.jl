@@ -20,8 +20,7 @@ This document provides information on contributing to the AluthgeSinhaBase sourc
 
 ## 1. Required tools
 
-You need to configure the following:
-- GitHub account
+You need to have a Github account. You also need to have the following tools installed and configured:
 - git
 - git-flow
 - GPG
@@ -43,30 +42,32 @@ You need to configure the following:
 **Step 1:**
 
 Open a terminal window and run the following command:
-bash
-git --version 
+```bash
+git --version
+```
 
 You should see a message that looks something like this:
-
+```
 git version 2.16.1
+```
 
-If you do, proceed to Step 2. If you receive an error message, download and install Git:
+If you do, proceed to Step 2. If you instead receive an error message, download and install Git:
 
 - Windows: [https://git-scm.com/download/win](https://git-scm.com/download/win)
 - macOS: [https://git-scm.com/download/mac](https://git-scm.com/download/mac)
 - GNU/Linux: [https://git-scm.com/download/linux](https://git-scm.com/download/linux)
 
 **Step 2:**
-
+```
 bash
 git config --global user.name "Myfirstname Mylastname"
-
+```
 
 **Step 3:**
-
+```
 bash
 git config user.email "myemailaddress@example.com"
-
+```
 
 **Step 4:**
 
@@ -74,16 +75,23 @@ git config user.email "myemailaddress@example.com"
 git config --global github.user mygithubusername
 ```
 
+**Step 5:**
+Follow the steps on each of the following pages in order to generate an SSH key and associate it with your Github account:
+1. [https://help.github.com/articles/checking-for-existing-ssh-keys/](https://help.github.com/articles/checking-for-existing-ssh-keys/)
+2. [https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)
+3. [https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/)
+4. [https://help.github.com/articles/testing-your-ssh-connection/](https://help.github.com/articles/testing-your-ssh-connection/)
+5. [https://help.github.com/articles/working-with-ssh-key-passphrases/](https://help.github.com/articles/working-with-ssh-key-passphrases/)
+
 ### 1.3 git-flow
 
-**Step 1:**
-
 Open a terminal window and run the following command:
-bash
+```bash
 git flow
+```
 
 You should see a message that looks something like this:
-
+```
 usage: git flow <subcommand>
 
 Available subcommands are:
@@ -95,37 +103,50 @@ Available subcommands are:
    version   Shows version information.
 
 Try 'git flow <subcommand> help' for details.
-
-If you do, proceed to Step 2. If you instead receive the message git: 'flow' is not a git command, download and install git-flow:
+```
+If you do, then you are good to go. If you instead receive the message git: 'flow' is not a git command, download and install git-flow:
 
 - Windows: [https://github.com/nvie/gitflow/wiki/Windows](https://github.com/nvie/gitflow/wiki/Windows)
 - macOS: [https://github.com/nvie/gitflow/wiki/Mac-OS-X](https://github.com/nvie/gitflow/wiki/Mac-OS-X)
 - GNU/Linux: [https://github.com/nvie/gitflow/wiki/Linux](https://github.com/nvie/gitflow/wiki/Linux)
 
-**Step 2:**
-
-
-**Step 3:**
-
-**Step 4:**
-
-**Step 5:**
 
 ### 1.4 GPG
 
 **Step 1:**
 
-**Step 2:**
+Open a terminal window and run the following command:
+```bash
+gpg --version
+```
 
+You should see a message that looks something like this:
+```
+gpg (GnuPG/MacGPG2) 2.2.3
+libgcrypt 1.8.1
+Copyright (C) 2017 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Home: /Users/dilum/.gnupg
+Supported algorithms:
+Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA
+Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
+        CAMELLIA128, CAMELLIA192, CAMELLIA256
+Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224
+Compression: Uncompressed, ZIP, ZLIB, BZIP2
+```
+If you do, then go to Step 2. If you instead see an error, download and install GPG:
 - Windows: [https://gpg4win.org/download.html](https://gpg4win.org/download.html)
 - macOS: [https://gpgtools.org/](https://gpgtools.org/)
 - GNU/Linux: [https://gnupg.org/download/#sec-1-2](https://gnupg.org/download/#sec-1-2)
 
+**Step 2:**
+
 **Step 3:**
 
 **Step 4:**
-
-**Step 5:**
 
 
 
