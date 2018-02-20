@@ -1,6 +1,6 @@
 # Contributing to AluthgeSinhaBase
 
-This document provides information on contributing to the AluthgeSinhaBase source code. For information on installing and using AluthgeSinhaBase, please see [README.md](README.md).
+This document provides information on contributing to the [AluthgeSinhaBase](https://github.com/dilumaluthge/AluthgeSinhaBase.jl) source code. For information on installing and using AluthgeSinhaBase, please see [README.md](README.md).
 
 <table>
     <thead>
