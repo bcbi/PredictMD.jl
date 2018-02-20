@@ -13,7 +13,7 @@ This document provides information on contributing to the AluthgeSinhaBase sourc
             <td align="left"><a href="#1-prerequisites">1. Prerequisites</a></td>
         </tr>
         <tr>
-            <td align="left"><a href="#2-">2. Setting up the AluthgeSinhaBase repo</a></td>
+            <td align="left"><a href="#2-setting-up-the-aluthgesinhabase-repo">2. Setting up the AluthgeSinhaBase repo</a></td>
         </tr>
     </tbody>
 </table>
