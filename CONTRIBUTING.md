@@ -33,9 +33,7 @@ You need to have a GitHub account (with two-factor authentication enabled). You 
 
 ### 1.2 git
 
-**Step 1:**
-
-Open a terminal window and run the following command:
+**Step 1:** Open a terminal window and run the following command:
 ```bash
 git --version
 ```
@@ -67,8 +65,7 @@ git config user.email "myemailaddress@example.com"
 git config --global github.user mygithubusername
 ```
 
-**Step 5:**
-Follow the steps on each of the following pages in order to generate an SSH key and associate it with your GitHub account:
+**Step 5:** Follow the steps on each of the following pages in order to generate an SSH key and associate it with your GitHub account:
 1. [https://help.github.com/articles/checking-for-existing-ssh-keys/](https://help.github.com/articles/checking-for-existing-ssh-keys/)
 2. [https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)
 3. [https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/)
@@ -77,9 +74,7 @@ Follow the steps on each of the following pages in order to generate an SSH key 
 
 ### 1.3 git-flow
 
-**Step 1:**
-
-Open a terminal window and run the following command:
+**Step 1:** Open a terminal window and run the following command:
 ```bash
 git flow
 ```
@@ -98,7 +93,7 @@ Available subcommands are:
 
 Try 'git flow <subcommand> help' for details.
 ```
-If you do, then you are good to go. If you instead receive the message git: 'flow' is not a git command, download and install git-flow:
+If you do, then you are good to go. If you instead receive the message ```git: 'flow' is not a git command```, download and install git-flow:
 
 - Windows: [https://github.com/nvie/gitflow/wiki/Windows](https://github.com/nvie/gitflow/wiki/Windows)
 - macOS: [https://github.com/nvie/gitflow/wiki/Mac-OS-X](https://github.com/nvie/gitflow/wiki/Mac-OS-X)
@@ -107,9 +102,7 @@ If you do, then you are good to go. If you instead receive the message git: 'flo
 
 ### 1.4 GPG
 
-**Step 1:**
-
-Open a terminal window and run the following command:
+**Step 1:** Open a terminal window and run the following command:
 ```bash
 gpg --version
 ```
@@ -136,9 +129,7 @@ If you do, then go to Step 2. If you instead see an error, download and install 
 - macOS: [https://gpgtools.org/](https://gpgtools.org/)
 - GNU/Linux: [https://gnupg.org/download/#sec-1-2](https://gnupg.org/download/#sec-1-2)
 
-**Step 2:**
-
-Follow the steps on each of the following pages in order to generate a GPG key and associate it with your GitHub account:
+**Step 2:** Follow the steps on each of the following pages in order to generate a GPG key and associate it with your GitHub account:
 1. [https://help.github.com/articles/checking-for-existing-gpg-keys/](https://help.github.com/articles/checking-for-existing-gpg-keys/)
 2. [https://help.github.com/articles/generating-a-new-gpg-key/](https://help.github.com/articles/generating-a-new-gpg-key/)
 3. [https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/](https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/)
@@ -147,24 +138,12 @@ Follow the steps on each of the following pages in order to generate a GPG key a
 
 ## 2. Setting up the AluthgeSinhaBase repo
 
-**Step 1:**
+**Step 1:** Make sure that you have followed all of the instructions in [Section 1 (Prerequisites)](#1-prerequisites).
 
-Follow the installation instructions in [README.md](README.md) to install AluthgeSinhaBase.
-
-**Step 2:**
-
-```bash
-cd ~/.julia/v0.6/AluthgeSinhaBase
-```
+**Step 2:** Follow the installation instructions in [README.md](README.md) to install AluthgeSinhaBase.
 
 **Step 3:**
 
 ```bash
-git checkout master && git checkout develop && git flow init -d
-```
-
-**Step 4:**
-
-```bash
-git config commit.gpgsign true
+cd ~/.julia/v0.6/AluthgeSinhaBase && git checkout master && git checkout develop && git flow init -d && git config commit.gpgsign true
 ```
