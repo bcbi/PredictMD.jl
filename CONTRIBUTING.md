@@ -20,22 +20,16 @@ This document provides information on contributing to the AluthgeSinhaBase sourc
 
 ## 1. Prerequisites
 
-You need to have a Github account. You also need to have the following tools installed and configured:
+You need to have a GitHub account. You also need to have the following tools installed and configured:
 - git (with SSH public key authentication)
 - git-flow
 - GPG
 
 ### 1.1 GitHub account
 
-**Step 1:** If you do not already have a GitHub account, go to [https://github.com/join](https://github.com/join) and create an account.
+**Step 1:** If you already have a GitHub account, go to [https://github.com/login](https://github.com/login) and log in. If you do not already have a GitHub account, go to [https://github.com/join](https://github.com/join) and create an account.
 
-**Step 2:** Go to [https://help.github.com/articles/configuring-two-factor-authentication-via-a-totp-mobile-app/](https://help.github.com/articles/configuring-two-factor-authentication-via-a-totp-mobile-app/) and follow the instructions to enable two-factor authentication for your Github account.
-
-**Step 3:**
-
-**Step 4:**
-
-**Step 5:**
+**Step 2:** Go to [https://help.github.com/articles/configuring-two-factor-authentication-via-a-totp-mobile-app/](https://help.github.com/articles/configuring-two-factor-authentication-via-a-totp-mobile-app/) and follow the instructions to enable two-factor authentication for your GitHub account.
 
 ### 1.2 git
 
@@ -76,7 +70,7 @@ git config --global github.user mygithubusername
 ```
 
 **Step 5:**
-Follow the steps on each of the following pages in order to generate an SSH key and associate it with your Github account:
+Follow the steps on each of the following pages in order to generate an SSH key and associate it with your GitHub account:
 1. [https://help.github.com/articles/checking-for-existing-ssh-keys/](https://help.github.com/articles/checking-for-existing-ssh-keys/)
 2. [https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)
 3. [https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/)
@@ -84,6 +78,8 @@ Follow the steps on each of the following pages in order to generate an SSH key 
 5. [https://help.github.com/articles/working-with-ssh-key-passphrases/](https://help.github.com/articles/working-with-ssh-key-passphrases/)
 
 ### 1.3 git-flow
+
+**Step 1:**
 
 Open a terminal window and run the following command:
 ```bash
@@ -144,7 +140,7 @@ If you do, then go to Step 2. If you instead see an error, download and install 
 
 **Step 2:**
 
-Follow the steps on each of the following pages in order to generate a GPG key and associate it with your Github account:
+Follow the steps on each of the following pages in order to generate a GPG key and associate it with your GitHub account:
 1. [https://help.github.com/articles/checking-for-existing-gpg-keys/](https://help.github.com/articles/checking-for-existing-gpg-keys/)
 2. [https://help.github.com/articles/generating-a-new-gpg-key/](https://help.github.com/articles/generating-a-new-gpg-key/)
 3. [https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/](https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/)
