@@ -13,7 +13,7 @@ This document provides information on contributing to the AluthgeSinhaBase sourc
             <td align="left"><a href="#1-prerequisites">1. Prerequisites</a></td>
         </tr>
         <tr>
-            <td align="left"><a href="#2-getting-set-up">2. Getting set up</a></td>
+            <td align="left"><a href="#2-">2. Setting up the AluthgeSinhaBase repo</a></td>
         </tr>
     </tbody>
 </table>
@@ -145,7 +145,7 @@ Follow the steps on each of the following pages in order to generate a GPG key a
 4. [https://help.github.com/articles/telling-git-about-your-gpg-key/](https://help.github.com/articles/telling-git-about-your-gpg-key/)
 5. [https://help.github.com/articles/associating-an-email-with-your-gpg-key/](https://help.github.com/articles/associating-an-email-with-your-gpg-key/)
 
-## 2. Getting set up
+## 2. Setting up the AluthgeSinhaBase repo
 
 **Step 1:**
 
