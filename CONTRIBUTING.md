@@ -10,18 +10,18 @@ This document provides information on contributing to the AluthgeSinhaBase sourc
     </thead>
     <tbody>
         <tr>
-            <td align="left"><a href="#1-required-tools">1. Required tools</a></td>
+            <td align="left"><a href="#1-prerequisites">1. Prerequisites</a></td>
         </tr>
         <tr>
-            <td align="left"><a href="#2-">2. Setting up the AluthgeSinhaBase repo for development</a></td>
+            <td align="left"><a href="#2-getting-set-up">2. Getting set up</a></td>
         </tr>
     </tbody>
 </table>
 
-## 1. Required tools
+## 1. Prerequisites
 
 You need to have a Github account. You also need to have the following tools installed and configured:
-- git
+- git (with SSH public key authentication)
 - git-flow
 - GPG
 
@@ -144,13 +144,14 @@ If you do, then go to Step 2. If you instead see an error, download and install 
 
 **Step 2:**
 
-**Step 3:**
+Follow the steps on each of the following pages in order to generate a GPG key and associate it with your Github account:
+1. [https://help.github.com/articles/checking-for-existing-gpg-keys/](https://help.github.com/articles/checking-for-existing-gpg-keys/)
+2. [https://help.github.com/articles/generating-a-new-gpg-key/](https://help.github.com/articles/generating-a-new-gpg-key/)
+3. [https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/](https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/)
+4. [https://help.github.com/articles/telling-git-about-your-gpg-key/](https://help.github.com/articles/telling-git-about-your-gpg-key/)
+5. [https://help.github.com/articles/associating-an-email-with-your-gpg-key/](https://help.github.com/articles/associating-an-email-with-your-gpg-key/)
 
-**Step 4:**
-
-
-
-## 2. Setting up the AluthgeSinhaBase repo for development
+## 2. Getting set up
 
 **Step 1:**
 
