@@ -43,37 +43,67 @@ You need to configure the following:
 **Step 1:**
 
 Open a terminal window and run the following command:
-```bash
-git --version```
+bash
+git --version 
+
 You should see a message that looks something like this:
-```
+
 git version 2.16.1
-```
-If you see a message like this, proceed to Step 2. If you receive an error message, download and install Git:
+
+If you do, proceed to Step 2. If you receive an error message, download and install Git:
 
 - Windows: [https://git-scm.com/download/win](https://git-scm.com/download/win)
 - macOS: [https://git-scm.com/download/mac](https://git-scm.com/download/mac)
 - GNU/Linux: [https://git-scm.com/download/linux](https://git-scm.com/download/linux)
 
+**Step 2:**
+
+bash
+git config --global user.name "Myfirstname Mylastname"
+
+
 **Step 3:**
+
+bash
+git config user.email "myemailaddress@example.com"
+
 
 **Step 4:**
 
-**Step 5:**
+```bash
+git config --global github.user mygithubusername
+```
 
 ### 1.3 git-flow
 
 **Step 1:**
 
+Open a terminal window and run the following command:
+bash
+git flow
+
+You should see a message that looks something like this:
+
+usage: git flow <subcommand>
+
+Available subcommands are:
+   init      Initialize a new git repo with support for the branching model.
+   feature   Manage your feature branches.
+   release   Manage your release branches.
+   hotfix    Manage your hotfix branches.
+   support   Manage your support branches.
+   version   Shows version information.
+
+Try 'git flow <subcommand> help' for details.
+
+If you do, proceed to Step 2. If you instead receive the message git: 'flow' is not a git command, download and install git-flow:
+
+- Windows: [https://github.com/nvie/gitflow/wiki/Windows](https://github.com/nvie/gitflow/wiki/Windows)
+- macOS: [https://github.com/nvie/gitflow/wiki/Mac-OS-X](https://github.com/nvie/gitflow/wiki/Mac-OS-X)
+- GNU/Linux: [https://github.com/nvie/gitflow/wiki/Linux](https://github.com/nvie/gitflow/wiki/Linux)
+
 **Step 2:**
 
-- Windows: []()
-- macOS: []()
-- GNU/Linux: []()
-
-- Windows: []()
-- macOS: []()
-- GNU/Linux: []()
 
 **Step 3:**
 
