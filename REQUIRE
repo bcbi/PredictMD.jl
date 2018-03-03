@@ -1,12 +1,13 @@
 julia 0.6
 
 Adapt 0.2
+ArgCheck 0.4
+ArgParse 0.5
 ArrayFire 0.1
 Atom 0.6
 AutoGrad 0.0.10
 BenchmarkTools 0.2
 BioMedQuery 0.3
-BinDeps
 Blink 0.6
 CLArrays 0.1
 CSV 0.2
@@ -21,7 +22,6 @@ ColorBrewer 0.3
 ColorSchemes 1.5
 ColorTypes 0.6
 Colors 0.8
-Compat
 CuArrays 0.4
 DataFlow 0.3
 DataFrames 0.11
@@ -70,6 +70,7 @@ NNlib 0.2
 NumericalIntegration 0.0.3
 OpenCL 0.7
 PGFPlots 2.2
+PackageCompiler 0.2
 PenaltyFunctions 0.0.2
 PlotRecipes 0.3
 PlotThemes 0.2

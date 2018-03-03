@@ -3,60 +3,50 @@
 <table>
     <thead>
         <tr>
+            <th>master</th>
+            <th>develop</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><a href="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl/branches"><img alt="Build Status (master)" title="Build Status (master)" src="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl.svg?token=dMqeEKHqcnWSXz982pdf&branch=master"></a></td>
+            <td><a href="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl/branches"><img alt="Build Status (develop)" title="Build Status (develop)" src="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl.svg?token=dMqeEKHqcnWSXz982pdf&branch=develop"></a></td>
+        </tr>
+    </tbody>
+</table>
+
+AluthgeSinhaBase is a [Julia](https://julialang.org/) package that provides a uniform interface for using multiple different statistics and machine learning packages. This document describes how to install and use AluthgeSinhaBase.
+
+<table>
+    <thead>
+        <tr>
             <th>Table of Contents</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td align="left"><a href="#1-build-status">1. Build Status</a></td>
+            <td align="left"><a href="#1-prerequisites">1. Prerequisites</a></td>
         </tr>
         <tr>
-            <td align="left"><a href="#2-prerequisites">2. Prerequisites</a></td>
+            <td align="left"><a href="#2-installation">2. Installation</a></td>
         </tr>
         <tr>
-            <td align="left"><a href="#3-installation">3. Installation</a></td>
+            <td align="left"><a href="#3-examples">3. Examples</a></td>
         </tr>
         <tr>
-            <td align="left"><a href="#4-examples">4. Examples</a></td>
-        </tr>
-        <tr>
-            <td align="left"><a href="#5-contributing">5. Contributing</a></td>
+            <td align="left"><a href="#4-contributing">4. Contributing</a></td>
         </tr>
     </tbody>
 </table>
 
-## 1. Build Status
-
-<table>
-    <thead>
-        <tr>
-            <th>Branch</th>
-            <th>Build status on Travis</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td align="center">master</td>
-            <td align="center"><a href="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl/branches"><img alt="Build Status (master)" title="Build Status (master)" src="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl.svg?token=dMqeEKHqcnWSXz982pdf&branch=master"></a></td>
-        </tr>
-        <tr>
-            <td align="center">develop</td>
-            <td align="center"><a href="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl/branches"><img alt="Build Status (develop)" title="Build Status (develop)" src="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl.svg?token=dMqeEKHqcnWSXz982pdf&branch=develop"></a></td>
-        </tr>
-        <tr>
-            <td align="center" colspan="2"><a href="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl">View this project on Travis</a></td>
-        </tr>
-    <tbody>
-</table>
-
-## 2. Prerequisites
+## 1. Prerequisites
 
 In order to run AluthgeSinhaBase, you need to have all of the following software packages installed on your system:
 * Julia (version >= 0.6)
 * LaTeX
 * pdf2svg.
 
-### 2.1. Julia
+### 1.1. Julia
 
 In order to check your installed version of Julia, start a new Julia session (e.g. open a terminal window, type ```julia```, and press enter). You should see a welcome message that looks something like this:
 ```
@@ -71,7 +61,7 @@ In order to check your installed version of Julia, start a new Julia session (e.
 ```
 If you receive an error (e.g. "command not found"), or if your version of Julia is less than 0.6, go to [https://julialang.org/downloads/](https://julialang.org/downloads/) and follow the instructions to install an appropriately recent version of Julia.
 
-### 2.2. LaTeX
+### 1.2. LaTeX
 
 To confirm that LaTeX is installed on your system, open a terminal window and run the following command:
 ```bash
@@ -98,7 +88,7 @@ If you receive an error (e.g. "command not found"), download and install a TeX d
 * macOS: [https://www.tug.org/mactex/](https://www.tug.org/mactex/)
 * GNU/Linux: [https://www.tug.org/texlive/](https://www.tug.org/texlive/)
 
-### 2.3. pdf2svg
+### 1.3. pdf2svg
 
 To confirm that pdf2svg is installed on your system, open a terminal window and run the following command:
 ```bash
@@ -114,20 +104,30 @@ If you receive an error (e.g. "command not found"), download and install pdf2svg
 * macOS: [http://brewinstall.org/Install-pdf2svg-on-Mac-with-Brew/](http://brewinstall.org/Install-pdf2svg-on-Mac-with-Brew/)
 * GNU/Linux: [https://github.com/dawbarton/pdf2svg](https://github.com/dawbarton/pdf2svg)
 
-## 3. Installation
+## 2. Installation
 
-Start a new Julia session (e.g. open a terminal window, type ```julia```, and press enter). Then, enter the following lines into Julia and press enter:
+**Step 1:** Make sure that you have followed all of the instructions in [Section 1 (Prerequisites)](#1-prerequisites).
+
+**Step 2:** Start a new Julia session (e.g. open a terminal window, type ```julia```, and press enter).
+
+**Step 3:** Paste the following line into Julia and press enter:
 ```julia
-Pkg.update()
-Pkg.clone("https://github.com/bcbi/ClassImbalance.jl")
-Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git")
-Pkg.test("AluthgeSinhaBase")
+Pkg.update();Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git");Pkg.test("AluthgeSinhaBase");
 ```
 
-## 4. Examples
+You will need to wait several minutes while all of the required packages are installed and all of the tests are run.
+
+If you receive the message "INFO: AluthgeSinhaBase tests passed", then you have successfully installed AluthgeSinhaBase. If the tests do not pass or if you see an error message, then do the following:
+1. Close your Julia session.
+2. Open a new terminal window, type ```mv ~/.julia ~/.julia.backup```, and press enter.
+3. Repeat Steps 2 and 3 above.
+
+If the tests still do not pass or if you still receive an error message, go to [https://github.com/dilumaluthge/AluthgeSinhaBase.jl/issues/new](https://github.com/dilumaluthge/AluthgeSinhaBase.jl/issues/new) and submit a new issue. Please include a screenshot of the error.
+
+## 3. Examples
 The `examples/` folder contains several files that illustrate the usage of AluthgeSinhaBase:
 
-### 4.1. Machine Learning Examples
+### 3.1. Machine Learning Examples
 
 <table>
     <thead>
@@ -154,6 +154,6 @@ The `examples/` folder contains several files that illustrate the usage of Aluth
     <tbody>
 </table>
 
-## 5. Contributing
+## 4. Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+If you would like to contribute to the AluthgeSinhaBase source code, please see [CONTRIBUTING.md](CONTRIBUTING.md).

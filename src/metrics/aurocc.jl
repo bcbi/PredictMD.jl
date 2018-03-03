@@ -51,8 +51,7 @@ function aurocc(
     if !( isapprox(Aluthge_aurocc, ROCAnalysis_aurocc; atol=0.00000001) )
         msg = "Aluthge_aurocc is not approx equal to ROCAnalysis_aurocc.\n" *
             "Aluthge_aurocc = $(Aluthge_aurocc)\n" *
-            "ROCAnalysis_aurocc = $(ROCAnalysis_aurocc)\n" *
-            "We will use the Aluthge_aurocc value."
+            "ROCAnalysis_aurocc = $(ROCAnalysis_aurocc)\n"
         error(msg)
     end
     return Aluthge_aurocc
