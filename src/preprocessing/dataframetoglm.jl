@@ -1,6 +1,6 @@
 import DataFrames
 
-immutable ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer <:
+struct ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer <:
         AbstractPrimitiveObject
     label::T1 where T1 <: Symbol
     positiveclass::T2 where T2 <: AbstractString

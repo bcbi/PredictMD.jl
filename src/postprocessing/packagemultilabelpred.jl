@@ -1,4 +1,4 @@
-immutable ImmutablePackageMultiLabelPredictionTransformer <:
+struct ImmutablePackageMultiLabelPredictionTransformer <:
         AbstractPrimitiveObject
     labelnames::T1 where T1 <: SymbolVector
 end

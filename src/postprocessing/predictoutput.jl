@@ -1,6 +1,6 @@
 import DataFrames
 
-immutable ImmutablePredictionsSingleLabelInt2StringTransformer <:
+struct ImmutablePredictionsSingleLabelInt2StringTransformer <:
         AbstractPrimitiveObject
     index::T1 where T1 <: Integer
     levels::T2 where T2 <: AbstractVector
