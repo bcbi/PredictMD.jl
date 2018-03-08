@@ -1,4 +1,4 @@
-immutable ImmutablePackageSingleLabelPredictionTransformer <:
+struct ImmutablePackageSingleLabelPredictionTransformer <:
         AbstractPrimitiveObject
     singlelabelname::T1 where T1 <: Symbol
 end
