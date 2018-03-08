@@ -1,7 +1,7 @@
 import DataFrames
 import StatsModels
 
-immutable ImmutableFeatureArrayTransposerTransformer <:
+struct ImmutableFeatureArrayTransposerTransformer <:
         AbstractPrimitiveObject
 end
 
