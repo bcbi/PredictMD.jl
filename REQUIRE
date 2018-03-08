@@ -39,7 +39,6 @@ GLM 0.10
 GLMNet 0.3
 GPUArrays 0.2
 GZip 0.3
-Git 0.2
 GroupedErrors 0.1
 HypothesisTests 0.6
 IterTools 0.2
