@@ -67,6 +67,7 @@ Missings 0.2
 MultivariateStats 0.4
 NNlib 0.2
 NumericalIntegration 0.0.3
+OhMyREPL
 OpenCL 0.7
 PGFPlots 2.2
 PackageCompiler 0.3
@@ -80,6 +81,7 @@ QuadGK 0.2
 Query 0.9
 RData 0.3
 RDatasets 0.3
+REPLCompletions
 Rmath 0.3
 ROCAnalysis 0.2
 RecipesBase 0.2
