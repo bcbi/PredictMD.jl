@@ -86,6 +86,7 @@ ROCAnalysis 0.2
 RecipesBase 0.2
 Reel 1.0
 Reinforce 0.0.1
+Requires 0.4
 ReverseDiff 0.2
 ReverseDiffSource 0.3
 ScikitLearnBase 0.3
