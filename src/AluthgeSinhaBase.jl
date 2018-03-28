@@ -2,8 +2,6 @@ __precompile__(true)
 
 module AluthgeSinhaBase
 
-import Requires
-
 # base/
 include("base/abstracttypes.jl")
 include("base/typealiases.jl")

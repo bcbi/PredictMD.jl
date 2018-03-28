@@ -119,8 +119,8 @@ StatsBase.countmap(traininglabelsdf[labelname])
 # on random seed). We would like that ratio to be 1:1. We will use SMOTE
 # to generate synthetic minority class samples. We will also undersample the
 # minority class. The result will be a balanced training set.
-majorityclass = "benign"
-minorityclass = "malignant"
+majorityclass = negativeclass
+minorityclass = positiveclass
 
 smotedtrainingfeaturesdf, smotedtraininglabelsdf = asb.smote(
     trainingfeaturesdf,
