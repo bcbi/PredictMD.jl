@@ -16,7 +16,7 @@ CUDAdrv
 CUDAnative
 CUDNN
 CategoricalArrays 0.3
-ClassImbalance
+ClassImbalance 0.2
 Clustering 0.9
 ColorBrewer 0.3
 ColorSchemes 1.5
