@@ -112,6 +112,7 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 ##############################################################################
 
 # Examine prevalence of each class in training set
+DataFrames.describe(traininglabelsdf[labelname])
 StatsBase.countmap(traininglabelsdf[labelname])
 
 # We see that malignant is minority class and benign is majority class.
@@ -135,6 +136,7 @@ smotedtrainingfeaturesdf, smotedtraininglabelsdf = asb.smote(
     )
 
 # Examine prevalence of each class in smoted training set
+DataFrames.describe(smotedtraininglabelsdf[labelname])
 StatsBase.countmap(smotedtraininglabelsdf[labelname])
 
 # Now we have a ratio of malignant:benign that is 1:1.
