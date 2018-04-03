@@ -9,8 +9,8 @@
     </thead>
     <tbody>
         <tr>
-            <td><a href="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl/branches"><img alt="Build Status (master)" title="Build Status (master)" src="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl.svg?token=dMqeEKHqcnWSXz982pdf&branch=master"></a></td>
-            <td><a href="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl/branches"><img alt="Build Status (develop)" title="Build Status (develop)" src="https://travis-ci.com/dilumaluthge/AluthgeSinhaBase.jl.svg?token=dMqeEKHqcnWSXz982pdf&branch=develop"></a></td>
+            <td><a href="https://travis-ci.com/DilumAluthge/AluthgeSinhaBase.jl/branches"><img alt="Build Status (master)" title="Build Status (master)" src="https://travis-ci.com/DilumAluthge/AluthgeSinhaBase.jl.svg?token=dMqeEKHqcnWSXz982pdf&branch=master"></a></td>
+            <td><a href="https://travis-ci.com/DilumAluthge/AluthgeSinhaBase.jl/branches"><img alt="Build Status (develop)" title="Build Status (develop)" src="https://travis-ci.com/DilumAluthge/AluthgeSinhaBase.jl.svg?token=dMqeEKHqcnWSXz982pdf&branch=develop"></a></td>
         </tr>
     </tbody>
 </table>
@@ -112,13 +112,13 @@ If you receive an error (e.g. "command not found"), download and install pdf2svg
 
 **Step 3:** Paste the following line into Julia and press enter:
 ```julia
-Pkg.update();Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git");Pkg.test("AluthgeSinhaBase");
+Pkg.update();Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git");Pkg.checkout("AluthgeSinhaBase", "master");Pkg.test("AluthgeSinhaBase");
 ```
 
 You will need to wait several minutes while all of the required packages are installed and all of the tests are run.
 
 If you receive the message "INFO: AluthgeSinhaBase tests passed", then you have successfully installed AluthgeSinhaBase. If the tests do not pass or if you see an error message, then do the following:
-1. Close your Julia session.
+1. Close your Julia session (e.g. type ```quit()``` and press enter).
 2. Open a new terminal window, type ```mv ~/.julia ~/.julia.backup```, and press enter.
 3. Repeat Steps 2 and 3 above.
 

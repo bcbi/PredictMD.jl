@@ -1,4 +1,4 @@
-immutable ImmutablePredictProbaSingleLabelInt2StringTransformer <:
+struct ImmutablePredictProbaSingleLabelInt2StringTransformer <:
         AbstractPrimitiveObject
     index::T1 where T1 <: Integer
     levels::T2 where T2 <: AbstractVector

@@ -1,4 +1,4 @@
-immutable ImmutableSimpleLinearPipeline <: AbstractCompositeObject
+struct ImmutableSimpleLinearPipeline <: AbstractCompositeObject
     name::T1 where T1 <: AbstractString
     objectsvector::T2 where T2 <: AbstractObjectVector
 end

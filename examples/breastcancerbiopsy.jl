@@ -112,6 +112,7 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 ##############################################################################
 
 # Examine prevalence of each class in training set
+DataFrames.describe(traininglabelsdf[labelname])
 StatsBase.countmap(traininglabelsdf[labelname])
 
 # We see that malignant is minority class and benign is majority class.
@@ -119,8 +120,8 @@ StatsBase.countmap(traininglabelsdf[labelname])
 # on random seed). We would like that ratio to be 1:1. We will use SMOTE
 # to generate synthetic minority class samples. We will also undersample the
 # minority class. The result will be a balanced training set.
-majorityclass = "benign"
-minorityclass = "malignant"
+majorityclass = negativeclass
+minorityclass = positiveclass
 
 smotedtrainingfeaturesdf, smotedtraininglabelsdf = asb.smote(
     trainingfeaturesdf,
@@ -135,6 +136,7 @@ smotedtrainingfeaturesdf, smotedtraininglabelsdf = asb.smote(
     )
 
 # Examine prevalence of each class in smoted training set
+DataFrames.describe(smotedtraininglabelsdf[labelname])
 StatsBase.countmap(smotedtraininglabelsdf[labelname])
 
 # Now we have a ratio of malignant:benign that is 1:1.

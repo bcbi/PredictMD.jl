@@ -106,7 +106,7 @@ featuresdf = df[featurenames]
 labelsdf = df[[labelname]]
 
 # View summary statistics for label variable (mean, quartiles, etc.)
-StatsBase.summarystats(labelsdf[labelname])
+DataFrames.describe(labelsdf[labelname])
 
 # Split data into training set (70%) and testing set (30%)
 trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =

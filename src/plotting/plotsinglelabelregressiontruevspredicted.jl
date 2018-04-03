@@ -1,5 +1,6 @@
 import LaTeXStrings
 import PGFPlots
+import PGFPlotsX
 
 function plotsinglelabelregressiontrueversuspredicted(
         estimator::AbstractObject,
