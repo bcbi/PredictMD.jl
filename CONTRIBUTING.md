@@ -142,7 +142,7 @@ If you do, then go to Step 2. If you instead see an error, download and install 
 
 **Step 2:** Follow the installation instructions in [README.md](README.md) to install AluthgeSinhaBase.
 
-**Step 3:**
+**Step 3:** Open a terminal window and run the following line:
 
 ```bash
 cd ~/.julia/v0.6/AluthgeSinhaBase && git config commit.gpgsign true && git checkout master && git checkout develop && git flow init -d
