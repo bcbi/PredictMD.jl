@@ -148,7 +148,7 @@ If you do, then go to Step 2. If you instead see an error, download and install 
 cd ~/.julia/v0.6/AluthgeSinhaBase
 ```
 
-**Step 3:** Run the following line:
+**Step 4:** Run the following line:
 
 ```bash
 git config commit.gpgsign true && git checkout master && git checkout develop && git flow init -d
