@@ -151,5 +151,5 @@ cd ~/.julia/v0.6/AluthgeSinhaBase
 **Step 4:** Run the following line:
 
 ```bash
-git config commit.gpgsign true && git checkout master && git checkout develop && git flow init -d
+git config commit.gpgsign true && git checkout master && git checkout develop && git flow init -fd && git checkout develop 
 ```
