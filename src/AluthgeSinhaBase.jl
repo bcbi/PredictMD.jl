@@ -23,15 +23,10 @@ include("datasets/rdatasets.jl")
 
 # ensemble/
 
-# integrations/gui/
-include("integrations/gui/blink.jl")
-
-# integrations/ide/
-include("integrations/ide/atomjuno.jl")
+# integrations/
+include("integrations/ide/atom.jl")
 
 # io/
-include("io/fileio.jl")
-include("io/jld2.jl")
 include("io/saveload.jl")
 
 # linearmodel/
@@ -58,7 +53,6 @@ include("modelselection/traintestsplit.jl")
 # multioutput/
 
 # neuralnetwork/
-include("neuralnetwork/autograd.jl")
 include("neuralnetwork/flux.jl")
 include("neuralnetwork/knet.jl")
 include("neuralnetwork/nnlib.jl")
@@ -86,9 +80,6 @@ include("preprocessing/dataframetodecisiontree.jl")
 include("preprocessing/dataframetoglm.jl")
 include("preprocessing/dataframetoknet.jl")
 include("preprocessing/dataframetosvm.jl")
-
-# scikitlearn/
-include("scikitlearn/scikitlearnapi.jl")
 
 # svm/
 include("svm/libsvm.jl")

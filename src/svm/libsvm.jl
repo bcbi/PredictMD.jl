@@ -1,4 +1,3 @@
-import LIBLINEAR
 import LIBSVM
 
 mutable struct MutableLIBSVMjlSVMEstimator <: AbstractPrimitiveObject

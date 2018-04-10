@@ -1,5 +1,4 @@
 import Knet
-import StatsFuns
 import ValueHistories
 
 function _emptyfunction()
