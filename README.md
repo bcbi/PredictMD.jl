@@ -119,7 +119,7 @@ You will need to wait several minutes while all of the required packages are ins
 
 If you receive the message "INFO: AluthgeSinhaBase tests passed", then you have successfully installed AluthgeSinhaBase. If the tests do not pass or if you see an error message, then do the following:
 1. Close your Julia session (e.g. type ```quit()``` and press enter).
-2. Open a new terminal window, type ```mv ~/.julia ~/.julia.backup```, and press enter.
+2. Open a new terminal window, type ```mv ~/.julia ~/.julia.backup-$(date +"%Y%m%d-%H%M%S")```, and press enter.
 3. Repeat Steps 2 and 3 above.
 
 If the tests still do not pass or if you still receive an error message, go to [https://github.com/dilumaluthge/AluthgeSinhaBase.jl/issues/new](https://github.com/dilumaluthge/AluthgeSinhaBase.jl/issues/new) and submit a new issue. Please include a screenshot of the error.
