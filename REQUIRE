@@ -1,5 +1,6 @@
 julia 0.6
 
+Atom 0.6
 CSV 0.2
 ClassImbalance 0.2
 DataFrames 0.11
