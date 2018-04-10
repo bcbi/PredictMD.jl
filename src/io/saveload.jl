@@ -1,5 +1,6 @@
 import FileIO
 import JLD2
+import ProgressMeter
 
 function save(filename::AbstractString, x::AbstractObject)
     # make sure that the filename ends in ".jld2"
