@@ -1,7 +1,5 @@
 julia 0.6
 
-Atom 0.6
-Blink 0.6
 CSV 0.2
 ClassImbalance 0.2
 DataFrames 0.11
@@ -11,7 +9,6 @@ Flux 0.4
 GLM 0.10
 GZip 0.3
 JLD2 0.0.5
-Juno 0.4
 Knet 0.9
 LIBLINEAR 0.3
 LIBSVM 0.1
