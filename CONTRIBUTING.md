@@ -15,6 +15,9 @@ This document provides information on contributing to the AluthgeSinhaBase sourc
         <tr>
             <td align="left"><a href="#2-setting-up-the-aluthgesinhabase-repo">2. Setting up the AluthgeSinhaBase repo</a></td>
         </tr>
+                <tr>
+            <td align="left"><a href="#3-working-with-examples">3. Working with examples</a></td>
+        </tr>
     </tbody>
 </table>
 
@@ -152,4 +155,41 @@ cd ~/.julia/v0.6/AluthgeSinhaBase
 
 ```bash
 git config commit.gpgsign true && git checkout master && git checkout develop && git flow init -fd && git checkout develop 
+```
+## Working with examples
+
+Some of the examples are provided as Jupyter notebooks as a convinient way to visualize and interact with the code. However, we also like to mantain corresponding plain Julia scripts that are in-sync with the notebooks. A convinient way to do so, is to add a post-save hook to your Jupyter configuration file.
+
+1. Open you jupyter configuration file ~/.jupyter/jupyter_notebook_config.py. If the file does not exist you can generate it by running `jupyter notebook --generate-config`
+
+2. Add the following code to the top of the file
+
+```python
+#-----------------------------------------------------------------------------
+# Auto save script version of notebook
+# Reference: https://svds.com/jupyter-notebook-best-practices-for-data-science/
+#-----------------------------------------------------------------------------
+
+import os
+from subprocess import check_call
+
+def post_save(model, os_path, contents_manager):
+    """post-save hook for converting notebooks to .py scripts"""
+    if model['type'] != 'notebook':
+        return # only do this for notebooks
+    d, fname = os.path.split(os_path)
+    check_call(['jupyter', 'nbconvert', '--to', 'script', fname], cwd=d)
+
+c.FileContentsManager.post_save_hook = post_save
+```
+
+**Note:** This behavior is global. If you want to have this saving only when in a particular folder, you can create multiple configuration files as a work-around. First create a new profile name via a bash command line:
+```bash
+export JUPYTER_CONFIG_DIR=~/.jupyter_profile2
+jupyter notebook --generate-config
+```
+This will create a new directory and file at `~/.jupyter_profile2/jupyter_notebook_config.py` Then run jupyter notebook and work as usual. To switch back to your default profile you will have to set (either by hand, shell function, or your .bashrc) back to:  
+
+```bash
+export JUPYTER_CONFIG_DIR=~/.jupyter
 ```
