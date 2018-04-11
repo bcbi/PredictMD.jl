@@ -8,3 +8,4 @@ deps/deps.jl
 data/
 input/
 output/
+*.ipynb_checkpoints/
