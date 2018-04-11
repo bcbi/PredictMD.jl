@@ -156,7 +156,7 @@ cd ~/.julia/v0.6/AluthgeSinhaBase
 ```bash
 git config commit.gpgsign true && git checkout master && git checkout develop && git flow init -fd && git checkout develop 
 ```
-## Working with examples
+## 3. Working with examples
 
 Some of the examples are provided as Jupyter notebooks as a convinient way to visualize and interact with the code. However, we also like to mantain corresponding plain Julia scripts that are in-sync with the notebooks. A convinient way to do so, is to add a post-save hook to your Jupyter configuration file.
 
