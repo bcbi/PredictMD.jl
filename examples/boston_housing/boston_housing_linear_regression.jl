@@ -58,7 +58,6 @@ continuousfeaturenames = Symbol[
     ]
 featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
-# D&S What are we doing here???
 if load_pretrained
 else
     featurecontrasts = asb.featurecontrasts(df, featurenames)

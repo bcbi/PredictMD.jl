@@ -55,8 +55,6 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 # load pre-trained models
 linearreg_filename = "./linearreg.jld2"
 
-# D&I Should loading requiere predefinition?
-
 # Set up linear regression model
 linearreg = asb.singlelabeldataframelinearregression(
     featurenames,

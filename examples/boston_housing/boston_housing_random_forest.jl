@@ -54,7 +54,6 @@ continuousfeaturenames = Symbol[
     ]
 featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
-# D&S What are we doing here???
 if load_pretrained
 else
     featurecontrasts = asb.featurecontrasts(df, featurenames)
@@ -64,7 +63,6 @@ end
 labelname = :MedV
 
 # Put features and labels in separate dataframes
-# D&I I think this step is an incovinience
 featuresdf = df[featurenames]
 labelsdf = df[[labelname]]
 
