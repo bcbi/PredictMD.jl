@@ -2,8 +2,8 @@
 
 import Crayons
 
-const OK =  GREEN_FG * BOLD("OK")
-const X =  RED_FG * BOLD("X")
+const OK =  Crayons.Box.GREEN_FG * Crayons.Box.BOLD("OK")
+const X =  Crayons.Box.RED_FG * Crayons.Box.BOLD("X")
 
 print(STDERR, "Looking for lualatex...")
 have_lualatex = try success(`lualatex -v`); catch; false; end
