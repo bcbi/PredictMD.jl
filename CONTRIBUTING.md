@@ -13,7 +13,7 @@ This document provides information on contributing to the PredictMD source code.
             <td align="left"><a href="#1-prerequisites">1. Prerequisites</a></td>
         </tr>
         <tr>
-            <td align="left"><a href="#2-setting-up-the-aluthgesinhabase-repo">2. Setting up the PredictMD repo</a></td>
+            <td align="left"><a href="#2-setting-up-the-predictmd-repo">2. Setting up the PredictMD repo</a></td>
         </tr>
                 <tr>
             <td align="left"><a href="#3-working-with-examples">3. Working with examples</a></td>
