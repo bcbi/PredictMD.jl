@@ -1,6 +1,6 @@
 __precompile__(true)
 
-module AluthgeSinhaBase
+module PredictMD
 
 # base/
 include("base/abstracttypes.jl")
@@ -103,4 +103,4 @@ include("utils/trapz.jl")
 include("utils/traviscienv.jl")
 
 
-end # end module AluthgeSinhaBase
+end # end module PredictMD

@@ -1,7 +1,6 @@
 
 # import required packages
-import AluthgeSinhaBase
-const asb = AluthgeSinhaBase
+import PredictMD
 import CSV
 import DataFrames
 import GZip
@@ -23,7 +22,7 @@ df = CSV.read(
 DataFrames.dropmissing!(df)
 
 # Shuffle rows
-asb.shufflerows!(df)
+PredictMD.shufflerows!(df)
 
 # Define labels
 featurenames = Symbol[
@@ -50,25 +49,25 @@ labelsdf = df[[labelname]]
 
 # Split data into training set (70%) and testing set (30%)
 trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    asb.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,);
+    PredictMD.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,);
 
 # load pre-trained models
 linearreg_filename = "./linearreg.jld2"
 
 # Set up linear regression model
-linearreg = asb.singlelabeldataframelinearregression(
+linearreg = PredictMD.singlelabeldataframelinearregression(
     featurenames,
     labelname;
     package = :GLMjl,
     intercept = true, # optional, defaults to true
     name = "Linear regression", # optional
     )
-asb.load!(linearreg_filename, linearreg)
+PredictMD.load!(linearreg_filename, linearreg)
 
 # Set up random forest regression model
 randomforestreg_filename = "./randomforestreg.jld2"
 
-randomforestreg = asb.singlelabeldataframerandomforestregression(
+randomforestreg = PredictMD.singlelabeldataframerandomforestregression(
     featurenames,
     labelname;
     nsubfeatures = 2, # number of subfeatures; defaults to 2
@@ -76,12 +75,12 @@ randomforestreg = asb.singlelabeldataframerandomforestregression(
     package = :DecisionTreejl,
     name = "Random forest" # optional
     )
-asb.load!(randomforestreg_filename, randomforestreg)
+PredictMD.load!(randomforestreg_filename, randomforestreg)
 
 # Set up epsilon-SVR model
 epsilonsvr_svmreg_filename = "./epsilonsvr_svmreg.jld2"
 
-epsilonsvr_svmreg = asb.singlelabeldataframesvmregression(
+epsilonsvr_svmreg = PredictMD.singlelabeldataframesvmregression(
     featurenames,
     labelname;
     package = :LIBSVMjl,
@@ -90,11 +89,11 @@ epsilonsvr_svmreg = asb.singlelabeldataframesvmregression(
     kernel = LIBSVM.Kernel.Linear,
     verbose = false,
     )
-asb.load!(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
+PredictMD.load!(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
 
 # Set up nu-SVR model
 nusvr_svmreg_filename = "./nusvr_svmreg.jld2"
-nusvr_svmreg = asb.singlelabeldataframesvmregression(
+nusvr_svmreg = PredictMD.singlelabeldataframesvmregression(
     featurenames,
     labelname;
     package = :LIBSVMjl,
@@ -103,7 +102,7 @@ nusvr_svmreg = asb.singlelabeldataframesvmregression(
     kernel = LIBSVM.Kernel.Linear,
     verbose = false,
     )
-asb.load!(nusvr_svmreg_filename, nusvr_svmreg)
+PredictMD.load!(nusvr_svmreg_filename, nusvr_svmreg)
 
 
 # Set up multilayer perceptron model
@@ -169,7 +168,7 @@ knetmlp_maxepochs = 500
 
 knetmlp_modelweights = Any[]
 
-knetmlpreg = asb.singlelabeldataframeknetregression(
+knetmlpreg = PredictMD.singlelabeldataframeknetregression(
     featurenames,
     labelname;
     package = :Knetjl,
@@ -184,10 +183,10 @@ knetmlpreg = asb.singlelabeldataframeknetregression(
     maxepochs = knetmlp_maxepochs,
     printlosseverynepochs = 100, # if 0, will not print at all
     )
-asb.load!(knetmlpreg_filename, knetmlpreg)
+PredictMD.load!(knetmlpreg_filename, knetmlpreg)
 
 # Compare performance of all five models on training set
-showall(asb.singlelabelregressionmetrics(
+showall(PredictMD.singlelabelregressionmetrics(
     [
         linearreg,
         randomforestreg,
@@ -201,7 +200,7 @@ showall(asb.singlelabelregressionmetrics(
     ))
 
 # Compare performance of all models on testing set
-showall(asb.singlelabelregressionmetrics(
+showall(PredictMD.singlelabelregressionmetrics(
     [
         linearreg,
         randomforestreg,

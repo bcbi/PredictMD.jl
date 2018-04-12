@@ -1,7 +1,6 @@
 
 # import required packages
-import AluthgeSinhaBase
-const asb = AluthgeSinhaBase
+import PredictMD
 import CSV
 import DataFrames
 import GZip
@@ -36,7 +35,7 @@ DataFrames.head(df)
 DataFrames.dropmissing!(df)
 
 # Shuffle rows
-asb.shufflerows!(df)
+PredictMD.shufflerows!(df)
 
 # Define labels
 categoricalfeaturenames = Symbol[]
@@ -60,7 +59,7 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 if load_pretrained
 else
-    featurecontrasts = asb.featurecontrasts(df, featurenames)
+    featurecontrasts = PredictMD.featurecontrasts(df, featurenames)
 end
 
 # Define labels
@@ -79,10 +78,10 @@ DataFrames.describe(labelsdf[labelname])
 
 # Split data into training set (70%) and testing set (30%)
 trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    asb.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,);
+    PredictMD.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,);
 
 # Set up linear regression model
-linearreg = asb.singlelabeldataframelinearregression(
+linearreg = PredictMD.singlelabeldataframelinearregression(
     featurenames,
     labelname;
     package = :GLMjl,
@@ -91,37 +90,37 @@ linearreg = asb.singlelabeldataframelinearregression(
     )
 
 if load_pretrained
-    asb.load!(linearreg_filename, linearreg)
+    PredictMD.load!(linearreg_filename, linearreg)
 else
     # set feature contrasts
-    asb.setfeaturecontrasts!(linearreg, featurecontrasts)
+    PredictMD.setfeaturecontrasts!(linearreg, featurecontrasts)
     # Train linear regression model
-    asb.fit!(linearreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(linearreg,trainingfeaturesdf,traininglabelsdf,)
 end
 
 # View coefficients, p values, etc. for underlying linear regression
-asb.getunderlying(linearreg)
+PredictMD.getunderlying(linearreg)
 
 # Plot true values versus predicted values for linear regression on training set
-linearreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
+linearreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     linearreg,
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
     )
-# asb.open(linearreg_plot_training)
+# PredictMD.open(linearreg_plot_training)
 
 # Plot true values versus predicted values for linear regression on testing set
-linearreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
+linearreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     linearreg,
     testingfeaturesdf,
     testinglabelsdf,
     labelname
     )
-# asb.open(linearreg_plot_testing)
+# PredictMD.open(linearreg_plot_testing)
 
 # Evaluate performance of linear regression on training set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     linearreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -129,7 +128,7 @@ asb.singlelabelregressionmetrics(
     )
 
 # Evaluate performance of linear regression on testing set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     linearreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -137,14 +136,14 @@ asb.singlelabelregressionmetrics(
     )
 
 if save_trained
-    asb.save(linearreg_filename, linearreg)
+    PredictMD.save(linearreg_filename, linearreg)
 end
 
-# We can use the asb.predict() function to get the real-valued predictions
+# We can use the PredictMD.predict() function to get the real-valued predictions
 # output by each of regression models.
 
 # Get real-valued predictions from each model for training set
-asb.predict(linearreg,trainingfeaturesdf,)
+PredictMD.predict(linearreg,trainingfeaturesdf,)
 
 # Get real-valued predictions from each model for testing set
-asb.predict(linearreg,testingfeaturesdf,)
+PredictMD.predict(linearreg,testingfeaturesdf,)

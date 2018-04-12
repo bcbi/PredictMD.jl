@@ -21,7 +21,7 @@ elseif have_pdflatex
 else
     warn(string("No LaTeX installation found, figures will not be generated. ",
         "Make sure either pdflatex or lualatex are installed and that ",
-        "the correct paths are set then run Pkg.build(\"AluthgeSinhaBase\")"))
+        "the correct paths are set then run Pkg.build(\"PredictMD\")"))
 end
 
 print(STDERR, "Looking for pdftoppm...")
@@ -29,7 +29,7 @@ have_pdftoppm =  try success(`pdftoppm  -v`); catch; false; end
 println(STDERR, "   ", have_pdftoppm ? OK : X)
 if !have_pdftoppm
     warn(string("Did not find `pdftoppm`, png output will be disabled. Install `pdftoppm` ",
-        "and run Pkg.build(\"AluthgeSinhaBase\") to enable"))
+        "and run Pkg.build(\"PredictMD\") to enable"))
 end
 
 print(STDERR, "Looking for pdf2svg...")
@@ -39,7 +39,7 @@ have_pdf2svg = try success(`pdf2svg $pdfpath $svgpath`); catch; false; end
 println(STDERR, "    ", have_pdf2svg ? OK : X)
 if !have_pdf2svg
     warn(string("Did not find `pdf2svg`, svg output will be disabled. Install `pdf2svg` ",
-        "and run Pkg.build(\"AluthgeSinhaBase\") to enable"))
+        "and run Pkg.build(\"PredictMD\") to enable"))
 end
 
 if !have_pdf2svg && !have_pdftoppm

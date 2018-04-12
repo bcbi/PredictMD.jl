@@ -1,7 +1,6 @@
 
 # import required packages
-import AluthgeSinhaBase
-const asb = AluthgeSinhaBase
+import PredictMD
 import CSV
 import DataFrames
 import GZip
@@ -32,7 +31,7 @@ DataFrames.head(df)
 DataFrames.dropmissing!(df)
 
 # Shuffle rows
-asb.shufflerows!(df)
+PredictMD.shufflerows!(df)
 
 # Define labels
 categoricalfeaturenames = Symbol[]
@@ -56,7 +55,7 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 if load_pretrained
 else
-    featurecontrasts = asb.featurecontrasts(df, featurenames)
+    featurecontrasts = PredictMD.featurecontrasts(df, featurenames)
 end
 
 # Define labels
@@ -75,10 +74,10 @@ DataFrames.describe(labelsdf[labelname])
 
 # Split data into training set (70%) and testing set (30%)
 trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    asb.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,);
+    PredictMD.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,);
 
 # Set up random forest regression model
-randomforestreg = asb.singlelabeldataframerandomforestregression(
+randomforestreg = PredictMD.singlelabeldataframerandomforestregression(
     featurenames,
     labelname;
     nsubfeatures = 2, # number of subfeatures; defaults to 2
@@ -88,16 +87,16 @@ randomforestreg = asb.singlelabeldataframerandomforestregression(
     )
 
 if load_pretrained
-    asb.load!(randomforestreg_filename, randomforestreg)
+    PredictMD.load!(randomforestreg_filename, randomforestreg)
 else
     # set feature contrasts
-    asb.setfeaturecontrasts!(randomforestreg, featurecontrasts)
+    PredictMD.setfeaturecontrasts!(randomforestreg, featurecontrasts)
     # Train random forest model on training set
-    asb.fit!(randomforestreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(randomforestreg,trainingfeaturesdf,traininglabelsdf,)
 end
 
 # Plot true values versus predicted values for random forest on training set
-randomforestreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
+randomforestreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     randomforestreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -105,7 +104,7 @@ randomforestreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted
     )
 
 # Plot true values versus predicted values for random forest on testing set
-randomforestreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
+randomforestreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     randomforestreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -113,7 +112,7 @@ randomforestreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
     )
 
 # Evaluate performance of random forest on training set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     randomforestreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -121,7 +120,7 @@ asb.singlelabelregressionmetrics(
     )
 
 # Evaluate performance of random forest on testing set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     randomforestreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -129,16 +128,16 @@ asb.singlelabelregressionmetrics(
     )
 
 if save_trained
-    asb.save(randomforestreg_filename, randomforestreg)
+    PredictMD.save(randomforestreg_filename, randomforestreg)
 end
 
-# We can use the asb.predict() function to get the real-valued predictions
+# We can use the PredictMD.predict() function to get the real-valued predictions
 # output by each of regression models.
 
 # Get real-valued predictions from each model for training set
-asb.predict(randomforestreg,trainingfeaturesdf)
+PredictMD.predict(randomforestreg,trainingfeaturesdf)
 
 # Get real-valued predictions from each model for testing set
-asb.predict(randomforestreg,testingfeaturesdf)
+PredictMD.predict(randomforestreg,testingfeaturesdf)
 
 

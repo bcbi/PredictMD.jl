@@ -1,7 +1,6 @@
 
 # import required packages
-import AluthgeSinhaBase
-const asb = AluthgeSinhaBase
+import PredictMD
 import CSV
 import DataFrames
 import GZip
@@ -33,7 +32,7 @@ DataFrames.head(df)
 DataFrames.dropmissing!(df)
 
 # Shuffle rows
-asb.shufflerows!(df)
+PredictMD.shufflerows!(df)
 
 # Define labels
 categoricalfeaturenames = Symbol[]
@@ -57,7 +56,7 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 if load_pretrained == "true"
 else
-    featurecontrasts = asb.featurecontrasts(df, featurenames)
+    featurecontrasts = PredictMD.featurecontrasts(df, featurenames)
 end
 
 # Define labels
@@ -76,7 +75,7 @@ DataFrames.describe(labelsdf[labelname])
 
 # Split data into training set (70%) and testing set (30%)
 trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    asb.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,);
+    PredictMD.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,);
 
 # Define predict function
 function knetmlp_predict(
@@ -161,7 +160,7 @@ knetmlp_minibatchsize = 48
 knetmlp_maxepochs = 500
 
 # Set up multilayer perceptron model
-knetmlpreg = asb.singlelabeldataframeknetregression(
+knetmlpreg = PredictMD.singlelabeldataframeknetregression(
     featurenames,
     labelname;
     package = :Knetjl,
@@ -178,22 +177,22 @@ knetmlpreg = asb.singlelabeldataframeknetregression(
     )
 
 if load_pretrained == "true"
-    asb.load!(knetmlpreg_filename, knetmlpreg)
+    PredictMD.load!(knetmlpreg_filename, knetmlpreg)
 else
     # set feature contrasts
-    asb.setfeaturecontrasts!(knetmlpreg, featurecontrasts)
+    PredictMD.setfeaturecontrasts!(knetmlpreg, featurecontrasts)
     # Train multilayer perceptron model on training set
-    asb.fit!(knetmlpreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(knetmlpreg,trainingfeaturesdf,traininglabelsdf,)
 end
 
 # Plot learning curve: loss vs. epoch
-knet_learningcurve_lossvsepoch = asb.plotlearningcurve(
+knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
     knetmlpreg,
     :lossvsepoch;
     )
 
 # Plot learning curve: loss vs. epoch, skip the first 10 epochs
-knet_learningcurve_lossvsepoch_skip10epochs = asb.plotlearningcurve(
+knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
     knetmlpreg,
     :lossvsepoch;
     startat = 10,
@@ -201,7 +200,7 @@ knet_learningcurve_lossvsepoch_skip10epochs = asb.plotlearningcurve(
     )
 
 # Plot learning curve: loss vs. iteration
-knet_learningcurve_lossvsiteration = asb.plotlearningcurve(
+knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
     knetmlpreg,
     :lossvsiteration;
     window = 50,
@@ -209,7 +208,7 @@ knet_learningcurve_lossvsiteration = asb.plotlearningcurve(
     )
 
 # Plot learning curve: loss vs. iteration, skip the first 100 iterations
-knet_learningcurve_lossvsiteration_skip100iterations = asb.plotlearningcurve(
+knet_learningcurve_lossvsiteration_skip100iterations = PredictMD.plotlearningcurve(
     knetmlpreg,
     :lossvsiteration;
     window = 50,
@@ -219,7 +218,7 @@ knet_learningcurve_lossvsiteration_skip100iterations = asb.plotlearningcurve(
     )
 
 # Plot true values versus predicted values for multilayer perceptron on training set
-knetmlpreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
+knetmlpreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     knetmlpreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -227,7 +226,7 @@ knetmlpreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
     )
 
 # Plot true values versus predicted values for multilayer perceptron on testing set
-knetmlpreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
+knetmlpreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     knetmlpreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -235,7 +234,7 @@ knetmlpreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
     )
 
 # Evaluate performance of multilayer perceptron on training set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     knetmlpreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -243,7 +242,7 @@ asb.singlelabelregressionmetrics(
     )
 
 # Evaluate performance of multilayer perceptron on testing set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     knetmlpreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -251,14 +250,14 @@ asb.singlelabelregressionmetrics(
     )
 
 if save_trained
-    asb.save(knetmlpreg_filename, knetmlpreg)
+    PredictMD.save(knetmlpreg_filename, knetmlpreg)
 end
 
-# We can use the asb.predict() function to get the real-valued predictions
+# We can use the PredictMD.predict() function to get the real-valued predictions
 # output by each of regression models.
 
 # Get real-valued predictions from each model for training set
-asb.predict(knetmlpreg,trainingfeaturesdf)
+PredictMD.predict(knetmlpreg,trainingfeaturesdf)
 
 # Get real-valued predictions from each model for testing set
-asb.predict(knetmlpreg,testingfeaturesdf)
+PredictMD.predict(knetmlpreg,testingfeaturesdf)
