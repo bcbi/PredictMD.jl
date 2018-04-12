@@ -115,7 +115,7 @@ If you receive an error (e.g. "command not found"), download and install pdf2svg
 Pkg.update();Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git");Pkg.checkout("AluthgeSinhaBase", "master");Pkg.test("AluthgeSinhaBase");
 ```
 
-You will need to wait several minutes while all of the required packages are installed and all of the tests are run.
+You will need to wait several minutes while all of the required packages are installed and all of the tests are run. Please keep an eye on Julia - you may be asked several times to enter the location and passphrase of your SSH private key.
 
 If you receive the message "INFO: AluthgeSinhaBase tests passed", then you have successfully installed AluthgeSinhaBase. If the tests do not pass or if you see an error message, then do the following:
 1. Close your Julia session (e.g. type ```quit()``` and press enter).
