@@ -9,8 +9,8 @@
     </thead>
     <tbody>
         <tr>
-            <td><a href="https://travis-ci.com/bcbi/PredictMD.jl/branches"><img alt="Build Status (master)" title="Build Status (master)" src="https://travis-ci.com/bcbi/PredictMD.jl.svg?token=dMqeEKHqcnWSXz982pdf&branch=master"></a></td>
-            <td><a href="https://travis-ci.com/bcbi/PredictMD.jl/branches"><img alt="Build Status (develop)" title="Build Status (develop)" src="https://travis-ci.com/bcbi/PredictMD.jl.svg?token=dMqeEKHqcnWSXz982pdf&branch=develop"></a></td>
+            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Build Status (master)" title="Build Status (master)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master"></a></td>
+            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Build Status (develop)" title="Build Status (develop)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=develop"></a></td>
         </tr>
     </tbody>
 </table>
