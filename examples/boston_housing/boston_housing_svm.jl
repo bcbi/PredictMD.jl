@@ -1,7 +1,6 @@
 
 # import required packages
-import AluthgeSinhaBase
-const asb = AluthgeSinhaBase
+import PredictMD
 import CSV
 import DataFrames
 import GZip
@@ -35,7 +34,7 @@ DataFrames.head(df)
 DataFrames.dropmissing!(df)
 
 # Shuffle rows
-asb.shufflerows!(df)
+PredictMD.shufflerows!(df)
 
 # Define labels
 categoricalfeaturenames = Symbol[]
@@ -59,7 +58,7 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 if load_pretrained
 else
-    featurecontrasts = asb.featurecontrasts(df, featurenames)
+    featurecontrasts = PredictMD.featurecontrasts(df, featurenames)
 end
 
 # Define labels
@@ -78,10 +77,10 @@ DataFrames.describe(labelsdf[labelname])
 
 # Split data into training set (70%) and testing set (30%)
 trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    asb.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,);
+    PredictMD.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,);
 
 # Set up epsilon-SVR model
-epsilonsvr_svmreg = asb.singlelabeldataframesvmregression(
+epsilonsvr_svmreg = PredictMD.singlelabeldataframesvmregression(
     featurenames,
     labelname;
     package = :LIBSVMjl,
@@ -92,16 +91,16 @@ epsilonsvr_svmreg = asb.singlelabeldataframesvmregression(
     )
 
 if load_pretrained
-    asb.load!(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
+    PredictMD.load!(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
 else
     # set feature contrasts
-    asb.setfeaturecontrasts!(epsilonsvr_svmreg, featurecontrasts)
+    PredictMD.setfeaturecontrasts!(epsilonsvr_svmreg, featurecontrasts)
     # Train epsilon-SVR model on training set
-    asb.fit!(epsilonsvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(epsilonsvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
 
 # Plot true values versus predicted values for epsilon-SVR on training set
-epsilonsvr_svmreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
+epsilonsvr_svmreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     epsilonsvr_svmreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -109,7 +108,7 @@ epsilonsvr_svmreg_plot_training = asb.plotsinglelabelregressiontrueversuspredict
     )
 
 # Plot true values versus predicted values for epsilon-SVR on testing set
-epsilonsvr_svmreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
+epsilonsvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     epsilonsvr_svmreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -117,7 +116,7 @@ epsilonsvr_svmreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicte
     )
 
 # Evaluate performance of epsilon-SVR on training set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     epsilonsvr_svmreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -125,7 +124,7 @@ asb.singlelabelregressionmetrics(
     )
 
 # Evaluate performance of epsilon-SVR on testing set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     epsilonsvr_svmreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -133,7 +132,7 @@ asb.singlelabelregressionmetrics(
     )
 
 # Set up nu-SVR model
-nusvr_svmreg = asb.singlelabeldataframesvmregression(
+nusvr_svmreg = PredictMD.singlelabeldataframesvmregression(
     featurenames,
     labelname;
     package = :LIBSVMjl,
@@ -144,16 +143,16 @@ nusvr_svmreg = asb.singlelabeldataframesvmregression(
     )
 
 if load_pretrained
-    asb.load!(nusvr_svmreg_filename, nusvr_svmreg)
+    PredictMD.load!(nusvr_svmreg_filename, nusvr_svmreg)
 else
     # set feature contrasts
-    asb.setfeaturecontrasts!(nusvr_svmreg, featurecontrasts)
+    PredictMD.setfeaturecontrasts!(nusvr_svmreg, featurecontrasts)
     # Train nu-SVR model
-    asb.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
 
 # Plot true values versus predicted values for nu-SVR on training set
-nusvr_svmreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
+nusvr_svmreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     nusvr_svmreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -161,7 +160,7 @@ nusvr_svmreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
     )
 
 # Plot true values versus predicted values for nu-SVR on testing set
-nusvr_svmreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
+nusvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     nusvr_svmreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -169,7 +168,7 @@ nusvr_svmreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
     )
 
 # Evaluate performance of nu-SVR on training set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     nusvr_svmreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -177,7 +176,7 @@ asb.singlelabelregressionmetrics(
     )
 
 # Evaluate performance of nu-SVR on testing set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     nusvr_svmreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -185,17 +184,17 @@ asb.singlelabelregressionmetrics(
     )
 
 if save_trained
-    asb.save(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
-    asb.save(nusvr_svmreg_filename, nusvr_svmreg)
+    PredictMD.save(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
+    PredictMD.save(nusvr_svmreg_filename, nusvr_svmreg)
 end
 
-# We can use the asb.predict() function to get the real-valued predictions
+# We can use the PredictMD.predict() function to get the real-valued predictions
 # output by each of regression models.
 
 # Get real-valued predictions from each model for training set
-asb.predict(epsilonsvr_svmreg,trainingfeaturesdf)
-asb.predict(nusvr_svmreg,trainingfeaturesdf)
+PredictMD.predict(epsilonsvr_svmreg,trainingfeaturesdf)
+PredictMD.predict(nusvr_svmreg,trainingfeaturesdf)
 
 # Get real-valued predictions from each model for testing set
-asb.predict(epsilonsvr_svmreg,testingfeaturesdf)
-asb.predict(nusvr_svmreg,testingfeaturesdf)
+PredictMD.predict(epsilonsvr_svmreg,testingfeaturesdf)
+PredictMD.predict(nusvr_svmreg,testingfeaturesdf)

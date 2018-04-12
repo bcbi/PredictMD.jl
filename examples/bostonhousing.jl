@@ -43,8 +43,7 @@ knetmlpreg_filename = "/Users/dilum/Desktop/knetmlpreg.jld2"
 ##############################################################################
 
 # import required packages
-import AluthgeSinhaBase
-const asb = AluthgeSinhaBase
+import PredictMD
 import CSV
 import DataFrames
 import GZip
@@ -72,7 +71,7 @@ df = CSV.read(
 DataFrames.dropmissing!(df)
 
 # Shuffle rows
-asb.shufflerows!(df)
+PredictMD.shufflerows!(df)
 
 # Define labels
 categoricalfeaturenames = Symbol[]
@@ -95,7 +94,7 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
 else
-    featurecontrasts = asb.featurecontrasts(df, featurenames)
+    featurecontrasts = PredictMD.featurecontrasts(df, featurenames)
 end
 
 # Define labels
@@ -110,7 +109,7 @@ DataFrames.describe(labelsdf[labelname])
 
 # Split data into training set (70%) and testing set (30%)
 trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    asb.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,)
+    PredictMD.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,)
 
 ##############################################################################
 ##############################################################################
@@ -123,7 +122,7 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 ##############################################################################
 
 # Set up linear regression model
-linearreg = asb.singlelabeldataframelinearregression(
+linearreg = PredictMD.singlelabeldataframelinearregression(
     featurenames,
     labelname;
     package = :GLMjl,
@@ -132,37 +131,37 @@ linearreg = asb.singlelabeldataframelinearregression(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    asb.load!(linearreg_filename, linearreg)
+    PredictMD.load!(linearreg_filename, linearreg)
 else
     # set feature contrasts
-    asb.setfeaturecontrasts!(linearreg, featurecontrasts)
+    PredictMD.setfeaturecontrasts!(linearreg, featurecontrasts)
     # Train linear regression model
-    asb.fit!(linearreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(linearreg,trainingfeaturesdf,traininglabelsdf,)
 end
 
 # View coefficients, p values, etc. for underlying linear regression
-asb.getunderlying(linearreg)
+PredictMD.getunderlying(linearreg)
 
 # Plot true values versus predicted values for linear regression on training set
-linearreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
+linearreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     linearreg,
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
     )
-asb.open(linearreg_plot_training)
+PredictMD.open(linearreg_plot_training)
 
 # Plot true values versus predicted values for linear regression on testing set
-linearreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
+linearreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     linearreg,
     testingfeaturesdf,
     testinglabelsdf,
     labelname
     )
-asb.open(linearreg_plot_testing)
+PredictMD.open(linearreg_plot_testing)
 
 # Evaluate performance of linear regression on training set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     linearreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -170,7 +169,7 @@ asb.singlelabelregressionmetrics(
     )
 
 # Evaluate performance of linear regression on testing set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     linearreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -182,7 +181,7 @@ asb.singlelabelregressionmetrics(
 ##############################################################################
 
 # Set up random forest regression model
-randomforestreg = asb.singlelabeldataframerandomforestregression(
+randomforestreg = PredictMD.singlelabeldataframerandomforestregression(
     featurenames,
     labelname;
     nsubfeatures = 2, # number of subfeatures; defaults to 2
@@ -192,34 +191,34 @@ randomforestreg = asb.singlelabeldataframerandomforestregression(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    asb.load!(randomforestreg_filename, randomforestreg)
+    PredictMD.load!(randomforestreg_filename, randomforestreg)
 else
     # set feature contrasts
-    asb.setfeaturecontrasts!(randomforestreg, featurecontrasts)
+    PredictMD.setfeaturecontrasts!(randomforestreg, featurecontrasts)
     # Train random forest model on training set
-    asb.fit!(randomforestreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(randomforestreg,trainingfeaturesdf,traininglabelsdf,)
 end
 
 # Plot true values versus predicted values for random forest on training set
-randomforestreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
+randomforestreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     randomforestreg,
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
     )
-asb.open(randomforestreg_plot_training)
+PredictMD.open(randomforestreg_plot_training)
 
 # Plot true values versus predicted values for random forest on testing set
-randomforestreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
+randomforestreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     randomforestreg,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
     )
-asb.open(randomforestreg_plot_testing)
+PredictMD.open(randomforestreg_plot_testing)
 
 # Evaluate performance of random forest on training set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     randomforestreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -227,7 +226,7 @@ asb.singlelabelregressionmetrics(
     )
 
 # Evaluate performance of random forest on testing set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     randomforestreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -239,7 +238,7 @@ asb.singlelabelregressionmetrics(
 ##############################################################################
 
 # Set up epsilon-SVR model
-epsilonsvr_svmreg = asb.singlelabeldataframesvmregression(
+epsilonsvr_svmreg = PredictMD.singlelabeldataframesvmregression(
     featurenames,
     labelname;
     package = :LIBSVMjl,
@@ -250,34 +249,34 @@ epsilonsvr_svmreg = asb.singlelabeldataframesvmregression(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    asb.load!(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
+    PredictMD.load!(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
 else
     # set feature contrasts
-    asb.setfeaturecontrasts!(epsilonsvr_svmreg, featurecontrasts)
+    PredictMD.setfeaturecontrasts!(epsilonsvr_svmreg, featurecontrasts)
     # Train epsilon-SVR model on training set
-    asb.fit!(epsilonsvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(epsilonsvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
 
 # Plot true values versus predicted values for epsilon-SVR on training set
-epsilonsvr_svmreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
+epsilonsvr_svmreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     epsilonsvr_svmreg,
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
     )
-asb.open(epsilonsvr_svmreg_plot_training)
+PredictMD.open(epsilonsvr_svmreg_plot_training)
 
 # Plot true values versus predicted values for epsilon-SVR on testing set
-epsilonsvr_svmreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
+epsilonsvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     epsilonsvr_svmreg,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
     )
-asb.open(epsilonsvr_svmreg_plot_testing)
+PredictMD.open(epsilonsvr_svmreg_plot_testing)
 
 # Evaluate performance of epsilon-SVR on training set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     epsilonsvr_svmreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -285,7 +284,7 @@ asb.singlelabelregressionmetrics(
     )
 
 # Evaluate performance of epsilon-SVR on testing set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     epsilonsvr_svmreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -297,7 +296,7 @@ asb.singlelabelregressionmetrics(
 ##############################################################################
 
 # Set up nu-SVR model
-nusvr_svmreg = asb.singlelabeldataframesvmregression(
+nusvr_svmreg = PredictMD.singlelabeldataframesvmregression(
     featurenames,
     labelname;
     package = :LIBSVMjl,
@@ -308,34 +307,34 @@ nusvr_svmreg = asb.singlelabeldataframesvmregression(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    asb.load!(nusvr_svmreg_filename, nusvr_svmreg)
+    PredictMD.load!(nusvr_svmreg_filename, nusvr_svmreg)
 else
     # set feature contrasts
-    asb.setfeaturecontrasts!(nusvr_svmreg, featurecontrasts)
+    PredictMD.setfeaturecontrasts!(nusvr_svmreg, featurecontrasts)
     # Train nu-SVR model
-    asb.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
 
 # Plot true values versus predicted values for nu-SVR on training set
-nusvr_svmreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
+nusvr_svmreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     nusvr_svmreg,
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
     )
-asb.open(nusvr_svmreg_plot_training)
+PredictMD.open(nusvr_svmreg_plot_training)
 
 # Plot true values versus predicted values for nu-SVR on testing set
-nusvr_svmreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
+nusvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     nusvr_svmreg,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
     )
-asb.open(nusvr_svmreg_plot_testing)
+PredictMD.open(nusvr_svmreg_plot_testing)
 
 # Evaluate performance of nu-SVR on training set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     nusvr_svmreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -343,7 +342,7 @@ asb.singlelabelregressionmetrics(
     )
 
 # Evaluate performance of nu-SVR on testing set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     nusvr_svmreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -437,7 +436,7 @@ knetmlp_minibatchsize = 48
 knetmlp_maxepochs = 500
 
 # Set up multilayer perceptron model
-knetmlpreg = asb.singlelabeldataframeknetregression(
+knetmlpreg = PredictMD.singlelabeldataframeknetregression(
     featurenames,
     labelname;
     package = :Knetjl,
@@ -454,41 +453,41 @@ knetmlpreg = asb.singlelabeldataframeknetregression(
     )
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    asb.load!(knetmlpreg_filename, knetmlpreg)
+    PredictMD.load!(knetmlpreg_filename, knetmlpreg)
 else
     # set feature contrasts
-    asb.setfeaturecontrasts!(knetmlpreg, featurecontrasts)
+    PredictMD.setfeaturecontrasts!(knetmlpreg, featurecontrasts)
     # Train multilayer perceptron model on training set
-    asb.fit!(knetmlpreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(knetmlpreg,trainingfeaturesdf,traininglabelsdf,)
 end
 
 # Plot learning curve: loss vs. epoch
-knet_learningcurve_lossvsepoch = asb.plotlearningcurve(
+knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
     knetmlpreg,
     :lossvsepoch;
     )
-asb.open(knet_learningcurve_lossvsepoch)
+PredictMD.open(knet_learningcurve_lossvsepoch)
 
 # Plot learning curve: loss vs. epoch, skip the first 10 epochs
-knet_learningcurve_lossvsepoch_skip10epochs = asb.plotlearningcurve(
+knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
     knetmlpreg,
     :lossvsepoch;
     startat = 10,
     endat = :end,
     )
-asb.open(knet_learningcurve_lossvsepoch_skip10epochs)
+PredictMD.open(knet_learningcurve_lossvsepoch_skip10epochs)
 
 # Plot learning curve: loss vs. iteration
-knet_learningcurve_lossvsiteration = asb.plotlearningcurve(
+knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
     knetmlpreg,
     :lossvsiteration;
     window = 50,
     sampleevery = 10,
     )
-asb.open(knet_learningcurve_lossvsiteration)
+PredictMD.open(knet_learningcurve_lossvsiteration)
 
 # Plot learning curve: loss vs. iteration, skip the first 100 iterations
-knet_learningcurve_lossvsiteration_skip100iterations = asb.plotlearningcurve(
+knet_learningcurve_lossvsiteration_skip100iterations = PredictMD.plotlearningcurve(
     knetmlpreg,
     :lossvsiteration;
     window = 50,
@@ -496,28 +495,28 @@ knet_learningcurve_lossvsiteration_skip100iterations = asb.plotlearningcurve(
     startat = 100,
     endat = :end,
     )
-asb.open(knet_learningcurve_lossvsiteration_skip100iterations)
+PredictMD.open(knet_learningcurve_lossvsiteration_skip100iterations)
 
 # Plot true values versus predicted values for multilayer perceptron on training set
-knetmlpreg_plot_training = asb.plotsinglelabelregressiontrueversuspredicted(
+knetmlpreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     knetmlpreg,
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
     )
-asb.open(knetmlpreg_plot_training)
+PredictMD.open(knetmlpreg_plot_training)
 
 # Plot true values versus predicted values for multilayer perceptron on testing set
-knetmlpreg_plot_testing = asb.plotsinglelabelregressiontrueversuspredicted(
+knetmlpreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     knetmlpreg,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
     )
-asb.open(knetmlpreg_plot_testing)
+PredictMD.open(knetmlpreg_plot_testing)
 
 # Evaluate performance of multilayer perceptron on training set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     knetmlpreg,
     trainingfeaturesdf,
     traininglabelsdf,
@@ -525,7 +524,7 @@ asb.singlelabelregressionmetrics(
     )
 
 # Evaluate performance of multilayer perceptron on testing set
-asb.singlelabelregressionmetrics(
+PredictMD.singlelabelregressionmetrics(
     knetmlpreg,
     testingfeaturesdf,
     testinglabelsdf,
@@ -539,7 +538,7 @@ asb.singlelabelregressionmetrics(
 ##############################################################################
 
 # Compare performance of all five models on training set
-showall(asb.singlelabelregressionmetrics(
+showall(PredictMD.singlelabelregressionmetrics(
     [
         linearreg,
         randomforestreg,
@@ -553,7 +552,7 @@ showall(asb.singlelabelregressionmetrics(
     ))
 
 # Compare performance of all models on testing set
-showall(asb.singlelabelregressionmetrics(
+showall(PredictMD.singlelabelregressionmetrics(
     [
         linearreg,
         randomforestreg,
@@ -573,11 +572,11 @@ showall(asb.singlelabelregressionmetrics(
 ##############################################################################
 
 if get(ENV, "SAVETRAINEDMODELSTOFILE", "") == "true"
-    asb.save(linearreg_filename, linearreg)
-    asb.save(randomforestreg_filename, randomforestreg)
-    asb.save(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
-    asb.save(nusvr_svmreg_filename, nusvr_svmreg)
-    asb.save(knetmlpreg_filename, knetmlpreg)
+    PredictMD.save(linearreg_filename, linearreg)
+    PredictMD.save(randomforestreg_filename, randomforestreg)
+    PredictMD.save(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
+    PredictMD.save(nusvr_svmreg_filename, nusvr_svmreg)
+    PredictMD.save(knetmlpreg_filename, knetmlpreg)
 end
 
 ##############################################################################
@@ -586,19 +585,19 @@ end
 ##############################################################################
 ##############################################################################
 
-# We can use the asb.predict() function to get the real-valued predictions
+# We can use the PredictMD.predict() function to get the real-valued predictions
 # output by each of regression models.
 
 # Get real-valued predictions from each model for training set
-asb.predict(linearreg,trainingfeaturesdf,)
-asb.predict(randomforestreg,trainingfeaturesdf,)
-asb.predict(epsilonsvr_svmreg,trainingfeaturesdf,)
-asb.predict(nusvr_svmreg,trainingfeaturesdf,)
-asb.predict(knetmlpreg,trainingfeaturesdf,)
+PredictMD.predict(linearreg,trainingfeaturesdf,)
+PredictMD.predict(randomforestreg,trainingfeaturesdf,)
+PredictMD.predict(epsilonsvr_svmreg,trainingfeaturesdf,)
+PredictMD.predict(nusvr_svmreg,trainingfeaturesdf,)
+PredictMD.predict(knetmlpreg,trainingfeaturesdf,)
 
 # Get real-valued predictions from each model for testing set
-asb.predict(linearreg,testingfeaturesdf,)
-asb.predict(randomforestreg,testingfeaturesdf,)
-asb.predict(epsilonsvr_svmreg,testingfeaturesdf,)
-asb.predict(nusvr_svmreg,testingfeaturesdf,)
-asb.predict(knetmlpreg,testingfeaturesdf,)
+PredictMD.predict(linearreg,testingfeaturesdf,)
+PredictMD.predict(randomforestreg,testingfeaturesdf,)
+PredictMD.predict(epsilonsvr_svmreg,testingfeaturesdf,)
+PredictMD.predict(nusvr_svmreg,testingfeaturesdf,)
+PredictMD.predict(knetmlpreg,testingfeaturesdf,)

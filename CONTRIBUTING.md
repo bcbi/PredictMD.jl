@@ -1,6 +1,6 @@
-# Contributing to AluthgeSinhaBase
+# Contributing to PredictMD
 
-This document provides information on contributing to the AluthgeSinhaBase source code. For information on installing and using AluthgeSinhaBase, please see [README.md](README.md).
+This document provides information on contributing to the PredictMD source code. For information on installing and using PredictMD, please see [README.md](README.md).
 
 <table>
     <thead>
@@ -13,7 +13,7 @@ This document provides information on contributing to the AluthgeSinhaBase sourc
             <td align="left"><a href="#1-prerequisites">1. Prerequisites</a></td>
         </tr>
         <tr>
-            <td align="left"><a href="#2-setting-up-the-aluthgesinhabase-repo">2. Setting up the AluthgeSinhaBase repo</a></td>
+            <td align="left"><a href="#2-setting-up-the-aluthgesinhabase-repo">2. Setting up the PredictMD repo</a></td>
         </tr>
                 <tr>
             <td align="left"><a href="#3-working-with-examples">3. Working with examples</a></td>
@@ -139,16 +139,16 @@ If you do, then go to Step 2. If you instead see an error, download and install 
 4. [https://help.github.com/articles/telling-git-about-your-gpg-key/](https://help.github.com/articles/telling-git-about-your-gpg-key/)
 5. [https://help.github.com/articles/associating-an-email-with-your-gpg-key/](https://help.github.com/articles/associating-an-email-with-your-gpg-key/)
 
-## 2. Setting up the AluthgeSinhaBase repo
+## 2. Setting up the PredictMD repo
 
 **Step 1:** Make sure that you have followed all of the instructions in [Section 1 (Prerequisites)](#1-prerequisites).
 
-**Step 2:** Follow the installation instructions in [README.md](README.md) to install AluthgeSinhaBase.
+**Step 2:** Follow the installation instructions in [README.md](README.md) to install PredictMD.
 
-**Step 3:** Open a terminal window and `cd` to the directory containing the AluthgeSinhaBase source code:
+**Step 3:** Open a terminal window and `cd` to the directory containing the PredictMD source code:
 
 ```bash
-cd ~/.julia/v0.6/AluthgeSinhaBase
+cd ~/.julia/v0.6/PredictMD
 ```
 
 **Step 4:** Run the following line:
