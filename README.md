@@ -112,10 +112,9 @@ If you receive an error (e.g. "command not found"), download and install pdf2svg
 
 **Step 3:** Paste the following line into Julia and press enter:
 ```julia
-Pkg.update();Pkg.clone("git@github.com:bcbi/PredictMD.jl.git");Pkg.checkout("PredictMD", "master");Pkg.test("PredictMD");
+Pkg.update();Pkg.clone("https://github.com/bcbi/PredictMD.jl.git");Pkg.checkout("PredictMD", "master");Pkg.test("PredictMD");
 ```
-
-You will need to wait several minutes while all of the required packages are installed and all of the tests are run. Please keep an eye on Julia - you may be asked several times to enter the location and passphrase of your SSH private key.
+You will need to wait several minutes while all of the required packages are installed and all of the tests are run.
 
 If you receive the message "INFO: PredictMD tests passed", then you have successfully installed PredictMD. If the tests do not pass or if you see an error message, then do the following:
 1. Close your Julia session (e.g. type ```quit()``` and press enter).

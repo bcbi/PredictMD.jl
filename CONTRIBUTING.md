@@ -154,8 +154,9 @@ cd ~/.julia/v0.6/PredictMD
 **Step 4:** Run the following line:
 
 ```bash
-git config commit.gpgsign true && git checkout master && git checkout develop && git flow init -fd && git checkout develop 
+git config commit.gpgsign true && git remote set-url origin https://github.com/bcbi/PredictMD.jl.git && git remote set-url --push origin git@github.com:bcbi/PredictMD.jl.git && git checkout master && git checkout develop && git flow init -fd && git checkout develop && git fetch --all --prune
 ```
+
 ## 3. Working with examples
 
 Some of the examples are provided as Jupyter notebooks as a convinient way to visualize and interact with the code. However, we also like to mantain corresponding plain Julia scripts that are in-sync with the notebooks. A convinient way to do so, is to add a post-save hook to your Jupyter configuration file.
