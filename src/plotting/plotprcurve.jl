@@ -3,7 +3,7 @@ import PGFPlots
 import PGFPlotsX
 
 function plotprcurve(
-        estimator::AbstractObject,
+        estimator::Fittable,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
@@ -21,7 +21,7 @@ function plotprcurve(
 end
 
 function plotprcurve(
-        vectorofestimators::AbstractObjectVector,
+        vectorofestimators::FittableVector,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,

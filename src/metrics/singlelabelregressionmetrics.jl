@@ -25,7 +25,7 @@ function singlelabelregressionypred(
 end
 
 function _singlelabelregressionmetrics(
-        estimator::AbstractObject,
+        estimator::Fittable,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
@@ -46,7 +46,7 @@ function _singlelabelregressionmetrics(
 end
 
 function singlelabelregressionmetrics(
-        estimator::AbstractObject,
+        estimator::Fittable,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
@@ -62,7 +62,7 @@ function singlelabelregressionmetrics(
 end
 
 function singlelabelregressionmetrics(
-        vectorofestimators::AbstractObjectVector,
+        vectorofestimators::FittableVector,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol;

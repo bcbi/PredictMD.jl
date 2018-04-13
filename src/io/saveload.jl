@@ -2,7 +2,7 @@ import FileIO
 import JLD2
 import ProgressMeter
 
-function save(filename::AbstractString, x::AbstractObject)
+function save(filename::AbstractString, x::Fittable)
     # make sure that the filename ends in ".jld2"
     if splitext(filename)[2] !== ".jld2"
         error("filename must end in \".jld2\"")
@@ -34,7 +34,7 @@ function save(filename::AbstractString, x::AbstractObject)
     return nothing
 end
 
-function load!(filename::AbstractString, x::AbstractObject)
+function load!(filename::AbstractString, x::Fittable)
     # make sure that the filename ends in ".jld2"
     if splitext(filename)[2] !== ".jld2"
         error("filename must end in \".jld2\"")
@@ -49,10 +49,10 @@ function load!(filename::AbstractString, x::AbstractObject)
     # get the value history objects
     allhistory = alldatasets["allhistory"]
 
-    # go through the AbstractObject and set all underlying objects
+    # go through the Fittable and set all underlying objects
     set_underlying!(x,allunderlying;loading=true,)
 
-    # go through the AbstractObject and set all value history objects
+    # go through the Fittable and set all value history objects
     sethistory!(x,allhistory;loading=true,)
 
     # print info message

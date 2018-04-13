@@ -5,7 +5,7 @@ import StatsBase
 import ValueHistories
 
 function plotlearningcurve(
-        inputobject::AbstractObject,
+        inputobject::Fittable,
         curvetype::Symbol = :lossvsiteration;
         window::Integer = 0,
         legendPos::AbstractString = "north east",

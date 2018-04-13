@@ -101,7 +101,7 @@ function _singlelabelbinaryclassclassificationmetrics_tunableparam(
 end
 
 function _singlelabelbinaryclassclassificationmetrics(
-        estimator::AbstractObject,
+        estimator::Fittable,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
@@ -185,7 +185,7 @@ function _singlelabelbinaryclassclassificationmetrics(
 end
 
 function singlelabelbinaryclassclassificationmetrics(
-        estimator::AbstractObject,
+        estimator::Fittable,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
@@ -205,7 +205,7 @@ function singlelabelbinaryclassclassificationmetrics(
 end
 
 function singlelabelbinaryclassclassificationmetrics(
-        vectorofestimators::AbstractObjectVector,
+        vectorofestimators::FittableVector,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,

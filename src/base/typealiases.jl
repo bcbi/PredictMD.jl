@@ -17,3 +17,4 @@ const StringMatrix = AbstractMatrix{T} where T <: AbstractString
 const SymbolArray = AbstractArray{T} where T <: Symbol
 const SymbolVector = AbstractVector{T} where T <: Symbol
 const SymbolMatrix = AbstractMatrix{T} where T <: Symbol
+

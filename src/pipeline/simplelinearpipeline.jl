@@ -1,10 +1,10 @@
 struct ImmutableSimpleLinearPipeline <: AbstractCompositeObject
     name::T1 where T1 <: AbstractString
-    objectsvector::T2 where T2 <: AbstractObjectVector
+    objectsvector::T2 where T2 <: FittableVector
 end
 
 function ImmutableSimpleLinearPipeline(
-        objectsvector::AbstractObjectVector;
+        objectsvector::FittableVector;
         name::AbstractString = "",
         )
     result = ImmutableSimpleLinearPipeline(
