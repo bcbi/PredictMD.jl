@@ -1,5 +1,5 @@
 struct ImmutablePackageMultiLabelPredictionTransformer <:
-        AbstractPrimitiveObject
+        AbstractEstimator
     labelnames::T1 where T1 <: SymbolVector
 end
 

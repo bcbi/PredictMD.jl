@@ -1,5 +1,5 @@
 struct ImmutablePackageSingleLabelPredictProbaTransformer <:
-        AbstractPrimitiveObject
+        AbstractEstimator
     singlelabelname::T1 where T1 <: Symbol
 end
 

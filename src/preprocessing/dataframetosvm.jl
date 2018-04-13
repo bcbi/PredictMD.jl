@@ -2,7 +2,7 @@ import DataFrames
 import StatsModels
 
 struct ImmutableFeatureArrayTransposerTransformer <:
-        AbstractPrimitiveObject
+        AbstractEstimator
 end
 
 function setfeaturecontrasts!(

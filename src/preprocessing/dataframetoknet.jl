@@ -2,7 +2,7 @@ import DataFrames
 import StatsModels
 
 mutable struct MutableDataFrame2ClassificationKnetTransformer <:
-        AbstractPrimitiveObject
+        AbstractEstimator
     featurenames::T1 where T1 <: AbstractVector
     labelnames::T2 where T2 <: SymbolVector
     labellevels::T3 where T3 <: Associative
@@ -178,7 +178,7 @@ function predict_proba(
 end
 
 mutable struct MutableDataFrame2RegressionKnetTransformer <:
-        AbstractPrimitiveObject
+        AbstractEstimator
     featurenames::T1 where T1 <: AbstractVector
     labelnames::T2 where T2 <: SymbolVector
     transposefeatures::T3 where T3 <: Bool

@@ -5,7 +5,7 @@ function _emptyfunction()
     return nothing
 end
 
-mutable struct MutableKnetjlNeuralNetworkEstimator <: AbstractPrimitiveObject
+mutable struct MutableKnetjlNeuralNetworkEstimator <: AbstractEstimator
     name::T1 where T1 <: AbstractString
     isclassificationmodel::T2 where T2 <: Bool
     isregressionmodel::T3 where T3 <: Bool

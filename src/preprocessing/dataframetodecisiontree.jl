@@ -2,7 +2,7 @@ import DataFrames
 import StatsModels
 
 mutable struct MutableDataFrame2DecisionTreeTransformer <:
-        AbstractPrimitiveObject
+        AbstractEstimator
     featurenames::T1 where T1 <: AbstractVector
     singlelabelname::T2 where T2 <: Symbol
     levels::T3 where T3 <: AbstractVector

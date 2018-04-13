@@ -1,7 +1,7 @@
 import DataFrames
 
 struct ImmutablePredictionsSingleLabelInt2StringTransformer <:
-        AbstractPrimitiveObject
+        AbstractEstimator
     index::T1 where T1 <: Integer
     levels::T2 where T2 <: AbstractVector
 end

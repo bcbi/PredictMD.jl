@@ -1,6 +1,6 @@
 import LIBSVM
 
-mutable struct MutableLIBSVMjlSVMEstimator <: AbstractPrimitiveObject
+mutable struct MutableLIBSVMjlSVMEstimator <: AbstractEstimator
     name::T1 where T1 <: AbstractString
     isclassificationmodel::T2 where T2 <: Bool
     isregressionmodel::T3 where T3 <: Bool
