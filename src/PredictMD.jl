@@ -46,7 +46,7 @@ include("metrics/roccurve.jl")
 include("metrics/rocnumsmetrics.jl")
 
 # modelselection/
-include("modelselection/traintestsplit.jl")
+include("modelselection/split_data.jl")
 
 # multiclass/
 
