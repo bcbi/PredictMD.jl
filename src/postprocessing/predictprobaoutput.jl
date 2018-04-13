@@ -11,7 +11,7 @@ function setfeaturecontrasts!(
     return nothing
 end
 
-function getunderlying(
+function get_underlying(
         x::ImmutablePredictProbaSingleLabelInt2StringTransformer;
         saving::Bool = false,
         loading::Bool = false,
@@ -19,7 +19,7 @@ function getunderlying(
     return nothing
 end
 
-function setunderlying!(
+function set_underlying!(
         x::ImmutablePredictProbaSingleLabelInt2StringTransformer,
         object;
         saving::Bool = false,

@@ -35,7 +35,7 @@ DataFrames.head(df)
 DataFrames.dropmissing!(df)
 
 # Shuffle rows
-PredictMD.shufflerows!(df)
+PredictMD.shuffle_rows!(df)
 
 # Define labels
 categoricalfeaturenames = Symbol[]
@@ -99,7 +99,7 @@ else
 end
 
 # View coefficients, p values, etc. for underlying linear regression
-PredictMD.getunderlying(linearreg)
+PredictMD.get_underlying(linearreg)
 
 # Plot true values versus predicted values for linear regression on training set
 linearreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(

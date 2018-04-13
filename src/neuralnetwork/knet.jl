@@ -91,7 +91,7 @@ function setfeaturecontrasts!(
     return nothing
 end
 
-function getunderlying(
+function get_underlying(
         x::MutableKnetjlNeuralNetworkEstimator;
         saving::Bool = false,
         loading::Bool = false,
@@ -100,7 +100,7 @@ function getunderlying(
     return result
 end
 
-function setunderlying!(
+function set_underlying!(
         x::MutableKnetjlNeuralNetworkEstimator,
         object;
         saving::Bool = false,

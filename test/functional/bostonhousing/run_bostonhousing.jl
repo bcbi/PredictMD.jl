@@ -108,7 +108,7 @@ else
 end
 
 # View coefficients, p values, etc. for underlying linear regression
-PredictMD.getunderlying(linearreg)
+PredictMD.get_underlying(linearreg)
 
 # Plot true values versus predicted values for linear regression on training set
 linearreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(

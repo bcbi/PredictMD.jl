@@ -1,6 +1,6 @@
 import StatsBase
 
-function getbinarythresholds(
+function get_binary_thresholds(
         yscore::StatsBase.RealVector;
         additionalthreshold::Real = 0.5,
         )

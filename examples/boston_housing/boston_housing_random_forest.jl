@@ -31,7 +31,7 @@ DataFrames.head(df)
 DataFrames.dropmissing!(df)
 
 # Shuffle rows
-PredictMD.shufflerows!(df)
+PredictMD.shuffle_rows!(df)
 
 # Define labels
 categoricalfeaturenames = Symbol[]

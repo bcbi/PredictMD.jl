@@ -115,7 +115,7 @@ function plotlearningcurve(
         )
     push!(allplotobjects, linearplotobject_yraw)
     if window > 0
-        yvaluessmoothed = simplemovingaverage(
+        yvaluessmoothed = simple_moving_average(
             yvalues,
             window,
             )

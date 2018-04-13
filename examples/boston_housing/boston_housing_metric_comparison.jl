@@ -22,7 +22,7 @@ df = CSV.read(
 DataFrames.dropmissing!(df)
 
 # Shuffle rows
-PredictMD.shufflerows!(df)
+PredictMD.shuffle_rows!(df)
 
 # Define labels
 featurenames = Symbol[

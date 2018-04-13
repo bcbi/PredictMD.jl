@@ -65,7 +65,7 @@ function setfeaturecontrasts!(
     return nothing
 end
 
-function getunderlying(
+function get_underlying(
         x::MutableLIBSVMjlSVMEstimator;
         saving::Bool = false,
         loading::Bool = false,
@@ -74,7 +74,7 @@ function getunderlying(
     return result
 end
 
-function setunderlying!(
+function set_underlying!(
         x::MutableLIBSVMjlSVMEstimator,
         object;
         saving::Bool = false,

@@ -50,7 +50,7 @@ function underlying(x::MutableDecisionTreejlRandomForestEstimator)
     return nothing
 end
 
-function getunderlying(
+function get_underlying(
         x::MutableDecisionTreejlRandomForestEstimator;
         saving::Bool = false,
         loading::Bool = false,
@@ -59,7 +59,7 @@ function getunderlying(
     return result
 end
 
-function setunderlying!(
+function set_underlying!(
         x::MutableDecisionTreejlRandomForestEstimator,
         object;
         saving::Bool = false,

@@ -1,7 +1,7 @@
 import ClassImbalance
 import DataFrames
 
-function _calculate_smote_pct_under(
+function calculate_smote_pct_under(
         ;
         pct_over::Real = 0,
         minority_to_majority_ratio::Real = 0,

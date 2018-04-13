@@ -142,7 +142,7 @@ else
 end
 
 # View coefficients, p values, etc. for underlying logistic regression
-PredictMD.getunderlying(logisticclassifier)
+PredictMD.get_underlying(logisticclassifier)
 
 # Plot classifier histogram for logistic classifier on smoted training set
 logistic_hist_training = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
@@ -212,7 +212,7 @@ else
 end
 
 # View coefficients, p values, etc. for underlying probit regression
-PredictMD.getunderlying(probitclassifier)
+PredictMD.get_underlying(probitclassifier)
 
 # Plot classifier histogram for probit classifier on smoted training set
 probitclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(

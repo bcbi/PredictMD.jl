@@ -4,12 +4,12 @@ import ProgressMeter
 
 function save(filename::AbstractString, x::AbstractObject)
     # make sure that the filename ends in ".jld2"
-    if !endswith(filename, ".jld2")
+    if splitext(filename)[2] !== ".jld2"
         error("filename must end in \".jld2\"")
     end
 
     # get all underlying objects
-    allunderlying = getunderlying(x;saving=true,)
+    allunderlying = get_underlying(x;saving=true,)
 
     # get all value history objects
     allhistory = gethistory(x;saving=true,)
@@ -36,10 +36,10 @@ end
 
 function load!(filename::AbstractString, x::AbstractObject)
     # make sure that the filename ends in ".jld2"
-    if !endswith(filename, ".jld2")
+    if splitext(filename)[2] !== ".jld2"
         error("filename must end in \".jld2\"")
     end
-    
+
     # load the JLD2 file
     alldatasets = FileIO.load(filename)
 
@@ -50,7 +50,7 @@ function load!(filename::AbstractString, x::AbstractObject)
     allhistory = alldatasets["allhistory"]
 
     # go through the AbstractObject and set all underlying objects
-    setunderlying!(x,allunderlying;loading=true,)
+    set_underlying!(x,allunderlying;loading=true,)
 
     # go through the AbstractObject and set all value history objects
     sethistory!(x,allhistory;loading=true,)

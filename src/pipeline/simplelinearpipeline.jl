@@ -24,13 +24,13 @@ function setfeaturecontrasts!(
     return nothing
 end
 
-function getunderlying(
+function get_underlying(
         x::ImmutableSimpleLinearPipeline;
         saving::Bool = false,
         loading::Bool = false,
         )
     allunderlying = [
-        getunderlying(
+        get_underlying(
             o;
             saving=saving,
             loading=loading,
@@ -49,7 +49,7 @@ function getunderlying(
     return allunderlying
 end
 
-function setunderlying!(
+function set_underlying!(
         x::ImmutableSimpleLinearPipeline,
         object;
         saving::Bool = false,
@@ -59,7 +59,7 @@ function setunderlying!(
         error("length(x) != length(object)")
     end
     for i = 1:length(x.objectsvector)
-        setunderlying!(
+        set_underlying!(
             x.objectsvector[i],
             object[i];
             saving=saving,

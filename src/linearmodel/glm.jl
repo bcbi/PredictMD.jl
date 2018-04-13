@@ -2,8 +2,7 @@ import DataFrames
 import GLM
 import StatsModels
 
-
-mutable struct MutableGLMjlGeneralizedLinearModelEstimator <:
+mutable struct GLMModel <:
         AbstractPrimitiveObject
     name::T1 where T1 <: AbstractString
     isclassificationmodel::T2 where T2 <: Bool
@@ -16,7 +15,7 @@ mutable struct MutableGLMjlGeneralizedLinearModelEstimator <:
     # parameters (learned from data):
     underlyingglm::T where T
 
-    function MutableGLMjlGeneralizedLinearModelEstimator(
+    function GLMModel(
             formula::StatsModels.Formula,
             family::GLM.Distribution,
             link::GLM.Link;
@@ -45,7 +44,7 @@ function gethistory(
 end
 
 function sethistory!(
-        x::MutableGLMjlGeneralizedLinearModelEstimator,
+        x::GLMModel,
         h;
         saving::Bool = false,
 	loading::Bool = false,
@@ -54,14 +53,14 @@ function sethistory!(
 end
 
 function setfeaturecontrasts!(
-        x::MutableGLMjlGeneralizedLinearModelEstimator,
+        x::GLMModel,
         contrasts::AbstractContrasts,
         )
     return nothing
 end
 
-function getunderlying(
-        x::MutableGLMjlGeneralizedLinearModelEstimator;
+function get_underlying(
+        x::GLMModel;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -69,8 +68,8 @@ function getunderlying(
     return result
 end
 
-function setunderlying!(
-        x::MutableGLMjlGeneralizedLinearModelEstimator,
+function set_underlying!(
+        x::GLMModel,
         object;
         saving::Bool = false,
         loading::Bool = false,
@@ -80,7 +79,7 @@ function setunderlying!(
 end
 
 function fit!(
-        estimator::MutableGLMjlGeneralizedLinearModelEstimator,
+        estimator::GLMModel,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         )
@@ -98,7 +97,7 @@ function fit!(
 end
 
 function predict(
-        estimator::MutableGLMjlGeneralizedLinearModelEstimator,
+        estimator::GLMModel,
         featuresdf::DataFrames.AbstractDataFrame,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
@@ -131,7 +130,7 @@ function predict(
 end
 
 function predict_proba(
-        estimator::MutableGLMjlGeneralizedLinearModelEstimator,
+        estimator::GLMModel,
         featuresdf::DataFrames.AbstractDataFrame,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel

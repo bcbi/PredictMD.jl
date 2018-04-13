@@ -1,9 +1,7 @@
 abstract type AbstractContrasts end
 
-abstract type AbstractFeatureContrasts <: AbstractContrasts end
+abstract type AbstractEstimator end
 
-abstract type AbstractObject end
+abstract type AbstractPipeline end
 
-abstract type AbstractPrimitiveObject <: AbstractObject end
-
-abstract type AbstractCompositeObject <: AbstractObject end
+abstract type AbstractTransformer end

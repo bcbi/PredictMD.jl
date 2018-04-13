@@ -38,7 +38,7 @@ function setfeaturecontrasts!(
     return nothing
 end
 
-function getunderlying(
+function get_underlying(
         x::MutableDataFrame2ClassificationKnetTransformer;
         saving::Bool = false,
         loading::Bool = false,
@@ -47,7 +47,7 @@ function getunderlying(
     return result
 end
 
-function setunderlying!(
+function set_underlying!(
         x::MutableDataFrame2ClassificationKnetTransformer,
         contrasts;
         saving::Bool = false,
@@ -208,7 +208,7 @@ function setfeaturecontrasts!(
     return nothing
 end
 
-function getunderlying(
+function get_underlying(
         x::MutableDataFrame2RegressionKnetTransformer;
         saving::Bool = false,
         loading::Bool = false,
@@ -217,7 +217,7 @@ function getunderlying(
     return result
 end
 
-function setunderlying!(
+function set_underlying!(
         x::MutableDataFrame2RegressionKnetTransformer,
         object;
         saving::Bool = false,
