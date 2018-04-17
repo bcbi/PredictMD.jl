@@ -34,15 +34,15 @@ mutable struct GLMModel <: AbstractEstimator
     end
 end
 
-function gethistory(
-        x::MutableGLMjlGeneralizedLinearModelEstimator;
+function get_history(
+        x::GLMModel;
         saving::Bool = false,
 	loading::Bool = false,
         )
     return nothing
 end
 
-function sethistory!(
+function set_history!(
         x::GLMModel,
         h;
         saving::Bool = false,
@@ -167,7 +167,7 @@ function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
         singlelabelname,
         positiveclass,
         )
-    glmestimator = MutableGLMjlGeneralizedLinearModelEstimator(
+    glmestimator = GLMModel(
         formula,
         GLM.Binomial(),
         GLM.LogitLink();
@@ -238,7 +238,7 @@ function _singlelabelbinaryclassdataframeprobitclassifier_GLM(
         singlelabelname,
         positiveclass,
         )
-    glmestimator = MutableGLMjlGeneralizedLinearModelEstimator(
+    glmestimator = GLMModel(
         formula,
         GLM.Binomial(),
         GLM.ProbitLink();
@@ -302,7 +302,7 @@ function _singlelabeldataframelinearregression_GLM(
         featurenames;
         intercept = intercept,
         )
-    glmestimator = MutableGLMjlGeneralizedLinearModelEstimator(
+    glmestimator = GLMModel(
         formula,
         GLM.Normal(),
         GLM.IdentityLink();

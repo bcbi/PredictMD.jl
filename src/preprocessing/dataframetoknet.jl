@@ -57,7 +57,7 @@ function set_underlying!(
     return nothing
 end
 
-function gethistory(
+function get_history(
         x::MutableDataFrame2ClassificationKnetTransformer;
         saving::Bool = false,
         loading::Bool = false,
@@ -65,7 +65,7 @@ function gethistory(
     return nothing
 end
 
-function sethistory!(
+function set_history!(
         x::MutableDataFrame2ClassificationKnetTransformer,
         h;
         saving::Bool = false,
@@ -227,7 +227,7 @@ function set_underlying!(
     return nothing
 end
 
-function gethistory(
+function get_history(
         x::MutableDataFrame2RegressionKnetTransformer;
         saving::Bool = false,
         loading::Bool = false,
@@ -235,7 +235,7 @@ function gethistory(
     return nothing
 end
 
-function sethistory!(
+function set_history!(
         x::MutableDataFrame2RegressionKnetTransformer,
         h;
         saving::Bool = false,

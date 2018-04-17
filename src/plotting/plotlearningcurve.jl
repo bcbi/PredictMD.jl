@@ -13,7 +13,7 @@ function plotlearningcurve(
         startat::Union{Integer, Symbol} = :start,
         endat::Union{Integer, Symbol} = :end,
         )
-    history = gethistory(inputobject)
+    history = get_history(inputobject)
     result = plotlearningcurve(
         history,
         curvetype,

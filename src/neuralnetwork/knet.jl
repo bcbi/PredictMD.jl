@@ -111,7 +111,7 @@ function set_underlying!(
     return nothing
 end
 
-function gethistory(
+function get_history(
         x::MutableKnetjlNeuralNetworkEstimator;
         saving::Bool = false,
         loading::Bool = false,
@@ -120,7 +120,7 @@ function gethistory(
     return result
 end
 
-function sethistory!(
+function set_history!(
         x::MutableKnetjlNeuralNetworkEstimator,
         h::ValueHistories.MultivalueHistory;
         saving::Bool = false,

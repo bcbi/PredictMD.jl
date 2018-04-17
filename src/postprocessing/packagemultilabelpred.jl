@@ -27,7 +27,7 @@ function set_underlying!(
     return nothing
 end
 
-function gethistory(
+function get_history(
         x::ImmutablePackageMultiLabelPredictionTransformer;
         saving::Bool = false,
         loading::Bool = false,
@@ -35,7 +35,7 @@ function gethistory(
     return nothing
 end
 
-function sethistory!(
+function set_history!(
         x::ImmutablePackageMultiLabelPredictionTransformer,
         h;
         saving::Bool = false,

@@ -1,6 +1,6 @@
 import DataFrames
 
-struct DataFrameContrasts <: Contrasts
+struct DataFrameContrasts <: AbstractContrasts
     columns::T1 where T1 <: SymbolVector
     num_df_columns::T2 where T2 <: Integer
     contrasts::T3 where T3 <: Associative

@@ -84,7 +84,7 @@ function set_underlying!(
     return nothing
 end
 
-function gethistory(
+function get_history(
         x::MutableLIBSVMjlSVMEstimator;
         saving::Bool = false,
         loading::Bool = false,
@@ -92,7 +92,7 @@ function gethistory(
     return nothing
 end
 
-function sethistory!(
+function set_history!(
         x::MutableLIBSVMjlSVMEstimator,
         h;
         saving::Bool = false,

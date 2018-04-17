@@ -12,7 +12,7 @@ function save(filename::AbstractString, x::Fittable)
     allunderlying = get_underlying(x;saving=true,)
 
     # get all value history objects
-    allhistory = gethistory(x;saving=true,)
+    allhistory = get_history(x;saving=true,)
 
     # make sure the parent directory exists
     parentdirectory = Base.Filesystem.dirname(filename)
@@ -53,7 +53,7 @@ function load!(filename::AbstractString, x::Fittable)
     set_underlying!(x,allunderlying;loading=true,)
 
     # go through the Fittable and set all value history objects
-    sethistory!(x,allhistory;loading=true,)
+    set_history!(x,allhistory;loading=true,)
 
     # print info message
     info(string("Loaded model from file ", filename))

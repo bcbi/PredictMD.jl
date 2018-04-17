@@ -1,4 +1,4 @@
-struct ImmutableSimpleLinearPipeline <: AbstractCompositeObject
+struct ImmutableSimpleLinearPipeline <: AbstractPipeline
     name::T1 where T1 <: AbstractString
     objectsvector::T2 where T2 <: FittableVector
 end
@@ -69,13 +69,13 @@ function set_underlying!(
     return nothing
 end
 
-function gethistory(
+function get_history(
         x::ImmutableSimpleLinearPipeline;
         saving::Bool = false,
         loading::Bool = false,
         )
     allhistory = [
-        gethistory(
+        get_history(
             o;
             saving = saving,
             loading = loading,
@@ -94,7 +94,7 @@ function gethistory(
     return allhistory
 end
 
-function sethistory!(
+function set_history!(
         x::ImmutableSimpleLinearPipeline,
         h;
         saving::Bool = false,
@@ -104,7 +104,7 @@ function sethistory!(
         error("length(x.objectsvector) != length(h)")
     end
     for i = 1:length(x.objectsvector)
-        sethistory!(
+        set_history!(
             x.objectsvector[i],
             h[i];
             saving=saving,
