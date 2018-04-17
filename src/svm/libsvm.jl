@@ -1,6 +1,6 @@
 import LIBSVM
 
-mutable struct MutableLIBSVMjlSVMEstimator <: AbstractEstimator
+mutable struct LIBSVMModel <: AbstractEstimator
     name::T1 where T1 <: AbstractString
     isclassificationmodel::T2 where T2 <: Bool
     isregressionmodel::T3 where T3 <: Bool
@@ -13,7 +13,7 @@ mutable struct MutableLIBSVMjlSVMEstimator <: AbstractEstimator
     # parameters (learned from data):
     underlyingsvm::T6 where T6
 
-    function MutableLIBSVMjlSVMEstimator(
+    function LIBSVMModel(
             ;
             singlelabellevels::AbstractVector = [],
             name::AbstractString = "",
@@ -59,14 +59,14 @@ mutable struct MutableLIBSVMjlSVMEstimator <: AbstractEstimator
 end
 
 function setfeaturecontrasts!(
-        x::MutableLIBSVMjlSVMEstimator,
+        x::LIBSVMModel,
         contrasts::AbstractContrasts,
         )
     return nothing
 end
 
 function get_underlying(
-        x::MutableLIBSVMjlSVMEstimator;
+        x::LIBSVMModel;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -75,7 +75,7 @@ function get_underlying(
 end
 
 function set_underlying!(
-        x::MutableLIBSVMjlSVMEstimator,
+        x::LIBSVMModel,
         object;
         saving::Bool = false,
         loading::Bool = false,
@@ -85,7 +85,7 @@ function set_underlying!(
 end
 
 function get_history(
-        x::MutableLIBSVMjlSVMEstimator;
+        x::LIBSVMModel;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -93,7 +93,7 @@ function get_history(
 end
 
 function set_history!(
-        x::MutableLIBSVMjlSVMEstimator,
+        x::LIBSVMModel,
         h;
         saving::Bool = false,
         loading::Bool = false,
@@ -102,7 +102,7 @@ function set_history!(
 end
 
 function fit!(
-        estimator::MutableLIBSVMjlSVMEstimator,
+        estimator::LIBSVMModel,
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
@@ -128,7 +128,7 @@ function fit!(
 end
 
 function predict(
-        estimator::MutableLIBSVMjlSVMEstimator,
+        estimator::LIBSVMModel,
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
@@ -189,7 +189,7 @@ function predict(
 end
 
 function predict_proba(
-        estimator::MutableLIBSVMjlSVMEstimator,
+        estimator::LIBSVMModel,
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
@@ -236,7 +236,7 @@ function _singlelabelmulticlassdataframesvmclassifier_LIBSVM(
         singlelabelname;
         levels = singlelabellevels,
         )
-    svmestimator = MutableLIBSVMjlSVMEstimator(
+    svmestimator = LIBSVMModel(
         ;
         name = name,
         singlelabellevels = singlelabellevels,
@@ -342,7 +342,7 @@ function _singlelabeldataframesvmregression_LIBSVM(
         featurenames,
         singlelabelname,
         )
-    svmestimator = MutableLIBSVMjlSVMEstimator(
+    svmestimator = LIBSVMModel(
         ;
         name = name,
         isclassificationmodel = false,

@@ -1,6 +1,6 @@
 import DecisionTree
 
-mutable struct MutableDecisionTreejlRandomForestEstimator <:
+mutable struct DecisionTreeModel <:
         AbstractEstimator
     name::T1 where T1 <: AbstractString
     isclassificationmodel::T2 where T2 <: Bool
@@ -15,7 +15,7 @@ mutable struct MutableDecisionTreejlRandomForestEstimator <:
     # parameters (learned from data):
     underlyingrandomforest::T7 where T7
 
-    function MutableDecisionTreejlRandomForestEstimator(
+    function DecisionTreeModel(
             singlelabelname::Symbol;
             name::AbstractString = "",
             nsubfeatures::Integer = 2,
@@ -40,18 +40,18 @@ mutable struct MutableDecisionTreejlRandomForestEstimator <:
 end
 
 function setfeaturecontrasts!(
-        x::MutableDecisionTreejlRandomForestEstimator,
+        x::DecisionTreeModel,
         contrasts::AbstractContrasts,
         )
     return nothing
 end
 
-function underlying(x::MutableDecisionTreejlRandomForestEstimator)
+function underlying(x::DecisionTreeModel)
     return nothing
 end
 
 function get_underlying(
-        x::MutableDecisionTreejlRandomForestEstimator;
+        x::DecisionTreeModel;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -60,7 +60,7 @@ function get_underlying(
 end
 
 function set_underlying!(
-        x::MutableDecisionTreejlRandomForestEstimator,
+        x::DecisionTreeModel,
         object;
         saving::Bool = false,
         loading::Bool = false,
@@ -70,7 +70,7 @@ function set_underlying!(
 end
 
 function get_history(
-        x::MutableDecisionTreejlRandomForestEstimator;
+        x::DecisionTreeModel;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -78,7 +78,7 @@ function get_history(
 end
 
 function set_history!(
-        x::MutableDecisionTreejlRandomForestEstimator,
+        x::DecisionTreeModel,
         h;
         saving::Bool = false,
         loading::Bool = false,
@@ -87,7 +87,7 @@ function set_history!(
 end
 
 function fit!(
-        estimator::MutableDecisionTreejlRandomForestEstimator,
+        estimator::DecisionTreeModel,
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
@@ -104,7 +104,7 @@ function fit!(
 end
 
 function predict(
-        estimator::MutableDecisionTreejlRandomForestEstimator,
+        estimator::DecisionTreeModel,
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
@@ -128,7 +128,7 @@ function predict(
 end
 
 function predict_proba(
-        estimator::MutableDecisionTreejlRandomForestEstimator,
+        estimator::DecisionTreeModel,
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
@@ -162,7 +162,7 @@ function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
         singlelabelname;
         levels = singlelabellevels,
         )
-    randomforestestimator = MutableDecisionTreejlRandomForestEstimator(
+    randomforestestimator = DecisionTreeModel(
         singlelabelname;
         name = name,
         nsubfeatures = nsubfeatures,
@@ -224,7 +224,7 @@ function _singlelabeldataframerandomforestregression_DecisionTree(
         featurenames,
         singlelabelname,
         )
-    randomforestestimator = MutableDecisionTreejlRandomForestEstimator(
+    randomforestestimator = DecisionTreeModel(
         singlelabelname;
         name = name,
         nsubfeatures = nsubfeatures,
