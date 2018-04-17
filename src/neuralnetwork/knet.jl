@@ -5,7 +5,7 @@ function _emptyfunction()
     return nothing
 end
 
-mutable struct MutableKnetjlNeuralNetworkEstimator <: AbstractEstimator
+mutable struct KnetModel <: AbstractEstimator
     name::T1 where T1 <: AbstractString
     isclassificationmodel::T2 where T2 <: Bool
     isregressionmodel::T3 where T3 <: Bool
@@ -27,7 +27,7 @@ mutable struct MutableKnetjlNeuralNetworkEstimator <: AbstractEstimator
     # learning state
     history::T where T <: ValueHistories.MultivalueHistory
 
-    function MutableKnetjlNeuralNetworkEstimator(
+    function KnetModel(
             ;
             name::AbstractString = "",
             predict::Function = _emptyfunction,
@@ -85,14 +85,14 @@ mutable struct MutableKnetjlNeuralNetworkEstimator <: AbstractEstimator
 end
 
 function setfeaturecontrasts!(
-        x::MutableKnetjlNeuralNetworkEstimator,
+        x::KnetModel,
         contrasts::AbstractContrasts,
         )
     return nothing
 end
 
 function get_underlying(
-        x::MutableKnetjlNeuralNetworkEstimator;
+        x::KnetModel;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -101,7 +101,7 @@ function get_underlying(
 end
 
 function set_underlying!(
-        x::MutableKnetjlNeuralNetworkEstimator,
+        x::KnetModel,
         object;
         saving::Bool = false,
         loading::Bool = false,
@@ -112,7 +112,7 @@ function set_underlying!(
 end
 
 function get_history(
-        x::MutableKnetjlNeuralNetworkEstimator;
+        x::KnetModel;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -121,7 +121,7 @@ function get_history(
 end
 
 function set_history!(
-        x::MutableKnetjlNeuralNetworkEstimator,
+        x::KnetModel,
         h::ValueHistories.MultivalueHistory;
         saving::Bool = false,
         loading::Bool = false,
@@ -131,7 +131,7 @@ function set_history!(
 end
 
 function fit!(
-        estimator::MutableKnetjlNeuralNetworkEstimator,
+        estimator::KnetModel,
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
@@ -253,7 +253,7 @@ function fit!(
 end
 
 function predict(
-        estimator::MutableKnetjlNeuralNetworkEstimator,
+        estimator::KnetModel,
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel
@@ -280,7 +280,7 @@ function predict(
 end
 
 function predict_proba(
-        estimator::MutableKnetjlNeuralNetworkEstimator,
+        estimator::KnetModel,
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel
@@ -333,7 +333,7 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
         transposefeatures = dftransformer_transposefeatures,
         transposelabels = dftransformer_transposelabels,
         )
-    knetestimator = MutableKnetjlNeuralNetworkEstimator(
+    knetestimator = KnetModel(
         ;
         name = name,
         predict = predict,
@@ -438,7 +438,7 @@ function _singlelabeldataframeknetregression_Knet(
         transposefeatures = true,
         transposelabels = true,
         )
-    knetestimator = MutableKnetjlNeuralNetworkEstimator(
+    knetestimator = KnetModel(
         ;
         name = name,
         predict = predict,
