@@ -3,8 +3,7 @@ __precompile__(true)
 module PredictMD
 
 # base/
-include("base/abstracttypes.jl")
-include("base/typealiases.jl")
+include("base/types.jl")
 include("base/version.jl")
 
 # calibration/
