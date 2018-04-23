@@ -3,8 +3,8 @@ import ROCAnalysis
 import StatsBase
 
 function _aurocc(
-        ytrue::StatsBase.IntegerVector,
-        yscore::StatsBase.RealVector,
+        ytrue::AbstractVector{<:Integer},
+        yscore::AbstractVector{<:Real},
         )
     allfpr, alltpr, allthresholds = roccurve(
         ytrue,
@@ -23,8 +23,8 @@ function _aurocc(
 end
 
 function _aurocc_verify(
-        ytrue::StatsBase.IntegerVector,
-        yscore::StatsBase.RealVector,
+        ytrue::AbstractVector{<:Integer},
+        yscore::AbstractVector{<:Real},
         )
     targetlevel = 1
     nontargetlevel = 0
@@ -37,8 +37,8 @@ function _aurocc_verify(
 end
 
 function aurocc(
-        ytrue::StatsBase.IntegerVector,
-        yscore::StatsBase.RealVector,
+        ytrue::AbstractVector{<:Integer},
+        yscore::AbstractVector{<:Real},
         )
     aurocc_value = _aurocc(
         ytrue,

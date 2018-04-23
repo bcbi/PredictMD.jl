@@ -1,7 +1,7 @@
 import DataFrames
 
 struct DataFrameContrasts <: AbstractContrasts
-    columns::T1 where T1 <: SymbolVector
+    columns::T1 where T1 <: AbstractVector{<:Symbol}
     num_df_columns::T2 where T2 <: Integer
     contrasts::T3 where T3 <: Associative
     num_array_columns::T4 where T4 <: Integer
@@ -9,7 +9,7 @@ end
 
 function DataFrameContrasts(
         df::DataFrames.AbstractDataFrame,
-        columns::SymbolVector,
+        columns::AbstractVector{<:Symbol},
         )
     num_df_columns = length(unique(columns))
     modelformula = makeformula(
@@ -34,5 +34,5 @@ function DataFrameContrasts(
     return result
 end
 
-contrasts(df::DataFrames.AbstractDataFrame,columns::SymbolVector) =
+contrasts(df::DataFrames.AbstractDataFrame,columns::AbstractVector{<:Symbol}) =
     DataFrameContrasts(df,columns)

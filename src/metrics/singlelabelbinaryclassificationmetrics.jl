@@ -205,7 +205,7 @@ function singlelabelbinaryclassclassificationmetrics(
 end
 
 function singlelabelbinaryclassclassificationmetrics(
-        vectorofestimators::FittableVector,
+        vectorofestimators::AbstractVector{Fittable},
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,

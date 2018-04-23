@@ -21,7 +21,7 @@ function plotprcurve(
 end
 
 function plotprcurve(
-        vectorofestimators::FittableVector,
+        vectorofestimators::AbstractVector{Fittable},
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,

@@ -1,6 +1,6 @@
 struct ImmutablePackageMultiLabelPredictionTransformer <:
         AbstractEstimator
-    labelnames::T1 where T1 <: SymbolVector
+    labelnames::T1 where T1 <: AbstractVector{<:Symbol}
 end
 
 function set_contrasts!(

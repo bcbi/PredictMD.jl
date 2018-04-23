@@ -62,7 +62,7 @@ function singlelabelregressionmetrics(
 end
 
 function singlelabelregressionmetrics(
-        vectorofestimators::FittableVector,
+        vectorofestimators::AbstractVector{Fittable},
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol;

@@ -5,8 +5,8 @@ r2_score(ytrue, ypred)
 Computes coefficient of determination.
 """
 function r2_score(
-        ytrue::StatsBase.RealVector,
-        ypred::StatsBase.RealVector,
+        ytrue::AbstractVector{<:Real},
+        ypred::AbstractVector{<:Real},
         )
     if length(ytrue) != length(ypred)
         error("length(ytrue) != length(ypred)")
@@ -24,4 +24,3 @@ function r2_score(
     R2 = 1 - SSres/SStot
     return R2
 end
-

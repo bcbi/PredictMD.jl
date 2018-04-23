@@ -86,8 +86,8 @@ function plotlearningcurve(
 end
 
 function plotlearningcurve(
-        xvalues::StatsBase.RealVector,
-        yvalues::StatsBase.RealVector,
+        xvalues::AbstractVector{<:Real},
+        yvalues::AbstractVector{<:Real},
         xlabel::AbstractString,
         ylabel::AbstractString,
         legendentry::AbstractString;

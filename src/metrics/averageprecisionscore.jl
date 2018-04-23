@@ -2,9 +2,9 @@ import MLBase
 import StatsBase
 
 function avg_precision(
-        allprecisions::StatsBase.RealVector,
-        allrecalls::StatsBase.RealVector,
-        allthresholds::StatsBase.RealVector,
+        allprecisions::AbstractVector{<:Real},
+        allrecalls::AbstractVector{<:Real},
+        allthresholds::AbstractVector{<:Real},
         )
     if length(allprecisions) != length(allrecalls)
         error("length(allprecisions) != length(allrecalls)")
@@ -26,8 +26,8 @@ function avg_precision(
 end
 
 function averageprecisionscore(
-        ytrue::StatsBase.IntegerVector,
-        yscore::StatsBase.RealVector,
+        ytrue::AbstractVector{<:Integer},
+        yscore::AbstractVector{<:Real},
         )
     allprecisions, allrecalls, allthresholds = prcurve(
         ytrue,
