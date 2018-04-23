@@ -37,7 +37,7 @@ function _singlelabelbinaryclassclassificationmetrics_tunableparam(
         ]
     maximizableparams = [
         :f1score,
-        :cohenkappa,
+        :cohen_kappa,
         ]
     kwargshastunableparam = [
         haskey(kwargsassoc, x) for x in tunableparams
@@ -73,11 +73,11 @@ function _singlelabelbinaryclassclassificationmetrics_tunableparam(
         metricprintnames[:threshold] = string("* Threshold")
     end
     metricprintnames[:accuracy] = string("* Accuracy")
-    if selectedtunableparam == :maximize && selectedparamtomax == :cohenkappa
-        metricprintnames[:cohenkappa] =
+    if selectedtunableparam == :maximize && selectedparamtomax == :cohen_kappa
+        metricprintnames[:cohen_kappa] =
             string("[max] * Cohen's Kappa statistic")
     else
-        metricprintnames[:cohenkappa] =
+        metricprintnames[:cohen_kappa] =
             string("* Cohen's Kappa statistic")
     end
     if selectedtunableparam == :maximize && selectedparamtomax == :f1score
@@ -158,9 +158,9 @@ function _singlelabelbinaryclassclassificationmetrics(
         if selectedparamtomax == :f1score
             allf1score = [fbetascore(x, 1) for x in allrocnums]
             bestindex = indmax(allf1score)
-        elseif selectedparamtomax == :cohenkappa
-            allcohenkappa = [cohenkappa(x) for x in allrocnums]
-            bestindex = indmax(allcohenkappa)
+        elseif selectedparamtomax == :cohen_kappa
+            allcohen_kappa = [cohen_kappa(x) for x in allrocnums]
+            bestindex = indmax(allcohen_kappa)
         else
             error("this is an error that should never happen")
         end
@@ -180,7 +180,7 @@ function _singlelabelbinaryclassclassificationmetrics(
     results[:precision] = precision(bestrocnums)
     results[:recall] = recall(bestrocnums)
     results[:f1score] = f1score(bestrocnums)
-    results[:cohenkappa] = cohenkappa(bestrocnums)
+    results[:cohen_kappa] = cohen_kappa(bestrocnums)
     return results
 end
 
@@ -192,7 +192,7 @@ function singlelabelbinaryclassclassificationmetrics(
         positiveclass::AbstractString;
         kwargs...
         )
-    vectorofestimators = [estimator]
+    vectorofestimators = Fittable[estimator]
     result = singlelabelbinaryclassclassificationmetrics(
         vectorofestimators,
         featuresdf,
@@ -233,7 +233,7 @@ function singlelabelbinaryclassclassificationmetrics(
         metricprintnames[:AveragePrecision],
         metricprintnames[:threshold],
         metricprintnames[:accuracy],
-        metricprintnames[:cohenkappa],
+        metricprintnames[:cohen_kappa],
         metricprintnames[:f1score],
         metricprintnames[:precision],
         metricprintnames[:recall],
@@ -247,7 +247,7 @@ function singlelabelbinaryclassclassificationmetrics(
             metricsforeachestimator[i][:AveragePrecision],
             metricsforeachestimator[i][:threshold],
             metricsforeachestimator[i][:accuracy],
-            metricsforeachestimator[i][:cohenkappa],
+            metricsforeachestimator[i][:cohen_kappa],
             metricsforeachestimator[i][:f1score],
             metricsforeachestimator[i][:precision],
             metricsforeachestimator[i][:recall],

@@ -6,7 +6,7 @@ function getallrocnums(
         yscore::StatsBase.RealVector;
         additionalthreshold::Real = 0.5,
         )
-    allthresholds = getbinarythresholds(
+    allthresholds = get_binary_thresholds(
         yscore;
         additionalthreshold = additionalthreshold,
         )

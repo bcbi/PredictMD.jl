@@ -51,7 +51,7 @@ function singlelabelregressionmetrics(
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         )
-    vectorofestimators = [estimator]
+    vectorofestimators = Fittable[estimator]
     result = singlelabelregressionmetrics(
         vectorofestimators,
         featuresdf,

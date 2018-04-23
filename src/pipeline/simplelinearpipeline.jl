@@ -14,12 +14,12 @@ function ImmutableSimpleLinearPipeline(
     return result
 end
 
-function setfeaturecontrasts!(
+function set_contrasts!(
         x::ImmutableSimpleLinearPipeline,
         contrasts::AbstractContrasts,
         )
     for i = 1:length(x.objectsvector)
-        setfeaturecontrasts!(x.objectsvector[i], contrasts)
+        set_contrasts!(x.objectsvector[i], contrasts)
     end
     return nothing
 end
@@ -38,7 +38,7 @@ function get_underlying(
         ]
     if saving || loading
     else
-        deletenothings!(underlying)
+        delete_nothings!(underlying)
         if length(underlying) == 0
             underlying = nothing
         elseif length(underlying) == 1
@@ -83,7 +83,7 @@ function get_history(
         ]
     if saving || loading
     else
-        deletenothings!(history)
+        delete_nothings!(history)
         if length(history) == 0
             history = nothing
         elseif length(history) == 1

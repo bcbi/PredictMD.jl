@@ -4,7 +4,7 @@ struct DataFrameContrasts <: AbstractContrasts
     columns::T1 where T1 <: SymbolVector
     num_df_columns::T2 where T2 <: Integer
     contrasts::T3 where T3 <: Associative
-    numarraycolumns::T4 where T4 <: Integer
+    num_array_columns::T4 where T4 <: Integer
 end
 
 function DataFrameContrasts(
@@ -24,12 +24,12 @@ function DataFrameContrasts(
     contrasts = modelframe.contrasts
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     columnsarray = modelmatrix.m
-    numarraycolumns = size(columnsarray, 2)
+    num_array_columns = size(columnsarray, 2)
     result = DataFrameContrasts(
         columns,
         num_df_columns,
         contrasts,
-        numarraycolumns,
+        num_array_columns,
         )
     return result
 end

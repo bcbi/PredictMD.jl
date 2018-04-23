@@ -56,7 +56,7 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 if load_pretrained == "true"
 else
-    featurecontrasts = PredictMD.featurecontrasts(df, featurenames)
+    contrasts = PredictMD.contrasts(df, featurenames)
 end
 
 # Define labels
@@ -75,7 +75,7 @@ DataFrames.describe(labelsdf[labelname])
 
 # Split data into training set (70%) and testing set (30%)
 trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    PredictMD.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,);
+    PredictMD.split_data(featuresdf,labelsdf,0.7);
 
 # Define predict function
 function knetmlp_predict(
@@ -97,11 +97,11 @@ if load_pretrained
 else
     # Randomly initialize model weights
     knetmlp_modelweights = Any[
-        # input layer has dimension featurecontrasts.numarrayfeatures
+        # input layer has dimension contrasts.num_array_columns
         #
         # hidden layer (10 neurons):
         Cfloat.(
-            0.1f0*randn(Cfloat,10,featurecontrasts.numarrayfeatures) # weights
+            0.1f0*randn(Cfloat,10,contrasts.num_array_columns) # weights
             ),
         Cfloat.(
             zeros(Cfloat,10,1) # biases
@@ -180,7 +180,7 @@ if load_pretrained == "true"
     PredictMD.load!(knetmlpreg_filename, knetmlpreg)
 else
     # set feature contrasts
-    PredictMD.setfeaturecontrasts!(knetmlpreg, featurecontrasts)
+    PredictMD.set_contrasts!(knetmlpreg, contrasts)
     # Train multilayer perceptron model on training set
     PredictMD.fit!(knetmlpreg,trainingfeaturesdf,traininglabelsdf,)
 end

@@ -6,7 +6,7 @@ mutable struct MutableDataFrame2DecisionTreeTransformer <:
     featurenames::T1 where T1 <: AbstractVector
     singlelabelname::T2 where T2 <: Symbol
     levels::T3 where T3 <: AbstractVector
-    dffeaturecontrasts::T4 where T4 <: AbstractContrasts
+    dfcontrasts::T4 where T4 <: AbstractContrasts
     function MutableDataFrame2DecisionTreeTransformer(
             featurenames::AbstractVector,
             singlelabelname::Symbol;
@@ -21,11 +21,11 @@ mutable struct MutableDataFrame2DecisionTreeTransformer <:
     end
 end
 
-function setfeaturecontrasts!(
+function set_contrasts!(
         x::MutableDataFrame2DecisionTreeTransformer,
         contrasts::AbstractContrasts,
         )
-    x.dffeaturecontrasts = contrasts
+    x.dfcontrasts = contrasts
     return nothing
 end
 
@@ -34,7 +34,7 @@ function get_underlying(
         saving::Bool = false,
         loading::Bool = false,
         )
-    result = x.dffeaturecontrasts
+    result = x.dfcontrasts
     return result
 end
 
@@ -44,7 +44,7 @@ function set_underlying!(
         saving::Bool = false,
         loading::Bool = false,
         )
-    x.dffeaturecontrasts = object
+    x.dfcontrasts = object
     return nothing
 end
 
@@ -82,7 +82,7 @@ function transform(
     modelframe = StatsModels.ModelFrame(
         modelformula,
         featuresdf;
-        contrasts = transformer.dffeaturecontrasts.featurecontrasts,
+        contrasts = transformer.dfcontrasts.contrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     featuresarray = modelmatrix.m
@@ -102,7 +102,7 @@ function transform(
     modelframe = StatsModels.ModelFrame(
         modelformula,
         featuresdf;
-        contrasts = transformer.dffeaturecontrasts.featurecontrasts,
+        contrasts = transformer.dfcontrasts.contrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     featuresarray = modelmatrix.m

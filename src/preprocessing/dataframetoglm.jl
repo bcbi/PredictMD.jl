@@ -6,7 +6,7 @@ struct ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer <:
     positiveclass::T2 where T2 <: AbstractString
 end
 
-function setfeaturecontrasts!(
+function set_contrasts!(
         x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         contrasts::AbstractContrasts,
         )

@@ -55,7 +55,7 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 if load_pretrained
 else
-    featurecontrasts = PredictMD.featurecontrasts(df, featurenames)
+    contrasts = PredictMD.contrasts(df, featurenames)
 end
 
 # Define labels
@@ -74,7 +74,7 @@ DataFrames.describe(labelsdf[labelname])
 
 # Split data into training set (70%) and testing set (30%)
 trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    PredictMD.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,);
+    PredictMD.split_data(featuresdf,labelsdf,0.7);
 
 # Set up random forest regression model
 randomforestreg = PredictMD.singlelabeldataframerandomforestregression(
@@ -90,7 +90,7 @@ if load_pretrained
     PredictMD.load!(randomforestreg_filename, randomforestreg)
 else
     # set feature contrasts
-    PredictMD.setfeaturecontrasts!(randomforestreg, featurecontrasts)
+    PredictMD.set_contrasts!(randomforestreg, contrasts)
     # Train random forest model on training set
     PredictMD.fit!(randomforestreg,trainingfeaturesdf,traininglabelsdf,)
 end

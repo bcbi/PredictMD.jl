@@ -6,7 +6,7 @@ struct ImmutablePredictionsSingleLabelInt2StringTransformer <:
     levels::T2 where T2 <: AbstractVector
 end
 
-function setfeaturecontrasts!(
+function set_contrasts!(
         x::ImmutablePredictionsSingleLabelInt2StringTransformer,
         contrasts::AbstractContrasts,
         )

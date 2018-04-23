@@ -58,7 +58,7 @@ mutable struct LIBSVMModel <: AbstractEstimator
     end
 end
 
-function setfeaturecontrasts!(
+function set_contrasts!(
         x::LIBSVMModel,
         contrasts::AbstractContrasts,
         )
@@ -263,7 +263,7 @@ function _singlelabelmulticlassdataframesvmclassifier_LIBSVM(
         singlelabelname,
         )
     finalpipeline = ImmutableSimpleLinearPipeline(
-        [
+        Fittable[
             dftransformer,
             svmestimator,
             probapackager,
@@ -365,7 +365,7 @@ function _singlelabeldataframesvmregression_LIBSVM(
         singlelabelname,
         )
     finalpipeline = ImmutableSimpleLinearPipeline(
-        [
+        Fittable[
             dftransformer,
             svmestimator,
             predpackager,

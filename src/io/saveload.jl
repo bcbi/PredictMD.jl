@@ -4,8 +4,15 @@ import ProgressMeter
 
 function save(filename::AbstractString, x::Fittable)
     # make sure that the filename ends in ".jld2"
-    if splitext(filename)[2] !== ".jld2"
-        error("filename must end in \".jld2\"")
+    if lowercase(strip(splitext(filename)[2])) != ".jld2"
+        error(
+            string(
+                "Filename \"",
+                #filename,
+                lowercase(strip(splitext(filename)[2])),
+                "\" does not end in \".jld2\"",
+                )
+            )
     end
 
     # get all underlying objects
@@ -36,8 +43,14 @@ end
 
 function load!(filename::AbstractString, x::Fittable)
     # make sure that the filename ends in ".jld2"
-    if splitext(filename)[2] !== ".jld2"
-        error("filename must end in \".jld2\"")
+    if lowercase(strip(splitext(filename)[2])) != ".jld2"
+        error(
+            string(
+                "Filename \"",
+                filename,
+                "\" does not end in \".jld2\"",
+                )
+            )
     end
 
     # load the JLD2 file

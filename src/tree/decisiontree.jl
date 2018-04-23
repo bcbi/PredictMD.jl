@@ -39,7 +39,7 @@ mutable struct DecisionTreeModel <:
     end
 end
 
-function setfeaturecontrasts!(
+function set_contrasts!(
         x::DecisionTreeModel,
         contrasts::AbstractContrasts,
         )
@@ -178,7 +178,7 @@ function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
         singlelabelname,
         )
     finalpipeline = ImmutableSimpleLinearPipeline(
-        [
+        Fittable[
             dftransformer,
             randomforestestimator,
             probapackager,
@@ -236,7 +236,7 @@ function _singlelabeldataframerandomforestregression_DecisionTree(
         singlelabelname,
         )
     finalpipeline = ImmutableSimpleLinearPipeline(
-        [
+        Fittable[
             dftransformer,
             randomforestestimator,
             predpackager,

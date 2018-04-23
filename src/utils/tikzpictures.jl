@@ -1,7 +1,7 @@
 import TikzPictures
 
 function save(tp::TikzPictures.TikzPicture, filename::AbstractString)
-    extension = splitext(filename)[2]
+    extension = lowercase(strip(splitext(filename)[2]))
     if extension == ".pdf"
         return save_pdf(tp, filename)
     elseif extension == ".tex"
@@ -48,7 +48,7 @@ function open(tp::TikzPictures.TikzPicture)
 end
 
 function open(tp::TikzPictures.TikzPicture, filename::AbstractString)
-    saveresult = savesvg(tp, filename)
+    saveresult = save_svg(tp, filename)
     openresult = open(filename)
     return openresult
 end

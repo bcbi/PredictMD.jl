@@ -3,7 +3,7 @@ struct ImmutablePackageMultiLabelPredictionTransformer <:
     labelnames::T1 where T1 <: SymbolVector
 end
 
-function setfeaturecontrasts!(
+function set_contrasts!(
         x::ImmutablePackageMultiLabelPredictionTransformer,
         contrasts::AbstractContrasts,
         )

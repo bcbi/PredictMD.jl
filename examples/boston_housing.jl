@@ -71,7 +71,7 @@ df = CSV.read(
 DataFrames.dropmissing!(df)
 
 # Shuffle rows
-PredictMD.shufflerows!(df)
+PredictMD.shuffle_rows!(df)
 
 # Define labels
 categoricalfeaturenames = Symbol[]
@@ -94,7 +94,7 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
 else
-    featurecontrasts = PredictMD.featurecontrasts(df, featurenames)
+    contrasts = PredictMD.contrasts(df, featurenames)
 end
 
 # Define labels
@@ -109,7 +109,7 @@ DataFrames.describe(labelsdf[labelname])
 
 # Split data into training set (70%) and testing set (30%)
 trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    PredictMD.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,)
+    PredictMD.split_data(featuresdf,labelsdf,0.7)
 
 ##############################################################################
 ##############################################################################
@@ -134,7 +134,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(linearreg_filename, linearreg)
 else
     # set feature contrasts
-    PredictMD.setfeaturecontrasts!(linearreg, featurecontrasts)
+    PredictMD.set_contrasts!(linearreg, contrasts)
     # Train linear regression model
     PredictMD.fit!(linearreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -194,7 +194,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(randomforestreg_filename, randomforestreg)
 else
     # set feature contrasts
-    PredictMD.setfeaturecontrasts!(randomforestreg, featurecontrasts)
+    PredictMD.set_contrasts!(randomforestreg, contrasts)
     # Train random forest model on training set
     PredictMD.fit!(randomforestreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -252,7 +252,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
 else
     # set feature contrasts
-    PredictMD.setfeaturecontrasts!(epsilonsvr_svmreg, featurecontrasts)
+    PredictMD.set_contrasts!(epsilonsvr_svmreg, contrasts)
     # Train epsilon-SVR model on training set
     PredictMD.fit!(epsilonsvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -310,7 +310,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(nusvr_svmreg_filename, nusvr_svmreg)
 else
     # set feature contrasts
-    PredictMD.setfeaturecontrasts!(nusvr_svmreg, featurecontrasts)
+    PredictMD.set_contrasts!(nusvr_svmreg, contrasts)
     # Train nu-SVR model
     PredictMD.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -373,11 +373,11 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
 else
     # Randomly initialize model weights
     knetmlp_modelweights = Any[
-        # input layer has dimension featurecontrasts.numarrayfeatures
+        # input layer has dimension contrasts.num_array_columns
         #
         # hidden layer (10 neurons):
         Cfloat.(
-            0.1f0*randn(Cfloat,10,featurecontrasts.numarrayfeatures) # weights
+            0.1f0*randn(Cfloat,10,contrasts.num_array_columns) # weights
             ),
         Cfloat.(
             zeros(Cfloat,10,1) # biases
@@ -456,7 +456,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(knetmlpreg_filename, knetmlpreg)
 else
     # set feature contrasts
-    PredictMD.setfeaturecontrasts!(knetmlpreg, featurecontrasts)
+    PredictMD.set_contrasts!(knetmlpreg, contrasts)
     # Train multilayer perceptron model on training set
     PredictMD.fit!(knetmlpreg,trainingfeaturesdf,traininglabelsdf,)
 end

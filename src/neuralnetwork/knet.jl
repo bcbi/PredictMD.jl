@@ -84,7 +84,7 @@ mutable struct KnetModel <: AbstractEstimator
     end
 end
 
-function setfeaturecontrasts!(
+function set_contrasts!(
         x::KnetModel,
         contrasts::AbstractContrasts,
         )
@@ -363,7 +363,7 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
         singlelabelname,
         )
     finalpipeline = ImmutableSimpleLinearPipeline(
-        [
+        Fittable[
             dftransformer,
             knetestimator,
             predprobalabelfixer,
@@ -457,7 +457,7 @@ function _singlelabeldataframeknetregression_Knet(
         [singlelabelname,],
         )
     finalpipeline = ImmutableSimpleLinearPipeline(
-        [
+        Fittable[
             dftransformer,
             knetestimator,
             predpackager,

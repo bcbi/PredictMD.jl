@@ -5,7 +5,7 @@ struct ImmutableFeatureArrayTransposerTransformer <:
         AbstractEstimator
 end
 
-function setfeaturecontrasts!(
+function set_contrasts!(
         x::ImmutableFeatureArrayTransposerTransformer,
         contrasts::AbstractContrasts,
         )
@@ -102,7 +102,7 @@ function DataFrame2LIBSVMTransformer(
         )
     featuretransposetransformer = ImmutableFeatureArrayTransposerTransformer()
     result = ImmutableSimpleLinearPipeline(
-        [
+        Fittable[
             df2decisiontreetransformer,
             featuretransposetransformer,
             ],

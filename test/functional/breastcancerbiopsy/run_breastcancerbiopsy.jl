@@ -36,7 +36,7 @@ df = RDatasets.dataset("MASS", "biopsy")
 DataFrames.dropmissing!(df)
 
 # Shuffle rows
-PredictMD.shufflerows!(df)
+PredictMD.shuffle_rows!(df)
 
 # Define features
 categoricalfeaturenames = Symbol[]
@@ -55,7 +55,7 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
 else
-    featurecontrasts = PredictMD.featurecontrasts(df, featurenames)
+    contrasts = PredictMD.contrasts(df, featurenames)
 end
 
 # Define labels
@@ -70,7 +70,7 @@ labelsdf = df[[labelname]]
 
 # Split data into training set (70%) and testing set (30%)
 trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    PredictMD.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,)
+    PredictMD.split_data(featuresdf,labelsdf,0.7)
 
 ##############################################################################
 ##############################################################################
@@ -132,7 +132,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(logisticclassifier_filename, logisticclassifier)
 else
     # set feature contrasts
-    PredictMD.setfeaturecontrasts!(logisticclassifier, featurecontrasts)
+    PredictMD.set_contrasts!(logisticclassifier, contrasts)
     # Train logistic classifier model on smoted training set
     PredictMD.fit!(
         logisticclassifier,
@@ -202,7 +202,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(probitclassifier_filename, probitclassifier)
 else
     # set feature contrasts
-    PredictMD.setfeaturecontrasts!(probitclassifier, featurecontrasts)
+    PredictMD.set_contrasts!(probitclassifier, contrasts)
     # Train probit classifier model on smoted training set
     PredictMD.fit!(
         probitclassifier,
@@ -273,7 +273,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(rfclassifier_filename, rfclassifier)
 else
     # set feature contrasts
-    PredictMD.setfeaturecontrasts!(rfclassifier, featurecontrasts)
+    PredictMD.set_contrasts!(rfclassifier, contrasts)
     # Train random forest classifier model on smoted training set
     PredictMD.fit!(
         rfclassifier,
@@ -341,7 +341,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(csvc_svmclassifier_filename, csvc_svmclassifier)
 else
     # set feature contrasts
-    PredictMD.setfeaturecontrasts!(csvc_svmclassifier, featurecontrasts)
+    PredictMD.set_contrasts!(csvc_svmclassifier, contrasts)
     # Train C-SVC model on smoted training set
     PredictMD.fit!(
         csvc_svmclassifier,
@@ -409,7 +409,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(nusvc_svmclassifier_filename, nusvc_svmclassifier)
 else
     # set feature contrasts
-    PredictMD.setfeaturecontrasts!(nusvc_svmclassifier, featurecontrasts)
+    PredictMD.set_contrasts!(nusvc_svmclassifier, contrasts)
     # Train nu-SVC model on smoted training set
     PredictMD.fit!(
         nusvc_svmclassifier,
@@ -493,11 +493,11 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
 else
     # Randomly initialize model weights
     knetmlp_modelweights = Any[
-        # input layer has dimension featurecontrasts.numarrayfeatures
+        # input layer has dimension contrasts.num_array_columns
         #
         # first hidden layer (64 neurons):
         Cfloat.(
-            0.1f0*randn(Cfloat,64,featurecontrasts.numarrayfeatures) # weights
+            0.1f0*randn(Cfloat,64,contrasts.num_array_columns) # weights
             ),
         Cfloat.(
             zeros(Cfloat,64,1) # biases
@@ -586,7 +586,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(knetmlp_filename, knetmlpclassifier)
 else
     # set feature contrasts
-    PredictMD.setfeaturecontrasts!(knetmlpclassifier, featurecontrasts)
+    PredictMD.set_contrasts!(knetmlpclassifier, contrasts)
     # Train multilayer perceptron model on training set
     PredictMD.fit!(
         knetmlpclassifier,
@@ -677,16 +677,18 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 ##############################################################################
 ##############################################################################
 
+all_models = PredictMD.Fittable[
+    logisticclassifier,
+    probitclassifier,
+    rfclassifier,
+    csvc_svmclassifier,
+    nusvc_svmclassifier,
+    knetmlpclassifier,
+    ]
+
 # Compare performance of all models on smoted training set
 showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
-    [
-        logisticclassifier,
-        probitclassifier,
-        rfclassifier,
-        csvc_svmclassifier,
-        nusvc_svmclassifier,
-        knetmlpclassifier,
-        ],
+    all_models,
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
@@ -694,14 +696,7 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
     sensitivity = 0.95,
     ))
 showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
-    [
-        logisticclassifier,
-        probitclassifier,
-        rfclassifier,
-        csvc_svmclassifier,
-        nusvc_svmclassifier,
-        knetmlpclassifier,
-        ],
+    all_models,
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
@@ -709,14 +704,7 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
     specificity = 0.95,
     ))
 showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
-    [
-        logisticclassifier,
-        probitclassifier,
-        rfclassifier,
-        csvc_svmclassifier,
-        nusvc_svmclassifier,
-        knetmlpclassifier,
-        ],
+    all_models,
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
@@ -724,31 +712,17 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
     maximize = :f1score,
     ))
 showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
-    [
-        logisticclassifier,
-        probitclassifier,
-        rfclassifier,
-        csvc_svmclassifier,
-        nusvc_svmclassifier,
-        knetmlpclassifier,
-        ],
+    all_models,
     trainingfeaturesdf,
     traininglabelsdf,
     labelname,
     positiveclass;
-    maximize = :cohenkappa,
+    maximize = :cohen_kappa,
     ))
 
 # Compare performance of all models on testing set
 showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
-    [
-        logisticclassifier,
-        probitclassifier,
-        rfclassifier,
-        csvc_svmclassifier,
-        nusvc_svmclassifier,
-        knetmlpclassifier,
-        ],
+    all_models,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -756,14 +730,7 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
     sensitivity = 0.95,
     ))
 showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
-    [
-        logisticclassifier,
-        probitclassifier,
-        rfclassifier,
-        csvc_svmclassifier,
-        nusvc_svmclassifier,
-        knetmlpclassifier,
-        ],
+    all_models,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -771,14 +738,7 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
     specificity = 0.95,
     ))
 showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
-    [
-        logisticclassifier,
-        probitclassifier,
-        rfclassifier,
-        csvc_svmclassifier,
-        nusvc_svmclassifier,
-        knetmlpclassifier,
-        ],
+    all_models,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -786,31 +746,17 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
     maximize = :f1score,
     ))
 showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
-    [
-        logisticclassifier,
-        probitclassifier,
-        rfclassifier,
-        csvc_svmclassifier,
-        nusvc_svmclassifier,
-        knetmlpclassifier,
-        ],
+    all_models,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
     positiveclass;
-    maximize = :cohenkappa,
+    maximize = :cohen_kappa,
     ))
 
 # Plot receiver operating characteristic curves for all models on testing set.
 rocplottesting = PredictMD.plotroccurves(
-    [
-        logisticclassifier,
-        probitclassifier,
-        rfclassifier,
-        csvc_svmclassifier,
-        nusvc_svmclassifier,
-        knetmlpclassifier,
-        ],
+    all_models,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
@@ -820,14 +766,7 @@ PredictMD.open(rocplottesting)
 
 # Plot precision-recall curves for all models on testing set.
 prplottesting = PredictMD.plotprcurves(
-    [
-        logisticclassifier,
-        probitclassifier,
-        rfclassifier,
-        csvc_svmclassifier,
-        nusvc_svmclassifier,
-        knetmlpclassifier,
-        ],
+    all_models,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,

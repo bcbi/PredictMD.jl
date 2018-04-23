@@ -60,7 +60,7 @@ function smote(
     if minorityclass == ""
         error("you need to specify minorityclass")
     end
-    pct_under = _calculate_smote_pct_under(
+    pct_under = calculate_smote_pct_under(
         ;
         pct_over = pct_over,
         minority_to_majority_ratio = minority_to_majority_ratio,

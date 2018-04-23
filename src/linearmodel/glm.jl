@@ -51,7 +51,7 @@ function set_history!(
     return nothing
 end
 
-function setfeaturecontrasts!(
+function set_contrasts!(
         x::GLMModel,
         contrasts::AbstractContrasts,
         )
@@ -186,7 +186,7 @@ function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
         singlelabelname,
         )
     finalpipeline = ImmutableSimpleLinearPipeline(
-        [
+        Fittable[
             dftransformer,
             glmestimator,
             predictlabelfixer,
@@ -257,7 +257,7 @@ function _singlelabelbinaryclassdataframeprobitclassifier_GLM(
         singlelabelname,
         )
     finalpipeline = ImmutableSimpleLinearPipeline(
-        [
+        Fittable[
             dftransformer,
             glmestimator,
             predictlabelfixer,
@@ -310,7 +310,7 @@ function _singlelabeldataframelinearregression_GLM(
         isregressionmodel = true,
         )
     finalpipeline = ImmutableSimpleLinearPipeline(
-        [
+        Fittable[
             glmestimator,
             ];
         name = name,

@@ -59,7 +59,7 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 if load_pretrained
 else
-    featurecontrasts = PredictMD.featurecontrasts(df, featurenames)
+    contrasts = PredictMD.contrasts(df, featurenames)
 end
 
 # Define labels
@@ -78,7 +78,7 @@ DataFrames.describe(labelsdf[labelname])
 
 # Split data into training set (70%) and testing set (30%)
 trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    PredictMD.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,);
+    PredictMD.split_data(featuresdf,labelsdf,0.7);
 
 # Set up linear regression model
 linearreg = PredictMD.singlelabeldataframelinearregression(
@@ -93,7 +93,7 @@ if load_pretrained
     PredictMD.load!(linearreg_filename, linearreg)
 else
     # set feature contrasts
-    PredictMD.setfeaturecontrasts!(linearreg, featurecontrasts)
+    PredictMD.set_contrasts!(linearreg, contrasts)
     # Train linear regression model
     PredictMD.fit!(linearreg,trainingfeaturesdf,traininglabelsdf,)
 end

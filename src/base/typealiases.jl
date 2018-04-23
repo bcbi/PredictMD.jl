@@ -2,9 +2,9 @@ import MLBase
 
 const Fittable = Union{AbstractEstimator,AbstractPipeline,AbstractTransformer}
 
-const FittableArray = AbstractArray{T} where T <: Fittable
-const FittableVector = AbstractVector{T} where T <: Fittable
-const FittableMatrix = AbstractMatrix{T} where T <: Fittable
+const FittableArray = AbstractArray{Fittable}
+const FittableVector = AbstractVector{Fittable}
+const FittableMatrix = AbstractMatrix{Fittable}
 
 const ROCNumsArray = AbstractArray{T} where T <: MLBase.ROCNums
 const ROCNumsVector = AbstractVector{T} where T <: MLBase.ROCNums
