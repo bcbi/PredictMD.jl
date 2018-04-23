@@ -1,7 +1,7 @@
 import MLBase
 import StatsBase
 
-function average_precision_score(
+function avg_precision(
         allprecisions::StatsBase.RealVector,
         allrecalls::StatsBase.RealVector,
         allthresholds::StatsBase.RealVector,
@@ -35,7 +35,7 @@ function averageprecisionscore(
         )
     x = allrecalls
     y = allprecisions
-    avgprecision = average_precision_score(
+    avgprecision = avg_precision(
         allprecisions,
         allrecalls,
         allthresholds,

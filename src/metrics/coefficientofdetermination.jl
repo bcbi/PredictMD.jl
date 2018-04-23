@@ -1,6 +1,10 @@
 import StatsBase
 
-function R2_coefficient_of_determination(
+"""
+r2_score(ytrue, ypred)
+Computes coefficient of determination.
+"""
+function r2_score(
         ytrue::StatsBase.RealVector,
         ypred::StatsBase.RealVector,
         )
@@ -21,11 +25,3 @@ function R2_coefficient_of_determination(
     return R2
 end
 
-function fraction_of_variance_unexplained(
-        ytrue::StatsBase.RealVector,
-        ypred::StatsBase.RealVector,
-        )
-    R2 = R2_coefficient_of_determination(ytrue, ypred)
-    FVU = 1 - R2
-    return FVU
-end

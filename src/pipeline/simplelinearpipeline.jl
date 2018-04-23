@@ -29,7 +29,7 @@ function get_underlying(
         saving::Bool = false,
         loading::Bool = false,
         )
-    allunderlying = [
+    underlying = [
         get_underlying(
             o;
             saving=saving,
@@ -38,15 +38,15 @@ function get_underlying(
         ]
     if saving || loading
     else
-        deletenothings!(allunderlying)
-        if length(allunderlying) == 0
-            allunderlying = nothing
-        elseif length(allunderlying) == 1
-            allunderlying = allunderlying[1]
+        deletenothings!(underlying)
+        if length(underlying) == 0
+            underlying = nothing
+        elseif length(underlying) == 1
+            underlying = underlying[1]
         else
         end
     end
-    return allunderlying
+    return underlying
 end
 
 function set_underlying!(
@@ -74,7 +74,7 @@ function get_history(
         saving::Bool = false,
         loading::Bool = false,
         )
-    allhistory = [
+    history = [
         get_history(
             o;
             saving = saving,
@@ -83,15 +83,15 @@ function get_history(
         ]
     if saving || loading
     else
-        deletenothings!(allhistory)
-        if length(allhistory) == 0
-            allhistory = nothing
-        elseif length(allhistory) == 1
-            allhistory = allhistory[1]
+        deletenothings!(history)
+        if length(history) == 0
+            history = nothing
+        elseif length(history) == 1
+            history = history[1]
         else
         end
     end
-    return allhistory
+    return history
 end
 
 function set_history!(

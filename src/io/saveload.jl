@@ -9,10 +9,10 @@ function save(filename::AbstractString, x::Fittable)
     end
 
     # get all underlying objects
-    allunderlying = get_underlying(x;saving=true,)
+    underlying = get_underlying(x;saving=true,)
 
     # get all value history objects
-    allhistory = get_history(x;saving=true,)
+    history = get_history(x;saving=true,)
 
     # make sure the parent directory exists
     parentdirectory = Base.Filesystem.dirname(filename)
@@ -22,8 +22,8 @@ function save(filename::AbstractString, x::Fittable)
     FileIO.save(
         filename,
         Dict(
-            "allunderlying" => allunderlying,
-            "allhistory" => allhistory,
+            "underlying" => underlying,
+            "history" => history,
             ),
         )
 
@@ -44,16 +44,16 @@ function load!(filename::AbstractString, x::Fittable)
     alldatasets = FileIO.load(filename)
 
     # get the underlying objects
-    allunderlying = alldatasets["allunderlying"]
+    underlying = alldatasets["underlying"]
 
     # get the value history objects
-    allhistory = alldatasets["allhistory"]
+    history = alldatasets["history"]
 
     # go through the Fittable and set all underlying objects
-    set_underlying!(x,allunderlying;loading=true,)
+    set_underlying!(x,underlying;loading=true,)
 
     # go through the Fittable and set all value history objects
-    set_history!(x,allhistory;loading=true,)
+    set_history!(x,history;loading=true,)
 
     # print info message
     info(string("Loaded model from file ", filename))

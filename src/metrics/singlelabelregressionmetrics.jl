@@ -38,7 +38,7 @@ function _singlelabelregressionmetrics(
         predictionsalllabels[singlelabelname],
         )
     results = Dict()
-    results[:R2coefficientofdetermination] = R2coefficientofdetermination(
+    results[:r2_score] = r2_score(
         ytrue,
         ypred,
         )
@@ -81,7 +81,7 @@ function singlelabelregressionmetrics(
     result[:metric] = "R^2 (coefficient of determination)"
     for i = 1:length(vectorofestimators)
         result[Symbol(vectorofestimators[i].name)] = [
-            metricsforeachestimator[i][:R2coefficientofdetermination]
+            metricsforeachestimator[i][:r2_score]
             ]
     end
     return result
