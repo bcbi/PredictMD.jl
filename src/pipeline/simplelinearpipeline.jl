@@ -1,13 +1,13 @@
-struct ImmutableSimpleLinearPipeline <: AbstractPipeline
+struct SimplePipeline <: AbstractPipeline
     name::T1 where T1 <: AbstractString
     objectsvector::T2 where T2 <: AbstractVector{Fittable}
 end
 
-function ImmutableSimpleLinearPipeline(
+function SimplePipeline(
         objectsvector::AbstractVector{Fittable};
         name::AbstractString = "",
         )
-    result = ImmutableSimpleLinearPipeline(
+    result = SimplePipeline(
         name,
         objectsvector,
         )
@@ -15,7 +15,7 @@ function ImmutableSimpleLinearPipeline(
 end
 
 function set_contrasts!(
-        x::ImmutableSimpleLinearPipeline,
+        x::SimplePipeline,
         contrasts::AbstractContrasts,
         )
     for i = 1:length(x.objectsvector)
@@ -25,7 +25,7 @@ function set_contrasts!(
 end
 
 function get_underlying(
-        x::ImmutableSimpleLinearPipeline;
+        x::SimplePipeline;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -50,7 +50,7 @@ function get_underlying(
 end
 
 function set_underlying!(
-        x::ImmutableSimpleLinearPipeline,
+        x::SimplePipeline,
         object;
         saving::Bool = false,
         loading::Bool = false,
@@ -70,7 +70,7 @@ function set_underlying!(
 end
 
 function get_history(
-        x::ImmutableSimpleLinearPipeline;
+        x::SimplePipeline;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -95,7 +95,7 @@ function get_history(
 end
 
 function set_history!(
-        x::ImmutableSimpleLinearPipeline,
+        x::SimplePipeline,
         h;
         saving::Bool = false,
         loading::Bool = false,
@@ -115,7 +115,7 @@ function set_history!(
 end
 
 function fit!(
-        simplelinearpipeline::ImmutableSimpleLinearPipeline,
+        simplelinearpipeline::SimplePipeline,
         varargs...;
         kwargs...
         )
@@ -139,7 +139,7 @@ function fit!(
 end
 
 function predict(
-        simplelinearpipeline::ImmutableSimpleLinearPipeline,
+        simplelinearpipeline::SimplePipeline,
         varargs...;
         kwargs...
         )
@@ -163,7 +163,7 @@ function predict(
 end
 
 function predict_proba(
-        simplelinearpipeline::ImmutableSimpleLinearPipeline,
+        simplelinearpipeline::SimplePipeline,
         varargs...;
         kwargs...
         )

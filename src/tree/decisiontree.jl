@@ -177,7 +177,7 @@ function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
     predpackager = ImmutablePackageSingleLabelPredictionTransformer(
         singlelabelname,
         )
-    finalpipeline = ImmutableSimpleLinearPipeline(
+    finalpipeline = SimplePipeline(
         Fittable[
             dftransformer,
             randomforestestimator,
@@ -235,7 +235,7 @@ function _singlelabeldataframerandomforestregression_DecisionTree(
     predpackager = ImmutablePackageSingleLabelPredictionTransformer(
         singlelabelname,
         )
-    finalpipeline = ImmutableSimpleLinearPipeline(
+    finalpipeline = SimplePipeline(
         Fittable[
             dftransformer,
             randomforestestimator,

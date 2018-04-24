@@ -362,7 +362,7 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
     predpackager = ImmutablePackageSingleLabelPredictionTransformer(
         singlelabelname,
         )
-    finalpipeline = ImmutableSimpleLinearPipeline(
+    finalpipeline = SimplePipeline(
         Fittable[
             dftransformer,
             knetestimator,
@@ -456,7 +456,7 @@ function _singlelabeldataframeknetregression_Knet(
     predpackager = ImmutablePackageMultiLabelPredictionTransformer(
         [singlelabelname,],
         )
-    finalpipeline = ImmutableSimpleLinearPipeline(
+    finalpipeline = SimplePipeline(
         Fittable[
             dftransformer,
             knetestimator,

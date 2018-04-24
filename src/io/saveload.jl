@@ -8,8 +8,7 @@ function save(filename::AbstractString, x::Fittable)
         error(
             string(
                 "Filename \"",
-                #filename,
-                lowercase(strip(splitext(filename)[2])),
+                filename,
                 "\" does not end in \".jld2\"",
                 )
             )

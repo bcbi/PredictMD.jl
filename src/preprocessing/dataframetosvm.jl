@@ -101,7 +101,7 @@ function DataFrame2LIBSVMTransformer(
         levels = levels,
         )
     featuretransposetransformer = ImmutableFeatureArrayTransposerTransformer()
-    result = ImmutableSimpleLinearPipeline(
+    result = SimplePipeline(
         Fittable[
             df2decisiontreetransformer,
             featuretransposetransformer,

@@ -185,7 +185,7 @@ function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         singlelabelname,
         )
-    finalpipeline = ImmutableSimpleLinearPipeline(
+    finalpipeline = SimplePipeline(
         Fittable[
             dftransformer,
             glmestimator,
@@ -256,7 +256,7 @@ function _singlelabelbinaryclassdataframeprobitclassifier_GLM(
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         singlelabelname,
         )
-    finalpipeline = ImmutableSimpleLinearPipeline(
+    finalpipeline = SimplePipeline(
         Fittable[
             dftransformer,
             glmestimator,
@@ -309,7 +309,7 @@ function _singlelabeldataframelinearregression_GLM(
         isclassificationmodel = false,
         isregressionmodel = true,
         )
-    finalpipeline = ImmutableSimpleLinearPipeline(
+    finalpipeline = SimplePipeline(
         Fittable[
             glmestimator,
             ];
