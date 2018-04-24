@@ -34,7 +34,7 @@ DataFrames.head(df)
 DataFrames.dropmissing!(df)
 
 # Shuffle rows
-PredictMD.shufflerows!(df)
+PredictMD.shuffle_rows!(df)
 
 # Define labels
 categoricalfeaturenames = Symbol[]
@@ -58,7 +58,7 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 if load_pretrained
 else
-    featurecontrasts = PredictMD.featurecontrasts(df, featurenames)
+    contrasts = PredictMD.contrasts(df, featurenames)
 end
 
 # Define labels
@@ -77,7 +77,7 @@ DataFrames.describe(labelsdf[labelname])
 
 # Split data into training set (70%) and testing set (30%)
 trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    PredictMD.train_test_split(featuresdf,labelsdf;training = 0.7,testing = 0.3,);
+    PredictMD.split_data(featuresdf,labelsdf,0.7);
 
 # Set up epsilon-SVR model
 epsilonsvr_svmreg = PredictMD.singlelabeldataframesvmregression(
@@ -94,7 +94,7 @@ if load_pretrained
     PredictMD.load!(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
 else
     # set feature contrasts
-    PredictMD.setfeaturecontrasts!(epsilonsvr_svmreg, featurecontrasts)
+    PredictMD.set_contrasts!(epsilonsvr_svmreg, contrasts)
     # Train epsilon-SVR model on training set
     PredictMD.fit!(epsilonsvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -146,7 +146,7 @@ if load_pretrained
     PredictMD.load!(nusvr_svmreg_filename, nusvr_svmreg)
 else
     # set feature contrasts
-    PredictMD.setfeaturecontrasts!(nusvr_svmreg, featurecontrasts)
+    PredictMD.set_contrasts!(nusvr_svmreg, contrasts)
     # Train nu-SVR model
     PredictMD.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end

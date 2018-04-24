@@ -2,17 +2,17 @@ import DataFrames
 import StatsModels
 
 mutable struct MutableDataFrame2ClassificationKnetTransformer <:
-        AbstractPrimitiveObject
+        AbstractEstimator
     featurenames::T1 where T1 <: AbstractVector
-    labelnames::T2 where T2 <: SymbolVector
+    labelnames::T2 where T2 <: AbstractVector{<:Symbol}
     labellevels::T3 where T3 <: Associative
     index::T4 where T4 <: Integer
     transposefeatures::T5 where T5 <: Bool
     transposelabels::T6 where T6 <: Bool
-    dffeaturecontrasts::T7 where T7 <: AbstractContrasts
+    dfcontrasts::T7 where T7 <: AbstractContrasts
     function MutableDataFrame2ClassificationKnetTransformer(
             featurenames::AbstractVector,
-            labelnames::SymbolVector,
+            labelnames::AbstractVector{<:Symbol},
             labellevels::Associative,
             index::Integer;
             transposefeatures::Bool = true,
@@ -30,34 +30,34 @@ mutable struct MutableDataFrame2ClassificationKnetTransformer <:
     end
 end
 
-function setfeaturecontrasts!(
+function set_contrasts!(
         x::MutableDataFrame2ClassificationKnetTransformer,
         contrasts::AbstractContrasts,
         )
-    x.dffeaturecontrasts = contrasts
+    x.dfcontrasts = contrasts
     return nothing
 end
 
-function getunderlying(
+function get_underlying(
         x::MutableDataFrame2ClassificationKnetTransformer;
         saving::Bool = false,
         loading::Bool = false,
         )
-    result = x.dffeaturecontrasts
+    result = x.dfcontrasts
     return result
 end
 
-function setunderlying!(
+function set_underlying!(
         x::MutableDataFrame2ClassificationKnetTransformer,
         contrasts;
         saving::Bool = false,
         loading::Bool = false,
         )
-    x.dffeaturecontrasts = contrasts
+    x.dfcontrasts = contrasts
     return nothing
 end
 
-function gethistory(
+function get_history(
         x::MutableDataFrame2ClassificationKnetTransformer;
         saving::Bool = false,
         loading::Bool = false,
@@ -65,7 +65,7 @@ function gethistory(
     return nothing
 end
 
-function sethistory!(
+function set_history!(
         x::MutableDataFrame2ClassificationKnetTransformer,
         h;
         saving::Bool = false,
@@ -114,7 +114,7 @@ function transform(
     modelframe = StatsModels.ModelFrame(
         modelformula,
         featuresdf;
-        contrasts = transformer.dffeaturecontrasts.featurecontrasts,
+        contrasts = transformer.dfcontrasts.contrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     featuresarray = modelmatrix.m
@@ -142,7 +142,7 @@ function transform(
     modelframe = StatsModels.ModelFrame(
         modelformula,
         featuresdf;
-        contrasts = transformer.dffeaturecontrasts.featurecontrasts,
+        contrasts = transformer.dfcontrasts.contrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     featuresarray = modelmatrix.m
@@ -178,15 +178,15 @@ function predict_proba(
 end
 
 mutable struct MutableDataFrame2RegressionKnetTransformer <:
-        AbstractPrimitiveObject
+        AbstractEstimator
     featurenames::T1 where T1 <: AbstractVector
-    labelnames::T2 where T2 <: SymbolVector
+    labelnames::T2 where T2 <: AbstractVector{<:Symbol}
     transposefeatures::T3 where T3 <: Bool
     transposelabels::T4 where T4 <: Bool
-    dffeaturecontrasts::T5 where T5 <: AbstractContrasts
+    dfcontrasts::T5 where T5 <: AbstractContrasts
     function MutableDataFrame2RegressionKnetTransformer(
             featurenames::AbstractVector,
-            labelnames::SymbolVector;
+            labelnames::AbstractVector{<:Symbol};
             transposefeatures::Bool = true,
             transposelabels::Bool = false,
             )
@@ -200,34 +200,34 @@ mutable struct MutableDataFrame2RegressionKnetTransformer <:
     end
 end
 
-function setfeaturecontrasts!(
+function set_contrasts!(
         x::MutableDataFrame2RegressionKnetTransformer,
         contrasts::AbstractContrasts,
         )
-    x.dffeaturecontrasts = contrasts
+    x.dfcontrasts = contrasts
     return nothing
 end
 
-function getunderlying(
+function get_underlying(
         x::MutableDataFrame2RegressionKnetTransformer;
         saving::Bool = false,
         loading::Bool = false,
         )
-    result = x.dffeaturecontrasts
+    result = x.dfcontrasts
     return result
 end
 
-function setunderlying!(
+function set_underlying!(
         x::MutableDataFrame2RegressionKnetTransformer,
         object;
         saving::Bool = false,
         loading::Bool = false,
         )
-    x.dffeaturecontrasts = object
+    x.dfcontrasts = object
     return nothing
 end
 
-function gethistory(
+function get_history(
         x::MutableDataFrame2RegressionKnetTransformer;
         saving::Bool = false,
         loading::Bool = false,
@@ -235,7 +235,7 @@ function gethistory(
     return nothing
 end
 
-function sethistory!(
+function set_history!(
         x::MutableDataFrame2RegressionKnetTransformer,
         h;
         saving::Bool = false,
@@ -263,7 +263,7 @@ function transform(
     modelframe = StatsModels.ModelFrame(
         modelformula,
         featuresdf;
-        contrasts = transformer.dffeaturecontrasts.featurecontrasts,
+        contrasts = transformer.dfcontrasts.contrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     featuresarray = modelmatrix.m
@@ -291,7 +291,7 @@ function transform(
     modelframe = StatsModels.ModelFrame(
         modelformula,
         featuresdf;
-        contrasts = transformer.dffeaturecontrasts.featurecontrasts,
+        contrasts = transformer.dfcontrasts.contrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     featuresarray = modelmatrix.m

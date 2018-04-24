@@ -2,9 +2,9 @@ import MLBase
 import ROCAnalysis
 import StatsBase
 
-function _aluthge_aurocc(
-        ytrue::StatsBase.IntegerVector,
-        yscore::StatsBase.RealVector,
+function _aurocc(
+        ytrue::AbstractVector{<:Integer},
+        yscore::AbstractVector{<:Real},
         )
     allfpr, alltpr, allthresholds = roccurve(
         ytrue,
@@ -18,41 +18,38 @@ function _aluthge_aurocc(
     #
     x = allfpr
     y = alltpr
-    Aluthge_aurocc = trapz(x, y)
-    return Aluthge_aurocc
+    aurocc_result = trapz(x, y)
+    return aurocc_result
 end
 
-function _rocanalysis_aurocc(
-        ytrue::StatsBase.IntegerVector,
-        yscore::StatsBase.RealVector,
+function _aurocc_verify(
+        ytrue::AbstractVector{<:Integer},
+        yscore::AbstractVector{<:Real},
         )
     targetlevel = 1
     nontargetlevel = 0
     targetscores = yscore[ytrue .== targetlevel]
     nontargetscores = yscore[ytrue .== nontargetlevel]
     r = ROCAnalysis.roc(targetscores, nontargetscores)
-    complementof_ROCAnalysis_aurocc = ROCAnalysis.auc(r)
-    ROCAnalysis_aurocc = 1 - complementof_ROCAnalysis_aurocc
-    return ROCAnalysis_aurocc
+    complement_of_aurocc = ROCAnalysis.auc(r)
+    aurocc_result = 1 - complement_of_aurocc
+    return aurocc_result
 end
 
 function aurocc(
-        ytrue::StatsBase.IntegerVector,
-        yscore::StatsBase.RealVector,
+        ytrue::AbstractVector{<:Integer},
+        yscore::AbstractVector{<:Real},
         )
-    Aluthge_aurocc = _aluthge_aurocc(
+    aurocc_value = _aurocc(
         ytrue,
         yscore,
         )
-    ROCAnalysis_aurocc = _rocanalysis_aurocc(
+    aurocc_verify_value = _aurocc_verify(
         ytrue,
         yscore,
         )
-    if !( isapprox(Aluthge_aurocc, ROCAnalysis_aurocc; atol=0.00000001) )
-        msg = "Aluthge_aurocc is not approx equal to ROCAnalysis_aurocc.\n" *
-            "Aluthge_aurocc = $(Aluthge_aurocc)\n" *
-            "ROCAnalysis_aurocc = $(ROCAnalysis_aurocc)\n"
-        error(msg)
+    if !( isapprox(aurocc_value, aurocc_verify_value; atol=0.00000001) )
+        error("Was not able to accurately compute the AUROCC.")
     end
-    return Aluthge_aurocc
+    return aurocc_value
 end

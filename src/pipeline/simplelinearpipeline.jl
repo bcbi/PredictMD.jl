@@ -1,36 +1,36 @@
-struct ImmutableSimpleLinearPipeline <: AbstractCompositeObject
+struct SimplePipeline <: AbstractPipeline
     name::T1 where T1 <: AbstractString
-    objectsvector::T2 where T2 <: AbstractObjectVector
+    objectsvector::T2 where T2 <: AbstractVector{Fittable}
 end
 
-function ImmutableSimpleLinearPipeline(
-        objectsvector::AbstractObjectVector;
+function SimplePipeline(
+        objectsvector::AbstractVector{Fittable};
         name::AbstractString = "",
         )
-    result = ImmutableSimpleLinearPipeline(
+    result = SimplePipeline(
         name,
         objectsvector,
         )
     return result
 end
 
-function setfeaturecontrasts!(
-        x::ImmutableSimpleLinearPipeline,
+function set_contrasts!(
+        x::SimplePipeline,
         contrasts::AbstractContrasts,
         )
     for i = 1:length(x.objectsvector)
-        setfeaturecontrasts!(x.objectsvector[i], contrasts)
+        set_contrasts!(x.objectsvector[i], contrasts)
     end
     return nothing
 end
 
-function getunderlying(
-        x::ImmutableSimpleLinearPipeline;
+function get_underlying(
+        x::SimplePipeline;
         saving::Bool = false,
         loading::Bool = false,
         )
-    allunderlying = [
-        getunderlying(
+    underlying = [
+        get_underlying(
             o;
             saving=saving,
             loading=loading,
@@ -38,19 +38,19 @@ function getunderlying(
         ]
     if saving || loading
     else
-        deletenothings!(allunderlying)
-        if length(allunderlying) == 0
-            allunderlying = nothing
-        elseif length(allunderlying) == 1
-            allunderlying = allunderlying[1]
+        delete_nothings!(underlying)
+        if length(underlying) == 0
+            underlying = nothing
+        elseif length(underlying) == 1
+            underlying = underlying[1]
         else
         end
     end
-    return allunderlying
+    return underlying
 end
 
-function setunderlying!(
-        x::ImmutableSimpleLinearPipeline,
+function set_underlying!(
+        x::SimplePipeline,
         object;
         saving::Bool = false,
         loading::Bool = false,
@@ -59,7 +59,7 @@ function setunderlying!(
         error("length(x) != length(object)")
     end
     for i = 1:length(x.objectsvector)
-        setunderlying!(
+        set_underlying!(
             x.objectsvector[i],
             object[i];
             saving=saving,
@@ -69,13 +69,13 @@ function setunderlying!(
     return nothing
 end
 
-function gethistory(
-        x::ImmutableSimpleLinearPipeline;
+function get_history(
+        x::SimplePipeline;
         saving::Bool = false,
         loading::Bool = false,
         )
-    allhistory = [
-        gethistory(
+    history = [
+        get_history(
             o;
             saving = saving,
             loading = loading,
@@ -83,19 +83,19 @@ function gethistory(
         ]
     if saving || loading
     else
-        deletenothings!(allhistory)
-        if length(allhistory) == 0
-            allhistory = nothing
-        elseif length(allhistory) == 1
-            allhistory = allhistory[1]
+        delete_nothings!(history)
+        if length(history) == 0
+            history = nothing
+        elseif length(history) == 1
+            history = history[1]
         else
         end
     end
-    return allhistory
+    return history
 end
 
-function sethistory!(
-        x::ImmutableSimpleLinearPipeline,
+function set_history!(
+        x::SimplePipeline,
         h;
         saving::Bool = false,
         loading::Bool = false,
@@ -104,7 +104,7 @@ function sethistory!(
         error("length(x.objectsvector) != length(h)")
     end
     for i = 1:length(x.objectsvector)
-        sethistory!(
+        set_history!(
             x.objectsvector[i],
             h[i];
             saving=saving,
@@ -115,7 +115,7 @@ function sethistory!(
 end
 
 function fit!(
-        simplelinearpipeline::ImmutableSimpleLinearPipeline,
+        simplelinearpipeline::SimplePipeline,
         varargs...;
         kwargs...
         )
@@ -139,7 +139,7 @@ function fit!(
 end
 
 function predict(
-        simplelinearpipeline::ImmutableSimpleLinearPipeline,
+        simplelinearpipeline::SimplePipeline,
         varargs...;
         kwargs...
         )
@@ -163,7 +163,7 @@ function predict(
 end
 
 function predict_proba(
-        simplelinearpipeline::ImmutableSimpleLinearPipeline,
+        simplelinearpipeline::SimplePipeline,
         varargs...;
         kwargs...
         )

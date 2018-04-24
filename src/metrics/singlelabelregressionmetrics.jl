@@ -25,7 +25,7 @@ function singlelabelregressionypred(
 end
 
 function _singlelabelregressionmetrics(
-        estimator::AbstractObject,
+        estimator::Fittable,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
@@ -38,7 +38,7 @@ function _singlelabelregressionmetrics(
         predictionsalllabels[singlelabelname],
         )
     results = Dict()
-    results[:R2coefficientofdetermination] = R2coefficientofdetermination(
+    results[:r2_score] = r2_score(
         ytrue,
         ypred,
         )
@@ -46,12 +46,12 @@ function _singlelabelregressionmetrics(
 end
 
 function singlelabelregressionmetrics(
-        estimator::AbstractObject,
+        estimator::Fittable,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         )
-    vectorofestimators = [estimator]
+    vectorofestimators = Fittable[estimator]
     result = singlelabelregressionmetrics(
         vectorofestimators,
         featuresdf,
@@ -62,7 +62,7 @@ function singlelabelregressionmetrics(
 end
 
 function singlelabelregressionmetrics(
-        vectorofestimators::AbstractObjectVector,
+        vectorofestimators::AbstractVector{Fittable},
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol;
@@ -81,7 +81,7 @@ function singlelabelregressionmetrics(
     result[:metric] = "R^2 (coefficient of determination)"
     for i = 1:length(vectorofestimators)
         result[Symbol(vectorofestimators[i].name)] = [
-            metricsforeachestimator[i][:R2coefficientofdetermination]
+            metricsforeachestimator[i][:r2_score]
             ]
     end
     return result

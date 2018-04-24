@@ -1,7 +1,7 @@
 import StatsBase
 
-function getbinarythresholds(
-        yscore::StatsBase.RealVector;
+function get_binary_thresholds(
+        yscore::AbstractVector{<:Real};
         additionalthreshold::Real = 0.5,
         )
     if !all(0 .<= yscore .<= 1)

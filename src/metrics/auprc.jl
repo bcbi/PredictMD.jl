@@ -3,8 +3,8 @@ import NumericalIntegration
 import StatsBase
 
 function auprc(
-        ytrue::StatsBase.IntegerVector,
-        yscore::StatsBase.RealVector,
+        ytrue::AbstractVector{<:Integer},
+        yscore::AbstractVector{<:Real},
         )
     allprecisions, allrecalls, allthresholds = prcurve(
         ytrue,

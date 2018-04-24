@@ -2,9 +2,7 @@ import DataFrames
 import GLM
 import StatsModels
 
-
-mutable struct MutableGLMjlGeneralizedLinearModelEstimator <:
-        AbstractPrimitiveObject
+mutable struct GLMModel <: AbstractEstimator
     name::T1 where T1 <: AbstractString
     isclassificationmodel::T2 where T2 <: Bool
     isregressionmodel::T3 where T3 <: Bool
@@ -16,7 +14,7 @@ mutable struct MutableGLMjlGeneralizedLinearModelEstimator <:
     # parameters (learned from data):
     underlyingglm::T where T
 
-    function MutableGLMjlGeneralizedLinearModelEstimator(
+    function GLMModel(
             formula::StatsModels.Formula,
             family::GLM.Distribution,
             link::GLM.Link;
@@ -36,16 +34,16 @@ mutable struct MutableGLMjlGeneralizedLinearModelEstimator <:
     end
 end
 
-function gethistory(
-        x::MutableGLMjlGeneralizedLinearModelEstimator;
+function get_history(
+        x::GLMModel;
         saving::Bool = false,
 	loading::Bool = false,
         )
     return nothing
 end
 
-function sethistory!(
-        x::MutableGLMjlGeneralizedLinearModelEstimator,
+function set_history!(
+        x::GLMModel,
         h;
         saving::Bool = false,
 	loading::Bool = false,
@@ -53,15 +51,15 @@ function sethistory!(
     return nothing
 end
 
-function setfeaturecontrasts!(
-        x::MutableGLMjlGeneralizedLinearModelEstimator,
+function set_contrasts!(
+        x::GLMModel,
         contrasts::AbstractContrasts,
         )
     return nothing
 end
 
-function getunderlying(
-        x::MutableGLMjlGeneralizedLinearModelEstimator;
+function get_underlying(
+        x::GLMModel;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -69,8 +67,8 @@ function getunderlying(
     return result
 end
 
-function setunderlying!(
-        x::MutableGLMjlGeneralizedLinearModelEstimator,
+function set_underlying!(
+        x::GLMModel,
         object;
         saving::Bool = false,
         loading::Bool = false,
@@ -80,7 +78,7 @@ function setunderlying!(
 end
 
 function fit!(
-        estimator::MutableGLMjlGeneralizedLinearModelEstimator,
+        estimator::GLMModel,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         )
@@ -98,7 +96,7 @@ function fit!(
 end
 
 function predict(
-        estimator::MutableGLMjlGeneralizedLinearModelEstimator,
+        estimator::GLMModel,
         featuresdf::DataFrames.AbstractDataFrame,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
@@ -131,7 +129,7 @@ function predict(
 end
 
 function predict_proba(
-        estimator::MutableGLMjlGeneralizedLinearModelEstimator,
+        estimator::GLMModel,
         featuresdf::DataFrames.AbstractDataFrame,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
@@ -169,7 +167,7 @@ function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
         singlelabelname,
         positiveclass,
         )
-    glmestimator = MutableGLMjlGeneralizedLinearModelEstimator(
+    glmestimator = GLMModel(
         formula,
         GLM.Binomial(),
         GLM.LogitLink();
@@ -187,8 +185,8 @@ function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         singlelabelname,
         )
-    finalpipeline = ImmutableSimpleLinearPipeline(
-        [
+    finalpipeline = SimplePipeline(
+        Fittable[
             dftransformer,
             glmestimator,
             predictlabelfixer,
@@ -240,7 +238,7 @@ function _singlelabelbinaryclassdataframeprobitclassifier_GLM(
         singlelabelname,
         positiveclass,
         )
-    glmestimator = MutableGLMjlGeneralizedLinearModelEstimator(
+    glmestimator = GLMModel(
         formula,
         GLM.Binomial(),
         GLM.ProbitLink();
@@ -258,8 +256,8 @@ function _singlelabelbinaryclassdataframeprobitclassifier_GLM(
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         singlelabelname,
         )
-    finalpipeline = ImmutableSimpleLinearPipeline(
-        [
+    finalpipeline = SimplePipeline(
+        Fittable[
             dftransformer,
             glmestimator,
             predictlabelfixer,
@@ -304,15 +302,15 @@ function _singlelabeldataframelinearregression_GLM(
         featurenames;
         intercept = intercept,
         )
-    glmestimator = MutableGLMjlGeneralizedLinearModelEstimator(
+    glmestimator = GLMModel(
         formula,
         GLM.Normal(),
         GLM.IdentityLink();
         isclassificationmodel = false,
         isregressionmodel = true,
         )
-    finalpipeline = ImmutableSimpleLinearPipeline(
-        [
+    finalpipeline = SimplePipeline(
+        Fittable[
             glmestimator,
             ];
         name = name,

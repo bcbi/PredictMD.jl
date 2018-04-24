@@ -9,7 +9,7 @@ info("Successfully imported PredictMD")
 info("Printing PredictMD version info:")
 println(string("PredictMD Version ", PredictMD.VERSION))
 
-ENV["ALUTHGESINHABASE_RUNTESTS"] = "true"
+ENV["PREDICTMD_RUNTESTS"] = "true"
 
 Base.Test.@testset "PredictMD test suite" begin
     Base.Test.@testset "Unit tests" begin

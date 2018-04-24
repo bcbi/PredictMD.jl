@@ -1,5 +1,5 @@
-function openplotsduringtests(a::Associative)
+function open_plots_during_tests(a::Associative)
     result =
-        lowercase(get(a, "OPENPLOTSDURINGTESTS", "")) == lowercase("true")
+        lowercase(get(a, "OPEN_PLOTS_DURING_TESTS", "")) == lowercase("true")
     return result
 end

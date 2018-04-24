@@ -1,10 +1,10 @@
 # Originally based on https://github.com/JuliaPlots/Plots.jl/blob/master/src/backends/web.jl
 
-function openbrowserwindow(filename::AbstractString)
-    if istravisci(ENV)
+function open_browser_window(filename::AbstractString)
+    if is_travis_ci(ENV)
         info(string("Skipping opening file during Travis build: ",filename,))
         return nothing
-    elseif isruntests(ENV) && !openplotsduringtests(ENV)
+    elseif is_runtests(ENV) && !open_plots_during_tests(ENV)
         info(string("Skipping opening file during package tests: ",filename,))
         return nothing
     else
@@ -32,4 +32,4 @@ function openbrowserwindow(filename::AbstractString)
     end
 end
 
-open(filename::AbstractString) = openbrowserwindow(filename)
+open(filename::AbstractString) = open_browser_window(filename)

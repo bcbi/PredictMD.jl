@@ -3,8 +3,7 @@ __precompile__(true)
 module PredictMD
 
 # base/
-include("base/abstracttypes.jl")
-include("base/typealiases.jl")
+include("base/types.jl")
 include("base/version.jl")
 
 # calibration/
@@ -46,7 +45,7 @@ include("metrics/roccurve.jl")
 include("metrics/rocnumsmetrics.jl")
 
 # modelselection/
-include("modelselection/traintestsplit.jl")
+include("modelselection/split_data.jl")
 
 # multiclass/
 

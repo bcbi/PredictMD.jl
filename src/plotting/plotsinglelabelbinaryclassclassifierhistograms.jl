@@ -3,11 +3,11 @@ import PGFPlots
 import PGFPlotsX
 
 function plotsinglelabelbinaryclassclassifierhistogram(
-        estimator::AbstractObject,
+        estimator::Fittable,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
-        singlelabellevels::StringVector;
+        singlelabellevels::AbstractVector{<:AbstractString};
         numbins::Integer = 25,
         )
     if length(singlelabellevels) != length(unique(singlelabellevels))
