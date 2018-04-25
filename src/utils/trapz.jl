@@ -1,6 +1,6 @@
 import NumericalIntegration
 
-function _aluthgetrapz(
+function trapz(
         x::AbstractVector,
         y::AbstractVector,
         )
@@ -19,29 +19,13 @@ function _aluthgetrapz(
         twoI += ( y[k] + y[k-1] ) * ( x[k] - x[k-1] )
     end
     I = twoI/2
-    return I
-end
-
-function trapz(
-        x::AbstractVector,
-        y::AbstractVector,
-        )
-    result_aluthgetrapz = _aluthgetrapz(
-        x,
-        y,
-        )
-    result_numericalintegration = NumericalIntegration.integrate(
+    I_verify = NumericalIntegration.integrate(
         x,
         y,
         NumericalIntegration.Trapezoidal(),
         )
-    if !isapprox(result_aluthgetrapz, result_numericalintegration; atol=0.00000001)
-        msg = string(
-            "result_aluthgetrapz!=result_numericalintegration. ",
-            "result_aluthgetrapz=$(result_aluthgetrapz). ",
-            "result_numericalintegration=$(result_numericalintegration)",
-            )
-        error(msg)
+    if !isapprox(I, I_verify; atol=0.00000001)
+        error("Was not able to accurately compute trapezoidal integration.")
     end
-    return result_aluthgetrapz
+    return I
 end

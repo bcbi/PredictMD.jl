@@ -2,17 +2,17 @@ import DataFrames
 import StatsModels
 
 struct ImmutableFeatureArrayTransposerTransformer <:
-        AbstractPrimitiveObject
+        AbstractEstimator
 end
 
-function setfeaturecontrasts!(
+function set_contrasts!(
         x::ImmutableFeatureArrayTransposerTransformer,
         contrasts::AbstractContrasts,
         )
     return nothing
 end
 
-function getunderlying(
+function get_underlying(
         x::ImmutableFeatureArrayTransposerTransformer;
         saving::Bool = false,
         loading::Bool = false,
@@ -20,7 +20,7 @@ function getunderlying(
     return nothing
 end
 
-function setunderlying!(
+function set_underlying!(
         x::ImmutableFeatureArrayTransposerTransformer,
         object;
         saving::Bool = false,
@@ -29,7 +29,7 @@ function setunderlying!(
     return nothing
 end
 
-function gethistory(
+function get_history(
         x::ImmutableFeatureArrayTransposerTransformer;
         saving::Bool = false,
         loading::Bool = false,
@@ -37,7 +37,7 @@ function gethistory(
     return nothing
 end
 
-function sethistory!(
+function set_history!(
         x::ImmutableFeatureArrayTransposerTransformer,
         h;
         saving::Bool = false,
@@ -101,8 +101,8 @@ function DataFrame2LIBSVMTransformer(
         levels = levels,
         )
     featuretransposetransformer = ImmutableFeatureArrayTransposerTransformer()
-    result = ImmutableSimpleLinearPipeline(
-        [
+    result = SimplePipeline(
+        Fittable[
             df2decisiontreetransformer,
             featuretransposetransformer,
             ],

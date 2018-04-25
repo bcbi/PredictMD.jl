@@ -1,1 +1,1 @@
-Base.Test.@test(typeof(asb.VERSION) <: VersionNumber)
+Base.Test.@test(typeof(PredictMD.VERSION) <: VersionNumber)

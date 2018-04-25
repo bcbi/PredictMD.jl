@@ -2,8 +2,8 @@ import MLBase
 import StatsBase
 
 function roccurve(
-        ytrue::StatsBase.IntegerVector,
-        yscore::StatsBase.RealVector,
+        ytrue::AbstractVector{<:Integer},
+        yscore::AbstractVector{<:Real},
         )
     allrocnums, allthresholds = getallrocnums(
         ytrue,
@@ -17,8 +17,8 @@ function roccurve(
 end
 
 function roccurve(
-        allrocnums::ROCNumsVector,
-        allthresholds::StatsBase.RealVector,
+        allrocnums::AbstractVector{<:MLBase.ROCNums},
+        allthresholds::AbstractVector{<:Real},
         )
     allfpr = [fpr(x) for x in allrocnums]
     alltpr = [tpr(x) for x in allrocnums]

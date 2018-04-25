@@ -1,17 +1,24 @@
 import FileIO
 import JLD2
+import ProgressMeter
 
-function save(filename::AbstractString, x::AbstractObject)
+function save(filename::AbstractString, x::Fittable)
     # make sure that the filename ends in ".jld2"
-    if !endswith(filename, ".jld2")
-        error("filename must end in \".jld2\"")
+    if lowercase(strip(splitext(filename)[2])) != ".jld2"
+        error(
+            string(
+                "Filename \"",
+                filename,
+                "\" does not end in \".jld2\"",
+                )
+            )
     end
 
     # get all underlying objects
-    allunderlying = getunderlying(x;saving=true,)
+    underlying = get_underlying(x;saving=true,)
 
     # get all value history objects
-    allhistory = gethistory(x;saving=true,)
+    history = get_history(x;saving=true,)
 
     # make sure the parent directory exists
     parentdirectory = Base.Filesystem.dirname(filename)
@@ -21,8 +28,8 @@ function save(filename::AbstractString, x::AbstractObject)
     FileIO.save(
         filename,
         Dict(
-            "allunderlying" => allunderlying,
-            "allhistory" => allhistory,
+            "underlying" => underlying,
+            "history" => history,
             ),
         )
 
@@ -33,26 +40,32 @@ function save(filename::AbstractString, x::AbstractObject)
     return nothing
 end
 
-function load!(filename::AbstractString, x::AbstractObject)
+function load!(filename::AbstractString, x::Fittable)
     # make sure that the filename ends in ".jld2"
-    if !endswith(filename, ".jld2")
-        error("filename must end in \".jld2\"")
+    if lowercase(strip(splitext(filename)[2])) != ".jld2"
+        error(
+            string(
+                "Filename \"",
+                filename,
+                "\" does not end in \".jld2\"",
+                )
+            )
     end
-    
+
     # load the JLD2 file
     alldatasets = FileIO.load(filename)
 
     # get the underlying objects
-    allunderlying = alldatasets["allunderlying"]
+    underlying = alldatasets["underlying"]
 
     # get the value history objects
-    allhistory = alldatasets["allhistory"]
+    history = alldatasets["history"]
 
-    # go through the AbstractObject and set all underlying objects
-    setunderlying!(x,allunderlying;loading=true,)
+    # go through the Fittable and set all underlying objects
+    set_underlying!(x,underlying;loading=true,)
 
-    # go through the AbstractObject and set all value history objects
-    sethistory!(x,allhistory;loading=true,)
+    # go through the Fittable and set all value history objects
+    set_history!(x,history;loading=true,)
 
     # print info message
     info(string("Loaded model from file ", filename))

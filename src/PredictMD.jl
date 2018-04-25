@@ -1,10 +1,9 @@
 __precompile__(true)
 
-module AluthgeSinhaBase
+module PredictMD
 
 # base/
-include("base/abstracttypes.jl")
-include("base/typealiases.jl")
+include("base/types.jl")
 include("base/version.jl")
 
 # calibration/
@@ -23,15 +22,10 @@ include("datasets/rdatasets.jl")
 
 # ensemble/
 
-# integrations/gui/
-include("integrations/gui/blink.jl")
-
-# integrations/ide/
-include("integrations/ide/atomjuno.jl")
+# integrations/
+include("integrations/ide/atom.jl")
 
 # io/
-include("io/fileio.jl")
-include("io/jld2.jl")
 include("io/saveload.jl")
 
 # linearmodel/
@@ -51,14 +45,13 @@ include("metrics/roccurve.jl")
 include("metrics/rocnumsmetrics.jl")
 
 # modelselection/
-include("modelselection/traintestsplit.jl")
+include("modelselection/split_data.jl")
 
 # multiclass/
 
 # multioutput/
 
 # neuralnetwork/
-include("neuralnetwork/autograd.jl")
 include("neuralnetwork/flux.jl")
 include("neuralnetwork/knet.jl")
 include("neuralnetwork/nnlib.jl")
@@ -87,9 +80,6 @@ include("preprocessing/dataframetoglm.jl")
 include("preprocessing/dataframetoknet.jl")
 include("preprocessing/dataframetosvm.jl")
 
-# scikitlearn/
-include("scikitlearn/scikitlearnapi.jl")
-
 # svm/
 include("svm/libsvm.jl")
 
@@ -112,4 +102,4 @@ include("utils/trapz.jl")
 include("utils/traviscienv.jl")
 
 
-end # end module AluthgeSinhaBase
+end # end module PredictMD

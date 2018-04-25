@@ -1,4 +1,4 @@
-# AluthgeSinhaBase.jl
+# PredictMD.jl
 
 <table>
     <thead>
@@ -9,13 +9,13 @@
     </thead>
     <tbody>
         <tr>
-            <td><a href="https://travis-ci.com/DilumAluthge/AluthgeSinhaBase.jl/branches"><img alt="Build Status (master)" title="Build Status (master)" src="https://travis-ci.com/DilumAluthge/AluthgeSinhaBase.jl.svg?token=dMqeEKHqcnWSXz982pdf&branch=master"></a></td>
-            <td><a href="https://travis-ci.com/DilumAluthge/AluthgeSinhaBase.jl/branches"><img alt="Build Status (develop)" title="Build Status (develop)" src="https://travis-ci.com/DilumAluthge/AluthgeSinhaBase.jl.svg?token=dMqeEKHqcnWSXz982pdf&branch=develop"></a></td>
+            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Build Status (master)" title="Build Status (master)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master"></a></td>
+            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Build Status (develop)" title="Build Status (develop)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=develop"></a></td>
         </tr>
     </tbody>
 </table>
 
-AluthgeSinhaBase is a [Julia](https://julialang.org/) package that provides a uniform interface for using multiple different statistics and machine learning packages. This document describes how to install and use AluthgeSinhaBase.
+PredictMD is a [Julia](https://julialang.org/) package that provides a uniform interface for using multiple different statistics and machine learning packages. This document describes how to install and use PredictMD.
 
 <table>
     <thead>
@@ -41,7 +41,7 @@ AluthgeSinhaBase is a [Julia](https://julialang.org/) package that provides a un
 
 ## 1. Prerequisites
 
-In order to run AluthgeSinhaBase, you need to have all of the following software packages installed on your system:
+In order to run PredictMD, you need to have all of the following software packages installed on your system:
 * Julia (version >= 0.6)
 * LaTeX
 * pdf2svg.
@@ -112,20 +112,19 @@ If you receive an error (e.g. "command not found"), download and install pdf2svg
 
 **Step 3:** Paste the following line into Julia and press enter:
 ```julia
-Pkg.update();Pkg.clone("git@github.com:dilumaluthge/AluthgeSinhaBase.jl.git");Pkg.checkout("AluthgeSinhaBase", "master");Pkg.test("AluthgeSinhaBase");
+Pkg.update();Pkg.clone("https://github.com/bcbi/PredictMD.jl.git");Pkg.checkout("PredictMD", "master");Pkg.test("PredictMD");
 ```
-
 You will need to wait several minutes while all of the required packages are installed and all of the tests are run.
 
-If you receive the message "INFO: AluthgeSinhaBase tests passed", then you have successfully installed AluthgeSinhaBase. If the tests do not pass or if you see an error message, then do the following:
+If you receive the message "INFO: PredictMD tests passed", then you have successfully installed PredictMD. If the tests do not pass or if you see an error message, then do the following:
 1. Close your Julia session (e.g. type ```quit()``` and press enter).
 2. Open a new terminal window, type ```mv ~/.julia ~/.julia.backup-$(date +"%Y%m%d-%H%M%S")```, and press enter.
 3. Repeat Steps 2 and 3 above.
 
-If the tests still do not pass or if you still receive an error message, go to [https://github.com/dilumaluthge/AluthgeSinhaBase.jl/issues/new](https://github.com/dilumaluthge/AluthgeSinhaBase.jl/issues/new) and submit a new issue. Please include a screenshot of the error.
+If the tests still do not pass or if you still receive an error message, go to [https://github.com/bcbi/PredictMD.jl/issues/new](https://github.com/bcbi/PredictMD.jl/issues/new) and submit a new issue. Please include a screenshot of the error.
 
 ## 3. Examples
-The `examples/` folder contains several files that illustrate the usage of AluthgeSinhaBase:
+The `examples/` folder contains several files that illustrate the usage of PredictMD:
 
 ### 3.1. Machine Learning Examples
 
@@ -156,4 +155,4 @@ The `examples/` folder contains several files that illustrate the usage of Aluth
 
 ## 4. Contributing
 
-If you would like to contribute to the AluthgeSinhaBase source code, please see [CONTRIBUTING.md](CONTRIBUTING.md).
+If you would like to contribute to the PredictMD source code, please see [CONTRIBUTING.md](CONTRIBUTING.md).

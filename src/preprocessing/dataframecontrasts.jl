@@ -1,46 +1,38 @@
 import DataFrames
 
-struct ImmutableDataFrameFeatureContrasts <: AbstractFeatureContrasts
-    featurenames::T1 where T1 <: SymbolVector
-    numdataframefeatures::T2 where T2 <: Integer
-    featurecontrasts::T3 where T3 <: Associative
-    numarrayfeatures::T4 where T4 <: Integer
+struct DataFrameContrasts <: AbstractContrasts
+    columns::T1 where T1 <: AbstractVector{<:Symbol}
+    num_df_columns::T2 where T2 <: Integer
+    contrasts::T3 where T3 <: Associative
+    num_array_columns::T4 where T4 <: Integer
 end
 
-function ImmutableDataFrameFeatureContrasts(
+function DataFrameContrasts(
         df::DataFrames.AbstractDataFrame,
-        featurenames::SymbolVector,
+        columns::AbstractVector{<:Symbol},
         )
-    numdataframefeatures = length(unique(featurenames))
+    num_df_columns = length(unique(columns))
     modelformula = makeformula(
-        featurenames[1],
-        featurenames;
+        columns[1],
+        columns;
         intercept = false,
         )
     modelframe = StatsModels.ModelFrame(
         modelformula,
         df,
         )
-    featurecontrasts = modelframe.contrasts
+    contrasts = modelframe.contrasts
     modelmatrix = StatsModels.ModelMatrix(modelframe)
-    featuresarray = modelmatrix.m
-    numarrayfeatures = size(featuresarray, 2)
-    result = ImmutableDataFrameFeatureContrasts(
-        featurenames,
-        numdataframefeatures,
-        featurecontrasts,
-        numarrayfeatures,
+    columnsarray = modelmatrix.m
+    num_array_columns = size(columnsarray, 2)
+    result = DataFrameContrasts(
+        columns,
+        num_df_columns,
+        contrasts,
+        num_array_columns,
         )
     return result
 end
 
-function featurecontrasts(
-        df::DataFrames.AbstractDataFrame,
-        featurenames::SymbolVector,
-        )
-    result = ImmutableDataFrameFeatureContrasts(
-        df,
-        featurenames,
-        )
-    return result
-end
+contrasts(df::DataFrames.AbstractDataFrame,columns::AbstractVector{<:Symbol}) =
+    DataFrameContrasts(df,columns)

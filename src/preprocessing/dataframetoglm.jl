@@ -1,19 +1,19 @@
 import DataFrames
 
 struct ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer <:
-        AbstractPrimitiveObject
+        AbstractEstimator
     label::T1 where T1 <: Symbol
     positiveclass::T2 where T2 <: AbstractString
 end
 
-function setfeaturecontrasts!(
+function set_contrasts!(
         x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         contrasts::AbstractContrasts,
         )
     return nothing
 end
 
-function getunderlying(
+function get_underlying(
         x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer;
         saving::Bool = false,
         loading::Bool = false,
@@ -21,7 +21,7 @@ function getunderlying(
     return nothing
 end
 
-function setunderlying!(
+function set_underlying!(
         x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         object;
         saving::Bool = false,
@@ -30,7 +30,7 @@ function setunderlying!(
     return nothing
 end
 
-function gethistory(
+function get_history(
         x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer;
         saving::Bool = false,
         loading::Bool = false,
@@ -38,7 +38,7 @@ function gethistory(
     return nothing
 end
 
-function sethistory!(
+function set_history!(
         x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         h;
         saving::Bool = false,

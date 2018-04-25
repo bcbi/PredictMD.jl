@@ -1,17 +1,17 @@
 struct ImmutablePredictProbaSingleLabelInt2StringTransformer <:
-        AbstractPrimitiveObject
+        AbstractEstimator
     index::T1 where T1 <: Integer
     levels::T2 where T2 <: AbstractVector
 end
 
-function setfeaturecontrasts!(
+function set_contrasts!(
         x::ImmutablePredictProbaSingleLabelInt2StringTransformer,
         contrasts::AbstractContrasts,
         )
     return nothing
 end
 
-function getunderlying(
+function get_underlying(
         x::ImmutablePredictProbaSingleLabelInt2StringTransformer;
         saving::Bool = false,
         loading::Bool = false,
@@ -19,7 +19,7 @@ function getunderlying(
     return nothing
 end
 
-function setunderlying!(
+function set_underlying!(
         x::ImmutablePredictProbaSingleLabelInt2StringTransformer,
         object;
         saving::Bool = false,
@@ -27,7 +27,7 @@ function setunderlying!(
         )
     return nothing
 end
-function gethistory(
+function get_history(
         x::ImmutablePredictProbaSingleLabelInt2StringTransformer;
         saving::Bool = false,
         loading::Bool = false,
@@ -35,7 +35,7 @@ function gethistory(
     return nothing
 end
 
-function sethistory!(
+function set_history!(
         x::ImmutablePredictProbaSingleLabelInt2StringTransformer,
         h;
         saving::Bool = false,

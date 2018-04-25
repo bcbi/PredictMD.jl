@@ -1,7 +1,7 @@
 import DecisionTree
 
-mutable struct MutableDecisionTreejlRandomForestEstimator <:
-        AbstractPrimitiveObject
+mutable struct DecisionTreeModel <:
+        AbstractEstimator
     name::T1 where T1 <: AbstractString
     isclassificationmodel::T2 where T2 <: Bool
     isregressionmodel::T3 where T3 <: Bool
@@ -15,7 +15,7 @@ mutable struct MutableDecisionTreejlRandomForestEstimator <:
     # parameters (learned from data):
     underlyingrandomforest::T7 where T7
 
-    function MutableDecisionTreejlRandomForestEstimator(
+    function DecisionTreeModel(
             singlelabelname::Symbol;
             name::AbstractString = "",
             nsubfeatures::Integer = 2,
@@ -39,19 +39,19 @@ mutable struct MutableDecisionTreejlRandomForestEstimator <:
     end
 end
 
-function setfeaturecontrasts!(
-        x::MutableDecisionTreejlRandomForestEstimator,
+function set_contrasts!(
+        x::DecisionTreeModel,
         contrasts::AbstractContrasts,
         )
     return nothing
 end
 
-function underlying(x::MutableDecisionTreejlRandomForestEstimator)
+function underlying(x::DecisionTreeModel)
     return nothing
 end
 
-function getunderlying(
-        x::MutableDecisionTreejlRandomForestEstimator;
+function get_underlying(
+        x::DecisionTreeModel;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -59,8 +59,8 @@ function getunderlying(
     return result
 end
 
-function setunderlying!(
-        x::MutableDecisionTreejlRandomForestEstimator,
+function set_underlying!(
+        x::DecisionTreeModel,
         object;
         saving::Bool = false,
         loading::Bool = false,
@@ -69,16 +69,16 @@ function setunderlying!(
     return nothing
 end
 
-function gethistory(
-        x::MutableDecisionTreejlRandomForestEstimator;
+function get_history(
+        x::DecisionTreeModel;
         saving::Bool = false,
         loading::Bool = false,
         )
     return nothing
 end
 
-function sethistory!(
-        x::MutableDecisionTreejlRandomForestEstimator,
+function set_history!(
+        x::DecisionTreeModel,
         h;
         saving::Bool = false,
         loading::Bool = false,
@@ -87,7 +87,7 @@ function sethistory!(
 end
 
 function fit!(
-        estimator::MutableDecisionTreejlRandomForestEstimator,
+        estimator::DecisionTreeModel,
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
@@ -104,7 +104,7 @@ function fit!(
 end
 
 function predict(
-        estimator::MutableDecisionTreejlRandomForestEstimator,
+        estimator::DecisionTreeModel,
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
@@ -128,7 +128,7 @@ function predict(
 end
 
 function predict_proba(
-        estimator::MutableDecisionTreejlRandomForestEstimator,
+        estimator::DecisionTreeModel,
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
@@ -162,7 +162,7 @@ function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
         singlelabelname;
         levels = singlelabellevels,
         )
-    randomforestestimator = MutableDecisionTreejlRandomForestEstimator(
+    randomforestestimator = DecisionTreeModel(
         singlelabelname;
         name = name,
         nsubfeatures = nsubfeatures,
@@ -177,8 +177,8 @@ function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
     predpackager = ImmutablePackageSingleLabelPredictionTransformer(
         singlelabelname,
         )
-    finalpipeline = ImmutableSimpleLinearPipeline(
-        [
+    finalpipeline = SimplePipeline(
+        Fittable[
             dftransformer,
             randomforestestimator,
             probapackager,
@@ -224,7 +224,7 @@ function _singlelabeldataframerandomforestregression_DecisionTree(
         featurenames,
         singlelabelname,
         )
-    randomforestestimator = MutableDecisionTreejlRandomForestEstimator(
+    randomforestestimator = DecisionTreeModel(
         singlelabelname;
         name = name,
         nsubfeatures = nsubfeatures,
@@ -235,8 +235,8 @@ function _singlelabeldataframerandomforestregression_DecisionTree(
     predpackager = ImmutablePackageSingleLabelPredictionTransformer(
         singlelabelname,
         )
-    finalpipeline = ImmutableSimpleLinearPipeline(
-        [
+    finalpipeline = SimplePipeline(
+        Fittable[
             dftransformer,
             randomforestestimator,
             predpackager,

@@ -1,7 +1,7 @@
 import ClassImbalance
 import DataFrames
 
-function _calculate_smote_pct_under(
+function calculate_smote_pct_under(
         ;
         pct_over::Real = 0,
         minority_to_majority_ratio::Real = 0,
@@ -19,7 +19,7 @@ end
 function smote(
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
-        featurenames::SymbolVector,
+        featurenames::AbstractVector{<:Symbol},
         labelname::Symbol;
         majorityclass::AbstractString = "",
         minorityclass::AbstractString = "",
@@ -46,7 +46,7 @@ function smote(
         rng::AbstractRNG,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
-        featurenames::SymbolVector,
+        featurenames::AbstractVector{<:Symbol},
         labelname::Symbol;
         majorityclass::AbstractString = "",
         minorityclass::AbstractString = "",
@@ -60,7 +60,7 @@ function smote(
     if minorityclass == ""
         error("you need to specify minorityclass")
     end
-    pct_under = _calculate_smote_pct_under(
+    pct_under = calculate_smote_pct_under(
         ;
         pct_over = pct_over,
         minority_to_majority_ratio = minority_to_majority_ratio,

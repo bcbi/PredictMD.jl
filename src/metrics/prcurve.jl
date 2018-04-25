@@ -2,8 +2,8 @@ import MLBase
 import StatsBase
 
 function prcurve(
-        ytrue::StatsBase.IntegerVector,
-        yscore::StatsBase.RealVector,
+        ytrue::AbstractVector{<:Integer},
+        yscore::AbstractVector{<:Real},
         )
     allrocnums, allthresholds = getallrocnums(
         ytrue,
@@ -17,8 +17,8 @@ function prcurve(
 end
 
 function prcurve(
-    allrocnums::ROCNumsVector,
-    allthresholds::StatsBase.RealVector,
+    allrocnums::AbstractVector{<:MLBase.ROCNums},
+    allthresholds::AbstractVector{<:Real},
     )
     allprecisions = [precision(x) for x in allrocnums]
     allrecalls = [recall(x) for x in allrocnums]

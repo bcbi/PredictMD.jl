@@ -1,4 +1,4 @@
-function simplemovingaverage(
+function simple_moving_average(
         x::AbstractVector,
         window::Integer,
         )
@@ -8,9 +8,9 @@ function simplemovingaverage(
     n = length(x)
     result = zeros(x)
     for i = 1:n
-        lowerbound = max(1, i - window)
-        upperbound = min(n, i + window)
-        result[i] = mean(x[lowerbound:upperbound])
+        lower_bound = max(1, i - window)
+        upper_bound = min(n, i + window)
+        result[i] = mean(x[lower_bound:upper_bound])
     end
     return result
 end

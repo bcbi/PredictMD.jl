@@ -3,16 +3,15 @@ import Base.Test
 info("Printing Julia version info:")
 versioninfo(true)
 
-info("Attempting to import AluthgeSinhaBase")
-import AluthgeSinhaBase
-const asb = AluthgeSinhaBase
-info("Successfully imported AluthgeSinhaBase")
-info("Printing AluthgeSinhaBase version info:")
-println(string("AluthgeSinhaBase Version ", asb.VERSION))
+info("Attempting to import PredictMD")
+import PredictMD
+info("Successfully imported PredictMD")
+info("Printing PredictMD version info:")
+println(string("PredictMD Version ", PredictMD.VERSION))
 
-ENV["ALUTHGESINHABASE_RUNTESTS"] = "true"
+ENV["PREDICTMD_RUNTESTS"] = "true"
 
-Base.Test.@testset "AluthgeSinhaBase test suite" begin
+Base.Test.@testset "PredictMD test suite" begin
     Base.Test.@testset "Unit tests" begin
         info("Running unit tests")
         Base.Test.@testset "base" begin

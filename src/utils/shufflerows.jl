@@ -1,14 +1,14 @@
 import DataFrames
 import StatsBase
 
-function shufflerows!(
+function shuffle_rows!(
         dataframe::DataFrames.AbstractDataFrame,
         )
-    result = shufflerows!(Base.GLOBAL_RNG, dataframe)
+    result = shuffle_rows!(Base.GLOBAL_RNG, dataframe)
     return result
 end
 
-function shufflerows!(
+function shuffle_rows!(
         rng::AbstractRNG,
         dataframe::DataFrames.AbstractDataFrame,
         )

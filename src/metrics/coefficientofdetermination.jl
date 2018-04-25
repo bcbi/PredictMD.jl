@@ -1,8 +1,12 @@
 import StatsBase
 
-function R2coefficientofdetermination(
-        ytrue::StatsBase.RealVector,
-        ypred::StatsBase.RealVector,
+"""
+r2_score(ytrue, ypred)
+Computes coefficient of determination.
+"""
+function r2_score(
+        ytrue::AbstractVector{<:Real},
+        ypred::AbstractVector{<:Real},
         )
     if length(ytrue) != length(ypred)
         error("length(ytrue) != length(ypred)")
@@ -19,13 +23,4 @@ function R2coefficientofdetermination(
     SSres = sum( residuals.^2 )
     R2 = 1 - SSres/SStot
     return R2
-end
-
-function fractionofvarianceunexplained(
-        ytrue::StatsBase.RealVector,
-        ypred::StatsBase.RealVector,
-        )
-    R2 = R2coefficientofdetermination(ytrue, ypred)
-    FVU = 1 - R2
-    return FVU
 end

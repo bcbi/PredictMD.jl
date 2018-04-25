@@ -1,6 +1,6 @@
-# Contributing to AluthgeSinhaBase
+# Contributing to PredictMD
 
-This document provides information on contributing to the AluthgeSinhaBase source code. For information on installing and using AluthgeSinhaBase, please see [README.md](README.md).
+This document provides information on contributing to the PredictMD source code. For information on installing and using PredictMD, please see [README.md](README.md).
 
 <table>
     <thead>
@@ -13,7 +13,10 @@ This document provides information on contributing to the AluthgeSinhaBase sourc
             <td align="left"><a href="#1-prerequisites">1. Prerequisites</a></td>
         </tr>
         <tr>
-            <td align="left"><a href="#2-setting-up-the-aluthgesinhabase-repo">2. Setting up the AluthgeSinhaBase repo</a></td>
+            <td align="left"><a href="#2-setting-up-the-predictmd-repo">2. Setting up the PredictMD repo</a></td>
+        </tr>
+                <tr>
+            <td align="left"><a href="#3-working-with-examples">3. Working with examples</a></td>
         </tr>
     </tbody>
 </table>
@@ -136,20 +139,58 @@ If you do, then go to Step 2. If you instead see an error, download and install 
 4. [https://help.github.com/articles/telling-git-about-your-gpg-key/](https://help.github.com/articles/telling-git-about-your-gpg-key/)
 5. [https://help.github.com/articles/associating-an-email-with-your-gpg-key/](https://help.github.com/articles/associating-an-email-with-your-gpg-key/)
 
-## 2. Setting up the AluthgeSinhaBase repo
+## 2. Setting up the PredictMD repo
 
 **Step 1:** Make sure that you have followed all of the instructions in [Section 1 (Prerequisites)](#1-prerequisites).
 
-**Step 2:** Follow the installation instructions in [README.md](README.md) to install AluthgeSinhaBase.
+**Step 2:** Follow the installation instructions in [README.md](README.md) to install PredictMD.
 
-**Step 3:** Open a terminal window and `cd` to the directory containing the AluthgeSinhaBase source code:
+**Step 3:** Open a terminal window and `cd` to the directory containing the PredictMD source code:
 
 ```bash
-cd ~/.julia/v0.6/AluthgeSinhaBase
+cd ~/.julia/v0.6/PredictMD
 ```
 
 **Step 4:** Run the following line:
 
 ```bash
-git config commit.gpgsign true && git checkout master && git checkout develop && git flow init -fd && git checkout develop 
+git config commit.gpgsign true && git remote set-url origin https://github.com/bcbi/PredictMD.jl.git && git remote set-url --push origin git@github.com:bcbi/PredictMD.jl.git && git checkout master && git checkout develop && git flow init -fd && git checkout develop && git fetch --all --prune
+```
+
+## 3. Working with examples
+
+Some of the examples are provided as Jupyter notebooks as a convinient way to visualize and interact with the code. However, we also like to mantain corresponding plain Julia scripts that are in-sync with the notebooks. A convinient way to do so, is to add a post-save hook to your Jupyter configuration file.
+
+1. Open you jupyter configuration file ~/.jupyter/jupyter_notebook_config.py. If the file does not exist you can generate it by running `jupyter notebook --generate-config`
+
+2. Add the following code to the top of the file
+
+```python
+#-----------------------------------------------------------------------------
+# Auto save script version of notebook
+# Reference: https://svds.com/jupyter-notebook-best-practices-for-data-science/
+#-----------------------------------------------------------------------------
+
+import os
+from subprocess import check_call
+
+def post_save(model, os_path, contents_manager):
+    """post-save hook for converting notebooks to .py scripts"""
+    if model['type'] != 'notebook':
+        return # only do this for notebooks
+    d, fname = os.path.split(os_path)
+    check_call(['jupyter', 'nbconvert', '--to', 'script', fname], cwd=d)
+
+c.FileContentsManager.post_save_hook = post_save
+```
+
+**Note:** This behavior is global. If you want to have this saving only when in a particular folder, you can create multiple configuration files as a work-around. First create a new profile name via a bash command line:
+```bash
+export JUPYTER_CONFIG_DIR=~/.jupyter_profile2
+jupyter notebook --generate-config
+```
+This will create a new directory and file at `~/.jupyter_profile2/jupyter_notebook_config.py` Then run jupyter notebook and work as usual. To switch back to your default profile you will have to set (either by hand, shell function, or your .bashrc) back to:  
+
+```bash
+export JUPYTER_CONFIG_DIR=~/.jupyter
 ```

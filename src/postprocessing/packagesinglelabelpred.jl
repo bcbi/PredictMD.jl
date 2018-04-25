@@ -1,16 +1,16 @@
 struct ImmutablePackageSingleLabelPredictionTransformer <:
-        AbstractPrimitiveObject
+        AbstractEstimator
     singlelabelname::T1 where T1 <: Symbol
 end
 
-function setfeaturecontrasts!(
+function set_contrasts!(
         x::ImmutablePackageSingleLabelPredictionTransformer,
         contrasts::AbstractContrasts,
         )
     return nothing
 end
 
-function getunderlying(
+function get_underlying(
         x::ImmutablePackageSingleLabelPredictionTransformer;
         saving::Bool = false,
         loading::Bool = false,
@@ -18,7 +18,7 @@ function getunderlying(
     return nothing
 end
 
-function setunderlying!(
+function set_underlying!(
         x::ImmutablePackageSingleLabelPredictionTransformer,
         object;
         saving::Bool = false,
@@ -27,7 +27,7 @@ function setunderlying!(
     return nothing
 end
 
-function gethistory(
+function get_history(
         x::ImmutablePackageSingleLabelPredictionTransformer;
         saving::Bool = false,
         loading::Bool = false,
@@ -35,7 +35,7 @@ function gethistory(
     return nothing
 end
 
-function sethistory!(
+function set_history!(
         x::ImmutablePackageSingleLabelPredictionTransformer,
         h;
         saving::Bool = false,

@@ -5,7 +5,7 @@ import StatsBase
 import ValueHistories
 
 function plotlearningcurve(
-        inputobject::AbstractObject,
+        inputobject::Fittable,
         curvetype::Symbol = :lossvsiteration;
         window::Integer = 0,
         legendPos::AbstractString = "north east",
@@ -13,7 +13,7 @@ function plotlearningcurve(
         startat::Union{Integer, Symbol} = :start,
         endat::Union{Integer, Symbol} = :end,
         )
-    history = gethistory(inputobject)
+    history = get_history(inputobject)
     result = plotlearningcurve(
         history,
         curvetype,
@@ -86,8 +86,8 @@ function plotlearningcurve(
 end
 
 function plotlearningcurve(
-        xvalues::StatsBase.RealVector,
-        yvalues::StatsBase.RealVector,
+        xvalues::AbstractVector{<:Real},
+        yvalues::AbstractVector{<:Real},
         xlabel::AbstractString,
         ylabel::AbstractString,
         legendentry::AbstractString;
@@ -115,7 +115,7 @@ function plotlearningcurve(
         )
     push!(allplotobjects, linearplotobject_yraw)
     if window > 0
-        yvaluessmoothed = simplemovingaverage(
+        yvaluessmoothed = simple_moving_average(
             yvalues,
             window,
             )
