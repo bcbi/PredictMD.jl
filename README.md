@@ -112,7 +112,7 @@ If you receive an error (e.g. "command not found"), download and install pdf2svg
 
 **Step 3:** Paste the following line into Julia and press enter:
 ```julia
-Pkg.update();Pkg.clone("https://github.com/bcbi/PredictMD.jl.git");Pkg.checkout("PredictMD", "master");Pkg.test("PredictMD");
+Pkg.update();Pkg.clone("https://github.com/bcbi/PredictMD.jl.git");Pkg.test("PredictMD");
 ```
 You will need to wait several minutes while all of the required packages are installed and all of the tests are run.
 
