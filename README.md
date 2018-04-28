@@ -28,13 +28,16 @@ PredictMD is a [Julia](https://julialang.org/) package that provides a uniform i
             <td align="left"><a href="#1-prerequisites">1. Prerequisites</a></td>
         </tr>
         <tr>
-            <td align="left"><a href="#2-installation">2. Installation</a></td>
+            <td align="left"><a href="#2-installation-recommended-method">2. Installation (recommended method)</a></td>
         </tr>
         <tr>
-            <td align="left"><a href="#3-examples">3. Examples</a></td>
+            <td align="left"><a href="#3-installation-alternate-method-with-conda">3. Installation (alternate method with Conda)</a></td>
         </tr>
         <tr>
-            <td align="left"><a href="#4-contributing">4. Contributing</a></td>
+            <td align="left"><a href="#4-examples">4. Examples</a></td>
+        </tr>
+        <tr>
+            <td align="left"><a href="#5-contributing">5. Contributing</a></td>
         </tr>
     </tbody>
 </table>
@@ -104,7 +107,7 @@ If you receive an error (e.g. "command not found"), download and install pdf2svg
 * macOS: [http://brewinstall.org/Install-pdf2svg-on-Mac-with-Brew/](http://brewinstall.org/Install-pdf2svg-on-Mac-with-Brew/)
 * GNU/Linux: [https://github.com/dawbarton/pdf2svg](https://github.com/dawbarton/pdf2svg)
 
-## 2. Installation
+## 2. Installation (recommended method)
 
 **Step 1:** Make sure that you have followed all of the instructions in [Section 1 (Prerequisites)](#1-prerequisites).
 
@@ -123,10 +126,12 @@ If you receive the message "INFO: PredictMD tests passed", then you have success
 
 If the tests still do not pass or if you still receive an error message, go to [https://github.com/bcbi/PredictMD.jl/issues/new](https://github.com/bcbi/PredictMD.jl/issues/new) and submit a new issue. Please include a screenshot of the error.
 
-## 3. Examples
-The `examples/` folder contains several files that illustrate the usage of PredictMD:
+## 3. Installation (alternate method with Conda)
 
-### 3.1. Machine Learning Examples
+Alternatively, you can install PredictMD using the Conda package manager. Just follow the instructions here: [https://github.com/dilumaluthge/conda-predictmd-cpu](https://github.com/dilumaluthge/conda-predictmd-cpu)
+
+## 4. Examples
+The `examples/` folder contains several files that illustrate the usage of PredictMD:
 
 <table>
     <thead>
@@ -153,6 +158,6 @@ The `examples/` folder contains several files that illustrate the usage of Predi
     <tbody>
 </table>
 
-## 4. Contributing
+## 5. Contributing
 
 If you would like to contribute to the PredictMD source code, please see [CONTRIBUTING.md](CONTRIBUTING.md).
