@@ -12,23 +12,23 @@ println(string("PredictMD Version ", PredictMD.VERSION))
 ENV["PREDICTMD_RUNTESTS"] = "true"
 
 Base.Test.@testset "PredictMD test suite" begin
-    Base.Test.@testset "Unit tests" begin
-        info("Running unit tests")
+    Base.Test.@testset "Unit tests (CPU)" begin
+        info("Running unit tests (CPU)")
         Base.Test.@testset "base" begin
-            include("unit/base/test_version.jl")
+            include("cpu/unit/base/test_version.jl")
         end
         Base.Test.@testset "metrics" begin
-            include("unit/metrics/test_coefficientofdetermination.jl")
-            include("unit/metrics/test_cohenkappa.jl")
+            include("cpu/unit/metrics/test_coefficientofdetermination.jl")
+            include("cpu/unit/metrics/test_cohenkappa.jl")
         end
     end
-    Base.Test.@testset "Functional tests" begin
-        info("Running functional tests")
+    Base.Test.@testset "Functional tests (CPU)" begin
+        info("Running functional tests (CPU)")
         Base.Test.@testset "Boston housing regression" begin
-            include("functional/bostonhousing/setup_bostonhousing.jl")
+            include("cpu/functional/bostonhousing/setup_bostonhousing.jl")
         end
         Base.Test.@testset "Breast cancer biopsy classification" begin
-            include("functional/breastcancerbiopsy/setup_breastcancerbiopsy.jl")
+            include("cpu/functional/breastcancerbiopsy/setup_breastcancerbiopsy.jl")
         end
     end
 end

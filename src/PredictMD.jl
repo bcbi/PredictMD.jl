@@ -22,6 +22,9 @@ include("datasets/rdatasets.jl")
 
 # ensemble/
 
+# gpu/
+include("gpu/cudnn.jl")
+
 # integrations/
 include("integrations/ide/atom.jl")
 
