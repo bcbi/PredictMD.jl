@@ -128,7 +128,7 @@ If the tests still do not pass or if you still receive an error message, go to [
 
 ## 3. Installation (alternate method with Conda)
 
-Alternatively, you can install PredictMD using the Conda package manager. Just follow the instructions here: [https://github.com/dilumaluthge/conda-predictmd](https://github.com/dilumaluthge/conda-predictmd)
+Alternatively, you can install PredictMD using the Conda package manager. Just follow the instructions here: [https://github.com/dilumaluthge/conda-predictmd-cpu](https://github.com/dilumaluthge/conda-predictmd-cpu)
 
 ## 4. Examples
 The `examples/` folder contains several files that illustrate the usage of PredictMD:
