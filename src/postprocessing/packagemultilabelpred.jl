@@ -3,9 +3,9 @@ struct ImmutablePackageMultiLabelPredictionTransformer <:
     labelnames::T1 where T1 <: AbstractVector{<:Symbol}
 end
 
-function set_contrasts!(
+function set_feature_contrasts!(
         x::ImmutablePackageMultiLabelPredictionTransformer,
-        contrasts::AbstractContrasts,
+        feature_contrasts::AbstractFeatureContrasts,
         )
     return nothing
 end

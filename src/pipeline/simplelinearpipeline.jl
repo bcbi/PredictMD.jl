@@ -14,12 +14,12 @@ function SimplePipeline(
     return result
 end
 
-function set_contrasts!(
+function set_feature_contrasts!(
         x::SimplePipeline,
-        contrasts::AbstractContrasts,
+        feature_contrasts::AbstractFeatureContrasts,
         )
     for i = 1:length(x.objectsvector)
-        set_contrasts!(x.objectsvector[i], contrasts)
+        set_feature_contrasts!(x.objectsvector[i], feature_contrasts)
     end
     return nothing
 end

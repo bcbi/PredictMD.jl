@@ -1,13 +1,13 @@
 import DataFrames
 
-struct DataFrameContrasts <: AbstractContrasts
+struct DataFrameFeatureContrasts <: AbstractFeatureContrasts
     columns::T1 where T1 <: AbstractVector{<:Symbol}
     num_df_columns::T2 where T2 <: Integer
     contrasts::T3 where T3 <: Associative
     num_array_columns::T4 where T4 <: Integer
 end
 
-function DataFrameContrasts(
+function DataFrameFeatureContrasts(
         df::DataFrames.AbstractDataFrame,
         columns::AbstractVector{<:Symbol},
         )
@@ -25,7 +25,7 @@ function DataFrameContrasts(
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     columnsarray = modelmatrix.m
     num_array_columns = size(columnsarray, 2)
-    result = DataFrameContrasts(
+    result = DataFrameFeatureContrasts(
         columns,
         num_df_columns,
         contrasts,
@@ -34,5 +34,5 @@ function DataFrameContrasts(
     return result
 end
 
-contrasts(df::DataFrames.AbstractDataFrame,columns::AbstractVector{<:Symbol}) =
-    DataFrameContrasts(df,columns)
+feature_contrasts(df::DataFrames.AbstractDataFrame,columns::AbstractVector{<:Symbol}) =
+    DataFrameFeatureContrasts(df,columns)

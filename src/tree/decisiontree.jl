@@ -39,9 +39,9 @@ mutable struct DecisionTreeModel <:
     end
 end
 
-function set_contrasts!(
+function set_feature_contrasts!(
         x::DecisionTreeModel,
-        contrasts::AbstractContrasts,
+        feature_contrasts::AbstractFeatureContrasts,
         )
     return nothing
 end

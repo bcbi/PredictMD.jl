@@ -94,7 +94,7 @@ if load_pretrained
     PredictMD.load!(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
 else
     # set feature contrasts
-    PredictMD.set_contrasts!(epsilonsvr_svmreg, contrasts)
+    PredictMD.set_feature_contrasts!(epsilonsvr_svmreg , feature_contrasts)
     # Train epsilon-SVR model on training set
     PredictMD.fit!(epsilonsvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -146,7 +146,7 @@ if load_pretrained
     PredictMD.load!(nusvr_svmreg_filename, nusvr_svmreg)
 else
     # set feature contrasts
-    PredictMD.set_contrasts!(nusvr_svmreg, contrasts)
+    PredictMD.set_feature_contrasts!(nusvr_svmreg , feature_contrasts)
     # Train nu-SVR model
     PredictMD.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end

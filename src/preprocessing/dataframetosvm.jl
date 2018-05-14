@@ -5,9 +5,9 @@ struct ImmutableFeatureArrayTransposerTransformer <:
         AbstractEstimator
 end
 
-function set_contrasts!(
+function set_feature_contrasts!(
         x::ImmutableFeatureArrayTransposerTransformer,
-        contrasts::AbstractContrasts,
+        feature_contrasts::AbstractFeatureContrasts,
         )
     return nothing
 end

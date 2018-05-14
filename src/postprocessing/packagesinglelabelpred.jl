@@ -3,9 +3,9 @@ struct ImmutablePackageSingleLabelPredictionTransformer <:
     singlelabelname::T1 where T1 <: Symbol
 end
 
-function set_contrasts!(
+function set_feature_contrasts!(
         x::ImmutablePackageSingleLabelPredictionTransformer,
-        contrasts::AbstractContrasts,
+        feature_contrasts::AbstractFeatureContrasts,
         )
     return nothing
 end

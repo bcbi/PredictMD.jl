@@ -1,6 +1,6 @@
-abstract type AbstractContrasts end
-
 abstract type AbstractEstimator end
+
+abstract type AbstractFeatureContrasts end
 
 abstract type AbstractPipeline end
 
