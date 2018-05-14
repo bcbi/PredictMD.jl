@@ -62,7 +62,7 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
 else
-    contrasts = PredictMD.contrasts(df, featurenames)
+    feature_contrasts = PredictMD.feature_contrasts(df, featurenames)
 end
 
 # Define labels
@@ -345,7 +345,7 @@ else
         #
         # hidden layer (10 neurons):
         Cfloat.(
-            0.1f0*randn(Cfloat,10,contrasts.num_array_columns) # weights
+            0.1f0*randn(Cfloat,10,feature_contrasts.num_array_columns) # weights
             ),
         Cfloat.(
             zeros(Cfloat,10,1) # biases
