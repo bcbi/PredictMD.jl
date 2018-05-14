@@ -55,7 +55,7 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
 else
-    contrasts = PredictMD.contrasts(df, featurenames)
+    feature_contrasts = PredictMD.feature_contrasts(df, featurenames)
 end
 
 # Define labels
@@ -132,7 +132,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(logisticclassifier_filename, logisticclassifier)
 else
     # set feature contrasts
-    PredictMD.set_contrasts!(logisticclassifier, contrasts)
+    PredictMD.set_feature_contrasts!(logisticclassifier , feature_contrasts)
     # Train logistic classifier model on smoted training set
     PredictMD.fit!(
         logisticclassifier,
@@ -202,7 +202,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(probitclassifier_filename, probitclassifier)
 else
     # set feature contrasts
-    PredictMD.set_contrasts!(probitclassifier, contrasts)
+    PredictMD.set_feature_contrasts!(probitclassifier , feature_contrasts)
     # Train probit classifier model on smoted training set
     PredictMD.fit!(
         probitclassifier,
@@ -273,7 +273,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(rfclassifier_filename, rfclassifier)
 else
     # set feature contrasts
-    PredictMD.set_contrasts!(rfclassifier, contrasts)
+    PredictMD.set_feature_contrasts!(rfclassifier , feature_contrasts)
     # Train random forest classifier model on smoted training set
     PredictMD.fit!(
         rfclassifier,
@@ -341,7 +341,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(csvc_svmclassifier_filename, csvc_svmclassifier)
 else
     # set feature contrasts
-    PredictMD.set_contrasts!(csvc_svmclassifier, contrasts)
+    PredictMD.set_feature_contrasts!(csvc_svmclassifier , feature_contrasts)
     # Train C-SVC model on smoted training set
     PredictMD.fit!(
         csvc_svmclassifier,
@@ -409,7 +409,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(nusvc_svmclassifier_filename, nusvc_svmclassifier)
 else
     # set feature contrasts
-    PredictMD.set_contrasts!(nusvc_svmclassifier, contrasts)
+    PredictMD.set_feature_contrasts!(nusvc_svmclassifier , feature_contrasts)
     # Train nu-SVC model on smoted training set
     PredictMD.fit!(
         nusvc_svmclassifier,
@@ -586,7 +586,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(knetmlp_filename, knetmlpclassifier)
 else
     # set feature contrasts
-    PredictMD.set_contrasts!(knetmlpclassifier, contrasts)
+    PredictMD.set_feature_contrasts!(knetmlpclassifier , feature_contrasts)
     # Train multilayer perceptron model on training set
     PredictMD.fit!(
         knetmlpclassifier,

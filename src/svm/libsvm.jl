@@ -58,9 +58,9 @@ mutable struct LIBSVMModel <: AbstractEstimator
     end
 end
 
-function set_contrasts!(
+function set_feature_contrasts!(
         x::LIBSVMModel,
-        contrasts::AbstractContrasts,
+        feature_contrasts::AbstractFeatureContrasts,
         )
     return nothing
 end

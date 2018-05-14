@@ -93,7 +93,7 @@ if load_pretrained
     PredictMD.load!(linearreg_filename, linearreg)
 else
     # set feature contrasts
-    PredictMD.set_contrasts!(linearreg, contrasts)
+    PredictMD.set_feature_contrasts!(linearreg , feature_contrasts)
     # Train linear regression model
     PredictMD.fit!(linearreg,trainingfeaturesdf,traininglabelsdf,)
 end

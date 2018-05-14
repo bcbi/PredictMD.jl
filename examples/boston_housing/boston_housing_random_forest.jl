@@ -90,7 +90,7 @@ if load_pretrained
     PredictMD.load!(randomforestreg_filename, randomforestreg)
 else
     # set feature contrasts
-    PredictMD.set_contrasts!(randomforestreg, contrasts)
+    PredictMD.set_feature_contrasts!(randomforestreg , feature_contrasts)
     # Train random forest model on training set
     PredictMD.fit!(randomforestreg,trainingfeaturesdf,traininglabelsdf,)
 end

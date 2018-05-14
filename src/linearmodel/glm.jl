@@ -51,9 +51,9 @@ function set_history!(
     return nothing
 end
 
-function set_contrasts!(
+function set_feature_contrasts!(
         x::GLMModel,
-        contrasts::AbstractContrasts,
+        feature_contrasts::AbstractFeatureContrasts,
         )
     return nothing
 end

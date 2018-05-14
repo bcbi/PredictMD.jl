@@ -102,7 +102,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(linearreg_filename, linearreg)
 else
     # set feature contrasts
-    PredictMD.set_contrasts!(linearreg, contrasts)
+    PredictMD.set_feature_contrasts!(linearreg , feature_contrasts)
     # Train linear regression model
     PredictMD.fit!(linearreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -162,7 +162,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(randomforestreg_filename, randomforestreg)
 else
     # set feature contrasts
-    PredictMD.set_contrasts!(randomforestreg, contrasts)
+    PredictMD.set_feature_contrasts!(randomforestreg , feature_contrasts)
     # Train random forest model on training set
     PredictMD.fit!(randomforestreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -220,7 +220,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
 else
     # set feature contrasts
-    PredictMD.set_contrasts!(epsilonsvr_svmreg, contrasts)
+    PredictMD.set_feature_contrasts!(epsilonsvr_svmreg , feature_contrasts)
     # Train epsilon-SVR model on training set
     PredictMD.fit!(epsilonsvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -278,7 +278,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(nusvr_svmreg_filename, nusvr_svmreg)
 else
     # set feature contrasts
-    PredictMD.set_contrasts!(nusvr_svmreg, contrasts)
+    PredictMD.set_feature_contrasts!(nusvr_svmreg , feature_contrasts)
     # Train nu-SVR model
     PredictMD.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -424,7 +424,7 @@ if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     PredictMD.load!(knetmlpreg_filename, knetmlpreg)
 else
     # set feature contrasts
-    PredictMD.set_contrasts!(knetmlpreg, contrasts)
+    PredictMD.set_feature_contrasts!(knetmlpreg , feature_contrasts)
     # Train multilayer perceptron model on training set
     PredictMD.fit!(knetmlpreg,trainingfeaturesdf,traininglabelsdf,)
 end

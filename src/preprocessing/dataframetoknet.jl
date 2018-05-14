@@ -9,7 +9,7 @@ mutable struct MutableDataFrame2ClassificationKnetTransformer <:
     index::T4 where T4 <: Integer
     transposefeatures::T5 where T5 <: Bool
     transposelabels::T6 where T6 <: Bool
-    dfcontrasts::T7 where T7 <: AbstractContrasts
+    dffeaturecontrasts::T7 where T7 <: AbstractFeatureContrasts
     function MutableDataFrame2ClassificationKnetTransformer(
             featurenames::AbstractVector,
             labelnames::AbstractVector{<:Symbol},
@@ -30,11 +30,11 @@ mutable struct MutableDataFrame2ClassificationKnetTransformer <:
     end
 end
 
-function set_contrasts!(
+function set_feature_contrasts!(
         x::MutableDataFrame2ClassificationKnetTransformer,
-        contrasts::AbstractContrasts,
+        feature_contrasts::AbstractFeatureContrasts,
         )
-    x.dfcontrasts = contrasts
+    x.dffeaturecontrasts = feature_contrasts
     return nothing
 end
 
@@ -43,17 +43,17 @@ function get_underlying(
         saving::Bool = false,
         loading::Bool = false,
         )
-    result = x.dfcontrasts
+    result = x.dffeaturecontrasts
     return result
 end
 
 function set_underlying!(
         x::MutableDataFrame2ClassificationKnetTransformer,
-        contrasts;
+        feature_contrasts;
         saving::Bool = false,
         loading::Bool = false,
         )
-    x.dfcontrasts = contrasts
+    x.dffeaturecontrasts = feature_contrasts
     return nothing
 end
 
@@ -114,7 +114,7 @@ function transform(
     modelframe = StatsModels.ModelFrame(
         modelformula,
         featuresdf;
-        contrasts = transformer.dfcontrasts.contrasts,
+        contrasts = transformer.dffeaturecontrasts.contrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     featuresarray = modelmatrix.m
@@ -142,7 +142,7 @@ function transform(
     modelframe = StatsModels.ModelFrame(
         modelformula,
         featuresdf;
-        contrasts = transformer.dfcontrasts.contrasts,
+        contrasts = transformer.dffeaturecontrasts.contrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     featuresarray = modelmatrix.m
@@ -183,7 +183,7 @@ mutable struct MutableDataFrame2RegressionKnetTransformer <:
     labelnames::T2 where T2 <: AbstractVector{<:Symbol}
     transposefeatures::T3 where T3 <: Bool
     transposelabels::T4 where T4 <: Bool
-    dfcontrasts::T5 where T5 <: AbstractContrasts
+    dffeaturecontrasts::T5 where T5 <: AbstractFeatureContrasts
     function MutableDataFrame2RegressionKnetTransformer(
             featurenames::AbstractVector,
             labelnames::AbstractVector{<:Symbol};
@@ -200,11 +200,11 @@ mutable struct MutableDataFrame2RegressionKnetTransformer <:
     end
 end
 
-function set_contrasts!(
+function set_feature_contrasts!(
         x::MutableDataFrame2RegressionKnetTransformer,
-        contrasts::AbstractContrasts,
+        contrasts::AbstractFeatureContrasts,
         )
-    x.dfcontrasts = contrasts
+    x.dffeaturecontrasts = contrasts
     return nothing
 end
 
@@ -213,7 +213,7 @@ function get_underlying(
         saving::Bool = false,
         loading::Bool = false,
         )
-    result = x.dfcontrasts
+    result = x.dffeaturecontrasts
     return result
 end
 
@@ -223,7 +223,7 @@ function set_underlying!(
         saving::Bool = false,
         loading::Bool = false,
         )
-    x.dfcontrasts = object
+    x.dffeaturecontrasts = object
     return nothing
 end
 
@@ -263,7 +263,7 @@ function transform(
     modelframe = StatsModels.ModelFrame(
         modelformula,
         featuresdf;
-        contrasts = transformer.dfcontrasts.contrasts,
+        contrasts = transformer.dffeaturecontrasts.contrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     featuresarray = modelmatrix.m
@@ -291,7 +291,7 @@ function transform(
     modelframe = StatsModels.ModelFrame(
         modelformula,
         featuresdf;
-        contrasts = transformer.dfcontrasts.contrasts,
+        contrasts = transformer.dffeaturecontrasts.contrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     featuresarray = modelmatrix.m
