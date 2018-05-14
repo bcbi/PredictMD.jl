@@ -15,6 +15,7 @@ Knet 0.9
 LIBSVM 0.1
 LaTeXStrings 0.3
 MLBase 0.7
+NBInclude 1.2
 NNlib 0.2
 NumericalIntegration 0.0.3
 PGFPlots 2.2
