@@ -497,7 +497,7 @@ else
         #
         # first hidden layer (64 neurons):
         Cfloat.(
-            0.1f0*randn(Cfloat,64,contrasts.num_array_columns) # weights
+            0.1f0*randn(Cfloat,64,feature_contrasts.num_array_columns) # weights
             ),
         Cfloat.(
             zeros(Cfloat,64,1) # biases
