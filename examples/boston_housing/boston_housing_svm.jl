@@ -18,8 +18,8 @@ save_trained = true
 # load_pretrained = true
 # save_trained = false
 
-epsilonsvr_svmreg_filename = "./epsilonsvr_svmreg.jld2"
-nusvr_svmreg_filename = "./nusvr_svmreg.jld2"
+epsilonsvr_svmreg_filename = "./epsilonsvr_svmreg.bson"
+nusvr_svmreg_filename = "./nusvr_svmreg.bson"
 
 # Import Boston housing data
 df = CSV.read(

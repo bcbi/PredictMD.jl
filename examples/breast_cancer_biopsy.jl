@@ -30,12 +30,12 @@
 # ENV["LOADTRAINEDMODELSFROMFILE"] = "true"
 # ENV["SAVETRAINEDMODELSTOFILE"] = "false"
 
-logisticclassifier_filename = "/Users/dilum/Desktop/logisticclassifier.jld2"
-probitclassifier_filename = "/Users/dilum/Desktop/probitclassifier.jld2"
-rfclassifier_filename = "/Users/dilum/Desktop/rfclassifier.jld2"
-csvc_svmclassifier_filename = "/Users/dilum/Desktop/csvc_svmclassifier.jld2"
-nusvc_svmclassifier_filename = "/Users/dilum/Desktop/nusvc_svmclassifier.jld2"
-knetmlp_filename = "/Users/dilum/Desktop/knetmlpclassifier.jld2"
+logisticclassifier_filename = "/Users/dilum/Desktop/logisticclassifier.bson"
+probitclassifier_filename = "/Users/dilum/Desktop/probitclassifier.bson"
+rfclassifier_filename = "/Users/dilum/Desktop/rfclassifier.bson"
+csvc_svmclassifier_filename = "/Users/dilum/Desktop/csvc_svmclassifier.bson"
+nusvc_svmclassifier_filename = "/Users/dilum/Desktop/nusvc_svmclassifier.bson"
+knetmlp_filename = "/Users/dilum/Desktop/knetmlpclassifier.bson"
 
 ##############################################################################
 ##############################################################################

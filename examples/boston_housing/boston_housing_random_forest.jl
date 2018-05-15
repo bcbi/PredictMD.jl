@@ -16,7 +16,7 @@ save_trained = true
 # load_pretrained = true
 # save_trained = false
 
-randomforestreg_filename = "./randomforestreg.jld2";
+randomforestreg_filename = "./randomforestreg.bson";
 
 # Import Boston housing data
 df = CSV.read(

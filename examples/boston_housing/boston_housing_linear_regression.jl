@@ -16,11 +16,11 @@ save_trained = true
 # load_pretrained = true
 # save_trained = false
 
-linearreg_filename = "./linearreg.jld2"
-randomforestreg_filename = "./randomforestreg.jld2"
-epsilonsvr_svmreg_filename = "./epsilonsvr_svmreg.jld2"
-nusvr_svmreg_filename = "./nusvr_svmreg.jld2"
-knetmlpreg_filename = "./knetmlpreg.jld2"
+linearreg_filename = "./linearreg.bson"
+randomforestreg_filename = "./randomforestreg.bson"
+epsilonsvr_svmreg_filename = "./epsilonsvr_svmreg.bson"
+nusvr_svmreg_filename = "./nusvr_svmreg.bson"
+knetmlpreg_filename = "./knetmlpreg.bson"
 
 # Import Boston housing data
 df = CSV.read(
