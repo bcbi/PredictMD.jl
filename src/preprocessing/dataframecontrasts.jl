@@ -34,5 +34,7 @@ function DataFrameFeatureContrasts(
     return result
 end
 
-feature_contrasts(df::DataFrames.AbstractDataFrame,columns::AbstractVector{<:Symbol}) =
-    DataFrameFeatureContrasts(df,columns)
+generate_feature_contrasts(
+    df::DataFrames.AbstractDataFrame,
+    columns::AbstractVector{<:Symbol},
+    ) = DataFrameFeatureContrasts(df,columns)

@@ -55,7 +55,7 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
 else
-    feature_contrasts = PredictMD.feature_contrasts(df, featurenames)
+    feature_contrasts = PredictMD.generate_feature_contrasts(df, featurenames)
 end
 
 # Define labels
@@ -118,19 +118,18 @@ StatsBase.countmap(smotedtraininglabelsdf[labelname])
 ## Logistic "regression" classifier ##########################################
 ##############################################################################
 
-# Set up logistic classifier model
-logisticclassifier = PredictMD.singlelabelbinaryclassdataframelogisticclassifier(
-    featurenames,
-    labelname,
-    labellevels;
-    package = :GLMjl,
-    intercept = true, # optional, defaults to true
-    name = "Logistic regression", # optional
-    )
-
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    PredictMD.load!(logisticclassifier_filename, logisticclassifier)
+    logisticclassifier = PredictMD.load(logisticclassifier_filename)
 else
+    # Set up logistic classifier model
+    logisticclassifier = PredictMD.singlelabelbinaryclassdataframelogisticclassifier(
+        featurenames,
+        labelname,
+        labellevels;
+        package = :GLMjl,
+        intercept = true, # optional, defaults to true
+        name = "Logistic regression", # optional
+        )
     # set feature contrasts
     PredictMD.set_feature_contrasts!(logisticclassifier , feature_contrasts)
     # Train logistic classifier model on smoted training set
@@ -188,21 +187,20 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 ## Probit "regression" classifier ############################################
 ##############################################################################
 
-# Set up probit classifier model
-probitclassifier = PredictMD.singlelabelbinaryclassdataframeprobitclassifier(
-    featurenames,
-    labelname,
-    labellevels;
-    package = :GLMjl,
-    intercept = true, # optional, defaults to true
-    name = "Probit regression", # optional
-    )
-
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    PredictMD.load!(probitclassifier_filename, probitclassifier)
+    probitclassifier = PredictMD.load(probitclassifier_filename)
 else
+    # Set up probit classifier model
+    probitclassifier = PredictMD.singlelabelbinaryclassdataframeprobitclassifier(
+        featurenames,
+        labelname,
+        labellevels;
+        package = :GLMjl,
+        intercept = true, # optional, defaults to true
+        name = "Probit regression", # optional
+        )
     # set feature contrasts
-    PredictMD.set_feature_contrasts!(probitclassifier , feature_contrasts)
+    PredictMD.set_feature_contrasts!(probitclassifier, feature_contrasts)
     # Train probit classifier model on smoted training set
     PredictMD.fit!(
         probitclassifier,
@@ -258,20 +256,21 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 ## Random forest classifier ##################################################
 ##############################################################################
 
-# Set up random forest classifier model
-rfclassifier = PredictMD.singlelabelmulticlassdataframerandomforestclassifier(
-    featurenames,
-    labelname,
-    labellevels;
-    nsubfeatures = 4, # number of subfeatures; defaults to 2
-    ntrees = 200, # number of trees; defaults to 10
-    package = :DecisionTreejl,
-    name = "Random forest" # optional
-    )
+
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    PredictMD.load!(rfclassifier_filename, rfclassifier)
+    rfclassifier = PredictMD.load(rfclassifier_filename)
 else
+    # Set up random forest classifier model
+    rfclassifier = PredictMD.singlelabelmulticlassdataframerandomforestclassifier(
+        featurenames,
+        labelname,
+        labellevels;
+        nsubfeatures = 4, # number of subfeatures; defaults to 2
+        ntrees = 200, # number of trees; defaults to 10
+        package = :DecisionTreejl,
+        name = "Random forest" # optional
+        )
     # set feature contrasts
     PredictMD.set_feature_contrasts!(rfclassifier , feature_contrasts)
     # Train random forest classifier model on smoted training set
@@ -326,20 +325,19 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 ## Support vector machine (C support vector classifier) ######################
 ##############################################################################
 
-# Set up C-SVC model
-csvc_svmclassifier = PredictMD.singlelabelmulticlassdataframesvmclassifier(
-    featurenames,
-    labelname,
-    labellevels;
-    package = :LIBSVMjl,
-    svmtype = LIBSVM.SVC,
-    name = "SVM (C-SVC)",
-    verbose = false,
-    )
-
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    PredictMD.load!(csvc_svmclassifier_filename, csvc_svmclassifier)
+    csvc_svmclassifier = PredictMD.load(csvc_svmclassifier_filename)
 else
+    # Set up C-SVC model
+    csvc_svmclassifier = PredictMD.singlelabelmulticlassdataframesvmclassifier(
+        featurenames,
+        labelname,
+        labellevels;
+        package = :LIBSVMjl,
+        svmtype = LIBSVM.SVC,
+        name = "SVM (C-SVC)",
+        verbose = false,
+        )
     # set feature contrasts
     PredictMD.set_feature_contrasts!(csvc_svmclassifier , feature_contrasts)
     # Train C-SVC model on smoted training set
@@ -394,20 +392,19 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 ## Support vector machine (nu support vector classifier) #####################
 ##############################################################################
 
-# Set up nu-SVC model
-nusvc_svmclassifier = PredictMD.singlelabelmulticlassdataframesvmclassifier(
-    featurenames,
-    labelname,
-    labellevels;
-    package = :LIBSVMjl,
-    svmtype = LIBSVM.NuSVC,
-    name = "SVM (nu-SVC)",
-    verbose = false,
-    )
-
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    PredictMD.load!(nusvc_svmclassifier_filename, nusvc_svmclassifier)
+    nusvc_svmclassifier = PredictMD.load(nusvc_svmclassifier_filename)
 else
+    # Set up nu-SVC model
+    nusvc_svmclassifier = PredictMD.singlelabelmulticlassdataframesvmclassifier(
+        featurenames,
+        labelname,
+        labellevels;
+        package = :LIBSVMjl,
+        svmtype = LIBSVM.NuSVC,
+        name = "SVM (nu-SVC)",
+        verbose = false,
+        )
     # set feature contrasts
     PredictMD.set_feature_contrasts!(nusvc_svmclassifier , feature_contrasts)
     # Train nu-SVC model on smoted training set
@@ -487,9 +484,31 @@ function knetmlp_predict(
     end
 end
 
+# Define loss function
+function knetmlp_loss(
+        predict::Function,
+        modelweights, # don't put a type annotation on this
+        x::AbstractArray,
+        ytrue::AbstractArray;
+        L1::Real = Cfloat(0),
+        L2::Real = Cfloat(0),
+        )
+    loss = Knet.nll(
+        predict(modelweights, x; training = true),
+        ytrue,
+        1, # d = 1 means that instances are in columns
+        )
+    if L1 != 0
+        loss += L1 * sum(sum(abs, w_i) for w_i in modelweights[1:2:end])
+    end
+    if L2 != 0
+        loss += L2 * sum(sum(abs2, w_i) for w_i in modelweights[1:2:end])
+    end
+    return loss
+end
+
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    # No need to initialize weights since we are going to load them from file
-    knetmlp_modelweights = Any[]
+    PredictMD.load!(knetmlp_filename, knetmlpclassifier)
 else
     # Randomly initialize model weights
     knetmlp_modelweights = Any[
@@ -519,72 +538,38 @@ else
             zeros(Cfloat,2,1) # biases
             ),
         ]
-end
-
-# Define loss function
-function knetmlp_loss(
-        predict::Function,
-        modelweights, # don't put a type annotation on this
-        x::AbstractArray,
-        ytrue::AbstractArray;
-        L1::Real = Cfloat(0),
-        L2::Real = Cfloat(0),
+    # Define loss hyperparameters
+    knetmlp_losshyperparameters = Dict()
+    knetmlp_losshyperparameters[:L1] = Cfloat(0.0)
+    knetmlp_losshyperparameters[:L2] = Cfloat(0.0)
+    # Select optimization algorithm
+    knetmlp_optimizationalgorithm = :Momentum
+    # Set optimization hyperparameters
+    knetmlp_optimizerhyperparameters = Dict()
+    # Set the minibatch size
+    knetmlp_minibatchsize = 48
+    # Set the max number of epochs. After training, look at the learning curve. If
+    # it looks like the model has not yet converged, raise maxepochs. If it looks
+    # like the loss has hit a plateau and you are worried about overfitting, lower
+    # maxepochs.
+    knetmlp_maxepochs = 500
+    # Set up multilayer perceptron model
+    knetmlpclassifier = PredictMD.singlelabelmulticlassdataframeknetclassifier(
+        featurenames,
+        labelname,
+        labellevels;
+        package = :Knetjl,
+        name = "Knet MLP",
+        predict = knetmlp_predict,
+        loss = knetmlp_loss,
+        losshyperparameters = knetmlp_losshyperparameters,
+        optimizationalgorithm = knetmlp_optimizationalgorithm,
+        optimizerhyperparameters = knetmlp_optimizerhyperparameters,
+        minibatchsize = knetmlp_minibatchsize,
+        modelweights = knetmlp_modelweights,
+        printlosseverynepochs = 100, # if 0, will not print at all
+        maxepochs = knetmlp_maxepochs,
         )
-    loss = Knet.nll(
-        predict(modelweights, x; training = true),
-        ytrue,
-        1, # d = 1 means that instances are in columns
-        )
-    if L1 != 0
-        loss += L1 * sum(sum(abs, w_i) for w_i in modelweights[1:2:end])
-    end
-    if L2 != 0
-        loss += L2 * sum(sum(abs2, w_i) for w_i in modelweights[1:2:end])
-    end
-    return loss
-end
-
-# Define loss hyperparameters
-knetmlp_losshyperparameters = Dict()
-knetmlp_losshyperparameters[:L1] = Cfloat(0.0)
-knetmlp_losshyperparameters[:L2] = Cfloat(0.0)
-
-# Select optimization algorithm
-knetmlp_optimizationalgorithm = :Momentum
-
-# Set optimization hyperparameters
-knetmlp_optimizerhyperparameters = Dict()
-
-# Set the minibatch size
-knetmlp_minibatchsize = 48
-
-# Set the max number of epochs. After training, look at the learning curve. If
-# it looks like the model has not yet converged, raise maxepochs. If it looks
-# like the loss has hit a plateau and you are worried about overfitting, lower
-# maxepochs.
-knetmlp_maxepochs = 500
-
-# Set up multilayer perceptron model
-knetmlpclassifier = PredictMD.singlelabelmulticlassdataframeknetclassifier(
-    featurenames,
-    labelname,
-    labellevels;
-    package = :Knetjl,
-    name = "Knet MLP",
-    predict = knetmlp_predict,
-    loss = knetmlp_loss,
-    losshyperparameters = knetmlp_losshyperparameters,
-    optimizationalgorithm = knetmlp_optimizationalgorithm,
-    optimizerhyperparameters = knetmlp_optimizerhyperparameters,
-    minibatchsize = knetmlp_minibatchsize,
-    modelweights = knetmlp_modelweights,
-    printlosseverynepochs = 100, # if 0, will not print at all
-    maxepochs = knetmlp_maxepochs,
-    )
-
-if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    PredictMD.load!(knetmlp_filename, knetmlpclassifier)
-else
     # set feature contrasts
     PredictMD.set_feature_contrasts!(knetmlpclassifier , feature_contrasts)
     # Train multilayer perceptron model on training set

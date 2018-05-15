@@ -7,11 +7,9 @@ ClassImbalance 0.2
 Crayons 0.4
 DataFrames 0.11
 DecisionTree 0.6
-FileIO 0.6
 Flux 0.4
 GLM 0.10
 GZip 0.3
-JLD2 0.0.5
 Knet 0.9
 LIBSVM 0.1
 LaTeXStrings 0.3

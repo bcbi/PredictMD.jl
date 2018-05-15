@@ -1,76 +1,43 @@
 import BSON
-import FileIO
-import JLD2
 import ProgressMeter
 
-function save(filename::AbstractString, x::Fittable)
-    # make sure that the filename ends in ".jld2"
-    if lowercase(strip(splitext(filename)[2])) != ".jld2"
+function save(filename::AbstractString, fittable_object_to_save::Fittable)
+    # make sure that the filename ends in ".bson"
+    if lowercase(strip(splitext(filename)[2])) != ".bson"
         error(
             string(
                 "Filename \"",
                 filename,
-                "\" does not end in \".jld2\"",
-                )
+                "",
+                "\" does not end in \".bson\"")
             )
     end
-
-    # get all underlying objects
-    underlying = get_underlying(x;saving=true,)
-
-    # get all value history objects
-    history = get_history(x;saving=true,)
-
+    dict_of_objects_to_save = Dict()
+    dict_of_objects_to_save[:saved_fittable_object] = fittable_object_to_save
+    info("Attempting to save model...")
     # make sure the parent directory exists
-    parentdirectory = Base.Filesystem.dirname(filename)
-    Base.Filesystem.mkpath(parentdirectory)
-
-    # save the JLD2 file
-    FileIO.save(
-        filename,
-        Dict(
-            "underlying" => underlying,
-            "history" => history,
-            ),
-        )
-
-    # print info message
-    info(string("Saved model to file ", filename))
-
-    # return
+    parent_directory = Base.Filesystem.dirname(filename)
+    Base.Filesystem.mkpath(parent_directory)
+    # save the .bson file
+    BSON.bson(filename, dict_of_objects_to_save)
+    info(string("Saved model to file \"", filename, "\""))
     return nothing
 end
 
-function load!(filename::AbstractString, x::Fittable)
-    # make sure that the filename ends in ".jld2"
-    if lowercase(strip(splitext(filename)[2])) != ".jld2"
+function load(filename::AbstractString)
+    # make sure that the filename ends in ".bson"
+    if lowercase(strip(splitext(filename)[2])) != ".bson"
         error(
             string(
                 "Filename \"",
                 filename,
-                "\" does not end in \".jld2\"",
-                )
+                "",
+                "\" does not end in \".bson\"")
             )
     end
-
-    # load the JLD2 file
-    alldatasets = FileIO.load(filename)
-
-    # get the underlying objects
-    underlying = alldatasets["underlying"]
-
-    # get the value history objects
-    history = alldatasets["history"]
-
-    # go through the Fittable and set all underlying objects
-    set_underlying!(x,underlying;loading=true,)
-
-    # go through the Fittable and set all value history objects
-    set_history!(x,history;loading=true,)
-
-    # print info message
-    info(string("Loaded model from file ", filename))
-
-    # return
-    return nothing
+    info("Attempting to load model...")
+    dict_of_loaded_objects = BSON.load(filename)
+    loaded_fittable_object = dict_of_loaded_objects[:saved_fittable_object]
+    info(string("Loaded model from file \"", filename, "\""))
+    return loaded_fittable_object
 end

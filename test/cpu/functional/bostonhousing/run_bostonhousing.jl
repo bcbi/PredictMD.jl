@@ -62,7 +62,7 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
 else
-    feature_contrasts = PredictMD.feature_contrasts(df, featurenames)
+    feature_contrasts = PredictMD.generate_feature_contrasts(df, featurenames)
 end
 
 # Define labels
@@ -89,18 +89,17 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 ## Linear regression #########################################################
 ##############################################################################
 
-# Set up linear regression model
-linearreg = PredictMD.singlelabeldataframelinearregression(
-    featurenames,
-    labelname;
-    package = :GLMjl,
-    intercept = true, # optional, defaults to true
-    name = "Linear regression", # optional
-    )
-
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    PredictMD.load!(linearreg_filename, linearreg)
+    linearreg = PredictMD.load(linearreg_filename)
 else
+    # Set up linear regression model
+    linearreg = PredictMD.singlelabeldataframelinearregression(
+        featurenames,
+        labelname;
+        package = :GLMjl,
+        intercept = true, # optional, defaults to true
+        name = "Linear regression", # optional
+        )
     # set feature contrasts
     PredictMD.set_feature_contrasts!(linearreg , feature_contrasts)
     # Train linear regression model
@@ -148,19 +147,20 @@ PredictMD.singlelabelregressionmetrics(
 ## Random forest regression ##################################################
 ##############################################################################
 
-# Set up random forest regression model
-randomforestreg = PredictMD.singlelabeldataframerandomforestregression(
-    featurenames,
-    labelname;
-    nsubfeatures = 2, # number of subfeatures; defaults to 2
-    ntrees = 20, # number of trees; defaults to 10
-    package = :DecisionTreejl,
-    name = "Random forest" # optional
-    )
+
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    PredictMD.load!(randomforestreg_filename, randomforestreg)
+    randomforestreg = PredictMD.load!(randomforestreg_filename)
 else
+    # Set up random forest regression model
+    randomforestreg = PredictMD.singlelabeldataframerandomforestregression(
+        featurenames,
+        labelname;
+        nsubfeatures = 2, # number of subfeatures; defaults to 2
+        ntrees = 20, # number of trees; defaults to 10
+        package = :DecisionTreejl,
+        name = "Random forest" # optional
+        )
     # set feature contrasts
     PredictMD.set_feature_contrasts!(randomforestreg , feature_contrasts)
     # Train random forest model on training set
@@ -205,20 +205,19 @@ PredictMD.singlelabelregressionmetrics(
 ## Support vector machine (epsilon support vector regression) ################
 ##############################################################################
 
-# Set up epsilon-SVR model
-epsilonsvr_svmreg = PredictMD.singlelabeldataframesvmregression(
-    featurenames,
-    labelname;
-    package = :LIBSVMjl,
-    svmtype = LIBSVM.EpsilonSVR,
-    name = "SVM (epsilon-SVR)",
-    kernel = LIBSVM.Kernel.Linear,
-    verbose = false,
-    )
-
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    PredictMD.load!(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
+    epsilonsvr_svmreg = PredictMD.load(epsilonsvr_svmreg_filename)
 else
+    # Set up epsilon-SVR model
+    epsilonsvr_svmreg = PredictMD.singlelabeldataframesvmregression(
+        featurenames,
+        labelname;
+        package = :LIBSVMjl,
+        svmtype = LIBSVM.EpsilonSVR,
+        name = "SVM (epsilon-SVR)",
+        kernel = LIBSVM.Kernel.Linear,
+        verbose = false,
+        )
     # set feature contrasts
     PredictMD.set_feature_contrasts!(epsilonsvr_svmreg , feature_contrasts)
     # Train epsilon-SVR model on training set
@@ -263,20 +262,21 @@ PredictMD.singlelabelregressionmetrics(
 ## Support vector machine (nu support vector regression) ################
 ##############################################################################
 
-# Set up nu-SVR model
-nusvr_svmreg = PredictMD.singlelabeldataframesvmregression(
-    featurenames,
-    labelname;
-    package = :LIBSVMjl,
-    svmtype = LIBSVM.NuSVR,
-    name = "SVM (nu-SVR)",
-    kernel = LIBSVM.Kernel.Linear,
-    verbose = false,
-    )
+
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    PredictMD.load!(nusvr_svmreg_filename, nusvr_svmreg)
+    nusvr_svmreg = PredictMD.load!(nusvr_svmreg_filename)
 else
+    # Set up nu-SVR model
+    nusvr_svmreg = PredictMD.singlelabeldataframesvmregression(
+        featurenames,
+        labelname;
+        package = :LIBSVMjl,
+        svmtype = LIBSVM.NuSVR,
+        name = "SVM (nu-SVR)",
+        kernel = LIBSVM.Kernel.Linear,
+        verbose = false,
+        )
     # set feature contrasts
     PredictMD.set_feature_contrasts!(nusvr_svmreg , feature_contrasts)
     # Train nu-SVR model
@@ -335,32 +335,6 @@ function knetmlp_predict(
     return x2
 end
 
-if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    # No need to initialize weights since we are going to load them from file
-    knetmlp_modelweights = Any[]
-else
-    # Randomly initialize model weights
-    knetmlp_modelweights = Any[
-        # input layer has dimension contrasts.num_array_columns
-        #
-        # hidden layer (10 neurons):
-        Cfloat.(
-            0.1f0*randn(Cfloat,10,feature_contrasts.num_array_columns) # weights
-            ),
-        Cfloat.(
-            zeros(Cfloat,10,1) # biases
-            ),
-        #
-        # output layer (regression nets have exactly 1 neuron in output layer):
-        Cfloat.(
-            0.1f0*randn(Cfloat,1,10) # weights
-            ),
-        Cfloat.(
-            zeros(Cfloat,1,1) # biases
-            ),
-        ]
-end
-
 # Define loss function
 function knetmlp_loss(
         predict::Function,
@@ -383,46 +357,60 @@ function knetmlp_loss(
     return loss
 end
 
-# Define loss hyperparameters
-knetmlp_losshyperparameters = Dict()
-knetmlp_losshyperparameters[:L1] = Cfloat(0.0)
-knetmlp_losshyperparameters[:L2] = Cfloat(0.0)
-
-# Select optimization algorithm
-knetmlp_optimizationalgorithm = :Adam
-
-# Set optimization hyperparameters
-knetmlp_optimizerhyperparameters = Dict()
-
-# Set the minibatch size
-knetmlp_minibatchsize = 48
-
-# Set the max number of epochs. After training, look at the learning curve. If
-# it looks like the model has not yet converged, raise maxepochs. If it looks
-# like the loss has hit a plateau and you are worried about overfitting, lower
-# maxepochs.
-knetmlp_maxepochs = 500
-
-# Set up multilayer perceptron model
-knetmlpreg = PredictMD.singlelabeldataframeknetregression(
-    featurenames,
-    labelname;
-    package = :Knetjl,
-    name = "Knet MLP",
-    predict = knetmlp_predict,
-    loss = knetmlp_loss,
-    losshyperparameters = knetmlp_losshyperparameters,
-    optimizationalgorithm = knetmlp_optimizationalgorithm,
-    optimizerhyperparameters = knetmlp_optimizerhyperparameters,
-    minibatchsize = knetmlp_minibatchsize,
-    modelweights = knetmlp_modelweights,
-    maxepochs = knetmlp_maxepochs,
-    printlosseverynepochs = 100, # if 0, will not print at all
-    )
-
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    PredictMD.load!(knetmlpreg_filename, knetmlpreg)
+    knetmlpreg = PredictMD.load(knetmlpreg_filename)
 else
+    # Randomly initialize model weights
+    knetmlp_modelweights = Any[
+        # input layer has dimension contrasts.num_array_columns
+        #
+        # hidden layer (10 neurons):
+        Cfloat.(
+            0.1f0*randn(Cfloat,10,feature_contrasts.num_array_columns) # weights
+            ),
+        Cfloat.(
+            zeros(Cfloat,10,1) # biases
+            ),
+        #
+        # output layer (regression nets have exactly 1 neuron in output layer):
+        Cfloat.(
+            0.1f0*randn(Cfloat,1,10) # weights
+            ),
+        Cfloat.(
+            zeros(Cfloat,1,1) # biases
+            ),
+        ]
+    # Define loss hyperparameters
+    knetmlp_losshyperparameters = Dict()
+    knetmlp_losshyperparameters[:L1] = Cfloat(0.0)
+    knetmlp_losshyperparameters[:L2] = Cfloat(0.0)
+    # Select optimization algorithm
+    knetmlp_optimizationalgorithm = :Adam
+    # Set optimization hyperparameters
+    knetmlp_optimizerhyperparameters = Dict()
+    # Set the minibatch size
+    knetmlp_minibatchsize = 48
+    # Set the max number of epochs. After training, look at the learning curve. If
+    # it looks like the model has not yet converged, raise maxepochs. If it looks
+    # like the loss has hit a plateau and you are worried about overfitting, lower
+    # maxepochs.
+    knetmlp_maxepochs = 500
+    # Set up multilayer perceptron model
+    knetmlpreg = PredictMD.singlelabeldataframeknetregression(
+        featurenames,
+        labelname;
+        package = :Knetjl,
+        name = "Knet MLP",
+        predict = knetmlp_predict,
+        loss = knetmlp_loss,
+        losshyperparameters = knetmlp_losshyperparameters,
+        optimizationalgorithm = knetmlp_optimizationalgorithm,
+        optimizerhyperparameters = knetmlp_optimizerhyperparameters,
+        minibatchsize = knetmlp_minibatchsize,
+        modelweights = knetmlp_modelweights,
+        maxepochs = knetmlp_maxepochs,
+        printlosseverynepochs = 100, # if 0, will not print at all
+        )
     # set feature contrasts
     PredictMD.set_feature_contrasts!(knetmlpreg , feature_contrasts)
     # Train multilayer perceptron model on training set
