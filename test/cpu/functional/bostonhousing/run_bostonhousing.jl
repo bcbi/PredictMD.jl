@@ -100,8 +100,6 @@ else
         intercept = true, # optional, defaults to true
         name = "Linear regression", # optional
         )
-    # set feature contrasts
-    PredictMD.set_feature_contrasts!(linearreg , feature_contrasts)
     # Train linear regression model
     PredictMD.fit!(linearreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -157,10 +155,9 @@ else
         nsubfeatures = 2, # number of subfeatures; defaults to 2
         ntrees = 20, # number of trees; defaults to 10
         package = :DecisionTreejl,
-        name = "Random forest" # optional
+        name = "Random forest", # optional
+        feature_contasts = feature_contrasts,
         )
-    # set feature contrasts
-    PredictMD.set_feature_contrasts!(randomforestreg , feature_contrasts)
     # Train random forest model on training set
     PredictMD.fit!(randomforestreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -215,9 +212,8 @@ else
         name = "SVM (epsilon-SVR)",
         kernel = LIBSVM.Kernel.Linear,
         verbose = false,
+        feature_contasts = feature_contrasts,
         )
-    # set feature contrasts
-    PredictMD.set_feature_contrasts!(epsilonsvr_svmreg , feature_contrasts)
     # Train epsilon-SVR model on training set
     PredictMD.fit!(epsilonsvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -272,9 +268,8 @@ else
         name = "SVM (nu-SVR)",
         kernel = LIBSVM.Kernel.Linear,
         verbose = false,
+        feature_contasts = feature_contrasts,
         )
-    # set feature contrasts
-    PredictMD.set_feature_contrasts!(nusvr_svmreg , feature_contrasts)
     # Train nu-SVR model
     PredictMD.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -406,9 +401,8 @@ else
         modelweights = knetmlp_modelweights,
         maxepochs = knetmlp_maxepochs,
         printlosseverynepochs = 100, # if 0, will not print at all
+        feature_contasts = feature_contrasts,
         )
-    # set feature contrasts
-    PredictMD.set_feature_contrasts!(knetmlpreg , feature_contrasts)
     # Train multilayer perceptron model on training set
     PredictMD.fit!(knetmlpreg,trainingfeaturesdf,traininglabelsdf,)
 end

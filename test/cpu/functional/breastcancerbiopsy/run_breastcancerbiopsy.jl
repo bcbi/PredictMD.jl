@@ -130,8 +130,6 @@ else
         intercept = true, # optional, defaults to true
         name = "Logistic regression", # optional
         )
-    # set feature contrasts
-    PredictMD.set_feature_contrasts!(logisticclassifier , feature_contrasts)
     # Train logistic classifier model on smoted training set
     PredictMD.fit!(
         logisticclassifier,
@@ -199,8 +197,6 @@ else
         intercept = true, # optional, defaults to true
         name = "Probit regression", # optional
         )
-    # set feature contrasts
-    PredictMD.set_feature_contrasts!(probitclassifier, feature_contrasts)
     # Train probit classifier model on smoted training set
     PredictMD.fit!(
         probitclassifier,
@@ -267,10 +263,9 @@ else
         nsubfeatures = 4, # number of subfeatures; defaults to 2
         ntrees = 200, # number of trees; defaults to 10
         package = :DecisionTreejl,
-        name = "Random forest" # optional
+        name = "Random forest", # optional
+        feature_contasts = feature_contrasts,
         )
-    # set feature contrasts
-    PredictMD.set_feature_contrasts!(rfclassifier , feature_contrasts)
     # Train random forest classifier model on smoted training set
     PredictMD.fit!(
         rfclassifier,
@@ -335,9 +330,8 @@ else
         svmtype = LIBSVM.SVC,
         name = "SVM (C-SVC)",
         verbose = false,
+        feature_contasts = feature_contrasts,
         )
-    # set feature contrasts
-    PredictMD.set_feature_contrasts!(csvc_svmclassifier , feature_contrasts)
     # Train C-SVC model on smoted training set
     PredictMD.fit!(
         csvc_svmclassifier,
@@ -402,9 +396,8 @@ else
         svmtype = LIBSVM.NuSVC,
         name = "SVM (nu-SVC)",
         verbose = false,
+        feature_contasts = feature_contrasts,
         )
-    # set feature contrasts
-    PredictMD.set_feature_contrasts!(nusvc_svmclassifier , feature_contrasts)
     # Train nu-SVC model on smoted training set
     PredictMD.fit!(
         nusvc_svmclassifier,
@@ -567,9 +560,8 @@ else
         modelweights = knetmlp_modelweights,
         printlosseverynepochs = 100, # if 0, will not print at all
         maxepochs = knetmlp_maxepochs,
+        feature_contasts = feature_contrasts,
         )
-    # set feature contrasts
-    PredictMD.set_feature_contrasts!(knetmlpclassifier , feature_contrasts)
     # Train multilayer perceptron model on training set
     PredictMD.fit!(
         knetmlpclassifier,

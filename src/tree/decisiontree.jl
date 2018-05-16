@@ -139,6 +139,7 @@ function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
         name::AbstractString = "",
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     dftransformer = MutableDataFrame2DecisionTreeTransformer(
         featurenames,
@@ -169,6 +170,9 @@ function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
             ];
         name = name,
         )
+    if !isvoid(feature_contrasts)
+        set_feature_contrasts!(finalpipeline, feature_contrasts)
+    end
     return finalpipeline
 end
 
@@ -180,6 +184,7 @@ function singlelabelmulticlassdataframerandomforestclassifier(
         package::Symbol = :none,
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     if package == :DecisionTreejl
         result = _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
@@ -189,6 +194,7 @@ function singlelabelmulticlassdataframerandomforestclassifier(
             name = name,
             nsubfeatures = nsubfeatures,
             ntrees = ntrees,
+            feature_contrasts = feature_contrasts
         )
         return result
     else
@@ -202,6 +208,7 @@ function _singlelabeldataframerandomforestregression_DecisionTree(
         name::AbstractString = "",
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     dftransformer = MutableDataFrame2DecisionTreeTransformer(
         featurenames,
@@ -226,6 +233,9 @@ function _singlelabeldataframerandomforestregression_DecisionTree(
             ];
         name = name,
         )
+    if !isvoid(feature_contrasts)
+        set_feature_contrasts!(finalpipeline, feature_contrasts)
+    end
     return finalpipeline
 end
 
@@ -236,6 +246,7 @@ function singlelabeldataframerandomforestregression(
         package::Symbol = :none,
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     if package == :DecisionTreejl
         result = _singlelabeldataframerandomforestregression_DecisionTree(
@@ -244,6 +255,7 @@ function singlelabeldataframerandomforestregression(
             name = name,
             nsubfeatures = nsubfeatures,
             ntrees = ntrees,
+            feature_contrasts = feature_contrasts
         )
         return result
     else
