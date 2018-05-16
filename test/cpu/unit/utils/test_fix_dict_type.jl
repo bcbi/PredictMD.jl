@@ -1,9 +1,9 @@
 import Base.Test
 
 dict_1 = Dict()
-Dict(Symbol(:x)) = Float64(1.1)
-Dict(Symbol(:y)) = Float64(2.2)
-Dict(Symbol(:z)) = Float64(3.3)
+dict_1[Symbol(:x)] = Float64(1.1)
+dict_1[Symbol(:y)] = Float64(2.2)
+dict_1[Symbol(:z)] = Float64(3.3)
 Base.Test.@test(typeof(dict_1) <: Dict{Any, Any})
 
 dict_2 = fix_dict_type(dict_1)
