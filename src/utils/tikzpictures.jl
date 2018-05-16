@@ -3,13 +3,13 @@ import TikzPictures
 function save_plot(filename::AbstractString, tp::TikzPictures.TikzPicture)
     extension = lowercase(strip(splitext(filename)[2]))
     if extension == ".pdf"
-        return save_plot_pdf(tp, filename)
+        return save_plot_pdf(filename, tp)
     elseif extension == ".tex"
-        return save_plot_tex(tp, filename)
+        return save_plot_tex(filename, tp)
     elseif extension == ".tikz"
-        return save_plot_tikz(tp, filename)
+        return save_plot_tikz(filename, tp)
     elseif extension == ".svg"
-        return save_plot_svg(tp, filename)
+        return save_plot_svg(filename, tp)
     else
         error(
             string(
@@ -48,7 +48,7 @@ function open_plot(tp::TikzPictures.TikzPicture)
 end
 
 function open_plot(filename::AbstractString, tp::TikzPictures.TikzPicture)
-    saveresult = save_plot_svg(tp, filename)
+    saveresult = save_plot_svg(filename, tp)
     openresult = open_browser_window(filename)
     return openresult
 end
