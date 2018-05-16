@@ -147,8 +147,6 @@ PredictMD.singlelabelregressionmetrics(
 ## Random forest regression ##################################################
 ##############################################################################
 
-
-
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     randomforestreg = PredictMD.load!(randomforestreg_filename)
 else
