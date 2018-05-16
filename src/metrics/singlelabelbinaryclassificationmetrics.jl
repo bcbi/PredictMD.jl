@@ -85,7 +85,8 @@ function _singlelabelbinaryclassclassificationmetrics_tunableparam(
     else
         metricprintnames[:f1score] = string("* F1 Score")
     end
-    metricprintnames[:precision] = string("* Precision (PPV)")
+    metricprintnames[:precision] = string("* Precision (positive predictive value)")
+    metricprintnames[:negative_predictive_value] = string("* Negative predictive value")
     metricprintnames[:recall] = string("* Recall (sensitivity, TPR)")
     if selectedtunableparam == :sensitivity
         metricprintnames[:sensitivity] = string("[fix] * Sensitivity (recall, TPR)")
@@ -180,6 +181,7 @@ function _singlelabelbinaryclassclassificationmetrics(
     results[:sensitivity] = sensitivity(bestrocnums)
     results[:specificity] = specificity(bestrocnums)
     results[:precision] = precision(bestrocnums)
+    results[:negative_predictive_value] = negative_predictive_value(bestrocnums)
     results[:recall] = recall(bestrocnums)
     results[:f1score] = f1score(bestrocnums)
     results[:cohen_kappa] = cohen_kappa(bestrocnums)
@@ -240,6 +242,7 @@ function singlelabelbinaryclassclassificationmetrics(
         metricprintnames[:cohen_kappa],
         metricprintnames[:f1score],
         metricprintnames[:precision],
+        metricprintnames[:negative_predictive_value],
         metricprintnames[:recall],
         metricprintnames[:sensitivity],
         metricprintnames[:specificity],
@@ -254,6 +257,7 @@ function singlelabelbinaryclassclassificationmetrics(
             metricsforeachestimator[i][:cohen_kappa],
             metricsforeachestimator[i][:f1score],
             metricsforeachestimator[i][:precision],
+            metricsforeachestimator[i][:negative_predictive_value],
             metricsforeachestimator[i][:recall],
             metricsforeachestimator[i][:sensitivity],
             metricsforeachestimator[i][:specificity],
