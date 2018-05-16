@@ -21,15 +21,6 @@ function get_underlying(
     return nothing
 end
 
-function set_underlying!(
-        x::ImmutablePredictionsSingleLabelInt2StringTransformer,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
 function get_history(
         x::ImmutablePredictionsSingleLabelInt2StringTransformer;
         saving::Bool = false,

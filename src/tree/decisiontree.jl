@@ -59,16 +59,6 @@ function get_underlying(
     return result
 end
 
-function set_underlying!(
-        x::DecisionTreeModel,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.underlyingrandomforest = object
-    return nothing
-end
-
 function get_history(
         x::DecisionTreeModel;
         saving::Bool = false,

@@ -38,16 +38,6 @@ function get_underlying(
     return result
 end
 
-function set_underlying!(
-        x::MutableDataFrame2DecisionTreeTransformer,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.dffeaturecontrasts = object
-    return nothing
-end
-
 function get_history(
         x::MutableDataFrame2DecisionTreeTransformer;
         saving::Bool = false,

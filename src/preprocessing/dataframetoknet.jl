@@ -47,16 +47,6 @@ function get_underlying(
     return result
 end
 
-function set_underlying!(
-        x::MutableDataFrame2ClassificationKnetTransformer,
-        feature_contrasts;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.dffeaturecontrasts = feature_contrasts
-    return nothing
-end
-
 function get_history(
         x::MutableDataFrame2ClassificationKnetTransformer;
         saving::Bool = false,

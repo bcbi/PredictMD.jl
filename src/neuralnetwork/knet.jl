@@ -101,17 +101,6 @@ function get_underlying(
     return result
 end
 
-function set_underlying!(
-        x::KnetModel,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.modelweights = object[1]
-    x.modelweightoptimizers = object[2]
-    return nothing
-end
-
 function get_history(
         x::KnetModel;
         saving::Bool = false,

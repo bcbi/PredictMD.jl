@@ -20,15 +20,6 @@ function get_underlying(
     return nothing
 end
 
-function set_underlying!(
-        x::ImmutableFeatureArrayTransposerTransformer,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
 function get_history(
         x::ImmutableFeatureArrayTransposerTransformer;
         saving::Bool = false,

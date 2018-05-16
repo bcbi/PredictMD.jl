@@ -74,16 +74,6 @@ function get_underlying(
     return result
 end
 
-function set_underlying!(
-        x::LIBSVMModel,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.underlyingsvm = object
-    return nothing
-end
-
 function get_history(
         x::LIBSVMModel;
         saving::Bool = false,

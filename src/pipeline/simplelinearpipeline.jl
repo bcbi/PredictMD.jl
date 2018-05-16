@@ -49,26 +49,6 @@ function get_underlying(
     return underlying
 end
 
-function set_underlying!(
-        x::SimplePipeline,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    if length(x.objectsvector) != length(object)
-        error("length(x) != length(object)")
-    end
-    for i = 1:length(x.objectsvector)
-        set_underlying!(
-            x.objectsvector[i],
-            object[i];
-            saving=saving,
-            loading=loading,
-            )
-    end
-    return nothing
-end
-
 function get_history(
         x::SimplePipeline;
         saving::Bool = false,
