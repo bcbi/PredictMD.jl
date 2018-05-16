@@ -90,7 +90,7 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 ##############################################################################
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    linearreg = PredictMD.load(linearreg_filename)
+    linearreg = PredictMD.load_plot(linearreg_filename)
 else
     # Set up linear regression model
     linearreg = PredictMD.singlelabeldataframelinearregression(
@@ -116,7 +116,7 @@ linearreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted
     traininglabelsdf,
     labelname,
     )
-PredictMD.open(linearreg_plot_training)
+PredictMD.open_plot(linearreg_plot_training)
 
 # Plot true values versus predicted values for linear regression on testing set
 linearreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -125,7 +125,7 @@ linearreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     testinglabelsdf,
     labelname
     )
-PredictMD.open(linearreg_plot_testing)
+PredictMD.open_plot(linearreg_plot_testing)
 
 # Evaluate performance of linear regression on training set
 PredictMD.singlelabelregressionmetrics(
@@ -174,7 +174,7 @@ randomforestreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspre
     traininglabelsdf,
     labelname,
     )
-PredictMD.open(randomforestreg_plot_training)
+PredictMD.open_plot(randomforestreg_plot_training)
 
 # Plot true values versus predicted values for random forest on testing set
 randomforestreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -183,7 +183,7 @@ randomforestreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspred
     testinglabelsdf,
     labelname,
     )
-PredictMD.open(randomforestreg_plot_testing)
+PredictMD.open_plot(randomforestreg_plot_testing)
 
 # Evaluate performance of random forest on training set
 PredictMD.singlelabelregressionmetrics(
@@ -206,7 +206,7 @@ PredictMD.singlelabelregressionmetrics(
 ##############################################################################
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    epsilonsvr_svmreg = PredictMD.load(epsilonsvr_svmreg_filename)
+    epsilonsvr_svmreg = PredictMD.load_plot(epsilonsvr_svmreg_filename)
 else
     # Set up epsilon-SVR model
     epsilonsvr_svmreg = PredictMD.singlelabeldataframesvmregression(
@@ -231,7 +231,7 @@ epsilonsvr_svmreg_plot_training = PredictMD.plotsinglelabelregressiontrueversusp
     traininglabelsdf,
     labelname,
     )
-PredictMD.open(epsilonsvr_svmreg_plot_training)
+PredictMD.open_plot(epsilonsvr_svmreg_plot_training)
 
 # Plot true values versus predicted values for epsilon-SVR on testing set
 epsilonsvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -240,7 +240,7 @@ epsilonsvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspr
     testinglabelsdf,
     labelname,
     )
-PredictMD.open(epsilonsvr_svmreg_plot_testing)
+PredictMD.open_plot(epsilonsvr_svmreg_plot_testing)
 
 # Evaluate performance of epsilon-SVR on training set
 PredictMD.singlelabelregressionmetrics(
@@ -288,7 +288,7 @@ nusvr_svmreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredic
     traininglabelsdf,
     labelname,
     )
-PredictMD.open(nusvr_svmreg_plot_training)
+PredictMD.open_plot(nusvr_svmreg_plot_training)
 
 # Plot true values versus predicted values for nu-SVR on testing set
 nusvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -297,7 +297,7 @@ nusvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredict
     testinglabelsdf,
     labelname,
     )
-PredictMD.open(nusvr_svmreg_plot_testing)
+PredictMD.open_plot(nusvr_svmreg_plot_testing)
 
 # Evaluate performance of nu-SVR on training set
 PredictMD.singlelabelregressionmetrics(
@@ -356,7 +356,7 @@ function knetmlp_loss(
 end
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    knetmlpreg = PredictMD.load(knetmlpreg_filename)
+    knetmlpreg = PredictMD.load_plot(knetmlpreg_filename)
 else
     # Randomly initialize model weights
     knetmlp_modelweights = Any[
@@ -420,7 +420,7 @@ knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
     knetmlpreg,
     :lossvsepoch;
     )
-PredictMD.open(knet_learningcurve_lossvsepoch)
+PredictMD.open_plot(knet_learningcurve_lossvsepoch)
 
 # Plot learning curve: loss vs. epoch, skip the first 10 epochs
 knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
@@ -429,7 +429,7 @@ knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
     startat = 10,
     endat = :end,
     )
-PredictMD.open(knet_learningcurve_lossvsepoch_skip10epochs)
+PredictMD.open_plot(knet_learningcurve_lossvsepoch_skip10epochs)
 
 # Plot learning curve: loss vs. iteration
 knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
@@ -438,7 +438,7 @@ knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
     window = 50,
     sampleevery = 10,
     )
-PredictMD.open(knet_learningcurve_lossvsiteration)
+PredictMD.open_plot(knet_learningcurve_lossvsiteration)
 
 # Plot learning curve: loss vs. iteration, skip the first 100 iterations
 knet_learningcurve_lossvsiteration_skip100iterations = PredictMD.plotlearningcurve(
@@ -449,7 +449,7 @@ knet_learningcurve_lossvsiteration_skip100iterations = PredictMD.plotlearningcur
     startat = 100,
     endat = :end,
     )
-PredictMD.open(knet_learningcurve_lossvsiteration_skip100iterations)
+PredictMD.open_plot(knet_learningcurve_lossvsiteration_skip100iterations)
 
 # Plot true values versus predicted values for multilayer perceptron on training set
 knetmlpreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -458,7 +458,7 @@ knetmlpreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicte
     traininglabelsdf,
     labelname,
     )
-PredictMD.open(knetmlpreg_plot_training)
+PredictMD.open_plot(knetmlpreg_plot_training)
 
 # Plot true values versus predicted values for multilayer perceptron on testing set
 knetmlpreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -467,7 +467,7 @@ knetmlpreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted
     testinglabelsdf,
     labelname,
     )
-PredictMD.open(knetmlpreg_plot_testing)
+PredictMD.open_plot(knetmlpreg_plot_testing)
 
 # Evaluate performance of multilayer perceptron on training set
 PredictMD.singlelabelregressionmetrics(
