@@ -1,8 +1,8 @@
-ENV["linearreg_filename"] = string(tempname(), "_linearreg.bson")
-ENV["randomforestreg_filename"] = string(tempname(), "_randomforestreg.bson")
-ENV["epsilonsvr_svmreg_filename"] = string(tempname(), "_epsilonsvr_svmreg.bson")
-ENV["nusvr_svmreg_filename"] = string(tempname(), "_nusvr_svmreg.bson")
-ENV["knetmlpreg_filename"] = string(tempname(), "_knetmlpreg.bson")
+ENV["linearreg_filename"] = string(tempname(), "_linearreg.jld2")
+ENV["randomforestreg_filename"] = string(tempname(), "_randomforestreg.jld2")
+ENV["epsilonsvr_svmreg_filename"] = string(tempname(), "_epsilonsvr_svmreg.jld2")
+ENV["nusvr_svmreg_filename"] = string(tempname(), "_nusvr_svmreg.jld2")
+ENV["knetmlpreg_filename"] = string(tempname(), "_knetmlpreg.jld2")
 
 Base.Test.@test(!isfile(ENV["linearreg_filename"]))
 Base.Test.@test(!isfile(ENV["randomforestreg_filename"]))
