@@ -301,6 +301,7 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     labelnames = [singlelabelname]
     labellevels = Dict()
@@ -357,6 +358,9 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
             ];
         name = name,
         )
+    if !is_nothing(feature_contrasts)
+        set_feature_contrasts!(finalpipeline, feature_contrasts)
+    end
     return finalpipeline
 end
 
@@ -375,6 +379,7 @@ function singlelabelmulticlassdataframeknetclassifier(
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     if package == :Knetjl
         result = _singlelabelmulticlassdataframeknetclassifier_Knet(
@@ -391,6 +396,7 @@ function singlelabelmulticlassdataframeknetclassifier(
             modelweights = modelweights,
             maxepochs = maxepochs,
             printlosseverynepochs = printlosseverynepochs,
+            feature_contrasts = feature_contrasts
             )
         return result
     else
@@ -411,6 +417,7 @@ function _singlelabeldataframeknetregression_Knet(
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     labelnames = [singlelabelname]
     dftransformer_index = 1
@@ -448,6 +455,9 @@ function _singlelabeldataframeknetregression_Knet(
             ];
         name = name,
         )
+    if !is_nothing(feature_contrasts)
+        set_feature_contrasts!(finalpipeline, feature_contrasts)
+    end
     return finalpipeline
 end
 
@@ -465,6 +475,7 @@ function singlelabeldataframeknetregression(
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     if package == :Knetjl
         result = _singlelabeldataframeknetregression_Knet(
@@ -480,6 +491,7 @@ function singlelabeldataframeknetregression(
             modelweights = modelweights,
             maxepochs = maxepochs,
             printlosseverynepochs = printlosseverynepochs,
+            feature_contrasts = feature_contrasts
             )
         return result
     else

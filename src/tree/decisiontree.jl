@@ -170,7 +170,7 @@ function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
             ];
         name = name,
         )
-    if !isvoid(feature_contrasts)
+    if !is_nothing(feature_contrasts)
         set_feature_contrasts!(finalpipeline, feature_contrasts)
     end
     return finalpipeline
@@ -233,7 +233,7 @@ function _singlelabeldataframerandomforestregression_DecisionTree(
             ];
         name = name,
         )
-    if !isvoid(feature_contrasts)
+    if !is_nothing(feature_contrasts)
         set_feature_contrasts!(finalpipeline, feature_contrasts)
     end
     return finalpipeline

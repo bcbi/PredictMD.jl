@@ -256,7 +256,7 @@ function _singlelabelmulticlassdataframesvmclassifier_LIBSVM(
             ];
         name = name,
         )
-    if !isvoid(feature_contrasts)
+    if !is_nothing(feature_contrasts)
         set_feature_contrasts!(finalpipeline, feature_contrasts)
     end
     return finalpipeline
@@ -363,7 +363,7 @@ function _singlelabeldataframesvmregression_LIBSVM(
             ];
         name = name,
         )
-    if !isvoid(feature_contrasts)
+    if !is_nothing(feature_contrasts)
         set_feature_contrasts!(finalpipeline, feature_contrasts)
     end
     return finalpipeline
