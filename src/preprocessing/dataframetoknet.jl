@@ -4,7 +4,7 @@ import StatsModels
 mutable struct MutableDataFrame2ClassificationKnetTransformer <:
         AbstractEstimator
     featurenames::T1 where T1 <: AbstractVector
-    labelnames::T2 where T2 <: AbstractVector{<:Symbol}
+    labelnames::T2 where T2 <: AbstractVector{Symbol}
     labellevels::T3 where T3 <: Associative
     index::T4 where T4 <: Integer
     transposefeatures::T5 where T5 <: Bool
@@ -12,7 +12,7 @@ mutable struct MutableDataFrame2ClassificationKnetTransformer <:
     dffeaturecontrasts::T7 where T7 <: AbstractFeatureContrasts
     function MutableDataFrame2ClassificationKnetTransformer(
             featurenames::AbstractVector,
-            labelnames::AbstractVector{<:Symbol},
+            labelnames::AbstractVector{Symbol},
             labellevels::Associative,
             index::Integer;
             transposefeatures::Bool = true,
@@ -161,13 +161,13 @@ end
 mutable struct MutableDataFrame2RegressionKnetTransformer <:
         AbstractEstimator
     featurenames::T1 where T1 <: AbstractVector
-    labelnames::T2 where T2 <: AbstractVector{<:Symbol}
+    labelnames::T2 where T2 <: AbstractVector{Symbol}
     transposefeatures::T3 where T3 <: Bool
     transposelabels::T4 where T4 <: Bool
     dffeaturecontrasts::T5 where T5 <: AbstractFeatureContrasts
     function MutableDataFrame2RegressionKnetTransformer(
             featurenames::AbstractVector,
-            labelnames::AbstractVector{<:Symbol};
+            labelnames::AbstractVector{Symbol};
             transposefeatures::Bool = true,
             transposelabels::Bool = false,
             )
