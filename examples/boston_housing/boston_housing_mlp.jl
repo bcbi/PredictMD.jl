@@ -17,7 +17,7 @@ save_trained = true
 # load_trained = true
 # save_trained = false
 
-knetmlpreg_filename = "./knetmlpreg.bson"
+knetmlpreg_filename = "./knetmlpreg.jld2"
 
 # Import Boston housing data
 df = CSV.read(

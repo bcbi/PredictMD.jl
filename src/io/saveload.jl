@@ -28,7 +28,7 @@ function save_model(filename::AbstractString, fittable_object_to_save)
 end
 
 function load_model(filename::AbstractString)
-    # make sure that the filename ends in ".bson"
+    # make sure that the filename ends in ".jld2"
     if lowercase(strip(splitext(filename)[2])) != ".jld2"
         error(
             string(

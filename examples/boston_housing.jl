@@ -30,11 +30,11 @@
 # ENV["LOADTRAINEDMODELSFROMFILE"] = "true"
 # ENV["SAVETRAINEDMODELSTOFILE"] = "false"
 
-linearreg_filename = "/Users/dilum/Desktop/linearreg.bson"
-randomforestreg_filename = "/Users/dilum/Desktop/randomforestreg.bson"
-epsilonsvr_svmreg_filename = "/Users/dilum/Desktop/epsilonsvr_svmreg.bson"
-nusvr_svmreg_filename = "/Users/dilum/Desktop/nusvr_svmreg.bson"
-knetmlpreg_filename = "/Users/dilum/Desktop/knetmlpreg.bson"
+linearreg_filename = "/Users/dilum/Desktop/linearreg.jld2"
+randomforestreg_filename = "/Users/dilum/Desktop/randomforestreg.jld2"
+epsilonsvr_svmreg_filename = "/Users/dilum/Desktop/epsilonsvr_svmreg.jld2"
+nusvr_svmreg_filename = "/Users/dilum/Desktop/nusvr_svmreg.jld2"
+knetmlpreg_filename = "/Users/dilum/Desktop/knetmlpreg.jld2"
 
 ##############################################################################
 ##############################################################################

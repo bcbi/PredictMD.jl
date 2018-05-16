@@ -52,7 +52,7 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
     PredictMD.split_data(featuresdf,labelsdf,0.7);
 
 # load pre-trained models
-linearreg_filename = "./linearreg.bson"
+linearreg_filename = "./linearreg.jld2"
 
 # Set up linear regression model
 linearreg = PredictMD.singlelabeldataframelinearregression(
@@ -65,7 +65,7 @@ linearreg = PredictMD.singlelabeldataframelinearregression(
 PredictMD.load!(linearreg_filename, linearreg)
 
 # Set up random forest regression model
-randomforestreg_filename = "./randomforestreg.bson"
+randomforestreg_filename = "./randomforestreg.jld2"
 
 randomforestreg = PredictMD.singlelabeldataframerandomforestregression(
     featurenames,
@@ -78,7 +78,7 @@ randomforestreg = PredictMD.singlelabeldataframerandomforestregression(
 PredictMD.load!(randomforestreg_filename, randomforestreg)
 
 # Set up epsilon-SVR model
-epsilonsvr_svmreg_filename = "./epsilonsvr_svmreg.bson"
+epsilonsvr_svmreg_filename = "./epsilonsvr_svmreg.jld2"
 
 epsilonsvr_svmreg = PredictMD.singlelabeldataframesvmregression(
     featurenames,
@@ -92,7 +92,7 @@ epsilonsvr_svmreg = PredictMD.singlelabeldataframesvmregression(
 PredictMD.load!(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
 
 # Set up nu-SVR model
-nusvr_svmreg_filename = "./nusvr_svmreg.bson"
+nusvr_svmreg_filename = "./nusvr_svmreg.jld2"
 nusvr_svmreg = PredictMD.singlelabeldataframesvmregression(
     featurenames,
     labelname;
@@ -106,7 +106,7 @@ PredictMD.load!(nusvr_svmreg_filename, nusvr_svmreg)
 
 
 # Set up multilayer perceptron model
-knetmlpreg_filename = "./knetmlpreg.bson"
+knetmlpreg_filename = "./knetmlpreg.jld2"
 
 #This should be defined somewhere else
 
