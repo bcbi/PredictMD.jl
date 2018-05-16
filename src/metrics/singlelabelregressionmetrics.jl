@@ -42,6 +42,7 @@ function _singlelabelregressionmetrics(
         ytrue,
         ypred,
         )
+    results = fix_dict_type(results)
     return results
 end
 

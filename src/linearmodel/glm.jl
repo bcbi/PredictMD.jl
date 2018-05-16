@@ -121,6 +121,7 @@ function predict_proba(
         result = Dict()
         result[1] = glmpredictoutput
         result[0] = 1 - glmpredictoutput
+        result = fix_dict_type(result)
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         error("predict_proba is not defined for regression models")

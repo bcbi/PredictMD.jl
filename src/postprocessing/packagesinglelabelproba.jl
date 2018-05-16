@@ -57,5 +57,6 @@ function predict_proba(
         )
     result = Dict()
     result[transformer.singlelabelname] = singlelabelprobabilities
+    result = fix_dict_type(result)
     return result
 end

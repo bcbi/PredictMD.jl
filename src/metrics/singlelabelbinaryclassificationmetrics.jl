@@ -85,18 +85,19 @@ function _singlelabelbinaryclassclassificationmetrics_tunableparam(
     else
         metricprintnames[:f1score] = string("* F1 Score")
     end
-    metricprintnames[:precision] = string("* Precision")
-    metricprintnames[:recall] = string("* Recall")
+    metricprintnames[:precision] = string("* Precision (PPV)")
+    metricprintnames[:recall] = string("* Recall (sensitivity, TPR)")
     if selectedtunableparam == :sensitivity
-        metricprintnames[:sensitivity] = string("[fix] * Sensitivity")
+        metricprintnames[:sensitivity] = string("[fix] * Sensitivity (recall, TPR)")
     else
-        metricprintnames[:sensitivity] = string("* Sensitivity")
+        metricprintnames[:sensitivity] = string("* Sensitivity (recall, TPR)")
     end
     if selectedtunableparam == :specificity
-        metricprintnames[:specificity] = string("[fix] * Specificity")
+        metricprintnames[:specificity] = string("[fix] * Specificity (TNR)")
     else
-        metricprintnames[:specificity] = string("* Specificity")
+        metricprintnames[:specificity] = string("* Specificity (TNR)")
     end
+    metricprintnames = fix_dict_type(metricprintnames)
     return selectedtunableparam, selectedparamtomax, metricprintnames
 end
 
@@ -110,6 +111,7 @@ function _singlelabelbinaryclassclassificationmetrics(
         )
     #
     kwargsdict = Dict(kwargs)
+    kwargsdict = fix_dict_type(kwargsdict)
     selectedtunableparam, selectedparamtomax, metricprintnames =
         _singlelabelbinaryclassclassificationmetrics_tunableparam(kwargsdict)
     #
@@ -181,6 +183,7 @@ function _singlelabelbinaryclassclassificationmetrics(
     results[:recall] = recall(bestrocnums)
     results[:f1score] = f1score(bestrocnums)
     results[:cohen_kappa] = cohen_kappa(bestrocnums)
+    results = fix_dict_type(results)
     return results
 end
 
@@ -213,6 +216,7 @@ function singlelabelbinaryclassclassificationmetrics(
         kwargs...
         )
     kwargsdict = Dict(kwargs)
+    kwargsdict = fix_dict_type(kwargsdict)
     selectedtunableparam, selectedparamtomax, metricprintnames =
         _singlelabelbinaryclassclassificationmetrics_tunableparam(kwargsdict)
     metricsforeachestimator = [

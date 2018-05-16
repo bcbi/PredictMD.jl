@@ -51,6 +51,7 @@ mutable struct KnetModel <: AbstractEstimator
         optimizersymbol2type[:Adagrad] = Knet.Adagrad
         optimizersymbol2type[:Adadelta] = Knet.Adadelta
         optimizersymbol2type[:Adam] = Knet.Adam
+        optimizersymbol2type = fix_dict_type(optimizersymbol2type)
         modelweightoptimizers = Knet.optimizers(
             modelweights,
             optimizersymbol2type[optimizationalgorithm];
@@ -65,6 +66,8 @@ mutable struct KnetModel <: AbstractEstimator
             0,
             0,
             )
+        losshyperparameters = fix_dict_type(losshyperparameters)
+        optimizerhyperparameters = fix_dict_type(optimizerhyperparameters)
         result = new(
             name,
             isclassificationmodel,
@@ -302,6 +305,7 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
     labelnames = [singlelabelname]
     labellevels = Dict()
     labellevels[singlelabelname] = singlelabellevels
+    labellevels = fix_dict_type(labellevels)
     dftransformer_index = 1
     dftransformer_transposefeatures = true
     dftransformer_transposelabels = true

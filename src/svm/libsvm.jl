@@ -44,9 +44,11 @@ mutable struct LIBSVMModel <: AbstractEstimator
         hyperparameters[:epsilon] = epsilon
         hyperparameters[:tolerance] = tolerance
         hyperparameters[:shrinking] = shrinking
+        weights = fix_dict_type(weights)
         hyperparameters[:weights] = weights
         hyperparameters[:cachesize] = cachesize
         hyperparameters[:verbose] = verbose
+        hyperparameters = fix_dict_type(hyperparameters)
         result = new(
             name,
             isclassificationmodel,
@@ -185,6 +187,7 @@ function predict_proba(
             result[estimator.underlyingsvm.labels[i]] =
                 decisionvaluestransposed[:, i]
         end
+        result = fix_dict_type(result)
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         error("predict_proba is not defined for regression models")

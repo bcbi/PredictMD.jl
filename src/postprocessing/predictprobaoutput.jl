@@ -64,5 +64,6 @@ function predict_proba(
     for key in keys(singlelabelprobabilities)
         result[labelint2stringmap[key]] = singlelabelprobabilities[key]
     end
+    result = fix_dict_type(result)
     return result
 end

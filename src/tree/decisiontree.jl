@@ -27,6 +27,7 @@ mutable struct DecisionTreeModel <:
         hyperparameters = Dict()
         hyperparameters[:nsubfeatures] = nsubfeatures
         hyperparameters[:ntrees] = ntrees
+        hyperparameters = fix_dict_type(hyperparameters)
         result = new(
             name,
             isclassificationmodel,
@@ -122,6 +123,7 @@ function predict_proba(
         for i = 1:length(estimator.levels)
             result[estimator.levels[i]] = predictedprobabilities[:, i]
         end
+        result = fix_dict_type(result)
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         error("predict_proba is not defined for regression models")
