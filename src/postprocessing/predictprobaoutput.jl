@@ -19,25 +19,8 @@ function get_underlying(
     return nothing
 end
 
-function set_underlying!(
-        x::ImmutablePredictProbaSingleLabelInt2StringTransformer,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
 function get_history(
         x::ImmutablePredictProbaSingleLabelInt2StringTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-function set_history!(
-        x::ImmutablePredictProbaSingleLabelInt2StringTransformer,
-        h;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -81,5 +64,6 @@ function predict_proba(
     for key in keys(singlelabelprobabilities)
         result[labelint2stringmap[key]] = singlelabelprobabilities[key]
     end
+    result = fix_dict_type(result)
     return result
 end

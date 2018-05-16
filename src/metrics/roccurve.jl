@@ -20,8 +20,8 @@ function roccurve(
         allrocnums::AbstractVector{<:MLBase.ROCNums},
         allthresholds::AbstractVector{<:Real},
         )
-    allfpr = [fpr(x) for x in allrocnums]
-    alltpr = [tpr(x) for x in allrocnums]
+    allfpr = [false_positive_rate(x) for x in allrocnums]
+    alltpr = [true_positive_rate(x) for x in allrocnums]
     #
     @assert(typeof(allfpr) <: AbstractVector)
     @assert(typeof(alltpr) <: AbstractVector)

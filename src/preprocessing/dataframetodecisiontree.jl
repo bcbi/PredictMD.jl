@@ -38,27 +38,8 @@ function get_underlying(
     return result
 end
 
-function set_underlying!(
-        x::MutableDataFrame2DecisionTreeTransformer,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.dffeaturecontrasts = object
-    return nothing
-end
-
 function get_history(
         x::MutableDataFrame2DecisionTreeTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-function set_history!(
-        x::MutableDataFrame2DecisionTreeTransformer,
-        h;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -74,7 +55,7 @@ function transform(
     singlelabelname = transformer.singlelabelname
     labelsarray = convert(Array, labelsdf[singlelabelname])
     @assert(typeof(labelsarray) <: AbstractVector)
-    modelformula = makeformula(
+    modelformula = generate_formula(
         transformer.featurenames[1],
         transformer.featurenames;
         intercept = false
@@ -94,7 +75,7 @@ function transform(
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    modelformula = makeformula(
+    modelformula = generate_formula(
         transformer.featurenames[1],
         transformer.featurenames;
         intercept = false

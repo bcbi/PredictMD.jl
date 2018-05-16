@@ -42,15 +42,6 @@ function get_history(
     return nothing
 end
 
-function set_history!(
-        x::GLMModel,
-        h;
-        saving::Bool = false,
-	loading::Bool = false,
-        )
-    return nothing
-end
-
 function set_feature_contrasts!(
         x::GLMModel,
         feature_contrasts::AbstractFeatureContrasts,
@@ -65,16 +56,6 @@ function get_underlying(
         )
     result = x.underlyingglm
     return result
-end
-
-function set_underlying!(
-        x::GLMModel,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.underlyingglm = object
-    return nothing
 end
 
 function fit!(
@@ -140,6 +121,7 @@ function predict_proba(
         result = Dict()
         result[1] = glmpredictoutput
         result[0] = 1 - glmpredictoutput
+        result = fix_dict_type(result)
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         error("predict_proba is not defined for regression models")
@@ -158,7 +140,7 @@ function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
         )
     negativeclass = singlelabellevels[1]
     positiveclass = singlelabellevels[2]
-    formula = makeformula(
+    formula = generate_formula(
         [singlelabelname],
         featurenames;
         intercept = intercept,
@@ -229,7 +211,7 @@ function _singlelabelbinaryclassdataframeprobitclassifier_GLM(
         )
     negativeclass = singlelabellevels[1]
     positiveclass = singlelabellevels[2]
-    formula = makeformula(
+    formula = generate_formula(
         [singlelabelname],
         featurenames;
         intercept = intercept,
@@ -297,7 +279,7 @@ function _singlelabeldataframelinearregression_GLM(
         intercept::Bool = true,
         name::AbstractString = "",
         )
-    formula = makeformula(
+    formula = generate_formula(
         [singlelabelname],
         featurenames;
         intercept = intercept,

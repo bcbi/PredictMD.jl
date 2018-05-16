@@ -18,32 +18,17 @@ function getallrocnums(
     return allrocnums, allthresholds
 end
 
-function accuracy(x::MLBase.ROCNums)
-    result = (x.tp + x.tn)/(x.p + x.n)
-    return result
-end
+accuracy(x::MLBase.ROCNums) = (x.tp + x.tn)/(x.p + x.n)
 
-function tpr(x::MLBase.ROCNums)
-    result = (x.tp)/(x.p)
-    return result
-end
+true_positive_rate(x::MLBase.ROCNums) = (x.tp)/(x.p)
 
-function tnr(x::MLBase.ROCNums)
-    result = (x.tn)/(x.n)
-    return result
-end
+true_negative_rate(x::MLBase.ROCNums) = (x.tn)/(x.n)
 
-function fpr(x::MLBase.ROCNums)
-    result = (x.fp)/(x.n)
-    return result
-end
+false_positive_rate(x::MLBase.ROCNums) = (x.fp)/(x.n)
 
-function fnr(x::MLBase.ROCNums)
-    result = (x.fn)/(x.p)
-    return result
-end
+false_negative_rate(x::MLBase.ROCNums) = (x.fn)/(x.p)
 
-function ppv(x::MLBase.ROCNums)
+function positive_predictive_value(x::MLBase.ROCNums)
     if (x.tp == 0) && (x.tp + x.fp == 0)
         result = 1
     elseif (x.tp != 0) && (x.tp + x.fp == 0)
@@ -54,7 +39,7 @@ function ppv(x::MLBase.ROCNums)
     return result
 end
 
-function npv(x::MLBase.ROCNums)
+function negative_predictive_value(x::MLBase.ROCNums)
     if (x.tn == 0) && (x.tn + x.fn ==0)
         result = 1
     elseif (x.tn != 0) && (x.tn + x.fn == 0)
@@ -65,21 +50,13 @@ function npv(x::MLBase.ROCNums)
     return result
 end
 
-function sensitivity(x::MLBase.ROCNums)
-    return tpr(x)
-end
+sensitivity(x::MLBase.ROCNums) = true_positive_rate(x)
 
-function specificity(x::MLBase.ROCNums)
-    return tnr(x)
-end
+specificity(x::MLBase.ROCNums) = true_negative_rate(x)
 
-function precision(x::MLBase.ROCNums)
-    return ppv(x)
-end
+precision(x::MLBase.ROCNums) = positive_predictive_value(x)
 
-function recall(x::MLBase.ROCNums)
-    return tpr(x)
-end
+recall(x::MLBase.ROCNums) = true_positive_rate(x)
 
 function fbetascore(
         x::MLBase.ROCNums,
@@ -91,8 +68,4 @@ function fbetascore(
     return result
 end
 
-function f1score(
-        x::MLBase.ROCNums,
-        )
-    return fbetascore(x, 1)
-end
+f1score(x::MLBase.ROCNums) = fbetascore(x, 1)

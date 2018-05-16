@@ -21,6 +21,10 @@ Base.Test.@testset "PredictMD test suite" begin
             include("cpu/unit/metrics/test_coefficientofdetermination.jl")
             include("cpu/unit/metrics/test_cohenkappa.jl")
         end
+        Base.Test.@testset "utils" begin
+            include("cpu/unit/utils/test_fix_dict_type.jl")
+            include("cpu/unit/utils/test_fix_vector_type.jl")
+        end
     end
     Base.Test.@testset "Functional tests (CPU)" begin
         info("Running functional tests (CPU)")

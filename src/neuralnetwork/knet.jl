@@ -1,4 +1,5 @@
 import Knet
+import ProgressMeter
 import ValueHistories
 
 function _emptyfunction()
@@ -50,6 +51,7 @@ mutable struct KnetModel <: AbstractEstimator
         optimizersymbol2type[:Adagrad] = Knet.Adagrad
         optimizersymbol2type[:Adadelta] = Knet.Adadelta
         optimizersymbol2type[:Adam] = Knet.Adam
+        optimizersymbol2type = fix_dict_type(optimizersymbol2type)
         modelweightoptimizers = Knet.optimizers(
             modelweights,
             optimizersymbol2type[optimizationalgorithm];
@@ -64,6 +66,8 @@ mutable struct KnetModel <: AbstractEstimator
             0,
             0,
             )
+        losshyperparameters = fix_dict_type(losshyperparameters)
+        optimizerhyperparameters = fix_dict_type(optimizerhyperparameters)
         result = new(
             name,
             isclassificationmodel,
@@ -100,17 +104,6 @@ function get_underlying(
     return result
 end
 
-function set_underlying!(
-        x::KnetModel,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.modelweights = object[1]
-    x.modelweightoptimizers = object[2]
-    return nothing
-end
-
 function get_history(
         x::KnetModel;
         saving::Bool = false,
@@ -118,16 +111,6 @@ function get_history(
         )
     result = x.history
     return result
-end
-
-function set_history!(
-        x::KnetModel,
-        h::ValueHistories.MultivalueHistory;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.history = h
-    return nothing
 end
 
 function fit!(
@@ -318,10 +301,12 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     labelnames = [singlelabelname]
     labellevels = Dict()
     labellevels[singlelabelname] = singlelabellevels
+    labellevels = fix_dict_type(labellevels)
     dftransformer_index = 1
     dftransformer_transposefeatures = true
     dftransformer_transposelabels = true
@@ -373,6 +358,9 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
             ];
         name = name,
         )
+    if !is_nothing(feature_contrasts)
+        set_feature_contrasts!(finalpipeline, feature_contrasts)
+    end
     return finalpipeline
 end
 
@@ -391,6 +379,7 @@ function singlelabelmulticlassdataframeknetclassifier(
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     if package == :Knetjl
         result = _singlelabelmulticlassdataframeknetclassifier_Knet(
@@ -407,6 +396,7 @@ function singlelabelmulticlassdataframeknetclassifier(
             modelweights = modelweights,
             maxepochs = maxepochs,
             printlosseverynepochs = printlosseverynepochs,
+            feature_contrasts = feature_contrasts
             )
         return result
     else
@@ -427,6 +417,7 @@ function _singlelabeldataframeknetregression_Knet(
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     labelnames = [singlelabelname]
     dftransformer_index = 1
@@ -464,6 +455,9 @@ function _singlelabeldataframeknetregression_Knet(
             ];
         name = name,
         )
+    if !is_nothing(feature_contrasts)
+        set_feature_contrasts!(finalpipeline, feature_contrasts)
+    end
     return finalpipeline
 end
 
@@ -481,6 +475,7 @@ function singlelabeldataframeknetregression(
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     if package == :Knetjl
         result = _singlelabeldataframeknetregression_Knet(
@@ -496,6 +491,7 @@ function singlelabeldataframeknetregression(
             modelweights = modelweights,
             maxepochs = maxepochs,
             printlosseverynepochs = printlosseverynepochs,
+            feature_contrasts = feature_contrasts
             )
         return result
     else

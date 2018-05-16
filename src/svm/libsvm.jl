@@ -44,9 +44,11 @@ mutable struct LIBSVMModel <: AbstractEstimator
         hyperparameters[:epsilon] = epsilon
         hyperparameters[:tolerance] = tolerance
         hyperparameters[:shrinking] = shrinking
+        weights = fix_dict_type(weights)
         hyperparameters[:weights] = weights
         hyperparameters[:cachesize] = cachesize
         hyperparameters[:verbose] = verbose
+        hyperparameters = fix_dict_type(hyperparameters)
         result = new(
             name,
             isclassificationmodel,
@@ -74,27 +76,8 @@ function get_underlying(
     return result
 end
 
-function set_underlying!(
-        x::LIBSVMModel,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.underlyingsvm = object
-    return nothing
-end
-
 function get_history(
         x::LIBSVMModel;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-function set_history!(
-        x::LIBSVMModel,
-        h;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -204,6 +187,7 @@ function predict_proba(
             result[estimator.underlyingsvm.labels[i]] =
                 decisionvaluestransposed[:, i]
         end
+        result = fix_dict_type(result)
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         error("predict_proba is not defined for regression models")
@@ -230,6 +214,7 @@ function _singlelabelmulticlassdataframesvmclassifier_LIBSVM(
         weights::Union{Dict, Void} = nothing,
         cachesize::AbstractFloat = 100.0,
         verbose::Bool = true,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     dftransformer = DataFrame2LIBSVMTransformer(
         featurenames,
@@ -271,6 +256,9 @@ function _singlelabelmulticlassdataframesvmclassifier_LIBSVM(
             ];
         name = name,
         )
+    if !is_nothing(feature_contrasts)
+        set_feature_contrasts!(finalpipeline, feature_contrasts)
+    end
     return finalpipeline
 end
 
@@ -293,6 +281,7 @@ function singlelabelmulticlassdataframesvmclassifier(
         weights::Union{Dict, Void} = nothing,
         cachesize::AbstractFloat = 100.0,
         verbose::Bool = true,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     if package == :LIBSVMjl
         result = _singlelabelmulticlassdataframesvmclassifier_LIBSVM(
@@ -313,6 +302,7 @@ function singlelabelmulticlassdataframesvmclassifier(
             weights = weights,
             cachesize = cachesize,
             verbose = verbose,
+            feature_contrasts = feature_contrasts
         )
         return result
     else
@@ -337,6 +327,7 @@ function _singlelabeldataframesvmregression_LIBSVM(
         weights::Union{Dict, Void} = nothing,
         cachesize::AbstractFloat = 100.0,
         verbose::Bool = true,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     dftransformer = DataFrame2LIBSVMTransformer(
         featurenames,
@@ -372,6 +363,9 @@ function _singlelabeldataframesvmregression_LIBSVM(
             ];
         name = name,
         )
+    if !is_nothing(feature_contrasts)
+        set_feature_contrasts!(finalpipeline, feature_contrasts)
+    end
     return finalpipeline
 end
 
@@ -394,6 +388,7 @@ function singlelabeldataframesvmregression(
         weights::Union{Dict, Void} = nothing,
         cachesize::AbstractFloat = 100.0,
         verbose::Bool = true,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     if package == :LIBSVMjl
         result = _singlelabeldataframesvmregression_LIBSVM(
@@ -413,6 +408,7 @@ function singlelabeldataframesvmregression(
             weights = weights,
             cachesize = cachesize,
             verbose = verbose,
+            feature_contrasts = feature_contrasts
         )
         return result
     else

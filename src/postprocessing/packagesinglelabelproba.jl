@@ -18,26 +18,8 @@ function get_underlying(
     return nothing
 end
 
-function set_underlying!(
-        x::ImmutablePackageSingleLabelPredictProbaTransformer,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
 function get_history(
         x::ImmutablePackageSingleLabelPredictProbaTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-function set_history!(
-        x::ImmutablePackageSingleLabelPredictProbaTransformer,
-        h;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -75,5 +57,6 @@ function predict_proba(
         )
     result = Dict()
     result[transformer.singlelabelname] = singlelabelprobabilities
+    result = fix_dict_type(result)
     return result
 end

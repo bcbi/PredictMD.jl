@@ -4,7 +4,7 @@ import StatsModels
 mutable struct MutableDataFrame2ClassificationKnetTransformer <:
         AbstractEstimator
     featurenames::T1 where T1 <: AbstractVector
-    labelnames::T2 where T2 <: AbstractVector{<:Symbol}
+    labelnames::T2 where T2 <: AbstractVector{Symbol}
     labellevels::T3 where T3 <: Associative
     index::T4 where T4 <: Integer
     transposefeatures::T5 where T5 <: Bool
@@ -12,7 +12,7 @@ mutable struct MutableDataFrame2ClassificationKnetTransformer <:
     dffeaturecontrasts::T7 where T7 <: AbstractFeatureContrasts
     function MutableDataFrame2ClassificationKnetTransformer(
             featurenames::AbstractVector,
-            labelnames::AbstractVector{<:Symbol},
+            labelnames::AbstractVector{Symbol},
             labellevels::Associative,
             index::Integer;
             transposefeatures::Bool = true,
@@ -47,27 +47,8 @@ function get_underlying(
     return result
 end
 
-function set_underlying!(
-        x::MutableDataFrame2ClassificationKnetTransformer,
-        feature_contrasts;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.dffeaturecontrasts = feature_contrasts
-    return nothing
-end
-
 function get_history(
         x::MutableDataFrame2ClassificationKnetTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-function set_history!(
-        x::MutableDataFrame2ClassificationKnetTransformer,
-        h;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -106,7 +87,7 @@ function transform(
                 [labelstring2intmap_j[y] for y in labelsdf[label_j]]
         end
     end
-    modelformula = makeformula(
+    modelformula = generate_formula(
         transformer.featurenames[1],
         transformer.featurenames;
         intercept = false
@@ -134,7 +115,7 @@ function transform(
         featuresdf::DataFrames.AbstractDataFrame,
         kwargs...
         )
-    modelformula = makeformula(
+    modelformula = generate_formula(
         transformer.featurenames[1],
         transformer.featurenames;
         intercept = false
@@ -180,13 +161,13 @@ end
 mutable struct MutableDataFrame2RegressionKnetTransformer <:
         AbstractEstimator
     featurenames::T1 where T1 <: AbstractVector
-    labelnames::T2 where T2 <: AbstractVector{<:Symbol}
+    labelnames::T2 where T2 <: AbstractVector{Symbol}
     transposefeatures::T3 where T3 <: Bool
     transposelabels::T4 where T4 <: Bool
     dffeaturecontrasts::T5 where T5 <: AbstractFeatureContrasts
     function MutableDataFrame2RegressionKnetTransformer(
             featurenames::AbstractVector,
-            labelnames::AbstractVector{<:Symbol};
+            labelnames::AbstractVector{Symbol};
             transposefeatures::Bool = true,
             transposelabels::Bool = false,
             )
@@ -217,27 +198,8 @@ function get_underlying(
     return result
 end
 
-function set_underlying!(
-        x::MutableDataFrame2RegressionKnetTransformer,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.dffeaturecontrasts = object
-    return nothing
-end
-
 function get_history(
         x::MutableDataFrame2RegressionKnetTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-function set_history!(
-        x::MutableDataFrame2RegressionKnetTransformer,
-        h;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -255,7 +217,7 @@ function transform(
             labelsdf[label] for label in transformer.labelnames
             ]...
         )
-    modelformula = makeformula(
+    modelformula = generate_formula(
         transformer.featurenames[1],
         transformer.featurenames;
         intercept = false
@@ -283,7 +245,7 @@ function transform(
         featuresdf::DataFrames.AbstractDataFrame,
         kwargs...
         )
-    modelformula = makeformula(
+    modelformula = generate_formula(
         transformer.featurenames[1],
         transformer.featurenames;
         intercept = false

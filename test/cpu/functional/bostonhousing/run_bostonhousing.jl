@@ -62,7 +62,7 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
 else
-    feature_contrasts = PredictMD.feature_contrasts(df, featurenames)
+    feature_contrasts = PredictMD.generate_feature_contrasts(df, featurenames)
 end
 
 # Define labels
@@ -89,20 +89,17 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 ## Linear regression #########################################################
 ##############################################################################
 
-# Set up linear regression model
-linearreg = PredictMD.singlelabeldataframelinearregression(
-    featurenames,
-    labelname;
-    package = :GLMjl,
-    intercept = true, # optional, defaults to true
-    name = "Linear regression", # optional
-    )
-
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    PredictMD.load!(linearreg_filename, linearreg)
+    linearreg = PredictMD.load_model(linearreg_filename)
 else
-    # set feature contrasts
-    PredictMD.set_feature_contrasts!(linearreg , feature_contrasts)
+    # Set up linear regression model
+    linearreg = PredictMD.singlelabeldataframelinearregression(
+        featurenames,
+        labelname;
+        package = :GLMjl,
+        intercept = true, # optional, defaults to true
+        name = "Linear regression", # optional
+        )
     # Train linear regression model
     PredictMD.fit!(linearreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -117,7 +114,7 @@ linearreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted
     traininglabelsdf,
     labelname,
     )
-PredictMD.open(linearreg_plot_training)
+PredictMD.open_plot(linearreg_plot_training)
 
 # Plot true values versus predicted values for linear regression on testing set
 linearreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -126,7 +123,7 @@ linearreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     testinglabelsdf,
     labelname
     )
-PredictMD.open(linearreg_plot_testing)
+PredictMD.open_plot(linearreg_plot_testing)
 
 # Evaluate performance of linear regression on training set
 PredictMD.singlelabelregressionmetrics(
@@ -148,21 +145,19 @@ PredictMD.singlelabelregressionmetrics(
 ## Random forest regression ##################################################
 ##############################################################################
 
-# Set up random forest regression model
-randomforestreg = PredictMD.singlelabeldataframerandomforestregression(
-    featurenames,
-    labelname;
-    nsubfeatures = 2, # number of subfeatures; defaults to 2
-    ntrees = 20, # number of trees; defaults to 10
-    package = :DecisionTreejl,
-    name = "Random forest" # optional
-    )
-
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    PredictMD.load!(randomforestreg_filename, randomforestreg)
+    randomforestreg = PredictMD.load_model(randomforestreg_filename)
 else
-    # set feature contrasts
-    PredictMD.set_feature_contrasts!(randomforestreg , feature_contrasts)
+    # Set up random forest regression model
+    randomforestreg = PredictMD.singlelabeldataframerandomforestregression(
+        featurenames,
+        labelname;
+        nsubfeatures = 2, # number of subfeatures; defaults to 2
+        ntrees = 20, # number of trees; defaults to 10
+        package = :DecisionTreejl,
+        name = "Random forest", # optional
+        feature_contrasts = feature_contrasts,
+        )
     # Train random forest model on training set
     PredictMD.fit!(randomforestreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -174,7 +169,7 @@ randomforestreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspre
     traininglabelsdf,
     labelname,
     )
-PredictMD.open(randomforestreg_plot_training)
+PredictMD.open_plot(randomforestreg_plot_training)
 
 # Plot true values versus predicted values for random forest on testing set
 randomforestreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -183,7 +178,7 @@ randomforestreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspred
     testinglabelsdf,
     labelname,
     )
-PredictMD.open(randomforestreg_plot_testing)
+PredictMD.open_plot(randomforestreg_plot_testing)
 
 # Evaluate performance of random forest on training set
 PredictMD.singlelabelregressionmetrics(
@@ -205,22 +200,20 @@ PredictMD.singlelabelregressionmetrics(
 ## Support vector machine (epsilon support vector regression) ################
 ##############################################################################
 
-# Set up epsilon-SVR model
-epsilonsvr_svmreg = PredictMD.singlelabeldataframesvmregression(
-    featurenames,
-    labelname;
-    package = :LIBSVMjl,
-    svmtype = LIBSVM.EpsilonSVR,
-    name = "SVM (epsilon-SVR)",
-    kernel = LIBSVM.Kernel.Linear,
-    verbose = false,
-    )
-
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    PredictMD.load!(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
+    epsilonsvr_svmreg = PredictMD.load_model(epsilonsvr_svmreg_filename)
 else
-    # set feature contrasts
-    PredictMD.set_feature_contrasts!(epsilonsvr_svmreg , feature_contrasts)
+    # Set up epsilon-SVR model
+    epsilonsvr_svmreg = PredictMD.singlelabeldataframesvmregression(
+        featurenames,
+        labelname;
+        package = :LIBSVMjl,
+        svmtype = LIBSVM.EpsilonSVR,
+        name = "SVM (epsilon-SVR)",
+        kernel = LIBSVM.Kernel.Linear,
+        verbose = false,
+        feature_contrasts = feature_contrasts,
+        )
     # Train epsilon-SVR model on training set
     PredictMD.fit!(epsilonsvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -232,7 +225,7 @@ epsilonsvr_svmreg_plot_training = PredictMD.plotsinglelabelregressiontrueversusp
     traininglabelsdf,
     labelname,
     )
-PredictMD.open(epsilonsvr_svmreg_plot_training)
+PredictMD.open_plot(epsilonsvr_svmreg_plot_training)
 
 # Plot true values versus predicted values for epsilon-SVR on testing set
 epsilonsvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -241,7 +234,7 @@ epsilonsvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspr
     testinglabelsdf,
     labelname,
     )
-PredictMD.open(epsilonsvr_svmreg_plot_testing)
+PredictMD.open_plot(epsilonsvr_svmreg_plot_testing)
 
 # Evaluate performance of epsilon-SVR on training set
 PredictMD.singlelabelregressionmetrics(
@@ -263,22 +256,20 @@ PredictMD.singlelabelregressionmetrics(
 ## Support vector machine (nu support vector regression) ################
 ##############################################################################
 
-# Set up nu-SVR model
-nusvr_svmreg = PredictMD.singlelabeldataframesvmregression(
-    featurenames,
-    labelname;
-    package = :LIBSVMjl,
-    svmtype = LIBSVM.NuSVR,
-    name = "SVM (nu-SVR)",
-    kernel = LIBSVM.Kernel.Linear,
-    verbose = false,
-    )
-
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    PredictMD.load!(nusvr_svmreg_filename, nusvr_svmreg)
+    nusvr_svmreg = PredictMD.load_model(nusvr_svmreg_filename)
 else
-    # set feature contrasts
-    PredictMD.set_feature_contrasts!(nusvr_svmreg , feature_contrasts)
+    # Set up nu-SVR model
+    nusvr_svmreg = PredictMD.singlelabeldataframesvmregression(
+        featurenames,
+        labelname;
+        package = :LIBSVMjl,
+        svmtype = LIBSVM.NuSVR,
+        name = "SVM (nu-SVR)",
+        kernel = LIBSVM.Kernel.Linear,
+        verbose = false,
+        feature_contrasts = feature_contrasts,
+        )
     # Train nu-SVR model
     PredictMD.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -290,7 +281,7 @@ nusvr_svmreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredic
     traininglabelsdf,
     labelname,
     )
-PredictMD.open(nusvr_svmreg_plot_training)
+PredictMD.open_plot(nusvr_svmreg_plot_training)
 
 # Plot true values versus predicted values for nu-SVR on testing set
 nusvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -299,7 +290,7 @@ nusvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredict
     testinglabelsdf,
     labelname,
     )
-PredictMD.open(nusvr_svmreg_plot_testing)
+PredictMD.open_plot(nusvr_svmreg_plot_testing)
 
 # Evaluate performance of nu-SVR on training set
 PredictMD.singlelabelregressionmetrics(
@@ -335,32 +326,6 @@ function knetmlp_predict(
     return x2
 end
 
-if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    # No need to initialize weights since we are going to load them from file
-    knetmlp_modelweights = Any[]
-else
-    # Randomly initialize model weights
-    knetmlp_modelweights = Any[
-        # input layer has dimension contrasts.num_array_columns
-        #
-        # hidden layer (10 neurons):
-        Cfloat.(
-            0.1f0*randn(Cfloat,10,feature_contrasts.num_array_columns) # weights
-            ),
-        Cfloat.(
-            zeros(Cfloat,10,1) # biases
-            ),
-        #
-        # output layer (regression nets have exactly 1 neuron in output layer):
-        Cfloat.(
-            0.1f0*randn(Cfloat,1,10) # weights
-            ),
-        Cfloat.(
-            zeros(Cfloat,1,1) # biases
-            ),
-        ]
-end
-
 # Define loss function
 function knetmlp_loss(
         predict::Function,
@@ -383,48 +348,61 @@ function knetmlp_loss(
     return loss
 end
 
-# Define loss hyperparameters
-knetmlp_losshyperparameters = Dict()
-knetmlp_losshyperparameters[:L1] = Cfloat(0.0)
-knetmlp_losshyperparameters[:L2] = Cfloat(0.0)
-
-# Select optimization algorithm
-knetmlp_optimizationalgorithm = :Adam
-
-# Set optimization hyperparameters
-knetmlp_optimizerhyperparameters = Dict()
-
-# Set the minibatch size
-knetmlp_minibatchsize = 48
-
-# Set the max number of epochs. After training, look at the learning curve. If
-# it looks like the model has not yet converged, raise maxepochs. If it looks
-# like the loss has hit a plateau and you are worried about overfitting, lower
-# maxepochs.
-knetmlp_maxepochs = 500
-
-# Set up multilayer perceptron model
-knetmlpreg = PredictMD.singlelabeldataframeknetregression(
-    featurenames,
-    labelname;
-    package = :Knetjl,
-    name = "Knet MLP",
-    predict = knetmlp_predict,
-    loss = knetmlp_loss,
-    losshyperparameters = knetmlp_losshyperparameters,
-    optimizationalgorithm = knetmlp_optimizationalgorithm,
-    optimizerhyperparameters = knetmlp_optimizerhyperparameters,
-    minibatchsize = knetmlp_minibatchsize,
-    modelweights = knetmlp_modelweights,
-    maxepochs = knetmlp_maxepochs,
-    printlosseverynepochs = 100, # if 0, will not print at all
-    )
-
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    PredictMD.load!(knetmlpreg_filename, knetmlpreg)
+    knetmlpreg = PredictMD.load_model(knetmlpreg_filename)
 else
-    # set feature contrasts
-    PredictMD.set_feature_contrasts!(knetmlpreg , feature_contrasts)
+    # Randomly initialize model weights
+    knetmlp_modelweights = Any[
+        # input layer has dimension contrasts.num_array_columns
+        #
+        # hidden layer (10 neurons):
+        Cfloat.(
+            0.1f0*randn(Cfloat,10,feature_contrasts.num_array_columns) # weights
+            ),
+        Cfloat.(
+            zeros(Cfloat,10,1) # biases
+            ),
+        #
+        # output layer (regression nets have exactly 1 neuron in output layer):
+        Cfloat.(
+            0.1f0*randn(Cfloat,1,10) # weights
+            ),
+        Cfloat.(
+            zeros(Cfloat,1,1) # biases
+            ),
+        ]
+    # Define loss hyperparameters
+    knetmlp_losshyperparameters = Dict()
+    knetmlp_losshyperparameters[:L1] = Cfloat(0.0)
+    knetmlp_losshyperparameters[:L2] = Cfloat(0.0)
+    # Select optimization algorithm
+    knetmlp_optimizationalgorithm = :Adam
+    # Set optimization hyperparameters
+    knetmlp_optimizerhyperparameters = Dict()
+    # Set the minibatch size
+    knetmlp_minibatchsize = 48
+    # Set the max number of epochs. After training, look at the learning curve. If
+    # it looks like the model has not yet converged, raise maxepochs. If it looks
+    # like the loss has hit a plateau and you are worried about overfitting, lower
+    # maxepochs.
+    knetmlp_maxepochs = 500
+    # Set up multilayer perceptron model
+    knetmlpreg = PredictMD.singlelabeldataframeknetregression(
+        featurenames,
+        labelname;
+        package = :Knetjl,
+        name = "Knet MLP",
+        predict = knetmlp_predict,
+        loss = knetmlp_loss,
+        losshyperparameters = knetmlp_losshyperparameters,
+        optimizationalgorithm = knetmlp_optimizationalgorithm,
+        optimizerhyperparameters = knetmlp_optimizerhyperparameters,
+        minibatchsize = knetmlp_minibatchsize,
+        modelweights = knetmlp_modelweights,
+        maxepochs = knetmlp_maxepochs,
+        printlosseverynepochs = 100, # if 0, will not print at all
+        feature_contrasts = feature_contrasts,
+        )
     # Train multilayer perceptron model on training set
     PredictMD.fit!(knetmlpreg,trainingfeaturesdf,traininglabelsdf,)
 end
@@ -434,7 +412,7 @@ knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
     knetmlpreg,
     :lossvsepoch;
     )
-PredictMD.open(knet_learningcurve_lossvsepoch)
+PredictMD.open_plot(knet_learningcurve_lossvsepoch)
 
 # Plot learning curve: loss vs. epoch, skip the first 10 epochs
 knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
@@ -443,7 +421,7 @@ knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
     startat = 10,
     endat = :end,
     )
-PredictMD.open(knet_learningcurve_lossvsepoch_skip10epochs)
+PredictMD.open_plot(knet_learningcurve_lossvsepoch_skip10epochs)
 
 # Plot learning curve: loss vs. iteration
 knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
@@ -452,7 +430,7 @@ knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
     window = 50,
     sampleevery = 10,
     )
-PredictMD.open(knet_learningcurve_lossvsiteration)
+PredictMD.open_plot(knet_learningcurve_lossvsiteration)
 
 # Plot learning curve: loss vs. iteration, skip the first 100 iterations
 knet_learningcurve_lossvsiteration_skip100iterations = PredictMD.plotlearningcurve(
@@ -463,7 +441,7 @@ knet_learningcurve_lossvsiteration_skip100iterations = PredictMD.plotlearningcur
     startat = 100,
     endat = :end,
     )
-PredictMD.open(knet_learningcurve_lossvsiteration_skip100iterations)
+PredictMD.open_plot(knet_learningcurve_lossvsiteration_skip100iterations)
 
 # Plot true values versus predicted values for multilayer perceptron on training set
 knetmlpreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -472,7 +450,7 @@ knetmlpreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicte
     traininglabelsdf,
     labelname,
     )
-PredictMD.open(knetmlpreg_plot_training)
+PredictMD.open_plot(knetmlpreg_plot_training)
 
 # Plot true values versus predicted values for multilayer perceptron on testing set
 knetmlpreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -481,7 +459,7 @@ knetmlpreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted
     testinglabelsdf,
     labelname,
     )
-PredictMD.open(knetmlpreg_plot_testing)
+PredictMD.open_plot(knetmlpreg_plot_testing)
 
 # Evaluate performance of multilayer perceptron on training set
 PredictMD.singlelabelregressionmetrics(
@@ -536,11 +514,11 @@ showall(PredictMD.singlelabelregressionmetrics(
 ##############################################################################
 
 if get(ENV, "SAVETRAINEDMODELSTOFILE", "") == "true"
-    PredictMD.save(linearreg_filename, linearreg)
-    PredictMD.save(randomforestreg_filename, randomforestreg)
-    PredictMD.save(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
-    PredictMD.save(nusvr_svmreg_filename, nusvr_svmreg)
-    PredictMD.save(knetmlpreg_filename, knetmlpreg)
+    PredictMD.save_model(linearreg_filename, linearreg)
+    PredictMD.save_model(randomforestreg_filename, randomforestreg)
+    PredictMD.save_model(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
+    PredictMD.save_model(nusvr_svmreg_filename, nusvr_svmreg)
+    PredictMD.save_model(knetmlpreg_filename, knetmlpreg)
 end
 
 ##############################################################################

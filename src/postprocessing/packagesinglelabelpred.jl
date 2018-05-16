@@ -18,26 +18,8 @@ function get_underlying(
     return nothing
 end
 
-function set_underlying!(
-        x::ImmutablePackageSingleLabelPredictionTransformer,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
 function get_history(
         x::ImmutablePackageSingleLabelPredictionTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-function set_history!(
-        x::ImmutablePackageSingleLabelPredictionTransformer,
-        h;
         saving::Bool = false,
         loading::Bool = false,
         )
