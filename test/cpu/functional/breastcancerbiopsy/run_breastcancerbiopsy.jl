@@ -119,7 +119,7 @@ StatsBase.countmap(smotedtraininglabelsdf[labelname])
 ##############################################################################
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    logisticclassifier = PredictMD.load_plot(logisticclassifier_filename)
+    logisticclassifier = PredictMD.load_model(logisticclassifier_filename)
 else
     # Set up logistic classifier model
     logisticclassifier = PredictMD.singlelabelbinaryclassdataframelogisticclassifier(
@@ -188,7 +188,7 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 ##############################################################################
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    probitclassifier = PredictMD.load_plot(probitclassifier_filename)
+    probitclassifier = PredictMD.load_model(probitclassifier_filename)
 else
     # Set up probit classifier model
     probitclassifier = PredictMD.singlelabelbinaryclassdataframeprobitclassifier(
@@ -257,7 +257,7 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 ##############################################################################
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    rfclassifier = PredictMD.load_plot(rfclassifier_filename)
+    rfclassifier = PredictMD.load_model(rfclassifier_filename)
 else
     # Set up random forest classifier model
     rfclassifier = PredictMD.singlelabelmulticlassdataframerandomforestclassifier(
@@ -324,7 +324,7 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 ##############################################################################
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    csvc_svmclassifier = PredictMD.load_plot(csvc_svmclassifier_filename)
+    csvc_svmclassifier = PredictMD.load_model(csvc_svmclassifier_filename)
 else
     # Set up C-SVC model
     csvc_svmclassifier = PredictMD.singlelabelmulticlassdataframesvmclassifier(
@@ -391,7 +391,7 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 ##############################################################################
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    nusvc_svmclassifier = PredictMD.load_plot(nusvc_svmclassifier_filename)
+    nusvc_svmclassifier = PredictMD.load_model(nusvc_svmclassifier_filename)
 else
     # Set up nu-SVC model
     nusvc_svmclassifier = PredictMD.singlelabelmulticlassdataframesvmclassifier(

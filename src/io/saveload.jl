@@ -1,8 +1,7 @@
 import BSON
 import ProgressMeter
 
-#function save_model(filename::AbstractString, fittable_object_to_save::Fittable)
-function save_model(filename::AbstractString, fittable_object_to_save)
+function save_model(filename::AbstractString, fittable_object_to_save::Fittable)
     # make sure that the filename ends in ".bson"
     if lowercase(strip(splitext(filename)[2])) != ".bson"
         error(

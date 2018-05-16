@@ -90,7 +90,7 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 ##############################################################################
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    linearreg = PredictMD.load_plot(linearreg_filename)
+    linearreg = PredictMD.load_model(linearreg_filename)
 else
     # Set up linear regression model
     linearreg = PredictMD.singlelabeldataframelinearregression(
@@ -204,7 +204,7 @@ PredictMD.singlelabelregressionmetrics(
 ##############################################################################
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    epsilonsvr_svmreg = PredictMD.load_plot(epsilonsvr_svmreg_filename)
+    epsilonsvr_svmreg = PredictMD.load_model(epsilonsvr_svmreg_filename)
 else
     # Set up epsilon-SVR model
     epsilonsvr_svmreg = PredictMD.singlelabeldataframesvmregression(
@@ -354,7 +354,7 @@ function knetmlp_loss(
 end
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    knetmlpreg = PredictMD.load_plot(knetmlpreg_filename)
+    knetmlpreg = PredictMD.load_model(knetmlpreg_filename)
 else
     # Randomly initialize model weights
     knetmlp_modelweights = Any[
