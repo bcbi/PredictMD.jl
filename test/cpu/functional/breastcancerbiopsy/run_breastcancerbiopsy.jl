@@ -199,6 +199,39 @@ PredictMD.probability_calibration_metrics(
     window = 0.1,
     )
 
+logistic_cutoffs, logistic_risk_group_prevalences = PredictMD.risk_score_cutoff_values(
+    logisticclassifier,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    average_function = mean,
+    )
+println(
+    string(
+        "Low risk: 0 to $(logistic_cutoffs[1]).",
+        " Medium risk: $(logistic_cutoffs[1]) to $(logistic_cutoffs[2]).",
+        " High risk: $(logistic_cutoffs[2]) to 1.",
+        )
+    )
+showall(logistic_risk_group_prevalences)
+logistic_cutoffs, logistic_risk_group_prevalences = PredictMD.risk_score_cutoff_values(
+    logisticclassifier,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    average_function = median,
+    )
+println(
+    string(
+        "Low risk: 0 to $(logistic_cutoffs[1]).",
+        " Medium risk: $(logistic_cutoffs[1]) to $(logistic_cutoffs[2]).",
+        " High risk: $(logistic_cutoffs[2]) to 1.",
+        )
+    )
+showall(logistic_risk_group_prevalences)
+
 ##############################################################################
 ## Random forest classifier ##################################################
 ##############################################################################
