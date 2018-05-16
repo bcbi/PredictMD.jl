@@ -87,16 +87,16 @@ function _singlelabelbinaryclassclassificationmetrics_tunableparam(
     end
     metricprintnames[:precision] = string("* Precision (positive predictive value)")
     metricprintnames[:negative_predictive_value] = string("* Negative predictive value")
-    metricprintnames[:recall] = string("* Recall (sensitivity, TPR)")
+    metricprintnames[:recall] = string("* Recall (sensitivity, true positive rate)")
     if selectedtunableparam == :sensitivity
-        metricprintnames[:sensitivity] = string("[fix] * Sensitivity (recall, TPR)")
+        metricprintnames[:sensitivity] = string("[fix] * Sensitivity (recall, true positive rate)")
     else
-        metricprintnames[:sensitivity] = string("* Sensitivity (recall, TPR)")
+        metricprintnames[:sensitivity] = string("* Sensitivity (recall, true positive rate)")
     end
     if selectedtunableparam == :specificity
-        metricprintnames[:specificity] = string("[fix] * Specificity (TNR)")
+        metricprintnames[:specificity] = string("[fix] * Specificity (true negative rate)")
     else
-        metricprintnames[:specificity] = string("* Specificity (TNR)")
+        metricprintnames[:specificity] = string("* Specificity (true negative rate)")
     end
     metricprintnames = fix_dict_type(metricprintnames)
     return selectedtunableparam, selectedparamtomax, metricprintnames
