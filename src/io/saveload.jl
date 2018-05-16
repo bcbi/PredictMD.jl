@@ -38,7 +38,7 @@ function load_model(filename::AbstractString)
             )
     end
     info("Attempting to load model...")
-    dict_of_loaded_objects = JLD2.load(filename)
+    dict_of_loaded_objects = FileIO.load(filename)
     loaded_fittable_object = dict_of_loaded_objects["saved_model"]
     info(string("Loaded model from file \"", filename, "\""))
     return loaded_fittable_object
