@@ -264,7 +264,7 @@ else
         ntrees = 200, # number of trees; defaults to 10
         package = :DecisionTreejl,
         name = "Random forest", # optional
-        feature_contasts = feature_contrasts,
+        feature_contrasts = feature_contrasts,
         )
     # Train random forest classifier model on smoted training set
     PredictMD.fit!(
@@ -330,7 +330,7 @@ else
         svmtype = LIBSVM.SVC,
         name = "SVM (C-SVC)",
         verbose = false,
-        feature_contasts = feature_contrasts,
+        feature_contrasts = feature_contrasts,
         )
     # Train C-SVC model on smoted training set
     PredictMD.fit!(
@@ -396,7 +396,7 @@ else
         svmtype = LIBSVM.NuSVC,
         name = "SVM (nu-SVC)",
         verbose = false,
-        feature_contasts = feature_contrasts,
+        feature_contrasts = feature_contrasts,
         )
     # Train nu-SVC model on smoted training set
     PredictMD.fit!(
@@ -560,7 +560,7 @@ else
         modelweights = knetmlp_modelweights,
         printlosseverynepochs = 100, # if 0, will not print at all
         maxepochs = knetmlp_maxepochs,
-        feature_contasts = feature_contrasts,
+        feature_contrasts = feature_contrasts,
         )
     # Train multilayer perceptron model on training set
     PredictMD.fit!(

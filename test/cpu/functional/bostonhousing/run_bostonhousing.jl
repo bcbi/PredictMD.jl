@@ -156,7 +156,7 @@ else
         ntrees = 20, # number of trees; defaults to 10
         package = :DecisionTreejl,
         name = "Random forest", # optional
-        feature_contasts = feature_contrasts,
+        feature_contrasts = feature_contrasts,
         )
     # Train random forest model on training set
     PredictMD.fit!(randomforestreg,trainingfeaturesdf,traininglabelsdf,)
@@ -212,7 +212,7 @@ else
         name = "SVM (epsilon-SVR)",
         kernel = LIBSVM.Kernel.Linear,
         verbose = false,
-        feature_contasts = feature_contrasts,
+        feature_contrasts = feature_contrasts,
         )
     # Train epsilon-SVR model on training set
     PredictMD.fit!(epsilonsvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
@@ -268,7 +268,7 @@ else
         name = "SVM (nu-SVR)",
         kernel = LIBSVM.Kernel.Linear,
         verbose = false,
-        feature_contasts = feature_contrasts,
+        feature_contrasts = feature_contrasts,
         )
     # Train nu-SVR model
     PredictMD.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
@@ -401,7 +401,7 @@ else
         modelweights = knetmlp_modelweights,
         maxepochs = knetmlp_maxepochs,
         printlosseverynepochs = 100, # if 0, will not print at all
-        feature_contasts = feature_contrasts,
+        feature_contrasts = feature_contrasts,
         )
     # Train multilayer perceptron model on training set
     PredictMD.fit!(knetmlpreg,trainingfeaturesdf,traininglabelsdf,)
