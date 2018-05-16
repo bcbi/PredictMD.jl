@@ -55,15 +55,6 @@ function get_history(
     return nothing
 end
 
-function set_history!(
-        x::MutableDataFrame2ClassificationKnetTransformer,
-        h;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
 function transform(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
@@ -207,27 +198,8 @@ function get_underlying(
     return result
 end
 
-function set_underlying!(
-        x::MutableDataFrame2RegressionKnetTransformer,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.dffeaturecontrasts = object
-    return nothing
-end
-
 function get_history(
         x::MutableDataFrame2RegressionKnetTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-function set_history!(
-        x::MutableDataFrame2RegressionKnetTransformer,
-        h;
         saving::Bool = false,
         loading::Bool = false,
         )

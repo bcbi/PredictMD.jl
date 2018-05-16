@@ -42,15 +42,6 @@ function get_history(
     return nothing
 end
 
-function set_history!(
-        x::GLMModel,
-        h;
-        saving::Bool = false,
-	loading::Bool = false,
-        )
-    return nothing
-end
-
 function set_feature_contrasts!(
         x::GLMModel,
         feature_contrasts::AbstractFeatureContrasts,
@@ -65,16 +56,6 @@ function get_underlying(
         )
     result = x.underlyingglm
     return result
-end
-
-function set_underlying!(
-        x::GLMModel,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.underlyingglm = object
-    return nothing
 end
 
 function fit!(

@@ -26,15 +26,6 @@ function get_history(
     return nothing
 end
 
-function set_history!(
-        x::ImmutablePackageMultiLabelPredictionTransformer,
-        h;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
 function fit!(
         transformer::ImmutablePackageMultiLabelPredictionTransformer,
         varargs...;

@@ -46,15 +46,6 @@ function get_history(
     return nothing
 end
 
-function set_history!(
-        x::MutableDataFrame2DecisionTreeTransformer,
-        h;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
 function transform(
         transformer::MutableDataFrame2DecisionTreeTransformer,
         featuresdf::DataFrames.AbstractDataFrame,

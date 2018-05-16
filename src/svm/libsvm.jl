@@ -82,15 +82,6 @@ function get_history(
     return nothing
 end
 
-function set_history!(
-        x::LIBSVMModel,
-        h;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
 function fit!(
         estimator::LIBSVMModel,
         featuresarray::AbstractArray,

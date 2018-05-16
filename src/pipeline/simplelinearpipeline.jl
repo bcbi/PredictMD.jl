@@ -74,26 +74,6 @@ function get_history(
     return history
 end
 
-function set_history!(
-        x::SimplePipeline,
-        h;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    if length(x.objectsvector) != length(h)
-        error("length(x.objectsvector) != length(h)")
-    end
-    for i = 1:length(x.objectsvector)
-        set_history!(
-            x.objectsvector[i],
-            h[i];
-            saving=saving,
-            loading=loading,
-            )
-    end
-    return nothing
-end
-
 function fit!(
         simplelinearpipeline::SimplePipeline,
         varargs...;

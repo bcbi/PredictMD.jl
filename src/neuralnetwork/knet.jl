@@ -110,16 +110,6 @@ function get_history(
     return result
 end
 
-function set_history!(
-        x::KnetModel,
-        h::ValueHistories.MultivalueHistory;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.history = h
-    return nothing
-end
-
 function fit!(
         estimator::KnetModel,
         featuresarray::AbstractArray,

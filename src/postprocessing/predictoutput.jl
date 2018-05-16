@@ -29,15 +29,6 @@ function get_history(
     return nothing
 end
 
-function set_history!(
-        x::ImmutablePredictionsSingleLabelInt2StringTransformer,
-        h;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
 function fit!(
         transformer::ImmutablePredictionsSingleLabelInt2StringTransformer,
         varargs...;

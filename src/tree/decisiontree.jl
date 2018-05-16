@@ -67,15 +67,6 @@ function get_history(
     return nothing
 end
 
-function set_history!(
-        x::DecisionTreeModel,
-        h;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
 function fit!(
         estimator::DecisionTreeModel,
         featuresarray::AbstractArray,

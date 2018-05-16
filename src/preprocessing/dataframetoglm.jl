@@ -29,15 +29,6 @@ function get_history(
     return nothing
 end
 
-function set_history!(
-        x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
-        h;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
 function transform(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         featuresdf::DataFrames.AbstractDataFrame,
