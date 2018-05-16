@@ -140,7 +140,7 @@ function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
         )
     negativeclass = singlelabellevels[1]
     positiveclass = singlelabellevels[2]
-    formula = makeformula(
+    formula = generate_formula(
         [singlelabelname],
         featurenames;
         intercept = intercept,
@@ -211,7 +211,7 @@ function _singlelabelbinaryclassdataframeprobitclassifier_GLM(
         )
     negativeclass = singlelabellevels[1]
     positiveclass = singlelabellevels[2]
-    formula = makeformula(
+    formula = generate_formula(
         [singlelabelname],
         featurenames;
         intercept = intercept,
@@ -279,7 +279,7 @@ function _singlelabeldataframelinearregression_GLM(
         intercept::Bool = true,
         name::AbstractString = "",
         )
-    formula = makeformula(
+    formula = generate_formula(
         [singlelabelname],
         featurenames;
         intercept = intercept,

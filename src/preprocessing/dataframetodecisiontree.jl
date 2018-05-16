@@ -55,7 +55,7 @@ function transform(
     singlelabelname = transformer.singlelabelname
     labelsarray = convert(Array, labelsdf[singlelabelname])
     @assert(typeof(labelsarray) <: AbstractVector)
-    modelformula = makeformula(
+    modelformula = generate_formula(
         transformer.featurenames[1],
         transformer.featurenames;
         intercept = false
@@ -75,7 +75,7 @@ function transform(
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    modelformula = makeformula(
+    modelformula = generate_formula(
         transformer.featurenames[1],
         transformer.featurenames;
         intercept = false

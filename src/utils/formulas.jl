@@ -1,11 +1,11 @@
 import StatsModels
 
-function makeformula(
+function generate_formula(
         singlelabelname::Symbol,
         featurenames::AbstractVector;
         intercept::Bool = true,
         )
-    result = makeformula(
+    result = generate_formula(
         [singlelabelname],
         featurenames;
         intercept = intercept;
@@ -13,7 +13,7 @@ function makeformula(
     return result
 end
 
-function makeformula(
+function generate_formula(
         labelnames::AbstractVector,
         featurenames::AbstractVector;
         intercept::Bool = true,

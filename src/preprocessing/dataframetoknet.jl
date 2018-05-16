@@ -87,7 +87,7 @@ function transform(
                 [labelstring2intmap_j[y] for y in labelsdf[label_j]]
         end
     end
-    modelformula = makeformula(
+    modelformula = generate_formula(
         transformer.featurenames[1],
         transformer.featurenames;
         intercept = false
@@ -115,7 +115,7 @@ function transform(
         featuresdf::DataFrames.AbstractDataFrame,
         kwargs...
         )
-    modelformula = makeformula(
+    modelformula = generate_formula(
         transformer.featurenames[1],
         transformer.featurenames;
         intercept = false
@@ -217,7 +217,7 @@ function transform(
             labelsdf[label] for label in transformer.labelnames
             ]...
         )
-    modelformula = makeformula(
+    modelformula = generate_formula(
         transformer.featurenames[1],
         transformer.featurenames;
         intercept = false
@@ -245,7 +245,7 @@ function transform(
         featuresdf::DataFrames.AbstractDataFrame,
         kwargs...
         )
-    modelformula = makeformula(
+    modelformula = generate_formula(
         transformer.featurenames[1],
         transformer.featurenames;
         intercept = false

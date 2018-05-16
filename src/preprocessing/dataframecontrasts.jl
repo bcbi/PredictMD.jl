@@ -12,7 +12,7 @@ function DataFrameFeatureContrasts(
         columns::AbstractVector{Symbol},
         )
     num_df_columns = length(unique(columns))
-    modelformula = makeformula(
+    modelformula = generate_formula(
         columns[1],
         columns;
         intercept = false,
