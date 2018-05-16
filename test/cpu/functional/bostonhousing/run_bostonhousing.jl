@@ -148,7 +148,7 @@ PredictMD.singlelabelregressionmetrics(
 ##############################################################################
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    randomforestreg = PredictMD.load(randomforestreg_filename)
+    randomforestreg = PredictMD.load_model(randomforestreg_filename)
 else
     # Set up random forest regression model
     randomforestreg = PredictMD.singlelabeldataframerandomforestregression(
@@ -261,7 +261,7 @@ PredictMD.singlelabelregressionmetrics(
 ##############################################################################
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    nusvr_svmreg = PredictMD.load(nusvr_svmreg_filename)
+    nusvr_svmreg = PredictMD.load_model(nusvr_svmreg_filename)
 else
     # Set up nu-SVR model
     nusvr_svmreg = PredictMD.singlelabeldataframesvmregression(

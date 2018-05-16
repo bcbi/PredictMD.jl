@@ -506,7 +506,7 @@ function knetmlp_loss(
 end
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    knetmlpclassifier = PredictMD.load(knetmlp_filename, )
+    knetmlpclassifier = PredictMD.load_model(knetmlp_filename, )
 else
     # Randomly initialize model weights
     knetmlp_modelweights = Any[
