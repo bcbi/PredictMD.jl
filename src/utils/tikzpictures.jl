@@ -43,7 +43,7 @@ end
 
 function open_plot(tp::TikzPictures.TikzPicture)
     tempsvgfilename = string(tempname(), ".svg")
-    result = open_plot(tp, tempsvgfilename)
+    result = open_plot(tempsvgfilename, tp)
     return result
 end
 
