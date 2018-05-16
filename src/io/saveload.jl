@@ -1,7 +1,8 @@
 import BSON
 import ProgressMeter
 
-function save(filename::AbstractString, fittable_object_to_save::Fittable)
+#function save_model(filename::AbstractString, fittable_object_to_save::Fittable)
+function save_model(filename::AbstractString, fittable_object_to_save)
     # make sure that the filename ends in ".bson"
     if lowercase(strip(splitext(filename)[2])) != ".bson"
         error(
@@ -12,8 +13,9 @@ function save(filename::AbstractString, fittable_object_to_save::Fittable)
                 "\" does not end in \".bson\"")
             )
     end
-    dict_of_objects_to_save = Dict()
-    dict_of_objects_to_save[:saved_fittable_object] = fittable_object_to_save
+    dict_of_objects_to_save = Dict(
+        :savedfittableobject => fittable_object_to_save,
+        )
     info("Attempting to save model...")
     # make sure the parent directory exists
     parent_directory = Base.Filesystem.dirname(filename)
@@ -24,7 +26,7 @@ function save(filename::AbstractString, fittable_object_to_save::Fittable)
     return nothing
 end
 
-function load(filename::AbstractString)
+function load_model(filename::AbstractString)
     # make sure that the filename ends in ".bson"
     if lowercase(strip(splitext(filename)[2])) != ".bson"
         error(
@@ -37,7 +39,7 @@ function load(filename::AbstractString)
     end
     info("Attempting to load model...")
     dict_of_loaded_objects = BSON.load(filename)
-    loaded_fittable_object = dict_of_loaded_objects[:saved_fittable_object]
+    loaded_fittable_object = dict_of_loaded_objects[:savedfittableobject]
     info(string("Loaded model from file \"", filename, "\""))
     return loaded_fittable_object
 end

@@ -31,5 +31,3 @@ function open_browser_window(filename::AbstractString)
         end
     end
 end
-
-open(filename::AbstractString) = open_browser_window(filename)

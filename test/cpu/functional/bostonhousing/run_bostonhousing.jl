@@ -262,8 +262,6 @@ PredictMD.singlelabelregressionmetrics(
 ## Support vector machine (nu support vector regression) ################
 ##############################################################################
 
-
-
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
     nusvr_svmreg = PredictMD.load!(nusvr_svmreg_filename)
 else
@@ -524,11 +522,11 @@ showall(PredictMD.singlelabelregressionmetrics(
 ##############################################################################
 
 if get(ENV, "SAVETRAINEDMODELSTOFILE", "") == "true"
-    PredictMD.save(linearreg_filename, linearreg)
-    PredictMD.save(randomforestreg_filename, randomforestreg)
-    PredictMD.save(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
-    PredictMD.save(nusvr_svmreg_filename, nusvr_svmreg)
-    PredictMD.save(knetmlpreg_filename, knetmlpreg)
+    PredictMD.save_model(linearreg_filename, linearreg)
+    PredictMD.save_model(randomforestreg_filename, randomforestreg)
+    PredictMD.save_model(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
+    PredictMD.save_model(nusvr_svmreg_filename, nusvr_svmreg)
+    PredictMD.save_model(knetmlpreg_filename, knetmlpreg)
 end
 
 ##############################################################################
