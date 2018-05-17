@@ -1,5 +1,4 @@
 logisticclassifier_filename = ENV["logisticclassifier_filename"]
-probitclassifier_filename = ENV["probitclassifier_filename"]
 rfclassifier_filename = ENV["rfclassifier_filename"]
 csvc_svmclassifier_filename = ENV["csvc_svmclassifier_filename"]
 nusvc_svmclassifier_filename = ENV["nusvc_svmclassifier_filename"]
@@ -181,72 +180,57 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
     sensitivity = 0.95,
     )
 
-##############################################################################
-## Probit "regression" classifier ############################################
-##############################################################################
-
-if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    probitclassifier = PredictMD.load_model(probitclassifier_filename)
-else
-    # Set up probit classifier model
-    probitclassifier = PredictMD.singlelabelbinaryclassdataframeprobitclassifier(
-        featurenames,
-        labelname,
-        labellevels;
-        package = :GLMjl,
-        intercept = true, # optional, defaults to true
-        name = "Probit regression", # optional
-        )
-    # Train probit classifier model on smoted training set
-    PredictMD.fit!(
-        probitclassifier,
-        smotedtrainingfeaturesdf,
-        smotedtraininglabelsdf,
-        )
-end
-
-# View coefficients, p values, etc. for underlying probit regression
-PredictMD.get_underlying(probitclassifier)
-
-# Plot classifier histogram for probit classifier on smoted training set
-probitclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
-    probitclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
-    labelname,
-    labellevels,
-    )
-PredictMD.open_plot(probitclassifier_hist_training)
-
-# Plot classifier histogram for probit classifier on testing set
-probitclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
-    probitclassifier,
-    testingfeaturesdf,
-    testinglabelsdf,
-    labelname,
-    labellevels,
-    )
-PredictMD.open_plot(probitclassifier_hist_testing)
-
-# Evaluate performance of probit classifier on smoted training set
-PredictMD.singlelabelbinaryclassclassificationmetrics(
-    probitclassifier,
+logistic_calibration_curve = PredictMD.plot_probability_calibration_curve(
+    logisticclassifier,
     smotedtrainingfeaturesdf,
     smotedtraininglabelsdf,
     labelname,
     positiveclass;
-    sensitivity = 0.95,
+    window = 0.2,
     )
+PredictMD.open_plot(logistic_calibration_curve)
 
-# Evaluate performance of probit classifier on testing set
-PredictMD.singlelabelbinaryclassclassificationmetrics(
-    probitclassifier,
+PredictMD.probability_calibration_metrics(
+    logisticclassifier,
     testingfeaturesdf,
     testinglabelsdf,
     labelname,
     positiveclass;
-    sensitivity = 0.95,
+    window = 0.1,
     )
+
+logistic_cutoffs, logistic_risk_group_prevalences = PredictMD.risk_score_cutoff_values(
+    logisticclassifier,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    average_function = mean,
+    )
+println(
+    string(
+        "Low risk: 0 to $(logistic_cutoffs[1]).",
+        " Medium risk: $(logistic_cutoffs[1]) to $(logistic_cutoffs[2]).",
+        " High risk: $(logistic_cutoffs[2]) to 1.",
+        )
+    )
+showall(logistic_risk_group_prevalences)
+logistic_cutoffs, logistic_risk_group_prevalences = PredictMD.risk_score_cutoff_values(
+    logisticclassifier,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    average_function = median,
+    )
+println(
+    string(
+        "Low risk: 0 to $(logistic_cutoffs[1]).",
+        " Medium risk: $(logistic_cutoffs[1]) to $(logistic_cutoffs[2]).",
+        " High risk: $(logistic_cutoffs[2]) to 1.",
+        )
+    )
+showall(logistic_risk_group_prevalences)
 
 ##############################################################################
 ## Random forest classifier ##################################################
@@ -313,6 +297,16 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
     positiveclass;
     sensitivity = 0.95,
     )
+
+rf_calibration_curve = PredictMD.plot_probability_calibration_curve(
+    rfclassifier,
+    testingfeaturesdf,
+    testinglabelsdf,
+    labelname,
+    positiveclass;
+    window = 0.1,
+    )
+PredictMD.open_plot(rf_calibration_curve)
 
 ##############################################################################
 ## Support vector machine (C support vector classifier) ######################
@@ -654,7 +648,6 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 
 all_models = PredictMD.Fittable[
     logisticclassifier,
-    probitclassifier,
     rfclassifier,
     csvc_svmclassifier,
     nusvc_svmclassifier,
@@ -757,7 +750,6 @@ PredictMD.open_plot(prplottesting)
 
 if get(ENV, "SAVETRAINEDMODELSTOFILE", "") == "true"
     PredictMD.save_model(logisticclassifier_filename, logisticclassifier)
-    PredictMD.save_model(probitclassifier_filename, probitclassifier)
     PredictMD.save_model(rfclassifier_filename, rfclassifier)
     PredictMD.save_model(csvc_svmclassifier_filename, csvc_svmclassifier)
     PredictMD.save_model(nusvc_svmclassifier_filename, nusvc_svmclassifier)
@@ -775,7 +767,6 @@ end
 
 # Get probabilities from each model for smoted training set
 PredictMD.predict_proba(logisticclassifier,smotedtrainingfeaturesdf,)
-PredictMD.predict_proba(probitclassifier,smotedtrainingfeaturesdf,)
 PredictMD.predict_proba(rfclassifier,smotedtrainingfeaturesdf,)
 PredictMD.predict_proba(csvc_svmclassifier,smotedtrainingfeaturesdf,)
 PredictMD.predict_proba(nusvc_svmclassifier,smotedtrainingfeaturesdf,)
@@ -783,7 +774,6 @@ PredictMD.predict_proba(knetmlpclassifier,smotedtrainingfeaturesdf,)
 
 # Get probabilities from each model for testing set
 PredictMD.predict_proba(logisticclassifier,testingfeaturesdf,)
-PredictMD.predict_proba(probitclassifier,testingfeaturesdf,)
 PredictMD.predict_proba(rfclassifier,testingfeaturesdf,)
 PredictMD.predict_proba(csvc_svmclassifier,testingfeaturesdf,)
 PredictMD.predict_proba(nusvc_svmclassifier,testingfeaturesdf,)
@@ -797,7 +787,6 @@ PredictMD.predict_proba(knetmlpclassifier,testingfeaturesdf,)
 
 # Get class predictions from each model for smoted training set
 PredictMD.predict(logisticclassifier,smotedtrainingfeaturesdf,)
-PredictMD.predict(probitclassifier,smotedtrainingfeaturesdf,)
 PredictMD.predict(rfclassifier,smotedtrainingfeaturesdf,)
 PredictMD.predict(csvc_svmclassifier,smotedtrainingfeaturesdf,)
 PredictMD.predict(nusvc_svmclassifier,smotedtrainingfeaturesdf,)
@@ -805,7 +794,6 @@ PredictMD.predict(knetmlpclassifier,smotedtrainingfeaturesdf,)
 
 # Get class predictions from each model for testing set
 PredictMD.predict(logisticclassifier,testingfeaturesdf,)
-PredictMD.predict(probitclassifier,testingfeaturesdf,)
 PredictMD.predict(rfclassifier,testingfeaturesdf,)
 PredictMD.predict(csvc_svmclassifier,testingfeaturesdf,)
 PredictMD.predict(nusvc_svmclassifier,testingfeaturesdf,)

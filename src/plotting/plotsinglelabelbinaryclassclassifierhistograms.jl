@@ -34,14 +34,12 @@ function plotsinglelabelbinaryclassclassifierhistogram(
     histogramobjectnegativeclass = PGFPlots.Plots.Histogram(
         yscore[ytrue .== 0],
         bins = numbins,
-        # style = "blue,fill=blue",
-        style = "blue,fill=blue!10",
+        style = "blue, opacity = 0.5, fill=blue, fill opacity=0.5",
         )
     histogramobjectpositiveclass = PGFPlots.Plots.Histogram(
         yscore[ytrue .== 1],
         bins = numbins,
-        # style = "red,fill=red",
-        style = "red,fill=red!10",
+        style = "red, opacity = 0.5, fill=red, fill opacity=0.5",
         )
     axisobject = PGFPlots.Axis(
         [

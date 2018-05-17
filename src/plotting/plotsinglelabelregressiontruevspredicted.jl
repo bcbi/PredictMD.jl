@@ -17,10 +17,10 @@ function plotsinglelabelregressiontrueversuspredicted(
         predictionsalllabels[singlelabelname],
         )
     truevalueversuspredictedvalue_linearplotobject = PGFPlots.Plots.Linear(
-        ytrue,
         ypred,
+        ytrue,
         onlyMarks = true,
-        style = "black,fill=black",
+        style = "black, fill = black",
         )
     if includeorigin
         perfectlinevalues = sort(
@@ -44,15 +44,29 @@ function plotsinglelabelregressiontrueversuspredicted(
         perfectlinevalues,
         perfectlinevalues,
         mark = "none",
-        style = "red",
+        style = "dotted, fill=red",
+        )
+    estimated_intercept,
+        estimated_x_coefficient = ordinary_least_squares_regression(
+            ;
+            X = Float64.(ypred),
+            Y = Float64.(ytrue),
+            intercept = true,
+            )
+    bestfitline_linearplotobject = PGFPlots.Plots.Linear(
+        perfectlinevalues,
+        estimated_intercept + estimated_x_coefficient*perfectlinevalues,
+        mark = "none",
+        style = "dashed, fill=blue",
         )
     axisobject = PGFPlots.Axis(
         [
             truevalueversuspredictedvalue_linearplotobject,
             perfectline_linearplotobject,
+            bestfitline_linearplotobject,
             ],
-        xlabel = LaTeXStrings.LaTeXString("True value"),
-        ylabel = LaTeXStrings.LaTeXString("Predicted value"),
+        xlabel = LaTeXStrings.LaTeXString("Predicted value"),
+        ylabel = LaTeXStrings.LaTeXString("True value"),
         )
     tikzpicture = PGFPlots.plot(axisobject)
     return tikzpicture
