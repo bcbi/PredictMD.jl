@@ -127,6 +127,7 @@ else
         labellevels;
         package = :GLMjl,
         intercept = true, # optional, defaults to true
+        interactions = 1, # optional, defaults to 1
         name = "Logistic regression", # optional
         )
     # Train logistic classifier model on smoted training set

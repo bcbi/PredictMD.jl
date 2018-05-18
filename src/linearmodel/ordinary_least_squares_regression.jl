@@ -7,6 +7,7 @@ function ordinary_least_squares_regression(
         X::AbstractVector{T} where T <: Real = [],
         Y::AbstractVector{T} where T <: Real = [],
         intercept::Bool = true,
+        ignore_errors::Bool = true,
         )
     if length(X) != length(Y)
         error("length(X) != length(Y)")
@@ -22,23 +23,31 @@ function ordinary_least_squares_regression(
         estimated_intercept, estimated_x_coefficient = try
             ols_regression = GLM.lm(StatsModels.@formula(Y ~ 1 + X),data,)
             coefficients = ols_regression.model.pp.beta0
-            # estimated_intercept = coefficients[1]
-            # estimated_x_coefficient = coefficients[2]
+            # estimated intercept: coefficients[1]
+            # estimated x coefficient: coefficients[2]
             coefficients[1], coefficients[2]
         catch e
-            warn(string("Ignored error: ", e))
-            0, 0
+            if ignore_errors
+                warn(string("Ignored error: ", e))
+                0, 0
+            else
+                rethrow(e)
+            end
         end
     else
         estimated_intercept, estimated_x_coefficient = try
             ols_regression = GLM.lm(StatsModels.@formula(Y ~ 0 + X),data,)
             coefficients = ols_regression.model.pp.beta0
-            # estimated_intercept = 0
-            # estimated_x_coefficient = coefficients[1]
+            # intercept: 0
+            # estimated x coefficient: coefficients[1]
             0, coefficients[1]
         catch e
-            warn(string("Ignored error: ", e))
-            0, 0
+            if ignore_errors
+                warn(string("Ignored error: ", e))
+                0, 0
+            else
+                rethrow(e)
+            end
         end
     end
     return estimated_intercept, estimated_x_coefficient
