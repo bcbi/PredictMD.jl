@@ -31,13 +31,10 @@ PredictMD is a [Julia](https://julialang.org/) package that provides a uniform i
             <td align="left"><a href="#2-installation-recommended-method">2. Installation (recommended method)</a></td>
         </tr>
         <tr>
-            <td align="left"><a href="#3-installation-alternate-method-with-conda">3. Installation (alternate method with Conda)</a></td>
+            <td align="left"><a href="#3-examples">3. Examples</a></td>
         </tr>
         <tr>
-            <td align="left"><a href="#4-examples">4. Examples</a></td>
-        </tr>
-        <tr>
-            <td align="left"><a href="#5-contributing">5. Contributing</a></td>
+            <td align="left"><a href="#4-contributing">4. Contributing</a></td>
         </tr>
     </tbody>
 </table>
@@ -126,11 +123,7 @@ If you receive the message "INFO: PredictMD tests passed", then you have success
 
 If the tests still do not pass or if you still receive an error message, go to [https://github.com/bcbi/PredictMD.jl/issues/new](https://github.com/bcbi/PredictMD.jl/issues/new) and submit a new issue. Please include a screenshot of the error.
 
-## 3. Installation (alternate method with Conda)
-
-Alternatively, you can install PredictMD using the Conda package manager. Just follow the instructions here: [https://github.com/dilumaluthge/conda-predictmd-cpu](https://github.com/dilumaluthge/conda-predictmd-cpu)
-
-## 4. Examples
+## 3. Examples
 The `examples/` folder contains several files that illustrate the usage of PredictMD:
 
 <table>
@@ -158,6 +151,6 @@ The `examples/` folder contains several files that illustrate the usage of Predi
     <tbody>
 </table>
 
-## 5. Contributing
+## 4. Contributing
 
 If you would like to contribute to the PredictMD source code, please see [CONTRIBUTING.md](CONTRIBUTING.md).
