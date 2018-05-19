@@ -269,7 +269,13 @@ function fit!(
         labelsdf::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    return transform(transformer, featuresdf, labelsdf)
+    result = transform(
+        transformer,
+        featuresdf,
+        labelsdf;
+        kwargs...
+        )
+    return result
 end
 
 function predict(
@@ -277,7 +283,12 @@ function predict(
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    return transform(transformer, featuresdf)
+    result = transform(
+        transformer,
+        featuresdf;
+        kwargs...
+        )
+    return result
 end
 
 function predict_proba(
@@ -285,5 +296,10 @@ function predict_proba(
         featuresdf::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    return transform(transformer, featuresdf)
+    result = transform(
+        transformer,
+        featuresdf;
+        kwargs...
+        )
+    return result
 end

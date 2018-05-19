@@ -2,10 +2,6 @@ import Knet
 import ProgressMeter
 import ValueHistories
 
-function _emptyfunction()
-    return nothing
-end
-
 mutable struct KnetModel <: AbstractEstimator
     name::T1 where T1 <: AbstractString
     isclassificationmodel::T2 where T2 <: Bool
@@ -31,8 +27,8 @@ mutable struct KnetModel <: AbstractEstimator
     function KnetModel(
             ;
             name::AbstractString = "",
-            predict::Function = _emptyfunction,
-            loss::Function =_emptyfunction,
+            predict::Function = () -> (),
+            loss::Function =() -> (),
             losshyperparameters::Associative = Dict(),
             optimizationalgorithm::Symbol = :nothing,
             optimizerhyperparameters::Associative = Dict(),
@@ -292,8 +288,8 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
         name::AbstractString = "",
-        predict::Function = _emptyfunction,
-        loss::Function =_emptyfunction,
+        predict::Function = () -> (),
+        loss::Function = () -> (),
         losshyperparameters::Associative = Dict(),
         optimizationalgorithm::Symbol = :nothing,
         optimizerhyperparameters::Associative = Dict(),
@@ -370,8 +366,8 @@ function singlelabelmulticlassdataframeknetclassifier(
         singlelabellevels::AbstractVector;
         package::Symbol = :none,
         name::AbstractString = "",
-        predict::Function = _emptyfunction,
-        loss::Function =_emptyfunction,
+        predict::Function = () -> (),
+        loss::Function =() -> (),
         losshyperparameters::Associative = Dict(),
         optimizationalgorithm::Symbol = :nothing,
         optimizerhyperparameters::Associative = Dict(),
@@ -408,8 +404,8 @@ function _singlelabeldataframeknetregression_Knet(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
         name::AbstractString = "",
-        predict::Function = _emptyfunction,
-        loss::Function =_emptyfunction,
+        predict::Function = () -> (),
+        loss::Function =() -> (),
         losshyperparameters::Associative = Dict(),
         optimizationalgorithm::Symbol = :nothing,
         optimizerhyperparameters::Associative = Dict(),
@@ -466,8 +462,8 @@ function singlelabeldataframeknetregression(
         singlelabelname::Symbol;
         package::Symbol = :none,
         name::AbstractString = "",
-        predict::Function = _emptyfunction,
-        loss::Function =_emptyfunction,
+        predict::Function = () -> (),
+        loss::Function =() -> (),
         losshyperparameters::Associative = Dict(),
         optimizationalgorithm::Symbol = :nothing,
         optimizerhyperparameters::Associative = Dict(),

@@ -61,7 +61,6 @@ include("modelselection/split_data.jl")
 # neuralnetwork/
 include("neuralnetwork/flux.jl")
 include("neuralnetwork/knet.jl")
-include("neuralnetwork/nnlib.jl")
 
 # pipeline/
 include("pipeline/simplelinearpipeline.jl")
