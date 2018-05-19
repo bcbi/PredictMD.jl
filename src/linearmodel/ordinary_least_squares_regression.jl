@@ -4,10 +4,9 @@ import StatsModels
 
 function ordinary_least_squares_regression(
         ;
-        X::AbstractVector{T} where T <: Real = [],
-        Y::AbstractVector{T} where T <: Real = [],
+        X::AbstractVector{T} where T <: Real = Real[],
+        Y::AbstractVector{T} where T <: Real = Real[],
         intercept::Bool = true,
-        ignore_errors::Bool = true,
         )
     if length(X) != length(Y)
         error("length(X) != length(Y)")
@@ -27,12 +26,8 @@ function ordinary_least_squares_regression(
             # estimated x coefficient: coefficients[2]
             coefficients[1], coefficients[2]
         catch e
-            if ignore_errors
-                warn(string("Ignored error: ", e))
-                0, 0
-            else
-                rethrow(e)
-            end
+            info(string("DEBUG Ignored error: ", e))
+            0, 0
         end
     else
         estimated_intercept, estimated_x_coefficient = try
@@ -42,12 +37,8 @@ function ordinary_least_squares_regression(
             # estimated x coefficient: coefficients[1]
             0, coefficients[1]
         catch e
-            if ignore_errors
-                warn(string("Ignored error: ", e))
-                0, 0
-            else
-                rethrow(e)
-            end
+            info(string("DEBUG Ignored error: ", e))
+            0, 0
         end
     end
     return estimated_intercept, estimated_x_coefficient

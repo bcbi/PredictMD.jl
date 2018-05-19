@@ -1,19 +1,19 @@
 import Base.Test
 
-info("Printing Julia version info:")
+info("INFO Printing Julia version info:")
 versioninfo(true)
 
-info("Attempting to import PredictMD")
+info("INFO Attempting to import PredictMD")
 import PredictMD
-info("Successfully imported PredictMD")
-info("Printing PredictMD version info:")
+info("INFO Successfully imported PredictMD")
+info("INFO Printing PredictMD version info:")
 println(string("PredictMD Version ", PredictMD.VERSION))
 
 ENV["PREDICTMD_RUNTESTS"] = "true"
 
 Base.Test.@testset "PredictMD test suite" begin
     Base.Test.@testset "Unit tests (CPU)" begin
-        info("Running unit tests (CPU)")
+        info("INFO Running unit tests (CPU)")
         Base.Test.@testset "base" begin
             include("cpu/unit/base/test_version.jl")
         end
@@ -27,7 +27,7 @@ Base.Test.@testset "PredictMD test suite" begin
         end
     end
     Base.Test.@testset "Functional tests (CPU)" begin
-        info("Running functional tests (CPU)")
+        info("INFO Running functional tests (CPU)")
         Base.Test.@testset "Boston housing regression" begin
             include("cpu/functional/bostonhousing/setup_bostonhousing.jl")
         end

@@ -3,5 +3,5 @@ function delete_nothings!(x::AbstractVector)
     return x
 end
 
-is_nothing(x::Any) = false
 is_nothing(x::Void) = true
+is_nothing(x::Any) = false

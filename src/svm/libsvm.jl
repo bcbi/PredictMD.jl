@@ -96,14 +96,14 @@ function fit!(
     else
         error("Could not figure out if model is classification or regression")
     end
-    info(string("Starting to train LIBSVM.jl model."))
+    info(string("INFO Starting to train LIBSVM.jl model."))
     svm = LIBSVM.svmtrain(
         featuresarray,
         labelsarray;
         probability = probability,
         estimator.hyperparameters...
         )
-    info(string("Finished training LIBSVM.jl model."))
+    info(string("INFO Finished training LIBSVM.jl model."))
     estimator.underlyingsvm = svm
     @assert(typeof(estimator.underlyingsvm.labels) <: AbstractVector)
     estimator.levels = estimator.underlyingsvm.labels
