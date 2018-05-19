@@ -8,6 +8,7 @@ function ordinary_least_squares_regression(
         Y::AbstractVector{T} where T <: Real = [],
         intercept::Bool = true,
         ignore_errors::Bool = true,
+        warn_on_error::Bool = false,
         )
     if length(X) != length(Y)
         error("length(X) != length(Y)")
@@ -27,8 +28,14 @@ function ordinary_least_squares_regression(
             # estimated x coefficient: coefficients[2]
             coefficients[1], coefficients[2]
         catch e
-            if ignore_errors
+            if ignore_errors && warn_on_error
                 warn(string("Ignored error: ", e))
+                # intercept: 0
+                # x coefficient: 0
+                0, 0
+            elseif ignore_errors && !warn_on_error
+                # intercept: 0
+                # x coefficient: 0
                 0, 0
             else
                 rethrow(e)
@@ -42,8 +49,14 @@ function ordinary_least_squares_regression(
             # estimated x coefficient: coefficients[1]
             0, coefficients[1]
         catch e
-            if ignore_errors
+            if ignore_errors && warn_on_error
                 warn(string("Ignored error: ", e))
+                # intercept: 0
+                # x coefficient: 0
+                0, 0
+            elseif ignore_errors && !warn_on_error
+                # intercept: 0
+                # x coefficient: 0
                 0, 0
             else
                 rethrow(e)

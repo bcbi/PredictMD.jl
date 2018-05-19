@@ -58,7 +58,7 @@ mutable struct KnetModel <: AbstractEstimator
         history = ValueHistories.MVHistory()
         ValueHistories.push!(
             history,
-            :epochatiteration,
+            :epoch_at_iteration,
             0,
             0,
             )
@@ -111,32 +111,45 @@ end
 
 function fit!(
         estimator::KnetModel,
-        featuresarray::AbstractArray,
-        labelsarray::AbstractArray,
+        training_features_array::AbstractArray,
+        training_labels_array::AbstractArray,
+        validation_features_array::Union{Void, AbstractArray} = nothing,
+        validation_labels_array::Union{Void, AbstractArray} = nothing,
         )
-    featuresarray = Cfloat.(featuresarray)
+    if is_nothing(validation_features_array) && is_nothing(validation_labels_array)
+        has_validation_data = false
+    elseif !is_nothing(validation_features_array) && !is_nothing(validation_labels_array)
+        has_validation_data = true
+    else
+        error(
+            string(
+                "Either define both validation_features_array and ",
+                "validation_labels_array, or define neither.",)
+            )
+    end
+    training_features_array = Cfloat.(training_features_array)
     if estimator.isclassificationmodel && !estimator.isregressionmodel
-        labelsarray = Int.(labelsarray)
+        training_labels_array = Int.(training_labels_array)
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
-        labelsarray = Cfloat.(labelsarray)
+        training_labels_array = Cfloat.(training_labels_array)
     else
         error("Could not figure out if model is classification or regression")
     end
-    trainingdata = Knet.minibatch(
-        featuresarray,
-        labelsarray,
+    training_data = Knet.minibatch(
+        training_features_array,
+        training_labels_array,
         estimator.minibatchsize,
         )
-    lossgradient = Knet.grad(
+    loss_gradient = Knet.grad(
         estimator.loss,
         2,
         )
-    alliterationssofar, allepochssofar = ValueHistories.get(
+    all_iterations_so_far, all_epochs_so_far = ValueHistories.get(
         estimator.history,
-        :epochatiteration,
+        :epoch_at_iteration,
         )
-    lastiteration = alliterationssofar[end]
-    lastepoch = allepochssofar[end]
+    last_iteration = all_iterations_so_far[end]
+    last_epoch = all_epochs_so_far[end]
     info(
         string(
             "Starting to train Knet.jl model. Max epochs: ",
@@ -144,31 +157,54 @@ function fit!(
             ".",
             )
         )
-    lossbeforetrainingstarts = estimator.loss(
+    training_lossbeforetrainingstarts = estimator.loss(
         estimator.predict,
         estimator.modelweights,
-        featuresarray,
-        labelsarray;
+        training_features_array,
+        training_labels_array;
         estimator.losshyperparameters...
         )
-    if (estimator.printlosseverynepochs) > 0
-        info(
-            string(
-                "Epoch: ",
-                lastepoch,
-                ". Loss: ",
-                lossbeforetrainingstarts,
-                "."
-                )
-            )
+    if has_validation_data
+        validation_lossbeforetrainingstarts = estimator.loss(
+           estimator.predict,
+           estimator.modelweights,
+           training_features_array,
+           training_labels_array;
+           estimator.losshyperparameters...
+           )
     end
-    while lastepoch < estimator.maxepochs
-        for (x,y) in trainingdata
-            grads = lossgradient(
+    if (estimator.printlosseverynepochs) > 0
+        if has_validation_data
+            info(
+                string(
+                    "Epoch: ",
+                    last_epoch,
+                    ". Loss (training set): ",
+                    training_lossbeforetrainingstarts,
+                    ". Loss (validation set): ",
+                    validation_lossbeforetrainingstarts,
+                    ".",
+                    )
+                )
+        else
+            info(
+                string(
+                    "Epoch: ",
+                    lastepoch,
+                    ". Loss: ",
+                    lossbeforetrainingstarts,
+                    "."
+                    )
+                )
+        end
+    end
+    while last_epoch < estimator.maxepochs
+        for (x_training, y_training) in training_data
+            grads = loss_gradient(
                 estimator.predict,
                 estimator.modelweights,
-                x,
-                y;
+                x_training,
+                y_training;
                 estimator.losshyperparameters...
                 )
             Knet.update!(
@@ -176,55 +212,84 @@ function fit!(
                 grads,
                 estimator.modelweightoptimizers,
                 )
-            lastiteration += 1
-            currentiterationloss = estimator.loss(
+            last_iteration += 1
+            training_currentiterationloss = estimator.loss(
                 estimator.predict,
                 estimator.modelweights,
-                x,
-                y;
+                x_training,
+                y_training;
                 estimator.losshyperparameters...
                 )
             ValueHistories.push!(
                 estimator.history,
-                :lossatiteration,
-                lastiteration,
-                currentiterationloss,
+                :training_loss_at_iteration,
+                last_iteration,
+                training_currentiterationloss,
                 )
         end # end for
-        lastepoch += 1
+        last_epoch += 1
         ValueHistories.push!(
             estimator.history,
-            :epochatiteration,
-            lastiteration,
-            lastepoch,
+            :epoch_at_iteration,
+            last_iteration,
+            last_epoch,
             )
-        currentepochloss = estimator.loss(
+        training_currentepochloss = estimator.loss(
             estimator.predict,
             estimator.modelweights,
-            featuresarray,
-            labelsarray;
+            training_features_array,
+            training_labels_array;
             estimator.losshyperparameters...
             )
         ValueHistories.push!(
             estimator.history,
-            :lossatepoch,
-            lastepoch,
-            currentepochloss,
+            :training_loss_at_epoch,
+            last_epoch,
+            training_currentepochloss,
             )
+        if has_validation_data
+            validation_currentepochloss = estimator.loss(
+                estimator.predict,
+                estimator.modelweights,
+                validation_features_array,
+                validation_labels_array;
+                estimator.losshyperparameters...
+                )
+            ValueHistories.push!(
+                estimator.history,
+                :validation_loss_at_epoch,
+                last_epoch,
+                validation_currentepochloss,
+                )
+        end
         printlossthisepoch = (estimator.printlosseverynepochs > 0) &&
-            ( (lastepoch == estimator.maxepochs) ||
-                ( (lastepoch %
+            ( (last_epoch == estimator.maxepochs) ||
+                ( (last_epoch %
                     estimator.printlosseverynepochs) == 0 ) )
         if printlossthisepoch
-            info(
-                string(
-                    "Epoch: ",
-                    lastepoch,
-                    ". Loss: ",
-                    currentepochloss,
-                    ".",
-                    ),
-                )
+            if has_validation_data
+                info(
+                   string(
+                       "Epoch: ",
+                       last_epoch,
+                       ". Loss (training set): ",
+                       training_currentepochloss,
+                       ". Loss (validation set): ",
+                       validation_currentepochloss,
+                       ".",
+                       ),
+                   )
+            else
+                info(
+                   string(
+                       "Epoch: ",
+                       last_epoch,
+                       ". Loss: ",
+                       training_currentepochloss,
+                       ".",
+                       ),
+                   )
+            end
         end
     end # end while
     info(string("Finished training Knet.jl model."))
@@ -248,7 +313,6 @@ function predict(
         output = estimator.predict(
             estimator.modelweights,
             featuresarray;
-            training = false,
             )
         outputtransposed = transpose(output)
         result = convert(Array, outputtransposed)
@@ -266,7 +330,7 @@ function predict_proba(
         output = estimator.predict(
             estimator.modelweights,
             featuresarray;
-            training = false,
+            probabilities = true,
             )
         outputtransposed = transpose(output)
         numclasses = size(outputtransposed, 2)

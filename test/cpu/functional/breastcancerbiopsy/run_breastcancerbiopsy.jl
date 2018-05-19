@@ -67,9 +67,26 @@ labellevels = [negativeclass, positiveclass]
 featuresdf = df[featurenames]
 labelsdf = df[[labelname]]
 
-# Split data into training set (70%) and testing set (30%)
-trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    PredictMD.split_data(featuresdf,labelsdf,0.7)
+# Split data into training (50% of total) and non-training (50% of total)
+trainingfeaturesdf,
+    nontrainingfeaturesdf,
+    traininglabelsdf,
+    nontraininglabelsdf = PredictMD.split_data(
+        featuresdf,
+        labelsdf,
+        0.5,
+        )
+
+# Split non-training data into validation (25% of total) and testing (25%
+# of total)
+validationfeaturesdf,
+    testingfeaturesdf,
+    validationlabelsdf,
+    testinglabelsdf = PredictMD.split_data(
+        nontrainingfeaturesdf,
+        nontraininglabelsdf,
+        0.5,
+        )
 
 ##############################################################################
 ##############################################################################
@@ -78,7 +95,7 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 ##############################################################################
 
 # Examine prevalence of each class in training set
-DataFrames.describe(traininglabelsdf[labelname])
+# DataFrames.describe(traininglabelsdf[labelname])
 StatsBase.countmap(traininglabelsdf[labelname])
 
 # We see that malignant is minority class and benign is majority class.
@@ -102,7 +119,7 @@ smotedtrainingfeaturesdf, smotedtraininglabelsdf = PredictMD.smote(
     )
 
 # Examine prevalence of each class in smoted training set
-DataFrames.describe(smotedtraininglabelsdf[labelname])
+# DataFrames.describe(smotedtraininglabelsdf[labelname])
 StatsBase.countmap(smotedtraininglabelsdf[labelname])
 
 # Now we have a ratio of malignant:benign that is 1:1.
@@ -130,6 +147,10 @@ else
         interactions = 1, # optional, defaults to 1
         name = "Logistic regression", # optional
         )
+end
+
+if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
+else
     # Train logistic classifier model on smoted training set
     PredictMD.fit!(
         logisticclassifier,
@@ -251,6 +272,10 @@ else
         name = "Random forest", # optional
         feature_contrasts = feature_contrasts,
         )
+end
+
+if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
+else
     # Train random forest classifier model on smoted training set
     PredictMD.fit!(
         rfclassifier,
@@ -327,6 +352,10 @@ else
         verbose = false,
         feature_contrasts = feature_contrasts,
         )
+end
+
+if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
+else
     # Train C-SVC model on smoted training set
     PredictMD.fit!(
         csvc_svmclassifier,
@@ -393,6 +422,10 @@ else
         verbose = false,
         feature_contrasts = feature_contrasts,
         )
+end
+
+if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
+else
     # Train nu-SVC model on smoted training set
     PredictMD.fit!(
         nusvc_svmclassifier,
@@ -449,7 +482,7 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 function knetmlp_predict(
         w, # don't put a type annotation on this
         x0::AbstractArray;
-        training::Bool = false,
+        probabilities::Bool = true,
         )
     # x0 = input layer
     # x1 = first hidden layer
@@ -459,14 +492,15 @@ function knetmlp_predict(
     # x3 = output layer
     x3 = w[5]*x2 .+ w[6] # w[5] = weights, w[6] = biases
     unnormalizedlogprobs = x3
-    if training
-        return unnormalizedlogprobs
-    else
+    if probabilities
+        info("Converting unnormalizedlogprobs to normalizedprobs.")
         normalizedlogprobs = Knet.logp(unnormalizedlogprobs, 1)
         normalizedprobs = exp.(normalizedlogprobs)
         @assert(all(0 .<= normalizedprobs .<= 1))
         @assert(all(isapprox.(sum(normalizedprobs, 1),1.0;atol = 0.00001,)))
         return normalizedprobs
+    else
+        return unnormalizedlogprobs
     end
 end
 
@@ -480,7 +514,11 @@ function knetmlp_loss(
         L2::Real = Cfloat(0),
         )
     loss = Knet.nll(
-        predict(modelweights, x; training = true),
+        predict(
+            modelweights,
+            x;
+            probabilities = false,
+            ),
         ytrue,
         1, # d = 1 means that instances are in columns
         )
@@ -494,7 +532,7 @@ function knetmlp_loss(
 end
 
 if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    knetmlpclassifier = PredictMD.load_model(knetmlp_filename, )
+    knetmlpclassifier = PredictMD.load_model(knetmlp_filename)
 else
     # Randomly initialize model weights
     knetmlp_modelweights = Any[
@@ -538,7 +576,7 @@ else
     # it looks like the model has not yet converged, raise maxepochs. If it looks
     # like the loss has hit a plateau and you are worried about overfitting, lower
     # maxepochs.
-    knetmlp_maxepochs = 500
+    knetmlp_maxepochs = 1_000
     # Set up multilayer perceptron model
     knetmlpclassifier = PredictMD.singlelabelmulticlassdataframeknetclassifier(
         featurenames,
@@ -557,25 +595,31 @@ else
         maxepochs = knetmlp_maxepochs,
         feature_contrasts = feature_contrasts,
         )
+end
+
+if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
+else
     # Train multilayer perceptron model on training set
     PredictMD.fit!(
         knetmlpclassifier,
         smotedtrainingfeaturesdf,
         smotedtraininglabelsdf,
+        validationfeaturesdf,
+        validationlabelsdf,
         )
 end
 
 # Plot learning curve: loss vs. epoch
 knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
     knetmlpclassifier,
-    :lossvsepoch;
+    :loss_vs_epoch;
     )
 PredictMD.open_plot(knet_learningcurve_lossvsepoch)
 
 # Plot learning curve: loss vs. epoch, skip the first 10 epochs
 knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
     knetmlpclassifier,
-    :lossvsepoch;
+    :loss_vs_epoch;
     startat = 10,
     endat = :end,
     )
@@ -584,7 +628,7 @@ PredictMD.open_plot(knet_learningcurve_lossvsepoch_skip10epochs)
 # Plot learning curve: loss vs. iteration
 knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
     knetmlpclassifier,
-    :lossvsiteration;
+    :loss_vs_iteration;
     window = 50,
     sampleevery = 10,
     )
@@ -593,7 +637,7 @@ PredictMD.open_plot(knet_learningcurve_lossvsiteration)
 # Plot learning curve: loss vs. iteration, skip the first 100 iterations
 knet_learningcurve_lossvsiteration_skip100iterations = PredictMD.plotlearningcurve(
     knetmlpclassifier,
-    :lossvsiteration;
+    :loss_vs_iteration;
     window = 50,
     sampleevery = 10,
     startat = 100,
