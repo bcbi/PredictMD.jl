@@ -27,6 +27,7 @@ mutable struct DecisionTreeModel <:
         hyperparameters = Dict()
         hyperparameters[:nsubfeatures] = nsubfeatures
         hyperparameters[:ntrees] = ntrees
+        hyperparameters = fix_dict_type(hyperparameters)
         result = new(
             name,
             isclassificationmodel,
@@ -39,9 +40,9 @@ mutable struct DecisionTreeModel <:
     end
 end
 
-function set_contrasts!(
+function set_feature_contrasts!(
         x::DecisionTreeModel,
-        contrasts::AbstractContrasts,
+        feature_contrasts::AbstractFeatureContrasts,
         )
     return nothing
 end
@@ -59,27 +60,8 @@ function get_underlying(
     return result
 end
 
-function set_underlying!(
-        x::DecisionTreeModel,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.underlyingrandomforest = object
-    return nothing
-end
-
 function get_history(
         x::DecisionTreeModel;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-function set_history!(
-        x::DecisionTreeModel,
-        h;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -91,14 +73,14 @@ function fit!(
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
-    info(string("Starting to train DecisionTree.jl model."))
+    info(string("INFO Starting to train DecisionTree.jl model."))
     randomforest = DecisionTree.build_forest(
         labelsarray,
         featuresarray,
         estimator.hyperparameters[:nsubfeatures],
         estimator.hyperparameters[:ntrees],
         )
-    info(string("Finished training DecisionTree.jl model."))
+    info(string("INFO Finished training DecisionTree.jl model."))
     estimator.underlyingrandomforest = randomforest
     return estimator
 end
@@ -141,6 +123,7 @@ function predict_proba(
         for i = 1:length(estimator.levels)
             result[estimator.levels[i]] = predictedprobabilities[:, i]
         end
+        result = fix_dict_type(result)
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         error("predict_proba is not defined for regression models")
@@ -156,6 +139,7 @@ function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
         name::AbstractString = "",
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     dftransformer = MutableDataFrame2DecisionTreeTransformer(
         featurenames,
@@ -186,6 +170,9 @@ function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
             ];
         name = name,
         )
+    if !is_nothing(feature_contrasts)
+        set_feature_contrasts!(finalpipeline, feature_contrasts)
+    end
     return finalpipeline
 end
 
@@ -197,6 +184,7 @@ function singlelabelmulticlassdataframerandomforestclassifier(
         package::Symbol = :none,
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     if package == :DecisionTreejl
         result = _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
@@ -206,6 +194,7 @@ function singlelabelmulticlassdataframerandomforestclassifier(
             name = name,
             nsubfeatures = nsubfeatures,
             ntrees = ntrees,
+            feature_contrasts = feature_contrasts
         )
         return result
     else
@@ -219,6 +208,7 @@ function _singlelabeldataframerandomforestregression_DecisionTree(
         name::AbstractString = "",
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     dftransformer = MutableDataFrame2DecisionTreeTransformer(
         featurenames,
@@ -243,6 +233,9 @@ function _singlelabeldataframerandomforestregression_DecisionTree(
             ];
         name = name,
         )
+    if !is_nothing(feature_contrasts)
+        set_feature_contrasts!(finalpipeline, feature_contrasts)
+    end
     return finalpipeline
 end
 
@@ -253,6 +246,7 @@ function singlelabeldataframerandomforestregression(
         package::Symbol = :none,
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     if package == :DecisionTreejl
         result = _singlelabeldataframerandomforestregression_DecisionTree(
@@ -261,6 +255,7 @@ function singlelabeldataframerandomforestregression(
             name = name,
             nsubfeatures = nsubfeatures,
             ntrees = ntrees,
+            feature_contrasts = feature_contrasts
         )
         return result
     else

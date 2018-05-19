@@ -2,13 +2,13 @@
 
 function open_browser_window(filename::AbstractString)
     if is_travis_ci(ENV)
-        info(string("Skipping opening file during Travis build: ",filename,))
+        info(string("DEBUG Skipping opening file during Travis build: ",filename,))
         return nothing
     elseif is_runtests(ENV) && !open_plots_during_tests(ENV)
-        info(string("Skipping opening file during package tests: ",filename,))
+        info(string("DEBUG Skipping opening file during package tests: ",filename,))
         return nothing
     else
-        info(string("Opening file ",filename,))
+        info(string("DEBUG Opening file ",filename,))
         if is_apple()
             result = run(`open $(filename)`)
             return result
@@ -31,5 +31,3 @@ function open_browser_window(filename::AbstractString)
         end
     end
 end
-
-open(filename::AbstractString) = open_browser_window(filename)

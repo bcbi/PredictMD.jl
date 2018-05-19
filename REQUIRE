@@ -1,20 +1,28 @@
 julia 0.6
 
+ArgCheck 0.6
 Atom 0.6
+BSON 0.1
 CSV 0.2
 ClassImbalance 0.2
+Combinatorics 0.6
 Crayons 0.4
 DataFrames 0.11
 DecisionTree 0.6
-FileIO 0.6
+Documenter 0.17
+FileIO 0.7
 Flux 0.4
+FluxJS 0.1
 GLM 0.10
 GZip 0.3
 JLD2 0.0.5
 Knet 0.9
 LIBSVM 0.1
 LaTeXStrings 0.3
+Literate 0.2
 MLBase 0.7
+Metalhead 0.1
+NBInclude 1.2
 NNlib 0.2
 NumericalIntegration 0.0.3
 PGFPlots 2.2
@@ -28,3 +36,4 @@ StatsBase 0.19
 StatsModels 0.2
 TikzPictures 1.2
 ValueHistories 0.4
+Weave 0.5

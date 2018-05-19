@@ -22,6 +22,9 @@ include("datasets/rdatasets.jl")
 
 # ensemble/
 
+# gpu/
+include("gpu/cudnn.jl")
+
 # integrations/
 include("integrations/ide/atom.jl")
 
@@ -30,19 +33,23 @@ include("io/saveload.jl")
 
 # linearmodel/
 include("linearmodel/glm.jl")
+include("linearmodel/ordinary_least_squares_regression.jl")
 
 # metrics/
 include("metrics/auprc.jl")
 include("metrics/aurocc.jl")
 include("metrics/averageprecisionscore.jl")
-include("metrics/singlelabelbinaryclassificationmetrics.jl")
-include("metrics/singlelabelregressionmetrics.jl")
+include("metrics/brier_score.jl")
 include("metrics/coefficientofdetermination.jl")
 include("metrics/cohenkappa.jl")
 include("metrics/getbinarythresholds.jl")
+include("metrics/mean_square_error.jl")
 include("metrics/prcurve.jl")
+include("metrics/risk_score_cutoff_values.jl")
 include("metrics/roccurve.jl")
 include("metrics/rocnumsmetrics.jl")
+include("metrics/singlelabelbinaryclassificationmetrics.jl")
+include("metrics/singlelabelregressionmetrics.jl")
 
 # modelselection/
 include("modelselection/split_data.jl")
@@ -54,7 +61,6 @@ include("modelselection/split_data.jl")
 # neuralnetwork/
 include("neuralnetwork/flux.jl")
 include("neuralnetwork/knet.jl")
-include("neuralnetwork/nnlib.jl")
 
 # pipeline/
 include("pipeline/simplelinearpipeline.jl")
@@ -65,6 +71,7 @@ include("plotting/plotprcurve.jl")
 include("plotting/plotroccurve.jl")
 include("plotting/plotsinglelabelregressiontruevspredicted.jl")
 include("plotting/plotsinglelabelbinaryclassclassifierhistograms.jl")
+include("plotting/probability_calibration_plots.jl")
 
 # postprocessing/
 include("postprocessing/packagemultilabelpred.jl")
@@ -87,6 +94,8 @@ include("svm/libsvm.jl")
 include("tree/decisiontree.jl")
 
 # utils/
+include("utils/fix_dict_type.jl")
+include("utils/fix_vector_type.jl")
 include("utils/formulas.jl")
 include("utils/labelstringintmaps.jl")
 include("utils/nothings.jl")

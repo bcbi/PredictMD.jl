@@ -180,7 +180,7 @@ if load_pretrained == "true"
     PredictMD.load!(knetmlpreg_filename, knetmlpreg)
 else
     # set feature contrasts
-    PredictMD.set_contrasts!(knetmlpreg, contrasts)
+    PredictMD.set_feature_contrasts!(knetmlpreg , feature_contrasts)
     # Train multilayer perceptron model on training set
     PredictMD.fit!(knetmlpreg,trainingfeaturesdf,traininglabelsdf,)
 end

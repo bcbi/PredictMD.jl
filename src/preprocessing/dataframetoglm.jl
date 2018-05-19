@@ -6,9 +6,9 @@ struct ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer <:
     positiveclass::T2 where T2 <: AbstractString
 end
 
-function set_contrasts!(
+function set_feature_contrasts!(
         x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
-        contrasts::AbstractContrasts,
+        feature_contrasts::AbstractFeatureContrasts,
         )
     return nothing
 end
@@ -21,26 +21,8 @@ function get_underlying(
     return nothing
 end
 
-function set_underlying!(
-        x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
 function get_history(
         x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-function set_history!(
-        x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
-        h;
         saving::Bool = false,
         loading::Bool = false,
         )

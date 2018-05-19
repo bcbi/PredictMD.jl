@@ -42,18 +42,9 @@ function get_history(
     return nothing
 end
 
-function set_history!(
+function set_feature_contrasts!(
         x::GLMModel,
-        h;
-        saving::Bool = false,
-	loading::Bool = false,
-        )
-    return nothing
-end
-
-function set_contrasts!(
-        x::GLMModel,
-        contrasts::AbstractContrasts,
+        feature_contrasts::AbstractFeatureContrasts,
         )
     return nothing
 end
@@ -67,30 +58,20 @@ function get_underlying(
     return result
 end
 
-function set_underlying!(
-        x::GLMModel,
-        object;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    x.underlyingglm = object
-    return nothing
-end
-
 function fit!(
         estimator::GLMModel,
         featuresdf::DataFrames.AbstractDataFrame,
         labelsdf::DataFrames.AbstractDataFrame,
         )
     labelsandfeaturesdf = hcat(labelsdf, featuresdf)
-    info(string("Starting to train GLM.jl model."))
+    info(string("INFO Starting to train GLM.jl model."))
     glm = GLM.glm(
         estimator.formula,
         labelsandfeaturesdf,
         estimator.family,
         estimator.link,
         )
-    info(string("Finished training GLM.jl model."))
+    info(string("INFO Finished training GLM.jl model."))
     estimator.underlyingglm = glm
     return estimator
 end
@@ -125,7 +106,6 @@ function predict(
     else
         error("Could not figure out if model is classification or regression")
     end
-
 end
 
 function predict_proba(
@@ -140,13 +120,13 @@ function predict_proba(
         result = Dict()
         result[1] = glmpredictoutput
         result[0] = 1 - glmpredictoutput
+        result = fix_dict_type(result)
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         error("predict_proba is not defined for regression models")
     else
         error("Could not figure out if model is classification or regression")
     end
-
 end
 
 function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
@@ -154,14 +134,16 @@ function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
         intercept::Bool = true,
+        interactions::Integer = 1,
         name::AbstractString = "",
         )
     negativeclass = singlelabellevels[1]
     positiveclass = singlelabellevels[2]
-    formula = makeformula(
+    formula = generate_formula(
         [singlelabelname],
         featurenames;
         intercept = intercept,
+        interactions = interactions,
         )
     dftransformer = ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer(
         singlelabelname,
@@ -204,6 +186,7 @@ function singlelabelbinaryclassdataframelogisticclassifier(
         singlelabellevels::AbstractVector;
         package::Symbol = :none,
         intercept::Bool = true,
+        interactions::Integer = 1,
         name::AbstractString = "",
         )
     if package == :GLMjl
@@ -212,6 +195,7 @@ function singlelabelbinaryclassdataframelogisticclassifier(
             singlelabelname,
             singlelabellevels;
             intercept = intercept,
+            interactions = interactions,
             name = name,
             )
         return result
@@ -225,14 +209,16 @@ function _singlelabelbinaryclassdataframeprobitclassifier_GLM(
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
         intercept::Bool = true,
+        interactions::Integer = 1,
         name::AbstractString = "",
         )
     negativeclass = singlelabellevels[1]
     positiveclass = singlelabellevels[2]
-    formula = makeformula(
+    formula = generate_formula(
         [singlelabelname],
         featurenames;
         intercept = intercept,
+        interactions = interactions,
         )
     dftransformer = ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer(
         singlelabelname,
@@ -275,6 +261,7 @@ function singlelabelbinaryclassdataframeprobitclassifier(
         singlelabellevels::AbstractVector;
         package::Symbol = :none,
         intercept::Bool = true,
+        interactions::Integer = 1,
         name::AbstractString = "",
         )
     if package == :GLMjl
@@ -283,6 +270,7 @@ function singlelabelbinaryclassdataframeprobitclassifier(
             singlelabelname,
             singlelabellevels;
             intercept = intercept,
+            interactions = interactions,
             name = name,
             )
         return result
@@ -295,12 +283,14 @@ function _singlelabeldataframelinearregression_GLM(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
         intercept::Bool = true,
+        interactions::Integer = 1,
         name::AbstractString = "",
         )
-    formula = makeformula(
+    formula = generate_formula(
         [singlelabelname],
         featurenames;
         intercept = intercept,
+        interactions = interactions,
         )
     glmestimator = GLMModel(
         formula,
@@ -323,6 +313,7 @@ function singlelabeldataframelinearregression(
         singlelabelname::Symbol;
         package::Symbol = :none,
         intercept::Bool = true,
+        interactions::Integer = 1,
         name::AbstractString = "",
         )
     if package == :GLMjl
@@ -330,6 +321,7 @@ function singlelabeldataframelinearregression(
             featurenames,
             singlelabelname;
             intercept = intercept,
+            interactions = interactions,
             name = name,
             )
         return result

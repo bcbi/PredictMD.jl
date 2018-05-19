@@ -10,6 +10,7 @@ function multilabelprobabilitiestopredictions(
             floattype = floattype,
             )
     end
+    result = Dict()
     return result
 end
 
