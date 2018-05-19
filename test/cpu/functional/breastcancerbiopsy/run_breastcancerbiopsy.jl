@@ -493,7 +493,6 @@ function knetmlp_predict(
     x3 = w[5]*x2 .+ w[6] # w[5] = weights, w[6] = biases
     unnormalizedlogprobs = x3
     if probabilities
-        info("Converting unnormalizedlogprobs to normalizedprobs.")
         normalizedlogprobs = Knet.logp(unnormalizedlogprobs, 1)
         normalizedprobs = exp.(normalizedlogprobs)
         @assert(all(0 .<= normalizedprobs .<= 1))

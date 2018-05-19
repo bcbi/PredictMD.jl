@@ -123,7 +123,7 @@ function fit!(
     else
         error(
             string(
-                "Either define both validation_features_array and ",
+                "ERROR Either define both validation_features_array and ",
                 "validation_labels_array, or define neither.",)
             )
     end
@@ -133,7 +133,7 @@ function fit!(
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         training_labels_array = Cfloat.(training_labels_array)
     else
-        error("Could not figure out if model is classification or regression")
+        error("ERROR Could not figure out if model is classification or regression")
     end
     training_data = Knet.minibatch(
         training_features_array,
@@ -152,7 +152,7 @@ function fit!(
     last_epoch = all_epochs_so_far[end]
     info(
         string(
-            "Starting to train Knet.jl model. Max epochs: ",
+            "INFO Starting to train Knet.jl model. Max epochs: ",
             estimator.maxepochs,
             ".",
             )
@@ -177,7 +177,7 @@ function fit!(
         if has_validation_data
             info(
                 string(
-                    "Epoch: ",
+                    "INFO Epoch: ",
                     last_epoch,
                     ". Loss (training set): ",
                     training_lossbeforetrainingstarts,
@@ -189,7 +189,7 @@ function fit!(
         else
             info(
                 string(
-                    "Epoch: ",
+                    "INFO Epoch: ",
                     lastepoch,
                     ". Loss: ",
                     lossbeforetrainingstarts,
@@ -270,7 +270,7 @@ function fit!(
             if has_validation_data
                 info(
                    string(
-                       "Epoch: ",
+                       "INFO Epoch: ",
                        last_epoch,
                        ". Loss (training set): ",
                        training_currentepochloss,
@@ -282,7 +282,7 @@ function fit!(
             else
                 info(
                    string(
-                       "Epoch: ",
+                       "INFO Epoch: ",
                        last_epoch,
                        ". Loss: ",
                        training_currentepochloss,
@@ -292,7 +292,7 @@ function fit!(
             end
         end
     end # end while
-    info(string("Finished training Knet.jl model."))
+    info(string("INFO Finished training Knet.jl model."))
     return estimator
 end
 
@@ -318,7 +318,7 @@ function predict(
         result = convert(Array, outputtransposed)
         return result
     else
-        error("unable to predict")
+        error("ERROR unable to predict")
     end
 end
 
@@ -341,9 +341,9 @@ function predict_proba(
         end
         return result
     elseif estimator.isregressionmodel
-        error("predict_proba is not defined for regression models")
+        error("ERROR predict_proba is not defined for regression models")
     else
-        error("unable to predict")
+        error("ERROR unable to predict")
     end
 end
 
@@ -460,7 +460,7 @@ function singlelabelmulticlassdataframeknetclassifier(
             )
         return result
     else
-        error("$(package) is not a valid value for package")
+        error("ERROR $(package) is not a valid value for package")
     end
 end
 
@@ -555,6 +555,6 @@ function singlelabeldataframeknetregression(
             )
         return result
     else
-        error("$(package) is not a valid value for package")
+        error("ERROR $(package) is not a valid value for package")
     end
 end
