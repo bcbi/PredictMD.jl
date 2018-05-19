@@ -11,7 +11,7 @@ mutable struct LIBSVMModel <: AbstractEstimator
     hyperparameters::T5 where T5 <: Associative
 
     # parameters (learned from data):
-    underlyingsvm::T6 where T6
+    underlyingsvm::T6 where T6 <: Union{Void, LIBSVM.SVM}
 
     function LIBSVMModel(
             ;
@@ -49,12 +49,14 @@ mutable struct LIBSVMModel <: AbstractEstimator
         hyperparameters[:cachesize] = cachesize
         hyperparameters[:verbose] = verbose
         hyperparameters = fix_dict_type(hyperparameters)
+        underlyingsvm = nothing
         result = new(
             name,
             isclassificationmodel,
             isregressionmodel,
             singlelabellevels,
             hyperparameters,
+            underlyingsvm,
             )
         return result
     end
@@ -97,12 +99,23 @@ function fit!(
         error("Could not figure out if model is classification or regression")
     end
     info(string("INFO Starting to train LIBSVM.jl model."))
-    svm = LIBSVM.svmtrain(
-        featuresarray,
-        labelsarray;
-        probability = probability,
-        estimator.hyperparameters...
-        )
+    svm = try
+        LIBSVM.svmtrain(
+            featuresarray,
+            labelsarray;
+            probability = probability,
+            estimator.hyperparameters...
+            )
+    catch e
+        warn(
+            string(
+                "While training LIBSVM.jl model, ignored error: ",
+                e,
+                )
+            )
+        nothing
+    end
+    # svm =
     info(string("INFO Finished training LIBSVM.jl model."))
     estimator.underlyingsvm = svm
     @assert(typeof(estimator.underlyingsvm.labels) <: AbstractVector)

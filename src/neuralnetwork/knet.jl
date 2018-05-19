@@ -19,7 +19,7 @@ mutable struct KnetModel <: AbstractEstimator
 
     # parameters (learned from data):
     modelweights::T12 where T12 <: AbstractArray
-    modelweightoptimizers::T13 where T13
+    modelweightoptimizers::T13 where T13 <: Any # TODO: do something better here
 
     # learning state
     history::T where T <: ValueHistories.MultivalueHistory

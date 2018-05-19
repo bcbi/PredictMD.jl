@@ -12,7 +12,7 @@ mutable struct GLMModel <: AbstractEstimator
     link::T6 where T6 <: GLM.Link
 
     # parameters (learned from data):
-    underlyingglm::T where T
+    underlyingglm::T7 where T7 <: Union{Void, StatsModels.DataFrameRegressionModel}
 
     function GLMModel(
             formula::StatsModels.Formula,
@@ -22,6 +22,7 @@ mutable struct GLMModel <: AbstractEstimator
             isclassificationmodel::Bool = false,
             isregressionmodel::Bool = false,
             )
+        underlyingglm = nothing
         result = new(
             name,
             isclassificationmodel,
@@ -29,6 +30,7 @@ mutable struct GLMModel <: AbstractEstimator
             formula,
             family,
             link,
+            underlyingglm,
             )
         return result
     end
@@ -65,12 +67,23 @@ function fit!(
         )
     labelsandfeaturesdf = hcat(labelsdf, featuresdf)
     info(string("INFO Starting to train GLM.jl model."))
-    glm = GLM.glm(
-        estimator.formula,
-        labelsandfeaturesdf,
-        estimator.family,
-        estimator.link,
-        )
+    glm = try
+        GLM.glm(
+            estimator.formula,
+            labelsandfeaturesdf,
+            estimator.family,
+            estimator.link,
+            )
+    catch e
+        warn(
+            string(
+                "WARN while training GLM.jl model, ignored error: ",
+                e,
+                )
+            )
+        nothing
+    end
+    # glm =
     info(string("INFO Finished training GLM.jl model."))
     estimator.underlyingglm = glm
     return estimator

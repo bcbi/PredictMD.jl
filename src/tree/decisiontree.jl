@@ -13,7 +13,7 @@ mutable struct DecisionTreeModel <:
     hyperparameters::T6 where T6 <: Associative
 
     # parameters (learned from data):
-    underlyingrandomforest::T7 where T7
+    underlyingrandomforest::T7 where T7 <: Union{Void, DecisionTree.Ensemble}
 
     function DecisionTreeModel(
             singlelabelname::Symbol;
@@ -28,6 +28,7 @@ mutable struct DecisionTreeModel <:
         hyperparameters[:nsubfeatures] = nsubfeatures
         hyperparameters[:ntrees] = ntrees
         hyperparameters = fix_dict_type(hyperparameters)
+        underlyingrandomforest = nothing
         result = new(
             name,
             isclassificationmodel,
@@ -35,6 +36,7 @@ mutable struct DecisionTreeModel <:
             singlelabelname,
             levels,
             hyperparameters,
+            underlyingrandomforest,
             )
         return result
     end
@@ -74,12 +76,22 @@ function fit!(
         labelsarray::AbstractArray,
         )
     info(string("INFO Starting to train DecisionTree.jl model."))
-    randomforest = DecisionTree.build_forest(
-        labelsarray,
-        featuresarray,
-        estimator.hyperparameters[:nsubfeatures],
-        estimator.hyperparameters[:ntrees],
-        )
+    randomforest = try
+        DecisionTree.build_forest(
+            labelsarray,
+            featuresarray,
+            estimator.hyperparameters[:nsubfeatures],
+            estimator.hyperparameters[:ntrees],
+            )
+    catch e
+        warn(
+            string(
+                "While training DecisionTree.jl model, ignored error: ",
+                e,
+                )
+            )
+        nothing
+    end
     info(string("INFO Finished training DecisionTree.jl model."))
     estimator.underlyingrandomforest = randomforest
     return estimator
