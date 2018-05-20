@@ -407,8 +407,6 @@ PredictMD.singlelabelregressionmetrics(
 all_models = PredictMD.Fittable[
     linearreg,
     randomforestreg,
-    epsilonsvr_svmreg,
-    nusvr_svmreg,
     knetmlpreg,
     ]
 
@@ -437,8 +435,6 @@ showall(PredictMD.singlelabelregressionmetrics(
 if get(ENV, "SAVETRAINEDMODELSTOFILE", "") == "true"
     PredictMD.save_model(linearreg_filename, linearreg)
     PredictMD.save_model(randomforestreg_filename, randomforestreg)
-    PredictMD.save_model(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
-    PredictMD.save_model(nusvr_svmreg_filename, nusvr_svmreg)
     PredictMD.save_model(knetmlpreg_filename, knetmlpreg)
 end
 
@@ -454,13 +450,9 @@ end
 # Get real-valued predictions from each model for training set
 PredictMD.predict(linearreg,training_features_df,)
 PredictMD.predict(randomforestreg,training_features_df,)
-PredictMD.predict(epsilonsvr_svmreg,training_features_df,)
-PredictMD.predict(nusvr_svmreg,training_features_df,)
 PredictMD.predict(knetmlpreg,training_features_df,)
 
 # Get real-valued predictions from each model for testing set
 PredictMD.predict(linearreg,testing_features_df,)
 PredictMD.predict(randomforestreg,testing_features_df,)
-PredictMD.predict(epsilonsvr_svmreg,testing_features_df,)
-PredictMD.predict(nusvr_svmreg,testing_features_df,)
 PredictMD.predict(knetmlpreg,testing_features_df,)
