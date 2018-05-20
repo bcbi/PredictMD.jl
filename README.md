@@ -28,7 +28,7 @@ PredictMD is a [Julia](https://julialang.org/) package that provides a uniform i
             <td align="left"><a href="#1-prerequisites">1. Prerequisites</a></td>
         </tr>
         <tr>
-            <td align="left"><a href="#2-installation-recommended-method">2. Installation (recommended method)</a></td>
+            <td align="left"><a href="#2-installation">2. Installation</a></td>
         </tr>
         <tr>
             <td align="left"><a href="#3-examples">3. Examples</a></td>
@@ -104,7 +104,7 @@ If you receive an error (e.g. "command not found"), download and install pdf2svg
 * macOS: [http://brewinstall.org/Install-pdf2svg-on-Mac-with-Brew/](http://brewinstall.org/Install-pdf2svg-on-Mac-with-Brew/)
 * GNU/Linux: [https://github.com/dawbarton/pdf2svg](https://github.com/dawbarton/pdf2svg)
 
-## 2. Installation (recommended method)
+## 2. Installation
 
 **Step 1:** Make sure that you have followed all of the instructions in [Section 1 (Prerequisites)](#1-prerequisites).
 
