@@ -62,15 +62,15 @@ end
 
 function fit!(
         estimator::GLMModel,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         )
-    labelsandfeaturesdf = hcat(labelsdf, featuresdf)
+    labelsandfeatures_df = hcat(labels_df, features_df)
     info(string("INFO Starting to train GLM.jl model."))
     glm = try
         GLM.glm(
             estimator.formula,
-            labelsandfeaturesdf,
+            labelsandfeatures_df,
             estimator.family,
             estimator.link,
             )
@@ -91,12 +91,12 @@ end
 
 function predict(
         estimator::GLMModel,
-        featuresdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
         probabilitiesassoc = predict_proba(
             estimator,
-            featuresdf,
+            features_df,
             )
         predictionsvector = singlelabelprobabilitiestopredictions(
             probabilitiesassoc
@@ -107,11 +107,11 @@ function predict(
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         if is_nothing(estimator.underlyingglm)
-            glmpredictoutput = zeros(size(featuresdf,1))
+            glmpredictoutput = zeros(size(features_df,1))
         else
             glmpredictoutput = GLM.predict(
                 estimator.underlyingglm,
-                featuresdf,
+                features_df,
                 )
         end
         result = DataFrames.DataFrame()
@@ -125,15 +125,15 @@ end
 
 function predict_proba(
         estimator::GLMModel,
-        featuresdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
         if is_nothing(estimator.underlyingglm,)
-            glmpredictoutput = zeros(size(featuresdf, 1))
+            glmpredictoutput = zeros(size(features_df, 1))
         else
             glmpredictoutput = GLM.predict(
                 estimator.underlyingglm,
-                featuresdf,
+                features_df,
                 )
         end
         result = Dict()

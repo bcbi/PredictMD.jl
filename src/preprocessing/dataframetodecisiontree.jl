@@ -48,12 +48,12 @@ end
 
 function transform(
         transformer::MutableDataFrame2DecisionTreeTransformer,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
     singlelabelname = transformer.singlelabelname
-    labelsarray = convert(Array, labelsdf[singlelabelname])
+    labelsarray = convert(Array, labels_df[singlelabelname])
     modelformula = generate_formula(
         transformer.featurenames[1],
         transformer.featurenames;
@@ -61,7 +61,7 @@ function transform(
         )
     modelframe = StatsModels.ModelFrame(
         modelformula,
-        featuresdf;
+        features_df;
         contrasts = transformer.dffeaturecontrasts.contrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
@@ -71,7 +71,7 @@ end
 
 function transform(
         transformer::MutableDataFrame2DecisionTreeTransformer,
-        featuresdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
     modelformula = generate_formula(
@@ -81,7 +81,7 @@ function transform(
         )
     modelframe = StatsModels.ModelFrame(
         modelformula,
-        featuresdf;
+        features_df;
         contrasts = transformer.dffeaturecontrasts.contrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
@@ -91,25 +91,25 @@ end
 
 function fit!(
         transformer::MutableDataFrame2DecisionTreeTransformer,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    return transform(transformer, featuresdf, labelsdf)
+    return transform(transformer, features_df, labels_df)
 end
 
 function predict(
         transformer::MutableDataFrame2DecisionTreeTransformer,
-        featuresdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    return transform(transformer, featuresdf)
+    return transform(transformer, features_df)
 end
 
 function predict_proba(
         transformer::MutableDataFrame2DecisionTreeTransformer,
-        featuresdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    return transform(transformer, featuresdf)
+    return transform(transformer, features_df)
 end

@@ -101,15 +101,15 @@ end
 labelname = :MedV
 
 # Put features and labels in separate dataframes
-featuresdf = df[featurenames]
-labelsdf = df[[labelname]]
+features_df = df[featurenames]
+labels_df = df[[labelname]]
 
 # View summary statistics for label variable (mean, quartiles, etc.)
-DataFrames.describe(labelsdf[labelname])
+DataFrames.describe(labels_df[labelname])
 
 # Split data into training set (70%) and testing set (30%)
-trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    PredictMD.split_data(featuresdf,labelsdf,0.7)
+training_features_df,testing_features_df,traininglabels_df,testing_labels_df =
+    PredictMD.split_data(features_df,labels_df,0.7)
 
 ##############################################################################
 ##############################################################################
@@ -136,7 +136,7 @@ else
     # set feature contrasts
     PredictMD.set_feature_contrasts!(linearreg, feature_contrasts)
     # Train linear regression model
-    PredictMD.fit!(linearreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(linearreg,training_features_df,traininglabels_df,)
 end
 
 # View coefficients, p values, etc. for underlying linear regression
@@ -145,8 +145,8 @@ PredictMD.get_underlying(linearreg)
 # Plot true values versus predicted values for linear regression on training set
 linearreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     linearreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 PredictMD.open(linearreg_plot_training)
@@ -154,8 +154,8 @@ PredictMD.open(linearreg_plot_training)
 # Plot true values versus predicted values for linear regression on testing set
 linearreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     linearreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname
     )
 PredictMD.open(linearreg_plot_testing)
@@ -163,16 +163,16 @@ PredictMD.open(linearreg_plot_testing)
 # Evaluate performance of linear regression on training set
 PredictMD.singlelabelregressionmetrics(
     linearreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 
 # Evaluate performance of linear regression on testing set
 PredictMD.singlelabelregressionmetrics(
     linearreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 
@@ -196,14 +196,14 @@ else
     # set feature contrasts
     PredictMD.set_feature_contrasts!(randomforestreg, feature_contrasts)
     # Train random forest model on training set
-    PredictMD.fit!(randomforestreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(randomforestreg,training_features_df,traininglabels_df,)
 end
 
 # Plot true values versus predicted values for random forest on training set
 randomforestreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     randomforestreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 PredictMD.open(randomforestreg_plot_training)
@@ -211,8 +211,8 @@ PredictMD.open(randomforestreg_plot_training)
 # Plot true values versus predicted values for random forest on testing set
 randomforestreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     randomforestreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 PredictMD.open(randomforestreg_plot_testing)
@@ -220,16 +220,16 @@ PredictMD.open(randomforestreg_plot_testing)
 # Evaluate performance of random forest on training set
 PredictMD.singlelabelregressionmetrics(
     randomforestreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 
 # Evaluate performance of random forest on testing set
 PredictMD.singlelabelregressionmetrics(
     randomforestreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 
@@ -254,14 +254,14 @@ else
     # set feature contrasts
     PredictMD.set_feature_contrasts!(epsilonsvr_svmreg, feature_contrasts)
     # Train epsilon-SVR model on training set
-    PredictMD.fit!(epsilonsvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(epsilonsvr_svmreg,training_features_df,traininglabels_df,)
 end
 
 # Plot true values versus predicted values for epsilon-SVR on training set
 epsilonsvr_svmreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     epsilonsvr_svmreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 PredictMD.open(epsilonsvr_svmreg_plot_training)
@@ -269,8 +269,8 @@ PredictMD.open(epsilonsvr_svmreg_plot_training)
 # Plot true values versus predicted values for epsilon-SVR on testing set
 epsilonsvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     epsilonsvr_svmreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 PredictMD.open(epsilonsvr_svmreg_plot_testing)
@@ -278,16 +278,16 @@ PredictMD.open(epsilonsvr_svmreg_plot_testing)
 # Evaluate performance of epsilon-SVR on training set
 PredictMD.singlelabelregressionmetrics(
     epsilonsvr_svmreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 
 # Evaluate performance of epsilon-SVR on testing set
 PredictMD.singlelabelregressionmetrics(
     epsilonsvr_svmreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 
@@ -312,14 +312,14 @@ else
     # set feature contrasts
     PredictMD.set_feature_contrasts!(nusvr_svmreg, feature_contrasts)
     # Train nu-SVR model
-    PredictMD.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(nusvr_svmreg,training_features_df,traininglabels_df,)
 end
 
 # Plot true values versus predicted values for nu-SVR on training set
 nusvr_svmreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     nusvr_svmreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 PredictMD.open(nusvr_svmreg_plot_training)
@@ -327,8 +327,8 @@ PredictMD.open(nusvr_svmreg_plot_training)
 # Plot true values versus predicted values for nu-SVR on testing set
 nusvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     nusvr_svmreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 PredictMD.open(nusvr_svmreg_plot_testing)
@@ -336,16 +336,16 @@ PredictMD.open(nusvr_svmreg_plot_testing)
 # Evaluate performance of nu-SVR on training set
 PredictMD.singlelabelregressionmetrics(
     nusvr_svmreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 
 # Evaluate performance of nu-SVR on testing set
 PredictMD.singlelabelregressionmetrics(
     nusvr_svmreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 
@@ -458,7 +458,7 @@ else
     # set feature contrasts
     PredictMD.set_feature_contrasts!(knetmlpreg, feature_contrasts)
     # Train multilayer perceptron model on training set
-    PredictMD.fit!(knetmlpreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(knetmlpreg,training_features_df,traininglabels_df,)
 end
 
 # Plot learning curve: loss vs. epoch
@@ -500,8 +500,8 @@ PredictMD.open(knet_learningcurve_lossvsiteration_skip100iterations)
 # Plot true values versus predicted values for multilayer perceptron on training set
 knetmlpreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     knetmlpreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 PredictMD.open(knetmlpreg_plot_training)
@@ -509,8 +509,8 @@ PredictMD.open(knetmlpreg_plot_training)
 # Plot true values versus predicted values for multilayer perceptron on testing set
 knetmlpreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     knetmlpreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 PredictMD.open(knetmlpreg_plot_testing)
@@ -518,16 +518,16 @@ PredictMD.open(knetmlpreg_plot_testing)
 # Evaluate performance of multilayer perceptron on training set
 PredictMD.singlelabelregressionmetrics(
     knetmlpreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 
 # Evaluate performance of multilayer perceptron on testing set
 PredictMD.singlelabelregressionmetrics(
     knetmlpreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 
@@ -546,8 +546,8 @@ showall(PredictMD.singlelabelregressionmetrics(
         nusvr_svmreg,
         knetmlpreg,
         ],
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     ))
 
@@ -560,8 +560,8 @@ showall(PredictMD.singlelabelregressionmetrics(
         nusvr_svmreg,
         knetmlpreg,
         ],
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     ))
 
@@ -589,15 +589,15 @@ end
 # output by each of regression models.
 
 # Get real-valued predictions from each model for training set
-PredictMD.predict(linearreg,trainingfeaturesdf,)
-PredictMD.predict(randomforestreg,trainingfeaturesdf,)
-PredictMD.predict(epsilonsvr_svmreg,trainingfeaturesdf,)
-PredictMD.predict(nusvr_svmreg,trainingfeaturesdf,)
-PredictMD.predict(knetmlpreg,trainingfeaturesdf,)
+PredictMD.predict(linearreg,training_features_df,)
+PredictMD.predict(randomforestreg,training_features_df,)
+PredictMD.predict(epsilonsvr_svmreg,training_features_df,)
+PredictMD.predict(nusvr_svmreg,training_features_df,)
+PredictMD.predict(knetmlpreg,training_features_df,)
 
 # Get real-valued predictions from each model for testing set
-PredictMD.predict(linearreg,testingfeaturesdf,)
-PredictMD.predict(randomforestreg,testingfeaturesdf,)
-PredictMD.predict(epsilonsvr_svmreg,testingfeaturesdf,)
-PredictMD.predict(nusvr_svmreg,testingfeaturesdf,)
-PredictMD.predict(knetmlpreg,testingfeaturesdf,)
+PredictMD.predict(linearreg,testing_features_df,)
+PredictMD.predict(randomforestreg,testing_features_df,)
+PredictMD.predict(epsilonsvr_svmreg,testing_features_df,)
+PredictMD.predict(nusvr_svmreg,testing_features_df,)
+PredictMD.predict(knetmlpreg,testing_features_df,)
