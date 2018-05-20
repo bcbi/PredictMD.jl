@@ -1,7 +1,5 @@
 linearreg_filename = ENV["linearreg_filename"]
 randomforestreg_filename = ENV["randomforestreg_filename"]
-epsilonsvr_svmreg_filename = ENV["epsilonsvr_svmreg_filename"]
-nusvr_svmreg_filename = ENV["nusvr_svmreg_filename"]
 knetmlpreg_filename = ENV["knetmlpreg_filename"]
 
 ##############################################################################
@@ -220,126 +218,6 @@ PredictMD.singlelabelregressionmetrics(
     )
 
 ##############################################################################
-## Support vector machine (epsilon support vector regression) ################
-##############################################################################
-
-if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    epsilonsvr_svmreg = PredictMD.load_model(epsilonsvr_svmreg_filename)
-else
-    # Set up epsilon-SVR model
-    epsilonsvr_svmreg = PredictMD.singlelabeldataframesvmregression(
-        featurenames,
-        labelname;
-        package = :LIBSVMjl,
-        svmtype = LIBSVM.EpsilonSVR,
-        name = "SVM (epsilon-SVR)",
-        kernel = LIBSVM.Kernel.Linear,
-        verbose = false,
-        feature_contrasts = feature_contrasts,
-        )
-end
-
-if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-else
-    # Train epsilon-SVR model on training set
-    PredictMD.fit!(epsilonsvr_svmreg,training_features_df,training_labels_df,)
-end
-
-# Plot true values versus predicted values for epsilon-SVR on training set
-epsilonsvr_svmreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
-    epsilonsvr_svmreg,
-    training_features_df,
-    training_labels_df,
-    labelname,
-    )
-PredictMD.open_plot(epsilonsvr_svmreg_plot_training)
-
-# Plot true values versus predicted values for epsilon-SVR on testing set
-epsilonsvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
-    epsilonsvr_svmreg,
-    testing_features_df,
-    testing_labels_df,
-    labelname,
-    )
-PredictMD.open_plot(epsilonsvr_svmreg_plot_testing)
-
-# Evaluate performance of epsilon-SVR on training set
-PredictMD.singlelabelregressionmetrics(
-    epsilonsvr_svmreg,
-    training_features_df,
-    training_labels_df,
-    labelname,
-    )
-
-# Evaluate performance of epsilon-SVR on testing set
-PredictMD.singlelabelregressionmetrics(
-    epsilonsvr_svmreg,
-    testing_features_df,
-    testing_labels_df,
-    labelname,
-    )
-
-##############################################################################
-## Support vector machine (nu support vector regression) ################
-##############################################################################
-
-if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-    nusvr_svmreg = PredictMD.load_model(nusvr_svmreg_filename)
-else
-    # Set up nu-SVR model
-    nusvr_svmreg = PredictMD.singlelabeldataframesvmregression(
-        featurenames,
-        labelname;
-        package = :LIBSVMjl,
-        svmtype = LIBSVM.NuSVR,
-        name = "SVM (nu-SVR)",
-        kernel = LIBSVM.Kernel.Linear,
-        verbose = false,
-        feature_contrasts = feature_contrasts,
-        )
-end
-
-if get(ENV, "LOADTRAINEDMODELSFROMFILE", "") == "true"
-else
-    # Train nu-SVR model
-    PredictMD.fit!(nusvr_svmreg,training_features_df,training_labels_df,)
-end
-
-# Plot true values versus predicted values for nu-SVR on training set
-nusvr_svmreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
-    nusvr_svmreg,
-    training_features_df,
-    training_labels_df,
-    labelname,
-    )
-PredictMD.open_plot(nusvr_svmreg_plot_training)
-
-# Plot true values versus predicted values for nu-SVR on testing set
-nusvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
-    nusvr_svmreg,
-    testing_features_df,
-    testing_labels_df,
-    labelname,
-    )
-PredictMD.open_plot(nusvr_svmreg_plot_testing)
-
-# Evaluate performance of nu-SVR on training set
-PredictMD.singlelabelregressionmetrics(
-    nusvr_svmreg,
-    training_features_df,
-    training_labels_df,
-    labelname,
-    )
-
-# Evaluate performance of nu-SVR on testing set
-PredictMD.singlelabelregressionmetrics(
-    nusvr_svmreg,
-    testing_features_df,
-    testing_labels_df,
-    labelname,
-    )
-
-##############################################################################
 ## Multilayer perceptron (i.e. fully connected feedforward neural network) ###
 ##############################################################################
 
@@ -529,8 +407,6 @@ PredictMD.singlelabelregressionmetrics(
 all_models = PredictMD.Fittable[
     linearreg,
     randomforestreg,
-    epsilonsvr_svmreg,
-    nusvr_svmreg,
     knetmlpreg,
     ]
 
@@ -559,8 +435,6 @@ showall(PredictMD.singlelabelregressionmetrics(
 if get(ENV, "SAVETRAINEDMODELSTOFILE", "") == "true"
     PredictMD.save_model(linearreg_filename, linearreg)
     PredictMD.save_model(randomforestreg_filename, randomforestreg)
-    PredictMD.save_model(epsilonsvr_svmreg_filename, epsilonsvr_svmreg)
-    PredictMD.save_model(nusvr_svmreg_filename, nusvr_svmreg)
     PredictMD.save_model(knetmlpreg_filename, knetmlpreg)
 end
 
@@ -576,13 +450,9 @@ end
 # Get real-valued predictions from each model for training set
 PredictMD.predict(linearreg,training_features_df,)
 PredictMD.predict(randomforestreg,training_features_df,)
-PredictMD.predict(epsilonsvr_svmreg,training_features_df,)
-PredictMD.predict(nusvr_svmreg,training_features_df,)
 PredictMD.predict(knetmlpreg,training_features_df,)
 
 # Get real-valued predictions from each model for testing set
 PredictMD.predict(linearreg,testing_features_df,)
 PredictMD.predict(randomforestreg,testing_features_df,)
-PredictMD.predict(epsilonsvr_svmreg,testing_features_df,)
-PredictMD.predict(nusvr_svmreg,testing_features_df,)
 PredictMD.predict(knetmlpreg,testing_features_df,)
