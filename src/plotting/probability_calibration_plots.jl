@@ -4,8 +4,8 @@ import PGFPlotsX
 
 function probability_calibration_scores_and_fractions(
         estimator::Fittable,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         positiveclass::AbstractString;
         window::Real = 0.1,
@@ -13,11 +13,11 @@ function probability_calibration_scores_and_fractions(
         )
     ytrue = Int.(
         singlelabelbinaryytrue(
-            labelsdf[singlelabelname],
+            labels_df[singlelabelname],
             positiveclass,
             )
         )
-    predictedprobabilitiesalllabels = predict_proba(estimator, featuresdf)
+    predictedprobabilitiesalllabels = predict_proba(estimator, features_df)
     yscore = Cfloat.(
         singlelabelbinaryyscore(
             predictedprobabilitiesalllabels[singlelabelname],
@@ -71,8 +71,8 @@ end
 
 function plot_probability_calibration_curve(
         estimator::Fittable,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         positiveclass::AbstractString;
         window::Real = 0.1,
@@ -80,8 +80,8 @@ function plot_probability_calibration_curve(
         )
     scores, fractions = probability_calibration_scores_and_fractions(
         estimator,
-        featuresdf,
-        labelsdf,
+        features_df,
+        labels_df,
         singlelabelname,
         positiveclass;
         window = window,
@@ -152,8 +152,8 @@ end
 
 function probability_calibration_metrics(
         estimator::Fittable,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         positiveclass::AbstractString;
         window::Real = 0.1,
@@ -162,8 +162,8 @@ function probability_calibration_metrics(
     vectorofestimators = Fittable[estimator]
     result = probability_calibration_metrics(
         vectorofestimators,
-        featuresdf,
-        labelsdf,
+        features_df,
+        labels_df,
         singlelabelname,
         positiveclass,
         )
@@ -172,8 +172,8 @@ end
 
 function probability_calibration_metrics(
         vectorofestimators::AbstractVector{Fittable},
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         positiveclass::AbstractString,
         window::Real = 0.1,
@@ -189,13 +189,13 @@ function probability_calibration_metrics(
     for i = 1:length(vectorofestimators)
         ytrue = Int.(
             singlelabelbinaryytrue(
-                labelsdf[singlelabelname],
+                labels_df[singlelabelname],
                 positiveclass,
                 )
             )
         predictedprobabilitiesalllabels = predict_proba(
                 vectorofestimators[i],
-                featuresdf,
+                features_df,
                 )
         yscore = Cfloat.(
             singlelabelbinaryyscore(

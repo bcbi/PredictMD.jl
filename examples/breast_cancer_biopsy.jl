@@ -97,12 +97,12 @@ positiveclass = "malignant"
 labellevels = [negativeclass, positiveclass]
 
 # Put features and labels in separate dataframes
-featuresdf = df[featurenames]
-labelsdf = df[[labelname]]
+features_df = df[featurenames]
+labels_df = df[[labelname]]
 
 # Split data into training set (70%) and testing set (30%)
-trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    PredictMD.split_data(featuresdf,labelsdf,0.7)
+training_features_df,testing_features_df,traininglabels_df,testing_labels_df =
+    PredictMD.split_data(features_df,labels_df,0.7)
 
 ##############################################################################
 ##############################################################################
@@ -111,8 +111,8 @@ trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
 ##############################################################################
 
 # Examine prevalence of each class in training set
-DataFrames.describe(traininglabelsdf[labelname])
-StatsBase.countmap(traininglabelsdf[labelname])
+DataFrames.describe(traininglabels_df[labelname])
+StatsBase.countmap(traininglabels_df[labelname])
 
 # We see that malignant is minority class and benign is majority class.
 # The ratio of malignant:benign is somewhere between 1:2.5 and 1:3 (depending
@@ -122,9 +122,9 @@ StatsBase.countmap(traininglabelsdf[labelname])
 majorityclass = "benign"
 minorityclass = "malignant"
 
-smotedtrainingfeaturesdf, smotedtraininglabelsdf = PredictMD.smote(
-    trainingfeaturesdf,
-    traininglabelsdf,
+smotedtraining_features_df, smotedtraininglabels_df = PredictMD.smote(
+    training_features_df,
+    traininglabels_df,
     featurenames,
     labelname;
     majorityclass = majorityclass,
@@ -135,8 +135,8 @@ smotedtrainingfeaturesdf, smotedtraininglabelsdf = PredictMD.smote(
     )
 
 # Examine prevalence of each class in smoted training set
-DataFrames.describe(smotedtraininglabelsdf[labelname])
-StatsBase.countmap(smotedtraininglabelsdf[labelname])
+DataFrames.describe(smotedtraininglabels_df[labelname])
+StatsBase.countmap(smotedtraininglabels_df[labelname])
 
 # Now we have a ratio of malignant:benign that is 1:1.
 
@@ -168,8 +168,8 @@ else
     # Train logistic classifier model on smoted training set
     PredictMD.fit!(
         logisticclassifier,
-        smotedtrainingfeaturesdf,
-        smotedtraininglabelsdf,
+        smotedtraining_features_df,
+        smotedtraininglabels_df,
         )
 end
 
@@ -179,8 +179,8 @@ PredictMD.get_underlying(logisticclassifier)
 # Plot classifier histogram for logistic classifier on smoted training set
 logistic_hist_training = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
     logisticclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    smotedtraining_features_df,
+    smotedtraininglabels_df,
     labelname,
     labellevels,
     )
@@ -189,8 +189,8 @@ PredictMD.open(logistic_hist_training)
 # Plot classifier histogram for logistic classifier on testing set
 logistic_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
     logisticclassifier,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     labellevels,
     )
@@ -199,8 +199,8 @@ PredictMD.open(logistic_hist_testing)
 # Evaluate performance of logistic classifier on smoted training set
 PredictMD.singlelabelbinaryclassclassificationmetrics(
     logisticclassifier,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     positiveclass;
     sensitivity = 0.95,
@@ -209,8 +209,8 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 # Evaluate performance of logistic classifier on testing set
 PredictMD.singlelabelbinaryclassclassificationmetrics(
     logisticclassifier,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     positiveclass;
     sensitivity = 0.95,
@@ -238,8 +238,8 @@ else
     # Train probit classifier model on smoted training set
     PredictMD.fit!(
         probitclassifier,
-        smotedtrainingfeaturesdf,
-        smotedtraininglabelsdf,
+        smotedtraining_features_df,
+        smotedtraininglabels_df,
         )
 end
 
@@ -249,8 +249,8 @@ PredictMD.get_underlying(probitclassifier)
 # Plot classifier histogram for probit classifier on smoted training set
 probitclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
     probitclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    smotedtraining_features_df,
+    smotedtraininglabels_df,
     labelname,
     labellevels,
     )
@@ -259,8 +259,8 @@ PredictMD.open(probitclassifier_hist_training)
 # Plot classifier histogram for probit classifier on testing set
 probitclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
     probitclassifier,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     labellevels,
     )
@@ -269,8 +269,8 @@ PredictMD.open(probitclassifier_hist_testing)
 # Evaluate performance of probit classifier on smoted training set
 PredictMD.singlelabelbinaryclassclassificationmetrics(
     probitclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    smotedtraining_features_df,
+    smotedtraininglabels_df,
     labelname,
     positiveclass;
     sensitivity = 0.95,
@@ -279,8 +279,8 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 # Evaluate performance of probit classifier on testing set
 PredictMD.singlelabelbinaryclassclassificationmetrics(
     probitclassifier,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     positiveclass;
     sensitivity = 0.95,
@@ -309,16 +309,16 @@ else
     # Train random forest classifier model on smoted training set
     PredictMD.fit!(
         rfclassifier,
-        smotedtrainingfeaturesdf,
-        smotedtraininglabelsdf,
+        smotedtraining_features_df,
+        smotedtraininglabels_df,
         )
 end
 
 # Plot classifier histogram for random forest classifier on smoted training set
 rfclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
     rfclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    smotedtraining_features_df,
+    smotedtraininglabels_df,
     labelname,
     labellevels,
     )
@@ -327,8 +327,8 @@ PredictMD.open(rfclassifier_hist_training)
 # Plot classifier histogram for random forest classifier on testing set
 rfclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
     rfclassifier,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     labellevels,
     )
@@ -337,8 +337,8 @@ PredictMD.open(rfclassifier_hist_testing)
 # Evaluate performance of random forest classifier on smoted training set
 PredictMD.singlelabelbinaryclassclassificationmetrics(
     rfclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    smotedtraining_features_df,
+    smotedtraininglabels_df,
     labelname,
     positiveclass;
     sensitivity = 0.95,
@@ -347,8 +347,8 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 # Evaluate performance of random forest on testing set
 PredictMD.singlelabelbinaryclassclassificationmetrics(
     rfclassifier,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     positiveclass;
     sensitivity = 0.95,
@@ -377,16 +377,16 @@ else
     # Train C-SVC model on smoted training set
     PredictMD.fit!(
         csvc_svmclassifier,
-        smotedtrainingfeaturesdf,
-        smotedtraininglabelsdf,
+        smotedtraining_features_df,
+        smotedtraininglabels_df,
         )
 end
 
 # Plot classifier histogram for C-SVC on smoted training set
 csvc_svmclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
     csvc_svmclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    smotedtraining_features_df,
+    smotedtraininglabels_df,
     labelname,
     labellevels,
     )
@@ -395,8 +395,8 @@ PredictMD.open(csvc_svmclassifier_hist_training)
 # Plot classifier histogram for C-SVC on testing set
 csvc_svmclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
     csvc_svmclassifier,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     labellevels,
     )
@@ -405,8 +405,8 @@ PredictMD.open(csvc_svmclassifier_hist_testing)
 # Evaluate performance of C-SVC on smoted training set
 PredictMD.singlelabelbinaryclassclassificationmetrics(
     csvc_svmclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    smotedtraining_features_df,
+    smotedtraininglabels_df,
     labelname,
     positiveclass;
     sensitivity = 0.95,
@@ -415,8 +415,8 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 # Evaluate performance of C-SVC on testing set
 PredictMD.singlelabelbinaryclassclassificationmetrics(
     csvc_svmclassifier,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     positiveclass;
     sensitivity = 0.95,
@@ -445,16 +445,16 @@ else
     # Train nu-SVC model on smoted training set
     PredictMD.fit!(
         nusvc_svmclassifier,
-        smotedtrainingfeaturesdf,
-        smotedtraininglabelsdf,
+        smotedtraining_features_df,
+        smotedtraininglabels_df,
         )
 end
 
 # Plot classifier histogram for nu-SVC on smoted training set
 nusvc_svmclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
     nusvc_svmclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    smotedtraining_features_df,
+    smotedtraininglabels_df,
     labelname,
     labellevels,
     )
@@ -463,8 +463,8 @@ PredictMD.open(nusvc_svmclassifier_hist_training)
 # Plot classifier histogram for nu-SVC on testing set
 nusvc_svmclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
     nusvc_svmclassifier,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     labellevels,
     )
@@ -473,8 +473,8 @@ PredictMD.open(nusvc_svmclassifier_hist_testing)
 # Evaluate performance of nu-SVC on smoted training set
 PredictMD.singlelabelbinaryclassclassificationmetrics(
     nusvc_svmclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    smotedtraining_features_df,
+    smotedtraininglabels_df,
     labelname,
     positiveclass;
     sensitivity = 0.95,
@@ -483,8 +483,8 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 # Evaluate performance of SVM on testing set
 PredictMD.singlelabelbinaryclassclassificationmetrics(
     nusvc_svmclassifier,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     positiveclass;
     sensitivity = 0.95,
@@ -513,8 +513,6 @@ function knetmlp_predict(
     else
         normalizedlogprobs = Knet.logp(unnormalizedlogprobs, 1)
         normalizedprobs = exp.(normalizedlogprobs)
-        @assert(all(0 .<= normalizedprobs .<= 1))
-        @assert(all(isapprox.(sum(normalizedprobs, 1),1.0;atol = 0.00001,)))
         return normalizedprobs
     end
 end
@@ -622,8 +620,8 @@ else
     # Train multilayer perceptron model on training set
     PredictMD.fit!(
         knetmlpclassifier,
-        smotedtrainingfeaturesdf,
-        smotedtraininglabelsdf,
+        smotedtraining_features_df,
+        smotedtraininglabels_df,
         )
 end
 
@@ -666,8 +664,8 @@ PredictMD.open(knet_learningcurve_lossvsiteration_skip100iterations)
 # Plot classifier histogram for multilayer perceptron on smoted training set
 knetmlpclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
     knetmlpclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    smotedtraining_features_df,
+    smotedtraininglabels_df,
     labelname,
     labellevels,
     )
@@ -676,8 +674,8 @@ PredictMD.open(knetmlpclassifier_hist_training)
 # Plot classifier histogram for multilayer perceptron on testing set
 knetmlpclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
     knetmlpclassifier,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     labellevels,
     )
@@ -686,8 +684,8 @@ PredictMD.open(knetmlpclassifier_hist_testing)
 # Evaluate performance of multilayer perceptron on smoted training set
 PredictMD.singlelabelbinaryclassclassificationmetrics(
     knetmlpclassifier,
-    smotedtrainingfeaturesdf,
-    smotedtraininglabelsdf,
+    smotedtraining_features_df,
+    smotedtraininglabels_df,
     labelname,
     positiveclass;
     sensitivity = 0.95,
@@ -696,8 +694,8 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
 # Evaluate performance of multilayer perceptron on testing set
 PredictMD.singlelabelbinaryclassclassificationmetrics(
     knetmlpclassifier,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     positiveclass;
     sensitivity = 0.95,
@@ -719,8 +717,8 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
         nusvc_svmclassifier,
         knetmlpclassifier,
         ],
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     positiveclass;
     sensitivity = 0.95,
@@ -734,8 +732,8 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
         nusvc_svmclassifier,
         knetmlpclassifier,
         ],
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     positiveclass;
     specificity = 0.95,
@@ -749,8 +747,8 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
         nusvc_svmclassifier,
         knetmlpclassifier,
         ],
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     positiveclass;
     maximize = :f1score,
@@ -764,8 +762,8 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
         nusvc_svmclassifier,
         knetmlpclassifier,
         ],
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     positiveclass;
     maximize = :cohen_kappa,
@@ -781,8 +779,8 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
         nusvc_svmclassifier,
         knetmlpclassifier,
         ],
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     positiveclass;
     sensitivity = 0.95,
@@ -796,8 +794,8 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
         nusvc_svmclassifier,
         knetmlpclassifier,
         ],
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     positiveclass;
     specificity = 0.95,
@@ -811,8 +809,8 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
         nusvc_svmclassifier,
         knetmlpclassifier,
         ],
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     positiveclass;
     maximize = :f1score,
@@ -826,8 +824,8 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
         nusvc_svmclassifier,
         knetmlpclassifier,
         ],
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     positiveclass;
     maximize = :cohen_kappa,
@@ -843,8 +841,8 @@ rocplottesting = PredictMD.plotroccurves(
         nusvc_svmclassifier,
         knetmlpclassifier,
         ],
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     positiveclass,
     )
@@ -860,8 +858,8 @@ prplottesting = PredictMD.plotprcurves(
         nusvc_svmclassifier,
         knetmlpclassifier,
         ],
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     positiveclass,
     )
@@ -892,20 +890,20 @@ end
 # by each of the classification models.
 
 # Get probabilities from each model for smoted training set
-PredictMD.predict_proba(logisticclassifier,smotedtrainingfeaturesdf,)
-PredictMD.predict_proba(probitclassifier,smotedtrainingfeaturesdf,)
-PredictMD.predict_proba(rfclassifier,smotedtrainingfeaturesdf,)
-PredictMD.predict_proba(csvc_svmclassifier,smotedtrainingfeaturesdf,)
-PredictMD.predict_proba(nusvc_svmclassifier,smotedtrainingfeaturesdf,)
-PredictMD.predict_proba(knetmlpclassifier,smotedtrainingfeaturesdf,)
+PredictMD.predict_proba(logisticclassifier,smotedtraining_features_df,)
+PredictMD.predict_proba(probitclassifier,smotedtraining_features_df,)
+PredictMD.predict_proba(rfclassifier,smotedtraining_features_df,)
+PredictMD.predict_proba(csvc_svmclassifier,smotedtraining_features_df,)
+PredictMD.predict_proba(nusvc_svmclassifier,smotedtraining_features_df,)
+PredictMD.predict_proba(knetmlpclassifier,smotedtraining_features_df,)
 
 # Get probabilities from each model for testing set
-PredictMD.predict_proba(logisticclassifier,testingfeaturesdf,)
-PredictMD.predict_proba(probitclassifier,testingfeaturesdf,)
-PredictMD.predict_proba(rfclassifier,testingfeaturesdf,)
-PredictMD.predict_proba(csvc_svmclassifier,testingfeaturesdf,)
-PredictMD.predict_proba(nusvc_svmclassifier,testingfeaturesdf,)
-PredictMD.predict_proba(knetmlpclassifier,testingfeaturesdf,)
+PredictMD.predict_proba(logisticclassifier,testing_features_df,)
+PredictMD.predict_proba(probitclassifier,testing_features_df,)
+PredictMD.predict_proba(rfclassifier,testing_features_df,)
+PredictMD.predict_proba(csvc_svmclassifier,testing_features_df,)
+PredictMD.predict_proba(nusvc_svmclassifier,testing_features_df,)
+PredictMD.predict_proba(knetmlpclassifier,testing_features_df,)
 
 # If we want to get predicted classes instead of probabilities, we can use the
 # PredictMD.predict() function to get the class predictions output by each of the
@@ -914,17 +912,17 @@ PredictMD.predict_proba(knetmlpclassifier,testingfeaturesdf,)
 # equivalent to using a threshold of 0.5.
 
 # Get class predictions from each model for smoted training set
-PredictMD.predict(logisticclassifier,smotedtrainingfeaturesdf,)
-PredictMD.predict(probitclassifier,smotedtrainingfeaturesdf,)
-PredictMD.predict(rfclassifier,smotedtrainingfeaturesdf,)
-PredictMD.predict(csvc_svmclassifier,smotedtrainingfeaturesdf,)
-PredictMD.predict(nusvc_svmclassifier,smotedtrainingfeaturesdf,)
-PredictMD.predict(knetmlpclassifier,smotedtrainingfeaturesdf,)
+PredictMD.predict(logisticclassifier,smotedtraining_features_df,)
+PredictMD.predict(probitclassifier,smotedtraining_features_df,)
+PredictMD.predict(rfclassifier,smotedtraining_features_df,)
+PredictMD.predict(csvc_svmclassifier,smotedtraining_features_df,)
+PredictMD.predict(nusvc_svmclassifier,smotedtraining_features_df,)
+PredictMD.predict(knetmlpclassifier,smotedtraining_features_df,)
 
 # Get class predictions from each model for testing set
-PredictMD.predict(logisticclassifier,testingfeaturesdf,)
-PredictMD.predict(probitclassifier,testingfeaturesdf,)
-PredictMD.predict(rfclassifier,testingfeaturesdf,)
-PredictMD.predict(csvc_svmclassifier,testingfeaturesdf,)
-PredictMD.predict(nusvc_svmclassifier,testingfeaturesdf,)
-PredictMD.predict(knetmlpclassifier,testingfeaturesdf,)
+PredictMD.predict(logisticclassifier,testing_features_df,)
+PredictMD.predict(probitclassifier,testing_features_df,)
+PredictMD.predict(rfclassifier,testing_features_df,)
+PredictMD.predict(csvc_svmclassifier,testing_features_df,)
+PredictMD.predict(nusvc_svmclassifier,testing_features_df,)
+PredictMD.predict(knetmlpclassifier,testing_features_df,)

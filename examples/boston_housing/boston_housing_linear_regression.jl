@@ -66,19 +66,19 @@ end
 labelname = :MedV
 
 # Put features and labels in separate dataframes
-featuresdf = df[featurenames]
-labelsdf = df[[labelname]]
+features_df = df[featurenames]
+labels_df = df[[labelname]]
 
 # Display for exploration
-display(DataFrames.head(featuresdf))
-display(DataFrames.head(labelsdf))
+display(DataFrames.head(features_df))
+display(DataFrames.head(labels_df))
 
 # View summary statistics for label variable (mean, quartiles, etc.)
-DataFrames.describe(labelsdf[labelname])
+DataFrames.describe(labels_df[labelname])
 
 # Split data into training set (70%) and testing set (30%)
-trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    PredictMD.split_data(featuresdf,labelsdf,0.7);
+training_features_df,testing_features_df,traininglabels_df,testing_labels_df =
+    PredictMD.split_data(features_df,labels_df,0.7);
 
 # Set up linear regression model
 linearreg = PredictMD.singlelabeldataframelinearregression(
@@ -95,7 +95,7 @@ else
     # set feature contrasts
     PredictMD.set_feature_contrasts!(linearreg , feature_contrasts)
     # Train linear regression model
-    PredictMD.fit!(linearreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(linearreg,training_features_df,traininglabels_df,)
 end
 
 # View coefficients, p values, etc. for underlying linear regression
@@ -104,8 +104,8 @@ PredictMD.get_underlying(linearreg)
 # Plot true values versus predicted values for linear regression on training set
 linearreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     linearreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 # PredictMD.open(linearreg_plot_training)
@@ -113,8 +113,8 @@ linearreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted
 # Plot true values versus predicted values for linear regression on testing set
 linearreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     linearreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname
     )
 # PredictMD.open(linearreg_plot_testing)
@@ -122,16 +122,16 @@ linearreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
 # Evaluate performance of linear regression on training set
 PredictMD.singlelabelregressionmetrics(
     linearreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 
 # Evaluate performance of linear regression on testing set
 PredictMD.singlelabelregressionmetrics(
     linearreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 
@@ -143,7 +143,7 @@ end
 # output by each of regression models.
 
 # Get real-valued predictions from each model for training set
-PredictMD.predict(linearreg,trainingfeaturesdf,)
+PredictMD.predict(linearreg,training_features_df,)
 
 # Get real-valued predictions from each model for testing set
-PredictMD.predict(linearreg,testingfeaturesdf,)
+PredictMD.predict(linearreg,testing_features_df,)

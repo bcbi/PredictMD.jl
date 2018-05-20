@@ -23,10 +23,6 @@ function roccurve(
     allfpr = [false_positive_rate(x) for x in allrocnums]
     alltpr = [true_positive_rate(x) for x in allrocnums]
     #
-    @assert(typeof(allfpr) <: AbstractVector)
-    @assert(typeof(alltpr) <: AbstractVector)
-    @assert(typeof(allthresholds) <: AbstractVector)
-    #
     permutation = sortperm(allthresholds; rev = false)
     allfpr = allfpr[permutation]
     alltpr = alltpr[permutation]

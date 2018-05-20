@@ -22,6 +22,5 @@ function get_binary_thresholds(
             );
         rev = false,
         )
-    @assert(typeof(result) <: AbstractVector)
     return result
 end

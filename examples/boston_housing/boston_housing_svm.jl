@@ -65,19 +65,19 @@ end
 labelname = :MedV
 
 # Put features and labels in separate dataframes
-featuresdf = df[featurenames]
-labelsdf = df[[labelname]]
+features_df = df[featurenames]
+labels_df = df[[labelname]]
 
 # Display for exploration
-display(DataFrames.head(featuresdf))
-display(DataFrames.head(labelsdf))
+display(DataFrames.head(features_df))
+display(DataFrames.head(labels_df))
 
 # View summary statistics for label variable (mean, quartiles, etc.)
-DataFrames.describe(labelsdf[labelname])
+DataFrames.describe(labels_df[labelname])
 
 # Split data into training set (70%) and testing set (30%)
-trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    PredictMD.split_data(featuresdf,labelsdf,0.7);
+training_features_df,testing_features_df,traininglabels_df,testing_labels_df =
+    PredictMD.split_data(features_df,labels_df,0.7);
 
 # Set up epsilon-SVR model
 epsilonsvr_svmreg = PredictMD.singlelabeldataframesvmregression(
@@ -96,38 +96,38 @@ else
     # set feature contrasts
     PredictMD.set_feature_contrasts!(epsilonsvr_svmreg , feature_contrasts)
     # Train epsilon-SVR model on training set
-    PredictMD.fit!(epsilonsvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(epsilonsvr_svmreg,training_features_df,traininglabels_df,)
 end
 
 # Plot true values versus predicted values for epsilon-SVR on training set
 epsilonsvr_svmreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     epsilonsvr_svmreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 
 # Plot true values versus predicted values for epsilon-SVR on testing set
 epsilonsvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     epsilonsvr_svmreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 
 # Evaluate performance of epsilon-SVR on training set
 PredictMD.singlelabelregressionmetrics(
     epsilonsvr_svmreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 
 # Evaluate performance of epsilon-SVR on testing set
 PredictMD.singlelabelregressionmetrics(
     epsilonsvr_svmreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 
@@ -148,38 +148,38 @@ else
     # set feature contrasts
     PredictMD.set_feature_contrasts!(nusvr_svmreg , feature_contrasts)
     # Train nu-SVR model
-    PredictMD.fit!(nusvr_svmreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(nusvr_svmreg,training_features_df,traininglabels_df,)
 end
 
 # Plot true values versus predicted values for nu-SVR on training set
 nusvr_svmreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     nusvr_svmreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 
 # Plot true values versus predicted values for nu-SVR on testing set
 nusvr_svmreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     nusvr_svmreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 
 # Evaluate performance of nu-SVR on training set
 PredictMD.singlelabelregressionmetrics(
     nusvr_svmreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 
 # Evaluate performance of nu-SVR on testing set
 PredictMD.singlelabelregressionmetrics(
     nusvr_svmreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 
@@ -192,9 +192,9 @@ end
 # output by each of regression models.
 
 # Get real-valued predictions from each model for training set
-PredictMD.predict(epsilonsvr_svmreg,trainingfeaturesdf)
-PredictMD.predict(nusvr_svmreg,trainingfeaturesdf)
+PredictMD.predict(epsilonsvr_svmreg,training_features_df)
+PredictMD.predict(nusvr_svmreg,training_features_df)
 
 # Get real-valued predictions from each model for testing set
-PredictMD.predict(epsilonsvr_svmreg,testingfeaturesdf)
-PredictMD.predict(nusvr_svmreg,testingfeaturesdf)
+PredictMD.predict(epsilonsvr_svmreg,testing_features_df)
+PredictMD.predict(nusvr_svmreg,testing_features_df)

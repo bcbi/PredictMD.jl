@@ -44,12 +44,12 @@ featurenames = Symbol[
 labelname = :MedV
 
 # Put features and labels in separate dataframes
-featuresdf = df[featurenames]
-labelsdf = df[[labelname]]
+features_df = df[featurenames]
+labels_df = df[[labelname]]
 
 # Split data into training set (70%) and testing set (30%)
-trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    PredictMD.split_data(featuresdf,labelsdf,0.7);
+training_features_df,testing_features_df,traininglabels_df,testing_labels_df =
+    PredictMD.split_data(features_df,labels_df,0.7);
 
 # load pre-trained models
 linearreg_filename = "./linearreg.jld2"
@@ -194,8 +194,8 @@ showall(PredictMD.singlelabelregressionmetrics(
         nusvr_svmreg,
         knetmlpreg,
         ],
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     ))
 
@@ -208,7 +208,7 @@ showall(PredictMD.singlelabelregressionmetrics(
         nusvr_svmreg,
         knetmlpreg,
         ],
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     ))

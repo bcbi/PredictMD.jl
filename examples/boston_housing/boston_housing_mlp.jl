@@ -63,19 +63,19 @@ end
 labelname = :MedV
 
 # Put features and labels in separate dataframes
-featuresdf = df[featurenames]
-labelsdf = df[[labelname]]
+features_df = df[featurenames]
+labels_df = df[[labelname]]
 
 # Display for exploration
-display(DataFrames.head(featuresdf))
-display(DataFrames.head(labelsdf))
+display(DataFrames.head(features_df))
+display(DataFrames.head(labels_df))
 
 # View summary statistics for label variable (mean, quartiles, etc.)
-DataFrames.describe(labelsdf[labelname])
+DataFrames.describe(labels_df[labelname])
 
 # Split data into training set (70%) and testing set (30%)
-trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    PredictMD.split_data(featuresdf,labelsdf,0.7);
+training_features_df,testing_features_df,traininglabels_df,testing_labels_df =
+    PredictMD.split_data(features_df,labels_df,0.7);
 
 # Define predict function
 function knetmlp_predict(
@@ -182,7 +182,7 @@ else
     # set feature contrasts
     PredictMD.set_feature_contrasts!(knetmlpreg , feature_contrasts)
     # Train multilayer perceptron model on training set
-    PredictMD.fit!(knetmlpreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(knetmlpreg,training_features_df,traininglabels_df,)
 end
 
 # Plot learning curve: loss vs. epoch
@@ -220,32 +220,32 @@ knet_learningcurve_lossvsiteration_skip100iterations = PredictMD.plotlearningcur
 # Plot true values versus predicted values for multilayer perceptron on training set
 knetmlpreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     knetmlpreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 
 # Plot true values versus predicted values for multilayer perceptron on testing set
 knetmlpreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     knetmlpreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 
 # Evaluate performance of multilayer perceptron on training set
 PredictMD.singlelabelregressionmetrics(
     knetmlpreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 
 # Evaluate performance of multilayer perceptron on testing set
 PredictMD.singlelabelregressionmetrics(
     knetmlpreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 
@@ -257,7 +257,7 @@ end
 # output by each of regression models.
 
 # Get real-valued predictions from each model for training set
-PredictMD.predict(knetmlpreg,trainingfeaturesdf)
+PredictMD.predict(knetmlpreg,training_features_df)
 
 # Get real-valued predictions from each model for testing set
-PredictMD.predict(knetmlpreg,testingfeaturesdf)
+PredictMD.predict(knetmlpreg,testing_features_df)

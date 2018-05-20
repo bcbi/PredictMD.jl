@@ -4,15 +4,15 @@ import PGFPlotsX
 
 function plotsinglelabelregressiontrueversuspredicted(
         estimator::Fittable,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol;
         includeorigin::Bool = false,
         )
     ytrue = singlelabelregressionytrue(
-        labelsdf[singlelabelname],
+        labels_df[singlelabelname],
         )
-    predictionsalllabels = predict(estimator, featuresdf)
+    predictionsalllabels = predict(estimator, features_df)
     ypred = singlelabelregressionypred(
         predictionsalllabels[singlelabelname],
         )
