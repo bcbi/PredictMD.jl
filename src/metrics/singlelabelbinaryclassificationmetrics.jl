@@ -104,8 +104,8 @@ end
 
 function _singlelabelbinaryclassclassificationmetrics(
         estimator::Fittable,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         positiveclass::AbstractString;
         kwargs...
@@ -116,7 +116,7 @@ function _singlelabelbinaryclassclassificationmetrics(
     selectedtunableparam, selectedparamtomax, metricprintnames =
         _singlelabelbinaryclassclassificationmetrics_tunableparam(kwargsdict)
     #
-    predictedprobabilitiesalllabels = predict_proba(estimator, featuresdf)
+    predictedprobabilitiesalllabels = predict_proba(estimator, features_df)
     yscore = Cfloat.(
         singlelabelbinaryyscore(
             predictedprobabilitiesalllabels[singlelabelname],
@@ -125,7 +125,7 @@ function _singlelabelbinaryclassclassificationmetrics(
         )
     ytrue = Int.(
         singlelabelbinaryytrue(
-            labelsdf[singlelabelname],
+            labels_df[singlelabelname],
             positiveclass,
             )
         )
@@ -191,8 +191,8 @@ end
 
 function singlelabelbinaryclassclassificationmetrics(
         estimator::Fittable,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         positiveclass::AbstractString;
         kwargs...
@@ -200,8 +200,8 @@ function singlelabelbinaryclassclassificationmetrics(
     vectorofestimators = Fittable[estimator]
     result = singlelabelbinaryclassclassificationmetrics(
         vectorofestimators,
-        featuresdf,
-        labelsdf,
+        features_df,
+        labels_df,
         singlelabelname,
         positiveclass;
         kwargs...
@@ -211,8 +211,8 @@ end
 
 function singlelabelbinaryclassclassificationmetrics(
         vectorofestimators::AbstractVector{Fittable},
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         positiveclass::AbstractString;
         kwargs...
@@ -224,8 +224,8 @@ function singlelabelbinaryclassclassificationmetrics(
     metricsforeachestimator = [
         _singlelabelbinaryclassclassificationmetrics(
             est,
-            featuresdf,
-            labelsdf,
+            features_df,
+            labels_df,
             singlelabelname,
             positiveclass;
             kwargs...

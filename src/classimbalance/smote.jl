@@ -17,8 +17,8 @@ function calculate_smote_pct_under(
 end
 
 function smote(
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         featurenames::AbstractVector{Symbol},
         labelname::Symbol;
         majorityclass::AbstractString = "",
@@ -29,8 +29,8 @@ function smote(
         )
     result = smote(
         Base.GLOBAL_RNG,
-        featuresdf,
-        labelsdf,
+        features_df,
+        labels_df,
         featurenames,
         labelname,
         majorityclass = majorityclass,
@@ -44,8 +44,8 @@ end
 
 function smote(
         rng::AbstractRNG,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         featurenames::AbstractVector{Symbol},
         labelname::Symbol;
         majorityclass::AbstractString = "",
@@ -65,13 +65,13 @@ function smote(
         pct_over = pct_over,
         minority_to_majority_ratio = minority_to_majority_ratio,
         )
-    if size(featuresdf, 1) != size(labelsdf, 1)
-        error("size(featuresdf, 1) != size(labelsdf, 1)")
+    if size(features_df, 1) != size(labels_df, 1)
+        error("size(features_df, 1) != size(labels_df, 1)")
     end
-    if size(featuresdf, 1) == 0
-        error("size(featuresdf, 1) == 0")
+    if size(features_df, 1) == 0
+        error("size(features_df, 1) == 0")
     end
-    labelsstringarray = labelsdf[labelname]
+    labelsstringarray = labels_df[labelname]
     labelsbinaryarray = zeros(Int, length(labelsstringarray))
     for i = 1:length(labelsstringarray)
         # Paul's smote code assumes 1 = minority, 0 = majority
@@ -83,8 +83,8 @@ function smote(
             error("value in labels column is neither majority nor minority")
         end
     end
-    smotedfeaturesdf, smotedlabelsbinaryarray = ClassImbalance.smote(
-        featuresdf[featurenames],
+    smotedfeatures_df, smotedlabelsbinaryarray = ClassImbalance.smote(
+        features_df[featurenames],
         labelsbinaryarray;
         k = k,
         pct_over = pct_over,
@@ -100,7 +100,7 @@ function smote(
             error("if you see this error, you will be very sad.")
         end
     end
-    smotedlabelsdf = DataFrames.DataFrame()
-    smotedlabelsdf[labelname] = smotedlabelsstringarray
-    return smotedfeaturesdf, smotedlabelsdf
+    smotedlabels_df = DataFrames.DataFrame()
+    smotedlabels_df[labelname] = smotedlabelsstringarray
+    return smotedfeatures_df, smotedlabels_df
 end

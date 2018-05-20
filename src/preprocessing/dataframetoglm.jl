@@ -31,49 +31,49 @@ end
 
 function transform(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    transformedlabelsdf = DataFrames.DataFrame()
+    transformedlabels_df = DataFrames.DataFrame()
     label = transformer.label
     positiveclass = transformer.positiveclass
-    originallabelcolumn = labelsdf[label]
+    originallabelcolumn = labels_df[label]
     transformedlabelcolumn = Int.(originallabelcolumn .== positiveclass)
-    transformedlabelsdf[label] = transformedlabelcolumn
-    return featuresdf, transformedlabelsdf
+    transformedlabels_df[label] = transformedlabelcolumn
+    return features_df, transformedlabels_df
 end
 
 function transform(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
-        featuresdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    return featuresdf
+    return features_df
 end
 
 function fit!(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    return transform(transformer, featuresdf, labelsdf)
+    return transform(transformer, features_df, labels_df)
 end
 
 function predict(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
-        featuresdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    return transform(transformer, featuresdf)
+    return transform(transformer, features_df)
 end
 
 
 function predict_proba(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
-        featuresdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    return transform(transformer, featuresdf)
+    return transform(transformer, features_df)
 end

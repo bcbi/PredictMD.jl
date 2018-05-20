@@ -22,11 +22,6 @@ function prcurve(
     )
     allprecisions = [precision(x) for x in allrocnums]
     allrecalls = [recall(x) for x in allrocnums]
-    #
-    @assert(typeof(allprecisions) <: AbstractVector)
-    @assert(typeof(allrecalls) <: AbstractVector)
-    @assert(typeof(allthresholds) <: AbstractVector)
-    #
     permutation = sortperm(allthresholds; rev = false)
     allprecisions = allprecisions[permutation]
     allrecalls = allrecalls[permutation]

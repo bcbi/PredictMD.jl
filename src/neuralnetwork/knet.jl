@@ -19,7 +19,7 @@ mutable struct KnetModel <: AbstractEstimator
 
     # parameters (learned from data):
     modelweights::T12 where T12 <: AbstractArray
-    modelweightoptimizers::T13 where T13
+    modelweightoptimizers::T13 where T13 <: Any # TODO: do something better here
 
     # learning state
     history::T where T <: ValueHistories.MultivalueHistory
@@ -168,8 +168,8 @@ function fit!(
         validation_lossbeforetrainingstarts = estimator.loss(
            estimator.predict,
            estimator.modelweights,
-           training_features_array,
-           training_labels_array;
+           validation_features_array,
+           validation_labels_array;
            estimator.losshyperparameters...
            )
     end
@@ -334,7 +334,6 @@ function predict_proba(
             )
         outputtransposed = transpose(output)
         numclasses = size(outputtransposed, 2)
-        @assert(numclasses > 0)
         result = Dict()
         for i = 1:numclasses
             result[i] = outputtransposed[:, i]

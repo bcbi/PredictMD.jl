@@ -143,28 +143,28 @@ end
 
 function predict(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
-        featuresdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    return transform(transformer, featuresdf)
+    return transform(transformer, features_df)
 end
 
 function predict_proba(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
-        featuresdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    return transform(transformer, featuresdf)
+    return transform(transformer, features_df)
 end
 
 function predict(
         transformer::MutableDataFrame2RegressionKnetTransformer,
-        featuresdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
     result = transform(
         transformer,
-        featuresdf;
+        features_df;
         kwargs...
         )
     return result
@@ -172,12 +172,12 @@ end
 
 function predict_proba(
         transformer::MutableDataFrame2RegressionKnetTransformer,
-        featuresdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
     result = transform(
         transformer,
-        featuresdf;
+        features_df;
         kwargs...
         )
     return result
@@ -214,8 +214,6 @@ function transform(
             )
         training_labels_array =
             [labelstring2intmap_1[y] for y in training_labels_df[label_1]]
-        @assert(typeof(training_labels_array) <: AbstractVector)
-        @assert(length(training_labels_array) == size(training_labels_df, 1))
     else
         training_labels_array = Array{Int}(
             size(training_labels_df, 1),
@@ -229,7 +227,7 @@ function transform(
                 transformer.index,
                 )
             training_labels_array[:, j] =
-                [labelstring2intmap_j[y] for y in labelsdf[label_j]]
+                [labelstring2intmap_j[y] for y in labels_df[label_j]]
         end
     end
     modelformula = generate_formula(
@@ -271,7 +269,7 @@ end
 
 function transform(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
-        featuresdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
     modelformula = generate_formula(
@@ -281,7 +279,7 @@ function transform(
         )
     modelframe = StatsModels.ModelFrame(
         modelformula,
-        featuresdf;
+        features_df;
         contrasts = transformer.dffeaturecontrasts.contrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
@@ -356,7 +354,7 @@ end
 
 function transform(
         transformer::MutableDataFrame2RegressionKnetTransformer,
-        featuresdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
         kwargs...
         )
     modelformula = generate_formula(
@@ -366,7 +364,7 @@ function transform(
         )
     modelframe = StatsModels.ModelFrame(
         modelformula,
-        featuresdf;
+        features_df;
         contrasts = transformer.dffeaturecontrasts.contrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)

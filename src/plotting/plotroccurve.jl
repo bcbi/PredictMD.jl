@@ -4,16 +4,16 @@ import PGFPlotsX
 
 function plotroccurve(
         estimator::Fittable,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         positiveclass::AbstractString,
         )
     vectorofestimators = [estimator]
     result = plotroccurve(
         vectorofestimators,
-        featuresdf,
-        labelsdf,
+        features_df,
+        labels_df,
         singlelabelname,
         positiveclass,
         )
@@ -22,8 +22,8 @@ end
 
 function plotroccurve(
         vectorofestimators::AbstractVector{Fittable},
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         positiveclass::AbstractString,
         )
@@ -35,8 +35,8 @@ function plotroccurve(
         estimator_i = vectorofestimators[i]
         metrics_i = _singlelabelbinaryclassclassificationmetrics(
             estimator_i,
-            featuresdf,
-            labelsdf,
+            features_df,
+            labels_df,
             singlelabelname,
             positiveclass;
             threshold = 0.5,

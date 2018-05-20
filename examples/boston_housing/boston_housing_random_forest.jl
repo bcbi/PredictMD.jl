@@ -62,19 +62,19 @@ end
 labelname = :MedV
 
 # Put features and labels in separate dataframes
-featuresdf = df[featurenames]
-labelsdf = df[[labelname]]
+features_df = df[featurenames]
+labels_df = df[[labelname]]
 
 # Display for exploration
-display(DataFrames.head(featuresdf))
-display(DataFrames.head(labelsdf))
+display(DataFrames.head(features_df))
+display(DataFrames.head(labels_df))
 
 # View summary statistics for label variable (mean, quartiles, etc.)
-DataFrames.describe(labelsdf[labelname])
+DataFrames.describe(labels_df[labelname])
 
 # Split data into training set (70%) and testing set (30%)
-trainingfeaturesdf,testingfeaturesdf,traininglabelsdf,testinglabelsdf =
-    PredictMD.split_data(featuresdf,labelsdf,0.7);
+training_features_df,testing_features_df,traininglabels_df,testing_labels_df =
+    PredictMD.split_data(features_df,labels_df,0.7);
 
 # Set up random forest regression model
 randomforestreg = PredictMD.singlelabeldataframerandomforestregression(
@@ -92,38 +92,38 @@ else
     # set feature contrasts
     PredictMD.set_feature_contrasts!(randomforestreg , feature_contrasts)
     # Train random forest model on training set
-    PredictMD.fit!(randomforestreg,trainingfeaturesdf,traininglabelsdf,)
+    PredictMD.fit!(randomforestreg,training_features_df,traininglabels_df,)
 end
 
 # Plot true values versus predicted values for random forest on training set
 randomforestreg_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     randomforestreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 
 # Plot true values versus predicted values for random forest on testing set
 randomforestreg_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
     randomforestreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 
 # Evaluate performance of random forest on training set
 PredictMD.singlelabelregressionmetrics(
     randomforestreg,
-    trainingfeaturesdf,
-    traininglabelsdf,
+    training_features_df,
+    traininglabels_df,
     labelname,
     )
 
 # Evaluate performance of random forest on testing set
 PredictMD.singlelabelregressionmetrics(
     randomforestreg,
-    testingfeaturesdf,
-    testinglabelsdf,
+    testing_features_df,
+    testing_labels_df,
     labelname,
     )
 
@@ -135,9 +135,9 @@ end
 # output by each of regression models.
 
 # Get real-valued predictions from each model for training set
-PredictMD.predict(randomforestreg,trainingfeaturesdf)
+PredictMD.predict(randomforestreg,training_features_df)
 
 # Get real-valued predictions from each model for testing set
-PredictMD.predict(randomforestreg,testingfeaturesdf)
+PredictMD.predict(randomforestreg,testing_features_df)
 
 

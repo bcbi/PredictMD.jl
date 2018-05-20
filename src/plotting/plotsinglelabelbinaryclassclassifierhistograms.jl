@@ -4,8 +4,8 @@ import PGFPlotsX
 
 function plotsinglelabelbinaryclassclassifierhistogram(
         estimator::Fittable,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector{<:AbstractString};
         numbins::Integer = 25,
@@ -18,7 +18,7 @@ function plotsinglelabelbinaryclassclassifierhistogram(
     end
     negativeclass = singlelabellevels[1]
     positiveclass = singlelabellevels[2]
-    predictedprobabilitiesalllabels = predict_proba(estimator, featuresdf)
+    predictedprobabilitiesalllabels = predict_proba(estimator, features_df)
     yscore = Cfloat.(
         singlelabelbinaryyscore(
             predictedprobabilitiesalllabels[singlelabelname],
@@ -27,7 +27,7 @@ function plotsinglelabelbinaryclassclassifierhistogram(
         )
     ytrue = Int.(
         singlelabelbinaryytrue(
-            labelsdf[singlelabelname],
+            labels_df[singlelabelname],
             positiveclass,
             )
         )

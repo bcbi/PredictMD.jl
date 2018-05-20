@@ -26,14 +26,14 @@ end
 
 function _singlelabelregressionmetrics(
         estimator::Fittable,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         )
     ytrue = singlelabelregressionytrue(
-        labelsdf[singlelabelname],
+        labels_df[singlelabelname],
         )
-    predictionsalllabels = predict(estimator, featuresdf)
+    predictionsalllabels = predict(estimator, features_df)
     ypred = singlelabelregressionypred(
         predictionsalllabels[singlelabelname],
         )
@@ -56,15 +56,15 @@ end
 
 function singlelabelregressionmetrics(
         estimator::Fittable,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         )
     vectorofestimators = Fittable[estimator]
     result = singlelabelregressionmetrics(
         vectorofestimators,
-        featuresdf,
-        labelsdf,
+        features_df,
+        labels_df,
         singlelabelname,
         )
     return result
@@ -72,16 +72,16 @@ end
 
 function singlelabelregressionmetrics(
         vectorofestimators::AbstractVector{Fittable},
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol;
         kwargs...
         )
     metricsforeachestimator = [
         _singlelabelregressionmetrics(
             est,
-            featuresdf,
-            labelsdf,
+            features_df,
+            labels_df,
             singlelabelname,
             )
             for est in vectorofestimators
