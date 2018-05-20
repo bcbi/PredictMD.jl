@@ -334,7 +334,6 @@ function predict_proba(
             )
         outputtransposed = transpose(output)
         numclasses = size(outputtransposed, 2)
-        @assert(numclasses > 0)
         result = Dict()
         for i = 1:numclasses
             result[i] = outputtransposed[:, i]

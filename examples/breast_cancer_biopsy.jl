@@ -513,8 +513,6 @@ function knetmlp_predict(
     else
         normalizedlogprobs = Knet.logp(unnormalizedlogprobs, 1)
         normalizedprobs = exp.(normalizedlogprobs)
-        @assert(all(0 .<= normalizedprobs .<= 1))
-        @assert(all(isapprox.(sum(normalizedprobs, 1),1.0;atol = 0.00001,)))
         return normalizedprobs
     end
 end

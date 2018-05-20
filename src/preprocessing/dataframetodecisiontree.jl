@@ -54,7 +54,6 @@ function transform(
         )
     singlelabelname = transformer.singlelabelname
     labelsarray = convert(Array, labelsdf[singlelabelname])
-    @assert(typeof(labelsarray) <: AbstractVector)
     modelformula = generate_formula(
         transformer.featurenames[1],
         transformer.featurenames;

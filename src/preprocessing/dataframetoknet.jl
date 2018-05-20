@@ -214,8 +214,6 @@ function transform(
             )
         training_labels_array =
             [labelstring2intmap_1[y] for y in training_labels_df[label_1]]
-        @assert(typeof(training_labels_array) <: AbstractVector)
-        @assert(length(training_labels_array) == size(training_labels_df, 1))
     else
         training_labels_array = Array{Int}(
             size(training_labels_df, 1),

@@ -118,7 +118,6 @@ function fit!(
     # svm =
     info(string("INFO Finished training LIBSVM.jl model."))
     estimator.underlyingsvm = svm
-    @assert(typeof(estimator.underlyingsvm.labels) <: AbstractVector)
     estimator.levels = estimator.underlyingsvm.labels
     return estimator
 end

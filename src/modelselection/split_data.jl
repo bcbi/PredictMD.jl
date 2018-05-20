@@ -30,8 +30,6 @@ function split_data(
     num_rows = size(featuresdf, 1)
     num_partition_1 = round(Int, split * num_rows)
     num_partition_2 = num_rows - num_partition_1
-    @assert(num_partition_1 + num_partition_2 == num_rows)
-    @assert( isapprox(num_partition_1/num_rows, split; atol=0.1) )
     allrows = convert(Array, 1:num_rows)
     partition_1_rows = StatsBase.sample(
         rng,
