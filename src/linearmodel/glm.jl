@@ -103,17 +103,19 @@ function predict(
             )
         result = DataFrames.DataFrame()
         labelname = estimator.formula.lhs
-        @assert(typeof(labelname) <: Symbol)
         result[labelname] = predictionsvector
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
-        glmpredictoutput = GLM.predict(
-            estimator.underlyingglm,
-            featuresdf,
-            )
+        if is_nothing(estimator.underlyingglm)
+            glmpredictoutput = zeros(size(featuresdf,1))
+        else
+            glmpredictoutput = GLM.predict(
+                estimator.underlyingglm,
+                featuresdf,
+                )
+        end
         result = DataFrames.DataFrame()
         labelname = estimator.formula.lhs
-        @assert(typeof(labelname) <: Symbol)
         result[labelname] = glmpredictoutput
         return result
     else
@@ -126,10 +128,14 @@ function predict_proba(
         featuresdf::DataFrames.AbstractDataFrame,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
-        glmpredictoutput = GLM.predict(
-            estimator.underlyingglm,
-            featuresdf,
-            )
+        if is_nothing(estimator.underlyingglm,)
+            glmpredictoutput = zeros(size(featuresdf, 1))
+        else
+            glmpredictoutput = GLM.predict(
+                estimator.underlyingglm,
+                featuresdf,
+                )
+        end
         result = Dict()
         result[1] = glmpredictoutput
         result[0] = 1 - glmpredictoutput

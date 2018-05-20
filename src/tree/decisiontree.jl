@@ -111,11 +111,15 @@ function predict(
             )
         return predictionsvector
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
-        output = DecisionTree.apply_forest(
-            estimator.underlyingrandomforest,
-            featuresarray,
-            )
-        return output
+        if is_nothing(estimator.underlyingrandomforest)
+            predicted_values = zeros(size(featuresarray,1))
+        else
+            predicted_values = DecisionTree.apply_forest(
+                estimator.underlyingrandomforest,
+                featuresarray,
+                )
+        end
+        return predicted_values
     else
         error("Could not figure out if model is classification or regression")
     end
@@ -126,11 +130,19 @@ function predict_proba(
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
-        predictedprobabilities = DecisionTree.apply_forest_proba(
-            estimator.underlyingrandomforest,
-            featuresarray,
-            estimator.levels,
-            )
+        if is_nothing(estimator.underlyingrandomforest)
+            predictedprobabilities = zeros(
+                size(featuresarray, 1),
+                length(estimator.levels),
+                )
+            predictedprobabilities[:, 1] = 1
+        else
+            predictedprobabilities = DecisionTree.apply_forest_proba(
+                estimator.underlyingrandomforest,
+                featuresarray,
+                estimator.levels,
+                )
+        end
         result = Dict()
         for i = 1:length(estimator.levels)
             result[estimator.levels[i]] = predictedprobabilities[:, i]

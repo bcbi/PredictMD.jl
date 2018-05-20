@@ -137,48 +137,18 @@ function predict(
             )
         return predictionsvector
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
-        predictedvalues, decisionvalues = LIBSVM.svmpredict(
-            estimator.underlyingsvm,
-            featuresarray,
-            )
-        @assert(typeof(predictedvalues) <: AbstractVector)
-        @assert(ndims(predictedvalues) == 1)
-        @assert(typeof(decisionvalues) <: AbstractMatrix)
-        @assert(ndims(decisionvalues) == 2)
-        @assert(size(predictedvalues, 1) == size(decisionvalues, 2))
-        @assert(size(decisionvalues, 1) == 2)
-        if !( isapprox(sum(abs, decisionvalues[2, :]), 0.0) )
-            msg = string(
-                "sum(abs, decisionvalues[2, :]) is not approx zero. ",
-                "sum abs: ",
-                sum(abs, decisionvalues[2, :]),
-                ". mean abs: ",
-                mean(abs, decisionvalues[2, :]),
-                ".",
+        if is_nothing(estimator.underlyingsvm)
+            predicted_values = zeros(size(featuresarray, 2))
+        else
+            predicted_values, decision_values = LIBSVM.svmpredict(
+                estimator.underlyingsvm,
+                featuresarray,
                 )
-            error(msg)
+            if !(typeof(predicted_values) <: AbstractVector)
+                error("!(typeof(predicted_values) <: AbstractVector)")
+            end
         end
-        if !(
-                all(
-                    isapprox.(
-                        predictedvalues[:],
-                        decisionvalues[1, :]
-                        )
-                    )
-                )
-            differences = predictedvalues[:] .- decisionvalues[1, :]
-            msg = string(
-                "not all predictedvalues[:] are approx equal to ",
-                "decisionvalues[1, :]. sum abs difference: ",
-                sum(abs, differences),
-                ". mean abs difference: ",
-                mean(abs, differences),
-                "."
-                )
-            error(msg)
-        end
-        result = convert(Vector, vec(predictedvalues))
-        return result
+        return predicted_values
     else
         error("Could not figure out if model is classification or regression")
     end
@@ -189,16 +159,20 @@ function predict_proba(
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
-        estimator.levels = estimator.underlyingsvm.labels
-        predictedlabels, decisionvalues = LIBSVM.svmpredict(
-            estimator.underlyingsvm,
-            featuresarray,
-            )
-        decisionvaluestransposed = transpose(decisionvalues)
+        if is_nothing(estimator.underlyingsvm)
+            decision_values = zeros(
+                size(featuresarray, 2),
+                length(estimator.underlyingsvm.labels),
+                )
+            decision_values[:, 1] = 1
+        else
+            predicted_labels, decision_values = LIBSVM.svmpredict(estimator.underlyingsvm,featuresarray,)
+            decision_values = transpose(decision_values)
+        end
         result = Dict()
         for i = 1:length(estimator.underlyingsvm.labels)
             result[estimator.underlyingsvm.labels[i]] =
-                decisionvaluestransposed[:, i]
+                decision_values[:, i]
         end
         result = fix_dict_type(result)
         return result

@@ -168,8 +168,8 @@ function fit!(
         validation_lossbeforetrainingstarts = estimator.loss(
            estimator.predict,
            estimator.modelweights,
-           training_features_array,
-           training_labels_array;
+           validation_features_array,
+           validation_labels_array;
            estimator.losshyperparameters...
            )
     end
