@@ -3,40 +3,22 @@
 ```@contents
 ```
 
-## Public (exported) functions
+## Types
 
 ```@autodocs
 Modules = [PredictMD]
 Public = true
-Private = false
-Order = [:function]
+Private = true
+Order = [:type]
 ```
 
-## Public (exported) types
+## Functions
 
 ```@autodocs
 Modules = [PredictMD]
 Public = true
-Private = false
-Order = [:type]
-```
-
-## Private functions
-
-```@autodocs
-Modules = [PredictMD]
-Public = false
 Private = true
 Order = [:function]
-```
-
-## Private types
-
-```@autodocs
-Modules = [PredictMD]
-Public = false
-Private = true
-Order = [:type]
 ```
 
 ## Index
