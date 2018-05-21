@@ -33,7 +33,7 @@ function plotroccurve(
     alllinearplotobjects = []
     for i = 1:length(vectorofestimators)
         estimator_i = vectorofestimators[i]
-        metrics_i = _singlelabelbinaryclassclassificationmetrics(
+        metrics_i = _singlelabelbinaryclassificationmetrics(
             estimator_i,
             features_df,
             labels_df,

@@ -160,7 +160,7 @@ end
 PredictMD.get_underlying(logisticclassifier)
 
 # Plot classifier histogram for logistic classifier on smoted training set
-logistic_hist_training = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
+logistic_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
     logisticclassifier,
     smoted_training_features_df,
     smoted_training_labels_df,
@@ -170,7 +170,7 @@ logistic_hist_training = PredictMD.plotsinglelabelbinaryclassclassifierhistogram
 PredictMD.open_plot(logistic_hist_training)
 
 # Plot classifier histogram for logistic classifier on testing set
-logistic_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
+logistic_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
     logisticclassifier,
     testing_features_df,
     testing_labels_df,
@@ -180,7 +180,7 @@ logistic_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
 PredictMD.open_plot(logistic_hist_testing)
 
 # Evaluate performance of logistic classifier on smoted training set
-PredictMD.singlelabelbinaryclassclassificationmetrics(
+PredictMD.singlelabelbinaryclassificationmetrics(
     logisticclassifier,
     testing_features_df,
     testing_labels_df,
@@ -190,7 +190,7 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
     )
 
 # Evaluate performance of logistic classifier on testing set
-PredictMD.singlelabelbinaryclassclassificationmetrics(
+PredictMD.singlelabelbinaryclassificationmetrics(
     logisticclassifier,
     testing_features_df,
     testing_labels_df,
@@ -282,7 +282,7 @@ else
 end
 
 # Plot classifier histogram for random forest classifier on smoted training set
-rfclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
+rfclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
     rfclassifier,
     smoted_training_features_df,
     smoted_training_labels_df,
@@ -292,7 +292,7 @@ rfclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassclassifierhisto
 PredictMD.open_plot(rfclassifier_hist_training)
 
 # Plot classifier histogram for random forest classifier on testing set
-rfclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
+rfclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
     rfclassifier,
     testing_features_df,
     testing_labels_df,
@@ -302,7 +302,7 @@ rfclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifierhistog
 PredictMD.open_plot(rfclassifier_hist_testing)
 
 # Evaluate performance of random forest classifier on smoted training set
-PredictMD.singlelabelbinaryclassclassificationmetrics(
+PredictMD.singlelabelbinaryclassificationmetrics(
     rfclassifier,
     smoted_training_features_df,
     smoted_training_labels_df,
@@ -312,7 +312,7 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
     )
 
 # Evaluate performance of random forest on testing set
-PredictMD.singlelabelbinaryclassclassificationmetrics(
+PredictMD.singlelabelbinaryclassificationmetrics(
     rfclassifier,
     testing_features_df,
     testing_labels_df,
@@ -362,7 +362,7 @@ else
 end
 
 # Plot classifier histogram for C-SVC on smoted training set
-csvc_svmclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
+csvc_svmclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
     csvc_svmclassifier,
     smoted_training_features_df,
     smoted_training_labels_df,
@@ -372,7 +372,7 @@ csvc_svmclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassclassifie
 PredictMD.open_plot(csvc_svmclassifier_hist_training)
 
 # Plot classifier histogram for C-SVC on testing set
-csvc_svmclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
+csvc_svmclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
     csvc_svmclassifier,
     testing_features_df,
     testing_labels_df,
@@ -382,7 +382,7 @@ csvc_svmclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifier
 PredictMD.open_plot(csvc_svmclassifier_hist_testing)
 
 # Evaluate performance of C-SVC on smoted training set
-PredictMD.singlelabelbinaryclassclassificationmetrics(
+PredictMD.singlelabelbinaryclassificationmetrics(
     csvc_svmclassifier,
     smoted_training_features_df,
     smoted_training_labels_df,
@@ -392,7 +392,7 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
     )
 
 # Evaluate performance of C-SVC on testing set
-PredictMD.singlelabelbinaryclassclassificationmetrics(
+PredictMD.singlelabelbinaryclassificationmetrics(
     csvc_svmclassifier,
     testing_features_df,
     testing_labels_df,
@@ -432,7 +432,7 @@ else
 end
 
 # Plot classifier histogram for nu-SVC on smoted training set
-nusvc_svmclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
+nusvc_svmclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
     nusvc_svmclassifier,
     smoted_training_features_df,
     smoted_training_labels_df,
@@ -442,7 +442,7 @@ nusvc_svmclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassclassifi
 PredictMD.open_plot(nusvc_svmclassifier_hist_training)
 
 # Plot classifier histogram for nu-SVC on testing set
-nusvc_svmclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
+nusvc_svmclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
     nusvc_svmclassifier,
     testing_features_df,
     testing_labels_df,
@@ -452,7 +452,7 @@ nusvc_svmclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifie
 PredictMD.open_plot(nusvc_svmclassifier_hist_testing)
 
 # Evaluate performance of nu-SVC on smoted training set
-PredictMD.singlelabelbinaryclassclassificationmetrics(
+PredictMD.singlelabelbinaryclassificationmetrics(
     nusvc_svmclassifier,
     smoted_training_features_df,
     smoted_training_labels_df,
@@ -462,7 +462,7 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
     )
 
 # Evaluate performance of SVM on testing set
-PredictMD.singlelabelbinaryclassclassificationmetrics(
+PredictMD.singlelabelbinaryclassificationmetrics(
     nusvc_svmclassifier,
     testing_features_df,
     testing_labels_df,
@@ -640,7 +640,7 @@ knet_learningcurve_lossvsiteration_skip100iterations = PredictMD.plotlearningcur
 PredictMD.open_plot(knet_learningcurve_lossvsiteration_skip100iterations)
 
 # Plot classifier histogram for multilayer perceptron on smoted training set
-knetmlpclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
+knetmlpclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
     knetmlpclassifier,
     smoted_training_features_df,
     smoted_training_labels_df,
@@ -650,7 +650,7 @@ knetmlpclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassclassifier
 PredictMD.open_plot(knetmlpclassifier_hist_training)
 
 # Plot classifier histogram for multilayer perceptron on testing set
-knetmlpclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifierhistogram(
+knetmlpclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
     knetmlpclassifier,
     testing_features_df,
     testing_labels_df,
@@ -660,7 +660,7 @@ knetmlpclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassclassifierh
 PredictMD.open_plot(knetmlpclassifier_hist_testing)
 
 # Evaluate performance of multilayer perceptron on smoted training set
-PredictMD.singlelabelbinaryclassclassificationmetrics(
+PredictMD.singlelabelbinaryclassificationmetrics(
     knetmlpclassifier,
     smoted_training_features_df,
     smoted_training_labels_df,
@@ -670,7 +670,7 @@ PredictMD.singlelabelbinaryclassclassificationmetrics(
     )
 
 # Evaluate performance of multilayer perceptron on testing set
-PredictMD.singlelabelbinaryclassclassificationmetrics(
+PredictMD.singlelabelbinaryclassificationmetrics(
     knetmlpclassifier,
     testing_features_df,
     testing_labels_df,
@@ -694,7 +694,7 @@ all_models = PredictMD.Fittable[
     ]
 
 # Compare performance of all models on smoted training set
-showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
+showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     training_features_df,
     training_labels_df,
@@ -702,7 +702,7 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
     positiveclass;
     sensitivity = 0.95,
     ))
-showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
+showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     training_features_df,
     training_labels_df,
@@ -710,7 +710,7 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
     positiveclass;
     specificity = 0.95,
     ))
-showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
+showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     training_features_df,
     training_labels_df,
@@ -718,7 +718,7 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
     positiveclass;
     maximize = :f1score,
     ))
-showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
+showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     training_features_df,
     training_labels_df,
@@ -728,7 +728,7 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
     ))
 
 # Compare performance of all models on testing set
-showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
+showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     testing_features_df,
     testing_labels_df,
@@ -736,7 +736,7 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
     positiveclass;
     sensitivity = 0.95,
     ))
-showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
+showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     testing_features_df,
     testing_labels_df,
@@ -744,7 +744,7 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
     positiveclass;
     specificity = 0.95,
     ))
-showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
+showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     testing_features_df,
     testing_labels_df,
@@ -752,7 +752,7 @@ showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
     positiveclass;
     maximize = :f1score,
     ))
-showall(PredictMD.singlelabelbinaryclassclassificationmetrics(
+showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     testing_features_df,
     testing_labels_df,
