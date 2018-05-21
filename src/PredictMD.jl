@@ -94,6 +94,7 @@ include("svm/libsvm.jl")
 include("tree/decisiontree.jl")
 
 # utils/
+include("utils/file_exists.jl")
 include("utils/fix_dict_type.jl")
 include("utils/fix_vector_type.jl")
 include("utils/formulas.jl")
