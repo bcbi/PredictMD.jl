@@ -22,4 +22,6 @@ docs_dir: 'build'
 
 pages:
     - Home: index.md
+    - Library:
+        - 'Internals': 'library/internals.md'
 

@@ -1,6 +1,8 @@
 import DataFrames
 import StatsModels
 
+"""
+"""
 mutable struct MutableDataFrame2ClassificationKnetTransformer <:
         AbstractEstimator
     featurenames::T1 where T1 <: AbstractVector
@@ -30,6 +32,8 @@ mutable struct MutableDataFrame2ClassificationKnetTransformer <:
     end
 end
 
+"""
+"""
 mutable struct MutableDataFrame2RegressionKnetTransformer <:
         AbstractEstimator
     featurenames::T1 where T1 <: AbstractVector
@@ -53,6 +57,8 @@ mutable struct MutableDataFrame2RegressionKnetTransformer <:
     end
 end
 
+"""
+"""
 function get_history(
         x::MutableDataFrame2ClassificationKnetTransformer;
         saving::Bool = false,
@@ -61,6 +67,8 @@ function get_history(
     return nothing
 end
 
+"""
+"""
 function get_history(
         x::MutableDataFrame2RegressionKnetTransformer;
         saving::Bool = false,
@@ -69,6 +77,8 @@ function get_history(
     return nothing
 end
 
+"""
+"""
 function get_underlying(
         x::MutableDataFrame2ClassificationKnetTransformer;
         saving::Bool = false,
@@ -78,6 +88,8 @@ function get_underlying(
     return result
 end
 
+"""
+"""
 function get_underlying(
         x::MutableDataFrame2RegressionKnetTransformer;
         saving::Bool = false,
@@ -87,6 +99,8 @@ function get_underlying(
     return result
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::MutableDataFrame2ClassificationKnetTransformer,
         feature_contrasts::AbstractFeatureContrasts,
@@ -95,6 +109,8 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::MutableDataFrame2RegressionKnetTransformer,
         contrasts::AbstractFeatureContrasts,
@@ -103,6 +119,8 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
 function fit!(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
@@ -122,6 +140,8 @@ function fit!(
     return result
 end
 
+"""
+"""
 function fit!(
         transformer::MutableDataFrame2RegressionKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
@@ -141,6 +161,8 @@ function fit!(
     return result
 end
 
+"""
+"""
 function predict(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         features_df::DataFrames.AbstractDataFrame;
@@ -149,6 +171,8 @@ function predict(
     return transform(transformer, features_df)
 end
 
+"""
+"""
 function predict_proba(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         features_df::DataFrames.AbstractDataFrame;
@@ -157,6 +181,8 @@ function predict_proba(
     return transform(transformer, features_df)
 end
 
+"""
+"""
 function predict(
         transformer::MutableDataFrame2RegressionKnetTransformer,
         features_df::DataFrames.AbstractDataFrame;
@@ -170,6 +196,8 @@ function predict(
     return result
 end
 
+"""
+"""
 function predict_proba(
         transformer::MutableDataFrame2RegressionKnetTransformer,
         features_df::DataFrames.AbstractDataFrame;
@@ -183,6 +211,8 @@ function predict_proba(
     return result
 end
 
+"""
+"""
 function transform(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
@@ -267,6 +297,8 @@ function transform(
     end
 end
 
+"""
+"""
 function transform(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         features_df::DataFrames.AbstractDataFrame;
@@ -290,6 +322,8 @@ function transform(
     return featuresarray
 end
 
+"""
+"""
 function transform(
         transformer::MutableDataFrame2RegressionKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
@@ -352,6 +386,8 @@ function transform(
     end
 end
 
+"""
+"""
 function transform(
         transformer::MutableDataFrame2RegressionKnetTransformer,
         features_df::DataFrames.AbstractDataFrame,

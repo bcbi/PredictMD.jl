@@ -2,6 +2,8 @@ import Knet
 import ProgressMeter
 import ValueHistories
 
+"""
+"""
 mutable struct KnetModel <: AbstractEstimator
     name::T1 where T1 <: AbstractString
     isclassificationmodel::T2 where T2 <: Bool
@@ -84,6 +86,8 @@ mutable struct KnetModel <: AbstractEstimator
     end
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::KnetModel,
         feature_contrasts::AbstractFeatureContrasts,
@@ -91,6 +95,8 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
 function get_underlying(
         x::KnetModel;
         saving::Bool = false,
@@ -100,6 +106,8 @@ function get_underlying(
     return result
 end
 
+"""
+"""
 function get_history(
         x::KnetModel;
         saving::Bool = false,
@@ -109,6 +117,8 @@ function get_history(
     return result
 end
 
+"""
+"""
 function fit!(
         estimator::KnetModel,
         training_features_array::AbstractArray,
@@ -296,6 +306,8 @@ function fit!(
     return estimator
 end
 
+"""
+"""
 function predict(
         estimator::KnetModel,
         featuresarray::AbstractArray,
@@ -322,6 +334,8 @@ function predict(
     end
 end
 
+"""
+"""
 function predict_proba(
         estimator::KnetModel,
         featuresarray::AbstractArray,
@@ -346,6 +360,8 @@ function predict_proba(
     end
 end
 
+"""
+"""
 function _singlelabelmulticlassdataframeknetclassifier_Knet(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
@@ -423,6 +439,8 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
     return finalpipeline
 end
 
+"""
+"""
 function singlelabelmulticlassdataframeknetclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
@@ -463,6 +481,8 @@ function singlelabelmulticlassdataframeknetclassifier(
     end
 end
 
+"""
+"""
 function _singlelabeldataframeknetregression_Knet(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
@@ -520,6 +540,8 @@ function _singlelabeldataframeknetregression_Knet(
     return finalpipeline
 end
 
+"""
+"""
 function singlelabeldataframeknetregression(
         featurenames::AbstractVector,
         singlelabelname::Symbol;

@@ -2,6 +2,8 @@ import DataFrames
 import MLBase
 import StatsBase
 
+"""
+"""
 function singlelabelregressionytrue(
         labels::AbstractVector;
         floattype::Type = Cfloat,
@@ -13,6 +15,8 @@ function singlelabelregressionytrue(
     return result
 end
 
+"""
+"""
 function singlelabelregressionypred(
         labels::AbstractVector;
         floattype::Type = Cfloat,
@@ -24,6 +28,8 @@ function singlelabelregressionypred(
     return result
 end
 
+"""
+"""
 function _singlelabelregressionmetrics(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
@@ -54,6 +60,8 @@ function _singlelabelregressionmetrics(
     return results
 end
 
+"""
+"""
 function singlelabelregressionmetrics(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
@@ -70,6 +78,8 @@ function singlelabelregressionmetrics(
     return result
 end
 
+"""
+"""
 function singlelabelregressionmetrics(
         vectorofestimators::AbstractVector{Fittable},
         features_df::DataFrames.AbstractDataFrame,

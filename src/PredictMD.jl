@@ -3,6 +3,7 @@ __precompile__(true)
 module PredictMD
 
 # base/
+include("base/interface.jl")
 include("base/types.jl")
 include("base/version.jl")
 

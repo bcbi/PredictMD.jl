@@ -1,3 +1,5 @@
+"""
+"""
 function simple_moving_average(
         x::AbstractVector,
         window::Integer,

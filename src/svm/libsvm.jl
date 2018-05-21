@@ -1,5 +1,7 @@
 import LIBSVM
 
+"""
+"""
 mutable struct LIBSVMModel <: AbstractEstimator
     name::T1 where T1 <: AbstractString
     isclassificationmodel::T2 where T2 <: Bool
@@ -62,6 +64,8 @@ mutable struct LIBSVMModel <: AbstractEstimator
     end
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::LIBSVMModel,
         feature_contrasts::AbstractFeatureContrasts,
@@ -69,6 +73,8 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
 function get_underlying(
         x::LIBSVMModel;
         saving::Bool = false,
@@ -78,6 +84,8 @@ function get_underlying(
     return result
 end
 
+"""
+"""
 function get_history(
         x::LIBSVMModel;
         saving::Bool = false,
@@ -86,6 +94,8 @@ function get_history(
     return nothing
 end
 
+"""
+"""
 function fit!(
         estimator::LIBSVMModel,
         featuresarray::AbstractArray,
@@ -122,6 +132,8 @@ function fit!(
     return estimator
 end
 
+"""
+"""
 function predict(
         estimator::LIBSVMModel,
         featuresarray::AbstractArray,
@@ -153,6 +165,8 @@ function predict(
     end
 end
 
+"""
+"""
 function predict_proba(
         estimator::LIBSVMModel,
         featuresarray::AbstractArray,
@@ -182,6 +196,8 @@ function predict_proba(
     end
 end
 
+"""
+"""
 function _singlelabelmulticlassdataframesvmclassifier_LIBSVM(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
@@ -248,6 +264,8 @@ function _singlelabelmulticlassdataframesvmclassifier_LIBSVM(
     return finalpipeline
 end
 
+"""
+"""
 function singlelabelmulticlassdataframesvmclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
@@ -296,6 +314,8 @@ function singlelabelmulticlassdataframesvmclassifier(
     end
 end
 
+"""
+"""
 function _singlelabeldataframesvmregression_LIBSVM(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
@@ -355,6 +375,8 @@ function _singlelabeldataframesvmregression_LIBSVM(
     return finalpipeline
 end
 
+"""
+"""
 function singlelabeldataframesvmregression(
         featurenames::AbstractVector,
         singlelabelname::Symbol,

@@ -3,6 +3,8 @@ import FileIO
 import JLD2
 import ProgressMeter
 
+"""
+"""
 function save_model(filename::AbstractString,fittable_object_to_save::Fittable)
     # make sure that the filename ends in ".jld2"
     if lowercase(strip(splitext(filename)[2])) != ".jld2"
@@ -26,6 +28,8 @@ function save_model(filename::AbstractString,fittable_object_to_save::Fittable)
     return nothing
 end
 
+"""
+"""
 function load_model(filename::AbstractString)
     # make sure that the filename ends in ".jld2"
     if lowercase(strip(splitext(filename)[2])) != ".jld2"

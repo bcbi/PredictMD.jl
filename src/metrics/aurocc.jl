@@ -2,7 +2,7 @@ import MLBase
 import ROCAnalysis
 import StatsBase
 
-function _aurocc(
+function _aurocc_trapz(
         ytrue::AbstractVector{<:Integer},
         yscore::AbstractVector{<:Real},
         )
@@ -18,8 +18,8 @@ function _aurocc(
     #
     x = allfpr
     y = alltpr
-    aurocc_result = trapz(x, y)
-    return aurocc_result
+    aurocc_trapz_result = trapz(x, y)
+    return aurocc_trapz_result
 end
 
 function _aurocc_verify(
@@ -32,15 +32,17 @@ function _aurocc_verify(
     nontargetscores = yscore[ytrue .== nontargetlevel]
     r = ROCAnalysis.roc(targetscores, nontargetscores)
     complement_of_aurocc = ROCAnalysis.auc(r)
-    aurocc_result = 1 - complement_of_aurocc
-    return aurocc_result
+    aurocc_verify_result = 1 - complement_of_aurocc
+    return aurocc_verify_result
 end
 
+"""
+"""
 function aurocc(
         ytrue::AbstractVector{<:Integer},
         yscore::AbstractVector{<:Real},
         )
-    aurocc_value = _aurocc(
+    aurocc_trapz_value = _aurocc_trapz(
         ytrue,
         yscore,
         )
@@ -48,8 +50,8 @@ function aurocc(
         ytrue,
         yscore,
         )
-    if !( isapprox(aurocc_value, aurocc_verify_value; atol=0.00000001) )
+    if !( isapprox(aurocc_trapz_value, aurocc_verify_value; atol=0.00000001) )
         error("Was not able to accurately compute the AUROCC.")
     end
-    return aurocc_value
+    return aurocc_trapz_value
 end

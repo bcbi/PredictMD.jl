@@ -1,5 +1,7 @@
 import DecisionTree
 
+"""
+"""
 mutable struct DecisionTreeModel <:
         AbstractEstimator
     name::T1 where T1 <: AbstractString
@@ -42,6 +44,8 @@ mutable struct DecisionTreeModel <:
     end
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::DecisionTreeModel,
         feature_contrasts::AbstractFeatureContrasts,
@@ -49,10 +53,14 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
 function underlying(x::DecisionTreeModel)
     return nothing
 end
 
+"""
+"""
 function get_underlying(
         x::DecisionTreeModel;
         saving::Bool = false,
@@ -62,6 +70,8 @@ function get_underlying(
     return result
 end
 
+"""
+"""
 function get_history(
         x::DecisionTreeModel;
         saving::Bool = false,
@@ -70,6 +80,8 @@ function get_history(
     return nothing
 end
 
+"""
+"""
 function fit!(
         estimator::DecisionTreeModel,
         featuresarray::AbstractArray,
@@ -97,6 +109,8 @@ function fit!(
     return estimator
 end
 
+"""
+"""
 function predict(
         estimator::DecisionTreeModel,
         featuresarray::AbstractArray,
@@ -125,6 +139,8 @@ function predict(
     end
 end
 
+"""
+"""
 function predict_proba(
         estimator::DecisionTreeModel,
         featuresarray::AbstractArray,
@@ -156,6 +172,8 @@ function predict_proba(
     end
 end
 
+"""
+"""
 function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
@@ -200,6 +218,8 @@ function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
     return finalpipeline
 end
 
+"""
+"""
 function singlelabelmulticlassdataframerandomforestclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
@@ -226,6 +246,8 @@ function singlelabelmulticlassdataframerandomforestclassifier(
     end
 end
 
+"""
+"""
 function _singlelabeldataframerandomforestregression_DecisionTree(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
@@ -263,6 +285,8 @@ function _singlelabeldataframerandomforestregression_DecisionTree(
     return finalpipeline
 end
 
+"""
+"""
 function singlelabeldataframerandomforestregression(
         featurenames::AbstractVector,
         singlelabelname::Symbol;

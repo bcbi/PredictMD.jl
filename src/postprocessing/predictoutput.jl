@@ -1,11 +1,15 @@
 import DataFrames
 
+"""
+"""
 struct ImmutablePredictionsSingleLabelInt2StringTransformer <:
         AbstractEstimator
     index::T1 where T1 <: Integer
     levels::T2 where T2 <: AbstractVector
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::ImmutablePredictionsSingleLabelInt2StringTransformer,
         feature_contrasts::AbstractFeatureContrasts,
@@ -13,6 +17,8 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
 function get_underlying(
         x::ImmutablePredictionsSingleLabelInt2StringTransformer;
         saving::Bool = false,
@@ -21,6 +27,8 @@ function get_underlying(
     return nothing
 end
 
+"""
+"""
 function get_history(
         x::ImmutablePredictionsSingleLabelInt2StringTransformer;
         saving::Bool = false,
@@ -29,6 +37,8 @@ function get_history(
     return nothing
 end
 
+"""
+"""
 function fit!(
         transformer::ImmutablePredictionsSingleLabelInt2StringTransformer,
         varargs...;
@@ -41,6 +51,8 @@ function fit!(
     end
 end
 
+"""
+"""
 function predict(
         transformer::ImmutablePredictionsSingleLabelInt2StringTransformer,
         singlelabelpredictions::AbstractVector;
@@ -58,6 +70,8 @@ function predict(
     return result
 end
 
+"""
+"""
 function predict(
         transformer::ImmutablePredictionsSingleLabelInt2StringTransformer,
         singlelabelpredictions::DataFrames.AbstractDataFrame;
@@ -75,6 +89,8 @@ function predict(
     return result
 end
 
+"""
+"""
 function predict_proba(
         transformer::ImmutablePredictionsSingleLabelInt2StringTransformer,
         varargs...;

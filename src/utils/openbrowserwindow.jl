@@ -1,5 +1,7 @@
 # Originally based on https://github.com/JuliaPlots/Plots.jl/blob/master/src/backends/web.jl
 
+"""
+"""
 function open_browser_window(filename::AbstractString)
     if is_travis_ci(ENV)
         info(string("DEBUG Skipping opening file during Travis build: ",filename,))

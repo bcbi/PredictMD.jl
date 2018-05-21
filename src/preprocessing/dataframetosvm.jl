@@ -1,10 +1,14 @@
 import DataFrames
 import StatsModels
 
+"""
+"""
 struct ImmutableFeatureArrayTransposerTransformer <:
         AbstractEstimator
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::ImmutableFeatureArrayTransposerTransformer,
         feature_contrasts::AbstractFeatureContrasts,
@@ -12,6 +16,8 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
 function get_underlying(
         x::ImmutableFeatureArrayTransposerTransformer;
         saving::Bool = false,
@@ -20,6 +26,8 @@ function get_underlying(
     return nothing
 end
 
+"""
+"""
 function get_history(
         x::ImmutableFeatureArrayTransposerTransformer;
         saving::Bool = false,
@@ -28,6 +36,8 @@ function get_history(
     return nothing
 end
 
+"""
+"""
 function transform(
         transformer::ImmutableFeatureArrayTransposerTransformer,
         featuresarray::AbstractMatrix,
@@ -38,6 +48,8 @@ function transform(
     return featuresarraytransposed, labelsarray
 end
 
+"""
+"""
 function transform(
         transformer::ImmutableFeatureArrayTransposerTransformer,
         featuresarray::AbstractMatrix;
@@ -47,6 +59,8 @@ function transform(
     return featuresarraytransposed
 end
 
+"""
+"""
 function fit!(
         transformer::ImmutableFeatureArrayTransposerTransformer,
         featuresarray::AbstractMatrix,
@@ -56,6 +70,8 @@ function fit!(
     return transform(transformer, featuresarray, labelsarray)
 end
 
+"""
+"""
 function predict(
         transformer::ImmutableFeatureArrayTransposerTransformer,
         featuresarray::AbstractMatrix;
@@ -64,6 +80,8 @@ function predict(
     return transform(transformer, featuresarray)
 end
 
+"""
+"""
 function predict_proba(
         transformer::ImmutableFeatureArrayTransposerTransformer,
         featuresarray::AbstractMatrix;
@@ -72,6 +90,8 @@ function predict_proba(
     return transform(transformer, featuresarray)
 end
 
+"""
+"""
 function DataFrame2LIBSVMTransformer(
         featurenames::AbstractVector,
         singlelabelname::Symbol;

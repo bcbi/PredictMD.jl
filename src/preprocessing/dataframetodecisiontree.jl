@@ -1,6 +1,8 @@
 import DataFrames
 import StatsModels
 
+"""
+"""
 mutable struct MutableDataFrame2DecisionTreeTransformer <:
         AbstractEstimator
     featurenames::T1 where T1 <: AbstractVector
@@ -21,6 +23,8 @@ mutable struct MutableDataFrame2DecisionTreeTransformer <:
     end
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::MutableDataFrame2DecisionTreeTransformer,
         feature_contrasts::AbstractFeatureContrasts,
@@ -29,6 +33,8 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
 function get_underlying(
         x::MutableDataFrame2DecisionTreeTransformer;
         saving::Bool = false,
@@ -38,6 +44,8 @@ function get_underlying(
     return result
 end
 
+"""
+"""
 function get_history(
         x::MutableDataFrame2DecisionTreeTransformer;
         saving::Bool = false,
@@ -46,6 +54,8 @@ function get_history(
     return nothing
 end
 
+"""
+"""
 function transform(
         transformer::MutableDataFrame2DecisionTreeTransformer,
         features_df::DataFrames.AbstractDataFrame,
@@ -69,6 +79,8 @@ function transform(
     return featuresarray, labelsarray
 end
 
+"""
+"""
 function transform(
         transformer::MutableDataFrame2DecisionTreeTransformer,
         features_df::DataFrames.AbstractDataFrame;
@@ -89,6 +101,8 @@ function transform(
     return featuresarray
 end
 
+"""
+"""
 function fit!(
         transformer::MutableDataFrame2DecisionTreeTransformer,
         features_df::DataFrames.AbstractDataFrame,
@@ -98,6 +112,8 @@ function fit!(
     return transform(transformer, features_df, labels_df)
 end
 
+"""
+"""
 function predict(
         transformer::MutableDataFrame2DecisionTreeTransformer,
         features_df::DataFrames.AbstractDataFrame;
@@ -106,6 +122,8 @@ function predict(
     return transform(transformer, features_df)
 end
 
+"""
+"""
 function predict_proba(
         transformer::MutableDataFrame2DecisionTreeTransformer,
         features_df::DataFrames.AbstractDataFrame;

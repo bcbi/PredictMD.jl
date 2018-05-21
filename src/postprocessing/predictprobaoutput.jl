@@ -1,9 +1,13 @@
+"""
+"""
 struct ImmutablePredictProbaSingleLabelInt2StringTransformer <:
         AbstractEstimator
     index::T1 where T1 <: Integer
     levels::T2 where T2 <: AbstractVector
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::ImmutablePredictProbaSingleLabelInt2StringTransformer,
         feature_contrasts::AbstractFeatureContrasts,
@@ -11,6 +15,8 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
 function get_underlying(
         x::ImmutablePredictProbaSingleLabelInt2StringTransformer;
         saving::Bool = false,
@@ -19,6 +25,8 @@ function get_underlying(
     return nothing
 end
 
+"""
+"""
 function get_history(
         x::ImmutablePredictProbaSingleLabelInt2StringTransformer;
         saving::Bool = false,
@@ -27,6 +35,8 @@ function get_history(
     return nothing
 end
 
+"""
+"""
 function fit!(
         transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer,
         varargs...;
@@ -39,6 +49,8 @@ function fit!(
     end
 end
 
+"""
+"""
 function predict(
         transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer,
         varargs...;
@@ -51,6 +63,8 @@ function predict(
     end
 end
 
+"""
+"""
 function predict_proba(
         transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer,
         singlelabelprobabilities::Associative;

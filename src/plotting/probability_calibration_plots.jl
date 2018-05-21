@@ -2,6 +2,8 @@ import LaTeXStrings
 import PGFPlots
 import PGFPlotsX
 
+"""
+"""
 function probability_calibration_scores_and_fractions(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
@@ -33,6 +35,8 @@ function probability_calibration_scores_and_fractions(
     return scores, fractions
 end
 
+"""
+"""
 function probability_calibration_scores_and_fractions(
         ytrue::AbstractVector{<:Integer},
         yscore::AbstractVector{<:AbstractFloat};
@@ -69,6 +73,8 @@ function probability_calibration_scores_and_fractions(
     return scores, fractions
 end
 
+"""
+"""
 function plot_probability_calibration_curve(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
@@ -91,6 +97,8 @@ function plot_probability_calibration_curve(
     return result
 end
 
+"""
+"""
 function plot_probability_calibration_curve(
         scores::AbstractVector{<:AbstractFloat},
         fractions::AbstractVector{<:AbstractFloat},
@@ -149,6 +157,8 @@ function plot_probability_calibration_curve(
     return tikzpicture
 end
 
+"""
+"""
 function probability_calibration_metrics(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
@@ -169,6 +179,8 @@ function probability_calibration_metrics(
     return result
 end
 
+"""
+"""
 function probability_calibration_metrics(
         vectorofestimators::AbstractVector{Fittable},
         features_df::DataFrames.AbstractDataFrame,

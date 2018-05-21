@@ -1,6 +1,6 @@
 import StatsBase
 
-doc"""
+"""
     r2_score(ytrue, ypred)
 
 Computes coefficient of determination. Higher values are better. Best value

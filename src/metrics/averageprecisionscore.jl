@@ -1,6 +1,8 @@
 import MLBase
 import StatsBase
 
+"""
+"""
 function avg_precision(
         allprecisions::AbstractVector{<:Real},
         allrecalls::AbstractVector{<:Real},
@@ -25,6 +27,8 @@ function avg_precision(
     return result
 end
 
+"""
+"""
 function averageprecisionscore(
         ytrue::AbstractVector{<:Integer},
         yscore::AbstractVector{<:Real},

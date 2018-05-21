@@ -1,5 +1,7 @@
 import DataFrames
 
+"""
+"""
 struct DataFrameFeatureContrasts <: AbstractFeatureContrasts
     columns::T1 where T1 <: AbstractVector{Symbol}
     num_df_columns::T2 where T2 <: Integer
@@ -7,6 +9,8 @@ struct DataFrameFeatureContrasts <: AbstractFeatureContrasts
     num_array_columns::T4 where T4 <: Integer
 end
 
+"""
+"""
 function DataFrameFeatureContrasts(
         df::DataFrames.AbstractDataFrame,
         columns::AbstractVector{Symbol},
@@ -34,6 +38,8 @@ function DataFrameFeatureContrasts(
     return result
 end
 
+"""
+"""
 function generate_feature_contrasts(
         df::DataFrames.AbstractDataFrame,
         columns::AbstractVector{Symbol},

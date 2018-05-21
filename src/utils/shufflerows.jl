@@ -1,6 +1,8 @@
 import DataFrames
 import StatsBase
 
+"""
+"""
 function shuffle_rows!(
         dataframe::DataFrames.AbstractDataFrame,
         )
@@ -8,6 +10,8 @@ function shuffle_rows!(
     return result
 end
 
+"""
+"""
 function shuffle_rows!(
         rng::AbstractRNG,
         dataframe::DataFrames.AbstractDataFrame,

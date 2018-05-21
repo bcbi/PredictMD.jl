@@ -2,6 +2,8 @@ import LaTeXStrings
 import PGFPlots
 import PGFPlotsX
 
+"""
+"""
 function plotsinglelabelbinaryclassifierhistogram(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,

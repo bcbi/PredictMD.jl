@@ -1,8 +1,12 @@
+"""
+"""
 struct ImmutablePackageMultiLabelPredictionTransformer <:
         AbstractEstimator
     labelnames::T1 where T1 <: AbstractVector{Symbol}
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::ImmutablePackageMultiLabelPredictionTransformer,
         feature_contrasts::AbstractFeatureContrasts,
@@ -10,6 +14,8 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
 function get_underlying(
         x::ImmutablePackageMultiLabelPredictionTransformer;
         saving::Bool = false,
@@ -18,6 +24,8 @@ function get_underlying(
     return nothing
 end
 
+"""
+"""
 function get_history(
         x::ImmutablePackageMultiLabelPredictionTransformer;
         saving::Bool = false,
@@ -26,6 +34,8 @@ function get_history(
     return nothing
 end
 
+"""
+"""
 function fit!(
         transformer::ImmutablePackageMultiLabelPredictionTransformer,
         varargs...;
@@ -38,6 +48,8 @@ function fit!(
     end
 end
 
+"""
+"""
 function predict(
         transformer::ImmutablePackageMultiLabelPredictionTransformer,
         singlelabelpredictions::AbstractMatrix,
@@ -49,6 +61,8 @@ function predict(
     return result
 end
 
+"""
+"""
 function predict_proba(
         transformer::ImmutablePackageMultiLabelPredictionTransformer,
         varargs...;
