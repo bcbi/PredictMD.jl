@@ -120,9 +120,8 @@ function plot_probability_calibration_curve(
         )
     estimated_intercept, estimated_x_coefficient =
         ordinary_least_squares_regression(
-            ;
-            X = scores,
-            Y = fractions,
+            scores, # X
+            fractions; # Y
             intercept = true,
             )
     bestfitline_linearplotobject = PGFPlots.Plots.Linear(
@@ -213,9 +212,8 @@ function probability_calibration_metrics(
         r2_score_value = r2_score(scores, fractions)
         estimated_intercept, estimated_x_coefficient =
             ordinary_least_squares_regression(
-                ;
-                X = Float64.(scores),
-                Y = Float64.(fractions),
+                Float64.(scores), # X
+                Float64.(fractions); # Y
                 intercept = true,
                 )
         result[Symbol(vectorofestimators[i].name)] = [

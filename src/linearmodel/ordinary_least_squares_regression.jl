@@ -3,11 +3,10 @@ import GLM
 import StatsModels
 
 function ordinary_least_squares_regression(
-        ;
-        X::AbstractVector{T} where T <: Real = Real[],
-        Y::AbstractVector{T} where T <: Real = Real[],
+        X::AbstractVector{T},
+        Y::AbstractVector{T};
         intercept::Bool = true,
-        )
+        ) where T <: Real
     if length(X) != length(Y)
         error("length(X) != length(Y)")
     end

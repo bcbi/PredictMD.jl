@@ -1,7 +1,9 @@
 """
-binary_brier_score(ytrue, yscore)
+    binary_brier_score(ytrue, yscore)
+
 Computes the binary formulation of the Brier score, defined as:
-<math>BS = \frac{1}{N}\sum\limits _{t=1}^{N}(f_t-o_t)^2 \,\!</math>
+
+\$\\frac{1}{N}\\sum\\limits _{t=1}^{N}(f_t-o_t)^2 \\,\\!\$
 
 Lower values are better. Best value is 0.
 """

@@ -1,5 +1,10 @@
 import NumericalIntegration
 
+"""
+    trapz(x,y)
+
+Compute the area under the curve of (x,y) points using the trapezoidal method.
+"""
 function trapz(
         x::AbstractVector,
         y::AbstractVector,

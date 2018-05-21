@@ -48,9 +48,8 @@ function plotsinglelabelregressiontrueversuspredicted(
         )
     estimated_intercept,
         estimated_x_coefficient = ordinary_least_squares_regression(
-            ;
-            X = Float64.(ypred),
-            Y = Float64.(ytrue),
+            Float64.(ypred), # X
+            Float64.(ytrue); # Y
             intercept = true,
             )
     bestfitline_linearplotobject = PGFPlots.Plots.Linear(
