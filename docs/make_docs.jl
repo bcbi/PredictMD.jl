@@ -1,4 +1,5 @@
 import Documenter
+import Literate
 import PredictMD
 
 Documenter.makedocs(

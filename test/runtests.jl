@@ -26,13 +26,14 @@ Base.Test.@testset "PredictMD test suite" begin
             include("cpu/unit/utils/test_fix_vector_type.jl")
         end
     end
-    Base.Test.@testset "Functional tests (CPU)" begin
-        info("INFO Running functional tests (CPU)")
-        Base.Test.@testset "Boston housing regression" begin
-            include("cpu/functional/bostonhousing/setup_bostonhousing.jl")
-        end
-        Base.Test.@testset "Breast cancer biopsy classification" begin
-            include("cpu/functional/breastcancerbiopsy/setup_breastcancerbiopsy.jl")
-        end
-    end
+    include("../docs/test_examples.jl")
+    # Base.Test.@testset "Functional tests (CPU)" begin
+    #     info("INFO Running functional tests (CPU)")
+    #     Base.Test.@testset "Boston housing regression" begin
+    #         include("cpu/functional/bostonhousing/setup_bostonhousing.jl")
+    #     end
+    #     Base.Test.@testset "Breast cancer biopsy classification" begin
+    #         include("cpu/functional/breastcancerbiopsy/setup_breastcancerbiopsy.jl")
+    #     end
+    # end
 end
