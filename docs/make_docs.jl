@@ -19,6 +19,16 @@ examples_output_parent_directory = joinpath(
     )
 mkpath(examples_output_parent_directory)
 
+cpu_examples_input_parent_directory = joinpath(
+    examples_input_parent_directory,
+    "cpu",
+    )
+cpu_examples_output_parent_directory = joinpath(
+    examples_output_parent_directory,
+    "cpu",
+    )
+mkpath(cpu_examples_output_parent_directory)
+
 boston_housing_input_directory = joinpath(
     examples_input_parent_directory,
     "boston_housing",
@@ -313,7 +323,10 @@ Literate.script(
 info("DEBUG: using Documenter.jl to generate Markdown docs")
 
 Documenter.makedocs(
-    modules = [PredictMD],
+    modules = [
+        PredictMD,
+        PredictMD.GPU,
+        ],
     sitename = "PredictMD.jl",
     pages = Any[
         "index.md",

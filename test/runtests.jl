@@ -26,13 +26,19 @@ Base.Test.@testset "PredictMD test suite" begin
             include("cpu/unit/utils/test_fix_vector_type.jl")
         end
     end
+    Base.Test.@testset "Generate documentation and examples" begin
+        info("INFO generating documentation and examples")
+        include("../docs/make_docs.jl")
+    end
     Base.Test.@testset "Test examples (CPU)" begin
         info("INFO testing examples (CPU)")
         Base.Test.@testset "Boston housing regression" begin
-            # include("")
+            include(
+                "../docs/src/examples/cpu/boston_housing/01_preprocess_data.jl"
+                )
         end
         Base.Test.@testset "Breast cancer biopsy classification" begin
-            # include("")
+            include("")
         end
     end
 end
