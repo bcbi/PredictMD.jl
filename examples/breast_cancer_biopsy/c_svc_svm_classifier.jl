@@ -67,16 +67,39 @@ smoted_training_labels_df = CSV.read(
     DataFrames.DataFrame,
     )
 
+categoricalfeaturenames = Symbol[]
+continuousfeaturenames = Symbol[
+    :V1,
+    :V2,
+    :V3,
+    :V4,
+    :V5,
+    :V6,
+    :V7,
+    :V8,
+    :V9,
+    ]
+featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
+
+singlelabelname = :Class
+negativeclass = "benign"
+positiveclass = "malignant"
+singlelabellevels = [negativeclass, positiveclass]
 ENV["c_svc_svm_classifier_filename"] = string(
     tempname(),
     "c_svc_svm_classifier.jld2",
     )
 c_svc_svm_classifier_filename = ENV["c_svc_svm_classifier_filename"]
 
+feature_contrasts = PredictMD.generate_feature_contrasts(
+    smoted_training_features_df,
+    featurenames,
+    )
+
 csvc_svmclassifier = PredictMD.singlelabelmulticlassdataframesvmclassifier(
     featurenames,
-    labelname,
-    labellevels;
+    singlelabelname,
+    singlelabellevels;
     package = :LIBSVMjl,
     svmtype = LIBSVM.SVC,
     name = "SVM (C-SVC)",
@@ -94,8 +117,8 @@ csvc_svmclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhist
     csvc_svmclassifier,
     smoted_training_features_df,
     smoted_training_labels_df,
-    labelname,
-    labellevels,
+    singlelabelname,
+    singlelabellevels,
     )
 PredictMD.open_plot(csvc_svmclassifier_hist_training)
 
@@ -103,8 +126,8 @@ csvc_svmclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhisto
     csvc_svmclassifier,
     testing_features_df,
     testing_labels_df,
-    labelname,
-    labellevels,
+    singlelabelname,
+    singlelabellevels,
     )
 PredictMD.open_plot(csvc_svmclassifier_hist_testing)
 
@@ -112,7 +135,7 @@ PredictMD.singlelabelbinaryclassificationmetrics(
     csvc_svmclassifier,
     smoted_training_features_df,
     smoted_training_labels_df,
-    labelname,
+    singlelabelname,
     positiveclass;
     sensitivity = 0.95,
     )
@@ -121,7 +144,7 @@ PredictMD.singlelabelbinaryclassificationmetrics(
     csvc_svmclassifier,
     testing_features_df,
     testing_labels_df,
-    labelname,
+    singlelabelname,
     positiveclass;
     sensitivity = 0.95,
     )

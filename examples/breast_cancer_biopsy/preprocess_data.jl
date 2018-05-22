@@ -31,7 +31,7 @@ negativeclass = "benign"
 positiveclass = "malignant"
 singlelabellevels = [negativeclass, positiveclass]
 
-labelnames = [singlelabelname
+labelnames = [singlelabelname]
 
 features_df = df[featurenames]
 labels_df = df[labelnames]

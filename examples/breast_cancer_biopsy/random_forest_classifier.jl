@@ -67,16 +67,40 @@ smoted_training_labels_df = CSV.read(
     DataFrames.DataFrame,
     )
 
+categoricalfeaturenames = Symbol[]
+continuousfeaturenames = Symbol[
+    :V1,
+    :V2,
+    :V3,
+    :V4,
+    :V5,
+    :V6,
+    :V7,
+    :V8,
+    :V9,
+    ]
+featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
+
+singlelabelname = :Class
+negativeclass = "benign"
+positiveclass = "malignant"
+singlelabellevels = [negativeclass, positiveclass]
+
 ENV["random_forest_classifier_filename"] = string(
     tempname(),
     "random_forest_classifier.jld2",
     )
 random_forest_classifier_filename = ENV["random_forest_classifier_filename"]
 
+feature_contrasts = PredictMD.generate_feature_contrasts(
+    smoted_training_features_df,
+    featurenames,
+    )
+
 rfclassifier = PredictMD.singlelabelmulticlassdataframerandomforestclassifier(
     featurenames,
-    labelname,
-    labellevels;
+    singlelabelname,
+    singlelabellevels;
     nsubfeatures = 4, # number of subfeatures; defaults to 2
     ntrees = 200, # number of trees; defaults to 10
     package = :DecisionTreejl,
@@ -94,8 +118,8 @@ rfclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
     rfclassifier,
     smoted_training_features_df,
     smoted_training_labels_df,
-    labelname,
-    labellevels,
+    singlelabelname,
+    singlelabellevels,
     )
 PredictMD.open_plot(rfclassifier_hist_training)
 
@@ -103,8 +127,8 @@ rfclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
     rfclassifier,
     testing_features_df,
     testing_labels_df,
-    labelname,
-    labellevels,
+    singlelabelname,
+    singlelabellevels,
     )
 PredictMD.open_plot(rfclassifier_hist_testing)
 
@@ -112,7 +136,7 @@ PredictMD.singlelabelbinaryclassificationmetrics(
     rfclassifier,
     smoted_training_features_df,
     smoted_training_labels_df,
-    labelname,
+    singlelabelname,
     positiveclass;
     sensitivity = 0.95,
     )
@@ -121,7 +145,7 @@ PredictMD.singlelabelbinaryclassificationmetrics(
     rfclassifier,
     testing_features_df,
     testing_labels_df,
-    labelname,
+    singlelabelname,
     positiveclass;
     sensitivity = 0.95,
     )

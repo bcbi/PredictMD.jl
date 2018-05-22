@@ -54,9 +54,27 @@ validation_labels_df = CSV.read(
     DataFrames.DataFrame,
     )
 
+categoricalfeaturenames = Symbol[]
+continuousfeaturenames = Symbol[
+    :V1,
+    :V2,
+    :V3,
+    :V4,
+    :V5,
+    :V6,
+    :V7,
+    :V8,
+    :V9,
+    ]
+featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
-DataFrames.describe(training_labels_df[labelname])
-StatsBase.countmap(training_labels_df[labelname])
+singlelabelname = :Class
+negativeclass = "benign"
+positiveclass = "malignant"
+singlelabellevels = [negativeclass, positiveclass]
+
+DataFrames.describe(training_labels_df[singlelabelname])
+StatsBase.countmap(training_labels_df[singlelabelname])
 
 majorityclass = "benign"
 minorityclass = "malignant"
@@ -65,7 +83,7 @@ smoted_training_features_df, smoted_training_labels_df = PredictMD.smote(
     training_features_df,
     training_labels_df,
     featurenames,
-    labelname;
+    singlelabelname;
     majorityclass = majorityclass,
     minorityclass = minorityclass,
     pct_over = 100, # how much to oversample the minority class
@@ -73,8 +91,8 @@ smoted_training_features_df, smoted_training_labels_df = PredictMD.smote(
     k = 5,
     )
 
-DataFrames.describe(smoted_training_labels_df[labelname])
-StatsBase.countmap(smoted_training_labels_df[labelname])
+DataFrames.describe(smoted_training_labels_df[singlelabelname])
+StatsBase.countmap(smoted_training_labels_df[singlelabelname])
 
 ENV["smoted_training_features_df_filename"] = string(
     tempname(),
