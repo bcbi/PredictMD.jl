@@ -81,3 +81,11 @@ showall(PredictMD.singlelabelregressionmetrics(
     testing_labels_df,
     labelname,
     ))
+
+PredictMD.predict(linearreg,training_features_df,)
+PredictMD.predict(randomforestreg,training_features_df,)
+PredictMD.predict(knetmlpreg,training_features_df,)
+
+PredictMD.predict(linearreg,testing_features_df,)
+PredictMD.predict(randomforestreg,testing_features_df,)
+PredictMD.predict(knetmlpreg,testing_features_df,)
