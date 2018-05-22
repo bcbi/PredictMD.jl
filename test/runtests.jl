@@ -33,12 +33,23 @@ Base.Test.@testset "PredictMD test suite" begin
     Base.Test.@testset "Test examples (CPU)" begin
         info("INFO testing examples (CPU)")
         Base.Test.@testset "Boston housing regression" begin
-            include(
-                "../docs/src/examples/cpu/boston_housing/01_preprocess_data.jl"
-                )
+            include("../docs/src/examples/cpu/boston_housing/")
+            include("../docs/src/examples/cpu/boston_housing/")
+            include("../docs/src/examples/cpu/boston_housing/")
+            include("../docs/src/examples/cpu/boston_housing/")
+            include("../docs/src/examples/cpu/boston_housing/")
+            include("../docs/src/examples/cpu/boston_housing/")
         end
         Base.Test.@testset "Breast cancer biopsy classification" begin
-            include("")
+            include("../docs/src/examples/cpu/breast_cancer_biopsy/")
+            include("../docs/src/examples/cpu/breast_cancer_biopsy/")
+            include("../docs/src/examples/cpu/breast_cancer_biopsy/")
+            include("../docs/src/examples/cpu/breast_cancer_biopsy/")
+            include("../docs/src/examples/cpu/breast_cancer_biopsy/")
+            include("../docs/src/examples/cpu/breast_cancer_biopsy/")
+            include("../docs/src/examples/cpu/breast_cancer_biopsy/")
+            include("../docs/src/examples/cpu/breast_cancer_biopsy/")
+            include("../docs/src/examples/cpu/breast_cancer_biopsy/")
         end
     end
 end

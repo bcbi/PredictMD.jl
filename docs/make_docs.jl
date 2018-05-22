@@ -153,7 +153,7 @@ breast_cancer_biopsy_input_directory = joinpath(
     )
 breast_cancer_biopsy_output_directory = joinpath(
     examples_output_parent_directory,
-    "breast_cancer_biopsyg",
+    "breast_cancer_biopsy",
     )
 mkpath(breast_cancer_biopsy_output_directory)
 
