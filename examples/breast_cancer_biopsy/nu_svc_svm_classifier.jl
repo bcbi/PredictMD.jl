@@ -63,7 +63,7 @@ smoted_training_features_df = CSV.read(
     DataFrames.DataFrame,
     )
 smoted_training_labels_df = CSV.read(
-    smoted_training_features_df_filename,
+    smoted_training_labels_df_filename,
     DataFrames.DataFrame,
     )
 
@@ -96,7 +96,7 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     featurenames,
     )
 
-nusvc_svmclassifier = PredictMD.singlelabelmulticlassdataframesvmclassifier(
+nu_svc_svm_classifier = PredictMD.singlelabelmulticlassdataframesvmclassifier(
     featurenames,
     singlelabelname,
     singlelabellevels;
@@ -108,31 +108,31 @@ nusvc_svmclassifier = PredictMD.singlelabelmulticlassdataframesvmclassifier(
     )
 
 PredictMD.fit!(
-    nusvc_svmclassifier,
+    nu_svc_svm_classifier,
     smoted_training_features_df,
     smoted_training_labels_df,
     )
 
-nusvc_svmclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    nusvc_svmclassifier,
+nu_svc_svm_classifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
+    nu_svc_svm_classifier,
     smoted_training_features_df,
     smoted_training_labels_df,
     singlelabelname,
     singlelabellevels,
     )
-PredictMD.open_plot(nusvc_svmclassifier_hist_training)
+PredictMD.open_plot(nu_svc_svm_classifier_hist_training)
 
-nusvc_svmclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    nusvc_svmclassifier,
+nu_svc_svm_classifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
+    nu_svc_svm_classifier,
     testing_features_df,
     testing_labels_df,
     singlelabelname,
     singlelabellevels,
     )
-PredictMD.open_plot(nusvc_svmclassifier_hist_testing)
+PredictMD.open_plot(nu_svc_svm_classifier_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
-    nusvc_svmclassifier,
+    nu_svc_svm_classifier,
     smoted_training_features_df,
     smoted_training_labels_df,
     singlelabelname,
@@ -141,7 +141,7 @@ PredictMD.singlelabelbinaryclassificationmetrics(
     )
 
 PredictMD.singlelabelbinaryclassificationmetrics(
-    nusvc_svmclassifier,
+    nu_svc_svm_classifier,
     testing_features_df,
     testing_labels_df,
     singlelabelname,
@@ -149,4 +149,4 @@ PredictMD.singlelabelbinaryclassificationmetrics(
     sensitivity = 0.95,
     )
 
-PredictMD.save_model(nusvc_svmclassifier_filename, nusvc_svmclassifier)
+PredictMD.save_model(nu_svc_svm_classifier_filename, nu_svc_svm_classifier)

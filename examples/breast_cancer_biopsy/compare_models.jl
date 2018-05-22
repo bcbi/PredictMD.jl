@@ -54,10 +54,23 @@ validation_labels_df = CSV.read(
     DataFrames.DataFrame,
     )
 
-logisticclassifier = PredictMD.load_model(logisticclassifier_filename)
-rfclassifier = PredictMD.load_model(rfclassifier_filename)
-csvc_svmclassifier = PredictMD.load_model(csvc_svmclassifier_filename)
-nusvc_svmclassifier = PredictMD.load_model(nusvc_svmclassifier_filename)
+smoted_training_features_df_filename =
+    ENV["smoted_training_features_df_filename"]
+smoted_training_labels_df_filename =
+    ENV["smoted_training_labels_df_filename"]
+smoted_training_features_df = CSV.read(
+    smoted_training_features_df_filename,
+    DataFrames.DataFrame,
+    )
+smoted_training_labels_df = CSV.read(
+    smoted_training_labels_df_filename,
+    DataFrames.DataFrame,
+    )
+
+logistic_classifier = PredictMD.load_model(logistic_classifier_filename)
+random_forest_classifier = PredictMD.load_model(random_forest_classifier_filename)
+c_svc_svm_classifier = PredictMD.load_model(c_svc_svm_classifier_filename)
+nu_svc_svm_classifier = PredictMD.load_model(nu_svc_svm_classifier_filename)
 
 function knetmlp_predict(
         w, # don't put a type annotation on this
@@ -107,14 +120,14 @@ function knetmlp_loss(
     return loss
 end
 
-knetmlpclassifier = PredictMD.load_model(knetmlp_filename)
+knet_mlp_classifier = PredictMD.load_model(knet_mlp_classifier_filename)
 
 all_models = PredictMD.Fittable[
-    logisticclassifier,
-    rfclassifier,
-    csvc_svmclassifier,
-    nusvc_svmclassifier,
-    knetmlpclassifier,
+    logistic_classifier,
+    random_forest_classifier,
+    c_svc_svm_classifier,
+    nu_svc_svm_classifier,
+    knet_mlp_classifier,
     ]
 
 singlelabelname = :Class

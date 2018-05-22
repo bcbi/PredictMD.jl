@@ -54,10 +54,23 @@ validation_labels_df = CSV.read(
     DataFrames.DataFrame,
     )
 
-logisticclassifier = PredictMD.load_model(logisticclassifier_filename)
-rfclassifier = PredictMD.load_model(rfclassifier_filename)
-csvc_svmclassifier = PredictMD.load_model(csvc_svmclassifier_filename)
-nusvc_svmclassifier = PredictMD.load_model(nusvc_svmclassifier_filename)
+smoted_training_features_df_filename =
+    ENV["smoted_training_features_df_filename"]
+smoted_training_labels_df_filename =
+    ENV["smoted_training_labels_df_filename"]
+smoted_training_features_df = CSV.read(
+    smoted_training_features_df_filename,
+    DataFrames.DataFrame,
+    )
+smoted_training_labels_df = CSV.read(
+    smoted_training_labels_df_filename,
+    DataFrames.DataFrame,
+    )
+
+logistic_classifier = PredictMD.load_model(logistic_classifier_filename)
+random_forest_classifier = PredictMD.load_model(random_forest_classifier_filename)
+c_svc_svm_classifier = PredictMD.load_model(c_svc_svm_classifier_filename)
+nu_svc_svm_classifier = PredictMD.load_model(nu_svc_svm_classifier_filename)
 
 function knetmlp_predict(
         w, # don't put a type annotation on this
@@ -107,28 +120,28 @@ function knetmlp_loss(
     return loss
 end
 
-knetmlpclassifier = PredictMD.load_model(knetmlp_filename)
+knet_mlp_classifier = PredictMD.load_model(knet_mlp_classifier_filename)
 
-PredictMD.predict_proba(logisticclassifier,smoted_training_features_df,)
-PredictMD.predict_proba(rfclassifier,smoted_training_features_df,)
-PredictMD.predict_proba(csvc_svmclassifier,smoted_training_features_df,)
-PredictMD.predict_proba(nusvc_svmclassifier,smoted_training_features_df,)
-PredictMD.predict_proba(knetmlpclassifier,smoted_training_features_df,)
+PredictMD.predict_proba(logistic_classifier,smoted_training_features_df,)
+PredictMD.predict_proba(random_forest_classifier,smoted_training_features_df,)
+PredictMD.predict_proba(c_svc_svm_classifier,smoted_training_features_df,)
+PredictMD.predict_proba(nu_svc_svm_classifier,smoted_training_features_df,)
+PredictMD.predict_proba(knet_mlp_classifier,smoted_training_features_df,)
 
-PredictMD.predict_proba(logisticclassifier,testing_features_df,)
-PredictMD.predict_proba(rfclassifier,testing_features_df,)
-PredictMD.predict_proba(csvc_svmclassifier,testing_features_df,)
-PredictMD.predict_proba(nusvc_svmclassifier,testing_features_df,)
-PredictMD.predict_proba(knetmlpclassifier,testing_features_df,)
+PredictMD.predict_proba(logistic_classifier,testing_features_df,)
+PredictMD.predict_proba(random_forest_classifier,testing_features_df,)
+PredictMD.predict_proba(c_svc_svm_classifier,testing_features_df,)
+PredictMD.predict_proba(nu_svc_svm_classifier,testing_features_df,)
+PredictMD.predict_proba(knet_mlp_classifier,testing_features_df,)
 
-PredictMD.predict(logisticclassifier,smoted_training_features_df,)
-PredictMD.predict(rfclassifier,smoted_training_features_df,)
-PredictMD.predict(csvc_svmclassifier,smoted_training_features_df,)
-PredictMD.predict(nusvc_svmclassifier,smoted_training_features_df,)
-PredictMD.predict(knetmlpclassifier,smoted_training_features_df,)
+PredictMD.predict(logistic_classifier,smoted_training_features_df,)
+PredictMD.predict(random_forest_classifier,smoted_training_features_df,)
+PredictMD.predict(c_svc_svm_classifier,smoted_training_features_df,)
+PredictMD.predict(nu_svc_svm_classifier,smoted_training_features_df,)
+PredictMD.predict(knet_mlp_classifier,smoted_training_features_df,)
 
-PredictMD.predict(logisticclassifier,testing_features_df,)
-PredictMD.predict(rfclassifier,testing_features_df,)
-PredictMD.predict(csvc_svmclassifier,testing_features_df,)
-PredictMD.predict(nusvc_svmclassifier,testing_features_df,)
-PredictMD.predict(knetmlpclassifier,testing_features_df,)
+PredictMD.predict(logistic_classifier,testing_features_df,)
+PredictMD.predict(random_forest_classifier,testing_features_df,)
+PredictMD.predict(c_svc_svm_classifier,testing_features_df,)
+PredictMD.predict(nu_svc_svm_classifier,testing_features_df,)
+PredictMD.predict(knet_mlp_classifier,testing_features_df,)

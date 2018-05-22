@@ -63,7 +63,7 @@ smoted_training_features_df = CSV.read(
     DataFrames.DataFrame,
     )
 smoted_training_labels_df = CSV.read(
-    smoted_training_features_df_filename,
+    smoted_training_labels_df_filename,
     DataFrames.DataFrame,
     )
 
@@ -182,7 +182,7 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     featurenames,
     )
 
-knetmlpclassifier = PredictMD.singlelabelmulticlassdataframeknetclassifier(
+knet_mlp_classifier = PredictMD.singlelabelmulticlassdataframeknetclassifier(
     featurenames,
     singlelabelname,
     singlelabellevels;
@@ -201,7 +201,7 @@ knetmlpclassifier = PredictMD.singlelabelmulticlassdataframeknetclassifier(
     )
 
 PredictMD.fit!(
-    knetmlpclassifier,
+    knet_mlp_classifier,
     smoted_training_features_df,
     smoted_training_labels_df,
     validation_features_df,
@@ -209,13 +209,13 @@ PredictMD.fit!(
     )
 
 knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
-    knetmlpclassifier,
+    knet_mlp_classifier,
     :loss_vs_epoch;
     )
 PredictMD.open_plot(knet_learningcurve_lossvsepoch)
 
 knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
-    knetmlpclassifier,
+    knet_mlp_classifier,
     :loss_vs_epoch;
     startat = 10,
     endat = :end,
@@ -223,7 +223,7 @@ knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
 PredictMD.open_plot(knet_learningcurve_lossvsepoch_skip10epochs)
 
 knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
-    knetmlpclassifier,
+    knet_mlp_classifier,
     :loss_vs_iteration;
     window = 50,
     sampleevery = 10,
@@ -231,7 +231,7 @@ knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
 PredictMD.open_plot(knet_learningcurve_lossvsiteration)
 
 knet_learningcurve_lossvsiteration_skip100iterations = PredictMD.plotlearningcurve(
-    knetmlpclassifier,
+    knet_mlp_classifier,
     :loss_vs_iteration;
     window = 50,
     sampleevery = 10,
@@ -240,26 +240,26 @@ knet_learningcurve_lossvsiteration_skip100iterations = PredictMD.plotlearningcur
     )
 PredictMD.open_plot(knet_learningcurve_lossvsiteration_skip100iterations)
 
-knetmlpclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    knetmlpclassifier,
+knet_mlp_classifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
+    knet_mlp_classifier,
     smoted_training_features_df,
     smoted_training_labels_df,
     singlelabelname,
     singlelabellevels,
     )
-PredictMD.open_plot(knetmlpclassifier_hist_training)
+PredictMD.open_plot(knet_mlp_classifier_hist_training)
 
-knetmlpclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    knetmlpclassifier,
+knet_mlp_classifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
+    knet_mlp_classifier,
     testing_features_df,
     testing_labels_df,
     singlelabelname,
     singlelabellevels,
     )
-PredictMD.open_plot(knetmlpclassifier_hist_testing)
+PredictMD.open_plot(knet_mlp_classifier_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
-    knetmlpclassifier,
+    knet_mlp_classifier,
     smoted_training_features_df,
     smoted_training_labels_df,
     singlelabelname,
@@ -268,7 +268,7 @@ PredictMD.singlelabelbinaryclassificationmetrics(
     )
 
 PredictMD.singlelabelbinaryclassificationmetrics(
-    knetmlpclassifier,
+    knet_mlp_classifier,
     testing_features_df,
     testing_labels_df,
     singlelabelname,
@@ -276,4 +276,4 @@ PredictMD.singlelabelbinaryclassificationmetrics(
     sensitivity = 0.95,
     )
 
-PredictMD.save_model(knetmlp_filename, knetmlpclassifier)
+PredictMD.save_model(knet_mlp_classifier_filename, knet_mlp_classifier)

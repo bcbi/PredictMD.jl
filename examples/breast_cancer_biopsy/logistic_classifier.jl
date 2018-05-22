@@ -62,7 +62,7 @@ smoted_training_features_df = CSV.read(
     DataFrames.DataFrame,
     )
 smoted_training_labels_df = CSV.read(
-    smoted_training_features_df_filename,
+    smoted_training_labels_df_filename,
     DataFrames.DataFrame,
     )
 
@@ -95,7 +95,7 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     featurenames,
     )
 
-logisticclassifier = PredictMD.singlelabelbinaryclassdataframelogisticclassifier(
+logistic_classifier = PredictMD.singlelabelbinaryclassdataframelogistic_classifier(
     featurenames,
     singlelabelname,
     singlelabellevels;
@@ -106,15 +106,15 @@ logisticclassifier = PredictMD.singlelabelbinaryclassdataframelogisticclassifier
     )
 
 PredictMD.fit!(
-    logisticclassifier,
+    logistic_classifier,
     smoted_training_features_df,
     smoted_training_labels_df,
     )
 
-PredictMD.get_underlying(logisticclassifier)
+PredictMD.get_underlying(logistic_classifier)
 
 logistic_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    logisticclassifier,
+    logistic_classifier,
     smoted_training_features_df,
     smoted_training_labels_df,
     singlelabelname,
@@ -123,7 +123,7 @@ logistic_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
 PredictMD.open_plot(logistic_hist_training)
 
 logistic_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    logisticclassifier,
+    logistic_classifier,
     testing_features_df,
     testing_labels_df,
     singlelabelname,
@@ -132,7 +132,7 @@ logistic_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
 PredictMD.open_plot(logistic_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
-    logisticclassifier,
+    logistic_classifier,
     testing_features_df,
     testing_labels_df,
     singlelabelname,
@@ -141,7 +141,7 @@ PredictMD.singlelabelbinaryclassificationmetrics(
     )
 
 PredictMD.singlelabelbinaryclassificationmetrics(
-    logisticclassifier,
+    logistic_classifier,
     testing_features_df,
     testing_labels_df,
     singlelabelname,
@@ -150,7 +150,7 @@ PredictMD.singlelabelbinaryclassificationmetrics(
     )
 
 logistic_calibration_curve = PredictMD.plot_probability_calibration_curve(
-    logisticclassifier,
+    logistic_classifier,
     smoted_training_features_df,
     smoted_training_labels_df,
     singlelabelname,
@@ -160,7 +160,7 @@ logistic_calibration_curve = PredictMD.plot_probability_calibration_curve(
 PredictMD.open_plot(logistic_calibration_curve)
 
 PredictMD.probability_calibration_metrics(
-    logisticclassifier,
+    logistic_classifier,
     testing_features_df,
     testing_labels_df,
     singlelabelname,
@@ -169,7 +169,7 @@ PredictMD.probability_calibration_metrics(
     )
 
 logistic_cutoffs, logistic_risk_group_prevalences = PredictMD.risk_score_cutoff_values(
-    logisticclassifier,
+    logistic_classifier,
     testing_features_df,
     testing_labels_df,
     singlelabelname,
@@ -185,7 +185,7 @@ println(
     )
 showall(logistic_risk_group_prevalences)
 logistic_cutoffs, logistic_risk_group_prevalences = PredictMD.risk_score_cutoff_values(
-    logisticclassifier,
+    logistic_classifier,
     testing_features_df,
     testing_labels_df,
     singlelabelname,
@@ -201,4 +201,4 @@ println(
     )
 showall(logistic_risk_group_prevalences)
 
-PredictMD.save_model(logisticclassifier_filename, logisticclassifier)
+PredictMD.save_model(logistic_classifier_filename, logistic_classifier)

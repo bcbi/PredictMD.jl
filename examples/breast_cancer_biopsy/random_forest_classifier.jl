@@ -63,7 +63,7 @@ smoted_training_features_df = CSV.read(
     DataFrames.DataFrame,
     )
 smoted_training_labels_df = CSV.read(
-    smoted_training_features_df_filename,
+    smoted_training_labels_df_filename,
     DataFrames.DataFrame,
     )
 
@@ -97,7 +97,7 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     featurenames,
     )
 
-rfclassifier = PredictMD.singlelabelmulticlassdataframerandomforestclassifier(
+random_forest_classifier = PredictMD.singlelabelmulticlassdataframerandomforestclassifier(
     featurenames,
     singlelabelname,
     singlelabellevels;
@@ -109,31 +109,31 @@ rfclassifier = PredictMD.singlelabelmulticlassdataframerandomforestclassifier(
     )
 
 PredictMD.fit!(
-    rfclassifier,
+    random_forest_classifier,
     smoted_training_features_df,
     smoted_training_labels_df,
     )
 
-rfclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    rfclassifier,
+random_forest_classifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
+    random_forest_classifier,
     smoted_training_features_df,
     smoted_training_labels_df,
     singlelabelname,
     singlelabellevels,
     )
-PredictMD.open_plot(rfclassifier_hist_training)
+PredictMD.open_plot(random_forest_classifier_hist_training)
 
-rfclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    rfclassifier,
+random_forest_classifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
+    random_forest_classifier,
     testing_features_df,
     testing_labels_df,
     singlelabelname,
     singlelabellevels,
     )
-PredictMD.open_plot(rfclassifier_hist_testing)
+PredictMD.open_plot(random_forest_classifier_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
-    rfclassifier,
+    random_forest_classifier,
     smoted_training_features_df,
     smoted_training_labels_df,
     singlelabelname,
@@ -142,7 +142,7 @@ PredictMD.singlelabelbinaryclassificationmetrics(
     )
 
 PredictMD.singlelabelbinaryclassificationmetrics(
-    rfclassifier,
+    random_forest_classifier,
     testing_features_df,
     testing_labels_df,
     singlelabelname,
@@ -150,4 +150,4 @@ PredictMD.singlelabelbinaryclassificationmetrics(
     sensitivity = 0.95,
     )
 
-PredictMD.save_model(rfclassifier_filename, rfclassifier)
+PredictMD.save_model(random_forest_classifier_filename, random_forest_classifier)
