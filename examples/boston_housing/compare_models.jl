@@ -59,7 +59,7 @@ random_forest_regression_filename = ENV["random_forest_regression_filename"]
 knet_mlp_regression_filename = ENV["knet_mlp_regression_filename"]
 
 linear_regression = PredictMD.load_model(linear_regression_filename)
-random_forest_reg = PredictMD.load_model(random_forest_reg_filename)
+random_forest_regression = PredictMD.load_model(random_forest_regression_filename)
 
 function knetmlp_predict(
         w, # don't put a type annotation on this
@@ -101,28 +101,22 @@ knet_mlp_regression = PredictMD.load_model(knet_mlp_regression_filename)
 
 all_models = PredictMD.Fittable[
     linear_regression,
-    random_forest_reg,
+    random_forest_regression,
     knet_mlp_regression,
     ]
+
+singlelabelname = :MedV
 
 showall(PredictMD.singlelabelregressionmetrics(
     all_models,
     training_features_df,
     training_labels_df,
-    labelname,
+    singlelabelname,
     ))
 
 showall(PredictMD.singlelabelregressionmetrics(
     all_models,
     testing_features_df,
     testing_labels_df,
-    labelname,
+    singlelabelname,
     ))
-
-PredictMD.predict(linear_regression,training_features_df,)
-PredictMD.predict(random_forest_reg,training_features_df,)
-PredictMD.predict(knet_mlp_regression,training_features_df,)
-
-PredictMD.predict(linear_regression,testing_features_df,)
-PredictMD.predict(random_forest_reg,testing_features_df,)
-PredictMD.predict(knet_mlp_regression,testing_features_df,)

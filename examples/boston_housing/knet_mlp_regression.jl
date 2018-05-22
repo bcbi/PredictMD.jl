@@ -54,11 +54,32 @@ validation_labels_df = CSV.read(
     DataFrames.DataFrame,
     )
 
+categoricalfeaturenames = Symbol[]
+continuousfeaturenames = Symbol[
+    :Crim,
+    :Zn,
+    :Indus,
+    :Chas,
+    :NOx,
+    :Rm,
+    :Age,
+    :Dis,
+    :Rad,
+    :Tax,
+    :PTRatio,
+    :Black,
+    :LStat,
+    ]
+featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
+
+singlelabelname = :MedV
+labelnames = [singlelabelname]
+
 ENV["knet_mlp_regression_filename"] = string(
     tempname(),
     "_knet_mlp_regression.jld2",
     )
-knet_mlp_regression = ENV["knet_mlp_regression_filename"]
+knet_mlp_regression_filename = ENV["knet_mlp_regression_filename"]
 
 function knetmlp_predict(
         w, # don't put a type annotation on this
@@ -128,7 +149,7 @@ feature_contrasts = PredictMD.generate_feature_contrasts(training_features_df, f
 
 knet_mlp_regression = PredictMD.singlelabeldataframeknetregression(
     featurenames,
-    labelname;
+    singlelabelname;
     package = :Knetjl,
     name = "Knet MLP",
     predict = knetmlp_predict,
@@ -150,7 +171,6 @@ PredictMD.fit!(
     validation_features_df,
     validation_labels_df,
     )
-
 
 knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
     knet_mlp_regression,
@@ -188,7 +208,7 @@ knet_mlp_regression_plot_training = PredictMD.plotsinglelabelregressiontrueversu
     knet_mlp_regression,
     training_features_df,
     training_labels_df,
-    labelname,
+    singlelabelname,
     )
 PredictMD.open_plot(knet_mlp_regression_plot_training)
 
@@ -196,7 +216,7 @@ knet_mlp_regression_plot_testing = PredictMD.plotsinglelabelregressiontrueversus
     knet_mlp_regression,
     testing_features_df,
     testing_labels_df,
-    labelname,
+    singlelabelname,
     )
 PredictMD.open_plot(knet_mlp_regression_plot_testing)
 
@@ -204,14 +224,14 @@ PredictMD.singlelabelregressionmetrics(
     knet_mlp_regression,
     training_features_df,
     training_labels_df,
-    labelname,
+    singlelabelname,
     )
 
 PredictMD.singlelabelregressionmetrics(
     knet_mlp_regression,
     testing_features_df,
     testing_labels_df,
-    labelname,
+    singlelabelname,
     )
 
-PredictMD.save_model(knet_mlp_regression, knet_mlp_regression)
+PredictMD.save_model(knet_mlp_regression_filename, knet_mlp_regression)

@@ -59,7 +59,7 @@ random_forest_regression_filename = ENV["random_forest_regression_filename"]
 knet_mlp_regression_filename = ENV["knet_mlp_regression_filename"]
 
 linear_regression = PredictMD.load_model(linear_regression_filename)
-random_forest_reg = PredictMD.load_model(random_forest_reg_filename)
+random_forest_regression = PredictMD.load_model(random_forest_regression_filename)
 
 function knetmlp_predict(
         w, # don't put a type annotation on this
@@ -100,9 +100,9 @@ end
 knet_mlp_regression = PredictMD.load_model(knet_mlp_regression_filename)
 
 PredictMD.predict(linear_regression,training_features_df,)
-PredictMD.predict(random_forest_reg,training_features_df,)
+PredictMD.predict(random_forest_regression,training_features_df,)
 PredictMD.predict(knet_mlp_regression,training_features_df,)
 
 PredictMD.predict(linear_regression,testing_features_df,)
-PredictMD.predict(random_forest_reg,testing_features_df,)
+PredictMD.predict(random_forest_regression,testing_features_df,)
 PredictMD.predict(knet_mlp_regression,testing_features_df,)

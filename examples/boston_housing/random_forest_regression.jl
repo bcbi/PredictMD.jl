@@ -53,6 +53,27 @@ validation_labels_df = CSV.read(
     DataFrames.DataFrame,
     )
 
+categoricalfeaturenames = Symbol[]
+continuousfeaturenames = Symbol[
+    :Crim,
+    :Zn,
+    :Indus,
+    :Chas,
+    :NOx,
+    :Rm,
+    :Age,
+    :Dis,
+    :Rad,
+    :Tax,
+    :PTRatio,
+    :Black,
+    :LStat,
+    ]
+featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
+
+singlelabelname = :MedV
+labelnames = [singlelabelname]
+
 ENV["random_forest_regression_filename"] = string(
     tempname(),
     "_random_forest_regression.jld2",
@@ -61,9 +82,9 @@ random_forest_regression_filename = ENV["random_forest_regression_filename"]
 
 feature_contrasts = PredictMD.generate_feature_contrasts(training_features_df, featurenames)
 
-random_forest_regression = PredictMD.singlelabeldataframerandom_forest_regressionression(
+random_forest_regression = PredictMD.singlelabeldataframerandomforestregression(
     featurenames,
-    labelname;
+    singlelabelname;
     nsubfeatures = 2, # number of subfeatures; defaults to 2
     ntrees = 20, # number of trees; defaults to 10
     package = :DecisionTreejl,
@@ -77,7 +98,7 @@ random_forest_regression_plot_training = PredictMD.plotsinglelabelregressiontrue
     random_forest_regression,
     training_features_df,
     training_labels_df,
-    labelname,
+    singlelabelname,
     )
 PredictMD.open_plot(random_forest_regression_plot_training)
 
@@ -85,7 +106,7 @@ random_forest_regression_plot_testing = PredictMD.plotsinglelabelregressiontruev
     random_forest_regression,
     testing_features_df,
     testing_labels_df,
-    labelname,
+    singlelabelname,
     )
 PredictMD.open_plot(random_forest_regression_plot_testing)
 
@@ -93,14 +114,14 @@ PredictMD.singlelabelregressionmetrics(
     random_forest_regression,
     training_features_df,
     training_labels_df,
-    labelname,
+    singlelabelname,
     )
 
 PredictMD.singlelabelregressionmetrics(
     random_forest_regression,
     testing_features_df,
     testing_labels_df,
-    labelname,
+    singlelabelname,
     )
 
 PredictMD.save_model(random_forest_regression_filename, random_forest_regression)
