@@ -5,36 +5,51 @@ import DataFrames
 import LIBSVM
 import PredictMD
 
+mkpath(
+    joinpath(
+        tempdir(),
+        "breast_cancer_biopsy_example",
+        ),
+    )
+
 trainingandvalidation_features_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "trainingandvalidation_features_df.csv",
     )
 trainingandvalidation_labels_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "trainingandvalidation_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "testing_features_df.csv",
     )
 testing_labels_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "testing_labels_df.csv",
     )
 training_features_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "training_features_df.csv",
     )
 training_labels_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "training_labels_df.csv",
     )
 validation_features_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "validation_features_df.csv",
     )
 validation_labels_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "validation_labels_df.csv",
     )
 trainingandvalidation_features_df = CSV.read(
@@ -76,10 +91,12 @@ validation_labels_df = CSV.read(
 
 smoted_training_features_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "smoted_training_features_df.csv",
     )
 smoted_training_labels_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "smoted_training_labels_df.csv",
     )
 smoted_training_features_df = CSV.read(
@@ -109,10 +126,6 @@ singlelabelname = :Class
 negativeclass = "benign"
 positiveclass = "malignant"
 singlelabellevels = [negativeclass, positiveclass]
-nu_svc_svm_classifier_filename = joinpath(
-    tempdir(),
-    "nu_svc_svm_classifier.jld2",
-    )
 
 feature_contrasts = PredictMD.generate_feature_contrasts(
     smoted_training_features_df,
@@ -170,6 +183,12 @@ PredictMD.singlelabelbinaryclassificationmetrics(
     singlelabelname,
     positiveclass;
     sensitivity = 0.95,
+    )
+
+nu_svc_svm_classifier_filename = joinpath(
+    tempdir(),
+    "breast_cancer_biopsy_example",
+    "nu_svc_svm_classifier.jld2",
     )
 
 PredictMD.save_model(nu_svc_svm_classifier_filename, nu_svc_svm_classifier)

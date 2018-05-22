@@ -7,34 +7,42 @@ import PredictMD
 
 trainingandvalidation_features_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "trainingandvalidation_features_df.csv",
     )
 trainingandvalidation_labels_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "trainingandvalidation_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "testing_features_df.csv",
     )
 testing_labels_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "testing_labels_df.csv",
     )
 training_features_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "training_features_df.csv",
     )
 training_labels_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "training_labels_df.csv",
     )
 validation_features_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "validation_features_df.csv",
     )
 validation_labels_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "validation_labels_df.csv",
     )
 trainingandvalidation_features_df = CSV.read(
