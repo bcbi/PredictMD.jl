@@ -72,8 +72,8 @@ training_features_df = CSV.read(
     training_features_df_filename,
     DataFrames.DataFrame,
     )
-training_features_df = CSV.read(
-    training_features_df_filename,
+training_labels_df = CSV.read(
+    training_labels_df_filename,
     DataFrames.DataFrame,
     )
 validation_features_df = CSV.read(
@@ -171,6 +171,11 @@ function knetmlp_loss(
     return loss
 end
 
+feature_contrasts = PredictMD.generate_feature_contrasts(
+    smoted_training_features_df,
+    featurenames,
+    )
+
 knetmlp_modelweights = Any[
     # input layer has dimension contrasts.num_array_columns
     #
@@ -207,11 +212,6 @@ knetmlp_optimizationalgorithm = :Momentum
 knetmlp_optimizerhyperparameters = Dict()
 knetmlp_minibatchsize = 48
 knetmlp_maxepochs = 1_000
-
-feature_contrasts = PredictMD.generate_feature_contrasts(
-    smoted_training_features_df,
-    featurenames,
-    )
 
 knet_mlp_classifier = PredictMD.singlelabelmulticlassdataframeknetclassifier(
     featurenames,

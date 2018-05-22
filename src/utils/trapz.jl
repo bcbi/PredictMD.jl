@@ -1,9 +1,10 @@
 import NumericalIntegration
 
 """
-    trapz(x,y)
+    trapz(x, y)
 
-Compute the area under the curve of (x,y) points using the trapezoidal method.
+Compute the area under the curve of 2-dimensional points (x, y) using the
+trapezoidal method.
 """
 function trapz(
         x::AbstractVector,
@@ -15,12 +16,11 @@ function trapz(
     if length(x) == 0
         error("length(x) == 0")
     end
-    N = length(x)
     if !all(x .== sort(x; rev = false))
         error("x needs to be sorted in ascending order")
     end
     twoI = 0
-    for k = 2:N
+    for k = 2:length(x)
         twoI += ( y[k] + y[k-1] ) * ( x[k] - x[k-1] )
     end
     I = twoI/2

@@ -72,8 +72,8 @@ training_features_df = CSV.read(
     training_features_df_filename,
     DataFrames.DataFrame,
     )
-training_features_df = CSV.read(
-    training_features_df_filename,
+training_labels_df = CSV.read(
+    training_labels_df_filename,
     DataFrames.DataFrame,
     )
 validation_features_df = CSV.read(
