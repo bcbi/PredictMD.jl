@@ -23,5 +23,6 @@ docs_dir: 'build'
 pages:
     - Home: index.md
     - Examples: examples.md
+    - Boy: examples/boston_housing/boston_housing.md
     - Library:
         - 'Internals': 'library/internals.md'
