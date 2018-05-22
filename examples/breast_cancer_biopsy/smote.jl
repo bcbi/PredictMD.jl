@@ -3,6 +3,7 @@ srand(999)
 import CSV
 import DataFrames
 import PredictMD
+import StatsBase
 
 trainingandvalidation_features_df_filename =
     ENV["trainingandvalidation_features_df_filename"]
@@ -53,54 +54,45 @@ validation_labels_df = CSV.read(
     DataFrames.DataFrame,
     )
 
-ENV["random_forest_regression_filename"] = string(
-    tempname(),
-    "_random_forest_regression.jld2",
-    )
-random_forest_regression_filename = ENV["random_forest_regression_filename"]
 
-feature_contrasts = PredictMD.generate_feature_contrasts(training_features_df, featurenames)
+DataFrames.describe(training_labels_df[labelname])
+StatsBase.countmap(training_labels_df[labelname])
 
-random_forest_regression = PredictMD.singlelabeldataframerandom_forest_regressionression(
+majorityclass = "benign"
+minorityclass = "malignant"
+
+smoted_training_features_df, smoted_training_labels_df = PredictMD.smote(
+    training_features_df,
+    training_labels_df,
     featurenames,
     labelname;
-    nsubfeatures = 2, # number of subfeatures; defaults to 2
-    ntrees = 20, # number of trees; defaults to 10
-    package = :DecisionTreejl,
-    name = "Random forest", # optional
-    feature_contrasts = feature_contrasts,
+    majorityclass = majorityclass,
+    minorityclass = minorityclass,
+    pct_over = 100, # how much to oversample the minority class
+    minority_to_majority_ratio = 1.0, # desired minority:majority ratio
+    k = 5,
     )
 
-PredictMD.fit!(random_forest_regression,training_features_df,training_labels_df,)
+DataFrames.describe(smoted_training_labels_df[labelname])
+StatsBase.countmap(smoted_training_labels_df[labelname])
 
-random_forest_regression_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
-    random_forest_regression,
-    training_features_df,
-    training_labels_df,
-    labelname,
+ENV["smoted_training_features_df_filename"] = string(
+    tempname(),
+    "_smoted_training_features_df.csv",
     )
-PredictMD.open_plot(random_forest_regression_plot_training)
-
-random_forest_regression_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
-    random_forest_regression,
-    testing_features_df,
-    testing_labels_df,
-    labelname,
+ENV["smoted_training_labels_df_filename"] = string(
+    tempname(),
+    "_smoted_training_labels_df.csv",
     )
-PredictMD.open_plot(random_forest_regression_plot_testing)
-
-PredictMD.singlelabelregressionmetrics(
-    random_forest_regression,
-    training_features_df,
-    training_labels_df,
-    labelname,
+smoted_training_features_df_filename =
+    ENV["smoted_training_features_df_filename"]
+smoted_training_labels_df_filename =
+    ENV["smoted_training_labels_df_filename"]
+CSV.write(
+    smoted_training_features_df_filename,
+    smoted_training_features_df,
     )
-
-PredictMD.singlelabelregressionmetrics(
-    random_forest_regression,
-    testing_features_df,
-    testing_labels_df,
-    labelname,
+CSV.write(
+    smoted_training_labels_df_filename,
+    smoted_training_labels_df,
     )
-
-PredictMD.save_model(random_forest_regression_filename, random_forest_regression)

@@ -2,6 +2,7 @@ srand(999)
 
 import CSV
 import DataFrames
+import LIBSVM
 import PredictMD
 
 trainingandvalidation_features_df_filename =
@@ -53,54 +54,76 @@ validation_labels_df = CSV.read(
     DataFrames.DataFrame,
     )
 
-ENV["random_forest_regression_filename"] = string(
-    tempname(),
-    "_random_forest_regression.jld2",
+smoted_training_features_df_filename =
+    ENV["smoted_training_features_df_filename"]
+smoted_training_labels_df_filename =
+    ENV["smoted_training_labels_df_filename"]
+smoted_training_features_df = CSV.read(
+    smoted_training_features_df_filename,
+    DataFrames.DataFrame,
     )
-random_forest_regression_filename = ENV["random_forest_regression_filename"]
+smoted_training_labels_df = CSV.read(
+    smoted_training_features_df_filename,
+    DataFrames.DataFrame,
+    )
 
-feature_contrasts = PredictMD.generate_feature_contrasts(training_features_df, featurenames)
+ENV["nu_svc_svm_classifier_filename"] = string(
+    tempname(),
+    "nu_svc_svm_classifier.jld2",
+    )
+nu_svc_svm_classifier_filename = ENV["nu_svc_svm_classifier_filename"]
 
-random_forest_regression = PredictMD.singlelabeldataframerandom_forest_regressionression(
+nusvc_svmclassifier = PredictMD.singlelabelmulticlassdataframesvmclassifier(
     featurenames,
-    labelname;
-    nsubfeatures = 2, # number of subfeatures; defaults to 2
-    ntrees = 20, # number of trees; defaults to 10
-    package = :DecisionTreejl,
-    name = "Random forest", # optional
+    labelname,
+    labellevels;
+    package = :LIBSVMjl,
+    svmtype = LIBSVM.NuSVC,
+    name = "SVM (nu-SVC)",
+    verbose = false,
     feature_contrasts = feature_contrasts,
     )
 
-PredictMD.fit!(random_forest_regression,training_features_df,training_labels_df,)
-
-random_forest_regression_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
-    random_forest_regression,
-    training_features_df,
-    training_labels_df,
-    labelname,
+PredictMD.fit!(
+    nusvc_svmclassifier,
+    smoted_training_features_df,
+    smoted_training_labels_df,
     )
-PredictMD.open_plot(random_forest_regression_plot_training)
 
-random_forest_regression_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
-    random_forest_regression,
+nusvc_svmclassifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
+    nusvc_svmclassifier,
+    smoted_training_features_df,
+    smoted_training_labels_df,
+    labelname,
+    labellevels,
+    )
+PredictMD.open_plot(nusvc_svmclassifier_hist_training)
+
+nusvc_svmclassifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
+    nusvc_svmclassifier,
     testing_features_df,
     testing_labels_df,
     labelname,
+    labellevels,
     )
-PredictMD.open_plot(random_forest_regression_plot_testing)
+PredictMD.open_plot(nusvc_svmclassifier_hist_testing)
 
-PredictMD.singlelabelregressionmetrics(
-    random_forest_regression,
-    training_features_df,
-    training_labels_df,
+PredictMD.singlelabelbinaryclassificationmetrics(
+    nusvc_svmclassifier,
+    smoted_training_features_df,
+    smoted_training_labels_df,
     labelname,
+    positiveclass;
+    sensitivity = 0.95,
     )
 
-PredictMD.singlelabelregressionmetrics(
-    random_forest_regression,
+PredictMD.singlelabelbinaryclassificationmetrics(
+    nusvc_svmclassifier,
     testing_features_df,
     testing_labels_df,
     labelname,
+    positiveclass;
+    sensitivity = 0.95,
     )
 
-PredictMD.save_model(random_forest_regression_filename, random_forest_regression)
+PredictMD.save_model(nusvc_svmclassifier_filename, nusvc_svmclassifier)

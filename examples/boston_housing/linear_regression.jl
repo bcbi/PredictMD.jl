@@ -1,8 +1,8 @@
 srand(999)
 
-import PredictMD
 import CSV
 import DataFrames
+import PredictMD
 
 trainingandvalidation_features_df_filename =
     ENV["trainingandvalidation_features_df_filename"]
@@ -57,7 +57,6 @@ ENV["linear_regression_filename"] = string(
     tempname(),
     "_linear_regression.jld2",
     )
-Base.Test.@test(!isfile(ENV["linear_regression_filename"]))
 linear_regression_filename = ENV["linear_regression_filename"]
 
 linear_regression = PredictMD.singlelabeldataframelinear_regressionression(

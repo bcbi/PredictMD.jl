@@ -2,21 +2,11 @@ srand(999)
 
 import CSV
 import DataFrames
-import GZip
 import PredictMD
+import RDatasets
 import StatsBase
 
-df = CSV.read(
-    GZip.gzopen(
-        joinpath(
-            Pkg.dir("RDatasets"),
-            "data",
-            "MASS",
-            "Boston.csv.gz",
-            ),
-        ),
-    DataFrames.DataFrame,
-    )
+df = RDatasets.dataset("MASS", "biopsy")
 
 DataFrames.dropmissing!(df)
 
@@ -24,29 +14,27 @@ PredictMD.shuffle_rows!(df)
 
 categoricalfeaturenames = Symbol[]
 continuousfeaturenames = Symbol[
-    :Crim,
-    :Zn,
-    :Indus,
-    :Chas,
-    :NOx,
-    :Rm,
-    :Age,
-    :Dis,
-    :Rad,
-    :Tax,
-    :PTRatio,
-    :Black,
-    :LStat,
+    :V1,
+    :V2,
+    :V3,
+    :V4,
+    :V5,
+    :V6,
+    :V7,
+    :V8,
+    :V9,
     ]
 featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
-singlelabelname = :MedV
-labelnames = [singlelabelname]
+singlelabelname = :Class
+negativeclass = "benign"
+positiveclass = "malignant"
+singlelabellevels = [negativeclass, positiveclass]
+
+labelnames = [singlelabelname
 
 features_df = df[featurenames]
 labels_df = df[labelnames]
-
-DataFrames.describe(labels_df[singlelabelname])
 
 trainingandvalidation_features_df,
     trainingandvalidation_labels_df,
@@ -54,7 +42,7 @@ trainingandvalidation_features_df,
     testing_labels_df = PredictMD.split_data(
         features_df,
         labels_df,
-        0.75, # 75% training/validation, 25% testing
+        0.75, # 75% training+validation, 25% testing
         )
 training_features_df,
     training_labels_df,

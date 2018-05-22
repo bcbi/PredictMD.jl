@@ -99,26 +99,6 @@ end
 
 knet_mlp_regression = PredictMD.load_model(knet_mlp_regression_filename)
 
-all_models = PredictMD.Fittable[
-    linear_regression,
-    random_forest_reg,
-    knet_mlp_regression,
-    ]
-
-showall(PredictMD.singlelabelregressionmetrics(
-    all_models,
-    training_features_df,
-    training_labels_df,
-    labelname,
-    ))
-
-showall(PredictMD.singlelabelregressionmetrics(
-    all_models,
-    testing_features_df,
-    testing_labels_df,
-    labelname,
-    ))
-
 PredictMD.predict(linear_regression,training_features_df,)
 PredictMD.predict(random_forest_reg,training_features_df,)
 PredictMD.predict(knet_mlp_regression,training_features_df,)
