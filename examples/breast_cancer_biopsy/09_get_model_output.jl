@@ -80,10 +80,12 @@ validation_labels_df = CSV.read(
 
 smoted_training_features_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "smoted_training_features_df.csv",
     )
 smoted_training_labels_df_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "smoted_training_labels_df.csv",
     )
 smoted_training_features_df = CSV.read(
@@ -97,22 +99,27 @@ smoted_training_labels_df = CSV.read(
 
 logistic_classifier_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "logistic_classifier.jld2",
     )
 random_forest_classifier_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "random_forest_classifier.jld2",
     )
 c_svc_svm_classifier_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "c_svc_svm_classifier.jld2",
     )
 nu_svc_svm_classifier_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "nu_svc_svm_classifier.jld2",
     )
 knet_mlp_classifier_filename = joinpath(
     tempdir(),
+    "breast_cancer_biopsy_example",
     "knet_mlp_classifier.jld2",
     )
 

@@ -127,7 +127,7 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     featurenames,
     )
 
-logistic_classifier = PredictMD.singlelabelbinaryclassdataframelogistic_classifier(
+logistic_classifier = PredictMD.singlelabelbinaryclassdataframelogisticclassifier(
     featurenames,
     singlelabelname,
     singlelabellevels;

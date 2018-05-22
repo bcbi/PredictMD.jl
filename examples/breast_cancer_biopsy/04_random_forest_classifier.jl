@@ -1,6 +1,5 @@
 srand(999)
 
-
 import CSV
 import DataFrames
 import PredictMD
