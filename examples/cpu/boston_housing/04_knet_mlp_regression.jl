@@ -110,10 +110,7 @@ function knetmlp_predict(
         w, # don't put a type annotation on this
         x0::AbstractArray,
         )
-    # x0 = input layer
-    # x1 = hidden layer
     x1 = Knet.relu.( w[1]*x0 .+ w[2] ) # w[1] = weights, w[2] = biases
-    # x2 = output layer
     x2 = w[3]*x1 .+ w[4] # w[3] = weights, w[4] = biases
     return x2
 end
@@ -145,17 +142,12 @@ end
 feature_contrasts = PredictMD.generate_feature_contrasts(training_features_df, featurenames)
 
 knetmlp_modelweights = Any[
-    # input layer has dimension contrasts.num_array_columns
-    #
-    # hidden layer (10 neurons):
     Cfloat.(
         0.1f0*randn(Cfloat,10,feature_contrasts.num_array_columns) # weights
         ),
     Cfloat.(
         zeros(Cfloat,10,1) # biases
         ),
-    #
-    # output layer (regression nets have exactly 1 neuron in output layer):
     Cfloat.(
         0.1f0*randn(Cfloat,1,10) # weights
         ),

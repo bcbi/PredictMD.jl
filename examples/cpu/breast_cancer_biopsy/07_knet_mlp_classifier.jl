@@ -128,12 +128,8 @@ function knetmlp_predict(
         x0::AbstractArray;
         probabilities::Bool = true,
         )
-    # x0 = input layer
-    # x1 = first hidden layer
     x1 = Knet.relu.( w[1]*x0 .+ w[2] ) # w[1] = weights, w[2] = biases
-    # x2 = second hidden layer
     x2 = Knet.relu.( w[3]*x1 .+ w[4] ) # w[3] = weights, w[4] = biases
-    # x3 = output layer
     x3 = w[5]*x2 .+ w[6] # w[5] = weights, w[6] = biases
     unnormalizedlogprobs = x3
     if probabilities
@@ -177,25 +173,18 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     )
 
 knetmlp_modelweights = Any[
-    # input layer has dimension contrasts.num_array_columns
-    #
-    # first hidden layer (64 neurons):
     Cfloat.(
         0.1f0*randn(Cfloat,64,feature_contrasts.num_array_columns) # weights
         ),
     Cfloat.(
         zeros(Cfloat,64,1) # biases
         ),
-    #
-    # second hidden layer (32 neurons):
     Cfloat.(
         0.1f0*randn(Cfloat,32,64) # weights
         ),
     Cfloat.(
         zeros(Cfloat,32,1) # biases
         ),
-    #
-    # output layer (number of neurons == number of classes):
     Cfloat.(
         0.1f0*randn(Cfloat,2,32) # weights
         ),
