@@ -26,22 +26,23 @@ boston_housing_input_directory = joinpath(
     examples_input_parent_directory,
     "boston_housing",
     )
-boston_housing_input_file = joinpath(
-    boston_housing_input_directory,
-    "boston_housing.jl",
-    )
 
 Literate.markdown(
-    boston_housing_input_file,
-    boston_housing_output_directory,
+    joinpath(boston_housing_input_directory, "boston_housing.jl"),
+    boston_housing_output_directory;
+    documenter = true,
     )
 Literate.notebook(
-    boston_housing_input_file,
-    boston_housing_output_directory,
+    joinpath(boston_housing_input_directory, "boston_housing.jl"),
+    boston_housing_output_directory;
+    documenter = true,
+    execute = false,
     )
 Literate.script(
-    boston_housing_input_file,
-    boston_housing_output_directory,
+    joinpath(boston_housing_input_directory, "boston_housing.jl"),
+    boston_housing_output_directory;
+    documenter = true,
+    keep_comments = true,
     )
 
 info("DEBUG: using Documenter.jl to generate Markdown docs")
