@@ -26,6 +26,8 @@ end
 """
 """
 function save_plot_pdf(filename::AbstractString, tp::TikzPictures.TikzPicture)
+    parent_directory = Base.Filesystem.dirname(filename)
+    Base.Filesystem.mkpath(parent_directory)
     result = TikzPictures.save(TikzPictures.PDF(filename), tp)
     return result
 end
@@ -33,6 +35,8 @@ end
 """
 """
 function save_plot_tex(filename::AbstractString, tp::TikzPictures.TikzPicture)
+    parent_directory = Base.Filesystem.dirname(filename)
+    Base.Filesystem.mkpath(parent_directory)
     result = TikzPictures.save(TikzPictures.TEX(filename), tp)
     return result
 end
@@ -40,6 +44,8 @@ end
 """
 """
 function save_plot_tikz(filename::AbstractString, tp::TikzPictures.TikzPicture)
+    parent_directory = Base.Filesystem.dirname(filename)
+    Base.Filesystem.mkpath(parent_directory)
     result = TikzPictures.save(TikzPictures.TIKZ(filename), tp)
     return result
 end
@@ -47,6 +53,8 @@ end
 """
 """
 function save_plot_svg(filename::AbstractString, tp::TikzPictures.TikzPicture)
+    parent_directory = Base.Filesystem.dirname(filename)
+    Base.Filesystem.mkpath(parent_directory)
     result = TikzPictures.save(TikzPictures.SVG(filename), tp)
     return result
 end
@@ -62,7 +70,7 @@ end
 """
 """
 function open_plot(filename::AbstractString, tp::TikzPictures.TikzPicture)
-    saveresult = save_plot_svg(filename, tp)
+    saveresult = save_plot(filename, tp)
     openresult = open_browser_window(filename)
     return openresult
 end

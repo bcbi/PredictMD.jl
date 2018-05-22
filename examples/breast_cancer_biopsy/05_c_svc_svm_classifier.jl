@@ -5,22 +5,38 @@ import DataFrames
 import LIBSVM
 import PredictMD
 
-trainingandvalidation_features_df_filename =
-    ENV["trainingandvalidation_features_df_filename"]
-trainingandvalidation_labels_df_filename =
-    ENV["trainingandvalidation_labels_df_filename"]
-testing_features_df_filename =
-    ENV["testing_features_df_filename"]
-testing_labels_df_filename =
-    ENV["testing_labels_df_filename"]
-training_features_df_filename =
-    ENV["training_features_df_filename"]
-training_labels_df_filename =
-    ENV["training_labels_df_filename"]
-validation_features_df_filename =
-    ENV["validation_features_df_filename"]
-validation_labels_df_filename =
-    ENV["validation_labels_df_filename"]
+trainingandvalidation_features_df_filename = joinpath(
+    tempdir(),
+    "trainingandvalidation_features_df.csv",
+    )
+trainingandvalidation_labels_df_filename = joinpath(
+    tempdir(),
+    "trainingandvalidation_labels_df.csv",
+    )
+testing_features_df_filename = joinpath(
+    tempdir(),
+    "testing_features_df.csv",
+    )
+testing_labels_df_filename = joinpath(
+    tempdir(),
+    "testing_labels_df.csv",
+    )
+training_features_df_filename = joinpath(
+    tempdir(),
+    "training_features_df.csv",
+    )
+training_labels_df_filename = joinpath(
+    tempdir(),
+    "training_labels_df.csv",
+    )
+validation_features_df_filename = joinpath(
+    tempdir(),
+    "validation_features_df.csv",
+    )
+validation_labels_df_filename = joinpath(
+    tempdir(),
+    "validation_labels_df.csv",
+    )
 trainingandvalidation_features_df = CSV.read(
     trainingandvalidation_features_df_filename,
     DataFrames.DataFrame,
@@ -54,10 +70,14 @@ validation_labels_df = CSV.read(
     DataFrames.DataFrame,
     )
 
-smoted_training_features_df_filename =
-    ENV["smoted_training_features_df_filename"]
-smoted_training_labels_df_filename =
-    ENV["smoted_training_labels_df_filename"]
+smoted_training_features_df_filename = joinpath(
+    tempdir(),
+    "smoted_training_features_df.csv",
+    )
+smoted_training_labels_df_filename = joinpath(
+    tempdir(),
+    "smoted_training_labels_df.csv",
+    )
 smoted_training_features_df = CSV.read(
     smoted_training_features_df_filename,
     DataFrames.DataFrame,
@@ -85,11 +105,10 @@ singlelabelname = :Class
 negativeclass = "benign"
 positiveclass = "malignant"
 singlelabellevels = [negativeclass, positiveclass]
-ENV["c_svc_svm_classifier_filename"] = string(
-    tempname(),
+c_svc_svm_classifier_filename = joinpath(
+    tempdir(),
     "c_svc_svm_classifier.jld2",
     )
-c_svc_svm_classifier_filename = ENV["c_svc_svm_classifier_filename"]
 
 feature_contrasts = PredictMD.generate_feature_contrasts(
     smoted_training_features_df,

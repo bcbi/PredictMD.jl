@@ -17,6 +17,7 @@ examples_output_parent_directory = joinpath(
     "src",
     "examples",
     )
+mkpath(examples_output_parent_directory)
 
 boston_housing_input_directory = joinpath(
     examples_input_parent_directory,
@@ -26,6 +27,7 @@ boston_housing_output_directory = joinpath(
     examples_output_parent_directory,
     "boston_housing",
     )
+mkpath(boston_housing_output_directory)
 
 Literate.markdown(
     joinpath(boston_housing_input_directory, "01_preprocess_data.jl"),
@@ -143,6 +145,7 @@ breast_cancer_biopsy_output_directory = joinpath(
     examples_output_parent_directory,
     "breast_cancer_biopsyg",
     )
+mkpath(breast_cancer_biopsy_output_directory)
 
 Literate.markdown(
     joinpath(breast_cancer_biopsy_input_directory, "01_preprocess_data.jl"),

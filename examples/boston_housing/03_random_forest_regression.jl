@@ -4,36 +4,51 @@ import CSV
 import DataFrames
 import PredictMD
 
+mkpath(
+    joinpath(
+        tempdir(),
+        "boston_housing_example",
+        ),
+    )
+
 trainingandvalidation_features_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "trainingandvalidation_features_df.csv",
     )
 trainingandvalidation_labels_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "trainingandvalidation_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "testing_features_df.csv",
     )
 testing_labels_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "testing_labels_df.csv",
     )
 training_features_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "training_features_df.csv",
     )
 training_labels_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "training_labels_df.csv",
     )
 validation_features_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "validation_features_df.csv",
     )
 validation_labels_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "validation_labels_df.csv",
     )
 trainingandvalidation_features_df = CSV.read(
@@ -90,12 +105,6 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 singlelabelname = :MedV
 labelnames = [singlelabelname]
 
-
-random_forest_regression_filename = joinpath(
-    tempdir(),
-    "random_forest_regression.jld2",
-    )
-
 feature_contrasts = PredictMD.generate_feature_contrasts(training_features_df, featurenames)
 
 random_forest_regression = PredictMD.singlelabeldataframerandomforestregression(
@@ -138,6 +147,12 @@ PredictMD.singlelabelregressionmetrics(
     testing_features_df,
     testing_labels_df,
     singlelabelname,
+    )
+
+random_forest_regression_filename = joinpath(
+    tempdir(),
+    "boston_housing_example",
+    "random_forest_regression.jld2",
     )
 
 PredictMD.save_model(random_forest_regression_filename, random_forest_regression)

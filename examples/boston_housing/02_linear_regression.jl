@@ -4,36 +4,51 @@ import CSV
 import DataFrames
 import PredictMD
 
+mkpath(
+    joinpath(
+        tempdir(),
+        "boston_housing_example",
+        ),
+    )
+
 trainingandvalidation_features_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "trainingandvalidation_features_df.csv",
     )
 trainingandvalidation_labels_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "trainingandvalidation_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "testing_features_df.csv",
     )
 testing_labels_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "testing_labels_df.csv",
     )
 training_features_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "training_features_df.csv",
     )
 training_labels_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "training_labels_df.csv",
     )
 validation_features_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "validation_features_df.csv",
     )
 validation_labels_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "validation_labels_df.csv",
     )
 trainingandvalidation_features_df = CSV.read(
@@ -90,11 +105,6 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 singlelabelname = :MedV
 labelnames = [singlelabelname]
 
-linear_regression_filename = joinpath(
-    tempdir(),
-    "linear_regression.jld2",
-    )
-
 linear_regression = PredictMD.singlelabeldataframelinearregression(
     featurenames,
     singlelabelname;
@@ -136,6 +146,12 @@ PredictMD.singlelabelregressionmetrics(
     testing_features_df,
     testing_labels_df,
     singlelabelname,
+    )
+
+linear_regression_filename = joinpath(
+    tempdir(),
+    "boston_housing_example",
+    "linear_regression.jld2",
     )
 
 PredictMD.save_model(linear_regression_filename, linear_regression)

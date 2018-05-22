@@ -5,36 +5,51 @@ import DataFrames
 import Knet
 import PredictMD
 
+mkpath(
+    joinpath(
+        tempdir(),
+        "boston_housing_example",
+        ),
+    )
+
 trainingandvalidation_features_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "trainingandvalidation_features_df.csv",
     )
 trainingandvalidation_labels_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "trainingandvalidation_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "testing_features_df.csv",
     )
 testing_labels_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "testing_labels_df.csv",
     )
 training_features_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "training_features_df.csv",
     )
 training_labels_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "training_labels_df.csv",
     )
 validation_features_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "validation_features_df.csv",
     )
 validation_labels_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "validation_labels_df.csv",
     )
 trainingandvalidation_features_df = CSV.read(
@@ -72,14 +87,17 @@ validation_labels_df = CSV.read(
 
 linear_regression_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "linear_regression.jld2",
     )
 random_forest_regression_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "random_forest_regression.jld2",
     )
 knet_mlp_regression_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "knet_mlp_regression.jld2",
     )
 
@@ -97,7 +115,6 @@ function knetmlp_predict(
     x2 = w[3]*x1 .+ w[4] # w[3] = weights, w[4] = biases
     return x2
 end
-
 function knetmlp_loss(
         predict_function::Function,
         modelweights, # don't put a type annotation on this
@@ -121,7 +138,6 @@ function knetmlp_loss(
     end
     return loss
 end
-
 knet_mlp_regression = PredictMD.load_model(knet_mlp_regression_filename)
 
 all_models = PredictMD.Fittable[

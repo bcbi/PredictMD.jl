@@ -5,36 +5,51 @@ import DataFrames
 import Knet
 import PredictMD
 
+mkpath(
+    joinpath(
+        tempdir(),
+        "boston_housing_example",
+        ),
+    )
+
 trainingandvalidation_features_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "trainingandvalidation_features_df.csv",
     )
 trainingandvalidation_labels_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "trainingandvalidation_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "testing_features_df.csv",
     )
 testing_labels_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "testing_labels_df.csv",
     )
 training_features_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "training_features_df.csv",
     )
 training_labels_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "training_labels_df.csv",
     )
 validation_features_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "validation_features_df.csv",
     )
 validation_labels_df_filename = joinpath(
     tempdir(),
+    "boston_housing_example",
     "validation_labels_df.csv",
     )
 trainingandvalidation_features_df = CSV.read(
@@ -90,11 +105,6 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 singlelabelname = :MedV
 labelnames = [singlelabelname]
-
-knet_mlp_regression_filename = joinpath(
-    tempdir(),
-    "knet_mlp_regression.jld2",
-    )
 
 function knetmlp_predict(
         w, # don't put a type annotation on this
@@ -247,6 +257,12 @@ PredictMD.singlelabelregressionmetrics(
     testing_features_df,
     testing_labels_df,
     singlelabelname,
+    )
+
+knet_mlp_regression_filename = joinpath(
+    tempdir(),
+    "boston_housing_example",
+    "knet_mlp_regression.jld2",
     )
 
 PredictMD.save_model(knet_mlp_regression_filename, knet_mlp_regression)
