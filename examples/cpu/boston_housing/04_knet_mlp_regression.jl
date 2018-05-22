@@ -107,17 +107,17 @@ singlelabelname = :MedV
 labelnames = [singlelabelname]
 
 function knetmlp_predict(
-        w, # don't put a type annotation on this
+        w, 
         x0::AbstractArray,
         )
-    x1 = Knet.relu.( w[1]*x0 .+ w[2] ) # w[1] = weights, w[2] = biases
-    x2 = w[3]*x1 .+ w[4] # w[3] = weights, w[4] = biases
+    x1 = Knet.relu.( w[1]*x0 .+ w[2] ) 
+    x2 = w[3]*x1 .+ w[4] 
     return x2
 end
 
 function knetmlp_loss(
         predict_function::Function,
-        modelweights, # don't put a type annotation on this
+        modelweights, 
         x::AbstractArray,
         ytrue::AbstractArray;
         L1::Real = Cfloat(0),
@@ -143,16 +143,16 @@ feature_contrasts = PredictMD.generate_feature_contrasts(training_features_df, f
 
 knetmlp_modelweights = Any[
     Cfloat.(
-        0.1f0*randn(Cfloat,10,feature_contrasts.num_array_columns) # weights
+        0.1f0*randn(Cfloat,10,feature_contrasts.num_array_columns) 
         ),
     Cfloat.(
-        zeros(Cfloat,10,1) # biases
+        zeros(Cfloat,10,1) 
         ),
     Cfloat.(
-        0.1f0*randn(Cfloat,1,10) # weights
+        0.1f0*randn(Cfloat,1,10) 
         ),
     Cfloat.(
-        zeros(Cfloat,1,1) # biases
+        zeros(Cfloat,1,1), 
         ),
     ]
 
@@ -177,7 +177,7 @@ knet_mlp_regression = PredictMD.singlelabeldataframeknetregression(
     minibatchsize = knetmlp_minibatchsize,
     modelweights = knetmlp_modelweights,
     maxepochs = knetmlp_maxepochs,
-    printlosseverynepochs = 100, # if 0, will not print at all
+    printlosseverynepochs = 100, 
     feature_contrasts = feature_contrasts,
     )
 

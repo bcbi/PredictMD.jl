@@ -105,19 +105,16 @@ linear_regression = PredictMD.load_model(linear_regression_filename)
 random_forest_regression = PredictMD.load_model(random_forest_regression_filename)
 
 function knetmlp_predict(
-        w, # don't put a type annotation on this
+        w, 
         x0::AbstractArray,
         )
-    # x0 = input layer
-    # x1 = hidden layer
-    x1 = Knet.relu.( w[1]*x0 .+ w[2] ) # w[1] = weights, w[2] = biases
-    # x2 = output layer
-    x2 = w[3]*x1 .+ w[4] # w[3] = weights, w[4] = biases
+    x1 = Knet.relu.( w[1]*x0 .+ w[2] ) 
+    x2 = w[3]*x1 .+ w[4] 
     return x2
 end
 function knetmlp_loss(
         predict_function::Function,
-        modelweights, # don't put a type annotation on this
+        modelweights, 
         x::AbstractArray,
         ytrue::AbstractArray;
         L1::Real = Cfloat(0),

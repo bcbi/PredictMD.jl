@@ -110,10 +110,10 @@ feature_contrasts = PredictMD.generate_feature_contrasts(training_features_df, f
 random_forest_regression = PredictMD.singlelabeldataframerandomforestregression(
     featurenames,
     singlelabelname;
-    nsubfeatures = 2, # number of subfeatures; defaults to 2
-    ntrees = 20, # number of trees; defaults to 10
+    nsubfeatures = 2, 
+    ntrees = 20, 
     package = :DecisionTreejl,
-    name = "Random forest", # optional
+    name = "Random forest", 
     feature_contrasts = feature_contrasts,
     )
 

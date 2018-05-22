@@ -1,8 +1,5 @@
 import Documenter
 import Literate
-
-info("DEBUG: importing PredictMD")
-
 import PredictMD
 
 info("DEBUG: using Literate.jl to generate examples")
@@ -30,11 +27,11 @@ cpu_examples_output_parent_directory = joinpath(
 mkpath(cpu_examples_output_parent_directory)
 
 boston_housing_input_directory = joinpath(
-    examples_input_parent_directory,
+    cpu_examples_input_parent_directory,
     "boston_housing",
     )
 boston_housing_output_directory = joinpath(
-    examples_output_parent_directory,
+    cpu_examples_output_parent_directory,
     "boston_housing",
     )
 mkpath(boston_housing_output_directory)
@@ -148,11 +145,11 @@ Literate.script(
     )
 
 breast_cancer_biopsy_input_directory = joinpath(
-    examples_input_parent_directory,
+    cpu_examples_input_parent_directory,
     "breast_cancer_biopsy",
     )
 breast_cancer_biopsy_output_directory = joinpath(
-    examples_output_parent_directory,
+    cpu_examples_output_parent_directory,
     "breast_cancer_biopsy",
     )
 mkpath(breast_cancer_biopsy_output_directory)

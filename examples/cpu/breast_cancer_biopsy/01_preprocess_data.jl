@@ -42,7 +42,7 @@ trainingandvalidation_features_df,
     testing_labels_df = PredictMD.split_data(
         features_df,
         labels_df,
-        0.75, # 75% training+validation, 25% testing
+        0.75, 
         )
 training_features_df,
     training_labels_df,
@@ -50,7 +50,7 @@ training_features_df,
     validation_labels_df = PredictMD.split_data(
         trainingandvalidation_features_df,
         trainingandvalidation_labels_df,
-        2/3, # 2/3 of 75% = 50% training, 1/3 of 75% = 25% validation
+        2/3, 
         )
 
 mkpath(

@@ -136,17 +136,13 @@ c_svc_svm_classifier = PredictMD.load_model(c_svc_svm_classifier_filename)
 nu_svc_svm_classifier = PredictMD.load_model(nu_svc_svm_classifier_filename)
 
 function knetmlp_predict(
-        w, # don't put a type annotation on this
+        w, 
         x0::AbstractArray;
         probabilities::Bool = true,
         )
-    # x0 = input layer
-    # x1 = first hidden layer
-    x1 = Knet.relu.( w[1]*x0 .+ w[2] ) # w[1] = weights, w[2] = biases
-    # x2 = second hidden layer
-    x2 = Knet.relu.( w[3]*x1 .+ w[4] ) # w[3] = weights, w[4] = biases
-    # x3 = output layer
-    x3 = w[5]*x2 .+ w[6] # w[5] = weights, w[6] = biases
+    x1 = Knet.relu.( w[1]*x0 .+ w[2] ) 
+    x2 = Knet.relu.( w[3]*x1 .+ w[4] ) 
+    x3 = w[5]*x2 .+ w[6] 
     unnormalizedlogprobs = x3
     if probabilities
         normalizedlogprobs = Knet.logp(unnormalizedlogprobs, 1)
@@ -158,7 +154,7 @@ function knetmlp_predict(
 end
 function knetmlp_loss(
         predict::Function,
-        modelweights, # don't put a type annotation on this
+        modelweights, 
         x::AbstractArray,
         ytrue::AbstractArray;
         L1::Real = Cfloat(0),
@@ -171,7 +167,7 @@ function knetmlp_loss(
             probabilities = false,
             ),
         ytrue,
-        1, # d = 1 means that instances are in columns
+        1, 
         )
     if L1 != 0
         loss += L1 * sum(sum(abs, w_i) for w_i in modelweights[1:2:end])

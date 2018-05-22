@@ -109,9 +109,9 @@ linear_regression = PredictMD.singlelabeldataframelinearregression(
     featurenames,
     singlelabelname;
     package = :GLMjl,
-    intercept = true, # optional, defaults to true
-    interactions = 2, # optional, defaults to 1
-    name = "Linear regression", # optional
+    intercept = true, 
+    interactions = 2, 
+    name = "Linear regression", 
     )
 
 PredictMD.fit!(linear_regression,training_features_df,training_labels_df,)

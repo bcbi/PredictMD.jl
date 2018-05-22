@@ -132,9 +132,9 @@ logistic_classifier = PredictMD.singlelabelbinaryclassdataframelogisticclassifie
     singlelabelname,
     singlelabellevels;
     package = :GLMjl,
-    intercept = true, # optional, defaults to true
-    interactions = 1, # optional, defaults to 1
-    name = "Logistic regression", # optional
+    intercept = true, 
+    interactions = 1, 
+    name = "Logistic regression", 
     )
 
 PredictMD.fit!(

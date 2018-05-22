@@ -124,13 +124,13 @@ positiveclass = "malignant"
 singlelabellevels = [negativeclass, positiveclass]
 
 function knetmlp_predict(
-        w, # don't put a type annotation on this
+        w, 
         x0::AbstractArray;
         probabilities::Bool = true,
         )
-    x1 = Knet.relu.( w[1]*x0 .+ w[2] ) # w[1] = weights, w[2] = biases
-    x2 = Knet.relu.( w[3]*x1 .+ w[4] ) # w[3] = weights, w[4] = biases
-    x3 = w[5]*x2 .+ w[6] # w[5] = weights, w[6] = biases
+    x1 = Knet.relu.( w[1]*x0 .+ w[2] ) 
+    x2 = Knet.relu.( w[3]*x1 .+ w[4] ) 
+    x3 = w[5]*x2 .+ w[6] 
     unnormalizedlogprobs = x3
     if probabilities
         normalizedlogprobs = Knet.logp(unnormalizedlogprobs, 1)
@@ -143,7 +143,7 @@ end
 
 function knetmlp_loss(
         predict::Function,
-        modelweights, # don't put a type annotation on this
+        modelweights, 
         x::AbstractArray,
         ytrue::AbstractArray;
         L1::Real = Cfloat(0),
@@ -156,7 +156,7 @@ function knetmlp_loss(
             probabilities = false,
             ),
         ytrue,
-        1, # d = 1 means that instances are in columns
+        1, 
         )
     if L1 != 0
         loss += L1 * sum(sum(abs, w_i) for w_i in modelweights[1:2:end])
@@ -174,22 +174,22 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
 
 knetmlp_modelweights = Any[
     Cfloat.(
-        0.1f0*randn(Cfloat,64,feature_contrasts.num_array_columns) # weights
+        0.1f0*randn(Cfloat,64,feature_contrasts.num_array_columns) 
         ),
     Cfloat.(
-        zeros(Cfloat,64,1) # biases
+        zeros(Cfloat,64,1) 
         ),
     Cfloat.(
-        0.1f0*randn(Cfloat,32,64) # weights
+        0.1f0*randn(Cfloat,32,64) 
         ),
     Cfloat.(
-        zeros(Cfloat,32,1) # biases
+        zeros(Cfloat,32,1) 
         ),
     Cfloat.(
-        0.1f0*randn(Cfloat,2,32) # weights
+        0.1f0*randn(Cfloat,2,32) 
         ),
     Cfloat.(
-        zeros(Cfloat,2,1) # biases
+        zeros(Cfloat,2,1) 
         ),
     ]
 
@@ -215,7 +215,7 @@ knet_mlp_classifier = PredictMD.singlelabelmulticlassdataframeknetclassifier(
     optimizerhyperparameters = knetmlp_optimizerhyperparameters,
     minibatchsize = knetmlp_minibatchsize,
     modelweights = knetmlp_modelweights,
-    printlosseverynepochs = 100, # if 0, will not print at all
+    printlosseverynepochs = 100, 
     maxepochs = knetmlp_maxepochs,
     feature_contrasts = feature_contrasts,
     )

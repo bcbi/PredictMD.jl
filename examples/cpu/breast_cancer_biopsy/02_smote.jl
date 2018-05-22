@@ -117,8 +117,8 @@ smoted_training_features_df, smoted_training_labels_df = PredictMD.smote(
     singlelabelname;
     majorityclass = majorityclass,
     minorityclass = minorityclass,
-    pct_over = 100, # how much to oversample the minority class
-    minority_to_majority_ratio = 1.0, # desired minority:majority ratio
+    pct_over = 100, 
+    minority_to_majority_ratio = 1.0, 
     k = 5,
     )
 
