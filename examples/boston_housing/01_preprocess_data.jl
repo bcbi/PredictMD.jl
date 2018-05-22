@@ -65,54 +65,38 @@ training_features_df,
         2/3, # 2/3 of 75% = 50% training, 1/3 of 75% = 25% validation
         )
 
-ENV["trainingandvalidation_features_df_filename"] = string(
-    tempname(),
-    "_trainingandvalidation_features_df.csv",
+trainingandvalidation_features_df_filename = joinpath(
+    tempdir(),
+    "trainingandvalidation_features_df.csv",
     )
-ENV["trainingandvalidation_labels_df_filename"] = string(
-    tempname(),
-    "_trainingandvalidation_labels_df.csv",
+trainingandvalidation_labels_df_filename = joinpath(
+    tempdir(),
+    "trainingandvalidation_labels_df.csv",
     )
-ENV["testing_features_df_filename"] = string(
-    tempname(),
-    "_testing_features_df.csv",
+testing_features_df_filename = joinpath(
+    tempdir(),
+    "testing_features_df.csv",
     )
-ENV["testing_labels_df_filename"] = string(
-    tempname(),
-    "_.testing_labels_dfcsv",
+testing_labels_df_filename = joinpath(
+    tempdir(),
+    "testing_labels_df.csv",
     )
-ENV["training_features_df_filename"] = string(
-    tempname(),
-    "_training_features_df.csv",
+training_features_df_filename = joinpath(
+    tempdir(),
+    "training_features_df.csv",
     )
-ENV["training_labels_df_filename"] = string(
-    tempname(),
-    "_training_labels_df.csv",
+training_labels_df_filename = joinpath(
+    tempdir(),
+    "training_labels_df.csv",
     )
-ENV["validation_features_df_filename"] = string(
-    tempname(),
-    "_validation_features_df.csv",
+validation_features_df_filename = joinpath(
+    tempdir(),
+    "validation_features_df.csv",
     )
-ENV["validation_labels_df_filename"] = string(
-    tempname(),
-    "_validation_labels_df.csv",
+validation_labels_df_filename = joinpath(
+    tempdir(),
+    "validation_labels_df.csv",
     )
-trainingandvalidation_features_df_filename =
-    ENV["trainingandvalidation_features_df_filename"]
-trainingandvalidation_labels_df_filename =
-    ENV["trainingandvalidation_labels_df_filename"]
-testing_features_df_filename =
-    ENV["testing_features_df_filename"]
-testing_labels_df_filename =
-    ENV["testing_labels_df_filename"]
-training_features_df_filename =
-    ENV["training_features_df_filename"]
-training_labels_df_filename =
-    ENV["training_labels_df_filename"]
-validation_features_df_filename =
-    ENV["validation_features_df_filename"]
-validation_labels_df_filename =
-    ENV["validation_labels_df_filename"]
 CSV.write(
     trainingandvalidation_features_df_filename,
     trainingandvalidation_features_df,

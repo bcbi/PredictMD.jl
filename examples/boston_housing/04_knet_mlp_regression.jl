@@ -5,22 +5,38 @@ import DataFrames
 import Knet
 import PredictMD
 
-trainingandvalidation_features_df_filename =
-    ENV["trainingandvalidation_features_df_filename"]
-trainingandvalidation_labels_df_filename =
-    ENV["trainingandvalidation_labels_df_filename"]
-testing_features_df_filename =
-    ENV["testing_features_df_filename"]
-testing_labels_df_filename =
-    ENV["testing_labels_df_filename"]
-training_features_df_filename =
-    ENV["training_features_df_filename"]
-training_labels_df_filename =
-    ENV["training_labels_df_filename"]
-validation_features_df_filename =
-    ENV["validation_features_df_filename"]
-validation_labels_df_filename =
-    ENV["validation_labels_df_filename"]
+trainingandvalidation_features_df_filename = joinpath(
+    tempdir(),
+    "trainingandvalidation_features_df.csv",
+    )
+trainingandvalidation_labels_df_filename = joinpath(
+    tempdir(),
+    "trainingandvalidation_labels_df.csv",
+    )
+testing_features_df_filename = joinpath(
+    tempdir(),
+    "testing_features_df.csv",
+    )
+testing_labels_df_filename = joinpath(
+    tempdir(),
+    "testing_labels_df.csv",
+    )
+training_features_df_filename = joinpath(
+    tempdir(),
+    "training_features_df.csv",
+    )
+training_labels_df_filename = joinpath(
+    tempdir(),
+    "training_labels_df.csv",
+    )
+validation_features_df_filename = joinpath(
+    tempdir(),
+    "validation_features_df.csv",
+    )
+validation_labels_df_filename = joinpath(
+    tempdir(),
+    "validation_labels_df.csv",
+    )
 trainingandvalidation_features_df = CSV.read(
     trainingandvalidation_features_df_filename,
     DataFrames.DataFrame,
@@ -75,11 +91,10 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 singlelabelname = :MedV
 labelnames = [singlelabelname]
 
-ENV["knet_mlp_regression_filename"] = string(
-    tempname(),
-    "_knet_mlp_regression.jld2",
+knet_mlp_regression_filename = joinpath(
+    tempdir(),
+    "knet_mlp_regression.jld2",
     )
-knet_mlp_regression_filename = ENV["knet_mlp_regression_filename"]
 
 function knetmlp_predict(
         w, # don't put a type annotation on this
