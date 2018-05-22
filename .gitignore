@@ -5,6 +5,7 @@ data/
 docs/build/
 docs/generated/
 docs/site/
+docs/src/examples/
 input/
 output/
 
@@ -21,4 +22,3 @@ deps/deps.jl
 deps/pdf2svg.svg
 deps/showed_warning
 scratch.jl
-
