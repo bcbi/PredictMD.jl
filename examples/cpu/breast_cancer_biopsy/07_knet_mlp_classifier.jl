@@ -123,14 +123,15 @@ negativeclass = "benign"
 positiveclass = "malignant"
 singlelabellevels = [negativeclass, positiveclass]
 
+knet_mlp_predict_function_source = """
 function knetmlp_predict(
-        w, 
+        w,
         x0::AbstractArray;
         probabilities::Bool = true,
         )
-    x1 = Knet.relu.( w[1]*x0 .+ w[2] ) 
-    x2 = Knet.relu.( w[3]*x1 .+ w[4] ) 
-    x3 = w[5]*x2 .+ w[6] 
+    x1 = Knet.relu.( w[1]*x0 .+ w[2] )
+    x2 = Knet.relu.( w[3]*x1 .+ w[4] )
+    x3 = w[5]*x2 .+ w[6]
     unnormalizedlogprobs = x3
     if probabilities
         normalizedlogprobs = Knet.logp(unnormalizedlogprobs, 1)
@@ -140,10 +141,12 @@ function knetmlp_predict(
         return unnormalizedlogprobs
     end
 end
+"""
 
+knet_mlp_loss_function_source = """
 function knetmlp_loss(
         predict::Function,
-        modelweights, 
+        modelweights,
         x::AbstractArray,
         ytrue::AbstractArray;
         L1::Real = Cfloat(0),
@@ -156,7 +159,7 @@ function knetmlp_loss(
             probabilities = false,
             ),
         ytrue,
-        1, 
+        1,
         )
     if L1 != 0
         loss += L1 * sum(sum(abs, w_i) for w_i in modelweights[1:2:end])
@@ -166,6 +169,7 @@ function knetmlp_loss(
     end
     return loss
 end
+"""
 
 feature_contrasts = PredictMD.generate_feature_contrasts(
     smoted_training_features_df,
@@ -174,22 +178,22 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
 
 knetmlp_modelweights = Any[
     Cfloat.(
-        0.1f0*randn(Cfloat,64,feature_contrasts.num_array_columns) 
+        0.1f0*randn(Cfloat,64,feature_contrasts.num_array_columns)
         ),
     Cfloat.(
-        zeros(Cfloat,64,1) 
+        zeros(Cfloat,64,1)
         ),
     Cfloat.(
-        0.1f0*randn(Cfloat,32,64) 
+        0.1f0*randn(Cfloat,32,64)
         ),
     Cfloat.(
-        zeros(Cfloat,32,1) 
+        zeros(Cfloat,32,1)
         ),
     Cfloat.(
-        0.1f0*randn(Cfloat,2,32) 
+        0.1f0*randn(Cfloat,2,32)
         ),
     Cfloat.(
-        zeros(Cfloat,2,1) 
+        zeros(Cfloat,2,1)
         ),
     ]
 
@@ -208,17 +212,19 @@ knet_mlp_classifier = PredictMD.singlelabelmulticlassdataframeknetclassifier(
     singlelabellevels;
     package = :Knetjl,
     name = "Knet MLP",
-    predict = knetmlp_predict,
-    loss = knetmlp_loss,
+    predict_function_source = knet_mlp_predict_function_source,
+    loss_function_source = knet_mlp_loss_function_source,
     losshyperparameters = knetmlp_losshyperparameters,
     optimizationalgorithm = knetmlp_optimizationalgorithm,
     optimizerhyperparameters = knetmlp_optimizerhyperparameters,
     minibatchsize = knetmlp_minibatchsize,
     modelweights = knetmlp_modelweights,
-    printlosseverynepochs = 100, 
+    printlosseverynepochs = 100,
     maxepochs = knetmlp_maxepochs,
     feature_contrasts = feature_contrasts,
     )
+
+PredictMD.parse_functions!(knet_mlp_classifier)
 
 PredictMD.fit!(
     knet_mlp_classifier,

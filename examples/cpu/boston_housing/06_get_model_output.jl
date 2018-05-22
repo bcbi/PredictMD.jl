@@ -96,39 +96,8 @@ knet_mlp_regression_filename = joinpath(
 
 linear_regression = PredictMD.load_model(linear_regression_filename)
 random_forest_regression = PredictMD.load_model(random_forest_regression_filename)
-
-function knetmlp_predict(
-        w, 
-        x0::AbstractArray,
-        )
-    x1 = Knet.relu.( w[1]*x0 .+ w[2] ) 
-    x2 = w[3]*x1 .+ w[4] 
-    return x2
-end
-function knetmlp_loss(
-        predict_function::Function,
-        modelweights, 
-        x::AbstractArray,
-        ytrue::AbstractArray;
-        L1::Real = Cfloat(0),
-        L2::Real = Cfloat(0),
-        )
-    loss = mean(
-        abs2,
-        ytrue - predict_function(
-            modelweights,
-            x,
-            ),
-        )
-    if L1 != 0
-        loss += L1 * sum(sum(abs, w_i) for w_i in modelweights[1:2:end])
-    end
-    if L2 != 0
-        loss += L2 * sum(sum(abs2, w_i) for w_i in modelweights[1:2:end])
-    end
-    return loss
-end
 knet_mlp_regression = PredictMD.load_model(knet_mlp_regression_filename)
+PredictMD.parse_functions!(knet_mlp_regression)
 
 PredictMD.predict(linear_regression,training_features_df,)
 PredictMD.predict(random_forest_regression,training_features_df,)

@@ -10,27 +10,31 @@ mutable struct KnetModel <: AbstractEstimator
     isregressionmodel::T3 where T3 <: Bool
 
     # hyperparameters (not learned from data):
-    predict::T4 where T4 <: Function
-    loss::T5 where T5 <: Function
-    losshyperparameters::T6 where T6 <: Associative
-    optimizationalgorithm::T7 where T7 <: Symbol
-    optimizerhyperparameters::T8 where T8 <: Associative
-    minibatchsize::T9 where T9 <: Integer
-    maxepochs::T10 where T10 <: Integer
-    printlosseverynepochs::T11 where T11 <: Integer
+    predict_function_source::T4 where T4 <: AbstractString
+    loss_function_source::T5 where T5 <: AbstractString
+    predict_function::T6 where T6 <: Union{Void, Function, Any}
+    loss_function::T7 where T7 <: Union{Void, Function, Any}
+    losshyperparameters::T8 where T8 <: Associative
+    optimizationalgorithm::T9 where T9 <: Symbol
+    optimizerhyperparameters::T10 where T10 <: Associative
+    minibatchsize::T11 where T11 <: Integer
+    maxepochs::T12 where T12 <: Integer
+    printlosseverynepochs::T13 where T13 <: Integer
 
     # parameters (learned from data):
-    modelweights::T12 where T12 <: AbstractArray
-    modelweightoptimizers::T13 where T13 <: Any # TODO: do something better here
+    modelweights::T14 where T14 <: AbstractArray
+    modelweightoptimizers::T15 where T15 <: Any
 
     # learning state
-    history::T where T <: ValueHistories.MultivalueHistory
+    history::T16 where T16 <: ValueHistories.MultivalueHistory
 
     function KnetModel(
             ;
             name::AbstractString = "",
-            predict::Function = () -> (),
-            loss::Function =() -> (),
+            predict_function_source::AbstractString = "",
+            loss_function_source::AbstractString = "",
+            predict_function::Function = identity,
+            loss_function::Function = identity,
             losshyperparameters::Associative = Dict(),
             optimizationalgorithm::Symbol = :nothing,
             optimizerhyperparameters::Associative = Dict(),
@@ -70,8 +74,10 @@ mutable struct KnetModel <: AbstractEstimator
             name,
             isclassificationmodel,
             isregressionmodel,
-            predict,
-            loss,
+            predict_function_source,
+            loss_function_source,
+            predict_function,
+            loss_function,
             losshyperparameters,
             optimizationalgorithm,
             optimizerhyperparameters,
@@ -117,6 +123,24 @@ function get_history(
     return result
 end
 
+function parse_functions!(estimator::KnetModel)
+    estimator.predict_function = eval(
+        parse(
+            strip(
+                estimator.predict_function_source
+                )
+            )
+        )
+    estimator.loss_function = eval(
+        parse(
+            strip(
+                estimator.loss_function_source
+                )
+            )
+        )
+    return nothing
+end
+
 """
 """
 function fit!(
@@ -150,8 +174,8 @@ function fit!(
         training_labels_array,
         estimator.minibatchsize,
         )
-    loss_gradient = Knet.grad(
-        estimator.loss,
+    loss_function_gradient = Knet.grad(
+        estimator.loss_function,
         2,
         )
     all_iterations_so_far, all_epochs_so_far = ValueHistories.get(
@@ -167,16 +191,16 @@ function fit!(
             ".",
             )
         )
-    training_lossbeforetrainingstarts = estimator.loss(
-        estimator.predict,
+    training_lossbeforetrainingstarts = estimator.loss_function(
+        estimator.predict_function,
         estimator.modelweights,
         training_features_array,
         training_labels_array;
         estimator.losshyperparameters...
         )
     if has_validation_data
-        validation_lossbeforetrainingstarts = estimator.loss(
-           estimator.predict,
+        validation_lossbeforetrainingstarts = estimator.loss_function(
+           estimator.predict_function,
            estimator.modelweights,
            validation_features_array,
            validation_labels_array;
@@ -210,8 +234,8 @@ function fit!(
     end
     while last_epoch < estimator.maxepochs
         for (x_training, y_training) in training_data
-            grads = loss_gradient(
-                estimator.predict,
+            grads = loss_function_gradient(
+                estimator.predict_function,
                 estimator.modelweights,
                 x_training,
                 y_training;
@@ -223,8 +247,8 @@ function fit!(
                 estimator.modelweightoptimizers,
                 )
             last_iteration += 1
-            training_currentiterationloss = estimator.loss(
-                estimator.predict,
+            training_currentiterationloss = estimator.loss_function(
+                estimator.predict_function,
                 estimator.modelweights,
                 x_training,
                 y_training;
@@ -244,8 +268,8 @@ function fit!(
             last_iteration,
             last_epoch,
             )
-        training_currentepochloss = estimator.loss(
-            estimator.predict,
+        training_currentepochloss = estimator.loss_function(
+            estimator.predict_function,
             estimator.modelweights,
             training_features_array,
             training_labels_array;
@@ -258,8 +282,8 @@ function fit!(
             training_currentepochloss,
             )
         if has_validation_data
-            validation_currentepochloss = estimator.loss(
-                estimator.predict,
+            validation_currentepochloss = estimator.loss_function(
+                estimator.predict_function,
                 estimator.modelweights,
                 validation_features_array,
                 validation_labels_array;
@@ -322,7 +346,7 @@ function predict(
             )
         return predictionsvector
     elseif estimator.isregressionmodel
-        output = estimator.predict(
+        output = estimator.predict_function(
             estimator.modelweights,
             featuresarray;
             )
@@ -341,7 +365,7 @@ function predict_proba(
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel
-        output = estimator.predict(
+        output = estimator.predict_function(
             estimator.modelweights,
             featuresarray;
             probabilities = true,
@@ -367,8 +391,8 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
         name::AbstractString = "",
-        predict::Function = () -> (),
-        loss::Function = () -> (),
+        predict_function_source::AbstractString = "",
+        loss_function_source::AbstractString = "",
         losshyperparameters::Associative = Dict(),
         optimizationalgorithm::Symbol = :nothing,
         optimizerhyperparameters::Associative = Dict(),
@@ -396,8 +420,8 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
     knetestimator = KnetModel(
         ;
         name = name,
-        predict = predict,
-        loss = loss,
+        predict_function_source = predict_function_source,
+        loss_function_source = loss_function_source,
         losshyperparameters = losshyperparameters,
         optimizationalgorithm = optimizationalgorithm,
         optimizerhyperparameters = optimizerhyperparameters,
@@ -408,11 +432,11 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
         maxepochs = maxepochs,
         printlosseverynepochs = printlosseverynepochs,
         )
-    predprobalabelfixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
+    predprobalabelfixer = ImmutablePredictProbaSingleLabelInTStringTransformer(
         1,
         singlelabellevels
         )
-    predictlabelfixer = ImmutablePredictionsSingleLabelInt2StringTransformer(
+    predictlabelfixer = ImmutablePredictionsSingleLabelInTStringTransformer(
         1,
         singlelabellevels
         )
@@ -447,8 +471,8 @@ function singlelabelmulticlassdataframeknetclassifier(
         singlelabellevels::AbstractVector;
         package::Symbol = :none,
         name::AbstractString = "",
-        predict::Function = () -> (),
-        loss::Function =() -> (),
+        predict_function_source::AbstractString = "",
+        loss_function_source::AbstractString = "",
         losshyperparameters::Associative = Dict(),
         optimizationalgorithm::Symbol = :nothing,
         optimizerhyperparameters::Associative = Dict(),
@@ -464,8 +488,8 @@ function singlelabelmulticlassdataframeknetclassifier(
             singlelabelname,
             singlelabellevels;
             name = name,
-            predict = predict,
-            loss = loss,
+            predict_function_source = predict_function_source,
+            loss_function_source = loss_function_source,
             losshyperparameters = losshyperparameters,
             optimizationalgorithm = optimizationalgorithm,
             optimizerhyperparameters = optimizerhyperparameters,
@@ -487,8 +511,8 @@ function _singlelabeldataframeknetregression_Knet(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
         name::AbstractString = "",
-        predict::Function = () -> (),
-        loss::Function =() -> (),
+        predict_function_source::AbstractString = "",
+        loss_function_source::AbstractString = "",
         losshyperparameters::Associative = Dict(),
         optimizationalgorithm::Symbol = :nothing,
         optimizerhyperparameters::Associative = Dict(),
@@ -511,8 +535,8 @@ function _singlelabeldataframeknetregression_Knet(
     knetestimator = KnetModel(
         ;
         name = name,
-        predict = predict,
-        loss = loss,
+        predict_function_source = predict_function_source,
+        loss_function_source = loss_function_source,
         losshyperparameters = losshyperparameters,
         optimizationalgorithm = optimizationalgorithm,
         optimizerhyperparameters = optimizerhyperparameters,
@@ -547,8 +571,8 @@ function singlelabeldataframeknetregression(
         singlelabelname::Symbol;
         package::Symbol = :none,
         name::AbstractString = "",
-        predict::Function = () -> (),
-        loss::Function =() -> (),
+        predict_function_source::AbstractString = "",
+        loss_function_source::AbstractString = "",
         losshyperparameters::Associative = Dict(),
         optimizationalgorithm::Symbol = :nothing,
         optimizerhyperparameters::Associative = Dict(),
@@ -563,8 +587,8 @@ function singlelabeldataframeknetregression(
             featurenames,
             singlelabelname;
             name = name,
-            predict = predict,
-            loss = loss,
+            predict_function_source = predict_function_source,
+            loss_function_source = loss_function_source,
             losshyperparameters = losshyperparameters,
             optimizationalgorithm = optimizationalgorithm,
             optimizerhyperparameters = optimizerhyperparameters,

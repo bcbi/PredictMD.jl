@@ -103,6 +103,12 @@ end
 
 """
 """
+function parse_functions!(transformer::MutableDataFrame2DecisionTreeTransformer)
+    return nothing
+end
+
+"""
+"""
 function fit!(
         transformer::MutableDataFrame2DecisionTreeTransformer,
         features_df::DataFrames.AbstractDataFrame,

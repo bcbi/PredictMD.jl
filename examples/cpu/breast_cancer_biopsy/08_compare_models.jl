@@ -134,50 +134,8 @@ logistic_classifier = PredictMD.load_model(logistic_classifier_filename)
 random_forest_classifier = PredictMD.load_model(random_forest_classifier_filename)
 c_svc_svm_classifier = PredictMD.load_model(c_svc_svm_classifier_filename)
 nu_svc_svm_classifier = PredictMD.load_model(nu_svc_svm_classifier_filename)
-
-function knetmlp_predict(
-        w, 
-        x0::AbstractArray;
-        probabilities::Bool = true,
-        )
-    x1 = Knet.relu.( w[1]*x0 .+ w[2] ) 
-    x2 = Knet.relu.( w[3]*x1 .+ w[4] ) 
-    x3 = w[5]*x2 .+ w[6] 
-    unnormalizedlogprobs = x3
-    if probabilities
-        normalizedlogprobs = Knet.logp(unnormalizedlogprobs, 1)
-        normalizedprobs = exp.(normalizedlogprobs)
-        return normalizedprobs
-    else
-        return unnormalizedlogprobs
-    end
-end
-function knetmlp_loss(
-        predict::Function,
-        modelweights, 
-        x::AbstractArray,
-        ytrue::AbstractArray;
-        L1::Real = Cfloat(0),
-        L2::Real = Cfloat(0),
-        )
-    loss = Knet.nll(
-        predict(
-            modelweights,
-            x;
-            probabilities = false,
-            ),
-        ytrue,
-        1, 
-        )
-    if L1 != 0
-        loss += L1 * sum(sum(abs, w_i) for w_i in modelweights[1:2:end])
-    end
-    if L2 != 0
-        loss += L2 * sum(sum(abs2, w_i) for w_i in modelweights[1:2:end])
-    end
-    return loss
-end
 knet_mlp_classifier = PredictMD.load_model(knet_mlp_classifier_filename)
+PredictMD.parse_functions!(knet_mlp_classifier)
 
 all_models = PredictMD.Fittable[
     logistic_classifier,

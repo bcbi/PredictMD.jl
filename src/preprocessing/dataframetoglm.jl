@@ -66,6 +66,12 @@ end
 
 """
 """
+function parse_functions!(transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer)
+    return nothing
+end
+
+"""
+"""
 function fit!(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         features_df::DataFrames.AbstractDataFrame,

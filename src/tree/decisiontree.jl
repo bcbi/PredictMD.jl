@@ -82,6 +82,12 @@ end
 
 """
 """
+function parse_functions!(estimator::DecisionTreeModel)
+    return nothing
+end
+
+"""
+"""
 function fit!(
         estimator::DecisionTreeModel,
         featuresarray::AbstractArray,

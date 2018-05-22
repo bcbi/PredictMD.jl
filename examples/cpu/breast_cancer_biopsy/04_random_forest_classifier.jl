@@ -131,10 +131,10 @@ random_forest_classifier = PredictMD.singlelabelmulticlassdataframerandomforestc
     featurenames,
     singlelabelname,
     singlelabellevels;
-    nsubfeatures = 4, 
-    ntrees = 200, 
+    nsubfeatures = 4,
+    ntrees = 200,
     package = :DecisionTreejl,
-    name = "Random forest", 
+    name = "Random forest",
     feature_contrasts = feature_contrasts,
     )
 

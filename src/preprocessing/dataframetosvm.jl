@@ -61,6 +61,12 @@ end
 
 """
 """
+function parse_functions!(transformer::ImmutableFeatureArrayTransposerTransformer)
+    return nothing
+end
+
+"""
+"""
 function fit!(
         transformer::ImmutableFeatureArrayTransposerTransformer,
         featuresarray::AbstractMatrix,

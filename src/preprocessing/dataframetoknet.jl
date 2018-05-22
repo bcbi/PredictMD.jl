@@ -121,6 +121,18 @@ end
 
 """
 """
+function parse_functions!(transformer::MutableDataFrame2ClassificationKnetTransformer)
+    return nothing
+end
+
+"""
+"""
+function parse_functions!(transformer::MutableDataFrame2RegressionKnetTransformer,)
+    return nothing
+end
+
+"""
+"""
 function fit!(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,

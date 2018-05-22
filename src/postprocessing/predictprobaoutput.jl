@@ -37,6 +37,12 @@ end
 
 """
 """
+function parse_functions!(transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer)
+    return nothing
+end
+
+"""
+"""
 function fit!(
         transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer,
         varargs...;

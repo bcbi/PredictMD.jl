@@ -36,6 +36,12 @@ end
 
 """
 """
+function parse_functions!(transformer::ImmutablePackageMultiLabelPredictionTransformer)
+    return nothing
+end
+
+"""
+"""
 function fit!(
         transformer::ImmutablePackageMultiLabelPredictionTransformer,
         varargs...;

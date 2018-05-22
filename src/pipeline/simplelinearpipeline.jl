@@ -86,6 +86,15 @@ end
 
 """
 """
+function parse_functions!(simplelinearpipeline::SimplePipeline)
+    for i = 1:length(simplelinearpipeline.objectsvector)
+        parse_functions!(simplelinearpipeline.objectsvector[i])
+    end
+    return nothing
+end
+
+"""
+"""
 function fit!(
         simplelinearpipeline::SimplePipeline,
         varargs...;

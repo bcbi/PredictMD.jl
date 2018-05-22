@@ -106,18 +106,21 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 singlelabelname = :MedV
 labelnames = [singlelabelname]
 
+knet_mlp_predict_function_source = """
 function knetmlp_predict(
-        w, 
+        w,
         x0::AbstractArray,
         )
-    x1 = Knet.relu.( w[1]*x0 .+ w[2] ) 
-    x2 = w[3]*x1 .+ w[4] 
+    x1 = Knet.relu.( w[1]*x0 .+ w[2] )
+    x2 = w[3]*x1 .+ w[4]
     return x2
 end
+"""
 
+knet_mlp_loss_function_source = """
 function knetmlp_loss(
         predict_function::Function,
-        modelweights, 
+        modelweights,
         x::AbstractArray,
         ytrue::AbstractArray;
         L1::Real = Cfloat(0),
@@ -138,21 +141,22 @@ function knetmlp_loss(
     end
     return loss
 end
+"""
 
 feature_contrasts = PredictMD.generate_feature_contrasts(training_features_df, featurenames)
 
 knetmlp_modelweights = Any[
     Cfloat.(
-        0.1f0*randn(Cfloat,10,feature_contrasts.num_array_columns) 
+        0.1f0*randn(Cfloat,10,feature_contrasts.num_array_columns)
         ),
     Cfloat.(
-        zeros(Cfloat,10,1) 
+        zeros(Cfloat,10,1)
         ),
     Cfloat.(
-        0.1f0*randn(Cfloat,1,10) 
+        0.1f0*randn(Cfloat,1,10)
         ),
     Cfloat.(
-        zeros(Cfloat,1,1), 
+        zeros(Cfloat,1,1),
         ),
     ]
 
@@ -169,17 +173,19 @@ knet_mlp_regression = PredictMD.singlelabeldataframeknetregression(
     singlelabelname;
     package = :Knetjl,
     name = "Knet MLP",
-    predict = knetmlp_predict,
-    loss = knetmlp_loss,
+    predict_function_source = knet_mlp_predict_function_source,
+    loss_function_source = knet_mlp_loss_function_source,
     losshyperparameters = knetmlp_losshyperparameters,
     optimizationalgorithm = knetmlp_optimizationalgorithm,
     optimizerhyperparameters = knetmlp_optimizerhyperparameters,
     minibatchsize = knetmlp_minibatchsize,
     modelweights = knetmlp_modelweights,
     maxepochs = knetmlp_maxepochs,
-    printlosseverynepochs = 100, 
+    printlosseverynepochs = 100,
     feature_contrasts = feature_contrasts,
     )
+
+PredictMD.parse_functions!(knet_mlp_regression)
 
 PredictMD.fit!(
     knet_mlp_regression,

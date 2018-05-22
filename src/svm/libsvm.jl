@@ -96,6 +96,12 @@ end
 
 """
 """
+function parse_functions!(estimator::LIBSVMModel)
+    return nothing
+end
+
+"""
+"""
 function fit!(
         estimator::LIBSVMModel,
         featuresarray::AbstractArray,

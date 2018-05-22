@@ -70,6 +70,12 @@ end
 
 """
 """
+function parse_functions!(estimator::GLMModel)
+    return nothing
+end
+
+"""
+"""
 function fit!(
         estimator::GLMModel,
         features_df::DataFrames.AbstractDataFrame,
