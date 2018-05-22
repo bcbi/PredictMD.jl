@@ -1,46 +1,50 @@
 import Documenter
 import Literate
+
+info("DEBUG: importing PredictMD")
+
 import PredictMD
 
-examples_input_directory = joinpath(
+info("DEBUG: using Literate.jl to generate examples")
+
+examples_output_parent_directory = joinpath(
+    @__DIR__,
+    "src",
+    "examples",
+    )
+examples_input_parent_directory = joinpath(
     @__DIR__,
     "..",
     "examples",
     )
 
-examples_output_directory = joinpath(
-    @__DIR__,
-    "",
-    "",
-    "",
-    "",
+boston_housing_output_directory = joinpath(
+    examples_output_parent_directory,
+    "boston_housing",
+    )
+boston_housing_input_directory = joinpath(
+    examples_input_parent_directory,
+    "boston_housing",
+    )
+boston_housing_input_file = joinpath(
+    boston_housing_input_directory,
+    "boston_housing.jl",
     )
 
 Literate.markdown(
-    ,
-    examples_output_directory,
+    boston_housing_input_file,
+    boston_housing_output_directory,
     )
 Literate.notebook(
-    ,
-    examples_output_directory,
+    boston_housing_input_file,
+    boston_housing_output_directory,
     )
 Literate.script(
-    ,
-    examples_output_directory,
+    boston_housing_input_file,
+    boston_housing_output_directory,
     )
 
-Literate.markdown(
-    ,
-    examples_output_directory,
-    )
-Literate.notebook(
-    ,
-    examples_output_directory,
-    )
-Literate.script(
-    ,
-    examples_output_directory,
-    )
+info("DEBUG: using Documenter.jl to generate Markdown docs")
 
 Documenter.makedocs(
     modules = [PredictMD],

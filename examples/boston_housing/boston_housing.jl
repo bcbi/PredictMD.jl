@@ -699,7 +699,6 @@ PredictMD.singlelabelregressionmetrics(
 ## Multilayer perceptron (i.e. fully connected feedforward neural network) ###
 ##############################################################################
 
-# Define predict function
 function knetmlp_predict(
         w, # don't put a type annotation on this
         x0::AbstractArray,
@@ -712,7 +711,6 @@ function knetmlp_predict(
     return x2
 end
 
-# Define loss function
 function knetmlp_loss(
         predict::Function,
         modelweights, # don't put a type annotation on this
