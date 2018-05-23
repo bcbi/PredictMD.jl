@@ -3,14 +3,21 @@
 <table>
     <thead>
         <tr>
+            <th>branch</th>
             <th>master</th>
             <th>develop</th>
         </tr>
     </thead>
     <tbody>
         <tr>
+            <td>travis</td>
             <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Build Status (master)" title="Build Status (master)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master"></a></td>
             <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Build Status (develop)" title="Build Status (develop)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=develop"></a></td>
+        </tr>
+        <tr>
+            <td>docs</td>
+            <td><a href="https://bcbi.github.io/PredictMD.jl/stable"><img alt="Documentation (stable)" title="Documentation (stable)" src="https://img.shields.io/badge/docs-stable-blue.svg"></a></td>
+            <td><a href="https://bcbi.github.io/PredictMD.jl/latest"><img alt="Documentation (latest)" title="Documentation (latest)" src="https://img.shields.io/badge/docs-latest-blue.svg"></a></td>
         </tr>
     </tbody>
 </table>
