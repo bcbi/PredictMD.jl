@@ -1,6 +1,8 @@
 import ClassImbalance
 import DataFrames
 
+"""
+"""
 function calculate_smote_pct_under(
         ;
         pct_over::Real = 0,
@@ -16,6 +18,8 @@ function calculate_smote_pct_under(
     return result
 end
 
+"""
+"""
 function smote(
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
@@ -42,6 +46,8 @@ function smote(
     return result
 end
 
+"""
+"""
 function smote(
         rng::AbstractRNG,
         features_df::DataFrames.AbstractDataFrame,

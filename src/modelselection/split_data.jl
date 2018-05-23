@@ -1,6 +1,8 @@
 import DataFrames
 import StatsBase
 
+"""
+"""
 function split_data(
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
@@ -15,6 +17,8 @@ function split_data(
     return result
 end
 
+"""
+"""
 function split_data(
         rng::AbstractRNG,
         features_df::DataFrames.AbstractDataFrame,

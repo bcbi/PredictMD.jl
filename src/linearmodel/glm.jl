@@ -2,6 +2,8 @@ import DataFrames
 import GLM
 import StatsModels
 
+"""
+"""
 mutable struct GLMModel <: AbstractEstimator
     name::T1 where T1 <: AbstractString
     isclassificationmodel::T2 where T2 <: Bool
@@ -36,6 +38,8 @@ mutable struct GLMModel <: AbstractEstimator
     end
 end
 
+"""
+"""
 function get_history(
         x::GLMModel;
         saving::Bool = false,
@@ -44,6 +48,8 @@ function get_history(
     return nothing
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::GLMModel,
         feature_contrasts::AbstractFeatureContrasts,
@@ -51,6 +57,8 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
 function get_underlying(
         x::GLMModel;
         saving::Bool = false,
@@ -60,6 +68,14 @@ function get_underlying(
     return result
 end
 
+"""
+"""
+function parse_functions!(estimator::GLMModel)
+    return nothing
+end
+
+"""
+"""
 function fit!(
         estimator::GLMModel,
         features_df::DataFrames.AbstractDataFrame,
@@ -89,6 +105,8 @@ function fit!(
     return estimator
 end
 
+"""
+"""
 function predict(
         estimator::GLMModel,
         features_df::DataFrames.AbstractDataFrame,
@@ -123,6 +141,8 @@ function predict(
     end
 end
 
+"""
+"""
 function predict_proba(
         estimator::GLMModel,
         features_df::DataFrames.AbstractDataFrame,
@@ -148,6 +168,8 @@ function predict_proba(
     end
 end
 
+"""
+"""
 function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
@@ -199,6 +221,8 @@ function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
     return finalpipeline
 end
 
+"""
+"""
 function singlelabelbinaryclassdataframelogisticclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
@@ -223,6 +247,8 @@ function singlelabelbinaryclassdataframelogisticclassifier(
     end
 end
 
+"""
+"""
 function _singlelabelbinaryclassdataframeprobitclassifier_GLM(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
@@ -274,6 +300,8 @@ function _singlelabelbinaryclassdataframeprobitclassifier_GLM(
     return finalpipeline
 end
 
+"""
+"""
 function singlelabelbinaryclassdataframeprobitclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
@@ -298,6 +326,8 @@ function singlelabelbinaryclassdataframeprobitclassifier(
     end
 end
 
+"""
+"""
 function _singlelabeldataframelinearregression_GLM(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
@@ -327,6 +357,8 @@ function _singlelabeldataframelinearregression_GLM(
     return finalpipeline
 end
 
+"""
+"""
 function singlelabeldataframelinearregression(
         featurenames::AbstractVector,
         singlelabelname::Symbol;

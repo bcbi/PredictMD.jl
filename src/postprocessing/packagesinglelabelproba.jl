@@ -1,8 +1,12 @@
+"""
+"""
 struct ImmutablePackageSingleLabelPredictProbaTransformer <:
         AbstractEstimator
     singlelabelname::T1 where T1 <: Symbol
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::ImmutablePackageSingleLabelPredictProbaTransformer,
         feature_contrasts::AbstractFeatureContrasts,
@@ -10,6 +14,8 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
 function get_underlying(
         x::ImmutablePackageSingleLabelPredictProbaTransformer;
         saving::Bool = false,
@@ -18,6 +24,8 @@ function get_underlying(
     return nothing
 end
 
+"""
+"""
 function get_history(
         x::ImmutablePackageSingleLabelPredictProbaTransformer;
         saving::Bool = false,
@@ -26,6 +34,14 @@ function get_history(
     return nothing
 end
 
+"""
+"""
+function parse_functions!(transformer::ImmutablePackageSingleLabelPredictProbaTransformer)
+    return nothing
+end
+
+"""
+"""
 function fit!(
         transformer::ImmutablePackageSingleLabelPredictProbaTransformer,
         varargs...;
@@ -38,6 +54,8 @@ function fit!(
     end
 end
 
+"""
+"""
 function predict(
         transformer::ImmutablePackageSingleLabelPredictProbaTransformer,
         varargs...;
@@ -50,6 +68,8 @@ function predict(
     end
 end
 
+"""
+"""
 function predict_proba(
         transformer::ImmutablePackageSingleLabelPredictProbaTransformer,
         singlelabelprobabilities::Associative;

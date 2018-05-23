@@ -2,7 +2,9 @@ import LaTeXStrings
 import PGFPlots
 import PGFPlotsX
 
-function plotprcurve(
+"""
+"""
+function plotprcurves(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
@@ -20,7 +22,9 @@ function plotprcurve(
     return result
 end
 
-function plotprcurve(
+"""
+"""
+function plotprcurves(
         vectorofestimators::AbstractVector{Fittable},
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
@@ -65,4 +69,4 @@ function plotprcurve(
     return tikzpicture
 end
 
-const plotprcurves = plotprcurve
+const plotprcurve = plotprcurves

@@ -1,11 +1,15 @@
 import DataFrames
 
+"""
+"""
 struct ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer <:
         AbstractEstimator
     label::T1 where T1 <: Symbol
     positiveclass::T2 where T2 <: AbstractString
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         feature_contrasts::AbstractFeatureContrasts,
@@ -13,6 +17,8 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
 function get_underlying(
         x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer;
         saving::Bool = false,
@@ -21,6 +27,8 @@ function get_underlying(
     return nothing
 end
 
+"""
+"""
 function get_history(
         x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer;
         saving::Bool = false,
@@ -29,6 +37,8 @@ function get_history(
     return nothing
 end
 
+"""
+"""
 function transform(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         features_df::DataFrames.AbstractDataFrame,
@@ -44,6 +54,8 @@ function transform(
     return features_df, transformedlabels_df
 end
 
+"""
+"""
 function transform(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         features_df::DataFrames.AbstractDataFrame;
@@ -52,6 +64,14 @@ function transform(
     return features_df
 end
 
+"""
+"""
+function parse_functions!(transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer)
+    return nothing
+end
+
+"""
+"""
 function fit!(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         features_df::DataFrames.AbstractDataFrame,
@@ -61,6 +81,8 @@ function fit!(
     return transform(transformer, features_df, labels_df)
 end
 
+"""
+"""
 function predict(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         features_df::DataFrames.AbstractDataFrame;
@@ -69,7 +91,8 @@ function predict(
     return transform(transformer, features_df)
 end
 
-
+"""
+"""
 function predict_proba(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         features_df::DataFrames.AbstractDataFrame;

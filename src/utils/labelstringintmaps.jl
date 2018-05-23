@@ -1,3 +1,5 @@
+"""
+"""
 function _getlabelstring2intmap(
         levels::AbstractVector,
         index::Integer,
@@ -13,6 +15,8 @@ function _getlabelstring2intmap(
     return result
 end
 
+"""
+"""
 function _getlabelint2stringmap(
         levels::AbstractVector,
         index::Integer,

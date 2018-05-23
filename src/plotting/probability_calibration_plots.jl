@@ -2,6 +2,8 @@ import LaTeXStrings
 import PGFPlots
 import PGFPlotsX
 
+"""
+"""
 function probability_calibration_scores_and_fractions(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
@@ -33,6 +35,8 @@ function probability_calibration_scores_and_fractions(
     return scores, fractions
 end
 
+"""
+"""
 function probability_calibration_scores_and_fractions(
         ytrue::AbstractVector{<:Integer},
         yscore::AbstractVector{<:AbstractFloat};
@@ -69,6 +73,8 @@ function probability_calibration_scores_and_fractions(
     return scores, fractions
 end
 
+"""
+"""
 function plot_probability_calibration_curve(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
@@ -91,6 +97,8 @@ function plot_probability_calibration_curve(
     return result
 end
 
+"""
+"""
 function plot_probability_calibration_curve(
         scores::AbstractVector{<:AbstractFloat},
         fractions::AbstractVector{<:AbstractFloat},
@@ -120,9 +128,8 @@ function plot_probability_calibration_curve(
         )
     estimated_intercept, estimated_x_coefficient =
         ordinary_least_squares_regression(
-            ;
-            X = scores,
-            Y = fractions,
+            scores, # X
+            fractions; # Y
             intercept = true,
             )
     bestfitline_linearplotobject = PGFPlots.Plots.Linear(
@@ -150,6 +157,8 @@ function plot_probability_calibration_curve(
     return tikzpicture
 end
 
+"""
+"""
 function probability_calibration_metrics(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
@@ -170,6 +179,8 @@ function probability_calibration_metrics(
     return result
 end
 
+"""
+"""
 function probability_calibration_metrics(
         vectorofestimators::AbstractVector{Fittable},
         features_df::DataFrames.AbstractDataFrame,
@@ -213,9 +224,8 @@ function probability_calibration_metrics(
         r2_score_value = r2_score(scores, fractions)
         estimated_intercept, estimated_x_coefficient =
             ordinary_least_squares_regression(
-                ;
-                X = Float64.(scores),
-                Y = Float64.(fractions),
+                Float64.(scores), # X
+                Float64.(fractions); # Y
                 intercept = true,
                 )
         result[Symbol(vectorofestimators[i].name)] = [
