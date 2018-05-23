@@ -6,12 +6,12 @@ ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "true"
 Documenter.deploydocs(
     branch = "gh-pages",
     deps = Documenter.Deps.pip(
-        "pygments",
         "mkdocs",
+        "pygments",
         "python-markdown-math",
         ),
     julia = "0.6",
-    latest = "develop", # latest = develop branch
+    latest = "develop",
     osname = "linux",
     repo = "github.com/bcbi/PredictMD.jl.git",
     target = "site",

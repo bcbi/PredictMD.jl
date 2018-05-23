@@ -42,9 +42,8 @@ before_install:
 
 script:
     - julia --color=yes -e 'Pkg.clone(pwd())'
-    - julia --color=yes -e "Pkg.build(\"PredictMD\")"
-    - julia --check-bounds=yes --color=yes -e "Pkg.test(\"PredictMD\", coverage=true)"
+    - julia --color=yes -e 'Pkg.build("PredictMD")'
+    - julia --check-bounds=yes --color=yes -e 'Pkg.test("PredictMD", coverage=true)'
 
 after_success:
-    - cd docs
-    - julia --check-bounds=yes --color=yes deploy_docs.jl
+    - julia -e 'cd(Pkg.dir("PredictMD")); include(joinpath("docs", "deploy_docs.jl"))'
