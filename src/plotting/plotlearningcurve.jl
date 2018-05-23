@@ -4,7 +4,9 @@ import PGFPlotsX
 import StatsBase
 import ValueHistories
 
-function plotlearningcurve(
+"""
+"""
+function plotlearningcurves(
         inputobject::Fittable,
         curvetype::Symbol = :loss_vs_iteration;
         window::Integer = 0,
@@ -32,7 +34,9 @@ function plotlearningcurve(
     return result
 end
 
-function plotlearningcurve(
+"""
+"""
+function plotlearningcurves(
         history::ValueHistories.MultivalueHistory,
         curvetype::Symbol = :loss_vs_iteration;
         window::Integer = 0,
@@ -157,7 +161,9 @@ function plotlearningcurve(
     return result
 end
 
-function plotlearningcurve(
+"""
+"""
+function plotlearningcurves(
         xvalues::AbstractVector{<:Real},
         training_yvalues::AbstractVector{<:Real},
         xlabel::AbstractString,
@@ -264,4 +270,4 @@ function plotlearningcurve(
     return tikzpicture
 end
 
-const plotlearningcurves = plotlearningcurve
+const plotlearningcurve = plotlearningcurves

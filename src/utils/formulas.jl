@@ -1,8 +1,12 @@
 import Combinatorics
 import StatsModels
 
+"""
+"""
 generate_formula(x::AbstractString) = generate_formula(parse(x))
 
+"""
+"""
 function generate_formula(expression::Expr)
     original_expression = Meta.quot(copy(expression))
     StatsModels.sort_terms!(StatsModels.parse!(expression))
@@ -23,6 +27,8 @@ function generate_formula(expression::Expr)
     return formula_7
 end
 
+"""
+"""
 function generate_formula(
         dependent_variable::Symbol,
         independent_variables::AbstractVector{<:Symbol};
@@ -38,6 +44,8 @@ function generate_formula(
     return result
 end
 
+"""
+"""
 function generate_formula(
         dependent_variables::AbstractVector{<:Symbol},
         independent_variables::AbstractVector{<:Symbol};
@@ -72,6 +80,8 @@ function generate_formula(
     return formula_object
 end
 
+"""
+"""
 function generate_interaction_terms(
         independent_variables::AbstractVector{<:Symbol},
         interactions::Integer,

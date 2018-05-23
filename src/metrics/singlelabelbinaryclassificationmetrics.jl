@@ -2,6 +2,8 @@ import DataFrames
 import MLBase
 import StatsBase
 
+"""
+"""
 function singlelabelbinaryytrue(
         labels::AbstractVector,
         positiveclass::AbstractString;
@@ -14,6 +16,8 @@ function singlelabelbinaryytrue(
     return result
 end
 
+"""
+"""
 function singlelabelbinaryyscore(
         singlelabelprobabilities::Associative,
         positiveclass::AbstractString;
@@ -26,6 +30,8 @@ function singlelabelbinaryyscore(
     return result
 end
 
+"""
+"""
 function _singlelabelbinaryclassificationmetrics_tunableparam(
         kwargsassoc::Associative,
         )
@@ -102,6 +108,8 @@ function _singlelabelbinaryclassificationmetrics_tunableparam(
     return selectedtunableparam, selectedparamtomax, metricprintnames
 end
 
+"""
+"""
 function _singlelabelbinaryclassificationmetrics(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
@@ -189,6 +197,8 @@ function _singlelabelbinaryclassificationmetrics(
     return results
 end
 
+"""
+"""
 function singlelabelbinaryclassificationmetrics(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
@@ -209,6 +219,8 @@ function singlelabelbinaryclassificationmetrics(
     return result
 end
 
+"""
+"""
 function singlelabelbinaryclassificationmetrics(
         vectorofestimators::AbstractVector{Fittable},
         features_df::DataFrames.AbstractDataFrame,

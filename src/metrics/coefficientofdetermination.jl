@@ -1,7 +1,8 @@
 import StatsBase
 
 """
-r2_score(ytrue, ypred)
+    r2_score(ytrue, ypred)
+
 Computes coefficient of determination. Higher values are better. Best value
 is 1.
 """

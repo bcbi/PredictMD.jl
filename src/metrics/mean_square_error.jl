@@ -1,3 +1,6 @@
+"""
+    mean_square_error(ytrue, ypred)
+"""
 function mean_square_error(
         ytrue::AbstractVector{<:Real},
         ypred::AbstractVector{<:Real},
@@ -6,6 +9,9 @@ function mean_square_error(
     return result
 end
 
+"""
+    root_mean_square_error(ytrue, ypred)
+"""
 root_mean_square_error(ytrue,ypred) = sqrt(mean_square_error(ytrue,ypred))
 
 # convenience aliases for mean squared error:

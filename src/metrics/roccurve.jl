@@ -1,6 +1,8 @@
 import MLBase
 import StatsBase
 
+"""
+"""
 function roccurve(
         ytrue::AbstractVector{<:Integer},
         yscore::AbstractVector{<:Real},
@@ -16,6 +18,8 @@ function roccurve(
     return result
 end
 
+"""
+"""
 function roccurve(
         allrocnums::AbstractVector{<:MLBase.ROCNums},
         allthresholds::AbstractVector{<:Real},

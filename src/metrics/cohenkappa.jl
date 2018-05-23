@@ -1,7 +1,11 @@
 import MLBase
 
+"""
+"""
 is_square(m::AbstractMatrix) = size(m, 1) == size(m, 2)
 
+"""
+"""
 function cohen_kappa(contingency_table::AbstractMatrix)
     if !is_square(contingency_table)
         error("contingency_table must be a square matrix")
@@ -25,6 +29,8 @@ function cohen_kappa(contingency_table::AbstractMatrix)
     return kappa
 end
 
+"""
+"""
 function compute_contingency_table(y1::AbstractVector, y2::AbstractVector)
     classes = sort(unique(vcat(y1, y2)); rev = false,)
     numclasses = length(classes)
@@ -34,18 +40,24 @@ function compute_contingency_table(y1::AbstractVector, y2::AbstractVector)
     return contingency_table
 end
 
+"""
+"""
 function cohen_kappa(y1::AbstractVector, y2::AbstractVector)
     contingency_table = compute_contingency_table(y1, y2)
     result = cohen_kappa(contingency_table)
     return result
 end
 
+"""
+"""
 function compute_contingency_table(rocnums::MLBase.ROCNums)
     # we will arbitrarily set rows = predicted, columns = true/gold
     contingency_table = [rocnums.tp rocnums.fp; rocnums.fn rocnums.tp]
     return contingency_table
 end
 
+"""
+"""
 function cohen_kappa(rocnums::MLBase.ROCNums)
     contingency_table = compute_contingency_table(rocnums)
     result = cohen_kappa(contingency_table)

@@ -1,44 +1,49 @@
-## Documentation: http://docs.travis-ci.com/user/languages/julia/
 language: julia
-os:
-  - linux
-  - osx
-julia:
-  - 0.6
-#  - nightly
-notifications:
-  email: false
-git:
-  depth: 99999999
 
-## Allow failures on nightly julia:
+os:
+    - linux
+    - osx
+
+julia:
+    - 0.6
+    - nightly
+
+notifications:
+    email: false
+
+git:
+    depth: 99999999
+
 matrix:
-  allow_failures:
-  - julia: nightly
+    allow_failures:
+    - julia: nightly
 
 addons:
-  apt:
-    packages:
-    - gfortran
-    - pdf2svg
-    - pgf
-    - poppler-utils # provides /usr/bin/pdftoppm
-    - texlive-binaries
-    - texlive-latex-base
-    - texlive-latex-extra
-    - texlive-pictures
+    apt:
+        packages:
+        - gfortran
+        - pdf2svg
+        - pgf
+        - poppler-utils
+        - texlive-binaries
+        - texlive-latex-base
+        - texlive-latex-extra
+        - texlive-pictures
 
 before_install:
-  # update homebrew
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
-  # install mactex
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install basictex; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH=/Library/TeX/texbin:"$PATH"; fi
-  # update tlmgr
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr update --self; fi
-  # install tex packages
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install luatex85; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install pgfplots; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install standalone; fi
-  # install pdf2svg
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install pdf2svg; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install basictex; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH=/Library/TeX/texbin:"$PATH"; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr update --self; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install luatex85; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install pgfplots; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo tlmgr install standalone; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install pdf2svg; fi
+
+script:
+    - julia --color=yes -e 'Pkg.clone(pwd())'
+    - julia --color=yes -e 'Pkg.build("PredictMD")'
+    - julia --check-bounds=yes --color=yes -e 'Pkg.test("PredictMD", coverage=true)'
+
+after_success:
+    - julia -e 'cd(Pkg.dir("PredictMD")); include(joinpath("docs", "deploy_docs.jl"))'

@@ -1,5 +1,7 @@
 import DataFrames
 
+"""
+"""
 function risk_score_cutoff_values(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
@@ -34,6 +36,8 @@ function risk_score_cutoff_values(
     return cutoffs, risk_group_prevalences
 end
 
+"""
+"""
 function risk_score_cutoff_values(
         ytrue::AbstractVector{<:Integer},
         yscore::AbstractVector{<:AbstractFloat};
