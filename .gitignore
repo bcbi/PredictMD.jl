@@ -3,7 +3,6 @@
 *.ipynb_checkpoints/
 data/
 docs/build/
-docs/generated/
 docs/site/
 docs/src/examples/
 input/
