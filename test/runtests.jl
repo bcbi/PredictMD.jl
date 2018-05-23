@@ -33,6 +33,7 @@ Base.Test.@testset "PredictMD test suite" begin
     Base.Test.@testset "Test examples (CPU)" begin
         info("INFO testing examples (CPU)")
         Base.Test.@testset "Boston housing regression" begin
+            info("INFO testing Boston housing regression")
             include("../docs/src/examples/cpu/boston_housing/01_preprocess_data.jl")
             include("../docs/src/examples/cpu/boston_housing/02_linear_regression.jl")
             include("../docs/src/examples/cpu/boston_housing/03_random_forest_regression.jl")
@@ -41,6 +42,7 @@ Base.Test.@testset "PredictMD test suite" begin
             include("../docs/src/examples/cpu/boston_housing/06_get_model_output.jl")
         end
         Base.Test.@testset "Breast cancer biopsy classification" begin
+            info("INFO testing breast cancer biopsy classification")
             include("../docs/src/examples/cpu/breast_cancer_biopsy/01_preprocess_data.jl")
             include("../docs/src/examples/cpu/breast_cancer_biopsy/02_smote.jl")
             include("../docs/src/examples/cpu/breast_cancer_biopsy/03_logistic_classifier.jl")

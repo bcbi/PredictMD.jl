@@ -7,35 +7,35 @@ Pages = ["internals.md"]
 ## Modules
 
 ```@autodocs
-Modules = [PredictMD]
+Modules = [PredictMD, PredictMD.GPU]
 Order = [:module]
 ```
 
 ## Constants
 
 ```@autodocs
-Modules = [PredictMD]
+Modules = [PredictMD, PredictMD.GPU]
 Order = [:constant]
 ```
 
 ## Types
 
 ```@autodocs
-Modules = [PredictMD]
+Modules = [PredictMD, PredictMD.GPU]
 Order = [:type]
 ```
 
 ## Functions
 
 ```@autodocs
-Modules = [PredictMD]
+Modules = [PredictMD, PredictMD.GPU]
 Order = [:function]
 ```
 
 ## Macros
 
 ```@autodocs
-Modules = [PredictMD]
+Modules = [PredictMD, PredictMD.GPU]
 Order = [:macro]
 ```
 
