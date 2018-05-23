@@ -1,6 +1,8 @@
 import Documenter
 import PredictMD
 
+ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "true"
+
 Documenter.deploydocs(
     branch = "gh-pages",
     deps = Documenter.Deps.pip(
@@ -14,3 +16,5 @@ Documenter.deploydocs(
     repo = "github.com/bcbi/PredictMD.jl.git",
     target = "site",
     )
+
+ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "false"

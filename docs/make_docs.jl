@@ -2,6 +2,8 @@ import Documenter
 import Literate
 import PredictMD
 
+ENV["PREDICTMD_IS_MAKE_DOCS"] = "true"
+
 info("DEBUG: using Literate.jl to generate examples")
 
 examples_input_parent_directory = joinpath(
@@ -330,3 +332,6 @@ Documenter.makedocs(
         "library/internals.md",
         ],
     )
+
+
+ENV["PREDICTMD_IS_MAKE_DOCS"] = "false"

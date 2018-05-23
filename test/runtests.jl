@@ -9,7 +9,7 @@ info("INFO Successfully imported PredictMD")
 info("INFO Printing PredictMD version info:")
 println(string("PredictMD Version ", PredictMD.VERSION))
 
-ENV["PREDICTMD_RUNTESTS"] = "true"
+ENV["PREDICTMD_IS_RUNTESTS"] = "true"
 
 Base.Test.@testset "PredictMD test suite" begin
     Base.Test.@testset "Unit tests (CPU)" begin
@@ -53,3 +53,5 @@ Base.Test.@testset "PredictMD test suite" begin
         end
     end
 end
+
+ENV["PREDICTMD_IS_RUNTESTS"] = "false"

@@ -432,11 +432,11 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
         maxepochs = maxepochs,
         printlosseverynepochs = printlosseverynepochs,
         )
-    predprobalabelfixer = ImmutablePredictProbaSingleLabelInTStringTransformer(
+    predprobalabelfixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
         1,
         singlelabellevels
         )
-    predictlabelfixer = ImmutablePredictionsSingleLabelInTStringTransformer(
+    predictlabelfixer = ImmutablePredictionsSingleLabelInt2StringTransformer(
         1,
         singlelabellevels
         )
