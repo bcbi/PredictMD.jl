@@ -46,4 +46,5 @@ script:
     - julia --check-bounds=yes --color=yes -e "Pkg.test(\"PredictMD\", coverage=true)"
 
 after_success:
-    - julia --check-bounds=yes --color=yes -e "include(joinpath(Pkg.dir(\"PredictMD\"), \"docs\", \"deploy_docs.jl\"))"
+    - cd docs
+    - julia --check-bounds=yes --color=yes deploy_docs.jl
