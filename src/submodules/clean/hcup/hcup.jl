@@ -5,7 +5,7 @@ import DataFrames
 import ..filename_extension
 import ..fix_dict_type
 import ..is_nothing
-import ..make_missing_anywhere
+import ..make_missing_anywhere!
 import ..something_exists_at_path
 
 function x_contains_y(
@@ -72,12 +72,32 @@ function clean_hcup_nis_csv_icd9(
         input_file_name_list::AbstractVector{<:AbstractString},
         output_file_name::AbstractString;
         header_row::Bool = true,
-        print_every_n_lines::Integer = 100_000,
+        print_every_n_lines::Integer = 1_000_000,
         icd_code_type::Union{Void, Symbol} = nothing,
         num_dx_columns::Integer = 25,
         num_pr_columns::Integer = 15,
         ccs_onehot_prefix::AbstractString = "ccs_onehot_",
         )
+    """
+    example usage:
+
+    import PredictMD
+    icd_code_list = ["8841"]
+    input_file_name_list = [
+        "./data/nis_2012_core.csv",
+        "./data/nis_2013_core.csv",
+        "./data/nis_2014_core.csv",
+        ]
+    output_file_name = "./output/hcup_nis_pr_8841.csv"
+    icd_code_type = :procedure
+    PredictMD.Clean.clean_hcup_nis_csv_icd9(
+        icd_code_list,
+        input_file_name_list,
+        output_file_name;
+        icd_code_type = icd_code_type,
+        )
+    """
+
     if is_nothing(icd_code_type)
         error("need to specify icd_code_type")
     end
@@ -90,11 +110,11 @@ function clean_hcup_nis_csv_icd9(
         error("length(input_file_name_list) == 0")
     end
     for i = 1:length(input_file_name_list)
-        if filename_extension(input_file_name_list[i]) !== ".csv"
+        if filename_extension(input_file_name_list[i]) != ".csv"
             error("all input files must be .csv")
         end
     end
-    if filename_extension(output_file_name) !== ".csv"
+    if filename_extension(output_file_name) != ".csv"
         error("output file must be .csv")
     end
     if something_exists_at_path(output_file_name)
@@ -138,10 +158,8 @@ function clean_hcup_nis_csv_icd9(
     df_vector = Vector{DataFrames.DataFrame}(length(input_file_name_list))
 
     for i = 1:length(temp_file_name_vector)
-        df_i = CSV.read(
-            temp_file_name_vector[i],
-            DataFrames.DataFrame,
-            )
+        # df_i = CSV.read(temp_file_name_vector[i],DataFrames.DataFrame,)
+        df_i = DataFrames.readtable(temp_file_name_vector[i])
         df_vector[i] = df_i
     end
 
