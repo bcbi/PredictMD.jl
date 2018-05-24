@@ -1,5 +1,7 @@
 import DecisionTree
 
+"""
+"""
 mutable struct DecisionTreeModel <:
         AbstractEstimator
     name::T1 where T1 <: AbstractString
@@ -13,7 +15,7 @@ mutable struct DecisionTreeModel <:
     hyperparameters::T6 where T6 <: Associative
 
     # parameters (learned from data):
-    underlyingrandomforest::T7 where T7
+    underlyingrandomforest::T7 where T7 <: Union{Void, DecisionTree.Ensemble}
 
     function DecisionTreeModel(
             singlelabelname::Symbol;
@@ -28,6 +30,7 @@ mutable struct DecisionTreeModel <:
         hyperparameters[:nsubfeatures] = nsubfeatures
         hyperparameters[:ntrees] = ntrees
         hyperparameters = fix_dict_type(hyperparameters)
+        underlyingrandomforest = nothing
         result = new(
             name,
             isclassificationmodel,
@@ -35,11 +38,14 @@ mutable struct DecisionTreeModel <:
             singlelabelname,
             levels,
             hyperparameters,
+            underlyingrandomforest,
             )
         return result
     end
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::DecisionTreeModel,
         feature_contrasts::AbstractFeatureContrasts,
@@ -47,10 +53,14 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
 function underlying(x::DecisionTreeModel)
     return nothing
 end
 
+"""
+"""
 function get_underlying(
         x::DecisionTreeModel;
         saving::Bool = false,
@@ -60,6 +70,8 @@ function get_underlying(
     return result
 end
 
+"""
+"""
 function get_history(
         x::DecisionTreeModel;
         saving::Bool = false,
@@ -68,23 +80,43 @@ function get_history(
     return nothing
 end
 
+"""
+"""
+function parse_functions!(estimator::DecisionTreeModel)
+    return nothing
+end
+
+"""
+"""
 function fit!(
         estimator::DecisionTreeModel,
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
     info(string("INFO Starting to train DecisionTree.jl model."))
-    randomforest = DecisionTree.build_forest(
-        labelsarray,
-        featuresarray,
-        estimator.hyperparameters[:nsubfeatures],
-        estimator.hyperparameters[:ntrees],
-        )
+    randomforest = try
+        DecisionTree.build_forest(
+            labelsarray,
+            featuresarray,
+            estimator.hyperparameters[:nsubfeatures],
+            estimator.hyperparameters[:ntrees],
+            )
+    catch e
+        warn(
+            string(
+                "While training DecisionTree.jl model, ignored error: ",
+                e,
+                )
+            )
+        nothing
+    end
     info(string("INFO Finished training DecisionTree.jl model."))
     estimator.underlyingrandomforest = randomforest
     return estimator
 end
 
+"""
+"""
 function predict(
         estimator::DecisionTreeModel,
         featuresarray::AbstractArray,
@@ -99,26 +131,40 @@ function predict(
             )
         return predictionsvector
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
-        output = DecisionTree.apply_forest(
-            estimator.underlyingrandomforest,
-            featuresarray,
-            )
-        return output
+        if is_nothing(estimator.underlyingrandomforest)
+            predicted_values = zeros(size(featuresarray,1))
+        else
+            predicted_values = DecisionTree.apply_forest(
+                estimator.underlyingrandomforest,
+                featuresarray,
+                )
+        end
+        return predicted_values
     else
         error("Could not figure out if model is classification or regression")
     end
 end
 
+"""
+"""
 function predict_proba(
         estimator::DecisionTreeModel,
         featuresarray::AbstractArray,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
-        predictedprobabilities = DecisionTree.apply_forest_proba(
-            estimator.underlyingrandomforest,
-            featuresarray,
-            estimator.levels,
-            )
+        if is_nothing(estimator.underlyingrandomforest)
+            predictedprobabilities = zeros(
+                size(featuresarray, 1),
+                length(estimator.levels),
+                )
+            predictedprobabilities[:, 1] = 1
+        else
+            predictedprobabilities = DecisionTree.apply_forest_proba(
+                estimator.underlyingrandomforest,
+                featuresarray,
+                estimator.levels,
+                )
+        end
         result = Dict()
         for i = 1:length(estimator.levels)
             result[estimator.levels[i]] = predictedprobabilities[:, i]
@@ -132,6 +178,8 @@ function predict_proba(
     end
 end
 
+"""
+"""
 function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
@@ -176,6 +224,8 @@ function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
     return finalpipeline
 end
 
+"""
+"""
 function singlelabelmulticlassdataframerandomforestclassifier(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
@@ -202,6 +252,8 @@ function singlelabelmulticlassdataframerandomforestclassifier(
     end
 end
 
+"""
+"""
 function _singlelabeldataframerandomforestregression_DecisionTree(
         featurenames::AbstractVector,
         singlelabelname::Symbol;
@@ -239,6 +291,8 @@ function _singlelabeldataframerandomforestregression_DecisionTree(
     return finalpipeline
 end
 
+"""
+"""
 function singlelabeldataframerandomforestregression(
         featurenames::AbstractVector,
         singlelabelname::Symbol;

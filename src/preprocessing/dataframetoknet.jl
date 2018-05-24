@@ -1,6 +1,8 @@
 import DataFrames
 import StatsModels
 
+"""
+"""
 mutable struct MutableDataFrame2ClassificationKnetTransformer <:
         AbstractEstimator
     featurenames::T1 where T1 <: AbstractVector
@@ -30,6 +32,8 @@ mutable struct MutableDataFrame2ClassificationKnetTransformer <:
     end
 end
 
+"""
+"""
 mutable struct MutableDataFrame2RegressionKnetTransformer <:
         AbstractEstimator
     featurenames::T1 where T1 <: AbstractVector
@@ -53,6 +57,8 @@ mutable struct MutableDataFrame2RegressionKnetTransformer <:
     end
 end
 
+"""
+"""
 function get_history(
         x::MutableDataFrame2ClassificationKnetTransformer;
         saving::Bool = false,
@@ -61,6 +67,8 @@ function get_history(
     return nothing
 end
 
+"""
+"""
 function get_history(
         x::MutableDataFrame2RegressionKnetTransformer;
         saving::Bool = false,
@@ -69,6 +77,8 @@ function get_history(
     return nothing
 end
 
+"""
+"""
 function get_underlying(
         x::MutableDataFrame2ClassificationKnetTransformer;
         saving::Bool = false,
@@ -78,6 +88,8 @@ function get_underlying(
     return result
 end
 
+"""
+"""
 function get_underlying(
         x::MutableDataFrame2RegressionKnetTransformer;
         saving::Bool = false,
@@ -87,6 +99,8 @@ function get_underlying(
     return result
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::MutableDataFrame2ClassificationKnetTransformer,
         feature_contrasts::AbstractFeatureContrasts,
@@ -95,6 +109,8 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::MutableDataFrame2RegressionKnetTransformer,
         contrasts::AbstractFeatureContrasts,
@@ -103,6 +119,20 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
+function parse_functions!(transformer::MutableDataFrame2ClassificationKnetTransformer)
+    return nothing
+end
+
+"""
+"""
+function parse_functions!(transformer::MutableDataFrame2RegressionKnetTransformer,)
+    return nothing
+end
+
+"""
+"""
 function fit!(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
@@ -122,6 +152,8 @@ function fit!(
     return result
 end
 
+"""
+"""
 function fit!(
         transformer::MutableDataFrame2RegressionKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
@@ -141,48 +173,58 @@ function fit!(
     return result
 end
 
+"""
+"""
 function predict(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
-        featuresdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    return transform(transformer, featuresdf)
+    return transform(transformer, features_df)
 end
 
+"""
+"""
 function predict_proba(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
-        featuresdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    return transform(transformer, featuresdf)
+    return transform(transformer, features_df)
 end
 
+"""
+"""
 function predict(
         transformer::MutableDataFrame2RegressionKnetTransformer,
-        featuresdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
     result = transform(
         transformer,
-        featuresdf;
+        features_df;
         kwargs...
         )
     return result
 end
 
+"""
+"""
 function predict_proba(
         transformer::MutableDataFrame2RegressionKnetTransformer,
-        featuresdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
     result = transform(
         transformer,
-        featuresdf;
+        features_df;
         kwargs...
         )
     return result
 end
 
+"""
+"""
 function transform(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
@@ -214,8 +256,6 @@ function transform(
             )
         training_labels_array =
             [labelstring2intmap_1[y] for y in training_labels_df[label_1]]
-        @assert(typeof(training_labels_array) <: AbstractVector)
-        @assert(length(training_labels_array) == size(training_labels_df, 1))
     else
         training_labels_array = Array{Int}(
             size(training_labels_df, 1),
@@ -229,7 +269,7 @@ function transform(
                 transformer.index,
                 )
             training_labels_array[:, j] =
-                [labelstring2intmap_j[y] for y in labelsdf[label_j]]
+                [labelstring2intmap_j[y] for y in labels_df[label_j]]
         end
     end
     modelformula = generate_formula(
@@ -269,9 +309,11 @@ function transform(
     end
 end
 
+"""
+"""
 function transform(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
-        featuresdf::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
     modelformula = generate_formula(
@@ -281,7 +323,7 @@ function transform(
         )
     modelframe = StatsModels.ModelFrame(
         modelformula,
-        featuresdf;
+        features_df;
         contrasts = transformer.dffeaturecontrasts.contrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)
@@ -292,6 +334,8 @@ function transform(
     return featuresarray
 end
 
+"""
+"""
 function transform(
         transformer::MutableDataFrame2RegressionKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
@@ -354,9 +398,11 @@ function transform(
     end
 end
 
+"""
+"""
 function transform(
         transformer::MutableDataFrame2RegressionKnetTransformer,
-        featuresdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
         kwargs...
         )
     modelformula = generate_formula(
@@ -366,7 +412,7 @@ function transform(
         )
     modelframe = StatsModels.ModelFrame(
         modelformula,
-        featuresdf;
+        features_df;
         contrasts = transformer.dffeaturecontrasts.contrasts,
         )
     modelmatrix = StatsModels.ModelMatrix(modelframe)

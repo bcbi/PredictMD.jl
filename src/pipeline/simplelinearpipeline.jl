@@ -1,8 +1,12 @@
+"""
+"""
 struct SimplePipeline <: AbstractPipeline
     name::T1 where T1 <: AbstractString
     objectsvector::T2 where T2 <: AbstractVector{Fittable}
 end
 
+"""
+"""
 function SimplePipeline(
         objectsvector::AbstractVector{Fittable};
         name::AbstractString = "",
@@ -14,6 +18,8 @@ function SimplePipeline(
     return result
 end
 
+"""
+"""
 function set_feature_contrasts!(
         x::SimplePipeline,
         feature_contrasts::AbstractFeatureContrasts,
@@ -24,6 +30,8 @@ function set_feature_contrasts!(
     return nothing
 end
 
+"""
+"""
 function get_underlying(
         x::SimplePipeline;
         saving::Bool = false,
@@ -49,6 +57,8 @@ function get_underlying(
     return underlying
 end
 
+"""
+"""
 function get_history(
         x::SimplePipeline;
         saving::Bool = false,
@@ -74,6 +84,17 @@ function get_history(
     return history
 end
 
+"""
+"""
+function parse_functions!(simplelinearpipeline::SimplePipeline)
+    for i = 1:length(simplelinearpipeline.objectsvector)
+        parse_functions!(simplelinearpipeline.objectsvector[i])
+    end
+    return nothing
+end
+
+"""
+"""
 function fit!(
         simplelinearpipeline::SimplePipeline,
         varargs...;
@@ -98,6 +119,8 @@ function fit!(
     return output
 end
 
+"""
+"""
 function predict(
         simplelinearpipeline::SimplePipeline,
         varargs...;
@@ -122,6 +145,8 @@ function predict(
     return output
 end
 
+"""
+"""
 function predict_proba(
         simplelinearpipeline::SimplePipeline,
         varargs...;

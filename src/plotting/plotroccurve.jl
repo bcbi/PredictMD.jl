@@ -2,28 +2,32 @@ import LaTeXStrings
 import PGFPlots
 import PGFPlotsX
 
-function plotroccurve(
+"""
+"""
+function plotroccurves(
         estimator::Fittable,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         positiveclass::AbstractString,
         )
     vectorofestimators = [estimator]
     result = plotroccurve(
         vectorofestimators,
-        featuresdf,
-        labelsdf,
+        features_df,
+        labels_df,
         singlelabelname,
         positiveclass,
         )
     return result
 end
 
-function plotroccurve(
+"""
+"""
+function plotroccurves(
         vectorofestimators::AbstractVector{Fittable},
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         positiveclass::AbstractString,
         )
@@ -33,10 +37,10 @@ function plotroccurve(
     alllinearplotobjects = []
     for i = 1:length(vectorofestimators)
         estimator_i = vectorofestimators[i]
-        metrics_i = _singlelabelbinaryclassclassificationmetrics(
+        metrics_i = _singlelabelbinaryclassificationmetrics(
             estimator_i,
-            featuresdf,
-            labelsdf,
+            features_df,
+            labels_df,
             singlelabelname,
             positiveclass;
             threshold = 0.5,
@@ -65,4 +69,4 @@ function plotroccurve(
     return tikzpicture
 end
 
-const plotroccurves = plotroccurve
+const plotroccurve = plotroccurves

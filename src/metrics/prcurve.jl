@@ -1,6 +1,8 @@
 import MLBase
 import StatsBase
 
+"""
+"""
 function prcurve(
         ytrue::AbstractVector{<:Integer},
         yscore::AbstractVector{<:Real},
@@ -16,17 +18,14 @@ function prcurve(
     return result
 end
 
+"""
+"""
 function prcurve(
     allrocnums::AbstractVector{<:MLBase.ROCNums},
     allthresholds::AbstractVector{<:Real},
     )
     allprecisions = [precision(x) for x in allrocnums]
     allrecalls = [recall(x) for x in allrocnums]
-    #
-    @assert(typeof(allprecisions) <: AbstractVector)
-    @assert(typeof(allrecalls) <: AbstractVector)
-    @assert(typeof(allthresholds) <: AbstractVector)
-    #
     permutation = sortperm(allthresholds; rev = false)
     allprecisions = allprecisions[permutation]
     allrecalls = allrecalls[permutation]

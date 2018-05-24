@@ -1,10 +1,18 @@
 __precompile__(true)
 
+"""
+"""
 module PredictMD
 
 # base/
+# (base must go first)
+include("base/interface.jl")
 include("base/types.jl")
 include("base/version.jl")
+
+# deprecations/
+# (deprecations must go second)
+include("deprecations/deprecated.jl")
 
 # calibration/
 
@@ -23,9 +31,15 @@ include("datasets/rdatasets.jl")
 # ensemble/
 
 # gpu/
+"""
+"""
+module GPU
 include("gpu/cudnn.jl")
+end
 
 # integrations/
+include("integrations/docs/documenter.jl")
+include("integrations/docs/literate.jl")
 include("integrations/ide/atom.jl")
 
 # io/
@@ -70,7 +84,7 @@ include("plotting/plotlearningcurve.jl")
 include("plotting/plotprcurve.jl")
 include("plotting/plotroccurve.jl")
 include("plotting/plotsinglelabelregressiontruevspredicted.jl")
-include("plotting/plotsinglelabelbinaryclassclassifierhistograms.jl")
+include("plotting/plotsinglelabelbinaryclassifierhistograms.jl")
 include("plotting/probability_calibration_plots.jl")
 
 # postprocessing/

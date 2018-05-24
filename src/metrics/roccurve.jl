@@ -1,6 +1,8 @@
 import MLBase
 import StatsBase
 
+"""
+"""
 function roccurve(
         ytrue::AbstractVector{<:Integer},
         yscore::AbstractVector{<:Real},
@@ -16,16 +18,14 @@ function roccurve(
     return result
 end
 
+"""
+"""
 function roccurve(
         allrocnums::AbstractVector{<:MLBase.ROCNums},
         allthresholds::AbstractVector{<:Real},
         )
     allfpr = [false_positive_rate(x) for x in allrocnums]
     alltpr = [true_positive_rate(x) for x in allrocnums]
-    #
-    @assert(typeof(allfpr) <: AbstractVector)
-    @assert(typeof(alltpr) <: AbstractVector)
-    @assert(typeof(allthresholds) <: AbstractVector)
     #
     permutation = sortperm(allthresholds; rev = false)
     allfpr = allfpr[permutation]

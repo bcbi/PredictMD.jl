@@ -2,6 +2,8 @@ import DataFrames
 import MLBase
 import StatsBase
 
+"""
+"""
 function singlelabelbinaryytrue(
         labels::AbstractVector,
         positiveclass::AbstractString;
@@ -14,6 +16,8 @@ function singlelabelbinaryytrue(
     return result
 end
 
+"""
+"""
 function singlelabelbinaryyscore(
         singlelabelprobabilities::Associative,
         positiveclass::AbstractString;
@@ -26,7 +30,9 @@ function singlelabelbinaryyscore(
     return result
 end
 
-function _singlelabelbinaryclassclassificationmetrics_tunableparam(
+"""
+"""
+function _singlelabelbinaryclassificationmetrics_tunableparam(
         kwargsassoc::Associative,
         )
     tunableparams = [
@@ -102,10 +108,12 @@ function _singlelabelbinaryclassclassificationmetrics_tunableparam(
     return selectedtunableparam, selectedparamtomax, metricprintnames
 end
 
-function _singlelabelbinaryclassclassificationmetrics(
+"""
+"""
+function _singlelabelbinaryclassificationmetrics(
         estimator::Fittable,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         positiveclass::AbstractString;
         kwargs...
@@ -114,9 +122,9 @@ function _singlelabelbinaryclassclassificationmetrics(
     kwargsdict = Dict(kwargs)
     kwargsdict = fix_dict_type(kwargsdict)
     selectedtunableparam, selectedparamtomax, metricprintnames =
-        _singlelabelbinaryclassclassificationmetrics_tunableparam(kwargsdict)
+        _singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
     #
-    predictedprobabilitiesalllabels = predict_proba(estimator, featuresdf)
+    predictedprobabilitiesalllabels = predict_proba(estimator, features_df)
     yscore = Cfloat.(
         singlelabelbinaryyscore(
             predictedprobabilitiesalllabels[singlelabelname],
@@ -125,7 +133,7 @@ function _singlelabelbinaryclassclassificationmetrics(
         )
     ytrue = Int.(
         singlelabelbinaryytrue(
-            labelsdf[singlelabelname],
+            labels_df[singlelabelname],
             positiveclass,
             )
         )
@@ -189,19 +197,21 @@ function _singlelabelbinaryclassclassificationmetrics(
     return results
 end
 
-function singlelabelbinaryclassclassificationmetrics(
+"""
+"""
+function singlelabelbinaryclassificationmetrics(
         estimator::Fittable,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         positiveclass::AbstractString;
         kwargs...
         )
     vectorofestimators = Fittable[estimator]
-    result = singlelabelbinaryclassclassificationmetrics(
+    result = singlelabelbinaryclassificationmetrics(
         vectorofestimators,
-        featuresdf,
-        labelsdf,
+        features_df,
+        labels_df,
         singlelabelname,
         positiveclass;
         kwargs...
@@ -209,10 +219,12 @@ function singlelabelbinaryclassclassificationmetrics(
     return result
 end
 
-function singlelabelbinaryclassclassificationmetrics(
+"""
+"""
+function singlelabelbinaryclassificationmetrics(
         vectorofestimators::AbstractVector{Fittable},
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         positiveclass::AbstractString;
         kwargs...
@@ -220,12 +232,12 @@ function singlelabelbinaryclassclassificationmetrics(
     kwargsdict = Dict(kwargs)
     kwargsdict = fix_dict_type(kwargsdict)
     selectedtunableparam, selectedparamtomax, metricprintnames =
-        _singlelabelbinaryclassclassificationmetrics_tunableparam(kwargsdict)
+        _singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
     metricsforeachestimator = [
-        _singlelabelbinaryclassclassificationmetrics(
+        _singlelabelbinaryclassificationmetrics(
             est,
-            featuresdf,
-            labelsdf,
+            features_df,
+            labels_df,
             singlelabelname,
             positiveclass;
             kwargs...

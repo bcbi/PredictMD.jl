@@ -1,9 +1,11 @@
 import DataFrames
 
+"""
+"""
 function risk_score_cutoff_values(
         estimator::Fittable,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol,
         positiveclass::AbstractString;
         multiply_by::Real = 1.0,
@@ -12,12 +14,12 @@ function risk_score_cutoff_values(
     #
     ytrue = Int.(
         singlelabelbinaryytrue(
-            labelsdf[singlelabelname],
+            labels_df[singlelabelname],
             positiveclass,
             )
         )
     #
-    predictedprobabilitiesalllabels = predict_proba(estimator, featuresdf)
+    predictedprobabilitiesalllabels = predict_proba(estimator, features_df)
     yscore = Cfloat.(
         singlelabelbinaryyscore(
             predictedprobabilitiesalllabels[singlelabelname],
@@ -34,6 +36,8 @@ function risk_score_cutoff_values(
     return cutoffs, risk_group_prevalences
 end
 
+"""
+"""
 function risk_score_cutoff_values(
         ytrue::AbstractVector{<:Integer},
         yscore::AbstractVector{<:AbstractFloat};

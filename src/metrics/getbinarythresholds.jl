@@ -1,5 +1,7 @@
 import StatsBase
 
+"""
+"""
 function get_binary_thresholds(
         yscore::AbstractVector{<:Real};
         additionalthreshold::Real = 0.5,
@@ -22,6 +24,5 @@ function get_binary_thresholds(
             );
         rev = false,
         )
-    @assert(typeof(result) <: AbstractVector)
     return result
 end

@@ -1,5 +1,7 @@
 import TikzPictures
 
+"""
+"""
 function save_plot(filename::AbstractString, tp::TikzPictures.TikzPicture)
     extension = lowercase(strip(splitext(filename)[2]))
     if extension == ".pdf"
@@ -21,34 +23,54 @@ function save_plot(filename::AbstractString, tp::TikzPictures.TikzPicture)
     end
 end
 
+"""
+"""
 function save_plot_pdf(filename::AbstractString, tp::TikzPictures.TikzPicture)
+    parent_directory = Base.Filesystem.dirname(filename)
+    Base.Filesystem.mkpath(parent_directory)
     result = TikzPictures.save(TikzPictures.PDF(filename), tp)
     return result
 end
 
+"""
+"""
 function save_plot_tex(filename::AbstractString, tp::TikzPictures.TikzPicture)
+    parent_directory = Base.Filesystem.dirname(filename)
+    Base.Filesystem.mkpath(parent_directory)
     result = TikzPictures.save(TikzPictures.TEX(filename), tp)
     return result
 end
 
+"""
+"""
 function save_plot_tikz(filename::AbstractString, tp::TikzPictures.TikzPicture)
+    parent_directory = Base.Filesystem.dirname(filename)
+    Base.Filesystem.mkpath(parent_directory)
     result = TikzPictures.save(TikzPictures.TIKZ(filename), tp)
     return result
 end
 
+"""
+"""
 function save_plot_svg(filename::AbstractString, tp::TikzPictures.TikzPicture)
+    parent_directory = Base.Filesystem.dirname(filename)
+    Base.Filesystem.mkpath(parent_directory)
     result = TikzPictures.save(TikzPictures.SVG(filename), tp)
     return result
 end
 
+"""
+"""
 function open_plot(tp::TikzPictures.TikzPicture)
     tempsvgfilename = string(tempname(), ".svg")
     result = open_plot(tempsvgfilename, tp)
     return result
 end
 
+"""
+"""
 function open_plot(filename::AbstractString, tp::TikzPictures.TikzPicture)
-    saveresult = save_plot_svg(filename, tp)
+    saveresult = save_plot(filename, tp)
     openresult = open_browser_window(filename)
     return openresult
 end

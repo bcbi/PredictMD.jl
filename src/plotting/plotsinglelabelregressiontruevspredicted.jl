@@ -2,17 +2,19 @@ import LaTeXStrings
 import PGFPlots
 import PGFPlotsX
 
+"""
+"""
 function plotsinglelabelregressiontrueversuspredicted(
         estimator::Fittable,
-        featuresdf::DataFrames.AbstractDataFrame,
-        labelsdf::DataFrames.AbstractDataFrame,
+        features_df::DataFrames.AbstractDataFrame,
+        labels_df::DataFrames.AbstractDataFrame,
         singlelabelname::Symbol;
         includeorigin::Bool = false,
         )
     ytrue = singlelabelregressionytrue(
-        labelsdf[singlelabelname],
+        labels_df[singlelabelname],
         )
-    predictionsalllabels = predict(estimator, featuresdf)
+    predictionsalllabels = predict(estimator, features_df)
     ypred = singlelabelregressionypred(
         predictionsalllabels[singlelabelname],
         )
@@ -48,9 +50,8 @@ function plotsinglelabelregressiontrueversuspredicted(
         )
     estimated_intercept,
         estimated_x_coefficient = ordinary_least_squares_regression(
-            ;
-            X = Float64.(ypred),
-            Y = Float64.(ytrue),
+            Float64.(ypred), # X
+            Float64.(ytrue); # Y
             intercept = true,
             )
     bestfitline_linearplotobject = PGFPlots.Plots.Linear(
