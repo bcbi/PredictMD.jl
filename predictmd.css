@@ -1,0 +1,9 @@
+.btn-grid
+{
+    margin: -2px 0;
+}
+
+.btn-grid > .btn
+{
+    margin: 2px 0;
+}
