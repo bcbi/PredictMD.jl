@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Center for Biomedical Informatics, Brown University">
+  <link rel="shortcut icon" href="../../../../img/favicon.ico">
+  <title>4. Knet neural network regression - PredictMD.jl</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../css/highlight.css">
+  <link href="../../../../assets/Documenter.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "4. Knet neural network regression";
+    var mkdocs_page_input_path = "examples/cpu/boston_housing/04_knet_mlp_regression.md";
+    var mkdocs_page_url = "/examples/cpu/boston_housing/04_knet_mlp_regression/";
+  </script>
+  
+  <script src="../../../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../../.." class="icon icon-home"> PredictMD.jl</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Examples</span>
+    <ul class="subnav">
+                <li class=" current">
+                    
+    <span class="caption-text">Boston housing (single label regression)</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../01_preprocess_data/">1. Preprocess data</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../02_linear_regression/">2. Linear regression</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../03_random_forest_regression/">3. Random forest regression</a>
+                </li>
+                <li class="toctree-l3 current">
+                    
+    <a class="current" href="./">4. Knet neural network regression</a>
+    <ul class="subnav">
+            
+    </ul>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../05_compare_models/">5. Compare models</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../06_get_model_output/">6. Directly access model output</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Breast cancer biopsy (single label binary classification)</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../breast_cancer_biopsy/01_preprocess_data/">1. Preprocess data</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../breast_cancer_biopsy/02_smote/">2. Apply SMOTE algorithm</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../breast_cancer_biopsy/03_logistic_classifier/">3. Logistic classifier</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../breast_cancer_biopsy/04_random_forest_classifier/">4. Random forest classifier</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../breast_cancer_biopsy/05_c_svc_svm_classifier/">5. C-SVC support vector machine classifier</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../breast_cancer_biopsy/06_nu_svc_svm_classifier/">6. nu-SVC support vector machine classifier</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../breast_cancer_biopsy/07_knet_mlp_classifier/">7. Knet neural network classifier</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../breast_cancer_biopsy/08_compare_models/">8. Compare models</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../breast_cancer_biopsy/09_get_model_output/">9. Directly access model output</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Library</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../../../library/internals/">Internals</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../..">PredictMD.jl</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Examples &raquo;</li>
+        
+      
+        
+          <li>Boston housing (single label regression) &raquo;</li>
+        
+      
+    
+    <li>4. Knet neural network regression</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/bcbi/PredictMD.jl/edit/master/docs/examples/cpu/boston_housing/04_knet_mlp_regression.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <pre><code class="julia">srand(999)
+
+import CSV
+import DataFrames
+import Knet
+import PredictMD
+
+mkpath(
+    joinpath(
+        tempdir(),
+        &quot;boston_housing_example&quot;,
+        ),
+    )
+
+trainingandvalidation_features_df_filename = joinpath(
+    tempdir(),
+    &quot;boston_housing_example&quot;,
+    &quot;trainingandvalidation_features_df.csv&quot;,
+    )
+trainingandvalidation_labels_df_filename = joinpath(
+    tempdir(),
+    &quot;boston_housing_example&quot;,
+    &quot;trainingandvalidation_labels_df.csv&quot;,
+    )
+testing_features_df_filename = joinpath(
+    tempdir(),
+    &quot;boston_housing_example&quot;,
+    &quot;testing_features_df.csv&quot;,
+    )
+testing_labels_df_filename = joinpath(
+    tempdir(),
+    &quot;boston_housing_example&quot;,
+    &quot;testing_labels_df.csv&quot;,
+    )
+training_features_df_filename = joinpath(
+    tempdir(),
+    &quot;boston_housing_example&quot;,
+    &quot;training_features_df.csv&quot;,
+    )
+training_labels_df_filename = joinpath(
+    tempdir(),
+    &quot;boston_housing_example&quot;,
+    &quot;training_labels_df.csv&quot;,
+    )
+validation_features_df_filename = joinpath(
+    tempdir(),
+    &quot;boston_housing_example&quot;,
+    &quot;validation_features_df.csv&quot;,
+    )
+validation_labels_df_filename = joinpath(
+    tempdir(),
+    &quot;boston_housing_example&quot;,
+    &quot;validation_labels_df.csv&quot;,
+    )
+trainingandvalidation_features_df = CSV.read(
+    trainingandvalidation_features_df_filename,
+    DataFrames.DataFrame,
+    )
+trainingandvalidation_labels_df = CSV.read(
+    trainingandvalidation_labels_df_filename,
+    DataFrames.DataFrame,
+    )
+testing_features_df = CSV.read(
+    testing_features_df_filename,
+    DataFrames.DataFrame,
+    )
+testing_labels_df = CSV.read(
+    testing_labels_df_filename,
+    DataFrames.DataFrame,
+    )
+training_features_df = CSV.read(
+    training_features_df_filename,
+    DataFrames.DataFrame,
+    )
+training_labels_df = CSV.read(
+    training_labels_df_filename,
+    DataFrames.DataFrame,
+    )
+validation_features_df = CSV.read(
+    validation_features_df_filename,
+    DataFrames.DataFrame,
+    )
+validation_labels_df = CSV.read(
+    validation_labels_df_filename,
+    DataFrames.DataFrame,
+    )
+
+categoricalfeaturenames = Symbol[]
+continuousfeaturenames = Symbol[
+    :Crim,
+    :Zn,
+    :Indus,
+    :Chas,
+    :NOx,
+    :Rm,
+    :Age,
+    :Dis,
+    :Rad,
+    :Tax,
+    :PTRatio,
+    :Black,
+    :LStat,
+    ]
+featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
+
+singlelabelname = :MedV
+labelnames = [singlelabelname]
+
+knet_mlp_predict_function_source = &quot;&quot;&quot;
+function knetmlp_predict(
+        w,
+        x0::AbstractArray,
+        )
+    x1 = Knet.relu.( w[1]*x0 .+ w[2] )
+    x2 = w[3]*x1 .+ w[4]
+    return x2
+end
+&quot;&quot;&quot;
+
+knet_mlp_loss_function_source = &quot;&quot;&quot;
+function knetmlp_loss(
+        predict_function::Function,
+        modelweights,
+        x::AbstractArray,
+        ytrue::AbstractArray;
+        L1::Real = Cfloat(0),
+        L2::Real = Cfloat(0),
+        )
+    loss = mean(
+        abs2,
+        ytrue - predict_function(
+            modelweights,
+            x,
+            ),
+        )
+    if L1 != 0
+        loss += L1 * sum(sum(abs, w_i) for w_i in modelweights[1:2:end])
+    end
+    if L2 != 0
+        loss += L2 * sum(sum(abs2, w_i) for w_i in modelweights[1:2:end])
+    end
+    return loss
+end
+&quot;&quot;&quot;
+
+feature_contrasts = PredictMD.generate_feature_contrasts(training_features_df, featurenames)
+
+knetmlp_modelweights = Any[
+    Cfloat.(
+        0.1f0*randn(Cfloat,10,feature_contrasts.num_array_columns)
+        ),
+    Cfloat.(
+        zeros(Cfloat,10,1)
+        ),
+    Cfloat.(
+        0.1f0*randn(Cfloat,1,10)
+        ),
+    Cfloat.(
+        zeros(Cfloat,1,1),
+        ),
+    ]
+
+knetmlp_losshyperparameters = Dict()
+knetmlp_losshyperparameters[:L1] = Cfloat(0.0)
+knetmlp_losshyperparameters[:L2] = Cfloat(0.0)
+knetmlp_optimizationalgorithm = :Adam
+knetmlp_optimizerhyperparameters = Dict()
+knetmlp_minibatchsize = 48
+knetmlp_maxepochs = 1_000
+
+knet_mlp_regression = PredictMD.singlelabeldataframeknetregression(
+    featurenames,
+    singlelabelname;
+    package = :Knetjl,
+    name = &quot;Knet MLP&quot;,
+    predict_function_source = knet_mlp_predict_function_source,
+    loss_function_source = knet_mlp_loss_function_source,
+    losshyperparameters = knetmlp_losshyperparameters,
+    optimizationalgorithm = knetmlp_optimizationalgorithm,
+    optimizerhyperparameters = knetmlp_optimizerhyperparameters,
+    minibatchsize = knetmlp_minibatchsize,
+    modelweights = knetmlp_modelweights,
+    maxepochs = knetmlp_maxepochs,
+    printlosseverynepochs = 100,
+    feature_contrasts = feature_contrasts,
+    )
+
+PredictMD.parse_functions!(knet_mlp_regression)
+
+PredictMD.fit!(
+    knet_mlp_regression,
+    training_features_df,
+    training_labels_df,
+    validation_features_df,
+    validation_labels_df,
+    )
+
+knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
+    knet_mlp_regression,
+    :loss_vs_epoch;
+    )
+PredictMD.open_plot(knet_learningcurve_lossvsepoch)
+
+knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
+    knet_mlp_regression,
+    :loss_vs_epoch;
+    startat = 10,
+    endat = :end,
+    )
+PredictMD.open_plot(knet_learningcurve_lossvsepoch_skip10epochs)
+
+knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
+    knet_mlp_regression,
+    :loss_vs_iteration;
+    window = 50,
+    sampleevery = 10,
+    )
+PredictMD.open_plot(knet_learningcurve_lossvsiteration)
+
+knet_learningcurve_lossvsiteration_skip100iterations = PredictMD.plotlearningcurve(
+    knet_mlp_regression,
+    :loss_vs_iteration;
+    window = 50,
+    sampleevery = 10,
+    startat = 100,
+    endat = :end,
+    )
+PredictMD.open_plot(knet_learningcurve_lossvsiteration_skip100iterations)
+
+knet_mlp_regression_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
+    knet_mlp_regression,
+    training_features_df,
+    training_labels_df,
+    singlelabelname,
+    )
+PredictMD.open_plot(knet_mlp_regression_plot_training)
+
+knet_mlp_regression_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
+    knet_mlp_regression,
+    testing_features_df,
+    testing_labels_df,
+    singlelabelname,
+    )
+PredictMD.open_plot(knet_mlp_regression_plot_testing)
+
+PredictMD.singlelabelregressionmetrics(
+    knet_mlp_regression,
+    training_features_df,
+    training_labels_df,
+    singlelabelname,
+    )
+
+PredictMD.singlelabelregressionmetrics(
+    knet_mlp_regression,
+    testing_features_df,
+    testing_labels_df,
+    singlelabelname,
+    )
+
+knet_mlp_regression_filename = joinpath(
+    tempdir(),
+    &quot;boston_housing_example&quot;,
+    &quot;knet_mlp_regression.jld2&quot;,
+    )
+
+PredictMD.save_model(knet_mlp_regression_filename, knet_mlp_regression)
+</code></pre>
+
+<pre><code>WARNING: Method definition knetmlp_predict(Any, AbstractArray{T, N} where N where T) in module PredictMD at none:6 overwritten at none:5.
+WARNING: Method definition knetmlp_loss(Function, Any, AbstractArray{T, N} where N where T, AbstractArray{T, N} where N where T) in module PredictMD at none:9 overwritten at none:9.
+WARNING: Method definition #knetmlp_loss(Array{Any, 1}, typeof(PredictMD.knetmlp_loss), Function, Any, AbstractArray{T, N} where N where T, AbstractArray{T, N} where N where T) in module PredictMD overwritten.
+INFO: INFO Starting to train Knet.jl model. Max epochs: 1000.
+INFO: INFO Epoch: 0. Loss (training set): 1751.7722. Loss (validation set): 1717.2460402149204.
+INFO: INFO Epoch: 100. Loss (training set): 66.09934. Loss (validation set): 70.65888652029466.
+INFO: INFO Epoch: 200. Loss (training set): 51.59168. Loss (validation set): 57.197286991194034.
+INFO: INFO Epoch: 300. Loss (training set): 41.914536. Loss (validation set): 44.88992458655756.
+INFO: INFO Epoch: 400. Loss (training set): 36.16382. Loss (validation set): 35.09895381440636.
+INFO: INFO Epoch: 500. Loss (training set): 29.710537. Loss (validation set): 28.507828887032293.
+INFO: INFO Epoch: 600. Loss (training set): 26.415281. Loss (validation set): 24.21031413051355.
+INFO: INFO Epoch: 700. Loss (training set): 23.775227. Loss (validation set): 21.562710817925204.
+INFO: INFO Epoch: 800. Loss (training set): 21.592096. Loss (validation set): 20.576544393481335.
+INFO: INFO Epoch: 900. Loss (training set): 19.215767. Loss (validation set): 18.187177333907847.
+INFO: INFO Epoch: 1000. Loss (training set): 17.761333. Loss (validation set): 17.03262552517438.
+INFO: INFO Finished training Knet.jl model.
+INFO: DEBUG Skipping opening file during Travis build: /tmp/juliaUPyVlh.svg
+INFO: DEBUG Skipping opening file during Travis build: /tmp/juliaDnVnt8.svg
+INFO: DEBUG Skipping opening file during Travis build: /tmp/juliaeIrzF4.svg
+INFO: DEBUG Skipping opening file during Travis build: /tmp/juliadGUS03.svg
+INFO: DEBUG Skipping opening file during Travis build: /tmp/juliaT7nYx6.svg
+INFO: DEBUG Skipping opening file during Travis build: /tmp/juliaeUs66b.svg
+INFO: INFO Attempting to save model...
+INFO: INFO Saved model to file &quot;/tmp/boston_housing_example/knet_mlp_regression.jld2&quot;
+
+</code></pre>
+
+<p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../05_compare_models/" class="btn btn-neutral float-right" title="5. Compare models">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../03_random_forest_regression/" class="btn btn-neutral" title="3. Random forest regression"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/bcbi/PredictMD.jl/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../03_random_forest_regression/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../05_compare_models/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../../../..';</script>
+    <script src="../../../../js/theme.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+      <script src="../../../../assets/mathjaxhelper.js"></script>
+      <script src="../../../../search/require.js"></script>
+      <script src="../../../../search/search.js"></script>
+
+</body>
+</html>
