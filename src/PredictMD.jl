@@ -19,6 +19,13 @@ include("deprecations/deprecated.jl")
 # classimbalance/
 include("classimbalance/smote.jl")
 
+# clean
+"""
+"""
+module Clean
+include("clean/hcup.jl")
+end
+
 # cluster/
 
 # datasets/
@@ -113,6 +120,7 @@ include("utils/fix_dict_type.jl")
 include("utils/fix_vector_type.jl")
 include("utils/formulas.jl")
 include("utils/labelstringintmaps.jl")
+include("utils/missings.jl")
 include("utils/nothings.jl")
 include("utils/openbrowserwindow.jl")
 include("utils/openplotsduringtestsenv.jl")

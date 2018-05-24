@@ -3,11 +3,6 @@ import FileIO
 import JLD2
 import ProgressMeter
 
-function filename_extension(filename::AbstractString)
-    result = lowercase(strip(splitext(filename)[2]))
-    return result
-end
-
 """
 """
 function save_model(filename::AbstractString,fittable_object_to_save::Fittable)
