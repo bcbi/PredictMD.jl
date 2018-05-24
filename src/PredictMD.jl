@@ -47,6 +47,7 @@ end
 # integrations/
 include("integrations/ide/atom.jl")
 include("integrations/literate_programming/literate.jl")
+include("integrations/literate_programming/weave.jl")
 
 # io/
 include("io/saveload.jl")
