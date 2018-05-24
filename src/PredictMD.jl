@@ -19,12 +19,8 @@ include("deprecations/deprecated.jl")
 # classimbalance/
 include("classimbalance/smote.jl")
 
-# clean
-"""
-"""
-module Clean
-include("clean/hcup.jl")
-end
+# clean/
+include("clean/clean.jl")
 
 # cluster/
 
