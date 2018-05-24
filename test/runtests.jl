@@ -23,21 +23,21 @@ Base.Test.@testset "PredictMD test suite" begin
         Base.Test.@testset "metrics" begin
             include(
                 joinpath(
-                    ".", cpu", unit", metrics", test_coefficientofdetermination.jl",)
+                    ".", "cpu", "unit", "metrics", "test_coefficientofdetermination.jl",)
                 )
             include(
                 joinpath(
-                    ".", cpu", unit", metrics", test_cohenkappa.jl",)
+                    ".", "cpu", "unit", "metrics", "test_cohenkappa.jl",)
                 )
         end
         Base.Test.@testset "utils" begin
             include(
                 joinpath(
-                    ".", cpu", unit", utils", test_fix_dict_type.jl",)
+                    ".", "cpu", "unit", "utils", "test_fix_dict_type.jl",)
                 )
             include(
                 joinpath(
-                    ".", cpu", unit", utils", test_fix_vector_type.jl",)
+                    ".", "cpu", "unit", "utils", "test_fix_vector_type.jl",)
                 )
         end
     end
@@ -45,7 +45,7 @@ Base.Test.@testset "PredictMD test suite" begin
         info("INFO generating documentation and examples")
         include(
             joinpath(
-                "..", docs", make_docs.jl",
+                "..", "docs", "make_docs.jl",
                 )
             )
     end
@@ -55,66 +55,66 @@ Base.Test.@testset "PredictMD test suite" begin
             info("INFO testing Boston housing regression (CPU)")
             include(
                 joinpath(
-                    "..", docs", src", examples", cpu", boston_housing", 01_preprocess_data.jl",)
+                    "..", "docs", "src", "examples", "cpu", "boston_housing", "01_preprocess_data.jl",)
                 )
             include(
                 joinpath(
-                    "..", docs", src", examples", cpu", boston_housing", 02_linear_regression.jl",)
+                    "..", "docs", "src", "examples", "cpu", "boston_housing", "02_linear_regression.jl",)
                 )
             include(
                 joinpath(
-                    "..", docs", src", examples", cpu", boston_housing", 03_random_forest_regression.jl",)
+                    "..", "docs", "src", "examples", "cpu", "boston_housing", "03_random_forest_regression.jl",)
                 )
             include(
                 joinpath(
-                    "..", docs", src", examples", cpu", boston_housing", 04_knet_mlp_regression.jl",)
+                    "..", "docs", "src", "examples", "cpu", "boston_housing", "04_knet_mlp_regression.jl",)
                 )
             include(
                 joinpath(
-                    "..", docs", src", examples", cpu", boston_housing", 05_compare_models.jl",)
+                    "..", "docs", "src", "examples", "cpu", "boston_housing", "05_compare_models.jl",)
                 )
             include(
                 joinpath(
-                    "..", docs", src", examples", cpu", boston_housing", 06_get_model_output.jl",)
+                    "..", "docs", "src", "examples", "cpu", "boston_housing", "06_get_model_output.jl",)
                 )
         end
         Base.Test.@testset "Breast cancer biopsy classification (CPU)" begin
             info("INFO testing breast cancer biopsy classification (CPU)")
             include(
                 joinpath(
-                    "..", docs", src", examples", cpu", breast_cancer_biopsy", 01_preprocess_data.jl",)
+                    "..", "docs", "src", "examples", "cpu", "breast_cancer_biopsy", "01_preprocess_data.jl",)
                 )
             include(
                 joinpath(
-                    "..", docs", src", examples", cpu", breast_cancer_biopsy", 02_smote.jl",)
+                    "..", "docs", "src", "examples", "cpu", "breast_cancer_biopsy", "02_smote.jl",)
                 )
             include(
                 joinpath(
-                    "..", docs", src", examples", cpu", breast_cancer_biopsy", 03_logistic_classifier.jl",)
+                    "..", "docs", "src", "examples", "cpu", "breast_cancer_biopsy", "03_logistic_classifier.jl",)
                 )
             include(
                 joinpath(
-                    "..", docs", src", examples", cpu", breast_cancer_biopsy", 04_random_forest_classifier.jl",)
+                    "..", "docs", "src", "examples", "cpu", "breast_cancer_biopsy", "04_random_forest_classifier.jl",)
                 )
             include(
                 joinpath(
-                    "..", docs", src", examples", cpu", breast_cancer_biopsy", 05_c_svc_svm_classifier.jl",)
+                    "..", "docs", "src", "examples", "cpu", "breast_cancer_biopsy", "05_c_svc_svm_classifier.jl",)
                 )
             include(
                 joinpath(
-                    "..", docs", src", examples", cpu", breast_cancer_biopsy", 06_nu_svc_svm_classifier.jl",)
+                    "..", "docs", "src", "examples", "cpu", "breast_cancer_biopsy", "06_nu_svc_svm_classifier.jl",)
                 )
             include(
                 joinpath(
-                    "..", docs", src", examples", cpu", breast_cancer_biopsy", 07_knet_mlp_classifier.jl",)
+                    "..", "docs", "src", "examples", "cpu", "breast_cancer_biopsy", "07_knet_mlp_classifier.jl",)
                 )
             include(
                 joinpath(
-                    "..", docs", src", examples", cpu", breast_cancer_biopsy", 08_compare_models.jl",)
+                    "..", "docs", "src", "examples", "cpu", "breast_cancer_biopsy", "08_compare_models.jl",)
                 )
             include(
                 joinpath(
-                    "..", docs", src", examples", cpu", breast_cancer_biopsy", 09_get_model_output.jl",)
+                    "..", "docs", "src", "examples", "cpu", "breast_cancer_biopsy", "09_get_model_output.jl",)
                 )
         end
     end
