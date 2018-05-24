@@ -2,5 +2,6 @@
 """
 module GPU
 
-# include("gpu/cudnn.jl")
+include(joinpath(".", "cudnn", "cudnn.jl",))
+
 end # end module GPU
