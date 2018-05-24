@@ -1,6 +1,13 @@
 import CSV
 import DataFrames
 
+# imports from PredictMD
+import ..filename_extension
+import ..fix_dict_type
+import ..is_nothing
+import ..make_missing_anywhere
+import ..something_exists_at_path
+
 function x_contains_y(
         x::AbstractString,
         y::AbstractVector{<:AbstractString},
