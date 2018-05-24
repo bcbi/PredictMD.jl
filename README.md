@@ -16,8 +16,8 @@
         </tr>
         <tr>
             <td>docs</td>
-            <td><a href="https://bcbi.github.io/PredictMD.jl/stable"><img alt="Documentation (stable)" title="Documentation (stable)" src="https://img.shields.io/badge/docs-stable-blue.svg"></a></td>
-            <td><a href="https://bcbi.github.io/PredictMD.jl/latest"><img alt="Documentation (latest)" title="Documentation (latest)" src="https://img.shields.io/badge/docs-latest-blue.svg"></a></td>
+            <td><a href="https://www.predictmd.net/stable"><img alt="Documentation (stable)" title="Documentation (stable)" src="https://img.shields.io/badge/docs-stable-blue.svg"></a></td>
+            <td><a href="https://www.predict.net/latest"><img alt="Documentation (latest)" title="Documentation (latest)" src="https://img.shields.io/badge/docs-latest-blue.svg"></a></td>
         </tr>
     </tbody>
 </table>
