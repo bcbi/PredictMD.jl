@@ -26,14 +26,6 @@ include(
         )
     )
 
-# deprecations/
-# (deprecations must go second)
-include(
-    joinpath(
-        ".", "deprecations", "deprecated.jl",
-        )
-    )
-
 # calibration/
 
 # classimbalance/
@@ -88,7 +80,7 @@ include(
 # io/
 include(
     joinpath(
-        ".", "io", "saveload.jl",
+        ".", "toplevel", "io", "saveload.jl",
         )
     )
 
@@ -304,94 +296,94 @@ include(
 # tree/
 include(
     joinpath(
-        ".", "tree", "decisiontree.jl",
+        ".", "toplevel", "tree", "decisiontree.jl",
         )
     )
 
 # utils/
 include(
     joinpath(
-        ".", "submodule", "utils", "file_exists.jl",
+        ".", "toplevel", "utils", "file_exists.jl",
         )
     )
 include(
     joinpath(
-        ".", "submodule", "utils", "fix_dict_type.jl",
+        ".", "toplevel", "utils", "fix_dict_type.jl",
         )
     )
 include(
     joinpath(
-        ".", "submodule", "utils", "fix_vector_type.jl",
+        ".", "toplevel", "utils", "fix_vector_type.jl",
         )
     )
 include(
     joinpath(
-        ".", "submodule", "utils", "formulas.jl",
+        ".", "toplevel", "utils", "formulas.jl",
         )
     )
 include(
     joinpath(
-        ".", "submodule", "utils", "labelstringintmaps.jl",
+        ".", "toplevel", "utils", "labelstringintmaps.jl",
         )
     )
 include(
     joinpath(
-        ".", "submodule", "utils", "missings.jl",
+        ".", "toplevel", "utils", "missings.jl",
         )
     )
 include(
     joinpath(
-        ".", "submodule", "utils", "nothings.jl",
+        ".", "toplevel", "utils", "nothings.jl",
         )
     )
 include(
     joinpath(
-        ".", "submodule", "utils", "openbrowserwindow.jl",
+        ".", "toplevel", "utils", "openbrowserwindow.jl",
         )
     )
 include(
     joinpath(
-        ".", "submodule", "utils", "openplotsduringtestsenv.jl",
+        ".", "toplevel", "utils", "openplotsduringtestsenv.jl",
         )
     )
 include(
     joinpath(
-        ".", "submodule", "utils", "predictionsassoctodataframe.jl",
+        ".", "toplevel", "utils", "predictionsassoctodataframe.jl",
         )
     )
 include(
     joinpath(
-        ".", "submodule", "utils", "probabilitiestopredictions.jl",
+        ".", "toplevel", "utils", "probabilitiestopredictions.jl",
         )
     )
 include(
     joinpath(
-        ".", "submodule", "utils", "runtestsenv.jl",
+        ".", "toplevel", "utils", "runtestsenv.jl",
         )
     )
 include(
     joinpath(
-        ".", "submodule", "utils", "shufflerows.jl",
+        ".", "toplevel", "utils", "shufflerows.jl",
         )
     )
 include(
     joinpath(
-        ".", "submodule", "utils", "simplemovingaverage.jl",
+        ".", "toplevel", "utils", "simplemovingaverage.jl",
         )
     )
 include(
     joinpath(
-        ".", "submodule", "utils", "tikzpictures.jl",
+        ".", "toplevel", "utils", "tikzpictures.jl",
         )
     )
 include(
     joinpath(
-        ".", "submodule", "utils", "trapz.jl",
+        ".", "toplevel", "utils", "trapz.jl",
         )
     )
 include(
     joinpath(
-        ".", "submodule", "utils", "traviscienv.jl",
+        ".", "toplevel", "utils", "traviscienv.jl",
         )
     )
 
