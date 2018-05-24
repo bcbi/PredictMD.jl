@@ -45,8 +45,8 @@ include("gpu/cudnn.jl")
 end
 
 # integrations/
-include("integrations/docs/literate.jl")
 include("integrations/ide/atom.jl")
+include("integrations/literate_programming/literate.jl")
 
 # io/
 include("io/saveload.jl")
