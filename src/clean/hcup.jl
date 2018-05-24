@@ -67,8 +67,8 @@ function clean_hcup_nis_csv_icd9(
         header_row::Bool = true,
         print_every_n_lines::Integer = 100_000,
         icd_code_type::Union{Void, Symbol} = nothing,
-        num_dx_columns::AbstractInteger = 25,
-        num_pr_columns::AbstractInteger = 15,
+        num_dx_columns::Integer = 25,
+        num_pr_columns::Integer = 15,
         ccs_onehot_prefix::AbstractString = "ccs_onehot_",
         )
     if is_nothing(icd_code_type)
@@ -132,7 +132,7 @@ function clean_hcup_nis_csv_icd9(
 
     for i = 1:length(temp_file_name_vector)
         df_i = CSV.read(
-            temp_file_name_vector[i]
+            temp_file_name_vector[i],
             DataFrames.DataFrame,
             )
         df_vector[i] = df_i
