@@ -4,6 +4,10 @@ __precompile__(true)
 """
 module PredictMD
 
+##############################################################################
+Top level ####################################################################
+##############################################################################
+
 # base/
 # (base must go first)
 include("base/interface.jl")
@@ -19,9 +23,6 @@ include("deprecations/deprecated.jl")
 # classimbalance/
 include("classimbalance/smote.jl")
 
-# clean/
-include("clean/clean.jl")
-
 # cluster/
 
 # datasets/
@@ -32,13 +33,6 @@ include("datasets/rdatasets.jl")
 # decomposition/
 
 # ensemble/
-
-# gpu/
-"""
-"""
-module GPU
-include("gpu/cudnn.jl")
-end
 
 # integrations/
 include("integrations/ide/atom.jl")
@@ -129,5 +123,14 @@ include("utils/tikzpictures.jl")
 include("utils/trapz.jl")
 include("utils/traviscienv.jl")
 
+##############################################################################
+Submodules ###################################################################
+##############################################################################
+
+# submodules/clean/
+include("submodules/clean/clean.jl")
+
+# submodules/gpu/
+include("submodules/gpu/gpu.jl")
 
 end # end module PredictMD
