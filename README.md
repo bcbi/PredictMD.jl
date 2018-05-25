@@ -22,7 +22,7 @@
     </tbody>
 </table>
 
-PredictMD is a [Julia](https://julialang.org/) package that provides a uniform interface for using multiple different statistics and machine learning packages. This document describes how to install and use PredictMD.
+PredictMD is a Julia package that provides a uniform interface for using multiple different statistics and machine learning packages. This document describes how to install and use PredictMD.
 
 <table>
     <thead>
