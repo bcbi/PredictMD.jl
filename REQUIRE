@@ -4,6 +4,7 @@ ArgCheck 0.6
 Atom 0.6
 BSON 0.1
 CSV 0.2
+CSVFiles
 ClassImbalance 0.2
 Combinatorics 0.6
 Compat

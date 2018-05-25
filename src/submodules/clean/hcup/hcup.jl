@@ -1,5 +1,7 @@
 import CSV
+import CSVFiles
 import DataFrames
+import FileIO
 
 # imports from PredictMD
 import ..filename_extension
@@ -106,10 +108,11 @@ function clean_hcup_nis_csv_icd9(
         icd_code_type = icd_code_type,
         rows_for_type_detect = 30_000,
         )
-    df = CSV.read(
-        output_file_name,
-        DataFrames.DataFrame;
-        rows_for_type_detect = 30_000,
+    df = DataFrames.DataFrame(
+        FileIO.load(
+            output_file_name;
+            type_detect_rows = 30_000,
+            )
         )
     """
 
@@ -202,10 +205,11 @@ function clean_hcup_nis_csv_icd9(
 
     for i = 1:length(temp_file_name_vector)
         # df_i = DataFrames.readtable(temp_file_name_vector[i])
-        df_i = CSV.read(
-            temp_file_name_vector[i],
-            DataFrames.DataFrame;
-            rows_for_type_detect = rows_for_type_detect,
+        df_i = DataFrames.DataFrame(
+            FileIO.load(
+                temp_file_name_vector[i];
+                type_detect_rows = rows_for_type_detect,
+                )
             )
         df_vector[i] = df_i
     end
