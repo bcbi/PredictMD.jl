@@ -15,6 +15,7 @@ output/
 *.jl.cov
 *.jl.*.cov
 *.jl.mem
+*.jls
 *.log
 deps/custom_preamble.tex
 deps/deps.jl
