@@ -8,10 +8,6 @@ import StatsBase
 
 df = RDatasets.dataset("MASS", "biopsy")
 
-DataFrames.dropmissing!(df)
-
-PredictMD.shuffle_rows!(df)
-
 categoricalfeaturenames = Symbol[]
 continuousfeaturenames = Symbol[
     :V1,
@@ -32,6 +28,10 @@ positiveclass = "malignant"
 singlelabellevels = [negativeclass, positiveclass]
 
 labelnames = [singlelabelname]
+
+df = df[:, vcat(featurenames, labelnames)]
+DataFrames.dropmissing!(df)
+PredictMD.shuffle_rows!(df)
 
 features_df = df[featurenames]
 labels_df = df[labelnames]

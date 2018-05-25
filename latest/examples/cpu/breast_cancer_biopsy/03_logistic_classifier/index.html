@@ -244,35 +244,43 @@ validation_labels_df_filename = joinpath(
     )
 trainingandvalidation_features_df = CSV.read(
     trainingandvalidation_features_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 trainingandvalidation_labels_df = CSV.read(
     trainingandvalidation_labels_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 testing_features_df = CSV.read(
     testing_features_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 testing_labels_df = CSV.read(
     testing_labels_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 training_features_df = CSV.read(
     training_features_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 training_labels_df = CSV.read(
     training_labels_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 validation_features_df = CSV.read(
     validation_features_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 validation_labels_df = CSV.read(
     validation_labels_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 
 smoted_training_features_df_filename = joinpath(
@@ -287,11 +295,13 @@ smoted_training_labels_df_filename = joinpath(
     )
 smoted_training_features_df = CSV.read(
     smoted_training_features_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 smoted_training_labels_df = CSV.read(
     smoted_training_labels_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 
 categoricalfeaturenames = Symbol[]
@@ -433,11 +443,11 @@ logistic_classifier_filename = joinpath(
 PredictMD.save_model(logistic_classifier_filename, logistic_classifier)
 </code></pre>
 
-<pre><code>INFO: INFO Starting to train GLM.jl model.
-INFO: INFO Finished training GLM.jl model.
-INFO: DEBUG Skipping opening file during Travis build: /tmp/juliariz3GS.svg
-INFO: DEBUG Skipping opening file during Travis build: /tmp/juliaZvmqiD.svg
-INFO: DEBUG Skipping opening file during Travis build: /tmp/juliaC5sq3p.svg
+<pre><code>INFO: Starting to train GLM.jl model.
+INFO: Finished training GLM.jl model.
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliav7JUyR.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaeefeuv.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaSb3jSb.svg
 Low risk: 0 to 0.05857493355870247. Medium risk: 0.05857493355870247 to 0.9342752695083618. High risk: 0.9342752695083618 to 1.
 3×3 DataFrames.DataFrame
 │ Row │ Risk_group  │ Arithmetic_mean │ Median │
@@ -450,8 +460,8 @@ Low risk: 0 to 0.05857493355870247. Medium risk: 0.05857493355870247 to 0.934275
 ├─────┼─────────────┼─────────────────┼────────┤
 │ 1   │ Low risk    │ 0.0             │ 0.0    │
 │ 2   │ Medium risk │ 0.326087        │ 0.0    │
-│ 3   │ High risk   │ 1.0             │ 1.0    │INFO: INFO Attempting to save model...
-INFO: INFO Saved model to file &quot;/tmp/breast_cancer_biopsy_example/logistic_classifier.jld2&quot;
+│ 3   │ High risk   │ 1.0             │ 1.0    │INFO: Attempting to save model...
+INFO: Saved model to file &quot;/tmp/breast_cancer_biopsy_example/logistic_classifier.jld2&quot;
 
 </code></pre>
 

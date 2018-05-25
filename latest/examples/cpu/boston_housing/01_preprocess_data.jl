@@ -15,12 +15,9 @@ df = CSV.read(
             "Boston.csv.gz",
             ),
         ),
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
-
-DataFrames.dropmissing!(df)
-
-PredictMD.shuffle_rows!(df)
 
 categoricalfeaturenames = Symbol[]
 continuousfeaturenames = Symbol[
@@ -42,6 +39,10 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 
 singlelabelname = :MedV
 labelnames = [singlelabelname]
+
+df = df[:, vcat(featurenames, labelnames)]
+DataFrames.dropmissing!(df)
+PredictMD.shuffle_rows!(df)
 
 features_df = df[featurenames]
 labels_df = df[labelnames]
