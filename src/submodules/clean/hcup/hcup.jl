@@ -8,6 +8,8 @@ import ..is_nothing
 import ..make_missing_anywhere!
 import ..something_exists_at_path
 
+"""
+"""
 function x_contains_y(
         x::AbstractString,
         y::AbstractVector{<:AbstractString},
@@ -23,6 +25,8 @@ function x_contains_y(
     return false
 end
 
+"""
+"""
 function symbol_begins_with(
     x::Symbol,
     y::AbstractString
@@ -35,6 +39,8 @@ function symbol_begins_with(
     return nothing
 end
 
+"""
+"""
 function ccs_onehot_names(
         df::DataFrames.AbstractDataFrame,
         ccs_onehot_prefix::AbstractString = "ccs_onehot_",
@@ -46,6 +52,8 @@ function ccs_onehot_names(
     return result
 end
 
+"""
+"""
 function column_names_with_prefix(
         df::DataFrames.AbstractDataFrame,
         prefix::AbstractString,
@@ -106,14 +114,21 @@ function clean_hcup_nis_csv_icd9(
     else
         error("icd_code_type must be one of: :diagnosis, :procedure")
     end
+
     if length(input_file_name_list) == 0
         error("length(input_file_name_list) == 0")
     end
+
+    input_file_name_list = strip.(input_file_name_list)
+
     for i = 1:length(input_file_name_list)
         if filename_extension(input_file_name_list[i]) != ".csv"
             error("all input files must be .csv")
         end
     end
+
+    output_file_name = strip.(output_file_name)
+
     if filename_extension(output_file_name) != ".csv"
         error("output file must be .csv")
     end
@@ -125,10 +140,14 @@ function clean_hcup_nis_csv_icd9(
                 )
         )
     end
+
     temp_file_name_vector = Vector{String}(length(input_file_name_list))
     for i = 1:length(input_file_name_list)
         temp_file_name_vector[i] = string(tempname(), "_", i, ".csv")
     end
+
+    icd_code_list = strip.(icd_code_list)
+
     for i = 1:length(input_file_name_list)
         if something_exists_at_path(temp_file_name_vector[i])
             error("something_exists_at_path(temp_file_name_vector[i])")
@@ -147,8 +166,18 @@ function clean_hcup_nis_csv_icd9(
                         end
                     end
                     line_number += 1
-                    if line_number % print_every_n_lines == 0
-                        info(string("Current line number: ", line_number))
+                    if (print_every_n_lines >= 0) &&
+                            (line_number % print_every_n_lines == 0)
+                        info(
+                            string(
+                                "Input file ",
+                                i,
+                                " of ",
+                                length(input_file_name_list),
+                                ". Current line number: ",
+                                line_number,
+                                )
+                            )
                     end
                 end
             end
@@ -174,14 +203,14 @@ function clean_hcup_nis_csv_icd9(
     all_column_names_vectors = [
         DataFrames.names(df) for df in df_vector
         ]
-    shared_column_names = intersect(all_names_vectors...)
+    shared_column_names = intersect(all_column_names_vectors...)
 
     for i = 1:length(df_vector)
         extra_column_names = setdiff(
             names(df_vector[i]),
             shared_column_names,
             )
-        DataFrames.delete!(df_vector, extra_column_names)
+        DataFrames.delete!(df_vector[i], extra_column_names)
     end
 
     combined_df = vcat(df_vector...)
@@ -192,11 +221,11 @@ function clean_hcup_nis_csv_icd9(
 
     if icd_code_type == :diagnosis
         icd_code_column_names = Symbol[
-            Symbol( string("DX", i) ) for j = 1:num_dx_columns
+            Symbol( string("DX", j) ) for j = 1:num_dx_columns
             ]
     elseif icd_code_type == :procedure
         icd_code_column_names = Symbol[
-            Symbol( string("PR", i) ) for j = 1:num_pr_columns
+            Symbol( string("PR", j) ) for j = 1:num_pr_columns
             ]
     else
         error("icd_code_type must be one of: :diagnosis, :procedure")
@@ -213,48 +242,58 @@ function clean_hcup_nis_csv_icd9(
             length(icd_code_column_names),
             )
         for j = 1:length(icd_code_column_names)
-            for i = size(combined_df, 1)
-                ith_row_has_current_icd_code_in_jth_icdcodecolumn_matrix =
-                    combined_df[i, icd_code_column_names[j]] == current_icd_code
+            for i = 1:size(combined_df, 1)
+                cell_value = combined_df[i, icd_code_column_names[j]]
+                if DataFrames.ismissing(cell_value)
+                    ith_row_has_current_icd_code_in_jth_icdcodecolumn_matrix[i, j] = false
+                else
+                    cell_value = strip(string(cell_value))
+                    ith_row_has_current_icd_code_in_jth_icdcodecolumn_matrix[i, j] =
+                        cell_value == current_icd_code
+                end
             end
         end
-        ith_row_has_current_icd_code_in_jth_icdcodecolumn_matrix[
-            DataFrames.ismissing(ith_row_has_current_icd_code_in_jth_icdcodecolumn_matrix)
-            ] = false
         ith_row_has_current_icd_code_in_any_icdcode_column = vec(
             sum(ith_row_has_current_icd_code_in_jth_icdcodecolumn_matrix, 2) .> 0
             )
         ith_row_has_kth_icd_code_matrix[:, k] = ith_row_has_current_icd_code_in_any_icdcode_column
     end
 
-    matching_rows = find(
-        vec(
-            sum(ith_row_has_kth_icd_code_matrix, 2) .> 0
+    matching_rows = find(Bool.(vec(sum(ith_row_has_kth_icd_code_matrix, 2).>0)))
+    num_rows_before = size(combined_df, 1)
+    combined_df = combined_df[matching_rows, :]
+    num_rows_after = size(combined_df, 1)
+    info(
+        string(
+            "DEBUG Rows before: ",
+            num_rows_before,
+            ". Rows after: ",
+            num_rows_after,
+            ". Difference: ",
+            num_rows_before - num_rows_after,
             )
         )
-
-    combined_df = combined_df[matching_rows, :]
 
     dx_column_names = [Symbol(string("DX", i)) for i = 1:num_dx_columns]
     dx_ccs_column_names = [Symbol(string("DXCCS", i)) for i = 1:num_dx_columns]
 
-    info("DEBUG before big nasty thing. time: ", now())
-    index_to_ccs = string.(
-        unique(
-            DataFrames.skipmissing(
-                vcat(
-                    [combined_df[:, col] for col in dx_ccs_column_names]...
+    index_to_ccs = strip.(
+        string.(
+            unique(
+                DataFrames.skipmissing(
+                    vcat(
+                        [combined_df[:, col] for col in dx_ccs_column_names]...
+                        )
                     )
                 )
             )
         )
-    info("DEBUG in middle of big nasty thing. time: ", now())
+
     ccs_to_index = Dict()
     for k = 1:length(index_to_ccs)
         ccs_to_index[  index_to_ccs[ k ]  ] = k
     end
     ccs_to_index = fix_dict_type(ccs_to_index)
-    info("DEBUG after big nasty thing. time: ", now())
 
     ith_row_has_vcode_dx_in_kth_ccs = Matrix{Bool}(
         size(combined_df, 1),
@@ -265,11 +304,12 @@ function clean_hcup_nis_csv_icd9(
         jth_dx_col_name = dx_column_names[j]
         jth_dx_ccs_col_name = dx_ccs_column_names[j]
         for i = 1:size(combined_df, 1)
-            dx_value = combined_df[i, jth_dx_col_name]
+            dx_value = strip(string(combined_df[i, jth_dx_col_name]))
             if DataFrames.ismissing(dx_value)
             else
-                if dx_value[1] == "V"
-                    ccs_value = combined_df[i, jth_dx_ccs_col_name]
+                if length(dx_value) == 0
+                elseif dx_value[1] == "V"
+                    ccs_value = strip(string(combined_df[i, jth_dx_ccs_col_name]))
                     if DataFrames.ismissing(ccs_value)
                         error("dx value was not missing but ccs value was missing")
                     else
@@ -283,14 +323,14 @@ function clean_hcup_nis_csv_icd9(
     DEBUG_num_ccs_columns_added = 0
     DEBUG_num_ccs_columns_not_added = 0
     for k = 1:length(index_to_ccs)
-        kth_ccs = ccs_to_index[k]
+        kth_ccs = index_to_ccs[k]
         kth_ccs_onehot_column_name = Symbol(
             string(
                 ccs_onehot_prefix,
                 kth_ccs,
                 )
             )
-        temporary_column_ints = Int.(ith_row_has_vcode_dx_in_kth_ccs[i, k])
+        temporary_column_ints = Int.(ith_row_has_vcode_dx_in_kth_ccs[:, k])
         if sum(temporary_column_ints) > 0
             temporary_column_strings = Vector{String}(size(combined_df, 1))
             for i = 1:size(combined_df, 1)
@@ -301,25 +341,30 @@ function clean_hcup_nis_csv_icd9(
                 end
             end
             combined_df[kth_ccs_onehot_column_name] = temporary_column_strings
-            info("DEBUG Added ccs column: ", kth_ccs_onehot_column_name)
             DEBUG_num_ccs_columns_added += 1
         else
             DEBUG_num_ccs_columns_not_added += 1
         end
     end
 
-    if !(DEBUG_num_ccs_columns_added + DEBUG_num_ccs_columns_added == length(index_to_ccs))
-        error("!(DEBUG_num_ccs_columns_added + DEBUG_num_ccs_columns_not_added == length(index_to_ccs))")
-    end
-    info("DEBUG: num_ccs_columns_added: ", DEBUG_num_ccs_columns_added)
-    info("DEBUG: num_ccs_columns_not_added", DEBUG_num_ccs_columns_added)
-
     make_missing_anywhere!(combined_df, "A")
     make_missing_anywhere!(combined_df, "C")
+
+    mkpath(dirname(combined_df))
 
     CSV.write(
         output_file_name,
         combined_df,
+        )
+
+    info(
+        string(
+            "INFO Wrote ",
+            size(combined_df, 1),
+            " rows to file: \"",
+            output_file_name
+            "\"",
+            )
         )
 
     return output_file_name
