@@ -85,6 +85,7 @@ function clean_hcup_nis_csv_icd9(
         num_dx_columns::Integer = 25,
         num_pr_columns::Integer = 15,
         ccs_onehot_prefix::AbstractString = "ccs_onehot_",
+        rows_for_type_detect::Union{Void, Integer} = nothing,
         )
     """
     example usage:
@@ -103,11 +104,24 @@ function clean_hcup_nis_csv_icd9(
         input_file_name_list,
         output_file_name;
         icd_code_type = icd_code_type,
+        rows_for_type_detect = 30_000,
+        )
+    df = CSV.read(
+        output_file_name,
+        DataFrames.DataFrame;
+        rows_for_type_detect = 30_000,
         )
     """
 
+    if is_nothing(rows_for_type_detect)
+        error("you need to specify rows_for_type_detect")
+    end
+    if rows_for_type_detect <= 0
+        error("rows_for_type_detect must be > 0")
+    end
+
     if is_nothing(icd_code_type)
-        error("need to specify icd_code_type")
+        error("you need to specify icd_code_type")
     end
     if icd_code_type == :diagnosis
     elseif icd_code_type == :procedure
@@ -187,8 +201,12 @@ function clean_hcup_nis_csv_icd9(
     df_vector = Vector{DataFrames.DataFrame}(length(input_file_name_list))
 
     for i = 1:length(temp_file_name_vector)
-        # df_i = CSV.read(temp_file_name_vector[i],DataFrames.DataFrame,)
-        df_i = DataFrames.readtable(temp_file_name_vector[i])
+        # df_i = DataFrames.readtable(temp_file_name_vector[i])
+        df_i = CSV.read(
+            temp_file_name_vector[i],
+            DataFrames.DataFrame;
+            rows_for_type_detect = rows_for_type_detect,
+            )
         df_vector[i] = df_i
     end
 
@@ -265,12 +283,15 @@ function clean_hcup_nis_csv_icd9(
     num_rows_after = size(combined_df, 1)
     info(
         string(
-            "DEBUG Rows before: ",
+            "DEBUG I initially identified ",
             num_rows_before,
-            ". Rows after: ",
+            " rows that could possibly have matched your ICD code(s).",
+            "I checked each row, and ",
             num_rows_after,
-            ". Difference: ",
+            " of those rows actually matched your ICD code(s).",
+            "I removed the ",
             num_rows_before - num_rows_after,
+            " rows that did not match.",
             )
         )
 
@@ -349,8 +370,9 @@ function clean_hcup_nis_csv_icd9(
 
     make_missing_anywhere!(combined_df, "A")
     make_missing_anywhere!(combined_df, "C")
+    make_missing_anywhere!(combined_df, -99)
 
-    mkpath(dirname(combined_df))
+    mkpath(dirname(output_file_name))
 
     CSV.write(
         output_file_name,
@@ -362,7 +384,7 @@ function clean_hcup_nis_csv_icd9(
             "INFO Wrote ",
             size(combined_df, 1),
             " rows to file: \"",
-            output_file_name
+            output_file_name,
             "\"",
             )
         )

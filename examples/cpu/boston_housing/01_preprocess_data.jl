@@ -15,7 +15,8 @@ df = CSV.read(
             "Boston.csv.gz",
             ),
         ),
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 
 categoricalfeaturenames = Symbol[]
