@@ -93,7 +93,7 @@ function fit!(
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
-    info(string("INFO Starting to train DecisionTree.jl model."))
+    info(string("Starting to train DecisionTree.jl model."))
     randomforest = try
         DecisionTree.build_forest(
             labelsarray,
@@ -110,7 +110,7 @@ function fit!(
             )
         nothing
     end
-    info(string("INFO Finished training DecisionTree.jl model."))
+    info(string("Finished training DecisionTree.jl model."))
     estimator.underlyingrandomforest = randomforest
     return estimator
 end

@@ -81,34 +81,34 @@ function plotlearningcurves(
                 )
         end
     else
-        error("ERROR curvetype must be one of: :loss_vs_iteration, :loss_vs_epoch")
+        error("curvetype must be one of: :loss_vs_iteration, :loss_vs_epoch")
     end
     if length(training_xvalues) != length(training_yvalues)
-        error("ERROR length(training_xvalues) != length(training_yvalues)")
+        error("length(training_xvalues) != length(training_yvalues)")
     end
     if has_validation
         if length(training_xvalues) != length(validation_yvalues)
-            error("ERROR length(training_xvalues) != length(validation_yvalues)")
+            error("length(training_xvalues) != length(validation_yvalues)")
         end
         if length(training_xvalues) != length(validation_xvalues)
-            error("ERROR length(training_xvalues) != length(validation_xvalues)")
+            error("length(training_xvalues) != length(validation_xvalues)")
         end
         if !all(training_xvalues .== validation_xvalues)
-            error("ERROR !all(training_xvalues .== validation_xvalues)")
+            error("!all(training_xvalues .== validation_xvalues)")
         end
     end
     if startat == :start
         startat = 1
     elseif typeof(startat) <: Symbol
-        error("ERROR $(startat) is not a valid value for startat")
+        error("$(startat) is not a valid value for startat")
     end
     if endat == :end
         endat = length(training_xvalues)
     elseif typeof(endat) <: Symbol
-        error("ERROR $(endat) is not a valid value for endat")
+        error("$(endat) is not a valid value for endat")
     end
     if startat > endat
-        error("ERROR startat > endat")
+        error("startat > endat")
     end
     training_xvalues = training_xvalues[startat:endat]
     training_yvalues = training_yvalues[startat:endat]
@@ -117,17 +117,17 @@ function plotlearningcurves(
         validation_yvalues = validation_yvalues[startat:endat]
     end
     if length(training_xvalues) != length(training_yvalues)
-        error("ERROR length(training_xvalues) != length(training_yvalues)")
+        error("length(training_xvalues) != length(training_yvalues)")
     end
     if has_validation
         if length(validation_xvalues) != length(validation_yvalues)
-            error("ERROR length(validation_xvalues) != length(validation_yvalues)")
+            error("length(validation_xvalues) != length(validation_yvalues)")
         end
         if length(training_xvalues) != length(validation_xvalues)
-            error("ERROR length(training_xvalues) != length(validation_xvalues)")
+            error("length(training_xvalues) != length(validation_xvalues)")
         end
         if !all(training_xvalues .== validation_xvalues)
-            error("ERROR !all(training_xvalues .== validation_xvalues)")
+            error("!all(training_xvalues .== validation_xvalues)")
         end
         result = plotlearningcurve(
             training_xvalues,
@@ -177,7 +177,7 @@ function plotlearningcurves(
         show_smoothed::Bool = true,
         )
     if !show_raw && !show_smoothed
-        error("ERROR At least one of show_raw, show_smoothed must be true.")
+        error("At least one of show_raw, show_smoothed must be true.")
     end
     if is_nothing(validation_yvalues)
         has_validation = false
@@ -191,13 +191,13 @@ function plotlearningcurves(
         training_legendentry = string(strip(legendentry), ", training set")
     end
     if sampleevery < 1
-        error("ERROR sampleevery must be >=1")
+        error("sampleevery must be >=1")
     end
     if length(xvalues) != length(training_yvalues)
-        error("ERROR length(xvalues) != length(training_yvalues)")
+        error("length(xvalues) != length(training_yvalues)")
     end
     if length(xvalues) == 0
-        error("ERROR length(xvalues) == 0")
+        error("length(xvalues) == 0")
     end
     xvalues = xvalues[1:sampleevery:end]
     training_yvalues = training_yvalues[1:sampleevery:end]

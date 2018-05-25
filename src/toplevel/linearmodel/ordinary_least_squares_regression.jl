@@ -37,7 +37,7 @@ function ordinary_least_squares_regression(
             # estimated x coefficient: coefficients[2]
             coefficients[1], coefficients[2]
         catch e
-            info(string("DEBUG Ignored error: ", e))
+            info(string("DEBUG: Ignored error: ", e))
             0, 0
         end
     else
@@ -48,7 +48,7 @@ function ordinary_least_squares_regression(
             # estimated x coefficient: coefficients[1]
             0, coefficients[1]
         catch e
-            info(string("DEBUG Ignored error: ", e))
+            info(string("DEBUG: Ignored error: ", e))
             0, 0
         end
     end

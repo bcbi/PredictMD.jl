@@ -1,19 +1,19 @@
 import Base.Test
 
-info("INFO Printing Julia version info:")
+info("Printing Julia version info:")
 versioninfo(true)
 
-info("INFO Attempting to import PredictMD")
+info("Attempting to import PredictMD")
 import PredictMD
-info("INFO Successfully imported PredictMD")
-info("INFO Printing PredictMD version info:")
+info("Successfully imported PredictMD")
+info("Printing PredictMD version info:")
 println(string("PredictMD Version ", PredictMD.VERSION))
 
 ENV["PREDICTMD_IS_RUNTESTS"] = "true"
 
 Base.Test.@testset "PredictMD test suite" begin
     Base.Test.@testset "Unit tests (CPU)" begin
-        info("INFO Running unit tests (CPU)")
+        info("Running unit tests (CPU)")
         Base.Test.@testset "base" begin
             include(
                 joinpath(
@@ -42,7 +42,7 @@ Base.Test.@testset "PredictMD test suite" begin
         end
     end
     Base.Test.@testset "Generate documentation and examples" begin
-        info("INFO generating documentation and examples")
+        info("generating documentation and examples")
         include(
             joinpath(
                 "..", "docs", "make_docs.jl",
@@ -50,9 +50,9 @@ Base.Test.@testset "PredictMD test suite" begin
             )
     end
     Base.Test.@testset "Test examples (CPU)" begin
-        info("INFO testing examples (CPU)")
+        info("testing examples (CPU)")
         Base.Test.@testset "Boston housing regression (CPU)" begin
-            info("INFO testing Boston housing regression (CPU)")
+            info("testing Boston housing regression (CPU)")
             include(
                 joinpath(
                     "..", "docs", "src", "examples", "cpu", "boston_housing", "01_preprocess_data.jl",)
@@ -79,7 +79,7 @@ Base.Test.@testset "PredictMD test suite" begin
                 )
         end
         Base.Test.@testset "Breast cancer biopsy classification (CPU)" begin
-            info("INFO testing breast cancer biopsy classification (CPU)")
+            info("testing breast cancer biopsy classification (CPU)")
             include(
                 joinpath(
                     "..", "docs", "src", "examples", "cpu", "breast_cancer_biopsy", "01_preprocess_data.jl",)

@@ -33,7 +33,7 @@ function symbol_begins_with(
     x::Symbol,
     y::AbstractString
     )
-    if string(x)[1:length(y)] == y
+    if length(y) <= length(string(x)) && string(x)[1:length(y)] == y
         return true
     else
         return false
@@ -42,6 +42,26 @@ function symbol_begins_with(
 end
 
 """
+Given a dataframe, return the column names corresponding to CCS "one-hot"
+columns.
+
+# Examples
+
+```julia
+import CSVFiles
+import FileIO
+import PredictMD
+
+df = DataFrames.DataFrame(
+    FileIO.load(
+        MY_CSV_FILE_NAME;
+        type_detect_rows = 30_000,
+        )
+    )
+
+showall(PredictMD.Clean.ccs_onehot_names(df))
+showall(PredictMD.Clean.ccs_onehot_names(df, "ccs_onehot_"))
+```
 """
 function ccs_onehot_names(
         df::DataFrames.AbstractDataFrame,
@@ -55,6 +75,7 @@ function ccs_onehot_names(
 end
 
 """
+
 """
 function column_names_with_prefix(
         df::DataFrames.AbstractDataFrame,
@@ -63,19 +84,53 @@ function column_names_with_prefix(
     all_names = DataFrames.names(df)
     name_begins_with_prefix = Vector{Bool}(length(all_names))
     for j = 1:length(all_names)
-        name_begins_with_prefix = symbol_begins_with(
-            all_names[k],
+        name_begins_with_prefix[j] = symbol_begins_with(
+            all_names[j],
             prefix,
             )
     end
-    vector_of_ccs_onehot_names = all_names[name_begins_with_ccs_onehot_prefix]
-    return vector_of_ccs_onehot_names
+    vector_of_matching_names = all_names[name_begins_with_prefix]
+    return vector_of_matching_names
 end
 
 """
 Given a single ICD 9 code, import the relevant patients from the
 Health Care Utilization Project (HCUP) National Inpatient Sample (NIS)
 database.
+
+# Examples:
+
+```julia
+import CSVFiles
+import FileIO
+import PredictMD
+
+icd_code_list = ["8841"]
+icd_code_type = :procedure
+input_file_name_list = [
+    "./data/nis_2012_core.csv",
+    "./data/nis_2013_core.csv",
+    "./data/nis_2014_core.csv",
+    ]
+output_file_name = "./output/hcup_nis_pr_8841.csv"
+
+PredictMD.Clean.clean_hcup_nis_csv_icd9(
+    icd_code_list,
+    input_file_name_list,
+    output_file_name;
+    icd_code_type = icd_code_type,
+    rows_for_type_detect = 30_000,
+    )
+
+df = DataFrames.DataFrame(
+    FileIO.load(
+        output_file_name;
+        type_detect_rows = 30_000,
+        )
+    )
+
+showall(PredictMD.Clean.ccs_onehot_names(df))
+```
 """
 function clean_hcup_nis_csv_icd9(
         icd_code_list::AbstractVector{<:AbstractString},
@@ -89,33 +144,6 @@ function clean_hcup_nis_csv_icd9(
         ccs_onehot_prefix::AbstractString = "ccs_onehot_",
         rows_for_type_detect::Union{Void, Integer} = nothing,
         )
-    """
-    example usage:
-
-    import PredictMD
-    icd_code_list = ["8841"]
-    input_file_name_list = [
-        "./data/nis_2012_core.csv",
-        "./data/nis_2013_core.csv",
-        "./data/nis_2014_core.csv",
-        ]
-    output_file_name = "./output/hcup_nis_pr_8841.csv"
-    icd_code_type = :procedure
-    PredictMD.Clean.clean_hcup_nis_csv_icd9(
-        icd_code_list,
-        input_file_name_list,
-        output_file_name;
-        icd_code_type = icd_code_type,
-        rows_for_type_detect = 30_000,
-        )
-    df = DataFrames.DataFrame(
-        FileIO.load(
-            output_file_name;
-            type_detect_rows = 30_000,
-            )
-        )
-    """
-
     if is_nothing(rows_for_type_detect)
         error("you need to specify rows_for_type_detect")
     end
@@ -169,6 +197,15 @@ function clean_hcup_nis_csv_icd9(
         if something_exists_at_path(temp_file_name_vector[i])
             error("something_exists_at_path(temp_file_name_vector[i])")
         end
+        info(
+            string(
+                "Starting to read input file ",
+                i,
+                " of ",
+                length(input_file_name_list),
+                ".",
+                )
+            )
         open(input_file_name_list[i], "r") do f_input
             open(temp_file_name_vector[i], "w") do f_temp_output
                 line_number = 1
@@ -199,12 +236,31 @@ function clean_hcup_nis_csv_icd9(
                 end
             end
         end
+        info(
+            string(
+                "Finished reading input file ",
+                i,
+                " of ",
+                length(input_file_name_list),
+                ".",
+                )
+            )
     end
 
     df_vector = Vector{DataFrames.DataFrame}(length(input_file_name_list))
 
     for i = 1:length(temp_file_name_vector)
+        info(
+            string(
+                "Starting to read temporary file ",
+                i,
+                " of ",
+                length(input_file_name_list),
+                ".",
+                )
+            )
         # df_i = DataFrames.readtable(temp_file_name_vector[i])
+        # We can't use DataFrames.readtable because it is deprecated.
         df_i = DataFrames.DataFrame(
             FileIO.load(
                 temp_file_name_vector[i];
@@ -212,6 +268,15 @@ function clean_hcup_nis_csv_icd9(
                 )
             )
         df_vector[i] = df_i
+        info(
+            string(
+                "Finished reading temporary file ",
+                i,
+                " of ",
+                length(input_file_name_list),
+                ".",
+                )
+            )
     end
 
     for i = 1:length(temp_file_name_vector)
@@ -264,6 +329,19 @@ function clean_hcup_nis_csv_icd9(
             length(icd_code_column_names),
             )
         for j = 1:length(icd_code_column_names)
+            info(
+                string(
+                    "icd9 code ",
+                    k,
+                    " of ",
+                    length(icd_code_list),
+                    ". DX column ",
+                    j,
+                    " of ",
+                    length(icd_code_column_names),
+                    ".",
+                    )
+                )
             for i = 1:size(combined_df, 1)
                 cell_value = combined_df[i, icd_code_column_names[j]]
                 if DataFrames.ismissing(cell_value)
@@ -287,10 +365,10 @@ function clean_hcup_nis_csv_icd9(
     num_rows_after = size(combined_df, 1)
     info(
         string(
-            "DEBUG I initially identified ",
+            "I initially identified ",
             num_rows_before,
             " rows that could possibly have matched your ICD code(s).",
-            "I checked each row, and ",
+            " I checked each row, and ",
             num_rows_after,
             " of those rows actually matched your ICD code(s).",
             "I removed the ",
@@ -313,6 +391,11 @@ function clean_hcup_nis_csv_icd9(
                 )
             )
         )
+    index_to_ccs = index_to_ccs[find(index_to_ccs .!= "")]
+    index_to_ccs = unique(index_to_ccs)
+    index_to_ccs = parse.(Int, index_to_ccs)
+    sort!(index_to_ccs)
+    index_to_ccs = string.(index_to_ccs)
 
     ccs_to_index = Dict()
     for k = 1:length(index_to_ccs)
@@ -326,18 +409,29 @@ function clean_hcup_nis_csv_icd9(
         )
 
     for j = 1:length(dx_column_names)
+        info(
+            string(
+                "Processing DXCCS column ",
+                j,
+                " of ",
+                length(dx_column_names),
+                ".",
+                )
+            )
         jth_dx_col_name = dx_column_names[j]
         jth_dx_ccs_col_name = dx_ccs_column_names[j]
         for i = 1:size(combined_df, 1)
-            dx_value = strip(string(combined_df[i, jth_dx_col_name]))
+            dx_value = combined_df[i, jth_dx_col_name]
             if DataFrames.ismissing(dx_value)
             else
+                dx_value = strip(string(dx_value))
                 if length(dx_value) == 0
-                elseif dx_value[1] == "V"
-                    ccs_value = strip(string(combined_df[i, jth_dx_ccs_col_name]))
+                elseif dx_value[1] == 'V' || dx_value[1] == "V"
+                    ccs_value = combined_df[i, jth_dx_ccs_col_name]
                     if DataFrames.ismissing(ccs_value)
-                        error("dx value was not missing but ccs value was missing")
+                        warn("dx value was not missing but ccs value was missing")
                     else
+                        ccs_value = strip(string(ccs_value))
                         ith_row_has_vcode_dx_in_kth_ccs[i, ccs_to_index[ccs_value]] = true
                     end
                 end
@@ -345,8 +439,6 @@ function clean_hcup_nis_csv_icd9(
         end
     end
 
-    DEBUG_num_ccs_columns_added = 0
-    DEBUG_num_ccs_columns_not_added = 0
     for k = 1:length(index_to_ccs)
         kth_ccs = index_to_ccs[k]
         kth_ccs_onehot_column_name = Symbol(
@@ -366,9 +458,7 @@ function clean_hcup_nis_csv_icd9(
                 end
             end
             combined_df[kth_ccs_onehot_column_name] = temporary_column_strings
-            DEBUG_num_ccs_columns_added += 1
         else
-            DEBUG_num_ccs_columns_not_added += 1
         end
     end
 
@@ -378,6 +468,8 @@ function clean_hcup_nis_csv_icd9(
 
     mkpath(dirname(output_file_name))
 
+    info(string("Attempting to write output file..."))
+
     CSV.write(
         output_file_name,
         combined_df,
@@ -385,9 +477,9 @@ function clean_hcup_nis_csv_icd9(
 
     info(
         string(
-            "INFO Wrote ",
+            "Wrote ",
             size(combined_df, 1),
-            " rows to file: \"",
+            " rows to output file: \"",
             output_file_name,
             "\"",
             )

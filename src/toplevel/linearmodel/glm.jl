@@ -82,7 +82,7 @@ function fit!(
         labels_df::DataFrames.AbstractDataFrame,
         )
     labelsandfeatures_df = hcat(labels_df, features_df)
-    info(string("INFO Starting to train GLM.jl model."))
+    info(string("Starting to train GLM.jl model."))
     glm = try
         GLM.glm(
             estimator.formula,
@@ -93,14 +93,14 @@ function fit!(
     catch e
         warn(
             string(
-                "WARN while training GLM.jl model, ignored error: ",
+                "while training GLM.jl model, ignored error: ",
                 e,
                 )
             )
         nothing
     end
     # glm =
-    info(string("INFO Finished training GLM.jl model."))
+    info(string("Finished training GLM.jl model."))
     estimator.underlyingglm = glm
     return estimator
 end
