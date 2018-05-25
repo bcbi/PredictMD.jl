@@ -16,13 +16,13 @@
         </tr>
         <tr>
             <td>docs</td>
-            <td><a href="https://bcbi.github.io/PredictMD.jl/stable"><img alt="Documentation (stable)" title="Documentation (stable)" src="https://img.shields.io/badge/docs-stable-blue.svg"></a></td>
-            <td><a href="https://bcbi.github.io/PredictMD.jl/latest"><img alt="Documentation (latest)" title="Documentation (latest)" src="https://img.shields.io/badge/docs-latest-blue.svg"></a></td>
+            <td><a href="https://www.predictmd.net/stable"><img alt="Documentation (stable)" title="Documentation (stable)" src="https://img.shields.io/badge/docs-stable-blue.svg"></a></td>
+            <td><a href="https://www.predictmd.net/latest"><img alt="Documentation (latest)" title="Documentation (latest)" src="https://img.shields.io/badge/docs-latest-blue.svg"></a></td>
         </tr>
     </tbody>
 </table>
 
-PredictMD is a [Julia](https://julialang.org/) package that provides a uniform interface for using multiple different statistics and machine learning packages. This document describes how to install and use PredictMD.
+PredictMD is a Julia package that provides a uniform interface for using multiple different statistics and machine learning packages. This document describes how to install and use PredictMD.
 
 <table>
     <thead>
