@@ -114,7 +114,7 @@ function fit!(
     else
         error("Could not figure out if model is classification or regression")
     end
-    info(string("INFO Starting to train LIBSVM.jl model."))
+    info(string("Starting to train LIBSVM.jl model."))
     svm = try
         LIBSVM.svmtrain(
             featuresarray,
@@ -132,7 +132,7 @@ function fit!(
         nothing
     end
     # svm =
-    info(string("INFO Finished training LIBSVM.jl model."))
+    info(string("Finished training LIBSVM.jl model."))
     estimator.underlyingsvm = svm
     estimator.levels = estimator.underlyingsvm.labels
     return estimator

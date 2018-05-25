@@ -324,6 +324,7 @@ info("DEBUG: using Documenter.jl to generate Markdown docs")
 Documenter.makedocs(
     modules = [
         PredictMD,
+        PredictMD.Clean,
         PredictMD.GPU,
         ],
     sitename = "PredictMD.jl",

@@ -4,125 +4,413 @@ __precompile__(true)
 """
 module PredictMD
 
+##############################################################################
+# Top level ##################################################################
+##############################################################################
+
 # base/
 # (base must go first)
-include("base/interface.jl")
-include("base/types.jl")
-include("base/version.jl")
-
-# deprecations/
-# (deprecations must go second)
-include("deprecations/deprecated.jl")
+include(
+    joinpath(
+        ".", "base", "interface.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "base", "types.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "base", "version.jl",
+        )
+    )
 
 # calibration/
 
 # classimbalance/
-include("classimbalance/smote.jl")
+include(
+    joinpath(
+        ".", "toplevel", "classimbalance", "smote.jl",
+        )
+    )
 
 # cluster/
 
 # datasets/
-include("datasets/csv.jl")
-include("datasets/gzip.jl")
-include("datasets/rdatasets.jl")
+include(
+    joinpath(
+        ".", "toplevel", "datasets", "csv.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "datasets", "gzip.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "datasets", "rdatasets.jl",
+        )
+    )
+
 
 # decomposition/
 
 # ensemble/
 
-# gpu/
-"""
-"""
-module GPU
-include("gpu/cudnn.jl")
-end
-
 # integrations/
-include("integrations/docs/documenter.jl")
-include("integrations/docs/literate.jl")
-include("integrations/ide/atom.jl")
+include(
+    joinpath(
+        ".", "toplevel", "integrations", "ide", "atom.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "integrations", "literate_programming", "literate.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "integrations", "literate_programming", "weave.jl",
+        )
+    )
+
 
 # io/
-include("io/saveload.jl")
+include(
+    joinpath(
+        ".", "toplevel", "io", "saveload.jl",
+        )
+    )
 
 # linearmodel/
-include("linearmodel/glm.jl")
-include("linearmodel/ordinary_least_squares_regression.jl")
+include(
+    joinpath(
+        ".", "toplevel", "linearmodel", "glm.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "linearmodel", "ordinary_least_squares_regression.jl",
+        )
+    )
 
 # metrics/
-include("metrics/auprc.jl")
-include("metrics/aurocc.jl")
-include("metrics/averageprecisionscore.jl")
-include("metrics/brier_score.jl")
-include("metrics/coefficientofdetermination.jl")
-include("metrics/cohenkappa.jl")
-include("metrics/getbinarythresholds.jl")
-include("metrics/mean_square_error.jl")
-include("metrics/prcurve.jl")
-include("metrics/risk_score_cutoff_values.jl")
-include("metrics/roccurve.jl")
-include("metrics/rocnumsmetrics.jl")
-include("metrics/singlelabelbinaryclassificationmetrics.jl")
-include("metrics/singlelabelregressionmetrics.jl")
+include(
+    joinpath(
+        ".", "toplevel", "metrics", "auprc.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "metrics", "aurocc.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "metrics", "averageprecisionscore.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "metrics", "brier_score.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "metrics", "coefficientofdetermination.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "metrics", "cohenkappa.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "metrics", "getbinarythresholds.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "metrics", "mean_square_error.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "metrics", "prcurve.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "metrics", "risk_score_cutoff_values.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "metrics", "roccurve.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "metrics", "rocnumsmetrics.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "metrics", "singlelabelbinaryclassificationmetrics.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "metrics", "singlelabelregressionmetrics.jl",
+        )
+    )
+
 
 # modelselection/
-include("modelselection/split_data.jl")
+include(
+    joinpath(
+        ".", "toplevel", "modelselection", "split_data.jl",
+        )
+    )
 
 # multiclass/
 
 # multioutput/
 
 # neuralnetwork/
-include("neuralnetwork/flux.jl")
-include("neuralnetwork/knet.jl")
+include(
+    joinpath(
+        ".", "toplevel", "neuralnetwork", "flux.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "neuralnetwork", "knet.jl",
+        )
+    )
 
 # pipeline/
-include("pipeline/simplelinearpipeline.jl")
+include(
+    joinpath(
+        ".", "toplevel", "pipeline", "simplelinearpipeline.jl",
+        )
+    )
 
 # plotting/
-include("plotting/plotlearningcurve.jl")
-include("plotting/plotprcurve.jl")
-include("plotting/plotroccurve.jl")
-include("plotting/plotsinglelabelregressiontruevspredicted.jl")
-include("plotting/plotsinglelabelbinaryclassifierhistograms.jl")
-include("plotting/probability_calibration_plots.jl")
+
+include(
+    joinpath(
+        ".", "toplevel", "plotting", "plotlearningcurve.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "plotting", "plotprcurve.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "plotting", "plotroccurve.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "plotting", "plotsinglelabelregressiontruevspredicted.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "plotting", "plotsinglelabelbinaryclassifierhistograms.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "plotting", "probability_calibration_plots.jl",
+        )
+    )
 
 # postprocessing/
-include("postprocessing/packagemultilabelpred.jl")
-include("postprocessing/packagesinglelabelpred.jl")
-include("postprocessing/packagesinglelabelproba.jl")
-include("postprocessing/predictoutput.jl")
-include("postprocessing/predictprobaoutput.jl")
+include(
+    joinpath(
+        ".", "toplevel", "postprocessing", "packagemultilabelpred.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "postprocessing", "packagesinglelabelpred.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "postprocessing", "packagesinglelabelproba.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "postprocessing", "predictoutput.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "postprocessing", "predictprobaoutput.jl",
+        )
+    )
 
 # preprocessing/
-include("preprocessing/dataframecontrasts.jl")
-include("preprocessing/dataframetodecisiontree.jl")
-include("preprocessing/dataframetoglm.jl")
-include("preprocessing/dataframetoknet.jl")
-include("preprocessing/dataframetosvm.jl")
+include(
+    joinpath(
+        ".", "toplevel", "preprocessing", "dataframecontrasts.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "preprocessing", "dataframetodecisiontree.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "preprocessing", "dataframetoglm.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "preprocessing", "dataframetoknet.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "preprocessing", "dataframetosvm.jl",
+        )
+    )
 
 # svm/
-include("svm/libsvm.jl")
+include(
+    joinpath(
+        ".", "toplevel", "svm", "libsvm.jl",
+        )
+    )
 
 # tree/
-include("tree/decisiontree.jl")
+include(
+    joinpath(
+        ".", "toplevel", "tree", "decisiontree.jl",
+        )
+    )
 
 # utils/
-include("utils/fix_dict_type.jl")
-include("utils/fix_vector_type.jl")
-include("utils/formulas.jl")
-include("utils/labelstringintmaps.jl")
-include("utils/nothings.jl")
-include("utils/openbrowserwindow.jl")
-include("utils/openplotsduringtestsenv.jl")
-include("utils/predictionsassoctodataframe.jl")
-include("utils/probabilitiestopredictions.jl")
-include("utils/runtestsenv.jl")
-include("utils/shufflerows.jl")
-include("utils/simplemovingaverage.jl")
-include("utils/tikzpictures.jl")
-include("utils/trapz.jl")
-include("utils/traviscienv.jl")
+include(
+    joinpath(
+        ".", "toplevel", "utils", "file_exists.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "fix_dict_type.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "fix_vector_type.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "formulas.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "labelstringintmaps.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "missings.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "nothings.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "openbrowserwindow.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "openplotsduringtestsenv.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "predictionsassoctodataframe.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "probabilitiestopredictions.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "runtestsenv.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "shufflerows.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "simplemovingaverage.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "tikzpictures.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "trapz.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "traviscienv.jl",
+        )
+    )
 
+##############################################################################
+##############################################################################
+##############################################################################
+
+##############################################################################
+# Submodules #################################################################
+##############################################################################
+
+# submodules/clean/
+include(
+    joinpath(
+        ".", "submodules", "clean", "Clean.jl",
+        )
+    )
+
+# submodules/gpu/
+include(
+    joinpath(
+        ".", "submodules", "gpu", "GPU.jl",
+        )
+    )
+
+##############################################################################
+##############################################################################
+##############################################################################
 
 end # end module PredictMD

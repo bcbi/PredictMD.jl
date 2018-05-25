@@ -8,10 +8,6 @@ import StatsBase
 
 df = RDatasets.dataset("MASS", "biopsy")
 
-DataFrames.dropmissing!(df)
-
-PredictMD.shuffle_rows!(df)
-
 categoricalfeaturenames = Symbol[]
 continuousfeaturenames = Symbol[
     :V1,
@@ -33,6 +29,10 @@ singlelabellevels = [negativeclass, positiveclass]
 
 labelnames = [singlelabelname]
 
+df = df[:, vcat(featurenames, labelnames)]
+DataFrames.dropmissing!(df)
+PredictMD.shuffle_rows!(df)
+
 features_df = df[featurenames]
 labels_df = df[labelnames]
 
@@ -42,7 +42,7 @@ trainingandvalidation_features_df,
     testing_labels_df = PredictMD.split_data(
         features_df,
         labels_df,
-        0.75, 
+        0.75,
         )
 training_features_df,
     training_labels_df,
@@ -50,7 +50,7 @@ training_features_df,
     validation_labels_df = PredictMD.split_data(
         trainingandvalidation_features_df,
         trainingandvalidation_labels_df,
-        2/3, 
+        2/3,
         )
 
 mkpath(
