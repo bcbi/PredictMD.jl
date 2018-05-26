@@ -1,8 +1,12 @@
+"""
+"""
 function filename_extension(filename::AbstractString)
     result = lowercase(strip(splitext(filename)[2]))
     return result
 end
 
+"""
+"""
 function something_exists_at_path(path::AbstractString)
     if ispath(path)
         return true
