@@ -1,4 +1,8 @@
-# Originally based on https://github.com/JuliaPlots/Plots.jl/blob/master/src/backends/web.jl
+# Parts of this file are based on:
+# 1. https://github.com/JuliaPlots/Plots.jl/blob/master/src/backends/web.jl
+# 2. https://github.com/JuliaGraphics/Luxor.jl/blob/master/src/Luxor.jl
+
+import FileIO
 
 """
 """
@@ -6,7 +10,29 @@ function open_browser_window(
         filename::AbstractString,
         env_dict::Associative = ENV,
         )
-    if is_travis_ci(env_dict)
+    extension = filename_extension(filename)
+    is_svg_file = extension == ".svg"
+    is_png_file = extension == ".png"
+    is_svg_or_png_file = is_svg_file || is_png_file
+    is_ijulia = isdefined(Main, :IJulia) && Main.IJulia.inited
+    if is_ijulia && is_svg_or_png_file
+        Main.IJulia.clear_output(true)
+        if is_svg_file
+            open(filename) do f
+                display(
+                    "image/svg+xml",
+                    readstring(f),
+                    )
+            end
+        elseif is_png_file
+            # We use Base.invokelatest to avoid world age errors
+            Base.invokelatest(
+                display,
+                "image/png",
+                FileIO.load(filename),
+                )
+        end
+    elseif is_travis_ci(env_dict)
         info(string("DEBUG: Skipping opening file during Travis build: ",filename,))
         return nothing
     elseif is_runtests(env_dict) && !open_plots_during_tests(env_dict)
@@ -24,17 +50,17 @@ function open_browser_window(
     else
         info(string("DEBUG: Opening file ",filename,))
         if is_apple()
-            result = run(`open $(filename)`)
-            return result
+            run_result = run(`open $(filename)`)
+            return filename
         elseif is_linux()
-            result = run(`xdg-open $(filename)`)
-            return result
+            run_result = run(`xdg-open $(filename)`)
+            return filename
         elseif is_bsd()
-            result = run(`xdg-open $(filename)`)
-            return result
+            run_result = run(`xdg-open $(filename)`)
+            return filename
         elseif is_windows()
-            result = run(`$(ENV["COMSPEC"]) /c start "" "$(filename)"`)
-            return result
+            run_result = run(`$(ENV["COMSPEC"]) /c start "" "$(filename)"`)
+            return filename
         else
             error(
                 string(
