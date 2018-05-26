@@ -15,6 +15,9 @@ This document provides information on contributing to the PredictMD source code.
         <tr>
             <td align="left"><a href="#2-setting-up-the-predictmd-repo">2. Setting up the PredictMD repo</a></td>
         </tr>
+        <tr>
+            <td align="left"><a href="#appendix-information-for-package-maintainers">Appendix: Information for package maintainers</a></td>
+        </tr>
     </tbody>
 </table>
 
@@ -153,3 +156,189 @@ cd ~/.julia/v0.6/PredictMD
 ```bash
 git config commit.gpgsign true && git remote set-url origin https://github.com/bcbi/PredictMD.jl.git && git remote set-url --push origin git@github.com:bcbi/PredictMD.jl.git && git checkout master && git checkout develop && git flow init -fd && git checkout develop && git fetch --all --prune
 ```
+
+## Appendix: Information for package maintainers
+
+### How to tag a new release using git-flow
+
+**IMPORTANT: Before you tag a new release, make sure that your GPG set-up is working. Release tags MUST be signed with your GPG key.**
+
+**Step 1:** Open a terminal window and `cd` to the directory containing the PredictMD source code:
+
+```bash
+cd ~/.julia/v0.6/PredictMD
+```
+
+**Step 2:** Fetch the latest versions of all branches:
+
+```bash
+git fetch origin --all --prune
+```
+
+**Step 3:** Checkout the develop branch:
+
+```bash
+git checkout develop
+```
+
+**Step 4:** Pull the latest version of develop.
+
+```bash
+git pull
+```
+
+**Step 5:** Determine the version number that you are going to release. We use the Semantic Versioning scheme: [https://semver.org/](https://semver.org/). In Semantic Versioning, version numbers take the form `vMAJOR.MINOR.PATCH`. We increment the `MAJOR` version when we make incompatible (non-backwards-compatible) API changes. We increment the `MINOR` version when we add functionality in a backwards-compatible manner. We increment the `PATCH` version when we make backwards-compatible bug fixes.
+
+For this example, let's pretend that the current version is `v30.770.25`, and we are adding functionality in a backwards-compatible manner. So we increment the `MINOR` version, which means the new version that we are tagging is `v30.771.0`.
+
+**Step 6:** Start a new release branch.
+
+```bash
+git flow release start v30.771.0
+```
+
+You MUST begin the name of the release with the letter "v".
+
+*If you subsequently forget what you named your release branch, you can list all of the release branches by running the following command:* `git flow release list`
+
+**Step 7:** Open the source file `src/base/version.jl` and increment the version number. For example, if the file looks like this:
+
+```julia
+const VERSION = try
+    convert(VersionNumber, "THE OLD VERSION NUMBER WILL BE HERE")
+catch e
+    warn("While creating PredictMD.VERSION, ignoring error $(e)")
+    VersionNumber(0)
+end
+```
+
+Then you would edit it to look like this:
+
+```julia
+const VERSION = try
+    convert(VersionNumber, "v30.771.0")
+catch e
+    warn("While creating PredictMD.VERSION, ignoring error $(e)")
+    VersionNumber(0)
+end
+```
+
+**Step 8:** Commit your changes:
+
+```bash
+git add src/base/version.jl
+
+git commit
+```
+An commit message editor will open. Type an appropriate commit message (e.g. "Bump version number"), save the file, and quit the editor.
+
+**Step 9:** Push the release branch so that Travis CI will build it and run the tests.
+
+```bash
+git push origin release/v30.771.0
+```
+
+**Step 10:** Wait for the Travis tests to pass. You can check on the status of the tests by going to [https://travis-ci.org/bcbi/PredictMD.jl/branches](https://travis-ci.org/bcbi/PredictMD.jl/branches) and clicking on your release branch.
+
+**You must wait for all of the tests to pass before you can finish tagging the release.**
+
+*Sometimes, one of the build jobs will fail because a download timed out. This is especially common with the Mac builds. If this happens, just click on the job, and then click the "Restart job" button.*
+
+**Step 11:**  Once all of the Travis tests have passed, you can finish tagging your release using the git-flow tools:
+
+
+```bash
+git flow release finish -s v30.771.0
+```
+
+*You MUST include the `-s` flag, because this is how you tell git-flow to sign the release tag with your GPG key. The "s" is lowercase.*
+
+Several commit message editors will open, one after the other. Some of them will have the correct commit message already filled in, e.g. "Merge branch ... into branch ...". In those cases, simply save the file, and quit the editor. One of the editors, however, will ask you to enter the message for the tag `v30.771.0`. In this editor, enter a reasonable release message (e.g. "PredictMD version 30.771.25"), save the file, and close the editor.
+
+Once you have finished all of the commits and tags, you must verify that you have correctly signed the release tag:
+
+**Step 12:** Verify that you have correctly signed the release tag. First, list all of the tags, and make sure that your new tag appears in the list:
+```bash
+git tag -ln
+```
+
+Now, verify the GPG signature of your release tag:
+```bash
+git tag -v v30.771.0
+```
+
+If you see a message similar to this:
+```
+gpg: Signature made Thu May 24 13:56:48 2018 EDT
+gpg:                using RSA key 36666C5CF81D90773604A1208CF0AA45DD38E4A0
+gpg: Good signature from "Dilum Aluthge <dilum@aluthge.com>" [ultimate]
+```
+
+then you have successfully signed the release, and you may proceed to Step 13. However, if you don't see that message, then you have not signed the tag successfully, and you may NOT proceed. At this point, you should [open a new issue](https://github.com/bcbi/PredictMD.jl/issues/new) and mention [@DilumAluthge](https://github.com/DilumAluthge) in the issue body.
+
+**Step 13:** Temporarily modify the branch protections for the `master` and `develop` branches:
+
+First, the `master` branch: go to [https://github.com/bcbi/PredictMD.jl/settings/branches/master](https://github.com/bcbi/PredictMD.jl/settings/branches/master), scroll down, UNCHECK the box next to "Include administrators", scroll to the bottom of the page, and click the green "Save changes" button. You may be asked to enter your GitHub password.
+
+Now do the same thing for the `develop` branch: Go to [https://github.com/bcbi/PredictMD.jl/settings/branches/develop](https://github.com/bcbi/PredictMD.jl/settings/branches/develop), scroll down, UNCHECK the box next to "Include administrators", scroll to the bottom of the page, and click the green "Save changes" button.
+
+**Step 14:** Push the new release to GitHub:
+
+```bash
+git push origin master # push the updated "master" branch
+git push origin develop # push the updated "develop" branch
+git push origin --tags # push the new "v30.771.0" tag
+```
+
+**Step 15:** Bump the version number again to indicate that the develop branch is in a developmental state. First, determine what the next version number will be, and then append "-DEV" to the end of the version string to indicate that it is currently in a developmental state
+
+In our example, we have just released `v30.771.0`. If we are planning on our next release being be backwards compatible, then the next version number will be `v30.772.0`, and thus you should set the current version number to `v30.772.0-DEV`. In contrast, if we are planning that the next release will be breaking (non-backwards-compatible), then the next version number will be `v31.0.0`, and thus you should set the current version number to `v31.0.0-DEV`. You need to determine what that next version number will be, and then.
+
+First, checkout the `develop` branch:
+```bash
+git checkout develop
+```
+
+Now, open the `src/base/version.jl` file and edit the version number accordingly. For our example, if we are planning on our next release being be backwards compatible, then we would edit `src/base/version.jl` to look like this:
+```julia
+const VERSION = try
+    convert(VersionNumber, "v30.772.0-DEV")
+catch e
+    warn("While creating PredictMD.VERSION, ignoring error $(e)")
+    VersionNumber(0)
+end
+```
+
+On the other hand, if we are planning that the next release will be breaking (non-backwards-compatible), then we would edit `src/base/version.jl` to look like this:
+```julia
+const VERSION = try
+    convert(VersionNumber, "v31.0.0-DEV")
+catch e
+    warn("While creating PredictMD.VERSION, ignoring error $(e)")
+    VersionNumber(0)
+end
+```
+
+**Step 16:** Commit your changes:
+
+```bash
+git add src/base/version.jl
+
+git commit
+```
+An commit message editor will open. Type an appropriate commit message (e.g. "Bump version number"), save the file, and quit the editor.
+
+**Step 17:** Push the updated develop branch:
+```bash
+git push origin develop
+```
+
+**Step 18:** Re-enable the branch protection settings:
+
+`master` branch: go to [https://github.com/bcbi/PredictMD.jl/settings/branches/master](https://github.com/bcbi/PredictMD.jl/settings/branches/master), scroll down, CHECK the box next to "Include administrators", scroll to the bottom of the page, and click the green "Save changes" button.
+
+`develop` branch: go to [https://github.com/bcbi/PredictMD.jl/settings/branches/develop](https://github.com/bcbi/PredictMD.jl/settings/branches/develop), scroll down, CHECK the box next to "Include administrators", scroll to the bottom of the page, and click the green "Save changes" button.
+
+**Step 19:** Create a release on GitHub using the tag you just created, signed, and pushed. First, go to [https://github.com/bcbi/PredictMD.jl/releases/new](https://github.com/bcbi/PredictMD.jl/releases/new). In the text box that reads "Tag version", type the name of the tag you just released. For our example, you would type "v30.771.0". Next, in the text box that reads "Release title", type an appropriate title, such as "PredictMD version 30.771.0". Finally, click the green "Publish release" button.
+
+Congratulations, you are finished making the release!
