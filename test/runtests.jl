@@ -42,12 +42,26 @@ Base.Test.@testset "PredictMD test suite" begin
         end
     end
     Base.Test.@testset "Generate documentation and examples" begin
-        info("generating documentation and examples")
-        include(
-            joinpath(
-                "..", "docs", "make_docs.jl",
+        Base.Test.@testset "Generate examples" begin
+            info("Generating examples")
+            include(
+                joinpath(
+                    "..",
+                    "docs",
+                    "make_examples.jl",
+                    )
                 )
-            )
+        end
+        Base.Test.@testset "Generate documentation" begin
+            info("Generating documentation")
+            include(
+                joinpath(
+                    "..",
+                    "docs",
+                    "make_docs.jl",
+                    )
+                )
+        end
     end
     Base.Test.@testset "Test examples (CPU)" begin
         info("testing examples (CPU)")

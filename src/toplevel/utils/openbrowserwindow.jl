@@ -12,6 +12,9 @@ function open_browser_window(
     elseif is_runtests(env_dict) && !open_plots_during_tests(env_dict)
         info(string("DEBUG: Skipping opening file during package tests: ",filename,))
         return nothing
+    elseif is_make_examples(env_dict)
+        info(string("DEBUG: Skipping opening file during make_examples: ",filename,))
+        return nothing
     elseif is_make_docs(env_dict)
         info(string("DEBUG: Skipping opening file during make_docs: ",filename,))
         return nothing
