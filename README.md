@@ -1,22 +1,22 @@
-# PredictMD.jl
+# PredictMD
 
 <table>
     <thead>
         <tr>
             <th>branch</th>
-            <th>master</th>
-            <th>develop</th>
+            <th>travis</th>
+            <th>docs</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>travis</td>
-            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Build Status (master)" title="Build Status (master)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master"></a></td>
-            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Build Status (develop)" title="Build Status (develop)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=develop"></a></td>
+            <td>master</td>
+            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Travis build status (master)" title="Travis build status (master)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master"></a></td>
+            <td><a href="https://www.predictmd.net/stable"><img alt="Documentation (stable)" title="Documentation (stable)" src="https://img.shields.io/badge/docs-stable-blue.svg"></a></td>
         </tr>
         <tr>
-            <td>docs</td>
-            <td><a href="https://www.predictmd.net/stable"><img alt="Documentation (stable)" title="Documentation (stable)" src="https://img.shields.io/badge/docs-stable-blue.svg"></a></td>
+            <td>develop</td>
+            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Travis build status (develop)" title="Travis build status (develop)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=develop"></a></td>
             <td><a href="https://www.predictmd.net/latest"><img alt="Documentation (latest)" title="Documentation (latest)" src="https://img.shields.io/badge/docs-latest-blue.svg"></a></td>
         </tr>
     </tbody>
@@ -109,7 +109,7 @@ Usage: pdf2svg <in file.pdf> <out file.svg> [<page no>]
 If you receive an error (e.g. "command not found"), download and install pdf2svg from the appropriate link below:
 * Windows: [https://github.com/jalios/pdf2svg-windows](https://github.com/jalios/pdf2svg-windows)
 * macOS: [http://brewinstall.org/Install-pdf2svg-on-Mac-with-Brew/](http://brewinstall.org/Install-pdf2svg-on-Mac-with-Brew/)
-* GNU/Linux: [https://github.com/dawbarton/pdf2svg](https://github.com/dawbarton/pdf2svg)
+* GNU/Linux: [http://www.cityinthesky.co.uk/opensource/pdf2svg/](http://www.cityinthesky.co.uk/opensource/pdf2svg/)
 
 ## 2. Installation
 
@@ -131,29 +131,29 @@ If you receive the message "INFO: PredictMD tests passed", then you have success
 If the tests still do not pass or if you still receive an error message, go to [https://github.com/bcbi/PredictMD.jl/issues/new](https://github.com/bcbi/PredictMD.jl/issues/new) and submit a new issue. Please include a screenshot of the error.
 
 ## 3. Examples
-The `examples/` folder contains several files that illustrate the usage of PredictMD:
+The documentation contains several examples that illustrate the usage of PredictMD.
 
 <table>
     <thead>
         <tr>
-            <th>Filename</th>
-            <th>Problem type</th>
-            <th>Problem description</th>
+            <th>Example</th>
+            <th>Type</th>
+            <th>Description</th>
             <th>Dataset</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td align="left"><a href="examples/bostonhousing.jl">examples/bostonhousing.jl</a></td>
+            <td align="left">Boston housing regression</td>
             <td align="left">Single label regression</td>
             <td align="left">Predict the median value of houses</td>
-            <td align="left"><a href="https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/Boston.rst">Boston housing dataset</a></td>
+            <td align="left">Boston housing dataset</td>
         </tr>
         <tr>
-            <td align="left"><a href="examples/breastcancerbiopsy.jl">examples/breastcancerbiopsy.jl</a></td>
+            <td align="left">Breast cancer biopsy classification</td>
             <td align="left">Single label binary classification</td>
             <td align="left">Classify a tumor as benign or malignant</td>
-            <td align="left"><a href="https://github.com/johnmyleswhite/RDatasets.jl/blob/master/doc/MASS/rst/biopsy.rst">Wisconsin breast cancer biopsy dataset</a></td>
+            <td align="left">Wisconsin breast cancer biopsy dataset</td>
         </tr>
     <tbody>
 </table>
