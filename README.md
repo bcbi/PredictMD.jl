@@ -1,4 +1,4 @@
-# PredictMD.jl
+# PredictMD
 
 <table>
     <thead>
