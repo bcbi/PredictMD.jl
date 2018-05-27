@@ -95,8 +95,6 @@ If you receive an error (e.g. "command not found"), download and install a TeX d
 * macOS: [https://www.tug.org/mactex/](https://www.tug.org/mactex/)
 * GNU/Linux: [https://www.tug.org/texlive/](https://www.tug.org/texlive/)
 
-> Alternate method: If you use the Conda package manager, you can install the Tex Live distribution using the Conda recipe available here: [https://github.com/DilumAluthge/predictmd-conda-recipes](https://github.com/DilumAluthge/predictmd-conda-recipes)
-
 ### 1.3. pdf2svg
 
 To confirm that pdf2svg is installed on your system, open a terminal window and run the following command:
@@ -112,8 +110,6 @@ If you receive an error (e.g. "command not found"), download and install pdf2svg
 * Windows: [https://github.com/jalios/pdf2svg-windows](https://github.com/jalios/pdf2svg-windows)
 * macOS: [http://brewinstall.org/Install-pdf2svg-on-Mac-with-Brew/](http://brewinstall.org/Install-pdf2svg-on-Mac-with-Brew/)
 * GNU/Linux: [https://github.com/dawbarton/pdf2svg](https://github.com/dawbarton/pdf2svg)
-
-> Alternate method: If you use the Conda package manager, you can install pdf2svg using the Conda recipe available here: [https://github.com/DilumAluthge/predictmd-conda-recipes](https://github.com/DilumAluthge/predictmd-conda-recipes)
 
 ## 2. Installation
 
