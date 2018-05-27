@@ -16,7 +16,7 @@ This document provides information on contributing to the PredictMD source code.
             <td align="left"><a href="#2-setting-up-the-predictmd-repo">2. Setting up the PredictMD repo</a></td>
         </tr>
         <tr>
-            <td align="left"><a href="#appendix-information-for-package-maintainers">Appendix: Information for package maintainers</a></td>
+            <td align="left"><a href="#appendix-a-information-for-package-maintainers">Appendix A: Information for package maintainers</a></td>
         </tr>
     </tbody>
 </table>
@@ -157,9 +157,9 @@ cd ~/.julia/v0.6/PredictMD
 git config commit.gpgsign true && git remote set-url origin https://github.com/bcbi/PredictMD.jl.git && git remote set-url --push origin git@github.com:bcbi/PredictMD.jl.git && git checkout master && git checkout develop && git flow init -fd && git checkout develop && git fetch --all --prune
 ```
 
-## Appendix: Information for package maintainers
+## Appendix A: Information for package maintainers
 
-### How to tag a new release using git-flow
+### A.1. How to tag a new release using git-flow
 
 **IMPORTANT: Before you tag a new release, make sure that your GPG set-up is working. Release tags MUST be signed with your GPG key.**
 
