@@ -7,7 +7,7 @@ function warn_on_tikzpictures_save_error(
         a::Associative = ENV,
         )
     if is_travis_ci(a)
-        info(
+        warn(
             string(
                 "DEBUG: since this is a travis build, rethrowing the exception",
                 )
@@ -83,7 +83,7 @@ function save_plot_tex(filename::AbstractString, tp::TikzPictures.TikzPicture)
     save_result = try
         TikzPictures.save(TikzPictures.TEX(filename), tp)
     catch e
-        warn_on_tikzpictures_save_error(w)
+        warn_on_tikzpictures_save_error(e)
     end
     return filename
 end

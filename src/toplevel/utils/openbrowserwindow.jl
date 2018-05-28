@@ -16,7 +16,8 @@ end
 function open_browser_window(filename::AbstractString, a::Associative = ENV)
     filename = strip(filename)
     if length(filename) == 0
-        error("filename is an empty string")
+        warn("filename is an empty string")
+        return nothing
     end
     if !something_exists_at_path(filename)
         warn(
@@ -26,6 +27,7 @@ function open_browser_window(filename::AbstractString, a::Associative = ENV)
                 "\".",
                 )
             )
+        return nothing
     end
     extension = filename_extension(filename)
     is_svg_file = extension == ".svg"
@@ -41,6 +43,7 @@ function open_browser_window(filename::AbstractString, a::Associative = ENV)
                     readstring(f),
                     )
             end
+            # return filename
         elseif is_png_file
             # We use Base.invokelatest to avoid world age errors
             Base.invokelatest(
@@ -48,6 +51,7 @@ function open_browser_window(filename::AbstractString, a::Associative = ENV)
                 "image/png",
                 FileIO.load(filename),
                 )
+            # return filename
         end
     elseif is_travis_ci(a)
         info(string("DEBUG: Skipping opening file during Travis build: ",filename,))
