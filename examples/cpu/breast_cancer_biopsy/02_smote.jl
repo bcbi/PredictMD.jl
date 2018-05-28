@@ -113,10 +113,24 @@ positiveclass = "malignant"
 singlelabellevels = [negativeclass, positiveclass]
 
 DataFrames.describe(training_labels_df[singlelabelname])
-StatsBase.countmap(training_labels_df[singlelabelname])
+classes_before_smote = StatsBase.countmap(training_labels_df[singlelabelname])
 
 majorityclass = "benign"
 minorityclass = "malignant"
+
+info(
+    string(
+        "Before SMOTE, in the training set, there are ",
+        classes_before_smote[majorityclass],
+        " instances in the majority class (\"",
+        majorityclass,
+        "\") and ",
+        classes_before_smote[minorityclass],
+        " instances in the minority class (\"",
+        minorityclass,
+        "\").",
+        )
+    )
 
 smoted_training_features_df, smoted_training_labels_df = PredictMD.smote(
     training_features_df,
@@ -131,8 +145,21 @@ smoted_training_features_df, smoted_training_labels_df = PredictMD.smote(
     )
 
 DataFrames.describe(smoted_training_labels_df[singlelabelname])
-StatsBase.countmap(smoted_training_labels_df[singlelabelname])
+classes_after_smote = StatsBase.countmap(smoted_training_labels_df[singlelabelname])
 
+info(
+    string(
+        "After SMOTE, in the smoted training set, there are ",
+        classes_after_smote[majorityclass],
+        " instances in the majority class (\"",
+        majorityclass,
+        "\") and ",
+        classes_after_smote[minorityclass],
+        " instances in the minority class (\"",
+        minorityclass,
+        "\").",
+        )
+    )
 
 smoted_training_features_df_filename = joinpath(
     tempdir(),

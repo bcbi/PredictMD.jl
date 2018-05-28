@@ -122,6 +122,14 @@ all_models = PredictMD.Fittable[
 
 singlelabelname = :MedV
 
+info(
+    string(
+        "Printing regression metrics for label \"",
+        singlelabelname,
+        "\"",
+        )
+    )
+
 showall(PredictMD.singlelabelregressionmetrics(
     all_models,
     training_features_df,

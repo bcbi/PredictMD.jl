@@ -8,6 +8,14 @@ import StatsBase
 
 df = RDatasets.dataset("MASS", "biopsy")
 
+info(
+    string(
+        "Imported ",
+        size(df, 1),
+        " rows from the breast cancer biopsy data set",
+        )
+    )
+
 categoricalfeaturenames = Symbol[]
 continuousfeaturenames = Symbol[
     :V1,
