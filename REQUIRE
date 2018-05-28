@@ -3,6 +3,7 @@ julia 0.6
 Atom
 BenchmarkTools
 CSVFiles
+CUDAapi
 ClassImbalance
 Combinatorics
 DecisionTree
