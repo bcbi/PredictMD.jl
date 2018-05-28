@@ -25,5 +25,6 @@ PackageCompiler
 ProgressMeter
 RDatasets
 ROCAnalysis
+Requires
 ValueHistories
 Weave
