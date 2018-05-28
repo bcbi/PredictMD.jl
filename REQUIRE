@@ -2,6 +2,7 @@ julia 0.6
 
 Atom
 BenchmarkTools
+CXX
 CSVFiles
 ClassImbalance
 Combinatorics
