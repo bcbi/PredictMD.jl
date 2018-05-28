@@ -6,9 +6,20 @@ import FileIO
 
 """
 """
+function open_browser_window(filename::Void, a::Associative = ENV)
+    warn("no filename to open!")
+    return nothing
+end
+
+"""
+"""
 function open_browser_window(filename::AbstractString, a::Associative = ENV)
+    filename = strip(filename)
+    if length(filename) == 0
+        error("filename is an empty string")
+    end
     if !something_exists_at_path(filename)
-        error(
+        warn(
             string(
                 "No file exists at path \"",
                 filename,
