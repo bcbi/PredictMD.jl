@@ -186,7 +186,9 @@
           <div role="main">
             <div class="section">
               
-                <pre><code class="julia">srand(999)
+                <pre><code class="julia"># Beginning of file
+
+srand(999)
 
 import CSV
 import DataFrames
@@ -340,6 +342,20 @@ CSV.write(
     smoted_training_labels_df_filename,
     smoted_training_labels_df,
     )
+
+# End of file
+</code></pre>
+
+<pre><code>Summary Stats:
+Length:         341
+Type:           Union{CategoricalArrays.CategoricalString{UInt32}, Missings.Missing}
+Number Unique:  2
+Number Missing: 0
+% Missing:      0.000000
+Summary Stats:
+Length:         504
+Type:           String
+Number Unique:  2
 </code></pre>
 
 <p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p>

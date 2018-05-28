@@ -1,3 +1,5 @@
+# Beginning of file
+
 srand(999)
 
 import CSV
@@ -132,6 +134,8 @@ CSV.write(
     validation_labels_df_filename,
     validation_labels_df,
     )
+
+# End of file
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

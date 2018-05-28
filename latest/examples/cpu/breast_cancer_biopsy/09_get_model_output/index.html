@@ -186,7 +186,9 @@
           <div role="main">
             <div class="section">
               
-                <pre><code class="julia">srand(999)
+                <pre><code class="julia"># Beginning of file
+
+srand(999)
 
 import CSV
 import DataFrames
@@ -351,6 +353,8 @@ PredictMD.predict(random_forest_classifier,testing_features_df,)
 PredictMD.predict(c_svc_svm_classifier,testing_features_df,)
 PredictMD.predict(nu_svc_svm_classifier,testing_features_df,)
 PredictMD.predict(knet_mlp_classifier,testing_features_df,)
+
+# End of file
 </code></pre>
 
 <pre><code>INFO: Attempting to load model...
@@ -363,31 +367,10 @@ INFO: Attempting to load model...
 INFO: Loaded model from file &quot;/tmp/breast_cancer_biopsy_example/nu_svc_svm_classifier.jld2&quot;
 INFO: Attempting to load model...
 INFO: Loaded model from file &quot;/tmp/breast_cancer_biopsy_example/knet_mlp_classifier.jld2&quot;
-WARNING: Method definition knetmlp_predict(Any, AbstractArray{T, N} where N where T) in module PredictMD at none:6 overwritten at none:6.
+WARNING: Method definition knetmlp_predict(Any, AbstractArray{T, N} where N where T) in module PredictMD at none:5 overwritten at none:6.
 WARNING: Method definition #knetmlp_predict(Array{Any, 1}, typeof(PredictMD.knetmlp_predict), Any, AbstractArray{T, N} where N where T) in module PredictMD overwritten.
 WARNING: Method definition knetmlp_loss(Function, Any, AbstractArray{T, N} where N where T, AbstractArray{T, N} where N where T) in module PredictMD at none:9 overwritten at none:9.
 WARNING: Method definition #knetmlp_loss(Array{Any, 1}, typeof(PredictMD.knetmlp_loss), Function, Any, AbstractArray{T, N} where N where T, AbstractArray{T, N} where N where T) in module PredictMD overwritten.
-171×1 DataFrames.DataFrame
-│ Row │ Class     │
-├─────┼───────────┤
-│ 1   │ malignant │
-│ 2   │ benign    │
-│ 3   │ benign    │
-│ 4   │ malignant │
-│ 5   │ benign    │
-│ 6   │ benign    │
-│ 7   │ benign    │
-│ 8   │ benign    │
-⋮
-│ 163 │ benign    │
-│ 164 │ benign    │
-│ 165 │ benign    │
-│ 166 │ malignant │
-│ 167 │ benign    │
-│ 168 │ malignant │
-│ 169 │ benign    │
-│ 170 │ benign    │
-│ 171 │ benign    │
 </code></pre>
 
 <p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p>

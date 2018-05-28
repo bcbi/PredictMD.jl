@@ -1,3 +1,5 @@
+# Beginning of file
+
 srand(999)
 
 import CSV
@@ -242,6 +244,8 @@ prplottesting = PredictMD.plotprcurves(
     positiveclass,
     )
 PredictMD.open_plot(prplottesting)
+
+# End of file
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

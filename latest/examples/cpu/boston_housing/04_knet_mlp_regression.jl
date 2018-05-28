@@ -1,3 +1,5 @@
+# Beginning of file
+
 srand(999)
 
 import CSV
@@ -272,6 +274,8 @@ knet_mlp_regression_filename = joinpath(
     )
 
 PredictMD.save_model(knet_mlp_regression_filename, knet_mlp_regression)
+
+# End of file
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

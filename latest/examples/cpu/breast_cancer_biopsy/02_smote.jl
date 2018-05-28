@@ -1,3 +1,5 @@
+# Beginning of file
+
 srand(999)
 
 import CSV
@@ -152,6 +154,8 @@ CSV.write(
     smoted_training_labels_df_filename,
     smoted_training_labels_df,
     )
+
+# End of file
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

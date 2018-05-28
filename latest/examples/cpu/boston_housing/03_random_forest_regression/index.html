@@ -186,7 +186,9 @@
           <div role="main">
             <div class="section">
               
-                <pre><code class="julia">srand(999)
+                <pre><code class="julia"># Beginning of file
+
+srand(999)
 
 import CSV
 import DataFrames
@@ -352,15 +354,17 @@ random_forest_regression_filename = joinpath(
     )
 
 PredictMD.save_model(random_forest_regression_filename, random_forest_regression)
+
+# End of file
 </code></pre>
 
 <pre><code>INFO: Starting to train DecisionTree.jl model.
 INFO: Finished training DecisionTree.jl model.
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliar2Nb8H.svg
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/julia0Wp4T2.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliauAsi3f.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaPt98fw.svg
 INFO: Attempting to save model...
 INFO: Saved model to file &quot;/tmp/boston_housing_example/random_forest_regression.jld2&quot;
-&quot;/tmp/boston_housing_example/random_forest_regression.jld2&quot;
+
 </code></pre>
 
 <p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p>

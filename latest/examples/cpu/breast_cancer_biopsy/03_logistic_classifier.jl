@@ -1,3 +1,5 @@
+# Beginning of file
+
 srand(999)
 
 import CSV
@@ -250,6 +252,8 @@ logistic_classifier_filename = joinpath(
     )
 
 PredictMD.save_model(logistic_classifier_filename, logistic_classifier)
+
+# End of file
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

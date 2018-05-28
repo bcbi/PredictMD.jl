@@ -186,7 +186,9 @@
           <div role="main">
             <div class="section">
               
-                <pre><code class="julia">srand(999)
+                <pre><code class="julia"># Beginning of file
+
+srand(999)
 
 import CSV
 import DataFrames
@@ -302,6 +304,8 @@ PredictMD.predict(knet_mlp_regression,training_features_df,)
 PredictMD.predict(linear_regression,testing_features_df,)
 PredictMD.predict(random_forest_regression,testing_features_df,)
 PredictMD.predict(knet_mlp_regression,testing_features_df,)
+
+# End of file
 </code></pre>
 
 <pre><code>INFO: Attempting to load model...
@@ -313,27 +317,6 @@ INFO: Loaded model from file &quot;/tmp/boston_housing_example/knet_mlp_regressi
 WARNING: Method definition knetmlp_predict(Any, AbstractArray{T, N} where N where T) in module PredictMD at none:6 overwritten at none:5.
 WARNING: Method definition knetmlp_loss(Function, Any, AbstractArray{T, N} where N where T, AbstractArray{T, N} where N where T) in module PredictMD at none:9 overwritten at none:9.
 WARNING: Method definition #knetmlp_loss(Array{Any, 1}, typeof(PredictMD.knetmlp_loss), Function, Any, AbstractArray{T, N} where N where T, AbstractArray{T, N} where N where T) in module PredictMD overwritten.
-126×1 DataFrames.DataFrame
-│ Row │ MedV    │
-├─────┼─────────┤
-│ 1   │ 43.2657 │
-│ 2   │ 38.367  │
-│ 3   │ 19.0059 │
-│ 4   │ 24.7577 │
-│ 5   │ 7.1735  │
-│ 6   │ 6.40599 │
-│ 7   │ 19.4495 │
-│ 8   │ 33.5594 │
-⋮
-│ 118 │ 27.421  │
-│ 119 │ 19.2045 │
-│ 120 │ 16.2741 │
-│ 121 │ 7.73533 │
-│ 122 │ 23.8556 │
-│ 123 │ 21.5028 │
-│ 124 │ 18.3388 │
-│ 125 │ 19.0699 │
-│ 126 │ 23.3085 │
 </code></pre>
 
 <p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p>

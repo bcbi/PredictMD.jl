@@ -186,7 +186,9 @@
           <div role="main">
             <div class="section">
               
-                <pre><code class="julia">srand(999)
+                <pre><code class="julia"># Beginning of file
+
+srand(999)
 
 import CSV
 import DataFrames
@@ -438,13 +440,15 @@ logistic_classifier_filename = joinpath(
     )
 
 PredictMD.save_model(logistic_classifier_filename, logistic_classifier)
+
+# End of file
 </code></pre>
 
 <pre><code>INFO: Starting to train GLM.jl model.
 INFO: Finished training GLM.jl model.
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaKmipDf.svg
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliac9SP6V.svg
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaWeKbnF.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/julia8iMHIg.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaXGucGo.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaovWLyy.svg
 Low risk: 0 to 0.05857493355870247. Medium risk: 0.05857493355870247 to 0.9342752695083618. High risk: 0.9342752695083618 to 1.
 3×3 DataFrames.DataFrame
 │ Row │ Risk_group  │ Arithmetic_mean │ Median │
@@ -459,7 +463,7 @@ Low risk: 0 to 0.05857493355870247. Medium risk: 0.05857493355870247 to 0.934275
 │ 2   │ Medium risk │ 0.326087        │ 0.0    │
 │ 3   │ High risk   │ 1.0             │ 1.0    │INFO: Attempting to save model...
 INFO: Saved model to file &quot;/tmp/breast_cancer_biopsy_example/logistic_classifier.jld2&quot;
-&quot;/tmp/breast_cancer_biopsy_example/logistic_classifier.jld2&quot;
+
 </code></pre>
 
 <p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p>

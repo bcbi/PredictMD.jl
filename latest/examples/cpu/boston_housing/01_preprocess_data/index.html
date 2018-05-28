@@ -186,7 +186,9 @@
           <div role="main">
             <div class="section">
               
-                <pre><code class="julia">srand(999)
+                <pre><code class="julia"># Beginning of file
+
+srand(999)
 
 import CSV
 import DataFrames
@@ -333,6 +335,21 @@ CSV.write(
     validation_labels_df_filename,
     validation_labels_df,
     )
+
+# End of file
+</code></pre>
+
+<pre><code>Summary Stats:
+Mean:           22.532806
+Minimum:        5.000000
+1st Quartile:   17.025000
+Median:         21.200000
+3rd Quartile:   25.000000
+Maximum:        50.000000
+Length:         506
+Type:           Union{Float64, Missings.Missing}
+Number Missing: 0
+% Missing:      0.000000
 </code></pre>
 
 <p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p>
