@@ -1,8 +1,8 @@
 """
 """
-function is_travis_ci(a::Associative)
-    result = (lowercase(get(a, "CI", "")) == lowercase("true")) &&
-        (lowercase(get(a, "TRAVIS", "")) == lowercase("true")) &&
-        (lowercase(get(a, "CONTINUOUS_INTEGRATION", "")) == lowercase("true"))
+function is_travis_ci(a::Associative = ENV)
+    result = (lowercase(strip(get(a, "CI", ""))) == "true") &&
+        (lowercase(strip(get(a, "TRAVIS", ""))) == "true") &&
+        (lowercase(strip(get(a, "CONTINUOUS_INTEGRATION", ""))) == "true")
     return result
 end
