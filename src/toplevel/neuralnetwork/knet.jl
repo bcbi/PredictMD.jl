@@ -1,3 +1,4 @@
+import AutoGrad
 import Knet
 import ProgressMeter
 import ValueHistories
