@@ -1,3 +1,5 @@
+## Beginning of file
+
 srand(999)
 
 import CSV
@@ -132,3 +134,5 @@ CSV.write(
     validation_labels_df_filename,
     validation_labels_df,
     )
+
+## End of file
