@@ -1,3 +1,5 @@
+## Beginning of file
+
 srand(999)
 
 import CSV
@@ -163,3 +165,5 @@ linear_regression_filename = joinpath(
     )
 
 PredictMD.save_model(linear_regression_filename, linear_regression)
+
+## End of file

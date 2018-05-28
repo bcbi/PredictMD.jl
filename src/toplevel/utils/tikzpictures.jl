@@ -2,7 +2,35 @@ import TikzPictures
 
 """
 """
+function warn_on_tikzpictures_save_error(
+        e::Exception,
+        a::Associative = ENV,
+        )
+    if is_travis_ci(a)
+        warn(
+            string(
+                "DEBUG: since this is a travis build, rethrowing the exception",
+                )
+            )
+        rethrow(e)
+    else
+        warn(
+            string(
+                "Ignoring error: ",
+                e,
+                )
+            )
+        return nothing
+    end
+end
+
+"""
+"""
 function save_plot(filename::AbstractString, tp::TikzPictures.TikzPicture)
+    filename = strip(filename)
+    if length(filename) == 0
+        error("filename is an empty string")
+    end
     extension = filename_extension(filename)
     if extension == ".pdf"
         save_result = save_plot_pdf(filename, tp)
@@ -21,36 +49,84 @@ end
 """
 """
 function save_plot_pdf(filename::AbstractString, tp::TikzPictures.TikzPicture)
+    filename = strip(filename)
+    if length(filename) == 0
+        error("filename is an empty string")
+    end
+    extension = filename_extension(filename)
+    if extension != ".pdf"
+        error("filename must end in .pdf")
+    end
     parent_directory = Base.Filesystem.dirname(filename)
     Base.Filesystem.mkpath(parent_directory)
-    save_result = TikzPictures.save(TikzPictures.PDF(filename), tp)
+    save_result = try
+        TikzPictures.save(TikzPictures.PDF(filename), tp)
+    catch e
+        warn_on_tikzpictures_save_error(e)
+    end
     return filename
 end
 
 """
 """
 function save_plot_tex(filename::AbstractString, tp::TikzPictures.TikzPicture)
+    filename = strip(filename)
+    if length(filename) == 0
+        error("filename is an empty string")
+    end
+    extension = filename_extension(filename)
+    if extension != ".tex"
+        error("filename must end in .tex")
+    end
     parent_directory = Base.Filesystem.dirname(filename)
     Base.Filesystem.mkpath(parent_directory)
-    save_result = TikzPictures.save(TikzPictures.TEX(filename), tp)
+    save_result = try
+        TikzPictures.save(TikzPictures.TEX(filename), tp)
+    catch e
+        warn_on_tikzpictures_save_error(e)
+    end
     return filename
 end
 
 """
 """
 function save_plot_tikz(filename::AbstractString, tp::TikzPictures.TikzPicture)
+    filename = strip(filename)
+    if length(filename) == 0
+        error("filename is an empty string")
+    end
+    if extension != ".tikz"
+        error("filename must end in .tikz")
+    end
+    extension = filename_extension(filename)
     parent_directory = Base.Filesystem.dirname(filename)
     Base.Filesystem.mkpath(parent_directory)
-    save_result = TikzPictures.save(TikzPictures.TIKZ(filename), tp)
+    save_result = try
+        TikzPictures.save(TikzPictures.TIKZ(filename), tp)
+    catch e
+        warn_on_tikzpictures_save_error(e)
+    end
     return filename
 end
 
 """
 """
 function save_plot_svg(filename::AbstractString, tp::TikzPictures.TikzPicture)
+    filename = strip(filename)
+    if length(filename) == 0
+        error("filename is an empty string")
+    end
+    extension = filename_extension(filename)
+    if extension != ".svg"
+        error("filename must end in .svg")
+    end
     parent_directory = Base.Filesystem.dirname(filename)
     Base.Filesystem.mkpath(parent_directory)
-    save_result = TikzPictures.save(TikzPictures.SVG(filename), tp)
+    save_result = try
+        TikzPictures.save(TikzPictures.SVG(filename), tp)
+    catch e
+        warn_on_tikzpictures_save_error(e)
+    end
     return filename
 end
 
@@ -65,6 +141,10 @@ end
 """
 """
 function open_plot(filename::AbstractString, tp::TikzPictures.TikzPicture)
+    filename = strip(filename)
+    if length(filename) == 0
+        error("filename is an empty string")
+    end
     saveresult = save_plot(filename, tp)
     open_result = open_browser_window(filename)
     return filename

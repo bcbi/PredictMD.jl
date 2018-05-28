@@ -1,3 +1,5 @@
+## Beginning of file
+
 srand(999)
 
 import CSV
@@ -198,3 +200,5 @@ c_svc_svm_classifier_filename = joinpath(
     )
 
 PredictMD.save_model(c_svc_svm_classifier_filename, c_svc_svm_classifier)
+
+## End of file

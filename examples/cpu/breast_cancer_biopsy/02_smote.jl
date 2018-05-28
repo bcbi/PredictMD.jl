@@ -1,3 +1,5 @@
+## Beginning of file
+
 srand(999)
 
 import CSV
@@ -152,3 +154,5 @@ CSV.write(
     smoted_training_labels_df_filename,
     smoted_training_labels_df,
     )
+
+## End of file

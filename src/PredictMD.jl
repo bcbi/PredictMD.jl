@@ -2,7 +2,23 @@ __precompile__(true)
 
 """
 """
-module PredictMD
+module PredictMD # begin module PredictMD
+
+function __init__()
+    info(
+        string(
+            "loaded PredictMD version ",
+            PredictMD.VERSION,
+            )
+        )
+    if is_debug()
+        info(
+            string(
+                "debug mode is enabled",
+                )
+            )
+    end
+end
 
 ##############################################################################
 # Top level ##################################################################
@@ -26,18 +42,18 @@ include(
         )
     )
 
-# calibration/
+# toplevel/calibration/
 
-# classimbalance/
+# toplevel/classimbalance/
 include(
     joinpath(
         ".", "toplevel", "classimbalance", "smote.jl",
         )
     )
 
-# cluster/
+# toplevel/cluster/
 
-# datasets/
+# toplevel/datasets/
 include(
     joinpath(
         ".", "toplevel", "datasets", "csv.jl",
@@ -55,11 +71,11 @@ include(
     )
 
 
-# decomposition/
+# toplevel/decomposition/
 
-# ensemble/
+# toplevel/ensemble/
 
-# integrations/
+# toplevel/integrations/
 include(
     joinpath(
         ".", "toplevel", "integrations", "ide", "atom.jl",
@@ -77,7 +93,7 @@ include(
     )
 
 
-# io/
+# toplevel/io/
 include(
     joinpath(
         ".", "toplevel", "io", "saveload.jl",
@@ -96,7 +112,7 @@ include(
         )
     )
 
-# metrics/
+# toplevel/metrics/
 include(
     joinpath(
         ".", "toplevel", "metrics", "auprc.jl",
@@ -169,18 +185,18 @@ include(
     )
 
 
-# modelselection/
+# toplevel/modelselection/
 include(
     joinpath(
         ".", "toplevel", "modelselection", "split_data.jl",
         )
     )
 
-# multiclass/
+# toplevel/multiclass/
 
-# multioutput/
+# toplevel/multioutput/
 
-# neuralnetwork/
+# toplevel/neuralnetwork/
 include(
     joinpath(
         ".", "toplevel", "neuralnetwork", "flux.jl",
@@ -192,14 +208,14 @@ include(
         )
     )
 
-# pipeline/
+# toplevel/pipeline/
 include(
     joinpath(
         ".", "toplevel", "pipeline", "simplelinearpipeline.jl",
         )
     )
 
-# plotting/
+# toplevel/plotting/
 
 include(
     joinpath(
@@ -232,7 +248,7 @@ include(
         )
     )
 
-# postprocessing/
+# toplevel/postprocessing/
 include(
     joinpath(
         ".", "toplevel", "postprocessing", "packagemultilabelpred.jl",
@@ -259,7 +275,7 @@ include(
         )
     )
 
-# preprocessing/
+# toplevel/preprocessing/
 include(
     joinpath(
         ".", "toplevel", "preprocessing", "dataframecontrasts.jl",
@@ -286,21 +302,21 @@ include(
         )
     )
 
-# svm/
+# toplevel/svm/
 include(
     joinpath(
         ".", "toplevel", "svm", "libsvm.jl",
         )
     )
 
-# tree/
+# toplevel/tree/
 include(
     joinpath(
         ".", "toplevel", "tree", "decisiontree.jl",
         )
     )
 
-# utils/
+# toplevel/utils/
 include(
     joinpath(
         ".", "toplevel", "utils", "file_exists.jl",
@@ -319,6 +335,11 @@ include(
 include(
     joinpath(
         ".", "toplevel", "utils", "formulas.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "is_debug.jl",
         )
     )
 include(
