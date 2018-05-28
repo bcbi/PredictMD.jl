@@ -1,27 +1,27 @@
 julia 0.6
 
-Atom 0.6
-CSVFiles 0.5
-ClassImbalance 0.2
-Combinatorics 0.6
-DecisionTree 0.6
-Documenter 0.17
-FluxJS 0.1
-GLM 0.10
-JLD2 0.0.5
-Knet 0.9
-LIBSVM 0.1
-Literate 0.2
-MLBase 0.7
+Atom
+CSVFiles
+ClassImbalance
+Combinatorics
+DecisionTree
+Documenter
+FluxJS
+GLM
+JLD2
+Knet
+LIBSVM
+Literate
+MLBase
 MLDatasets
-Metalhead 0.1
-NBInclude 1.2
-NumericalIntegration 0.0.3
-PGFPlots 2.2
-PGFPlotsX 0.2
-PackageCompiler 0.3
-ProgressMeter 0.5
-RDatasets 0.3
-ROCAnalysis 0.2
-ValueHistories 0.4
-Weave 0.5
+Metalhead
+NBInclude
+NumericalIntegration
+PGFPlots
+PGFPlotsX
+PackageCompiler
+ProgressMeter
+RDatasets
+ROCAnalysis
+ValueHistories
+Weave
