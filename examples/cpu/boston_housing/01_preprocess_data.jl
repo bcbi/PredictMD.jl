@@ -19,12 +19,6 @@ df = CSV.read(
     rows_for_type_detect = 100,
     )
 
-info(
-    string("Read "),
-    size(df, 1),
-    string(" rows from the Boston housing data set."),
-    )
-
 categoricalfeaturenames = Symbol[]
 continuousfeaturenames = Symbol[
     :Crim,
