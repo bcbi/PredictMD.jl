@@ -47,6 +47,7 @@ before_install:
 script:
     - julia --check-bounds=yes --color=yes -e 'Pkg.clone(pwd())'
     - julia --check-bounds=yes --color=yes -e 'Pkg.build("PredictMD")'
+    - julia --check-bounds=yes --color=yes -e 'import PredictMD'
     - julia --check-bounds=yes --color=yes -e 'Pkg.test("PredictMD", coverage=true)'
 
 after_success:
