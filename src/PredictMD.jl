@@ -4,6 +4,22 @@ __precompile__(true)
 """
 module PredictMD # begin module PredictMD
 
+function __init__()
+    info(
+        string(
+            "loaded PredictMD version ",
+            PredictMD.VERSION,
+            )
+        )
+    if is_debug()
+        info(
+            string(
+                "debug mode is enabled",
+                )
+            )
+    end
+end
+
 ##############################################################################
 # Top level ##################################################################
 ##############################################################################
@@ -319,6 +335,11 @@ include(
 include(
     joinpath(
         ".", "toplevel", "utils", "formulas.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "is_debug.jl",
         )
     )
 include(
