@@ -1,3 +1,5 @@
+## Beginning of file
+
 srand(999)
 
 import CSV
@@ -53,35 +55,43 @@ validation_labels_df_filename = joinpath(
     )
 trainingandvalidation_features_df = CSV.read(
     trainingandvalidation_features_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 trainingandvalidation_labels_df = CSV.read(
     trainingandvalidation_labels_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 testing_features_df = CSV.read(
     testing_features_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 testing_labels_df = CSV.read(
     testing_labels_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 training_features_df = CSV.read(
     training_features_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 training_labels_df = CSV.read(
     training_labels_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 validation_features_df = CSV.read(
     validation_features_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 validation_labels_df = CSV.read(
     validation_labels_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 
 categoricalfeaturenames = Symbol[]
@@ -110,10 +120,10 @@ feature_contrasts = PredictMD.generate_feature_contrasts(training_features_df, f
 random_forest_regression = PredictMD.singlelabeldataframerandomforestregression(
     featurenames,
     singlelabelname;
-    nsubfeatures = 2, 
-    ntrees = 20, 
+    nsubfeatures = 2,
+    ntrees = 20,
     package = :DecisionTreejl,
-    name = "Random forest", 
+    name = "Random forest",
     feature_contrasts = feature_contrasts,
     )
 
@@ -156,3 +166,5 @@ random_forest_regression_filename = joinpath(
     )
 
 PredictMD.save_model(random_forest_regression_filename, random_forest_regression)
+
+## End of file

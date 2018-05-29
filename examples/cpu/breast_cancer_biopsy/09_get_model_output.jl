@@ -1,3 +1,5 @@
+## Beginning of file
+
 srand(999)
 
 import CSV
@@ -47,35 +49,43 @@ validation_labels_df_filename = joinpath(
     )
 trainingandvalidation_features_df = CSV.read(
     trainingandvalidation_features_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 trainingandvalidation_labels_df = CSV.read(
     trainingandvalidation_labels_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 testing_features_df = CSV.read(
     testing_features_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 testing_labels_df = CSV.read(
     testing_labels_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 training_features_df = CSV.read(
     training_features_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 training_labels_df = CSV.read(
     training_labels_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 validation_features_df = CSV.read(
     validation_features_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 validation_labels_df = CSV.read(
     validation_labels_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 
 smoted_training_features_df_filename = joinpath(
@@ -90,11 +100,13 @@ smoted_training_labels_df_filename = joinpath(
     )
 smoted_training_features_df = CSV.read(
     smoted_training_features_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 smoted_training_labels_df = CSV.read(
     smoted_training_labels_df_filename,
-    DataFrames.DataFrame,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
     )
 
 logistic_classifier_filename = joinpath(
@@ -153,3 +165,5 @@ PredictMD.predict(random_forest_classifier,testing_features_df,)
 PredictMD.predict(c_svc_svm_classifier,testing_features_df,)
 PredictMD.predict(nu_svc_svm_classifier,testing_features_df,)
 PredictMD.predict(knet_mlp_classifier,testing_features_df,)
+
+## End of file
