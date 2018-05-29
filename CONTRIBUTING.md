@@ -172,7 +172,7 @@ cd ~/.julia/v0.6/PredictMD
 **Step 2:** Fetch the latest versions of all branches:
 
 ```bash
-git fetch origin --all --prune
+git fetch --all --prune
 ```
 
 **Step 3:** Checkout the develop branch:
