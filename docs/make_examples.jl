@@ -3,7 +3,11 @@ import PredictMD
 
 ENV["PREDICTMD_IS_MAKE_EXAMPLES"] = "true"
 
-execute_notebooks = true
+if is_windows()
+    execute_notebooks = false
+else
+    execute_notebooks = true
+end
 
 examples_input_parent_directory = joinpath(
     @__DIR__,
