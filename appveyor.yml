@@ -10,6 +10,7 @@ environment:
         - JULIA_URL: "https://julialangnightlies-s3.julialang.org/bin/winnt/x64/julia-latest-win64.exe"
 
 matrix:
+    fast_finish: true # immediately finish build once one of the jobs fails
     allow_failures:
         - JULIA_URL: "https://julialangnightlies-s3.julialang.org/bin/winnt/x86/julia-latest-win32.exe"
         - JULIA_URL: "https://julialangnightlies-s3.julialang.org/bin/winnt/x64/julia-latest-win64.exe"
@@ -25,6 +26,8 @@ skip_branch_with_pr: false
 skip_non_tags: false
 
 skip_tags: false
+
+version: '{build}'
 
 ###############################################################################
 
