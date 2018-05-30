@@ -21,7 +21,6 @@ NBInclude
 NumericalIntegration
 PGFPlots
 PGFPlotsX
-PackageCompiler
 ProgressMeter
 RDatasets
 ROCAnalysis
