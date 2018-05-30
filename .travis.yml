@@ -49,7 +49,7 @@ before_install:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install pdf2svg; fi
 
 script:
-    - julia --check-bounds=yes --color=yes -e 'Pkg.clone(pwd())'
+    - julia --check-bounds=yes --color=yes -e 'Pkg.clone(pwd(), "PredictMD")'
     - julia --check-bounds=yes --color=yes -e 'Pkg.build("PredictMD")'
     - julia --check-bounds=yes --color=yes -e 'import PredictMD'
     - julia --check-bounds=yes --color=yes -e 'Pkg.test("PredictMD", coverage=true)'
