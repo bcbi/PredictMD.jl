@@ -1,7 +1,7 @@
-# Minimum supported version of Julia: 0.6
+##### Minimum supported version of Julia: 0.6
 julia 0.6
 
-# Required Julia packages:
+##### Required Julia packages
 Atom
 BenchmarkTools
 CSVFiles
@@ -30,7 +30,7 @@ Requires
 ValueHistories
 Weave
 
-# The following Julia packages are not required, but will be used by
+##### The following Julia packages are not required, but will be used by
 # PredictMD if the user runs `import PACKAGENAME` or `using PACKAGENAME`
 # CUDNN
 # Clang
