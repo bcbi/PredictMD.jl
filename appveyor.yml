@@ -7,6 +7,8 @@ environment:
         - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.6/julia-0.6-latest-win64.exe"
         # - JULIA_URL: "https://julialangnightlies-s3.julialang.org/bin/winnt/x64/julia-latest-win64.exe"
 
+image: Visual Studio 2015
+
 matrix:
     fast_finish: true # immediately finish build once one of the jobs fails
     # allow_failures:
