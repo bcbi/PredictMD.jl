@@ -1,6 +1,11 @@
 import Literate
 import PredictMD
 
+srand(999)
+
+Base.flush( Base.STDOUT )
+Base.flush( Base.STDERR )
+
 ENV["PREDICTMD_IS_MAKE_EXAMPLES"] = "true"
 
 if is_windows()
@@ -322,3 +327,6 @@ Literate.script(
     )
 
 ENV["PREDICTMD_IS_MAKE_EXAMPLES"] = "false"
+
+Base.flush( Base.STDOUT )
+Base.flush( Base.STDERR )

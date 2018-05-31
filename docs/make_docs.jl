@@ -2,6 +2,11 @@ import Documenter
 import Literate
 import PredictMD
 
+srand(999)
+
+Base.flush( Base.STDOUT )
+Base.flush( Base.STDERR )
+
 ENV["PREDICTMD_IS_MAKE_DOCS"] = "true"
 
 if is_windows()
@@ -26,3 +31,6 @@ else
 end
 
 ENV["PREDICTMD_IS_MAKE_DOCS"] = "false"
+
+Base.flush( Base.STDOUT )
+Base.flush( Base.STDERR )
