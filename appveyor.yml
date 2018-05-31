@@ -4,7 +4,8 @@ branches:
 
 environment:
     matrix:
-        - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.6/julia-0.6-latest-win64.exe"
+        # - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.6/julia-0.6-latest-win64.exe"
+        - JULIA_URL: "https://s3.amazonaws.com/julialang/bin/winnt/x64/0.7/julia-0.7.0-pre.alpha-win64.exe 32"
         # - JULIA_URL: "https://julialangnightlies-s3.julialang.org/bin/winnt/x64/julia-latest-win64.exe"
 
 image: Visual Studio 2015
