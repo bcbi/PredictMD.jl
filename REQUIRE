@@ -1,5 +1,7 @@
+##### Minimum supported version: Julia 0.7
 julia 0.7
 
+##### Required Julia packages
 Atom
 BenchmarkTools
 CSVFiles
@@ -21,10 +23,16 @@ NBInclude
 NumericalIntegration
 PGFPlots
 PGFPlotsX
-PackageCompiler
 ProgressMeter
 RDatasets
 ROCAnalysis
 Requires
 ValueHistories
 Weave
+
+##### The following Julia packages are not required, but will be used by
+# PredictMD if the user runs `import PACKAGENAME` or `using PACKAGENAME`
+# CUDNN
+# Clang
+# Cxx
+# LLVM
