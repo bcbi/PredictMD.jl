@@ -4,7 +4,7 @@
     <thead>
         <tr>
             <th>Branch</th>
-            <th>Documentation</th>
+            <th>Docs</th>
             <th>Travis</th>
         </tr>
     </thead>
