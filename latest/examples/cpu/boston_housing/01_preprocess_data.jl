@@ -1,12 +1,12 @@
 # Beginning of file
 
-srand(999)
-
 import CSV
 import DataFrames
 import GZip
 import PredictMD
 import StatsBase
+
+srand(999)
 
 df = CSV.read(
     GZip.gzopen(

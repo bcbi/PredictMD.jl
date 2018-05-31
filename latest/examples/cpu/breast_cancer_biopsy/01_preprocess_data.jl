@@ -1,12 +1,12 @@
 # Beginning of file
 
-srand(999)
-
 import CSV
 import DataFrames
 import PredictMD
 import RDatasets
 import StatsBase
+
+srand(999)
 
 df = RDatasets.dataset("MASS", "biopsy")
 

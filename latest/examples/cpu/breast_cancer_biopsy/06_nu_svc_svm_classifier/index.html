@@ -188,12 +188,12 @@
               
                 <pre><code class="julia"># Beginning of file
 
-srand(999)
-
 import CSV
 import DataFrames
 import LIBSVM
 import PredictMD
+
+srand(999)
 
 mkpath(
     joinpath(
@@ -394,8 +394,8 @@ PredictMD.save_model(nu_svc_svm_classifier_filename, nu_svc_svm_classifier)
 
 <pre><code>INFO: Starting to train LIBSVM.jl model.
 INFO: Finished training LIBSVM.jl model.
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliav4aCHg.svg
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/julia8O3MpB.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/julialwGVxp.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/julia3SBgnL.svg
 INFO: Attempting to save model...
 INFO: Saved model to file &quot;/tmp/breast_cancer_biopsy_example/nu_svc_svm_classifier.jld2&quot;
 
