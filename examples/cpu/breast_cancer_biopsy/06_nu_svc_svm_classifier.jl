@@ -1,11 +1,11 @@
 ## Beginning of file
 
-srand(999)
-
 import CSV
 import DataFrames
 import LIBSVM
 import PredictMD
+
+srand(999)
 
 mkpath(
     joinpath(

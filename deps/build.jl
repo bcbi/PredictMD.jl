@@ -1,6 +1,12 @@
-# Originally based on https://github.com/KristofferC/PGFPlotsX.jl/blob/master/deps/build.jl
+# Parts of this file are based on:
+# 1. https://github.com/KristofferC/PGFPlotsX.jl/blob/master/deps/build.jl
 
 import Crayons
+
+srand(999)
+
+Base.flush( Base.STDOUT )
+Base.flush( Base.STDERR )
 
 const OK =  Crayons.Box.GREEN_FG * Crayons.Box.BOLD("OK")
 const X =  Crayons.Box.RED_FG * Crayons.Box.BOLD("X")
@@ -56,3 +62,6 @@ const PREAMBLE_PATH = joinpath(@__DIR__, "custom_preamble.tex")
 if !isfile(PREAMBLE_PATH)
     touch(PREAMBLE_PATH)
 end
+
+Base.flush( Base.STDOUT )
+Base.flush( Base.STDERR )
