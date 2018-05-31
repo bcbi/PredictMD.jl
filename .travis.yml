@@ -18,7 +18,7 @@ git:
     depth: 99999999
 
 julia:
-    - 0.6
+    - 0.7
     - nightly
 
 language: julia
