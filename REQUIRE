@@ -31,7 +31,7 @@ ValueHistories
 Weave
 
 ##### The following Julia packages are not required, but will be used by
-# PredictMD if the user runs `import PACKAGENAME` or `using PACKAGENAME`
+##### PredictMD if the user runs `import PACKAGENAME` or `using PACKAGENAME`
 # CUDNN
 # Clang
 # Cxx
