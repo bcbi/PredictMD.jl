@@ -238,11 +238,11 @@ An commit message editor will open. Type an appropriate commit message (e.g. "Bu
 git push origin release/v30.771.0
 ```
 
-**Step 10:** Wait for the Travis tests to pass. You can check on the status of the tests by going to [https://travis-ci.org/bcbi/PredictMD.jl/branches](https://travis-ci.org/bcbi/PredictMD.jl/branches) and clicking on your release branch.
+**Step 10:** Wait for all of the tests to pass. You can check on the status of the tests by going to [https://github.com/bcbi/PredictMD.jl/branches](https://github.com/bcbi/PredictMD.jl/branches) and scrolling down to find your release branch. A yellow dot indicates that the tests are still running. A red "X" indicates that one or more of the tests failed. A green checkmark indicates that all of the tests passed.
 
-**You must wait for all of the tests to pass before you can finish tagging the release.**
+**You must wait for all of the tests to pass (green checkmark) before you can finish tagging the release.**
 
-*Sometimes, one of the build jobs will fail because a download timed out. This is especially common with the Mac builds. If this happens, just click on the job, and then click the "Restart job" button.*
+*Sometimes, one of the build jobs will fail because a download timed out. This is especially common with the Mac builds on Travis. You can usually resolve this error simply by restarting the failed build.*
 
 **Step 11:**  Once all of the Travis tests have passed, you can finish tagging your release using the git-flow tools:
 
