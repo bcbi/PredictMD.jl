@@ -3,21 +3,21 @@
 <table>
     <thead>
         <tr>
-            <th>branch</th>
-            <th>travis</th>
-            <th>docs</th>
+            <th>Branch</th>
+            <th>Docs</th>
+            <th>Travis</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>master</td>
-            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Travis build status (master)" title="Travis build status (master)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master"></a></td>
             <td><a href="https://www.predictmd.net/stable"><img alt="Documentation (stable)" title="Documentation (stable)" src="https://img.shields.io/badge/docs-stable-blue.svg"></a></td>
+            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Travis build status (master)" title="Travis build status (master)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master"></a></td>
         </tr>
         <tr>
             <td>develop</td>
-            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Travis build status (develop)" title="Travis build status (develop)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=develop"></a></td>
             <td><a href="https://www.predictmd.net/latest"><img alt="Documentation (latest)" title="Documentation (latest)" src="https://img.shields.io/badge/docs-latest-blue.svg"></a></td>
+            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Travis build status (develop)" title="Travis build status (develop)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=develop"></a></td>
         </tr>
     </tbody>
 </table>
