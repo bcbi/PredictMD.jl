@@ -238,7 +238,11 @@ An commit message editor will open. Type an appropriate commit message (e.g. "Bu
 git push origin release/v30.771.0
 ```
 
-**Step 10:** Wait for all of the tests to pass. You can check on the status of the tests by going to [https://github.com/bcbi/PredictMD.jl/branches](https://github.com/bcbi/PredictMD.jl/branches) and scrolling down to find your release branch. A yellow dot indicates that the tests are still running. A red "X" indicates that one or more of the tests failed. A green checkmark indicates that all of the tests passed.
+**Step 10:** Wait for all of the tests to pass. You can check on the status of the tests by going to [https://github.com/bcbi/PredictMD.jl/branches](https://github.com/bcbi/PredictMD.jl/branches) and scrolling down to find your release branch.
+
+* A yellow dot indicates that the tests are still running. Click on the yellow dot to see which tests are still running.
+* A red "X" indicates that one or more of the tests failed. Click on the red "X" to see which tests failed.
+* A green checkmark indicates that all of the tests passed.
 
 **You must wait for all of the tests to pass (green checkmark) before you can finish tagging the release.**
 
