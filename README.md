@@ -13,7 +13,7 @@
     <tbody>
         <tr>
             <td>master</td>
-            <td><img src="https://img.shields.io/github/release/bcbi/PredictMD.svg"></td>
+            <td><a><img src="https://img.shields.io/github/release/bcbi/PredictMD.svg"></a></td>
             <td><a href="https://www.predictmd.net/stable"><img alt="Documentation (stable)" title="Documentation (stable)" src="https://img.shields.io/badge/docs-stable-blue.svg"></a></td>
             <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Travis build status (master)" title="Travis build status (master)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master"></a></td>
             <td><a href="https://ci.appveyor.com/project/mirestrepo/predictmd-jl/history"><img alt="AppVeyor build status (master)" title="AppVeyor build status (master)" src="https://ci.appveyor.com/api/projects/status/github/bcbi/PredictMD.jl?branch=master&svg=true"></a></td>
