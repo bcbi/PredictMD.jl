@@ -1,4 +1,4 @@
-# PredictMD - Uniform interface for machine learning in Julia
+# [PredictMD](https://www.predictmd.net) - Uniform interface for machine learning in Julia
 
 ## Latest release: <a href="https://github.com/bcbi/PredictMD.jl/releases/latest"><img alt="Latest release" title="Latest release" src="https://img.shields.io/github/release/bcbi/PredictMD.svg"></a>
 
@@ -27,7 +27,7 @@
     </tbody>
 </table>
 
-PredictMD is a Julia package that provides a uniform interface for using multiple different statistics and machine learning packages. This document describes how to install and use PredictMD.
+[PredictMD](https://www.predictmd.net) is a Julia package that provides a uniform interface for using multiple different statistics and machine learning packages. This document describes how to install and use PredictMD.
 
 <table>
     <thead>
