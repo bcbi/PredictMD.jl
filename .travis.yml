@@ -1,7 +1,6 @@
 addons:
     apt:
         packages:
-        - gfortran
         - pdf2svg
         - pgf
         - poppler-utils
