@@ -232,7 +232,7 @@ git commit
 ```
 An commit message editor will open. Type an appropriate commit message (e.g. "Bump version number"), save the file, and quit the editor.
 
-**Step 9:** Push the release branch so that Travis CI will build it and run the tests.
+**Step 9:** Push the release branch to GitHub.
 
 ```bash
 git push origin release/v30.771.0
