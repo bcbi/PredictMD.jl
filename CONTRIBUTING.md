@@ -175,21 +175,21 @@ cd ~/.julia/v0.6/PredictMD
 git fetch --all --prune
 ```
 
-**Step 3:** Checkout the develop branch:
+**Step 3:** Checkout the `develop` branch:
 
 ```bash
 git checkout develop
 ```
 
-**Step 4:** Pull the latest version of develop.
+**Step 4:** Pull the latest version of `develop`.
 
 ```bash
 git pull
 ```
 
-**Step 5:** Determine the version number that you are going to release. We use the Semantic Versioning scheme: [https://semver.org/](https://semver.org/). In Semantic Versioning, version numbers take the form `vMAJOR.MINOR.PATCH`. We increment the `MAJOR` version when we make incompatible (non-backwards-compatible) API changes. We increment the `MINOR` version when we add functionality in a backwards-compatible manner. We increment the `PATCH` version when we make backwards-compatible bug fixes.
+**Step 5:** Determine the version number that you are going to release. We use the Semantic Versioning system: [https://semver.org](https://semver.org). In Semantic Versioning, version numbers take the form `vMAJOR.MINOR.PATCH`. We increment the `MAJOR` version when we make incompatible (non-backwards-compatible) API changes. We increment the `MINOR` version when we add functionality in a backwards-compatible manner. We increment the `PATCH` version when we make backwards-compatible bug fixes.
 
-For this example, let's pretend that the current version is `v3.5.12`, and we are adding functionality in a backwards-compatible manner. So we increment the `MINOR` version, which means the new version that we are tagging is `v3.6.0`.
+For this example, let's pretend that the current version is `v3.5.12` and that we are adding functionality in a backwards-compatible manner. So we increment the `MINOR` version, which means the new version that we are tagging is `v3.6.0`.
 
 **Step 6:** Start a new release branch.
 
@@ -197,7 +197,7 @@ For this example, let's pretend that the current version is `v3.5.12`, and we ar
 git flow release start v3.6.0
 ```
 
-You MUST begin the name of the release with the letter "v".
+**You MUST begin the name of the release with the letter "v".**
 
 *If you subsequently forget what you named your release branch, you can list all of the release branches by running the following command:* `git flow release list`
 
@@ -244,7 +244,7 @@ git push origin release/v3.6.0
 * A red "X" indicates that one or more of the tests failed. Click on the red "X" to see which tests failed.
 * A green check mark indicates that all of the tests passed.
 
-**You must wait for all of the tests to pass (green check mark) before you can finish tagging the release.**
+**You must wait for all of the tests to pass (green check mark) before you can continue.**
 
 *Sometimes, one of the build jobs will fail because a download timed out. This is especially common with the Mac builds on Travis. You can usually resolve this error by restarting the failed build.*
 
@@ -294,18 +294,18 @@ git push origin develop # push the updated "develop" branch
 git push origin --tags # push the new "v3.6.0" tag
 ```
 
-**Step 15:** Bump the version number again to indicate that the develop branch is in a developmental state. First, determine what the next version number will be, and then append "-DEV" to the end of the version string to indicate that it is currently in a developmental state.
+**Step 15:** Update the version number in the `develop` branch:
 
-In our example, we have just released `v3.6.0`. If we are planning on our next release being be backwards compatible, then the next version number will be `v3.7.0`, and thus you should set the current version number to `v3.7.0-DEV`. In contrast, if we are planning that the next release will be breaking (non-backwards-compatible), then the next version number will be `v4.0.0`, and thus you should set the current version number to `v4.0.0-DEV`.
+First, use Semantic Versioning ([https://semver.org](https://semver.org)) determine what the next version number will be. In our example, we have just released `v3.6.0`. If we are planning on our next release being be backwards compatible, then the next version number will be `v3.7.0`. In contrast, if we are planning that the next release will be breaking (non-backwards-compatible), then the next version number will be `v4.0.0`.
 
-First, determine what the next version number will be.
+Second, append "-DEV" to the end of the version number. So if the next version number will be `v3.7.0`, then you should set the current version number to `v3.7.0-DEV`. In contrast, if the next version number will be `v4.0.0`, the you should set the current version number to `v4.0.0-DEV`.
 
-Second, checkout the `develop` branch:
+Third, checkout the `develop` branch:
 ```bash
 git checkout develop
 ```
 
-Third, open the `src/base/version.jl` file and edit the version number accordingly. For example, to set the version number to `v3.7.0-DEV`, edit `src/base/version.jl` to look like this:
+Fourth, open the `src/base/version.jl` file and edit the version number accordingly. For example, to set the version number to `v3.7.0-DEV`, edit `src/base/version.jl` to look like this. **Remember to include "-DEV" at the end of the version number.**
 ```julia
 const VERSION = try
     convert(VersionNumber, "v3.7.0-DEV")
@@ -315,7 +315,7 @@ catch e
 end
 ```
 
-On the other hand, to set the version number to `v4.0.0-DEV`, edit `src/base/version.jl` to look like this:
+On the other hand, to set the version number to `v4.0.0-DEV`, edit `src/base/version.jl` to look like this. **Remember to include "-DEV" at the end of the version number.**
 ```julia
 const VERSION = try
     convert(VersionNumber, "v4.0.0-DEV")
