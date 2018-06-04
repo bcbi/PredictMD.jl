@@ -1,7 +1,6 @@
 addons:
     apt:
         packages:
-        - gfortran
         - pdf2svg
         - pgf
         - poppler-utils
@@ -9,10 +8,14 @@ addons:
         - texlive-latex-base
         - texlive-latex-extra
         - texlive-pictures
-        
+
+branches:
+    except:
+        - gh-pages
+
 git:
     depth: 99999999
-    
+
 julia:
     - 0.6
     - nightly
@@ -45,10 +48,10 @@ before_install:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install pdf2svg; fi
 
 script:
-    - julia --check-bounds=yes --color=yes -e 'Pkg.clone(pwd())'
+    - julia --check-bounds=yes --color=yes -e 'Pkg.clone(pwd(), "PredictMD")'
     - julia --check-bounds=yes --color=yes -e 'Pkg.build("PredictMD")'
     - julia --check-bounds=yes --color=yes -e 'import PredictMD'
-    - julia --check-bounds=yes --color=yes -e 'Pkg.test("PredictMD", coverage=true)'
+    - julia --check-bounds=yes --color=yes -e 'Pkg.test("PredictMD"; coverage=true)'
 
 after_success:
     - julia --check-bounds=yes --color=yes -e 'cd(Pkg.dir("PredictMD")); include(joinpath("docs", "deploy_docs.jl"))'
