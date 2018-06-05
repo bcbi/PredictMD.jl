@@ -294,7 +294,9 @@ git push origin develop # push the updated "develop" branch
 git push origin --tags # push the new "v3.6.0" tag
 ```
 
-**Step 15:** Update the version number in the `develop` branch:
+**Step 15:** Create a release on GitHub using the tag you just created, signed, and pushed. First, go to [https://github.com/bcbi/PredictMD.jl/releases/new](https://github.com/bcbi/PredictMD.jl/releases/new). In the text box that reads "Tag version", type the name of the tag you just released. For our example, you would type "v3.6.0". Next, in the text box that reads "Release title", type an appropriate title, such as "PredictMD version 3.6.0". Finally, click the green "Publish release" button.
+
+**Step 16:** Update the version number in the `develop` branch:
 
 First, use Semantic Versioning ([https://semver.org](https://semver.org)) determine what the next version number will be. In our example, we have just released `v3.6.0`. If we are planning on our next release being be backwards compatible, then the next version number will be `v3.7.0`. In contrast, if we are planning that the next release will be breaking (non-backwards-compatible), then the next version number will be `v4.0.0`.
 
@@ -325,7 +327,7 @@ catch e
 end
 ```
 
-**Step 16:** Commit your changes:
+**Step 17:** Commit your changes:
 
 ```bash
 git add src/base/version.jl
@@ -334,17 +336,15 @@ git commit
 ```
 An commit message editor will open. Type an appropriate commit message (e.g. "Bump version number"), save the file, and quit the editor.
 
-**Step 17:** Push the updated develop branch:
+**Step 18:** Push the updated develop branch:
 ```bash
 git push origin develop
 ```
 
-**Step 18:** Re-enable the branch protection settings:
+**Step 19:** Re-enable the branch protection settings:
 
 `master` branch: go to [https://github.com/bcbi/PredictMD.jl/settings/branches/master](https://github.com/bcbi/PredictMD.jl/settings/branches/master), scroll down, CHECK the box next to "Include administrators", scroll to the bottom of the page, and click the green "Save changes" button.
 
 `develop` branch: go to [https://github.com/bcbi/PredictMD.jl/settings/branches/develop](https://github.com/bcbi/PredictMD.jl/settings/branches/develop), scroll down, CHECK the box next to "Include administrators", scroll to the bottom of the page, and click the green "Save changes" button.
 
-**Step 19:** Create a release on GitHub using the tag you just created, signed, and pushed. First, go to [https://github.com/bcbi/PredictMD.jl/releases/new](https://github.com/bcbi/PredictMD.jl/releases/new). In the text box that reads "Tag version", type the name of the tag you just released. For our example, you would type "v3.6.0". Next, in the text box that reads "Release title", type an appropriate title, such as "PredictMD version 3.6.0". Finally, click the green "Publish release" button.
-
-Congratulations, you are finished making the release!
+Congratulations, you are finished!
