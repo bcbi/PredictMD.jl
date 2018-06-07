@@ -1,6 +1,6 @@
 # [PredictMD](https://www.predictmd.net) - Uniform interface for machine learning in Julia
 
-## Current release: <a href="https://github.com/bcbi/PredictMD.jl/releases/latest"><img alt="Latest release" title="Latest release" src="https://img.shields.io/github/release/bcbi/PredictMD.svg"></a>
+## Current release: <a href="https://github.com/bcbi/PredictMD.jl/releases/latest"><img alt="Current release" title="Current release" src="https://img.shields.io/github/release/bcbi/PredictMD.svg"></a>
 
 <table>
     <thead>
