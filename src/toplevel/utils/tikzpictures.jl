@@ -3,7 +3,7 @@ import TikzPictures
 """
 """
 function is_force_test_plots(a::Associative = ENV)
-    result = lowercase(strip(get(a, "PREDICTMD_IS_FORCE_TEST_PLOTS", ""))) == "true"
+    result = lowercase(strip(get(a, "PREDICTMD_FORCE_TEST_PLOTS", ""))) == "true"
     return result 
 end
 
