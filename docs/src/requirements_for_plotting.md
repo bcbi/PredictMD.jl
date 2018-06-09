@@ -4,8 +4,15 @@ There are no requirements in order to run PredictMD---you can train, run, and ev
 * LaTeX
 * pdf2svg.
 
+See below for instructions on installing these software packages.
 
-## 1. LaTeX
+Once you have installed the required software, you can test PredictMD's plotting
+functionality by running the following command in Julia:
+```julia
+ENV["PREDICTMD_FORCE_TEST_PLOTS"] = "true"; Pkg.test("PredictMD");
+```
+
+## Installing LaTeX
 
 To confirm that LaTeX is installed on your system, open a terminal window and run the following command:
 ```bash
@@ -32,7 +39,7 @@ If you receive an error (e.g. "command not found"), download and install a TeX d
 * macOS: [https://www.tug.org/mactex/](https://www.tug.org/mactex/)
 * GNU/Linux: [https://www.tug.org/texlive/](https://www.tug.org/texlive/)
 
-## 2. pdf2svg
+## Installing pdf2svg
 
 To confirm that pdf2svg is installed on your system, open a terminal window and run the following command:
 ```bash

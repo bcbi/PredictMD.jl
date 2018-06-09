@@ -36,3 +36,7 @@ To install PredictMD, open Julia (e.g. open a terminal, type `julia`, and press 
 ```julia
 Pkg.clone("https://github.com/bcbi/PredictMD.jl")
 ```
+
+The [PredictMD documentation](https://www.predictmd.net/stable) contains useful
+information, including instructions for use, example code, and a description of
+PredictMD's internals.
