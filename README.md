@@ -32,11 +32,21 @@
 
 [PredictMD](https://www.predictmd.net) is a Julia package that provides a uniform interface for using multiple different statistics and machine learning packages.
 
+## Installation
+
 To install PredictMD, open Julia (e.g. open a terminal, type `julia`, and press enter) and run the following command:
 ```julia
 Pkg.clone("https://github.com/bcbi/PredictMD.jl")
 ```
 
+After you install PredictMD, you should run the test suite to make sure that everything is working. You can run the test suite with the following Julia command:
+```julia
+Pkg.test("PredictMD")
+```
+
+## Documentation
+
 The [PredictMD documentation](https://www.predictmd.net/stable) contains useful
 information, including instructions for use, example code, and a description of
 PredictMD's internals.
+
