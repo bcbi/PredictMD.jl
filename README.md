@@ -28,8 +28,8 @@ PredictMD's internals.
     <thead>
         <tr>
             <th></th>
-            <th>master</th>
-            <th>develop</th>
+            <th>master (stable)</th>
+            <th>develop (latest)</th>
         </tr>
     </thead>
     <tbody>
