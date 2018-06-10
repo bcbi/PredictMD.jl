@@ -49,7 +49,7 @@ PredictMD's internals.
             <td><a href="https://coveralls.io/github/bcbi/PredictMD.jl?branch=develop"><img alt="Coverage status (develop)" title="Coverage status (develop)" src="https://coveralls.io/repos/github/bcbi/PredictMD.jl/badge.svg?branch=develop" /></a></td>
         </tr>
         <tr>
-            <td>Docs</td>
+            <td>Documentation</td>
             <td><a href="https://www.predictmd.net/stable"><img alt="Documentation (stable)" title="Documentation (stable)" src="https://img.shields.io/badge/docs-stable-blue.svg" /></a></td>
             <td><a href="https://www.predictmd.net/latest"><img alt="Documentation (latest)" title="Documentation (latest)" src="https://img.shields.io/badge/docs-latest-blue.svg" /></a></td>
         </tr>
