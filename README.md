@@ -60,7 +60,3 @@ PredictMD's internals.
         </tr>
     </tbody>
 </table>
-
-**master** branch: Current release (stable)
-
-**develop** branch: Development branch (latest)
