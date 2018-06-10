@@ -34,29 +34,29 @@ PredictMD's internals.
     </thead>
     <tbody>
         <tr>
-            <td>AppVeyor</td>
+            <td>travis</td>
+            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Travis build status (master)" title="Travis build status (master)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master" /></a></td>
+            <td><a href="https://ci.appveyor.com/project/mirestrepo/predictmd-jl/history"><img alt="AppVeyor build status (develop)" title="AppVeyor build status (develop)" src="https://ci.appveyor.com/api/projects/status/github/bcbi/PredictMD.jl?branch=develop&svg=true" /></a></td>
+        </tr>
+        <tr>
+            <td>appveyor</td>
             <td><a href="https://ci.appveyor.com/project/mirestrepo/predictmd-jl/history"><img alt="AppVeyor build status (master)" title="AppVeyor build status (master)" src="https://ci.appveyor.com/api/projects/status/github/bcbi/PredictMD.jl?branch=master&svg=true" /></a></td>
             <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Travis build status (develop)" title="Travis build status (develop)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=develop" /></a></td>
         </tr>
         <tr>
-            <td>CodeCov</td>
+            <td>codecov</td>
             <td><a href="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master"><img alt="CodeCov (master)" title="CodeCov (master)" src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master/graph/badge.svg" /></a></td>
             <td><a href="https://codecov.io/gh/bcbi/PredictMD.jl/branch/develop"><img alt="CodeCov (develop)" title="CodeCov (develop)" src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/develop/graph/badge.svg" /></a></td>
         </tr>
         <tr>
-            <td>Coveralls</td>
+            <td>coveralls</td>
             <td><a href="https://coveralls.io/github/bcbi/PredictMD.jl?branch=master"><img alt="Coverage status (master)" title="Coverage status (master)" src="https://coveralls.io/repos/github/bcbi/PredictMD.jl/badge.svg?branch=master" /></a></td>
             <td><a href="https://coveralls.io/github/bcbi/PredictMD.jl?branch=develop"><img alt="Coverage status (develop)" title="Coverage status (develop)" src="https://coveralls.io/repos/github/bcbi/PredictMD.jl/badge.svg?branch=develop" /></a></td>
         </tr>
         <tr>
-            <td>Documentation</td>
+            <td>docs</td>
             <td><a href="https://www.predictmd.net/stable"><img alt="Documentation (stable)" title="Documentation (stable)" src="https://img.shields.io/badge/docs-stable-blue.svg" /></a></td>
             <td><a href="https://www.predictmd.net/latest"><img alt="Documentation (latest)" title="Documentation (latest)" src="https://img.shields.io/badge/docs-latest-blue.svg" /></a></td>
-        </tr>
-        <tr>
-            <td>Travis</td>
-            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Travis build status (master)" title="Travis build status (master)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master" /></a></td>
-            <td><a href="https://ci.appveyor.com/project/mirestrepo/predictmd-jl/history"><img alt="AppVeyor build status (develop)" title="AppVeyor build status (develop)" src="https://ci.appveyor.com/api/projects/status/github/bcbi/PredictMD.jl?branch=develop&svg=true" /></a></td>
         </tr>
     </tbody>
 </table>
