@@ -2,6 +2,13 @@ import TikzPictures
 
 """
 """
+function is_force_test_plots(a::Associative = ENV)
+    result = lowercase(strip(get(a, "PREDICTMD_FORCE_TEST_PLOTS", ""))) == "true"
+    return result 
+end
+
+"""
+"""
 function warn_on_tikzpictures_save_error(
         e::Exception,
         a::Associative = ENV,
@@ -9,7 +16,14 @@ function warn_on_tikzpictures_save_error(
     if is_travis_ci(a)
         warn(
             string(
-                "DEBUG: since this is a travis build, rethrowing the exception",
+                "this is a travis build, so rethrowing the exception",
+                )
+            )
+        rethrow(e)
+    elseif is_force_test_plots(a)
+        warn(
+            string(
+                "PREDICTMD_IS_FORCE_TEST_PLOTS is true, so rethrowing the exception",
                 )
             )
         rethrow(e)
