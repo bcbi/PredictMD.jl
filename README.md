@@ -36,12 +36,12 @@ PredictMD's internals.
         <tr>
             <td>travis</td>
             <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Travis build status (master)" title="Travis build status (master)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master" /></a></td>
-            <td><a href="https://ci.appveyor.com/project/mirestrepo/predictmd-jl/history"><img alt="AppVeyor build status (develop)" title="AppVeyor build status (develop)" src="https://ci.appveyor.com/api/projects/status/github/bcbi/PredictMD.jl?branch=develop&svg=true" /></a></td>
+            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Travis build status (develop)" title="Travis build status (develop)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=develop" /></a></td>
         </tr>
         <tr>
             <td>appveyor</td>
             <td><a href="https://ci.appveyor.com/project/mirestrepo/predictmd-jl/history"><img alt="AppVeyor build status (master)" title="AppVeyor build status (master)" src="https://ci.appveyor.com/api/projects/status/github/bcbi/PredictMD.jl?branch=master&svg=true" /></a></td>
-            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches"><img alt="Travis build status (develop)" title="Travis build status (develop)" src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=develop" /></a></td>
+            <td><a href="https://ci.appveyor.com/project/mirestrepo/predictmd-jl/history"><img alt="AppVeyor build status (develop)" title="AppVeyor build status (develop)" src="https://ci.appveyor.com/api/projects/status/github/bcbi/PredictMD.jl?branch=develop&svg=true" /></a></td>
         </tr>
         <tr>
             <td>codecov</td>
