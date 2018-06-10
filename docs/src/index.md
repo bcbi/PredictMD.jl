@@ -1,4 +1,4 @@
-# PredictMD.jl
+# PredictMD
 
 PredictMD is a free and open-source Julia package that provides a uniform interface for machine learning.
 
