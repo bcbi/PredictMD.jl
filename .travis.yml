@@ -54,7 +54,7 @@ script:
     - julia --check-bounds=yes --color=yes -e 'Pkg.test("PredictMD"; coverage=true)'
 
 after_success:
-    - julia --check-bounds=yes --color=yes -e 'cd(Pkg.dir("PredictMD")); include(joinpath("docs", "deploy_docs.jl"))'
     - julia --check-bounds=yes --color=yes -e 'Pkg.add("Coverage");'
-    - julia --check-bounds=yes --color=yes -e 'cd(Pkg.dir("PredictMD"));using Coverage;Coveralls.submit(Coveralls.process_folder());'
     - julia --check-bounds=yes --color=yes -e 'cd(Pkg.dir("PredictMD"));using Coverage;Codecov.submit(Codecov.process_folder());'
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then julia --check-bounds=yes --color=yes -e 'cd(Pkg.dir("PredictMD"));using Coverage;Coveralls.submit(Coveralls.process_folder());'; fi
+    - julia --check-bounds=yes --color=yes -e 'cd(Pkg.dir("PredictMD")); include(joinpath("docs", "deploy_docs.jl"))'
