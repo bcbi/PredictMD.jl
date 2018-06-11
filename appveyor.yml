@@ -58,5 +58,5 @@ test_script:
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e "Pkg.test(\"PredictMD\")
 
 on_success:
-    - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e "Pkg.add("Coverage");"
-    - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e "cd(Pkg.dir("PredictMD")); using Coverage; Codecov.submit(Codecov.process_folder());"
+    - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e "Pkg.add(\"Coverage\");"
+    - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e "cd(Pkg.dir(\"PredictMD\")); using Coverage; Codecov.submit(Codecov.process_folder());"
