@@ -12,6 +12,7 @@ DecisionTree
 Documenter
 FluxJS
 GLM
+GPUArrays
 JLD2
 Knet
 LIBSVM
