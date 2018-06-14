@@ -9,6 +9,9 @@ module GPU # begin module PredictMD.GPU
 # submodules/gpu/clang/
 include(joinpath(".", "clang", "clang.jl",))
 
+# submodules/gpu/clarrays/
+include(joinpath(".", "clarrays", "clarrays.jl",))
+
 # submodules/gpu/cuarrays/
 include(joinpath(".", "cuarrays", "cuarrays.jl",))
 
