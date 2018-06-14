@@ -18,6 +18,9 @@ include(joinpath(".", "cudaapi", "cudaapi.jl",))
 # submodules/gpu/cxx/
 include(joinpath(".", "cxx", "cxx.jl",))
 
+# submodules/gpu/gpuarrays/
+include(joinpath(".", "gpuarrays", "gpuarrays.jl",))
+
 # submodules/gpu/llvm/
 include(joinpath(".", "llvm", "llvm.jl",))
 
