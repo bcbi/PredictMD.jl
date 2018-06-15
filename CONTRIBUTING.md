@@ -347,6 +347,6 @@ git push origin develop
 
 `develop` branch: go to [https://github.com/bcbi/PredictMD.jl/settings/branches/develop](https://github.com/bcbi/PredictMD.jl/settings/branches/develop), scroll down, CHECK the box next to "Include administrators", scroll to the bottom of the page, and click the green "Save changes" button.
 
-**Step 20:** Delete the release branch, which you no longer need. To do this, go to [https://github.com/bcbi/PredictMD.jl/branches/yours](https://github.com/bcbi/PredictMD.jl/branches/yours), scroll down to find your release branch, and then click the trash can icon to delete the release branch.
+**Step 20:** Delete the release branch, which is no longer needed. To do this, go to [https://github.com/bcbi/PredictMD.jl/branches/yours](https://github.com/bcbi/PredictMD.jl/branches/yours), scroll down to find the release branch, and then click the trash can icon to delete the branch.
 
 Congratulations, you are finished!
