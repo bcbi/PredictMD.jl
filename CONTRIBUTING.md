@@ -278,7 +278,7 @@ gpg:                using RSA key 36666C5CF81D90773604A1208CF0AA45DD38E4A0
 gpg: Good signature from "Dilum Aluthge <dilum@aluthge.com>" [ultimate]
 ```
 
-then you have successfully signed the release, and you may proceed to Step 13. However, if you don't see that message, then you have not signed the tag successfully, and you may NOT proceed. At this point, you should [open a new issue](https://github.com/bcbi/PredictMD.jl/issues/new) and mention [@DilumAluthge](https://github.com/DilumAluthge) in the issue body.
+then you have successfully signed the release, and you may proceed to Step 13. However, if you see a different message, then you have not signed the tag successfully, and you may NOT proceed. At this point, you should [open a new issue](https://github.com/bcbi/PredictMD.jl/issues/new) and mention [@DilumAluthge](https://github.com/DilumAluthge) in the issue body.
 
 **Step 13:** Temporarily modify the branch protections for the `master` and `develop` branches:
 
@@ -346,5 +346,7 @@ git push origin develop
 `master` branch: go to [https://github.com/bcbi/PredictMD.jl/settings/branches/master](https://github.com/bcbi/PredictMD.jl/settings/branches/master), scroll down, CHECK the box next to "Include administrators", scroll to the bottom of the page, and click the green "Save changes" button.
 
 `develop` branch: go to [https://github.com/bcbi/PredictMD.jl/settings/branches/develop](https://github.com/bcbi/PredictMD.jl/settings/branches/develop), scroll down, CHECK the box next to "Include administrators", scroll to the bottom of the page, and click the green "Save changes" button.
+
+**Step 20:** Delete the release branch, which you no longer need. To do this, go to [https://github.com/bcbi/PredictMD.jl/branches/yours](https://github.com/bcbi/PredictMD.jl/branches/yours), scroll down to find your release branch, and then click the trash can icon to delete the release branch.
 
 Congratulations, you are finished!
