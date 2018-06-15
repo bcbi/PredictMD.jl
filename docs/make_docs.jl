@@ -25,6 +25,7 @@ else
         sitename = "PredictMD.jl",
         pages = Any[
             "index.md",
+            "requirements_for_plotting.md",
             "library/internals.md",
             ],
         )
