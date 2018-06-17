@@ -111,9 +111,12 @@ knet_mlp_regression_filename = joinpath(
     "knet_mlp_regression.jld2",
     )
 
-linear_regression = PredictMD.load_model(linear_regression_filename)
-random_forest_regression = PredictMD.load_model(random_forest_regression_filename)
-knet_mlp_regression = PredictMD.load_model(knet_mlp_regression_filename)
+linear_regression =
+    PredictMD.load_model(linear_regression_filename)
+random_forest_regression =
+    PredictMD.load_model(random_forest_regression_filename)
+knet_mlp_regression =
+    PredictMD.load_model(knet_mlp_regression_filename)
 PredictMD.parse_functions!(knet_mlp_regression)
 
 all_models = PredictMD.Fittable[

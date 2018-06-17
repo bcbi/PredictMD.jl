@@ -60,7 +60,7 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Examples</span>
+    <span class="caption-text">examples</span>
     <ul class="subnav">
                 <li class=" current">
                     
@@ -173,7 +173,7 @@
     
       
         
-          <li>Examples &raquo;</li>
+          <li>examples &raquo;</li>
         
       
         
@@ -297,9 +297,12 @@ knet_mlp_regression_filename = joinpath(
     &quot;knet_mlp_regression.jld2&quot;,
     )
 
-linear_regression = PredictMD.load_model(linear_regression_filename)
-random_forest_regression = PredictMD.load_model(random_forest_regression_filename)
-knet_mlp_regression = PredictMD.load_model(knet_mlp_regression_filename)
+linear_regression =
+    PredictMD.load_model(linear_regression_filename)
+random_forest_regression =
+    PredictMD.load_model(random_forest_regression_filename)
+knet_mlp_regression =
+    PredictMD.load_model(knet_mlp_regression_filename)
 PredictMD.parse_functions!(knet_mlp_regression)
 
 PredictMD.predict(linear_regression,training_features_df,)

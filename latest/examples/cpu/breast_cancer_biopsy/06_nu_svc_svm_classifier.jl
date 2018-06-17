@@ -140,16 +140,17 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     featurenames,
     )
 
-nu_svc_svm_classifier = PredictMD.singlelabelmulticlassdataframesvmclassifier(
-    featurenames,
-    singlelabelname,
-    singlelabellevels;
-    package = :LIBSVMjl,
-    svmtype = LIBSVM.NuSVC,
-    name = "SVM (nu-SVC)",
-    verbose = false,
-    feature_contrasts = feature_contrasts,
-    )
+nu_svc_svm_classifier =
+    PredictMD.singlelabelmulticlassdataframesvmclassifier(
+        featurenames,
+        singlelabelname,
+        singlelabellevels;
+        package = :LIBSVMjl,
+        svmtype = LIBSVM.NuSVC,
+        name = "SVM (nu-SVC)",
+        verbose = false,
+        feature_contrasts = feature_contrasts,
+        )
 
 PredictMD.fit!(
     nu_svc_svm_classifier,
@@ -157,22 +158,24 @@ PredictMD.fit!(
     smoted_training_labels_df,
     )
 
-nu_svc_svm_classifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    nu_svc_svm_classifier,
-    smoted_training_features_df,
-    smoted_training_labels_df,
-    singlelabelname,
-    singlelabellevels,
-    )
+nu_svc_svm_classifier_hist_training =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        nu_svc_svm_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
+        singlelabelname,
+        singlelabellevels,
+        )
 PredictMD.open_plot(nu_svc_svm_classifier_hist_training)
 
-nu_svc_svm_classifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    nu_svc_svm_classifier,
-    testing_features_df,
-    testing_labels_df,
-    singlelabelname,
-    singlelabellevels,
-    )
+nu_svc_svm_classifier_hist_testing =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        nu_svc_svm_classifier,
+        testing_features_df,
+        testing_labels_df,
+        singlelabelname,
+        singlelabellevels,
+        )
 PredictMD.open_plot(nu_svc_svm_classifier_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
@@ -199,7 +202,10 @@ nu_svc_svm_classifier_filename = joinpath(
     "nu_svc_svm_classifier.jld2",
     )
 
-PredictMD.save_model(nu_svc_svm_classifier_filename, nu_svc_svm_classifier)
+PredictMD.save_model(
+    nu_svc_svm_classifier_filename,
+    nu_svc_svm_classifier,
+    )
 
 # End of file
 

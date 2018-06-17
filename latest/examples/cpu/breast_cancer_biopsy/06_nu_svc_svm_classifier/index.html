@@ -60,7 +60,7 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Examples</span>
+    <span class="caption-text">examples</span>
     <ul class="subnav">
                 <li class="">
                     
@@ -173,7 +173,7 @@
     
       
         
-          <li>Examples &raquo;</li>
+          <li>examples &raquo;</li>
         
       
         
@@ -333,16 +333,17 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     featurenames,
     )
 
-nu_svc_svm_classifier = PredictMD.singlelabelmulticlassdataframesvmclassifier(
-    featurenames,
-    singlelabelname,
-    singlelabellevels;
-    package = :LIBSVMjl,
-    svmtype = LIBSVM.NuSVC,
-    name = &quot;SVM (nu-SVC)&quot;,
-    verbose = false,
-    feature_contrasts = feature_contrasts,
-    )
+nu_svc_svm_classifier =
+    PredictMD.singlelabelmulticlassdataframesvmclassifier(
+        featurenames,
+        singlelabelname,
+        singlelabellevels;
+        package = :LIBSVMjl,
+        svmtype = LIBSVM.NuSVC,
+        name = &quot;SVM (nu-SVC)&quot;,
+        verbose = false,
+        feature_contrasts = feature_contrasts,
+        )
 
 PredictMD.fit!(
     nu_svc_svm_classifier,
@@ -350,22 +351,24 @@ PredictMD.fit!(
     smoted_training_labels_df,
     )
 
-nu_svc_svm_classifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    nu_svc_svm_classifier,
-    smoted_training_features_df,
-    smoted_training_labels_df,
-    singlelabelname,
-    singlelabellevels,
-    )
+nu_svc_svm_classifier_hist_training =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        nu_svc_svm_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
+        singlelabelname,
+        singlelabellevels,
+        )
 PredictMD.open_plot(nu_svc_svm_classifier_hist_training)
 
-nu_svc_svm_classifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    nu_svc_svm_classifier,
-    testing_features_df,
-    testing_labels_df,
-    singlelabelname,
-    singlelabellevels,
-    )
+nu_svc_svm_classifier_hist_testing =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        nu_svc_svm_classifier,
+        testing_features_df,
+        testing_labels_df,
+        singlelabelname,
+        singlelabellevels,
+        )
 PredictMD.open_plot(nu_svc_svm_classifier_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
@@ -392,15 +395,18 @@ nu_svc_svm_classifier_filename = joinpath(
     &quot;nu_svc_svm_classifier.jld2&quot;,
     )
 
-PredictMD.save_model(nu_svc_svm_classifier_filename, nu_svc_svm_classifier)
+PredictMD.save_model(
+    nu_svc_svm_classifier_filename,
+    nu_svc_svm_classifier,
+    )
 
 # End of file
 </code></pre>
 
 <pre><code>INFO: Starting to train LIBSVM.jl model.
 INFO: Finished training LIBSVM.jl model.
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/julia54o6tE.svg
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaC0wZ7w.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/julianLfS1r.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/julia1rnvDT.svg
 INFO: Attempting to save model...
 INFO: Saved model to file &quot;/tmp/breast_cancer_biopsy_example/nu_svc_svm_classifier.jld2&quot;
 

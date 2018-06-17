@@ -115,34 +115,44 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 singlelabelname = :MedV
 labelnames = [singlelabelname]
 
-feature_contrasts = PredictMD.generate_feature_contrasts(training_features_df, featurenames)
-
-random_forest_regression = PredictMD.singlelabeldataframerandomforestregression(
+feature_contrasts = PredictMD.generate_feature_contrasts(
+    training_features_df,
     featurenames,
-    singlelabelname;
-    nsubfeatures = 2,
-    ntrees = 20,
-    package = :DecisionTreejl,
-    name = "Random forest",
-    feature_contrasts = feature_contrasts,
     )
 
-PredictMD.fit!(random_forest_regression,training_features_df,training_labels_df,)
+random_forest_regression =
+    PredictMD.singlelabeldataframerandomforestregression(
+        featurenames,
+        singlelabelname;
+        nsubfeatures = 2,
+        ntrees = 20,
+        package = :DecisionTreejl,
+        name = "Random forest",
+        feature_contrasts = feature_contrasts,
+        )
 
-random_forest_regression_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
+PredictMD.fit!(
     random_forest_regression,
     training_features_df,
     training_labels_df,
-    singlelabelname,
     )
+
+random_forest_regression_plot_training =
+    PredictMD.plotsinglelabelregressiontrueversuspredicted(
+        random_forest_regression,
+        training_features_df,
+        training_labels_df,
+        singlelabelname,
+        )
 PredictMD.open_plot(random_forest_regression_plot_training)
 
-random_forest_regression_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
-    random_forest_regression,
-    testing_features_df,
-    testing_labels_df,
-    singlelabelname,
-    )
+random_forest_regression_plot_testing =
+    PredictMD.plotsinglelabelregressiontrueversuspredicted(
+        random_forest_regression,
+        testing_features_df,
+        testing_labels_df,
+        singlelabelname,
+        )
 PredictMD.open_plot(random_forest_regression_plot_testing)
 
 PredictMD.singlelabelregressionmetrics(
@@ -165,7 +175,10 @@ random_forest_regression_filename = joinpath(
     "random_forest_regression.jld2",
     )
 
-PredictMD.save_model(random_forest_regression_filename, random_forest_regression)
+PredictMD.save_model(
+    random_forest_regression_filename,
+    random_forest_regression
+    )
 
 # End of file
 

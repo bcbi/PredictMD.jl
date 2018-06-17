@@ -60,7 +60,7 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Examples</span>
+    <span class="caption-text">examples</span>
     <ul class="subnav">
                 <li class=" current">
                     
@@ -173,7 +173,7 @@
     
       
         
-          <li>Examples &raquo;</li>
+          <li>examples &raquo;</li>
         
       
         
@@ -308,34 +308,44 @@ featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
 singlelabelname = :MedV
 labelnames = [singlelabelname]
 
-feature_contrasts = PredictMD.generate_feature_contrasts(training_features_df, featurenames)
-
-random_forest_regression = PredictMD.singlelabeldataframerandomforestregression(
+feature_contrasts = PredictMD.generate_feature_contrasts(
+    training_features_df,
     featurenames,
-    singlelabelname;
-    nsubfeatures = 2,
-    ntrees = 20,
-    package = :DecisionTreejl,
-    name = &quot;Random forest&quot;,
-    feature_contrasts = feature_contrasts,
     )
 
-PredictMD.fit!(random_forest_regression,training_features_df,training_labels_df,)
+random_forest_regression =
+    PredictMD.singlelabeldataframerandomforestregression(
+        featurenames,
+        singlelabelname;
+        nsubfeatures = 2,
+        ntrees = 20,
+        package = :DecisionTreejl,
+        name = &quot;Random forest&quot;,
+        feature_contrasts = feature_contrasts,
+        )
 
-random_forest_regression_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
+PredictMD.fit!(
     random_forest_regression,
     training_features_df,
     training_labels_df,
-    singlelabelname,
     )
+
+random_forest_regression_plot_training =
+    PredictMD.plotsinglelabelregressiontrueversuspredicted(
+        random_forest_regression,
+        training_features_df,
+        training_labels_df,
+        singlelabelname,
+        )
 PredictMD.open_plot(random_forest_regression_plot_training)
 
-random_forest_regression_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
-    random_forest_regression,
-    testing_features_df,
-    testing_labels_df,
-    singlelabelname,
-    )
+random_forest_regression_plot_testing =
+    PredictMD.plotsinglelabelregressiontrueversuspredicted(
+        random_forest_regression,
+        testing_features_df,
+        testing_labels_df,
+        singlelabelname,
+        )
 PredictMD.open_plot(random_forest_regression_plot_testing)
 
 PredictMD.singlelabelregressionmetrics(
@@ -358,15 +368,18 @@ random_forest_regression_filename = joinpath(
     &quot;random_forest_regression.jld2&quot;,
     )
 
-PredictMD.save_model(random_forest_regression_filename, random_forest_regression)
+PredictMD.save_model(
+    random_forest_regression_filename,
+    random_forest_regression
+    )
 
 # End of file
 </code></pre>
 
 <pre><code>INFO: Starting to train DecisionTree.jl model.
 INFO: Finished training DecisionTree.jl model.
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaa3LmPo.svg
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaJSqKTD.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaNJrv0z.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaMY5bn0.svg
 INFO: Attempting to save model...
 INFO: Saved model to file &quot;/tmp/boston_housing_example/random_forest_regression.jld2&quot;
 

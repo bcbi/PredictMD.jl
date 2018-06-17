@@ -60,7 +60,7 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Examples</span>
+    <span class="caption-text">examples</span>
     <ul class="subnav">
                 <li class="">
                     
@@ -173,7 +173,7 @@
     
       
         
-          <li>Examples &raquo;</li>
+          <li>examples &raquo;</li>
         
       
         
@@ -411,23 +411,24 @@ knetmlp_optimizerhyperparameters = Dict()
 knetmlp_minibatchsize = 48
 knetmlp_maxepochs = 1_000
 
-knet_mlp_classifier = PredictMD.singlelabelmulticlassdataframeknetclassifier(
-    featurenames,
-    singlelabelname,
-    singlelabellevels;
-    package = :Knetjl,
-    name = &quot;Knet MLP&quot;,
-    predict_function_source = knet_mlp_predict_function_source,
-    loss_function_source = knet_mlp_loss_function_source,
-    losshyperparameters = knetmlp_losshyperparameters,
-    optimizationalgorithm = knetmlp_optimizationalgorithm,
-    optimizerhyperparameters = knetmlp_optimizerhyperparameters,
-    minibatchsize = knetmlp_minibatchsize,
-    modelweights = knetmlp_modelweights,
-    printlosseverynepochs = 100,
-    maxepochs = knetmlp_maxepochs,
-    feature_contrasts = feature_contrasts,
-    )
+knet_mlp_classifier =
+    PredictMD.singlelabelmulticlassdataframeknetclassifier(
+        featurenames,
+        singlelabelname,
+        singlelabellevels;
+        package = :Knetjl,
+        name = &quot;Knet MLP&quot;,
+        predict_function_source = knet_mlp_predict_function_source,
+        loss_function_source = knet_mlp_loss_function_source,
+        losshyperparameters = knetmlp_losshyperparameters,
+        optimizationalgorithm = knetmlp_optimizationalgorithm,
+        optimizerhyperparameters = knetmlp_optimizerhyperparameters,
+        minibatchsize = knetmlp_minibatchsize,
+        modelweights = knetmlp_modelweights,
+        printlosseverynepochs = 100,
+        maxepochs = knetmlp_maxepochs,
+        feature_contrasts = feature_contrasts,
+        )
 
 PredictMD.parse_functions!(knet_mlp_classifier)
 
@@ -461,32 +462,35 @@ knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
     )
 PredictMD.open_plot(knet_learningcurve_lossvsiteration)
 
-knet_learningcurve_lossvsiteration_skip100iterations = PredictMD.plotlearningcurve(
-    knet_mlp_classifier,
-    :loss_vs_iteration;
-    window = 50,
-    sampleevery = 10,
-    startat = 100,
-    endat = :end,
-    )
+knet_learningcurve_lossvsiteration_skip100iterations =
+    PredictMD.plotlearningcurve(
+        knet_mlp_classifier,
+        :loss_vs_iteration;
+        window = 50,
+        sampleevery = 10,
+        startat = 100,
+        endat = :end,
+        )
 PredictMD.open_plot(knet_learningcurve_lossvsiteration_skip100iterations)
 
-knet_mlp_classifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    knet_mlp_classifier,
-    smoted_training_features_df,
-    smoted_training_labels_df,
-    singlelabelname,
-    singlelabellevels,
-    )
+knet_mlp_classifier_hist_training =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        knet_mlp_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
+        singlelabelname,
+        singlelabellevels,
+        )
 PredictMD.open_plot(knet_mlp_classifier_hist_training)
 
-knet_mlp_classifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    knet_mlp_classifier,
-    testing_features_df,
-    testing_labels_df,
-    singlelabelname,
-    singlelabellevels,
-    )
+knet_mlp_classifier_hist_testing =
+        PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        knet_mlp_classifier,
+        testing_features_df,
+        testing_labels_df,
+        singlelabelname,
+        singlelabellevels,
+        )
 PredictMD.open_plot(knet_mlp_classifier_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
@@ -524,23 +528,23 @@ WARNING: Method definition knetmlp_loss(Function, Any, AbstractArray{T, N} where
 WARNING: Method definition #knetmlp_loss(Array{Any, 1}, typeof(PredictMD.knetmlp_loss), Function, Any, AbstractArray{T, N} where N where T, AbstractArray{T, N} where N where T) in module PredictMD overwritten.
 INFO: Starting to train Knet.jl model. Max epochs: 1000.
 INFO: Epoch: 0. Loss (training set): 0.7201029. Loss (validation set): 0.6927045935199466.
-INFO: Epoch: 100. Loss (training set): 0.09744535. Loss (validation set): 0.10499530119466373.
-INFO: Epoch: 200. Loss (training set): 0.0597624. Loss (validation set): 0.07322174962375574.
-INFO: Epoch: 300. Loss (training set): 0.045931447. Loss (validation set): 0.06903423504480356.
-INFO: Epoch: 400. Loss (training set): 0.038275506. Loss (validation set): 0.06803475318710037.
-INFO: Epoch: 500. Loss (training set): 0.033291608. Loss (validation set): 0.06852033895709449.
-INFO: Epoch: 600. Loss (training set): 0.029123198. Loss (validation set): 0.06943674983424104.
-INFO: Epoch: 700. Loss (training set): 0.025713954. Loss (validation set): 0.0695901351953489.
-INFO: Epoch: 800. Loss (training set): 0.022704413. Loss (validation set): 0.07064241984158841.
-INFO: Epoch: 900. Loss (training set): 0.019910447. Loss (validation set): 0.0730483377405911.
-INFO: Epoch: 1000. Loss (training set): 0.017296534. Loss (validation set): 0.07547972273625916.
+INFO: Epoch: 100. Loss (training set): 0.09744535. Loss (validation set): 0.10499530052334453.
+INFO: Epoch: 200. Loss (training set): 0.059762415. Loss (validation set): 0.07322175006846152.
+INFO: Epoch: 300. Loss (training set): 0.045931436. Loss (validation set): 0.06903422926611998.
+INFO: Epoch: 400. Loss (training set): 0.03827687. Loss (validation set): 0.06807030173017072.
+INFO: Epoch: 500. Loss (training set): 0.033273607. Loss (validation set): 0.06853613498526183.
+INFO: Epoch: 600. Loss (training set): 0.029120164. Loss (validation set): 0.06944961839841199.
+INFO: Epoch: 700. Loss (training set): 0.025723964. Loss (validation set): 0.06958666157365702.
+INFO: Epoch: 800. Loss (training set): 0.02273111. Loss (validation set): 0.07064465877708066.
+INFO: Epoch: 900. Loss (training set): 0.019935755. Loss (validation set): 0.07275781294036861.
+INFO: Epoch: 1000. Loss (training set): 0.017285056. Loss (validation set): 0.07562355137457422.
 INFO: Finished training Knet.jl model.
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaV6woSP.svg
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/julia6aEB6C.svg
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaZDB3Aw.svg
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliacRJmSv.svg
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaqxlOtB.svg
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/julia4AHstJ.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliagZOgM8.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaZI1RhQ.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaUlZM1C.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaaBBt8u.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliax50ehs.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaYdmBxr.svg
 INFO: Attempting to save model...
 INFO: Saved model to file &quot;/tmp/breast_cancer_biopsy_example/knet_mlp_classifier.jld2&quot;
 

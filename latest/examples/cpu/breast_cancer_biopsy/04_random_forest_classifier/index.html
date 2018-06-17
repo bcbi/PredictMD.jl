@@ -60,7 +60,7 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Examples</span>
+    <span class="caption-text">examples</span>
     <ul class="subnav">
                 <li class="">
                     
@@ -173,7 +173,7 @@
     
       
         
-          <li>Examples &raquo;</li>
+          <li>examples &raquo;</li>
         
       
         
@@ -332,16 +332,17 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     featurenames,
     )
 
-random_forest_classifier = PredictMD.singlelabelmulticlassdataframerandomforestclassifier(
-    featurenames,
-    singlelabelname,
-    singlelabellevels;
-    nsubfeatures = 4,
-    ntrees = 200,
-    package = :DecisionTreejl,
-    name = &quot;Random forest&quot;,
-    feature_contrasts = feature_contrasts,
-    )
+random_forest_classifier =
+    PredictMD.singlelabelmulticlassdataframerandomforestclassifier(
+        featurenames,
+        singlelabelname,
+        singlelabellevels;
+        nsubfeatures = 4,
+        ntrees = 200,
+        package = :DecisionTreejl,
+        name = &quot;Random forest&quot;,
+        feature_contrasts = feature_contrasts,
+        )
 
 PredictMD.fit!(
     random_forest_classifier,
@@ -349,22 +350,24 @@ PredictMD.fit!(
     smoted_training_labels_df,
     )
 
-random_forest_classifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    random_forest_classifier,
-    smoted_training_features_df,
-    smoted_training_labels_df,
-    singlelabelname,
-    singlelabellevels,
-    )
+random_forest_classifier_hist_training =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        random_forest_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
+        singlelabelname,
+        singlelabellevels,
+        )
 PredictMD.open_plot(random_forest_classifier_hist_training)
 
-random_forest_classifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    random_forest_classifier,
-    testing_features_df,
-    testing_labels_df,
-    singlelabelname,
-    singlelabellevels,
-    )
+random_forest_classifier_hist_testing =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        random_forest_classifier,
+        testing_features_df,
+        testing_labels_df,
+        singlelabelname,
+        singlelabellevels,
+        )
 PredictMD.open_plot(random_forest_classifier_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
@@ -391,15 +394,18 @@ random_forest_classifier_filename = joinpath(
     &quot;random_forest_classifier.jld2&quot;,
     )
 
-PredictMD.save_model(random_forest_classifier_filename, random_forest_classifier)
+PredictMD.save_model(
+    random_forest_classifier_filename,
+    random_forest_classifier,
+    )
 
 # End of file
 </code></pre>
 
 <pre><code>INFO: Starting to train DecisionTree.jl model.
 INFO: Finished training DecisionTree.jl model.
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliakBDmRo.svg
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaydETGb.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliahXioZq.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/julia46ptbk.svg
 INFO: Attempting to save model...
 INFO: Saved model to file &quot;/tmp/breast_cancer_biopsy_example/random_forest_classifier.jld2&quot;
 
