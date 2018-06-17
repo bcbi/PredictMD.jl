@@ -9,7 +9,7 @@ module PredictMD # begin module PredictMD
 ############################################################################
 
 function __init__()
-    info(string("Loaded PredictMD version ", PredictMD.version(),))
+    info(string("Loading PredictMD version ", PredictMD.version(),))
 end
 
 ############################################################################
