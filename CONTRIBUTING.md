@@ -1,8 +1,8 @@
 # Contributing to PredictMD
 
-This document provides information on contributing to the PredictMD source
-code. For information on installing and using PredictMD, please
-see [README.md](README.md).
+This document provides information on contributing to the
+PredictMD source code. For information on installing and using
+PredictMD, please see [README.md](README.md).
 
 <table>
     <thead>
@@ -49,7 +49,8 @@ You also need to have the following tools installed and configured:
 If you do not already have a GitHub account, go to
 [https://github.com/join](https://github.com/join) and create an account.
 
-**Step 2:** Go to [https://help.github.com/articles/configuring-two-factor-authentication-via-a-totp-mobile-app/](https://help.github.com/articles/configuring-two-factor-authentication-via-a-totp-mobile-app/)
+**Step 2:** Go to [https://help.github.com/articles/configuring-two-factor-authentication-via-a-totp-mobile-app/]
+(https://help.github.com/articles/configuring-two-factor-authentication-via-a-totp-mobile-app/)
 and follow the instructions to enable two-factor
 authentication for your GitHub account.
 
@@ -68,9 +69,12 @@ git version 2.16.1
 If you do, proceed to Step 2. If you instead receive an error message,
 download and install Git:
 
-- Windows: [https://git-scm.com/download/win](https://git-scm.com/download/win)
-- macOS: [https://git-scm.com/download/mac](https://git-scm.com/download/mac)
-- GNU/Linux: [https://git-scm.com/download/linux](https://git-scm.com/download/linux)
+- Windows: [https://git-scm.com/download/win]
+(https://git-scm.com/download/win)
+- macOS: [https://git-scm.com/download/mac]
+(https://git-scm.com/download/mac)
+- GNU/Linux: [https://git-scm.com/download/linux]
+(https://git-scm.com/download/linux)
 
 **Step 2:**
 ```bash
@@ -90,11 +94,16 @@ git config --global github.user mygithubusername
 
 **Step 5:** Follow the steps on each of the following pages in order to
 generate an SSH key and associate it with your GitHub account:
-1. [https://help.github.com/articles/checking-for-existing-ssh-keys/](https://help.github.com/articles/checking-for-existing-ssh-keys/)
-2. [https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)
-3. [https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/)
-4. [https://help.github.com/articles/testing-your-ssh-connection/](https://help.github.com/articles/testing-your-ssh-connection/)
-5. [https://help.github.com/articles/working-with-ssh-key-passphrases/](https://help.github.com/articles/working-with-ssh-key-passphrases/)
+1. [https://help.github.com/articles/checking-for-existing-ssh-keys/]
+(https://help.github.com/articles/checking-for-existing-ssh-keys/)
+2. [https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/]
+(https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)
+3. [https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/]
+(https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/)
+4. [https://help.github.com/articles/testing-your-ssh-connection/]
+(https://help.github.com/articles/testing-your-ssh-connection/)
+5. [https://help.github.com/articles/working-with-ssh-key-passphrases/]
+(https://help.github.com/articles/working-with-ssh-key-passphrases/)
 
 ### 1.3 git-flow
 
@@ -121,9 +130,12 @@ If you do, then you are good to go. If you instead receive the
 message ```git: 'flow' is not a git command```, download and
 install git-flow:
 
-- Windows: [https://github.com/nvie/gitflow/wiki/Windows](https://github.com/nvie/gitflow/wiki/Windows)
-- macOS: [https://github.com/nvie/gitflow/wiki/Mac-OS-X](https://github.com/nvie/gitflow/wiki/Mac-OS-X)
-- GNU/Linux: [https://github.com/nvie/gitflow/wiki/Linux](https://github.com/nvie/gitflow/wiki/Linux)
+- Windows: [https://github.com/nvie/gitflow/wiki/Windows]
+(https://github.com/nvie/gitflow/wiki/Windows)
+- macOS: [https://github.com/nvie/gitflow/wiki/Mac-OS-X]
+(https://github.com/nvie/gitflow/wiki/Mac-OS-X)
+- GNU/Linux: [https://github.com/nvie/gitflow/wiki/Linux]
+(https://github.com/nvie/gitflow/wiki/Linux)
 
 
 ### 1.4 GPG
@@ -152,17 +164,25 @@ Compression: Uncompressed, ZIP, ZLIB, BZIP2
 ```
 If you do, then go to Step 2. If you instead see an error,
 download and install GPG:
-- Windows: [https://gpg4win.org/download.html](https://gpg4win.org/download.html)
-- macOS: [https://gpgtools.org/](https://gpgtools.org/)
-- GNU/Linux: [https://gnupg.org/download/#sec-1-2](https://gnupg.org/download/#sec-1-2)
+- Windows: [https://gpg4win.org/download.html]
+(https://gpg4win.org/download.html)
+- macOS: [https://gpgtools.org/]
+(https://gpgtools.org/)
+- GNU/Linux: [https://gnupg.org/download/#sec-1-2]
+(https://gnupg.org/download/#sec-1-2)
 
 **Step 2:** Follow the steps on each of the following pages in order to
 generate a GPG key and associate it with your GitHub account:
-1. [https://help.github.com/articles/checking-for-existing-gpg-keys/](https://help.github.com/articles/checking-for-existing-gpg-keys/)
-2. [https://help.github.com/articles/generating-a-new-gpg-key/](https://help.github.com/articles/generating-a-new-gpg-key/)
-3. [https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/](https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/)
-4. [https://help.github.com/articles/telling-git-about-your-gpg-key/](https://help.github.com/articles/telling-git-about-your-gpg-key/)
-5. [https://help.github.com/articles/associating-an-email-with-your-gpg-key/](https://help.github.com/articles/associating-an-email-with-your-gpg-key/)
+1. [https://help.github.com/articles/checking-for-existing-gpg-keys/]
+(https://help.github.com/articles/checking-for-existing-gpg-keys/)
+2. [https://help.github.com/articles/generating-a-new-gpg-key/]
+(https://help.github.com/articles/generating-a-new-gpg-key/)
+3. [https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/]
+(https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/)
+4. [https://help.github.com/articles/telling-git-about-your-gpg-key/]
+(https://help.github.com/articles/telling-git-about-your-gpg-key/)
+5. [https://help.github.com/articles/associating-an-email-with-your-gpg-key/]
+(https://help.github.com/articles/associating-an-email-with-your-gpg-key/)
 
 ## 2. Setting up the PredictMD repo
 
@@ -179,7 +199,7 @@ containing the PredictMD source code:
 cd ~/.julia/v0.6/PredictMD
 ```
 
-**Step 4:** Run the following line:
+**Step 4:** Run the following lines:
 
 ```bash
 git config commit.gpgsign true &&
@@ -294,7 +314,8 @@ git push origin release/v3.6.0
 
 **Step 10:** Wait for all of the tests to pass. You can check on
 the status of the tests by going to
-[https://github.com/bcbi/PredictMD.jl/branches/yours](https://github.com/bcbi/PredictMD.jl/branches/yours)
+[https://github.com/bcbi/PredictMD.jl/branches/yours]
+(https://github.com/bcbi/PredictMD.jl/branches/yours)
 and scrolling down to find your release branch.
 
 * A yellow dot indicates that the tests are still running. Click on the
@@ -356,13 +377,15 @@ issue body.
 the `master` and `develop` branches:
 
 First, the `master` branch: go to
-[https://github.com/bcbi/PredictMD.jl/settings/branches/master](https://github.com/bcbi/PredictMD.jl/settings/branches/master),
+[https://github.com/bcbi/PredictMD.jl/settings/branches/master]
+(https://github.com/bcbi/PredictMD.jl/settings/branches/master),
 scroll down, UNCHECK the box next to "Include administrators", scroll
 to the bottom of the page, and click the green "Save changes" button.
 You may be asked to enter your GitHub password.
 
 Now do the same thing for the `develop` branch: Go to
-[https://github.com/bcbi/PredictMD.jl/settings/branches/develop](https://github.com/bcbi/PredictMD.jl/settings/branches/develop),
+[https://github.com/bcbi/PredictMD.jl/settings/branches/develop]
+(https://github.com/bcbi/PredictMD.jl/settings/branches/develop),
 scroll down, UNCHECK the box next to "Include administrators", scroll to
 the bottom of the page, and click the green "Save changes" button.
 
@@ -376,7 +399,8 @@ git push origin --tags # push the new "v3.6.0" tag
 
 **Step 15:** Create a release on GitHub using the tag you just
 created, signed, and pushed. First, go to
-[https://github.com/bcbi/PredictMD.jl/releases/new](https://github.com/bcbi/PredictMD.jl/releases/new).
+[https://github.com/bcbi/PredictMD.jl/releases/new]
+(https://github.com/bcbi/PredictMD.jl/releases/new).
 In the text box that reads "Tag version", type the name of the tag you
 just released. For our example, you would type "v3.6.0". Next, in the
 text box that reads "Release title", type an appropriate title, such
@@ -448,20 +472,23 @@ git push origin develop
 **Step 19:** Re-enable the branch protection settings:
 
 `master` branch: go to
-[https://github.com/bcbi/PredictMD.jl/settings/branches/master](https://github.com/bcbi/PredictMD.jl/settings/branches/master),
+[https://github.com/bcbi/PredictMD.jl/settings/branches/master]
+(https://github.com/bcbi/PredictMD.jl/settings/branches/master),
 scroll down, CHECK the box next to "Include administrators",
 scroll to the bottom of the page, and click the green
 "Save changes" button.
 
 `develop` branch: go to
-[https://github.com/bcbi/PredictMD.jl/settings/branches/develop](https://github.com/bcbi/PredictMD.jl/settings/branches/develop),
+[https://github.com/bcbi/PredictMD.jl/settings/branches/develop]
+(https://github.com/bcbi/PredictMD.jl/settings/branches/develop),
 scroll down, CHECK the box next to "Include administrators", scroll to
 the bottom of the page, and click the green
 "Save changes" button.
 
 **Step 20:** Delete the release branch, which is no longer needed. To do
 this, go to
-[https://github.com/bcbi/PredictMD.jl/branches/yours](https://github.com/bcbi/PredictMD.jl/branches/yours),
+[https://github.com/bcbi/PredictMD.jl/branches/yours]
+(https://github.com/bcbi/PredictMD.jl/branches/yours),
 scroll down to find the release branch, and then click the
 trash can icon to delete the branch.
 
