@@ -310,7 +310,7 @@ you can continue.**
 This is especially common with the Mac builds on Travis. You can usually
 resolve this error by restarting the failed build.*
 
-**Step 11:**  Once all of the Travis tests have passed, you can finish
+**Step 11:**  Once all of the tests have passed, you can finish
 tagging your release using the git-flow tools:
 
 
@@ -465,4 +465,16 @@ this, go to
 scroll down to find the release branch, and then click the
 trash can icon to delete the branch.
 
-Congratulations, you are finished!
+**Step 21:** The final step is to go to the Zenodo entry for the newly created release and put in the correct information. First go to [https://www.predictmd.net/zenodo](https://www.predictmd.net/zenodo), and then click on the yellow "Edit" button to edit the most recent release. Then, enter the correct information for the following fields:
+* Title
+* Authors (author names, affiliations, and ORCIDs)
+* Description
+* Language
+* Keywords
+* Additional notes
+* License
+* Related/alternate identifiers
+
+You can get the correct values for those fields by looking at the previous Zenodo release and copying those values.
+
+After you have entered the correct information in all of the above fields, click the white "Save" button, and then click the blue "Publish" button. Congratulations, you are finished!
