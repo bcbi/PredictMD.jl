@@ -10,9 +10,6 @@ module PredictMD # begin module PredictMD
 
 function __init__()
     info(string("Loaded PredictMD version ", PredictMD.version(),))
-    if is_debug()
-        info(string("Debug mode is enabled."))
-    end
 end
 
 ############################################################################
