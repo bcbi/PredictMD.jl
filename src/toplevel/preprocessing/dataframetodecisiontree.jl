@@ -103,7 +103,9 @@ end
 
 """
 """
-function parse_functions!(transformer::MutableDataFrame2DecisionTreeTransformer)
+function parse_functions!(
+    transformer::MutableDataFrame2DecisionTreeTransformer,
+    )
     return nothing
 end
 

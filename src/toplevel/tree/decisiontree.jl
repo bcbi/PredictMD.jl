@@ -15,7 +15,8 @@ mutable struct DecisionTreeModel <:
     hyperparameters::T6 where T6 <: Associative
 
     # parameters (learned from data):
-    underlyingrandomforest::T7 where T7 <: Union{Void, DecisionTree.Ensemble}
+    underlyingrandomforest::T7 where T7 <:
+        Union{Void, DecisionTree.Ensemble}
 
     function DecisionTreeModel(
             singlelabelname::Symbol;
@@ -141,7 +142,9 @@ function predict(
         end
         return predicted_values
     else
-        error("Could not figure out if model is classification or regression")
+        error(
+            "Could not figure out if model is classification or regression"
+            )
     end
 end
 
@@ -174,13 +177,15 @@ function predict_proba(
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         error("predict_proba is not defined for regression models")
     else
-        error("Could not figure out if model is classification or regression")
+        error(
+            "Could not figure out if model is classification or regression"
+            )
     end
 end
 
 """
 """
-function _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
+function _singlelabelmulticlassdfrandomforestclassifier_DecisionTree(
         featurenames::AbstractVector,
         singlelabelname::Symbol,
         singlelabellevels::AbstractVector;
@@ -237,15 +242,16 @@ function singlelabelmulticlassdataframerandomforestclassifier(
         feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     if package == :DecisionTreejl
-        result = _singlelabelmulticlassdataframerandomforestclassifier_DecisionTree(
-            featurenames,
-            singlelabelname,
-            singlelabellevels;
-            name = name,
-            nsubfeatures = nsubfeatures,
-            ntrees = ntrees,
-            feature_contrasts = feature_contrasts
-        )
+        result =
+            _singlelabelmulticlassdfrandomforestclassifier_DecisionTree(
+                featurenames,
+                singlelabelname,
+                singlelabellevels;
+                name = name,
+                nsubfeatures = nsubfeatures,
+                ntrees = ntrees,
+                feature_contrasts = feature_contrasts
+                )
         return result
     else
         error("$(package) is not a valid value for package")

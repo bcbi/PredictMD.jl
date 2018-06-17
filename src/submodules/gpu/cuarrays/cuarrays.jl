@@ -14,4 +14,11 @@ Requires.@require CuArrays begin
     import GPUArrays
 
     has_cuarrays() = true
+
+    info(
+        string(
+            "PredictMD detected that CuArrays has been imported. ",
+            "Thus, CuArrays functionality is now available in PredictMD.",
+            )
+        )
 end

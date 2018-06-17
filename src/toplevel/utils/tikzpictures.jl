@@ -3,8 +3,9 @@ import TikzPictures
 """
 """
 function is_force_test_plots(a::Associative = ENV)
-    result = lowercase(strip(get(a, "PREDICTMD_FORCE_TEST_PLOTS", ""))) == "true"
-    return result 
+    result = lowercase(strip(get(a, "PREDICTMD_FORCE_TEST_PLOTS", ""))) ==
+        "true"
+    return result
 end
 
 """
@@ -23,7 +24,8 @@ function warn_on_tikzpictures_save_error(
     elseif is_force_test_plots(a)
         warn(
             string(
-                "PREDICTMD_IS_FORCE_TEST_PLOTS is true, so rethrowing the exception",
+                "PREDICTMD_IS_FORCE_TEST_PLOTS is true, ",
+                "so rethrowing the exception",
                 )
             )
         rethrow(e)
@@ -62,7 +64,10 @@ end
 
 """
 """
-function save_plot_pdf(filename::AbstractString, tp::TikzPictures.TikzPicture)
+function save_plot_pdf(
+        filename::AbstractString,
+        tp::TikzPictures.TikzPicture,
+        )
     filename = strip(filename)
     if length(filename) == 0
         error("filename is an empty string")
@@ -83,7 +88,10 @@ end
 
 """
 """
-function save_plot_tex(filename::AbstractString, tp::TikzPictures.TikzPicture)
+function save_plot_tex(
+        filename::AbstractString,
+        tp::TikzPictures.TikzPicture,
+        )
     filename = strip(filename)
     if length(filename) == 0
         error("filename is an empty string")
@@ -104,7 +112,10 @@ end
 
 """
 """
-function save_plot_tikz(filename::AbstractString, tp::TikzPictures.TikzPicture)
+function save_plot_tikz(
+        filename::AbstractString,
+        tp::TikzPictures.TikzPicture,
+        )
     filename = strip(filename)
     if length(filename) == 0
         error("filename is an empty string")
@@ -125,7 +136,10 @@ end
 
 """
 """
-function save_plot_svg(filename::AbstractString, tp::TikzPictures.TikzPicture)
+function save_plot_svg(
+        filename::AbstractString,
+        tp::TikzPictures.TikzPicture,
+        )
     filename = strip(filename)
     if length(filename) == 0
         error("filename is an empty string")
@@ -154,7 +168,10 @@ end
 
 """
 """
-function open_plot(filename::AbstractString, tp::TikzPictures.TikzPicture)
+function open_plot(
+        filename::AbstractString,
+        tp::TikzPictures.TikzPicture,
+        )
     filename = strip(filename)
     if length(filename) == 0
         error("filename is an empty string")

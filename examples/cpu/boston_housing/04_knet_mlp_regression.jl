@@ -153,7 +153,8 @@ function knetmlp_loss(
 end
 """
 
-feature_contrasts = PredictMD.generate_feature_contrasts(training_features_df, featurenames)
+feature_contrasts =
+    PredictMD.generate_feature_contrasts(training_features_df, featurenames)
 
 knetmlp_modelweights = Any[
     Cfloat.(
@@ -227,30 +228,33 @@ knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
     )
 PredictMD.open_plot(knet_learningcurve_lossvsiteration)
 
-knet_learningcurve_lossvsiteration_skip100iterations = PredictMD.plotlearningcurve(
-    knet_mlp_regression,
-    :loss_vs_iteration;
-    window = 50,
-    sampleevery = 10,
-    startat = 100,
-    endat = :end,
-    )
+knet_learningcurve_lossvsiteration_skip100iterations =
+    PredictMD.plotlearningcurve(
+        knet_mlp_regression,
+        :loss_vs_iteration;
+        window = 50,
+        sampleevery = 10,
+        startat = 100,
+        endat = :end,
+        )
 PredictMD.open_plot(knet_learningcurve_lossvsiteration_skip100iterations)
 
-knet_mlp_regression_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
-    knet_mlp_regression,
-    training_features_df,
-    training_labels_df,
-    singlelabelname,
-    )
+knet_mlp_regression_plot_training =
+    PredictMD.plotsinglelabelregressiontrueversuspredicted(
+        knet_mlp_regression,
+        training_features_df,
+        training_labels_df,
+        singlelabelname,
+        )
 PredictMD.open_plot(knet_mlp_regression_plot_training)
 
-knet_mlp_regression_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
-    knet_mlp_regression,
-    testing_features_df,
-    testing_labels_df,
-    singlelabelname,
-    )
+knet_mlp_regression_plot_testing =
+    PredictMD.plotsinglelabelregressiontrueversuspredicted(
+        knet_mlp_regression,
+        testing_features_df,
+        testing_labels_df,
+        singlelabelname,
+        )
 PredictMD.open_plot(knet_mlp_regression_plot_testing)
 
 PredictMD.singlelabelregressionmetrics(

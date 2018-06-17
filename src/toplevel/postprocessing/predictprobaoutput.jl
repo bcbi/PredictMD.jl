@@ -37,7 +37,9 @@ end
 
 """
 """
-function parse_functions!(transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer)
+function parse_functions!(
+        transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer,
+        )
     return nothing
 end
 

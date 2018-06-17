@@ -139,16 +139,17 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     featurenames,
     )
 
-random_forest_classifier = PredictMD.singlelabelmulticlassdataframerandomforestclassifier(
-    featurenames,
-    singlelabelname,
-    singlelabellevels;
-    nsubfeatures = 4,
-    ntrees = 200,
-    package = :DecisionTreejl,
-    name = "Random forest",
-    feature_contrasts = feature_contrasts,
-    )
+random_forest_classifier =
+    PredictMD.singlelabelmulticlassdataframerandomforestclassifier(
+        featurenames,
+        singlelabelname,
+        singlelabellevels;
+        nsubfeatures = 4,
+        ntrees = 200,
+        package = :DecisionTreejl,
+        name = "Random forest",
+        feature_contrasts = feature_contrasts,
+        )
 
 PredictMD.fit!(
     random_forest_classifier,
@@ -156,22 +157,24 @@ PredictMD.fit!(
     smoted_training_labels_df,
     )
 
-random_forest_classifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    random_forest_classifier,
-    smoted_training_features_df,
-    smoted_training_labels_df,
-    singlelabelname,
-    singlelabellevels,
-    )
+random_forest_classifier_hist_training =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        random_forest_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
+        singlelabelname,
+        singlelabellevels,
+        )
 PredictMD.open_plot(random_forest_classifier_hist_training)
 
-random_forest_classifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    random_forest_classifier,
-    testing_features_df,
-    testing_labels_df,
-    singlelabelname,
-    singlelabellevels,
-    )
+random_forest_classifier_hist_testing =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        random_forest_classifier,
+        testing_features_df,
+        testing_labels_df,
+        singlelabelname,
+        singlelabellevels,
+        )
 PredictMD.open_plot(random_forest_classifier_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
@@ -198,6 +201,9 @@ random_forest_classifier_filename = joinpath(
     "random_forest_classifier.jld2",
     )
 
-PredictMD.save_model(random_forest_classifier_filename, random_forest_classifier)
+PredictMD.save_model(
+    random_forest_classifier_filename,
+    random_forest_classifier,
+    )
 
 ## End of file

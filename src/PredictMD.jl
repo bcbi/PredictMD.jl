@@ -4,28 +4,19 @@ __precompile__(true)
 """
 module PredictMD # begin module PredictMD
 
+############################################################################
+# PredictMD.__init__() #####################################################
+############################################################################
+
 function __init__()
-    info(
-        string(
-            "loaded PredictMD version ",
-            PredictMD.VERSION,
-            )
-        )
-    if is_debug()
-        info(
-            string(
-                "debug mode is enabled",
-                )
-            )
-    end
+    info(string("Loading PredictMD version ", PredictMD.version(),))
 end
 
-##############################################################################
-# Top level ##################################################################
-##############################################################################
+############################################################################
+# PredictMD base files (top level namespace) ###############################
+############################################################################
 
 # base/
-# (base must go first)
 include(
     joinpath(
         ".", "base", "interface.jl",
@@ -41,6 +32,10 @@ include(
         ".", "base", "version.jl",
         )
     )
+
+############################################################################
+# PredictMD source files (top level namespace) #############################
+############################################################################
 
 # toplevel/calibration/
 
@@ -70,7 +65,6 @@ include(
         )
     )
 
-
 # toplevel/decomposition/
 
 # toplevel/ensemble/
@@ -83,15 +77,16 @@ include(
     )
 include(
     joinpath(
-        ".", "toplevel", "integrations", "literate_programming", "literate.jl",
+        ".", "toplevel", "integrations", "literate_programming",
+        "literate.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "integrations", "literate_programming", "weave.jl",
+        ".", "toplevel", "integrations", "literate_programming",
+        "weave.jl",
         )
     )
-
 
 # toplevel/io/
 include(
@@ -108,7 +103,8 @@ include(
     )
 include(
     joinpath(
-        ".", "toplevel", "linearmodel", "ordinary_least_squares_regression.jl",
+        ".", "toplevel", "linearmodel",
+        "ordinary_least_squares_regression.jl",
         )
     )
 
@@ -175,7 +171,8 @@ include(
     )
 include(
     joinpath(
-        ".", "toplevel", "metrics", "singlelabelbinaryclassificationmetrics.jl",
+        ".", "toplevel", "metrics",
+        "singlelabelbinaryclassificationmetrics.jl",
         )
     )
 include(
@@ -183,7 +180,6 @@ include(
         ".", "toplevel", "metrics", "singlelabelregressionmetrics.jl",
         )
     )
-
 
 # toplevel/modelselection/
 include(
@@ -234,17 +230,20 @@ include(
     )
 include(
     joinpath(
-        ".", "toplevel", "plotting", "plotsinglelabelregressiontruevspredicted.jl",
+        ".", "toplevel", "plotting",
+        "plotsinglelabelregressiontruevspredicted.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "plotting", "plotsinglelabelbinaryclassifierhistograms.jl",
+        ".", "toplevel", "plotting",
+        "plotsinglelabelbinaryclassifierhistograms.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "plotting", "probability_calibration_plots.jl",
+        ".", "toplevel", "plotting",
+        "probability_calibration_plots.jl",
         )
     )
 
@@ -339,6 +338,11 @@ include(
     )
 include(
     joinpath(
+        ".", "toplevel", "utils", "get_version_number.jl",
+        )
+    )
+include(
+    joinpath(
         ".", "toplevel", "utils", "is_debug.jl",
         )
     )
@@ -408,13 +412,9 @@ include(
         )
     )
 
-##############################################################################
-##############################################################################
-##############################################################################
-
-##############################################################################
-# Submodules #################################################################
-##############################################################################
+############################################################################
+# PredictMD submodules #####################################################
+############################################################################
 
 # submodules/clean/
 include(
@@ -429,9 +429,5 @@ include(
         ".", "submodules", "gpu", "GPU.jl",
         )
     )
-
-##############################################################################
-##############################################################################
-##############################################################################
 
 end # end module PredictMD
