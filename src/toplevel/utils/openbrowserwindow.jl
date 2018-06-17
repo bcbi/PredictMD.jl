@@ -54,19 +54,44 @@ function open_browser_window(filename::AbstractString, a::Associative = ENV)
             # return filename
         end
     elseif is_travis_ci(a)
-        info(string("DEBUG: Skipping opening file during Travis build: ",filename,))
+        info(
+            string(
+                "DEBUG: Skipping opening file during Travis build: ",
+                filename,
+                )
+            )
         return nothing
     elseif is_runtests(a) && !open_plots_during_tests(a)
-        info(string("DEBUG: Skipping opening file during package tests: ",filename,))
+        info(
+            string(
+                "DEBUG: Skipping opening file during package tests: ",
+                filename,
+                )
+            )
         return nothing
     elseif is_make_examples(a)
-        info(string("DEBUG: Skipping opening file during make_examples: ",filename,))
+        info(
+            string(
+                "DEBUG: Skipping opening file during make_examples: ",
+                filename,
+                )
+            )
         return nothing
     elseif is_make_docs(a)
-        info(string("DEBUG: Skipping opening file during make_docs: ",filename,))
+        info(
+            string(
+                "DEBUG: Skipping opening file during make_docs: ",
+                filename,
+                )
+            )
         return nothing
     elseif is_deploy_docs(a)
-        info(string("DEBUG: Skipping opening file during deploy_docs: ",filename,))
+        info(
+            string(
+                "DEBUG: Skipping opening file during deploy_docs: ",
+                filename,
+                )
+            )
         return nothing
     else
         info(string("DEBUG: Opening file ",filename,))

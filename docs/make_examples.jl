@@ -83,18 +83,21 @@ Literate.script(
     )
 
 Literate.markdown(
-    joinpath(boston_housing_input_directory, "03_random_forest_regression.jl"),
+    joinpath(boston_housing_input_directory,
+        "03_random_forest_regression.jl"),
     boston_housing_output_directory;
     documenter = true,
     )
 Literate.notebook(
-    joinpath(boston_housing_input_directory, "03_random_forest_regression.jl"),
+    joinpath(boston_housing_input_directory,
+        "03_random_forest_regression.jl"),
     boston_housing_output_directory;
     documenter = true,
     execute = execute_notebooks,
     )
 Literate.script(
-    joinpath(boston_housing_input_directory, "03_random_forest_regression.jl"),
+    joinpath(boston_housing_input_directory,
+        "03_random_forest_regression.jl"),
     boston_housing_output_directory;
     documenter = true,
     keep_comments = true,
@@ -201,90 +204,105 @@ Literate.script(
     )
 
 Literate.markdown(
-    joinpath(breast_cancer_biopsy_input_directory, "03_logistic_classifier.jl"),
+    joinpath(breast_cancer_biopsy_input_directory,
+        "03_logistic_classifier.jl"),
     breast_cancer_biopsy_output_directory;
     documenter = true,
     )
 Literate.notebook(
-    joinpath(breast_cancer_biopsy_input_directory, "03_logistic_classifier.jl"),
+    joinpath(breast_cancer_biopsy_input_directory,
+        "03_logistic_classifier.jl"),
     breast_cancer_biopsy_output_directory;
     documenter = true,
     execute = execute_notebooks,
     )
 Literate.script(
-    joinpath(breast_cancer_biopsy_input_directory, "03_logistic_classifier.jl"),
+    joinpath(breast_cancer_biopsy_input_directory,
+        "03_logistic_classifier.jl"),
     breast_cancer_biopsy_output_directory;
     documenter = true,
     keep_comments = true,
     )
 
 Literate.markdown(
-    joinpath(breast_cancer_biopsy_input_directory, "04_random_forest_classifier.jl"),
+    joinpath(breast_cancer_biopsy_input_directory,
+        "04_random_forest_classifier.jl"),
     breast_cancer_biopsy_output_directory;
     documenter = true,
     )
 Literate.notebook(
-    joinpath(breast_cancer_biopsy_input_directory, "04_random_forest_classifier.jl"),
+    joinpath(breast_cancer_biopsy_input_directory,
+        "04_random_forest_classifier.jl"),
     breast_cancer_biopsy_output_directory;
     documenter = true,
     execute = execute_notebooks,
     )
 Literate.script(
-    joinpath(breast_cancer_biopsy_input_directory, "04_random_forest_classifier.jl"),
+    joinpath(breast_cancer_biopsy_input_directory,
+        "04_random_forest_classifier.jl"),
     breast_cancer_biopsy_output_directory;
     documenter = true,
     keep_comments = true,
     )
 
 Literate.markdown(
-    joinpath(breast_cancer_biopsy_input_directory, "05_c_svc_svm_classifier.jl"),
+    joinpath(breast_cancer_biopsy_input_directory,
+        "05_c_svc_svm_classifier.jl"),
     breast_cancer_biopsy_output_directory;
     documenter = true,
     )
 Literate.notebook(
-    joinpath(breast_cancer_biopsy_input_directory, "05_c_svc_svm_classifier.jl"),
+    joinpath(breast_cancer_biopsy_input_directory,
+        "05_c_svc_svm_classifier.jl"),
     breast_cancer_biopsy_output_directory;
     documenter = true,
     execute = execute_notebooks,
     )
 Literate.script(
-    joinpath(breast_cancer_biopsy_input_directory, "05_c_svc_svm_classifier.jl"),
+    joinpath(breast_cancer_biopsy_input_directory,
+        "05_c_svc_svm_classifier.jl"),
     breast_cancer_biopsy_output_directory;
     documenter = true,
     keep_comments = true,
     )
 
 Literate.markdown(
-    joinpath(breast_cancer_biopsy_input_directory, "06_nu_svc_svm_classifier.jl"),
+    joinpath(breast_cancer_biopsy_input_directory,
+        "06_nu_svc_svm_classifier.jl"),
     breast_cancer_biopsy_output_directory;
     documenter = true,
     )
 Literate.notebook(
-    joinpath(breast_cancer_biopsy_input_directory, "06_nu_svc_svm_classifier.jl"),
+    joinpath(breast_cancer_biopsy_input_directory,
+        "06_nu_svc_svm_classifier.jl"),
     breast_cancer_biopsy_output_directory;
     documenter = true,
     execute = execute_notebooks,
     )
 Literate.script(
-    joinpath(breast_cancer_biopsy_input_directory, "06_nu_svc_svm_classifier.jl"),
+    joinpath(breast_cancer_biopsy_input_directory,
+        "06_nu_svc_svm_classifier.jl"),
     breast_cancer_biopsy_output_directory;
     documenter = true,
     keep_comments = true,
     )
 
 Literate.markdown(
-    joinpath(breast_cancer_biopsy_input_directory, "07_knet_mlp_classifier.jl"),
+    joinpath(breast_cancer_biopsy_input_directory,
+        "07_knet_mlp_classifier.jl"),
     breast_cancer_biopsy_output_directory;
     documenter = true,
     )
 Literate.notebook(
-    joinpath(breast_cancer_biopsy_input_directory, "07_knet_mlp_classifier.jl"),
+    joinpath(breast_cancer_biopsy_input_directory,
+        "07_knet_mlp_classifier.jl"),
     breast_cancer_biopsy_output_directory;
     documenter = true,
     execute = execute_notebooks,
     )
 Literate.script(
-    joinpath(breast_cancer_biopsy_input_directory, "07_knet_mlp_classifier.jl"),
+    joinpath(breast_cancer_biopsy_input_directory,
+        "07_knet_mlp_classifier.jl"),
     breast_cancer_biopsy_output_directory;
     documenter = true,
     keep_comments = true,

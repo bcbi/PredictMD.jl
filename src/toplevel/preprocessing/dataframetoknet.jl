@@ -121,13 +121,17 @@ end
 
 """
 """
-function parse_functions!(transformer::MutableDataFrame2ClassificationKnetTransformer)
+function parse_functions!(
+        transformer::MutableDataFrame2ClassificationKnetTransformer,
+        )
     return nothing
 end
 
 """
 """
-function parse_functions!(transformer::MutableDataFrame2RegressionKnetTransformer,)
+function parse_functions!(
+        transformer::MutableDataFrame2RegressionKnetTransformer,
+        )
     return nothing
 end
 
@@ -137,8 +141,10 @@ function fit!(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
         training_labels_df::DataFrames.AbstractDataFrame,
-        validation_features_df::Union{Void, DataFrames.AbstractDataFrame} = nothing,
-        validation_labels_df::Union{Void, DataFrames.AbstractDataFrame} = nothing;
+        validation_features_df::Union{Void, DataFrames.AbstractDataFrame} =
+            nothing,
+        validation_labels_df::Union{Void, DataFrames.AbstractDataFrame} =
+            nothing;
         kwargs...
         )
     result = transform(
@@ -158,8 +164,10 @@ function fit!(
         transformer::MutableDataFrame2RegressionKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
         training_labels_df::DataFrames.AbstractDataFrame,
-        validation_features_df::Union{Void, DataFrames.AbstractDataFrame} = nothing,
-        validation_labels_df::Union{Void, DataFrames.AbstractDataFrame} = nothing;
+        validation_features_df::Union{Void, DataFrames.AbstractDataFrame} =
+            nothing,
+        validation_labels_df::Union{Void, DataFrames.AbstractDataFrame} =
+            nothing;
         kwargs...
         )
     result = transform(
@@ -229,18 +237,23 @@ function transform(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
         training_labels_df::DataFrames.AbstractDataFrame,
-        validation_features_df::Union{Void, DataFrames.AbstractDataFrame} = nothing,
-        validation_labels_df::Union{Void, DataFrames.AbstractDataFrame} = nothing;
+        validation_features_df::Union{Void, DataFrames.AbstractDataFrame} =
+            nothing,
+        validation_labels_df::Union{Void, DataFrames.AbstractDataFrame} =
+            nothing;
         kwargs...
         )
-    if is_nothing(validation_features_df) && is_nothing(validation_labels_df)
+    if is_nothing(validation_features_df) &&
+            is_nothing(validation_labels_df)
         has_validation_data = false
-    elseif !is_nothing(validation_features_df) && !is_nothing(validation_labels_df)
+    elseif !is_nothing(validation_features_df) &&
+            !is_nothing(validation_labels_df)
         has_validation_data = true
     else
         error(
             string(
-                "Either both validation_features_df and validation_labels_df ",
+                "Either both validation_features_df ",
+                "and validation_labels_df ",
                 "must be defined, or neither can be defined."
                 )
             )
@@ -340,19 +353,24 @@ function transform(
         transformer::MutableDataFrame2RegressionKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
         training_labels_df::DataFrames.AbstractDataFrame,
-        validation_features_df::Union{Void, DataFrames.AbstractDataFrame} = nothing,
-        validation_labels_df::Union{Void, DataFrames.AbstractDataFrame} = nothing;
+        validation_features_df::Union{Void, DataFrames.AbstractDataFrame} =
+            nothing,
+        validation_labels_df::Union{Void, DataFrames.AbstractDataFrame} =
+            nothing;
         kwargs...
         )
-    if is_nothing(validation_features_df) && is_nothing(validation_labels_df)
+    if is_nothing(validation_features_df) &&
+            is_nothing(validation_labels_df)
         has_validation_data = false
-    elseif !is_nothing(validation_features_df) && !is_nothing(validation_labels_df)
+    elseif !is_nothing(validation_features_df) &&
+            !is_nothing(validation_labels_df)
         has_validation_data = true
     else
         error(
             string(
-                "Either both validation_features_df and validation_labels_df ",
-                "must be defined, or neither can be defined."
+                "Either both validation_features_df ",
+                "and validation_labels_df ",
+                "must be defined, or neither can be defined.",
                 )
             )
     end

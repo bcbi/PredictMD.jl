@@ -14,7 +14,8 @@ mutable struct GLMModel <: AbstractEstimator
     link::T6 where T6 <: GLM.Link
 
     # parameters (learned from data):
-    underlyingglm::T7 where T7 <: Union{Void, StatsModels.DataFrameRegressionModel}
+    underlyingglm::T7 where T7 <:
+        Union{Void, StatsModels.DataFrameRegressionModel}
 
     function GLMModel(
             formula::StatsModels.Formula,
@@ -137,7 +138,9 @@ function predict(
         result[labelname] = glmpredictoutput
         return result
     else
-        error("Could not figure out if model is classification or regression")
+        error(
+            "Could not figure out if model is classification or regression"
+            )
     end
 end
 
@@ -164,7 +167,9 @@ function predict_proba(
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         error("predict_proba is not defined for regression models")
     else
-        error("Could not figure out if model is classification or regression")
+        error(
+            "Could not figure out if model is classification or regression"
+            )
     end
 end
 
@@ -186,10 +191,11 @@ function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
         intercept = intercept,
         interactions = interactions,
         )
-    dftransformer = ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer(
-        singlelabelname,
-        positiveclass,
-        )
+    dftransformer =
+        ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer(
+            singlelabelname,
+            positiveclass,
+            )
     glmestimator = GLMModel(
         formula,
         GLM.Binomial(),
@@ -197,14 +203,16 @@ function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
         isclassificationmodel = true,
         isregressionmodel = false,
         )
-    predictlabelfixer = ImmutablePredictionsSingleLabelInt2StringTransformer(
-        0,
-        singlelabellevels,
-        )
-    predprobalabelfixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
-        0,
-        singlelabellevels,
-        )
+    predictlabelfixer =
+        ImmutablePredictionsSingleLabelInt2StringTransformer(
+            0,
+            singlelabellevels,
+            )
+    predprobalabelfixer =
+        ImmutablePredictProbaSingleLabelInt2StringTransformer(
+            0,
+            singlelabellevels,
+            )
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         singlelabelname,
         )
@@ -265,10 +273,11 @@ function _singlelabelbinaryclassdataframeprobitclassifier_GLM(
         intercept = intercept,
         interactions = interactions,
         )
-    dftransformer = ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer(
-        singlelabelname,
-        positiveclass,
-        )
+    dftransformer =
+        ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer(
+            singlelabelname,
+            positiveclass,
+            )
     glmestimator = GLMModel(
         formula,
         GLM.Binomial(),
@@ -276,14 +285,16 @@ function _singlelabelbinaryclassdataframeprobitclassifier_GLM(
         isclassificationmodel = true,
         isregressionmodel = false,
         )
-    predictlabelfixer = ImmutablePredictionsSingleLabelInt2StringTransformer(
-        0,
-        singlelabellevels,
-        )
-    predprobalabelfixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
-        0,
-        singlelabellevels,
-        )
+    predictlabelfixer =
+        ImmutablePredictionsSingleLabelInt2StringTransformer(
+            0,
+            singlelabellevels,
+            )
+    predprobalabelfixer =
+        ImmutablePredictProbaSingleLabelInt2StringTransformer(
+            0,
+            singlelabellevels,
+            )
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         singlelabelname,
         )

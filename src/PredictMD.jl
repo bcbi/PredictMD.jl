@@ -4,9 +4,9 @@ __precompile__(true)
 """
 module PredictMD # begin module PredictMD
 
-##############################################################################
-# PredictMD.__init__() #######################################################
-##############################################################################
+############################################################################
+# PredictMD.__init__() #####################################################
+############################################################################
 
 function __init__()
     info(string("Loaded PredictMD version ", PredictMD.version(),))
@@ -15,9 +15,9 @@ function __init__()
     end
 end
 
-##############################################################################
-# PredictMD base files (top level namespace) #################################
-##############################################################################
+############################################################################
+# PredictMD base files (top level namespace) ###############################
+############################################################################
 
 # base/
 include(
@@ -36,9 +36,9 @@ include(
         )
     )
 
-##############################################################################
-# PredictMD source files (top level namespace) ###############################
-##############################################################################
+############################################################################
+# PredictMD source files (top level namespace) #############################
+############################################################################
 
 # toplevel/calibration/
 
@@ -80,12 +80,14 @@ include(
     )
 include(
     joinpath(
-        ".", "toplevel", "integrations", "literate_programming", "literate.jl",
+        ".", "toplevel", "integrations", "literate_programming",
+        "literate.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "integrations", "literate_programming", "weave.jl",
+        ".", "toplevel", "integrations", "literate_programming",
+        "weave.jl",
         )
     )
 
@@ -104,7 +106,8 @@ include(
     )
 include(
     joinpath(
-        ".", "toplevel", "linearmodel", "ordinary_least_squares_regression.jl",
+        ".", "toplevel", "linearmodel",
+        "ordinary_least_squares_regression.jl",
         )
     )
 
@@ -171,7 +174,8 @@ include(
     )
 include(
     joinpath(
-        ".", "toplevel", "metrics", "singlelabelbinaryclassificationmetrics.jl",
+        ".", "toplevel", "metrics",
+        "singlelabelbinaryclassificationmetrics.jl",
         )
     )
 include(
@@ -229,17 +233,20 @@ include(
     )
 include(
     joinpath(
-        ".", "toplevel", "plotting", "plotsinglelabelregressiontruevspredicted.jl",
+        ".", "toplevel", "plotting",
+        "plotsinglelabelregressiontruevspredicted.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "plotting", "plotsinglelabelbinaryclassifierhistograms.jl",
+        ".", "toplevel", "plotting",
+        "plotsinglelabelbinaryclassifierhistograms.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "plotting", "probability_calibration_plots.jl",
+        ".", "toplevel", "plotting",
+        "probability_calibration_plots.jl",
         )
     )
 
@@ -408,9 +415,9 @@ include(
         )
     )
 
-##############################################################################
-# PredictMD submodules #######################################################
-##############################################################################
+############################################################################
+# PredictMD submodules #####################################################
+############################################################################
 
 # submodules/clean/
 include(
@@ -425,9 +432,5 @@ include(
         ".", "submodules", "gpu", "GPU.jl",
         )
     )
-
-##############################################################################
-##############################################################################
-##############################################################################
 
 end # end module PredictMD

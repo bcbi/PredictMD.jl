@@ -66,7 +66,9 @@ end
 
 """
 """
-function parse_functions!(transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer)
+function parse_functions!(
+        transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
+        )
     return nothing
 end
 

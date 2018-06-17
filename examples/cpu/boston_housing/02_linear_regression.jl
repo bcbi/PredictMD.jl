@@ -128,20 +128,22 @@ PredictMD.fit!(linear_regression,training_features_df,training_labels_df,)
 
 PredictMD.get_underlying(linear_regression)
 
-linear_regression_plot_training = PredictMD.plotsinglelabelregressiontrueversuspredicted(
-    linear_regression,
-    training_features_df,
-    training_labels_df,
-    singlelabelname,
-    )
+linear_regression_plot_training =
+    PredictMD.plotsinglelabelregressiontrueversuspredicted(
+        linear_regression,
+        training_features_df,
+        training_labels_df,
+        singlelabelname,
+        )
 PredictMD.open_plot(linear_regression_plot_training)
 
-linear_regression_plot_testing = PredictMD.plotsinglelabelregressiontrueversuspredicted(
-    linear_regression,
-    testing_features_df,
-    testing_labels_df,
-    singlelabelname
-    )
+linear_regression_plot_testing =
+    PredictMD.plotsinglelabelregressiontrueversuspredicted(
+        linear_regression,
+        testing_features_df,
+        testing_labels_df,
+        singlelabelname
+        )
 PredictMD.open_plot(linear_regression_plot_testing)
 
 PredictMD.singlelabelregressionmetrics(

@@ -36,7 +36,9 @@ end
 
 """
 """
-function parse_functions!(transformer::ImmutablePackageMultiLabelPredictionTransformer)
+function parse_functions!(
+        transformer::ImmutablePackageMultiLabelPredictionTransformer,
+        )
     return nothing
 end
 

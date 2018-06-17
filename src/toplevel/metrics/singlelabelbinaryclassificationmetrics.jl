@@ -79,30 +79,39 @@ function _singlelabelbinaryclassificationmetrics_tunableparam(
         metricprintnames[:threshold] = string("* Threshold")
     end
     metricprintnames[:accuracy] = string("* Accuracy")
-    if selectedtunableparam == :maximize && selectedparamtomax == :cohen_kappa
+    if selectedtunableparam == :maximize && selectedparamtomax ==
+            :cohen_kappa
         metricprintnames[:cohen_kappa] =
             string("[max] * Cohen's Kappa statistic")
     else
         metricprintnames[:cohen_kappa] =
             string("* Cohen's Kappa statistic")
     end
-    if selectedtunableparam == :maximize && selectedparamtomax == :f1score
+    if selectedtunableparam == :maximize && selectedparamtomax ==
+            :f1score
         metricprintnames[:f1score] = string("[max] * F1 score")
     else
         metricprintnames[:f1score] = string("* F1 Score")
     end
-    metricprintnames[:precision] = string("* Precision (positive predictive value)")
-    metricprintnames[:negative_predictive_value] = string("* Negative predictive value")
-    metricprintnames[:recall] = string("* Recall (sensitivity, true positive rate)")
+    metricprintnames[:precision] =
+        string("* Precision (positive predictive value)")
+    metricprintnames[:negative_predictive_value] =
+        string("* Negative predictive value")
+    metricprintnames[:recall] =
+        string("* Recall (sensitivity, true positive rate)")
     if selectedtunableparam == :sensitivity
-        metricprintnames[:sensitivity] = string("[fix] * Sensitivity (recall, true positive rate)")
+        metricprintnames[:sensitivity] =
+            string("[fix] * Sensitivity (recall, true positive rate)")
     else
-        metricprintnames[:sensitivity] = string("* Sensitivity (recall, true positive rate)")
+        metricprintnames[:sensitivity] =
+            string("* Sensitivity (recall, true positive rate)")
     end
     if selectedtunableparam == :specificity
-        metricprintnames[:specificity] = string("[fix] * Specificity (true negative rate)")
+        metricprintnames[:specificity] =
+            string("[fix] * Specificity (true negative rate)")
     else
-        metricprintnames[:specificity] = string("* Specificity (true negative rate)")
+        metricprintnames[:specificity] =
+            string("* Specificity (true negative rate)")
     end
     metricprintnames = fix_dict_type(metricprintnames)
     return selectedtunableparam, selectedparamtomax, metricprintnames
@@ -189,7 +198,8 @@ function _singlelabelbinaryclassificationmetrics(
     results[:sensitivity] = sensitivity(bestrocnums)
     results[:specificity] = specificity(bestrocnums)
     results[:precision] = precision(bestrocnums)
-    results[:negative_predictive_value] = negative_predictive_value(bestrocnums)
+    results[:negative_predictive_value] =
+        negative_predictive_value(bestrocnums)
     results[:recall] = recall(bestrocnums)
     results[:f1score] = f1score(bestrocnums)
     results[:cohen_kappa] = cohen_kappa(bestrocnums)

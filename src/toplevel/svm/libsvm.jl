@@ -112,7 +112,9 @@ function fit!(
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         probability = false
     else
-        error("Could not figure out if model is classification or regression")
+        error(
+            "Could not figure out if model is classification or regression"
+            )
     end
     info(string("Starting to train LIBSVM.jl model."))
     svm = try
@@ -167,7 +169,9 @@ function predict(
         end
         return predicted_values
     else
-        error("Could not figure out if model is classification or regression")
+        error(
+            "Could not figure out if model is classification or regression"
+            )
     end
 end
 
@@ -185,7 +189,8 @@ function predict_proba(
                 )
             decision_values[:, 1] = 1
         else
-            predicted_labels, decision_values = LIBSVM.svmpredict(estimator.underlyingsvm,featuresarray,)
+            predicted_labels, decision_values =
+                LIBSVM.svmpredict(estimator.underlyingsvm,featuresarray,)
             decision_values = transpose(decision_values)
         end
         result = Dict()
@@ -198,7 +203,9 @@ function predict_proba(
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         error("predict_proba is not defined for regression models")
     else
-        error("Could not figure out if model is classification or regression")
+        error(
+            "Could not figure out if model is classification or regression"
+            )
     end
 end
 
@@ -222,7 +229,8 @@ function _singlelabelmulticlassdataframesvmclassifier_LIBSVM(
         weights::Union{Dict, Void} = nothing,
         cachesize::AbstractFloat = 100.0,
         verbose::Bool = true,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+            nothing,
         )
     dftransformer = DataFrame2LIBSVMTransformer(
         featurenames,
@@ -339,7 +347,8 @@ function _singlelabeldataframesvmregression_LIBSVM(
         weights::Union{Dict, Void} = nothing,
         cachesize::AbstractFloat = 100.0,
         verbose::Bool = true,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+                nothing,
         )
     dftransformer = DataFrame2LIBSVMTransformer(
         featurenames,

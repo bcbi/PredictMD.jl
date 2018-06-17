@@ -19,7 +19,8 @@ function risk_score_cutoff_values(
             )
         )
     #
-    predictedprobabilitiesalllabels = predict_proba(estimator, features_df)
+    predictedprobabilitiesalllabels =
+        predict_proba(estimator, features_df)
     yscore = Cfloat.(
         singlelabelbinaryyscore(
             predictedprobabilitiesalllabels[singlelabelname],
@@ -67,7 +68,9 @@ function risk_score_cutoff_values(
         yscore .<= average_score_true_negatives
         )
     medium_risk_group_rows = find(
-        average_score_true_negatives .<= yscore .<= average_score_true_positives
+        average_score_true_negatives .<=
+            yscore .<=
+            average_score_true_positives
         )
     high_risk_group_rows = find(
         average_score_true_positives .<= yscore
