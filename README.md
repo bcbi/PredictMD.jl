@@ -1,11 +1,6 @@
 # PredictMD - Uniform interface for machine learning in Julia
 
-<a href="https://github.com/bcbi/PredictMD.jl/releases/latest">
-<img alt="Current release" title="Current release"
-src="https://img.shields.io/github/release/bcbi/PredictMD.svg" />
-</a> <a href="https://zenodo.org/badge/latestdoi/109460252">
-<img alt="DOI for current release" title="DOI for current release"
-src="https://zenodo.org/badge/109460252.svg"/></a>
+<a href="https://github.com/bcbi/PredictMD.jl/releases/latest"><img alt="Current release" title="Current release" src="https://img.shields.io/github/release/bcbi/PredictMD.svg" /> </a> <a href="https://zenodo.org/badge/latestdoi/109460252"> <img alt="DOI for current release" title="DOI for current release" src="https://zenodo.org/badge/109460252.svg"/></a>
 
 [PredictMD](https://www.predictmd.net) is a Julia package that provides a
 uniform interface for using multiple different machine learning packages.
