@@ -140,16 +140,17 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     featurenames,
     )
 
-c_svc_svm_classifier = PredictMD.singlelabelmulticlassdataframesvmclassifier(
-    featurenames,
-    singlelabelname,
-    singlelabellevels;
-    package = :LIBSVMjl,
-    svmtype = LIBSVM.SVC,
-    name = "SVM (C-SVC)",
-    verbose = false,
-    feature_contrasts = feature_contrasts,
-    )
+c_svc_svm_classifier =
+    PredictMD.singlelabelmulticlassdataframesvmclassifier(
+        featurenames,
+        singlelabelname,
+        singlelabellevels;
+        package = :LIBSVMjl,
+        svmtype = LIBSVM.SVC,
+        name = "SVM (C-SVC)",
+        verbose = false,
+        feature_contrasts = feature_contrasts,
+        )
 
 PredictMD.fit!(
     c_svc_svm_classifier,
@@ -157,22 +158,24 @@ PredictMD.fit!(
     smoted_training_labels_df,
     )
 
-c_svc_svm_classifier_hist_training = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    c_svc_svm_classifier,
-    smoted_training_features_df,
-    smoted_training_labels_df,
-    singlelabelname,
-    singlelabellevels,
-    )
+c_svc_svm_classifier_hist_training =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        c_svc_svm_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
+        singlelabelname,
+        singlelabellevels,
+        )
 PredictMD.open_plot(c_svc_svm_classifier_hist_training)
 
-c_svc_svm_classifier_hist_testing = PredictMD.plotsinglelabelbinaryclassifierhistogram(
-    c_svc_svm_classifier,
-    testing_features_df,
-    testing_labels_df,
-    singlelabelname,
-    singlelabellevels,
-    )
+c_svc_svm_classifier_hist_testing =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        c_svc_svm_classifier,
+        testing_features_df,
+        testing_labels_df,
+        singlelabelname,
+        singlelabellevels,
+        )
 PredictMD.open_plot(c_svc_svm_classifier_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(

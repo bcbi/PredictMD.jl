@@ -318,16 +318,17 @@ function clean_hcup_nis_csv_icd9(
         error("icd_code_type must be one of: :diagnosis, :procedure")
     end
 
-    ith_row_has_kth_icd_code_matrix = Matrix{Bool}(
+    row_i_has_kth_icd_code_matrix = Matrix{Bool}(
         size(combined_df, 1),
         length(icd_code_list),
         )
     for k = 1:length(icd_code_list)
         current_icd_code = icd_code_list[k]
-        ith_row_has_current_icd_code_in_jth_icdcodecolumn_matrix = Matrix{Bool}(
-            size(combined_df, 1),
-            length(icd_code_column_names),
-            )
+        row_i_has_current_icd_code_in_col_j_matrix =
+            Matrix{Bool}(
+                size(combined_df, 1),
+                length(icd_code_column_names),
+                )
         for j = 1:length(icd_code_column_names)
             info(
                 string(
@@ -345,21 +346,23 @@ function clean_hcup_nis_csv_icd9(
             for i = 1:size(combined_df, 1)
                 cell_value = combined_df[i, icd_code_column_names[j]]
                 if DataFrames.ismissing(cell_value)
-                    ith_row_has_current_icd_code_in_jth_icdcodecolumn_matrix[i, j] = false
+                    row_i_has_current_icd_code_in_col_j_matrix[i, j] = false
                 else
                     cell_value = strip(string(cell_value))
-                    ith_row_has_current_icd_code_in_jth_icdcodecolumn_matrix[i, j] =
+                    row_i_has_current_icd_code_in_col_j_matrix[i, j] =
                         cell_value == current_icd_code
                 end
             end
         end
-        ith_row_has_current_icd_code_in_any_icdcode_column = vec(
-            sum(ith_row_has_current_icd_code_in_jth_icdcodecolumn_matrix, 2) .> 0
+        row_i_has_current_icd_code_in_any_icdcode_column = vec(
+            sum(row_i_has_current_icd_code_in_col_j_matrix, 2) .> 0
             )
-        ith_row_has_kth_icd_code_matrix[:, k] = ith_row_has_current_icd_code_in_any_icdcode_column
+        row_i_has_kth_icd_code_matrix[:, k] =
+            row_i_has_current_icd_code_in_any_icdcode_column
     end
 
-    matching_rows = find(Bool.(vec(sum(ith_row_has_kth_icd_code_matrix, 2).>0)))
+    matching_rows =
+        find(Bool.(vec(sum(row_i_has_kth_icd_code_matrix, 2).>0)))
     num_rows_before = size(combined_df, 1)
     combined_df = combined_df[matching_rows, :]
     num_rows_after = size(combined_df, 1)
@@ -378,14 +381,16 @@ function clean_hcup_nis_csv_icd9(
         )
 
     dx_column_names = [Symbol(string("DX", i)) for i = 1:num_dx_columns]
-    dx_ccs_column_names = [Symbol(string("DXCCS", i)) for i = 1:num_dx_columns]
+    dx_ccs_column_names =
+        [Symbol(string("DXCCS", i)) for i = 1:num_dx_columns]
 
     index_to_ccs = strip.(
         string.(
             unique(
                 DataFrames.skipmissing(
                     vcat(
-                        [combined_df[:, col] for col in dx_ccs_column_names]...
+                        [combined_df[:, col] for
+                            col in dx_ccs_column_names]...
                         )
                     )
                 )
@@ -403,7 +408,7 @@ function clean_hcup_nis_csv_icd9(
     end
     ccs_to_index = fix_dict_type(ccs_to_index)
 
-    ith_row_has_vcode_dx_in_kth_ccs = Matrix{Bool}(
+    row_i_has_vcode_dx_in_kth_ccs = Matrix{Bool}(
         size(combined_df, 1),
         length(index_to_ccs),
         )
@@ -429,10 +434,18 @@ function clean_hcup_nis_csv_icd9(
                 elseif dx_value[1] == 'V' || dx_value[1] == "V"
                     ccs_value = combined_df[i, jth_dx_ccs_col_name]
                     if DataFrames.ismissing(ccs_value)
-                        warn("dx value was not missing but ccs value was missing")
+                        error(
+                            error(
+                                "dx value was not missing but",
+                                "ccs value was missing"
+                                )
+                            )
                     else
                         ccs_value = strip(string(ccs_value))
-                        ith_row_has_vcode_dx_in_kth_ccs[i, ccs_to_index[ccs_value]] = true
+                        row_i_has_vcode_dx_in_kth_ccs[
+                            i,
+                            ccs_to_index[ccs_value]
+                            ] = true
                     end
                 end
             end
@@ -447,7 +460,7 @@ function clean_hcup_nis_csv_icd9(
                 kth_ccs,
                 )
             )
-        temporary_column_ints = Int.(ith_row_has_vcode_dx_in_kth_ccs[:, k])
+        temporary_column_ints = Int.(row_i_has_vcode_dx_in_kth_ccs[:, k])
         if sum(temporary_column_ints) > 0
             temporary_column_strings = Vector{String}(size(combined_df, 1))
             for i = 1:size(combined_df, 1)
@@ -457,7 +470,8 @@ function clean_hcup_nis_csv_icd9(
                     temporary_column_strings[i] = "No"
                 end
             end
-            combined_df[kth_ccs_onehot_column_name] = temporary_column_strings
+            combined_df[kth_ccs_onehot_column_name] =
+                temporary_column_strings
         else
         end
     end

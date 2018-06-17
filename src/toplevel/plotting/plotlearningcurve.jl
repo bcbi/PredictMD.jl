@@ -185,10 +185,13 @@ function plotlearningcurves(
         has_validation = true
     end
     if has_validation
-        training_legendentry = string(strip(legendentry), ", training set")
-        validation_legendentry = string(strip(legendentry), ", validation set")
+        training_legendentry = string(strip(legendentry),
+                ", training set")
+        validation_legendentry = string(strip(legendentry),
+                ", validation set")
     else
-        training_legendentry = string(strip(legendentry), ", training set")
+        training_legendentry = string(strip(legendentry),
+                ", training set")
     end
     if sampleevery < 1
         error("sampleevery must be >=1")
@@ -217,7 +220,8 @@ function plotlearningcurves(
             validation_linearplotobject_yraw = PGFPlots.Plots.Linear(
                 xvalues,
                 validation_yvalues,
-                legendentry = LaTeXStrings.LaTeXString(validation_legendentry),
+                legendentry =
+                        LaTeXStrings.LaTeXString(validation_legendentry),
                 mark = "none",
                 )
             push!(allplotobjects, validation_linearplotobject_yraw)
@@ -237,7 +241,8 @@ function plotlearningcurves(
         training_linearplotobject_ysmoothed = PGFPlots.Plots.Linear(
             xvalues,
             training_yvaluessmoothed,
-            legendentry = LaTeXStrings.LaTeXString(training_legendentry_smoothed),
+            legendentry =
+                LaTeXStrings.LaTeXString(training_legendentry_smoothed),
             mark = "none",
             )
         push!(allplotobjects, training_linearplotobject_ysmoothed)
@@ -254,7 +259,10 @@ function plotlearningcurves(
             validation_linearplotobject_ysmoothed = PGFPlots.Plots.Linear(
                 xvalues,
                 validation_yvaluessmoothed,
-                legendentry = LaTeXStrings.LaTeXString(validation_legendentry_smoothed),
+                legendentry =
+                    LaTeXStrings.LaTeXString(
+                        validation_legendentry_smoothed
+                        ),
                 mark = "none",
                 )
             push!(allplotobjects, validation_linearplotobject_ysmoothed)

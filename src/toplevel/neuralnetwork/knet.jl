@@ -151,9 +151,11 @@ function fit!(
         validation_features_array::Union{Void, AbstractArray} = nothing,
         validation_labels_array::Union{Void, AbstractArray} = nothing,
         )
-    if is_nothing(validation_features_array) && is_nothing(validation_labels_array)
+    if is_nothing(validation_features_array) &&
+            is_nothing(validation_labels_array)
         has_validation_data = false
-    elseif !is_nothing(validation_features_array) && !is_nothing(validation_labels_array)
+    elseif !is_nothing(validation_features_array) &&
+                !is_nothing(validation_labels_array)
         has_validation_data = true
     else
         error(
@@ -168,7 +170,9 @@ function fit!(
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         training_labels_array = Cfloat.(training_labels_array)
     else
-        error("Could not figure out if model is classification or regression")
+        error(
+            "Could not figure out if model is classification or regression"
+            )
     end
     training_data = Knet.minibatch(
         training_features_array,
@@ -401,7 +405,8 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+            nothing,
         )
     labelnames = [singlelabelname]
     labellevels = Dict()
@@ -433,14 +438,16 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
         maxepochs = maxepochs,
         printlosseverynepochs = printlosseverynepochs,
         )
-    predprobalabelfixer = ImmutablePredictProbaSingleLabelInt2StringTransformer(
-        1,
-        singlelabellevels
-        )
-    predictlabelfixer = ImmutablePredictionsSingleLabelInt2StringTransformer(
-        1,
-        singlelabellevels
-        )
+    predprobalabelfixer =
+            ImmutablePredictProbaSingleLabelInt2StringTransformer(
+                        1,
+                        singlelabellevels
+                        )
+    predictlabelfixer =
+            ImmutablePredictionsSingleLabelInt2StringTransformer(
+                        1,
+                        singlelabellevels
+                        )
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         singlelabelname,
         )
@@ -481,7 +488,8 @@ function singlelabelmulticlassdataframeknetclassifier(
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+            nothing,
         )
     if package == :Knetjl
         result = _singlelabelmulticlassdataframeknetclassifier_Knet(
@@ -521,7 +529,8 @@ function _singlelabeldataframeknetregression_Knet(
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+            nothing,
         )
     labelnames = [singlelabelname]
     dftransformer_index = 1
@@ -581,7 +590,8 @@ function singlelabeldataframeknetregression(
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+            nothing,
         )
     if package == :Knetjl
         result = _singlelabeldataframeknetregression_Knet(

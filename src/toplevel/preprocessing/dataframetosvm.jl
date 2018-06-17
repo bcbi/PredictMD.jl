@@ -61,7 +61,9 @@ end
 
 """
 """
-function parse_functions!(transformer::ImmutableFeatureArrayTransposerTransformer)
+function parse_functions!(
+        transformer::ImmutableFeatureArrayTransposerTransformer,
+        )
     return nothing
 end
 
@@ -108,7 +110,8 @@ function DataFrame2LIBSVMTransformer(
         singlelabelname;
         levels = levels,
         )
-    featuretransposetransformer = ImmutableFeatureArrayTransposerTransformer()
+    featuretransposetransformer =
+        ImmutableFeatureArrayTransposerTransformer()
     result = SimplePipeline(
         Fittable[
             df2decisiontreetransformer,

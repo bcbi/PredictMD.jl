@@ -4,7 +4,9 @@ branches:
 
 environment:
     matrix:
-        - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.6/julia-0.6-latest-win64.exe"
+        - JULIA_URL:
+                "https://julialang-s3.julialang.org/bin/winnt/\
+                x64/0.6/julia-0.6-latest-win64.exe"
 
 image: Visual Studio 2015
 
@@ -25,7 +27,7 @@ skip_tags: false
 
 version: '{build}'
 
-###############################################################################
+############################################################################
 
 install:
     - ps: "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12"
