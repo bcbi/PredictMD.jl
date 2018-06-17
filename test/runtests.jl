@@ -7,7 +7,7 @@ info("Attempting to import PredictMD")
 import PredictMD
 info("Successfully imported PredictMD")
 info("Printing PredictMD version info:")
-println(string("PredictMD Version ", PredictMD.VERSION_NUMBER))
+println(string("PredictMD Version ", PredictMD.version()))
 
 srand(999)
 

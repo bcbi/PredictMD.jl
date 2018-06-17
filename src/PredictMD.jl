@@ -8,7 +8,7 @@ function __init__()
     info(
         string(
             "loaded PredictMD version ",
-            PredictMD.VERSION_NUMBER,
+            PredictMD.version(),
             )
         )
     if is_debug()
@@ -335,6 +335,11 @@ include(
 include(
     joinpath(
         ".", "toplevel", "utils", "formulas.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "get_version_number.jl",
         )
     )
 include(
