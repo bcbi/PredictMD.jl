@@ -4,28 +4,22 @@ __precompile__(true)
 """
 module PredictMD # begin module PredictMD
 
+##############################################################################
+# PredictMD.__init__() #######################################################
+##############################################################################
+
 function __init__()
-    info(
-        string(
-            "loaded PredictMD version ",
-            PredictMD.version(),
-            )
-        )
+    info(string("Loaded PredictMD version ", PredictMD.version(),))
     if is_debug()
-        info(
-            string(
-                "debug mode is enabled",
-                )
-            )
+        info(string("Debug mode is enabled."))
     end
 end
 
 ##############################################################################
-# Top level ##################################################################
+# PredictMD base files (top level namespace) #################################
 ##############################################################################
 
 # base/
-# (base must go first)
 include(
     joinpath(
         ".", "base", "interface.jl",
@@ -41,6 +35,10 @@ include(
         ".", "base", "version.jl",
         )
     )
+
+##############################################################################
+# PredictMD source files (top level namespace) ###############################
+##############################################################################
 
 # toplevel/calibration/
 
@@ -70,7 +68,6 @@ include(
         )
     )
 
-
 # toplevel/decomposition/
 
 # toplevel/ensemble/
@@ -91,7 +88,6 @@ include(
         ".", "toplevel", "integrations", "literate_programming", "weave.jl",
         )
     )
-
 
 # toplevel/io/
 include(
@@ -183,7 +179,6 @@ include(
         ".", "toplevel", "metrics", "singlelabelregressionmetrics.jl",
         )
     )
-
 
 # toplevel/modelselection/
 include(
@@ -414,11 +409,7 @@ include(
     )
 
 ##############################################################################
-##############################################################################
-##############################################################################
-
-##############################################################################
-# Submodules #################################################################
+# PredictMD submodules #######################################################
 ##############################################################################
 
 # submodules/clean/
