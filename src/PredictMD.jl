@@ -8,7 +8,7 @@ function __init__()
     info(
         string(
             "loaded PredictMD version ",
-            PredictMD.VERSION,
+            PredictMD.VERSION_NUMBER,
             )
         )
     if is_debug()

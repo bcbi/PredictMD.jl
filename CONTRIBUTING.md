@@ -204,10 +204,10 @@ git flow release start v3.6.0
 **Step 7:** Open the source file `src/base/version.jl` and increment the version number. For example, if the file looks like this:
 
 ```julia
-const VERSION = try
-    convert(VersionNumber, "THE OLD VERSION NUMBER WILL BE HERE")
+const VERSION_NUMBER = try
+    convert(VersionNumber, "THE OLD VERSION_NUMBER NUMBER WILL BE HERE")
 catch e
-    warn("While creating PredictMD.VERSION, ignoring error $(e)")
+    warn("While creating PredictMD.VERSION_NUMBER, ignoring error $(e)")
     VersionNumber(0)
 end
 ```
@@ -215,10 +215,10 @@ end
 Then you would edit it to look like this:
 
 ```julia
-const VERSION = try
+const VERSION_NUMBER = try
     convert(VersionNumber, "v3.6.0")
 catch e
-    warn("While creating PredictMD.VERSION, ignoring error $(e)")
+    warn("While creating PredictMD.VERSION_NUMBER, ignoring error $(e)")
     VersionNumber(0)
 end
 ```
@@ -309,20 +309,20 @@ git checkout develop
 
 Fourth, open the `src/base/version.jl` file and edit the version number accordingly. For example, to set the version number to `v3.7.0-DEV`, edit `src/base/version.jl` to look like this. **Remember to include "-DEV" at the end of the version number.**
 ```julia
-const VERSION = try
+const VERSION_NUMBER = try
     convert(VersionNumber, "v3.7.0-DEV")
 catch e
-    warn("While creating PredictMD.VERSION, ignoring error $(e)")
+    warn("While creating PredictMD.VERSION_NUMBER, ignoring error $(e)")
     VersionNumber(0)
 end
 ```
 
 On the other hand, to set the version number to `v4.0.0-DEV`, edit `src/base/version.jl` to look like this. **Remember to include "-DEV" at the end of the version number.**
 ```julia
-const VERSION = try
+const VERSION_NUMBER = try
     convert(VersionNumber, "v4.0.0-DEV")
 catch e
-    warn("While creating PredictMD.VERSION, ignoring error $(e)")
+    warn("While creating PredictMD.VERSION_NUMBER, ignoring error $(e)")
     VersionNumber(0)
 end
 ```
