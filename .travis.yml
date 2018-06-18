@@ -24,7 +24,8 @@ language: julia
 
 matrix:
     allow_failures:
-    - julia: nightly
+        - julia: nightly
+    fast_finish: true
 
 notifications:
     email:
