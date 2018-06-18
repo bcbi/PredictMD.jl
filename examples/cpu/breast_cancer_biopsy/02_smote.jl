@@ -120,7 +120,7 @@ StatsBase.countmap(training_labels_df[singlelabelname])
 majorityclass = "benign"
 minorityclass = "malignant"
 
-smoted_training_features_df, smoted_training_labels_df = PredictMD.smote(
+(smoted_training_features_df, smoted_training_labels_df,) = PredictMD.smote(
     training_features_df,
     training_labels_df,
     featurenames,
