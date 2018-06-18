@@ -244,18 +244,18 @@ labels_df = df[labelnames]
 
 DataFrames.describe(labels_df[singlelabelname])
 
-trainingandvalidation_features_df,
+(trainingandvalidation_features_df,
     trainingandvalidation_labels_df,
     testing_features_df,
-    testing_labels_df = PredictMD.split_data(
+    testing_labels_df,) = PredictMD.split_data(
         features_df,
         labels_df,
         0.75,
         )
-training_features_df,
+(training_features_df,
     training_labels_df,
     validation_features_df,
-    validation_labels_df = PredictMD.split_data(
+    validation_labels_df,) = PredictMD.split_data(
         trainingandvalidation_features_df,
         trainingandvalidation_labels_df,
         2/3,
