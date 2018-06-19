@@ -498,10 +498,13 @@ trash can icon to delete the branch.
 #### Step 21:
 The final step is to go to the Zenodo entry for the newly created release and put in the correct information. First go to [https://www.predictmd.net/zenodo](https://www.predictmd.net/zenodo), and then click on the yellow "Edit" button to edit the most recent release. Then, fill out the following fields with the specified values:
 
-##### Title
+##### Upload type:
+* Software
+
+##### Basic information -> Title:
 * PredictMD - Uniform interface for machine learning in Julia
 
-##### Authors:
+##### Basic information -> Authors:
 
 | Name | Affiliation | ORCID |
 | ---- | ----------- | ----- |
@@ -512,25 +515,25 @@ The final step is to go to the Zenodo entry for the newly created release and pu
 | Chen ES | Brown Center for Biomedical Informatics, Brown University | 0000-0002-6181-3369 |
 | Sarkar IN | Brown Center for Biomedical Informatics, Brown University | 0000-0003-2054-7356 |
 
-##### Description:
+##### Basic information -> Description:
 * Uniform interface for machine learning in Julia: https://www.predictmd.net
 
-##### Language:
+##### Basic information -> Language:
 * English
 
-##### Keywords:
+##### Basic information -> Keywords:
 * biomedical informatics
 * Julia
 * machine learning
 * statistics
 
-##### Additional notes:
+##### Basic information -> Additional notes:
 * Development of PredictMD was supported in part by National Institutes of Health grants U54GM115677, R01LM011963, and R25MH116440. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health.
 
-##### License:
+##### License -> License:
 * MIT License
 
-##### Related/alternate identifies:
+##### Related/alternate identifiers -> Related identifiers:
 
 (Replace `vMAJOR.MINOR.PATCH` with the appropriate version number. In our example, you would replace `vMAJOR.MINOR.PATCH` with `v3.6.0`.)
 
