@@ -44,18 +44,21 @@ You also need to have the following tools installed and configured:
 
 ### 1.1 GitHub account
 
-**Step 1:** If you already have a GitHub account, go to
+#### Step 1:
+If you already have a GitHub account, go to
 [https://github.com/login](https://github.com/login) and log in.
 If you do not already have a GitHub account, go to
 [https://github.com/join](https://github.com/join) and create an account.
 
-**Step 2:** Go to [https://help.github.com/articles/configuring-two-factor-authentication-via-a-totp-mobile-app/](https://help.github.com/articles/configuring-two-factor-authentication-via-a-totp-mobile-app/)
+#### Step 2:
+Go to [https://help.github.com/articles/configuring-two-factor-authentication-via-a-totp-mobile-app/](https://help.github.com/articles/configuring-two-factor-authentication-via-a-totp-mobile-app/)
 and follow the instructions to enable two-factor
 authentication for your GitHub account.
 
 ### 1.2 git
 
-**Step 1:** Open a terminal window and run the following command:
+#### Step 1:
+Open a terminal window and run the following command:
 ```bash
 git --version
 ```
@@ -72,23 +75,24 @@ download and install Git:
 - macOS: [https://git-scm.com/download/mac](https://git-scm.com/download/mac)
 - GNU/Linux: [https://git-scm.com/download/linux](https://git-scm.com/download/linux)
 
-**Step 2:**
+#### Step 2:
 ```bash
 git config --global user.name "Myfirstname Mylastname"
 ```
 
-**Step 3:**
+#### Step 3:
 ```bash
 git config user.email "myemailaddress@example.com"
 ```
 
-**Step 4:**
+#### Step 4:
 
 ```bash
 git config --global github.user mygithubusername
 ```
 
-**Step 5:** Follow the steps on each of the following pages in order to
+#### Step 5:
+Follow the steps on each of the following pages in order to
 generate an SSH key and associate it with your GitHub account:
 1. [https://help.github.com/articles/checking-for-existing-ssh-keys/](https://help.github.com/articles/checking-for-existing-ssh-keys/)
 2. [https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)
@@ -98,7 +102,8 @@ generate an SSH key and associate it with your GitHub account:
 
 ### 1.3 git-flow
 
-**Step 1:** Open a terminal window and run the following command:
+#### Step 1:
+Open a terminal window and run the following command:
 ```bash
 git flow
 ```
@@ -128,7 +133,8 @@ install git-flow:
 
 ### 1.4 GPG
 
-**Step 1:** Open a terminal window and run the following command:
+#### Step 1:
+Open a terminal window and run the following command:
 ```bash
 gpg --version
 ```
@@ -156,7 +162,8 @@ download and install GPG:
 - macOS: [https://gpgtools.org/](https://gpgtools.org/)
 - GNU/Linux: [https://gnupg.org/download/#sec-1-2](https://gnupg.org/download/#sec-1-2)
 
-**Step 2:** Follow the steps on each of the following pages in order to
+#### Step 2:
+Follow the steps on each of the following pages in order to
 generate a GPG key and associate it with your GitHub account:
 1. [https://help.github.com/articles/checking-for-existing-gpg-keys/](https://help.github.com/articles/checking-for-existing-gpg-keys/)
 2. [https://help.github.com/articles/generating-a-new-gpg-key/](https://help.github.com/articles/generating-a-new-gpg-key/)
@@ -166,20 +173,24 @@ generate a GPG key and associate it with your GitHub account:
 
 ## 2. Setting up the PredictMD repo
 
-**Step 1:** Make sure that you have followed all of the instructions
+#### Step 1:
+Make sure that you have followed all of the instructions
 in [Section 1 (Prerequisites)](#1-prerequisites).
 
-**Step 2:** Follow the installation instructions in
+#### Step 2:
+Follow the installation instructions in
 [README.md](README.md) to install PredictMD.
 
-**Step 3:** Open a terminal window and `cd` to the directory
+#### Step 3:
+Open a terminal window and `cd` to the directory
 containing the PredictMD source code:
 
 ```bash
 cd ~/.julia/v0.6/PredictMD
 ```
 
-**Step 4:** Run the following lines:
+#### Step 4:
+Run the following lines:
 
 ```bash
 git config commit.gpgsign true &&
@@ -200,32 +211,36 @@ git fetch --all --prune
 your GPG set-up is working.
 Release tags MUST be signed with your GPG key.**
 
-**Step 1:** Open a terminal window and `cd` to the directory
-containing the PredictMD source code:
+#### Step 1:
+Open a terminal window and `cd` to the directory containing the PredictMD source code:
 
 ```bash
 cd ~/.julia/v0.6/PredictMD
 ```
 
-**Step 2:** Fetch the latest versions of all branches:
+#### Step 2:
+Fetch the latest versions of all branches:
 
 ```bash
 git fetch --all --prune
 ```
 
-**Step 3:** Checkout the `develop` branch:
+#### Step 3:
+Checkout the `develop` branch:
 
 ```bash
 git checkout develop
 ```
 
-**Step 4:** Pull the latest version of `develop`.
+#### Step 4:
+Pull the latest version of `develop`.
 
 ```bash
 git pull
 ```
 
-**Step 5:** Determine the version number that you are going to
+#### Step 5:
+Determine the version number that you are going to
 release. We use the Semantic Versioning
 system: [https://semver.org](https://semver.org). In Semantic
 Versioning, version numbers take the form `vMAJOR.MINOR.PATCH`.
@@ -240,7 +255,8 @@ is `v3.5.12` and that we are adding functionality in a
 backwards-compatible manner. So we increment the `MINOR` version,
 which means the new version that we are tagging is `v3.6.0`.
 
-**Step 6:** Start a new release branch.
+#### Step 6:
+Start a new release branch.
 
 ```bash
 git flow release start v3.6.0
@@ -252,7 +268,8 @@ git flow release start v3.6.0
 you can list all of the release branches by running the following
 command:* `git flow release list`
 
-**Step 7:** Open the source file `src/base/version.jl` and change
+#### Step 7:
+Open the source file `src/base/version.jl` and change
 the version number. For example, if the file looks like this:
 
 ```julia
@@ -275,7 +292,8 @@ catch e
 end
 ```
 
-**Step 8:** Commit your changes:
+#### Step 8:
+Commit your changes:
 
 ```bash
 git add src/base/version.jl
@@ -286,13 +304,15 @@ An commit message editor will open. Type an appropriate commit
 message (e.g. "Bump version number"), save the file, and quit the
 editor.
 
-**Step 9:** Push the release branch to GitHub.
+#### Step 9:
+Push the release branch to GitHub.
 
 ```bash
 git push origin release/v3.6.0
 ```
 
-**Step 10:** Wait for all of the tests to pass. You can check on
+#### Step 10:
+Wait for all of the tests to pass. You can check on
 the status of the tests by going to
 [https://github.com/bcbi/PredictMD.jl/branches/yours](https://github.com/bcbi/PredictMD.jl/branches/yours)
 and scrolling down to find your release branch.
@@ -310,7 +330,8 @@ you can continue.**
 This is especially common with the Mac builds on Travis. You can usually
 resolve this error by restarting the failed build.*
 
-**Step 11:**  Once all of the tests have passed, you can finish
+#### Step 11:
+Once all of the tests have passed, you can finish
 tagging your release using the git-flow tools:
 
 
@@ -332,7 +353,8 @@ the file, and close the editor.
 Once you have finished all of the commits and tags, you must verify
 that you have correctly signed the release tag:
 
-**Step 12:** Verify that you have correctly signed the release tag:
+#### Step 12:
+Verify that you have correctly signed the release tag:
 ```bash
 git tag -v v3.6.0
 ```
@@ -352,7 +374,8 @@ point, you should
 and mention [@DilumAluthge](https://github.com/DilumAluthge) in the
 issue body.
 
-**Step 13:** Temporarily modify the branch protections for
+#### Step 13:
+Temporarily modify the branch protections for
 the `master` and `develop` branches:
 
 First, the `master` branch: go to
@@ -366,7 +389,8 @@ Now do the same thing for the `develop` branch: Go to
 scroll down, UNCHECK the box next to "Include administrators", scroll to
 the bottom of the page, and click the green "Save changes" button.
 
-**Step 14:** Push the new release to GitHub:
+#### Step 14:
+Push the new release to GitHub:
 
 ```bash
 git push origin master # push the updated "master" branch
@@ -374,7 +398,8 @@ git push origin develop # push the updated "develop" branch
 git push origin --tags # push the new "v3.6.0" tag
 ```
 
-**Step 15:** Create a release on GitHub using the tag you just
+#### Step 15:
+Create a release on GitHub using the tag you just
 created, signed, and pushed. First, go to
 [https://github.com/bcbi/PredictMD.jl/releases/new](https://github.com/bcbi/PredictMD.jl/releases/new).
 In the text box that reads "Tag version", type the name of the tag you
@@ -383,7 +408,8 @@ text box that reads "Release title", type an appropriate title, such
 as "PredictMD version 3.6.0". Finally, click the green
 "Publish release" button.
 
-**Step 16:** Update the version number in the `develop` branch:
+#### Step 16:
+Update the version number in the `develop` branch:
 
 First, use Semantic Versioning ([https://semver.org](https://semver.org))
 determine what the next version number will be. In our example, we have
@@ -429,7 +455,8 @@ catch e
 end
 ```
 
-**Step 17:** Commit your changes:
+#### Step 17:
+Commit your changes:
 
 ```bash
 git add src/base/version.jl
@@ -440,12 +467,14 @@ An commit message editor will open. Type an appropriate commit
 message (e.g. "Bump version number"), save the file, and quit
 the editor.
 
-**Step 18:** Push the updated develop branch:
+#### Step 18:
+Push the updated develop branch:
 ```bash
 git push origin develop
 ```
 
-**Step 19:** Re-enable the branch protection settings:
+#### Step 19:
+Re-enable the branch protection settings:
 
 `master` branch: go to
 [https://github.com/bcbi/PredictMD.jl/settings/branches/master](https://github.com/bcbi/PredictMD.jl/settings/branches/master),
@@ -459,22 +488,56 @@ scroll down, CHECK the box next to "Include administrators", scroll to
 the bottom of the page, and click the green
 "Save changes" button.
 
-**Step 20:** Delete the release branch, which is no longer needed. To do
+#### Step 20:
+Delete the release branch, which is no longer needed. To do
 this, go to
 [https://github.com/bcbi/PredictMD.jl/branches/yours](https://github.com/bcbi/PredictMD.jl/branches/yours),
 scroll down to find the release branch, and then click the
 trash can icon to delete the branch.
 
-**Step 21:** The final step is to go to the Zenodo entry for the newly created release and put in the correct information. First go to [https://www.predictmd.net/zenodo](https://www.predictmd.net/zenodo), and then click on the yellow "Edit" button to edit the most recent release. Then, enter the correct information for the following fields:
-* Title
-* Authors (author names, affiliations, and ORCIDs)
-* Description
-* Language
-* Keywords
-* Additional notes
-* License
-* Related/alternate identifiers
+#### Step 21:
+The final step is to go to the Zenodo entry for the newly created release and put in the correct information. First go to [https://www.predictmd.net/zenodo](https://www.predictmd.net/zenodo), and then click on the yellow "Edit" button to edit the most recent release. Then, fill out the following fields with the specified values:
 
-You can get the correct values for those fields by looking at the previous Zenodo release and copying those values.
+##### Title
+* PredictMD - Uniform interface for machine learning in Julia
+
+##### Authors:
+
+| Name | Affiliation | ORCID |
+| ---- | ----------- | ----- |
+| Aluthge DP | Brown Center for Biomedical Informatics, Brown University | 0000-0002-9247-0530 |
+| Sinha I | Brown Center for Biomedical Informatics, Brown University |  |
+| Stey P | Brown Center for Biomedical Informatics, Brown University |  |
+| Restrepo MI | Brown Center for Biomedical Informatics, Brown University | 0000-0002-2708-8984 |
+| Chen ES | Brown Center for Biomedical Informatics, Brown University | 0000-0002-6181-3369 |
+| Sarkar IN | Brown Center for Biomedical Informatics, Brown University | 0000-0003-2054-7356 |
+
+##### Description:
+* Uniform interface for machine learning in Julia: https://www.predictmd.net
+
+##### Language:
+* English
+
+##### Keywords:
+* biomedical informatics
+* Julia
+* machine learning
+* statistics
+
+##### Additional notes:
+* Development of PredictMD was supported in part by National Institutes of Health grants U54GM115677, R01LM011963, and R25MH116440. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health.
+
+##### License:
+* MIT License
+
+##### Related/alternate identifies:
+
+(Replace `vMAJOR.MINOR.PATCH` with the appropriate version number. In our example, you would replace `vMAJOR.MINOR.PATCH` with `v3.6.0`.)
+
+| Identifier | Relationship |
+| ----- | ----- |
+| `https://www.predictmd.net/vMAJOR.MINOR.PATCH` | documents this upload |
+| `https://github.com/bcbi/PredictMD.jl/releases/tag/vMAJOR.MINOR.PATCH` | is an alternate identifier of this upload |
+| `https://github.com/bcbi/PredictMD.jl/tree/vMAJOR.MINOR.PATCH` | is an alternate identifier of this upload |
 
 After you have entered the correct information in all of the above fields, click the white "Save" button, and then click the blue "Publish" button. Congratulations, you are finished!
