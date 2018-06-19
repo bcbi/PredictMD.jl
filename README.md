@@ -87,21 +87,6 @@ PredictMD's internals.
             /></a></td>
         </tr>
         <tr>
-            <td>Coveralls</td>
-            <td>
-            <a
-            href="https://coveralls.io/github/bcbi/PredictMD.jl?branch=master">
-            <img alt="Coverage status (master)"
-            title="Coverage status (master)"
-            src="https://coveralls.io/repos/github/bcbi/PredictMD.jl/badge.svg?branch=master"
-            /></a></td>
-            <td>
-            <a
-            href="https://coveralls.io/github/bcbi/PredictMD.jl?branch=develop">
-            <img alt="Coverage status (develop)" title="Coverage status (develop)" src="https://coveralls.io/repos/github/bcbi/PredictMD.jl/badge.svg?branch=develop"
-            /></a></td>
-        </tr>
-        <tr>
             <td>docs</td>
             <td><a href="https://www.predictmd.net/stable">
             <img
