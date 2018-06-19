@@ -516,7 +516,7 @@ The final step is to go to the Zenodo entry for the newly created release and pu
 | Sarkar IN | Brown Center for Biomedical Informatics, Brown University | 0000-0003-2054-7356 |
 
 ##### Basic information -> Description:
-* Uniform interface for machine learning in Julia: https://www.predictmd.net
+* PredictMD is a free and open-source Julia package that provides a uniform interface for machine learning.
 
 ##### Basic information -> Language:
 * English
@@ -539,6 +539,7 @@ The final step is to go to the Zenodo entry for the newly created release and pu
 
 | Identifier | Relationship |
 | ----- | ----- |
+| `https://www.predictmd.net` | compiled/created this upload |
 | `https://www.predictmd.net/vMAJOR.MINOR.PATCH` | documents this upload |
 | `https://github.com/bcbi/PredictMD.jl/releases/tag/vMAJOR.MINOR.PATCH` | is an alternate identifier of this upload |
 | `https://github.com/bcbi/PredictMD.jl/tree/vMAJOR.MINOR.PATCH` | is an alternate identifier of this upload |
