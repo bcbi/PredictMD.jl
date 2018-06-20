@@ -9,6 +9,11 @@ info("Successfully imported PredictMD")
 info("Printing PredictMD version info:")
 println(string("PredictMD Version ", PredictMD.version()))
 
+info("Attempting to import submodules of PredictMD")
+import PredictMD.Clean
+import PredictMD.GPU
+info("Successfully imported submodules of PredictMD")
+
 srand(999)
 
 Base.flush( Base.STDOUT )
