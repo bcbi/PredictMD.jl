@@ -1,4 +1,15 @@
-## Beginning of file
+###### Beginning of file
+
+#### Begin project-specific settings
+
+PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "boston_housing_example")
+# PROJECT_OUTPUT_DIRECTORY = "/Users/dilum/Desktop/boston_housing_example"
+
+#### End project-specific settings
+
+#### Begin content
+
+mkpath(PROJECT_OUTPUT_DIRECTORY)
 
 import CSV
 import DataFrames
@@ -6,51 +17,36 @@ import PredictMD
 
 srand(999)
 
-mkpath(
-    joinpath(
-        tempdir(),
-        "boston_housing_example",
-        ),
-    )
-
 trainingandvalidation_features_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "trainingandvalidation_features_df.csv",
     )
 trainingandvalidation_labels_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "trainingandvalidation_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "testing_features_df.csv",
     )
 testing_labels_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "testing_labels_df.csv",
     )
 training_features_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "training_features_df.csv",
     )
 training_labels_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "training_labels_df.csv",
     )
 validation_features_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "validation_features_df.csv",
     )
 validation_labels_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "validation_labels_df.csv",
     )
 trainingandvalidation_features_df = CSV.read(
@@ -170,8 +166,7 @@ PredictMD.singlelabelregressionmetrics(
     )
 
 random_forest_regression_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "random_forest_regression.jld2",
     )
 
@@ -180,4 +175,6 @@ PredictMD.save_model(
     random_forest_regression
     )
 
-## End of file
+#### End content
+
+###### End of file

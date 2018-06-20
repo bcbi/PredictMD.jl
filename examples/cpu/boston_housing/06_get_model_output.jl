@@ -1,4 +1,15 @@
-## Beginning of file
+###### Beginning of file
+
+#### Begin project-specific settings
+
+PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "boston_housing_example")
+# PROJECT_OUTPUT_DIRECTORY = "/Users/dilum/Desktop/boston_housing_example"
+
+#### End project-specific settings
+
+#### Begin content
+
+mkpath(PROJECT_OUTPUT_DIRECTORY)
 
 import CSV
 import DataFrames
@@ -8,43 +19,35 @@ import PredictMD
 srand(999)
 
 trainingandvalidation_features_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "trainingandvalidation_features_df.csv",
     )
 trainingandvalidation_labels_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "trainingandvalidation_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "testing_features_df.csv",
     )
 testing_labels_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "testing_labels_df.csv",
     )
 training_features_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "training_features_df.csv",
     )
 training_labels_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "training_labels_df.csv",
     )
 validation_features_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "validation_features_df.csv",
     )
 validation_labels_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "validation_labels_df.csv",
     )
 trainingandvalidation_features_df = CSV.read(
@@ -89,18 +92,15 @@ validation_labels_df = CSV.read(
     )
 
 linear_regression_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "linear_regression.jld2",
     )
 random_forest_regression_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "random_forest_regression.jld2",
     )
 knet_mlp_regression_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "knet_mlp_regression.jld2",
     )
 
@@ -120,4 +120,6 @@ PredictMD.predict(linear_regression,testing_features_df,)
 PredictMD.predict(random_forest_regression,testing_features_df,)
 PredictMD.predict(knet_mlp_regression,testing_features_df,)
 
-## End of file
+#### End content
+
+###### End of file
