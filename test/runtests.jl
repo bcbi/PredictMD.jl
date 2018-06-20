@@ -20,40 +20,44 @@ srand(999)
 ENV["PREDICTMD_IS_RUNTESTS"] = "true"
 
 Base.Test.@testset "PredictMD test suite" begin
-            Base.Test.@testset "Unit tests (CPU)" begin
-                        info("Running unit tests (CPU)")
-                        Base.Test.@testset "base" begin
+    Base.Test.@testset "Unit tests (CPU)" begin
+        info("Running unit tests (CPU)")
+        Base.Test.@testset "base" begin
             include(
                 joinpath(
-                    ".", "cpu", "unit", "base", "test_version.jl",)
+                    ".", "cpu", "unit", "base",
+                    "test_version.jl",)
                 )
         end
         Base.Test.@testset "metrics" begin
             include(
                 joinpath(
-                    ".", "cpu", "unit", "metrics",
+                    ".", "cpu", "unit", "toplevel", "metrics",
                     "test_coefficientofdetermination.jl",)
                 )
             include(
                 joinpath(
-                    ".", "cpu", "unit", "metrics", "test_cohenkappa.jl",)
+                    ".", "cpu", "unit", "toplevel", "metrics",
+                    "test_cohenkappa.jl",)
                 )
         end
         Base.Test.@testset "utils" begin
             include(
                 joinpath(
-                    ".", "cpu", "unit", "utils", "test_fix_dict_type.jl",)
+                    ".", "cpu", "unit", "toplevel", "utils",
+                    "test_fix_dict_type.jl",)
                 )
             include(
                 joinpath(
-                    ".", "cpu", "unit", "utils", "test_fix_vector_type.jl",)
+                    ".", "cpu", "unit", "toplevel", "utils",
+                    "test_fix_vector_type.jl",)
                 )
         end
     end
     Base.Test.@testset "Generate documentation and examples" begin
-                        Base.Test.@testset "Generate examples" begin
-                                    info("Generating examples")
-                                    include(
+        Base.Test.@testset "Generate examples" begin
+            info("Generating examples")
+            include(
                 joinpath(
                     "..",
                     "docs",
@@ -62,8 +66,8 @@ Base.Test.@testset "PredictMD test suite" begin
                 )
         end
         Base.Test.@testset "Generate documentation" begin
-                                    info("Generating documentation")
-                                    include(
+            info("Generating documentation")
+            include(
                 joinpath(
                     "..",
                     "docs",
@@ -73,10 +77,10 @@ Base.Test.@testset "PredictMD test suite" begin
         end
                     end
     Base.Test.@testset "Test examples (CPU)" begin
-                        info("testing examples (CPU)")
-                        Base.Test.@testset "Boston housing regression (CPU)" begin
-                                    info("testing Boston housing regression (CPU)")
-                                    include(
+        info("testing examples (CPU)")
+        Base.Test.@testset "Boston housing regression (CPU)" begin
+            info("testing Boston housing regression (CPU)")
+            include(
                 joinpath(
                     "..", "docs", "src", "examples", "cpu", "boston_housing",
                     "01_preprocess_data.jl",)
@@ -106,10 +110,10 @@ Base.Test.@testset "PredictMD test suite" begin
                     "..", "docs", "src", "examples", "cpu", "boston_housing",
                     "06_get_model_output.jl",)
                 )
-                                end
+        end
         Base.Test.@testset "Breast cancer biopsy classification (CPU)" begin
-                                    info("testing breast cancer biopsy classification (CPU)")
-                                    include(
+            info("testing breast cancer biopsy classification (CPU)")
+            include(
                 joinpath(
                     "..", "docs", "src", "examples", "cpu",
                     "breast_cancer_biopsy", "01_preprocess_data.jl",)
@@ -154,10 +158,8 @@ Base.Test.@testset "PredictMD test suite" begin
                     "..", "docs", "src", "examples", "cpu",
                     "breast_cancer_biopsy", "09_get_model_output.jl",)
                 )
-                                end
-                    end
         end
+    end
+end
 
 ENV["PREDICTMD_IS_RUNTESTS"] = "false"
-
-
