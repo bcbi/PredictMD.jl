@@ -118,7 +118,7 @@ linear_regression = PredictMD.singlelabeldataframelinearregression(
     singlelabelname;
     package = :GLMjl,
     intercept = true,
-    interactions = 2,
+    interactions = 1,
     name = "Linear regression",
     )
 
