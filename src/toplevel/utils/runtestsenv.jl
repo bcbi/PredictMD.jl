@@ -31,3 +31,8 @@ function is_deploy_docs(a::Associative = ENV)
         "true"
     return result
 end
+
+"""
+"""
+is_docs_or_examples(a::Associative = ENV) =
+    is_make_examples(a) || is_make_docs(a) || is_deploy_docs(a)
