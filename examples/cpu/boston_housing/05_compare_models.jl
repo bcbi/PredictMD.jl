@@ -7,7 +7,7 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "boston_housing_example")
 
 #### End project-specific settings
 
-#### Begin content
+#### Begin model comparison code
 
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 
@@ -134,6 +134,6 @@ showall(PredictMD.singlelabelregressionmetrics(
     singlelabelname,
     ))
 
-#### End content
+#### End model comparison code
 
 ###### End of file

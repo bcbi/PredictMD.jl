@@ -7,7 +7,7 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "boston_housing_example")
 
 #### End project-specific settings
 
-#### Begin content
+#### Begin model output code
 
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 
@@ -120,6 +120,6 @@ PredictMD.predict(linear_regression,testing_features_df,)
 PredictMD.predict(random_forest_regression,testing_features_df,)
 PredictMD.predict(knet_mlp_regression,testing_features_df,)
 
-#### End content
+#### End model output code
 
 ###### End of file

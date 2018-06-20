@@ -7,7 +7,7 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "breast_cancer_biopsy_example")
 
 #### End project-specific settings
 
-#### Begin content
+#### Begin data preprocessing code
 
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 
@@ -131,6 +131,6 @@ CSV.write(
     validation_labels_df,
     )
 
-#### End content
+#### End data preprocessing code
 
 ###### End of file

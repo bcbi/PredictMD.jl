@@ -7,7 +7,7 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "breast_cancer_biopsy_example")
 
 #### End project-specific settings
 
-#### Begin content
+#### Begin SMOTE class-balancing code
 
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 
@@ -149,6 +149,6 @@ CSV.write(
     smoted_training_labels_df,
     )
 
-#### End content
+#### End SMOTE class-balancing code
 
 ###### End of file

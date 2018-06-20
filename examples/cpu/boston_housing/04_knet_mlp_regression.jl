@@ -7,7 +7,7 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "boston_housing_example")
 
 #### End project-specific settings
 
-#### Begin content
+#### Begin Knet neural network regression code
 
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 
@@ -274,6 +274,6 @@ knet_mlp_regression_filename = joinpath(
 
 PredictMD.save_model(knet_mlp_regression_filename, knet_mlp_regression)
 
-#### End content
+#### End Knet neural network regression code
 
 ###### End of file

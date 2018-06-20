@@ -7,7 +7,7 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "breast_cancer_biopsy_example")
 
 #### End project-specific settings
 
-#### Begin content
+#### Begin random forest classifier code
 
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 
@@ -199,6 +199,6 @@ PredictMD.save_model(
     random_forest_classifier,
     )
 
-#### End content
+#### End random forest classifier code
 
 ###### End of file

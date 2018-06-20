@@ -7,7 +7,7 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "breast_cancer_biopsy_example")
 
 #### End project-specific settings
 
-#### Begin content
+#### Begin model comparison code
 
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 
@@ -239,6 +239,6 @@ prplottesting = PredictMD.plotprcurves(
     )
 PredictMD.open_plot(prplottesting)
 
-#### End content
+#### End model comparison code
 
 ###### End of file

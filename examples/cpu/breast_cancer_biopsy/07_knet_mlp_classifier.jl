@@ -7,7 +7,7 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "breast_cancer_biopsy_example")
 
 #### End project-specific settings
 
-#### Begin content
+#### Begin Knet neural network classifier code
 
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 
@@ -319,6 +319,6 @@ knet_mlp_classifier_filename = joinpath(
 
 PredictMD.save_model(knet_mlp_classifier_filename, knet_mlp_classifier)
 
-#### End content
+#### End Knet neural network classifier code
 
 ###### End of file

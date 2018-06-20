@@ -7,7 +7,7 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "breast_cancer_biopsy_example")
 
 #### End project-specific settings
 
-#### Begin content
+#### Begin model output code
 
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 
@@ -182,6 +182,6 @@ PredictMD.predict(c_svc_svm_classifier,testing_features_df,)
 PredictMD.predict(nu_svc_svm_classifier,testing_features_df,)
 PredictMD.predict(knet_mlp_classifier,testing_features_df,)
 
-#### End content
+#### End model output code
 
 ###### End of file

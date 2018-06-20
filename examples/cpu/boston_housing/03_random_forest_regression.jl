@@ -7,7 +7,7 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "boston_housing_example")
 
 #### End project-specific settings
 
-#### Begin content
+#### Begin random forest regression code
 
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 
@@ -175,6 +175,6 @@ PredictMD.save_model(
     random_forest_regression
     )
 
-#### End content
+#### End random forest regression code
 
 ###### End of file

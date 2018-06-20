@@ -7,7 +7,7 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "boston_housing_example")
 
 #### End project-specific settings
 
-#### Begin content
+#### Begin linear regression code
 
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 
@@ -163,6 +163,6 @@ linear_regression_filename = joinpath(
 
 PredictMD.save_model(linear_regression_filename, linear_regression)
 
-#### End content
+#### End linear regression code
 
 ###### End of file

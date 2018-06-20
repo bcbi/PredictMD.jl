@@ -7,7 +7,7 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "breast_cancer_biopsy_example")
 
 #### End project-specific settings
 
-#### Begin content
+#### Begin nu-SVC code
 
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 
@@ -200,6 +200,6 @@ PredictMD.save_model(
     nu_svc_svm_classifier,
     )
 
-#### End content
+#### End nu-SVC code
 
 ###### End of file

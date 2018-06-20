@@ -7,7 +7,7 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "breast_cancer_biopsy_example")
 
 #### End project-specific settings
 
-#### Begin content
+#### Begin logistic classifier code
 
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 
@@ -252,6 +252,6 @@ logistic_classifier_filename = joinpath(
 
 PredictMD.save_model(logistic_classifier_filename, logistic_classifier)
 
-#### End content
+#### End logistic classifier code
 
 ###### End of file
