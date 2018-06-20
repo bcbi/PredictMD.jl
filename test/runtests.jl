@@ -66,14 +66,14 @@ Base.Test.@testset "PredictMD test suite" begin
             include(
                 joinpath(
                     ".", "cpu", "unit", "submodules", "gpu",
-                    "test_gpu_has_functions",)
+                    "test_gpu_has_functions.jl",)
                 )
         end
         Base.Test.@testset "hcup utility functions" begin
             include(
                 joinpath(
                     ".", "cpu", "unit", "submodules", "clean", "hcup",
-                    "test_hcup_utility_functions",)
+                    "test_hcup_utility_functions.jl",)
                 )
         end
     end
