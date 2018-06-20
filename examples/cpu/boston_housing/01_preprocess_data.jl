@@ -1,20 +1,22 @@
 ###### Beginning of file
 
+import PredictMD
+
 #### Begin project-specific settings
 
-PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "boston_housing_example")
-# PROJECT_OUTPUT_DIRECTORY = "/Users/dilum/Desktop/boston_housing_example"
+PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
+    homedir(),
+    "Desktop",
+    "boston_housing_example",
+    )
 
 #### End project-specific settings
 
 #### Begin data preprocessing code
 
-mkpath(PROJECT_OUTPUT_DIRECTORY)
-
 import CSV
 import DataFrames
 import GZip
-import PredictMD
 import StatsBase
 
 srand(999)

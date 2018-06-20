@@ -1,20 +1,22 @@
 ###### Beginning of file
 
+import PredictMD
+
 #### Begin project-specific settings
 
-PROJECT_OUTPUT_DIRECTORY = joinpath(tempdir(), "breast_cancer_biopsy_example")
-# PROJECT_OUTPUT_DIRECTORY = "/Users/dilum/Desktop/breast_cancer_biopsy_example"
+PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
+    homedir(),
+    "Desktop",
+    "breast_cancer_biopsy_example",
+    )
 
 #### End project-specific settings
 
 #### Begin model output code
 
-mkpath(PROJECT_OUTPUT_DIRECTORY)
-
 import CSV
 import DataFrames
 import Knet
-import PredictMD
 
 srand(999)
 
