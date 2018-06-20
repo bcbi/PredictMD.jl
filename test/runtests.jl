@@ -16,7 +16,6 @@ info("Successfully imported submodules of PredictMD")
 
 srand(999)
 
-
 ENV["PREDICTMD_IS_RUNTESTS"] = "true"
 
 Base.Test.@testset "PredictMD test suite" begin
@@ -51,6 +50,20 @@ Base.Test.@testset "PredictMD test suite" begin
                 joinpath(
                     ".", "cpu", "unit", "toplevel", "utils",
                     "test_fix_vector_type.jl",)
+                )
+        end
+        Base.Test.@testset "\"has\" functions" begin
+            include(
+                joinpath(
+                    ".", "cpu", "unit", "submodules", "gpu",
+                    "test_gpu_has_functions",)
+                )
+        end
+        Base.Test.@testset "hcup utility functions" begin
+            include(
+                joinpath(
+                    ".", "cpu", "unit", "submodules", "clean", "hcup",
+                    "test_hcup_utility_functions",)
                 )
         end
     end
