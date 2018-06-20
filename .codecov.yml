@@ -1,12 +1,11 @@
 codecov:
     branch: develop
+    ignore:
+        - "src/submodules/clean/hcup/hcup.jl"
+        - "src/submodules/gpu/clang/clang.jl"
+        - "src/submodules/gpu/clarrays/clarrays.jl"
+        - "src/submodules/gpu/cuarrays/cuarrays.jl"
+        - "src/submodules/gpu/cxx/cxx.jl"
+        - "src/submodules/gpu/llvm/llvm.jl"
 
 comment: true
-
-ignore:
-    - "src/submodules/clean/hcup/hcup.jl"
-    - "src/submodules/gpu/clang/clang.jl"
-    - "src/submodules/gpu/clarrays/clarrays.jl"
-    - "src/submodules/gpu/cuarrays/cuarrays.jl"
-    - "src/submodules/gpu/cxx/cxx.jl"
-    - "src/submodules/gpu/llvm/llvm.jl"
