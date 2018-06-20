@@ -16,21 +16,13 @@ info("Successfully imported submodules of PredictMD")
 
 srand(999)
 
-Base.flush( Base.STDOUT )
-Base.flush( Base.STDERR )
 
 ENV["PREDICTMD_IS_RUNTESTS"] = "true"
 
 Base.Test.@testset "PredictMD test suite" begin
-    Base.flush( Base.STDOUT )
-    Base.flush( Base.STDERR )
-    Base.Test.@testset "Unit tests (CPU)" begin
-        Base.flush( Base.STDOUT )
-        Base.flush( Base.STDERR )
-        info("Running unit tests (CPU)")
-        Base.flush( Base.STDOUT )
-        Base.flush( Base.STDERR )
-        Base.Test.@testset "base" begin
+            Base.Test.@testset "Unit tests (CPU)" begin
+                        info("Running unit tests (CPU)")
+                        Base.Test.@testset "base" begin
             include(
                 joinpath(
                     ".", "cpu", "unit", "base", "test_version.jl",)
@@ -59,15 +51,9 @@ Base.Test.@testset "PredictMD test suite" begin
         end
     end
     Base.Test.@testset "Generate documentation and examples" begin
-        Base.flush( Base.STDOUT )
-        Base.flush( Base.STDERR )
-        Base.Test.@testset "Generate examples" begin
-            Base.flush( Base.STDOUT )
-            Base.flush( Base.STDERR )
-            info("Generating examples")
-            Base.flush( Base.STDOUT )
-            Base.flush( Base.STDERR )
-            include(
+                        Base.Test.@testset "Generate examples" begin
+                                    info("Generating examples")
+                                    include(
                 joinpath(
                     "..",
                     "docs",
@@ -76,12 +62,8 @@ Base.Test.@testset "PredictMD test suite" begin
                 )
         end
         Base.Test.@testset "Generate documentation" begin
-            Base.flush( Base.STDOUT )
-            Base.flush( Base.STDERR )
-            info("Generating documentation")
-            Base.flush( Base.STDOUT )
-            Base.flush( Base.STDERR )
-            include(
+                                    info("Generating documentation")
+                                    include(
                 joinpath(
                     "..",
                     "docs",
@@ -89,22 +71,12 @@ Base.Test.@testset "PredictMD test suite" begin
                     )
                 )
         end
-        Base.flush( Base.STDOUT )
-        Base.flush( Base.STDERR )
-    end
+                    end
     Base.Test.@testset "Test examples (CPU)" begin
-        Base.flush( Base.STDOUT )
-        Base.flush( Base.STDERR )
-        info("testing examples (CPU)")
-        Base.flush( Base.STDOUT )
-        Base.flush( Base.STDERR )
-        Base.Test.@testset "Boston housing regression (CPU)" begin
-            Base.flush( Base.STDOUT )
-            Base.flush( Base.STDERR )
-            info("testing Boston housing regression (CPU)")
-            Base.flush( Base.STDOUT )
-            Base.flush( Base.STDERR )
-            include(
+                        info("testing examples (CPU)")
+                        Base.Test.@testset "Boston housing regression (CPU)" begin
+                                    info("testing Boston housing regression (CPU)")
+                                    include(
                 joinpath(
                     "..", "docs", "src", "examples", "cpu", "boston_housing",
                     "01_preprocess_data.jl",)
@@ -134,16 +106,10 @@ Base.Test.@testset "PredictMD test suite" begin
                     "..", "docs", "src", "examples", "cpu", "boston_housing",
                     "06_get_model_output.jl",)
                 )
-            Base.flush( Base.STDOUT )
-            Base.flush( Base.STDERR )
-        end
+                                end
         Base.Test.@testset "Breast cancer biopsy classification (CPU)" begin
-            Base.flush( Base.STDOUT )
-            Base.flush( Base.STDERR )
-            info("testing breast cancer biopsy classification (CPU)")
-            Base.flush( Base.STDOUT )
-            Base.flush( Base.STDERR )
-            include(
+                                    info("testing breast cancer biopsy classification (CPU)")
+                                    include(
                 joinpath(
                     "..", "docs", "src", "examples", "cpu",
                     "breast_cancer_biopsy", "01_preprocess_data.jl",)
@@ -188,17 +154,10 @@ Base.Test.@testset "PredictMD test suite" begin
                     "..", "docs", "src", "examples", "cpu",
                     "breast_cancer_biopsy", "09_get_model_output.jl",)
                 )
-            Base.flush( Base.STDOUT )
-            Base.flush( Base.STDERR )
+                                end
+                    end
         end
-        Base.flush( Base.STDOUT )
-        Base.flush( Base.STDERR )
-    end
-    Base.flush( Base.STDOUT )
-    Base.flush( Base.STDERR )
-end
 
 ENV["PREDICTMD_IS_RUNTESTS"] = "false"
 
-Base.flush( Base.STDOUT )
-Base.flush( Base.STDERR )
+
