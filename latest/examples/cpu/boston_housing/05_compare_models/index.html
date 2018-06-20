@@ -191,60 +191,58 @@
           <div role="main">
             <div class="section">
               
-                <pre><code class="julia"># Beginning of file
+                <pre><code class="julia">###### Beginning of file
+
+import PredictMD
+
+#### Begin project-specific settings
+
+PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
+    homedir(),
+    &quot;Desktop&quot;,
+    &quot;boston_housing_example&quot;,
+    )
+
+#### End project-specific settings
+
+#### Begin model comparison code
 
 import CSV
 import DataFrames
 import Knet
-import PredictMD
 
 srand(999)
 
-mkpath(
-    joinpath(
-        tempdir(),
-        &quot;boston_housing_example&quot;,
-        ),
-    )
-
 trainingandvalidation_features_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;trainingandvalidation_features_df.csv&quot;,
     )
 trainingandvalidation_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;trainingandvalidation_labels_df.csv&quot;,
     )
 testing_features_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;testing_features_df.csv&quot;,
     )
 testing_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;testing_labels_df.csv&quot;,
     )
 training_features_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;training_features_df.csv&quot;,
     )
 training_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;training_labels_df.csv&quot;,
     )
 validation_features_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;validation_features_df.csv&quot;,
     )
 validation_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;validation_labels_df.csv&quot;,
     )
 trainingandvalidation_features_df = CSV.read(
@@ -289,18 +287,15 @@ validation_labels_df = CSV.read(
     )
 
 linear_regression_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;linear_regression.jld2&quot;,
     )
 random_forest_regression_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;random_forest_regression.jld2&quot;,
     )
 knet_mlp_regression_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;knet_mlp_regression.jld2&quot;,
     )
 
@@ -334,29 +329,31 @@ showall(PredictMD.singlelabelregressionmetrics(
     singlelabelname,
     ))
 
-# End of file
+#### End model comparison code
+
+###### End of file
 </code></pre>
 
 <pre><code>INFO: Attempting to load model...
-INFO: Loaded model from file &quot;/tmp/boston_housing_example/linear_regression.jld2&quot;
+INFO: Loaded model from file &quot;/home/travis/Desktop/boston_housing_example/linear_regression.jld2&quot;
 INFO: Attempting to load model...
-INFO: Loaded model from file &quot;/tmp/boston_housing_example/random_forest_regression.jld2&quot;
+INFO: Loaded model from file &quot;/home/travis/Desktop/boston_housing_example/random_forest_regression.jld2&quot;
 INFO: Attempting to load model...
-INFO: Loaded model from file &quot;/tmp/boston_housing_example/knet_mlp_regression.jld2&quot;
+INFO: Loaded model from file &quot;/home/travis/Desktop/boston_housing_example/knet_mlp_regression.jld2&quot;
 WARNING: Method definition knetmlp_predict(Any, AbstractArray{T, N} where N where T) in module PredictMD at none:6 overwritten at none:5.
 WARNING: Method definition knetmlp_loss(Function, Any, AbstractArray{T, N} where N where T, AbstractArray{T, N} where N where T) in module PredictMD at none:9 overwritten at none:9.
 WARNING: Method definition #knetmlp_loss(Array{Any, 1}, typeof(PredictMD.knetmlp_loss), Function, Any, AbstractArray{T, N} where N where T, AbstractArray{T, N} where N where T) in module PredictMD overwritten.
 3×4 DataFrames.DataFrame
 │ Row │ metric                             │ Linear regression │ Random forest │ Knet MLP │
 ├─────┼────────────────────────────────────┼───────────────────┼───────────────┼──────────┤
-│ 1   │ R^2 (coefficient of determination) │ 0.744772          │ 0.904803      │ 0.795489 │
-│ 2   │ Mean squared error (MSE)           │ 22.166            │ 8.26763       │ 17.7613  │
-│ 3   │ Root mean square error (RMSE)      │ 4.70808           │ 2.87535       │ 4.21442  │3×4 DataFrames.DataFrame
+│ 1   │ R^2 (coefficient of determination) │ 0.744772          │ 0.904803      │ 0.795473 │
+│ 2   │ Mean squared error (MSE)           │ 22.166            │ 8.26763       │ 17.7628  │
+│ 3   │ Root mean square error (RMSE)      │ 4.70808           │ 2.87535       │ 4.21459  │3×4 DataFrames.DataFrame
 │ Row │ metric                             │ Linear regression │ Random forest │ Knet MLP │
 ├─────┼────────────────────────────────────┼───────────────────┼───────────────┼──────────┤
-│ 1   │ R^2 (coefficient of determination) │ 0.662067          │ 0.727597      │ 0.762622 │
-│ 2   │ Mean squared error (MSE)           │ 27.2624           │ 21.9758       │ 19.1502  │
-│ 3   │ Root mean square error (RMSE)      │ 5.22134           │ 4.68784       │ 4.37609  │
+│ 1   │ R^2 (coefficient of determination) │ 0.662067          │ 0.727597      │ 0.762049 │
+│ 2   │ Mean squared error (MSE)           │ 27.2624           │ 21.9758       │ 19.1964  │
+│ 3   │ Root mean square error (RMSE)      │ 5.22134           │ 4.68784       │ 4.38137  │
 </code></pre>
 
 <p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p>

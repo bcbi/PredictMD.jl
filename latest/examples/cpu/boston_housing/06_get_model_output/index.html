@@ -191,53 +191,58 @@
           <div role="main">
             <div class="section">
               
-                <pre><code class="julia"># Beginning of file
+                <pre><code class="julia">###### Beginning of file
+
+import PredictMD
+
+#### Begin project-specific settings
+
+PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
+    homedir(),
+    &quot;Desktop&quot;,
+    &quot;boston_housing_example&quot;,
+    )
+
+#### End project-specific settings
+
+#### Begin model output code
 
 import CSV
 import DataFrames
 import Knet
-import PredictMD
 
 srand(999)
 
 trainingandvalidation_features_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;trainingandvalidation_features_df.csv&quot;,
     )
 trainingandvalidation_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;trainingandvalidation_labels_df.csv&quot;,
     )
 testing_features_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;testing_features_df.csv&quot;,
     )
 testing_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;testing_labels_df.csv&quot;,
     )
 training_features_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;training_features_df.csv&quot;,
     )
 training_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;training_labels_df.csv&quot;,
     )
 validation_features_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;validation_features_df.csv&quot;,
     )
 validation_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;validation_labels_df.csv&quot;,
     )
 trainingandvalidation_features_df = CSV.read(
@@ -282,18 +287,15 @@ validation_labels_df = CSV.read(
     )
 
 linear_regression_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;linear_regression.jld2&quot;,
     )
 random_forest_regression_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;random_forest_regression.jld2&quot;,
     )
 knet_mlp_regression_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;knet_mlp_regression.jld2&quot;,
     )
 
@@ -313,15 +315,17 @@ PredictMD.predict(linear_regression,testing_features_df,)
 PredictMD.predict(random_forest_regression,testing_features_df,)
 PredictMD.predict(knet_mlp_regression,testing_features_df,)
 
-# End of file
+#### End model output code
+
+###### End of file
 </code></pre>
 
 <pre><code>INFO: Attempting to load model...
-INFO: Loaded model from file &quot;/tmp/boston_housing_example/linear_regression.jld2&quot;
+INFO: Loaded model from file &quot;/home/travis/Desktop/boston_housing_example/linear_regression.jld2&quot;
 INFO: Attempting to load model...
-INFO: Loaded model from file &quot;/tmp/boston_housing_example/random_forest_regression.jld2&quot;
+INFO: Loaded model from file &quot;/home/travis/Desktop/boston_housing_example/random_forest_regression.jld2&quot;
 INFO: Attempting to load model...
-INFO: Loaded model from file &quot;/tmp/boston_housing_example/knet_mlp_regression.jld2&quot;
+INFO: Loaded model from file &quot;/home/travis/Desktop/boston_housing_example/knet_mlp_regression.jld2&quot;
 WARNING: Method definition knetmlp_predict(Any, AbstractArray{T, N} where N where T) in module PredictMD at none:6 overwritten at none:5.
 WARNING: Method definition knetmlp_loss(Function, Any, AbstractArray{T, N} where N where T, AbstractArray{T, N} where N where T) in module PredictMD at none:9 overwritten at none:9.
 WARNING: Method definition #knetmlp_loss(Array{Any, 1}, typeof(PredictMD.knetmlp_loss), Function, Any, AbstractArray{T, N} where N where T, AbstractArray{T, N} where N where T) in module PredictMD overwritten.

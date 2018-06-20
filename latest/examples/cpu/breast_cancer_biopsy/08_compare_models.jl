@@ -1,57 +1,55 @@
-# Beginning of file
+###### Beginning of file
+
+import PredictMD
+
+#### Begin project-specific settings
+
+PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
+    homedir(),
+    "Desktop",
+    "breast_cancer_biopsy_example",
+    )
+
+#### End project-specific settings
+
+#### Begin model comparison code
 
 import CSV
 import DataFrames
 import Knet
-import PredictMD
 
 srand(999)
 
-mkpath(
-    joinpath(
-        tempdir(),
-        "breast_cancer_biopsy_example",
-        ),
-    )
-
 trainingandvalidation_features_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "trainingandvalidation_features_df.csv",
     )
 trainingandvalidation_labels_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "trainingandvalidation_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "testing_features_df.csv",
     )
 testing_labels_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "testing_labels_df.csv",
     )
 training_features_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "training_features_df.csv",
     )
 training_labels_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "training_labels_df.csv",
     )
 validation_features_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "validation_features_df.csv",
     )
 validation_labels_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "validation_labels_df.csv",
     )
 trainingandvalidation_features_df = CSV.read(
@@ -96,13 +94,11 @@ validation_labels_df = CSV.read(
     )
 
 smoted_training_features_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "smoted_training_features_df.csv",
     )
 smoted_training_labels_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "smoted_training_labels_df.csv",
     )
 smoted_training_features_df = CSV.read(
@@ -117,28 +113,23 @@ smoted_training_labels_df = CSV.read(
     )
 
 logistic_classifier_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "logistic_classifier.jld2",
     )
 random_forest_classifier_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "random_forest_classifier.jld2",
     )
 c_svc_svm_classifier_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "c_svc_svm_classifier.jld2",
     )
 nu_svc_svm_classifier_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "nu_svc_svm_classifier.jld2",
     )
 knet_mlp_classifier_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "knet_mlp_classifier.jld2",
     )
 
@@ -250,7 +241,9 @@ prplottesting = PredictMD.plotprcurves(
     )
 PredictMD.open_plot(prplottesting)
 
-# End of file
+#### End model comparison code
+
+###### End of file
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

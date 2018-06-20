@@ -191,59 +191,57 @@
           <div role="main">
             <div class="section">
               
-                <pre><code class="julia"># Beginning of file
+                <pre><code class="julia">###### Beginning of file
+
+import PredictMD
+
+#### Begin project-specific settings
+
+PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
+    homedir(),
+    &quot;Desktop&quot;,
+    &quot;boston_housing_example&quot;,
+    )
+
+#### End project-specific settings
+
+#### Begin linear regression code
 
 import CSV
 import DataFrames
-import PredictMD
 
 srand(999)
 
-mkpath(
-    joinpath(
-        tempdir(),
-        &quot;boston_housing_example&quot;,
-        ),
-    )
-
 trainingandvalidation_features_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;trainingandvalidation_features_df.csv&quot;,
     )
 trainingandvalidation_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;trainingandvalidation_labels_df.csv&quot;,
     )
 testing_features_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;testing_features_df.csv&quot;,
     )
 testing_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;testing_labels_df.csv&quot;,
     )
 training_features_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;training_features_df.csv&quot;,
     )
 training_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;training_labels_df.csv&quot;,
     )
 validation_features_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;validation_features_df.csv&quot;,
     )
 validation_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;validation_labels_df.csv&quot;,
     )
 trainingandvalidation_features_df = CSV.read(
@@ -354,22 +352,23 @@ PredictMD.singlelabelregressionmetrics(
     )
 
 linear_regression_filename = joinpath(
-    tempdir(),
-    &quot;boston_housing_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;linear_regression.jld2&quot;,
     )
 
 PredictMD.save_model(linear_regression_filename, linear_regression)
 
-# End of file
+#### End linear regression code
+
+###### End of file
 </code></pre>
 
 <pre><code>INFO: Starting to train GLM.jl model.
 INFO: Finished training GLM.jl model.
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaU4MIIY.svg
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliah5Um7H.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/julia9I9aGO.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliazgtDeo.svg
 INFO: Attempting to save model...
-INFO: Saved model to file &quot;/tmp/boston_housing_example/linear_regression.jld2&quot;
+INFO: Saved model to file &quot;/home/travis/Desktop/boston_housing_example/linear_regression.jld2&quot;
 
 </code></pre>
 

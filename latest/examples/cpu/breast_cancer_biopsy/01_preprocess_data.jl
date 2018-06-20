@@ -1,8 +1,21 @@
-# Beginning of file
+###### Beginning of file
+
+import PredictMD
+
+#### Begin project-specific settings
+
+PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
+    homedir(),
+    "Desktop",
+    "breast_cancer_biopsy_example",
+    )
+
+#### End project-specific settings
+
+#### Begin data preprocessing code
 
 import CSV
 import DataFrames
-import PredictMD
 import RDatasets
 import StatsBase
 
@@ -55,51 +68,36 @@ labels_df = df[labelnames]
         2/3,
         )
 
-mkpath(
-    joinpath(
-        tempdir(),
-        "breast_cancer_biopsy_example",
-        ),
-    )
-
 trainingandvalidation_features_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "trainingandvalidation_features_df.csv",
     )
 trainingandvalidation_labels_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "trainingandvalidation_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "testing_features_df.csv",
     )
 testing_labels_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "testing_labels_df.csv",
     )
 training_features_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "training_features_df.csv",
     )
 training_labels_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "training_labels_df.csv",
     )
 validation_features_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "validation_features_df.csv",
     )
 validation_labels_df_filename = joinpath(
-    tempdir(),
-    "breast_cancer_biopsy_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "validation_labels_df.csv",
     )
 CSV.write(
@@ -135,7 +133,9 @@ CSV.write(
     validation_labels_df,
     )
 
-# End of file
+#### End data preprocessing code
+
+###### End of file
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 

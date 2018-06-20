@@ -191,59 +191,57 @@
           <div role="main">
             <div class="section">
               
-                <pre><code class="julia"># Beginning of file
+                <pre><code class="julia">###### Beginning of file
+
+import PredictMD
+
+#### Begin project-specific settings
+
+PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
+    homedir(),
+    &quot;Desktop&quot;,
+    &quot;breast_cancer_biopsy_example&quot;,
+    )
+
+#### End project-specific settings
+
+#### Begin logistic classifier code
 
 import CSV
 import DataFrames
-import PredictMD
 
 srand(999)
 
-mkpath(
-    joinpath(
-        tempdir(),
-        &quot;breast_cancer_biopsy_example&quot;,
-        ),
-    )
-
 trainingandvalidation_features_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;trainingandvalidation_features_df.csv&quot;,
     )
 trainingandvalidation_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;trainingandvalidation_labels_df.csv&quot;,
     )
 testing_features_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;testing_features_df.csv&quot;,
     )
 testing_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;testing_labels_df.csv&quot;,
     )
 training_features_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;training_features_df.csv&quot;,
     )
 training_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;training_labels_df.csv&quot;,
     )
 validation_features_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;validation_features_df.csv&quot;,
     )
 validation_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;validation_labels_df.csv&quot;,
     )
 trainingandvalidation_features_df = CSV.read(
@@ -288,13 +286,11 @@ validation_labels_df = CSV.read(
     )
 
 smoted_training_features_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;smoted_training_features_df.csv&quot;,
     )
 smoted_training_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;smoted_training_labels_df.csv&quot;,
     )
 smoted_training_features_df = CSV.read(
@@ -445,21 +441,22 @@ println(
 showall(logistic_risk_group_prevalences)
 
 logistic_classifier_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;logistic_classifier.jld2&quot;,
     )
 
 PredictMD.save_model(logistic_classifier_filename, logistic_classifier)
 
-# End of file
+#### End logistic classifier code
+
+###### End of file
 </code></pre>
 
 <pre><code>INFO: Starting to train GLM.jl model.
 INFO: Finished training GLM.jl model.
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/julia45xOKu.svg
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaNfQMdk.svg
-INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliatHCaQb.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliauLuRPd.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/juliaOt5cPX.svg
+INFO: DEBUG: Skipping opening file during Travis build: /tmp/julia7xvJVJ.svg
 Low risk: 0 to 0.05857493355870247. Medium risk: 0.05857493355870247 to 0.9342752695083618. High risk: 0.9342752695083618 to 1.
 3×3 DataFrames.DataFrame
 │ Row │ Risk_group  │ Arithmetic_mean │ Median │
@@ -473,7 +470,7 @@ Low risk: 0 to 0.05857493355870247. Medium risk: 0.05857493355870247 to 0.934275
 │ 1   │ Low risk    │ 0.0             │ 0.0    │
 │ 2   │ Medium risk │ 0.326087        │ 0.0    │
 │ 3   │ High risk   │ 1.0             │ 1.0    │INFO: Attempting to save model...
-INFO: Saved model to file &quot;/tmp/breast_cancer_biopsy_example/logistic_classifier.jld2&quot;
+INFO: Saved model to file &quot;/home/travis/Desktop/breast_cancer_biopsy_example/logistic_classifier.jld2&quot;
 
 </code></pre>
 

@@ -191,60 +191,58 @@
           <div role="main">
             <div class="section">
               
-                <pre><code class="julia"># Beginning of file
+                <pre><code class="julia">###### Beginning of file
+
+import PredictMD
+
+#### Begin project-specific settings
+
+PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
+    homedir(),
+    &quot;Desktop&quot;,
+    &quot;breast_cancer_biopsy_example&quot;,
+    )
+
+#### End project-specific settings
+
+#### Begin SMOTE class-balancing code
 
 import CSV
 import DataFrames
-import PredictMD
 import StatsBase
 
 srand(999)
 
-mkpath(
-    joinpath(
-        tempdir(),
-        &quot;breast_cancer_biopsy_example&quot;,
-        ),
-    )
-
 trainingandvalidation_features_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;trainingandvalidation_features_df.csv&quot;,
     )
 trainingandvalidation_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;trainingandvalidation_labels_df.csv&quot;,
     )
 testing_features_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;testing_features_df.csv&quot;,
     )
 testing_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;testing_labels_df.csv&quot;,
     )
 training_features_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;training_features_df.csv&quot;,
     )
 training_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;training_labels_df.csv&quot;,
     )
 validation_features_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;validation_features_df.csv&quot;,
     )
 validation_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;validation_labels_df.csv&quot;,
     )
 trainingandvalidation_features_df = CSV.read(
@@ -330,13 +328,11 @@ StatsBase.countmap(smoted_training_labels_df[singlelabelname])
 
 
 smoted_training_features_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;smoted_training_features_df.csv&quot;,
     )
 smoted_training_labels_df_filename = joinpath(
-    tempdir(),
-    &quot;breast_cancer_biopsy_example&quot;,
+    PROJECT_OUTPUT_DIRECTORY,
     &quot;smoted_training_labels_df.csv&quot;,
     )
 CSV.write(
@@ -348,7 +344,9 @@ CSV.write(
     smoted_training_labels_df,
     )
 
-# End of file
+#### End SMOTE class-balancing code
+
+###### End of file
 </code></pre>
 
 <pre><code>Summary Stats:

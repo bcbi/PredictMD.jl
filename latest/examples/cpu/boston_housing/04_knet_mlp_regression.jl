@@ -1,57 +1,55 @@
-# Beginning of file
+###### Beginning of file
+
+import PredictMD
+
+#### Begin project-specific settings
+
+PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
+    homedir(),
+    "Desktop",
+    "boston_housing_example",
+    )
+
+#### End project-specific settings
+
+#### Begin Knet neural network regression code
 
 import CSV
 import DataFrames
 import Knet
-import PredictMD
 
 srand(999)
 
-mkpath(
-    joinpath(
-        tempdir(),
-        "boston_housing_example",
-        ),
-    )
-
 trainingandvalidation_features_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "trainingandvalidation_features_df.csv",
     )
 trainingandvalidation_labels_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "trainingandvalidation_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "testing_features_df.csv",
     )
 testing_labels_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "testing_labels_df.csv",
     )
 training_features_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "training_features_df.csv",
     )
 training_labels_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "training_labels_df.csv",
     )
 validation_features_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "validation_features_df.csv",
     )
 validation_labels_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "validation_labels_df.csv",
     )
 trainingandvalidation_features_df = CSV.read(
@@ -272,14 +270,15 @@ PredictMD.singlelabelregressionmetrics(
     )
 
 knet_mlp_regression_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "knet_mlp_regression.jld2",
     )
 
 PredictMD.save_model(knet_mlp_regression_filename, knet_mlp_regression)
 
-# End of file
+#### End Knet neural network regression code
+
+###### End of file
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 
