@@ -19,12 +19,15 @@ ENV["PREDICTMD_IS_RUNTESTS"] = "true"
 Base.Test.@testset "PredictMD test suite" begin
     Base.flush( Base.STDOUT )
     Base.flush( Base.STDERR )
-    Base.Test.@testset "Test module imports" begin
-        info("Testing module imports")
+    Base.Test.@testset "Test module import" begin
+        info("Testing module import")
         
         import PredictMD
         Base.Test.@test( isdefined(:PredictMD) )
         Base.Test.@test( typeof(PredictMD) === Module )
+    end
+    Base.Test.@testset "Test submodule imports" begin
+        info("Testing submodule imports")
         
         import PredictMD.Clean
         Base.Test.@test( isdefined(PredictMD, :Clean) )
