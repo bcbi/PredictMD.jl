@@ -3,7 +3,6 @@ julia 0.6
 
 ##### Required Julia packages
 Atom
-BenchmarkTools
 CSVFiles
 CUDAapi
 ClassImbalance
@@ -20,7 +19,6 @@ Literate
 MLBase
 MLDatasets
 Metalhead
-NBInclude
 NumericalIntegration
 PGFPlots
 PGFPlotsX
@@ -29,7 +27,6 @@ RDatasets
 ROCAnalysis
 Requires
 ValueHistories
-Weave
 
 ##### The following Julia packages are not required, but will be used by
 ##### PredictMD if the user runs `import PACKAGENAME` or `using PACKAGENAME`

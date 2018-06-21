@@ -81,12 +81,6 @@ include(
         "literate.jl",
         )
     )
-include(
-    joinpath(
-        ".", "toplevel", "integrations", "literate_programming",
-        "weave.jl",
-        )
-    )
 
 # toplevel/io/
 include(
