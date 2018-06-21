@@ -143,8 +143,6 @@ function plotlearningcurves(
             show_smoothed = show_smoothed,
             )
     else
-        Base.flush(Base.STDOUT)
-        Base.flush(Base.STDOUT)
         result = plotlearningcurve(
             training_xvalues,
             training_yvalues,

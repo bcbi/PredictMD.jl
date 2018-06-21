@@ -1,5 +1,5 @@
 const VERSION_NUMBER = try
-    convert(VersionNumber, "v0.17.0")
+    convert(VersionNumber, "v0.18.0")
 catch e
     warn("While creating PredictMD.VERSION_NUMBER, ignoring error $(e)")
     VersionNumber(0)

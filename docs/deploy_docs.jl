@@ -3,9 +3,6 @@ import PredictMD
 
 srand(999)
 
-Base.flush( Base.STDOUT )
-Base.flush( Base.STDERR )
-
 ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "true"
 
 if is_windows()
@@ -33,5 +30,3 @@ end
 
 ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "false"
 
-Base.flush( Base.STDOUT )
-Base.flush( Base.STDERR )

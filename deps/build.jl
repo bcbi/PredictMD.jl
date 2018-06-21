@@ -5,9 +5,6 @@ import Crayons
 
 srand(999)
 
-Base.flush( Base.STDOUT )
-Base.flush( Base.STDERR )
-
 const OK =  Crayons.Box.GREEN_FG * Crayons.Box.BOLD("OK")
 const X =  Crayons.Box.RED_FG * Crayons.Box.BOLD("X")
 
@@ -89,5 +86,3 @@ if !isfile(PREAMBLE_PATH)
     touch(PREAMBLE_PATH)
 end
 
-Base.flush( Base.STDOUT )
-Base.flush( Base.STDERR )

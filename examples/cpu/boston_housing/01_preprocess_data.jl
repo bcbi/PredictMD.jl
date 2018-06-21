@@ -1,9 +1,22 @@
-## Beginning of file
+###### Beginning of file
+
+import PredictMD
+
+#### Begin project-specific settings
+
+PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
+    homedir(),
+    "Desktop",
+    "boston_housing_example",
+    )
+
+#### End project-specific settings
+
+#### Begin data preprocessing code
 
 import CSV
 import DataFrames
 import GZip
-import PredictMD
 import StatsBase
 
 srand(999)
@@ -51,68 +64,53 @@ labels_df = df[labelnames]
 
 DataFrames.describe(labels_df[singlelabelname])
 
-trainingandvalidation_features_df,
+(trainingandvalidation_features_df,
     trainingandvalidation_labels_df,
     testing_features_df,
-    testing_labels_df = PredictMD.split_data(
+    testing_labels_df,) = PredictMD.split_data(
         features_df,
         labels_df,
         0.75,
         )
-training_features_df,
+(training_features_df,
     training_labels_df,
     validation_features_df,
-    validation_labels_df = PredictMD.split_data(
+    validation_labels_df,) = PredictMD.split_data(
         trainingandvalidation_features_df,
         trainingandvalidation_labels_df,
         2/3,
         )
 
-mkpath(
-    joinpath(
-        tempdir(),
-        "boston_housing_example",
-        ),
-    )
-
 trainingandvalidation_features_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "trainingandvalidation_features_df.csv",
     )
 trainingandvalidation_labels_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "trainingandvalidation_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "testing_features_df.csv",
     )
 testing_labels_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "testing_labels_df.csv",
     )
 training_features_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "training_features_df.csv",
     )
 training_labels_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "training_labels_df.csv",
     )
 validation_features_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "validation_features_df.csv",
     )
 validation_labels_df_filename = joinpath(
-    tempdir(),
-    "boston_housing_example",
+    PROJECT_OUTPUT_DIRECTORY,
     "validation_labels_df.csv",
     )
 CSV.write(
@@ -148,4 +146,6 @@ CSV.write(
     validation_labels_df,
     )
 
-## End of file
+#### End data preprocessing code
+
+###### End of file
