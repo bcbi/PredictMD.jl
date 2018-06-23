@@ -418,14 +418,14 @@ include(
 # submodules/clean/
 include(
     joinpath(
-        ".", "submodules", "clean", "Clean.jl",
+        ".", "submodules", "Clean", "Clean.jl",
         )
     )
 
 # submodules/gpu/
 include(
     joinpath(
-        ".", "submodules", "gpu", "GPU.jl",
+        ".", "submodules", "GPU", "GPU.jl",
         )
     )
 
