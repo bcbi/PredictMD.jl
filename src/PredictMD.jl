@@ -316,7 +316,7 @@ include(
 # toplevel/utils/
 include(
     joinpath(
-        ".", "toplevel", "utils", "file_exists.jl",
+        ".", "toplevel", "utils", "filename_extension.jl",
         )
     )
 include(
