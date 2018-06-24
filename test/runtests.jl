@@ -62,20 +62,20 @@ Base.Test.@testset "PredictMD test suite" begin
                 )
         end
     end
-    if PredictMD.is_travis_ci()
-        temp_makedocs_dir = joinpath(
-              tempdir(),
-              "travis",
-              "PredictMDTEMP",
-              "docs",
-              )
-    else
-        temp_makedocs_dir = joinpath(
-              tempname(),
-              "PredictMDTEMP",
-              "docs",
-              )
-    end
+    rm(
+          joinpath(
+                tempdir(),
+                "make_docs",
+                );
+          force = true,
+          recursive = true,
+          )
+    temp_makedocs_dir = joinpath(
+          tempdir(),
+          "make_docs",
+          "PredictMDTEMP",
+          "docs",
+          )
     Base.Test.@testset "Generate documentation and examples" begin
         info("Generating examples and documentation")
         include(
