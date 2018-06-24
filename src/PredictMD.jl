@@ -72,13 +72,17 @@ include(
 # toplevel/integrations/
 include(
     joinpath(
-        ".", "toplevel", "integrations", "ide", "atom.jl",
+        ".", "toplevel", "integrations", "docs", "generate_docs.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "integrations", "literate_programming",
-        "literate.jl",
+        ".", "toplevel", "integrations", "examples", "generate_examples.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "integrations", "ide", "atom.jl",
         )
     )
 
@@ -312,7 +316,7 @@ include(
 # toplevel/utils/
 include(
     joinpath(
-        ".", "toplevel", "utils", "file_exists.jl",
+        ".", "toplevel", "utils", "filename_extension.jl",
         )
     )
 include(
@@ -372,6 +376,11 @@ include(
     )
 include(
     joinpath(
+        ".", "toplevel", "utils", "pkg_dir.jl",
+        )
+    )
+include(
+    joinpath(
         ".", "toplevel", "utils", "predictionsassoctodataframe.jl",
         )
     )
@@ -418,14 +427,14 @@ include(
 # submodules/clean/
 include(
     joinpath(
-        ".", "submodules", "clean", "Clean.jl",
+        ".", "submodules", "Clean", "Clean.jl",
         )
     )
 
 # submodules/gpu/
 include(
     joinpath(
-        ".", "submodules", "gpu", "GPU.jl",
+        ".", "submodules", "GPU", "GPU.jl",
         )
     )
 

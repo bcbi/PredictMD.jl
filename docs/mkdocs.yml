@@ -1,7 +1,7 @@
-site_name: PredictMD.jl
+site_name: PredictMD documentation
 # repo_url: https://github.com/bcbi/PredictMD.jl
-site_description: Uniform interface for machine learning in Julia
-site_author: Center for Biomedical Informatics, Brown University
+site_description: PredictMD - uniform interface for machine learning in Julia
+site_author: Brown Center for Biomedical Informatics, Brown University
 
 theme: readthedocs
 

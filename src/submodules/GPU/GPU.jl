@@ -6,25 +6,25 @@ module GPU # begin submodule PredictMD.GPU
 # PredictMD.GPU source files ###############################################
 ############################################################################
 
-# submodules/gpu/clang/
+# submodules/GPU/clang/
 include(joinpath(".", "clang", "clang.jl",))
 
-# submodules/gpu/clarrays/
+# submodules/GPU/clarrays/
 include(joinpath(".", "clarrays", "clarrays.jl",))
 
-# submodules/gpu/cuarrays/
+# submodules/GPU/cuarrays/
 include(joinpath(".", "cuarrays", "cuarrays.jl",))
 
-# submodules/gpu/cudaapi/
+# submodules/GPU/cudaapi/
 include(joinpath(".", "cudaapi", "cudaapi.jl",))
 
-# submodules/gpu/cxx/
+# submodules/GPU/cxx/
 include(joinpath(".", "cxx", "cxx.jl",))
 
-# submodules/gpu/gpuarrays/
+# submodules/GPU/gpuarrays/
 include(joinpath(".", "gpuarrays", "gpuarrays.jl",))
 
-# submodules/gpu/llvm/
+# submodules/GPU/llvm/
 include(joinpath(".", "llvm", "llvm.jl",))
 
 end # end submodule PredictMD.GPU

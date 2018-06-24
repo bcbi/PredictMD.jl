@@ -8,7 +8,6 @@ import ..filename_extension
 import ..fix_dict_type
 import ..is_nothing
 import ..make_missing_anywhere!
-import ..something_exists_at_path
 
 """
 """
@@ -177,7 +176,7 @@ function clean_hcup_nis_csv_icd9(
     if filename_extension(output_file_name) != ".csv"
         error("output file must be .csv")
     end
-    if something_exists_at_path(output_file_name)
+    if ispath(output_file_name)
         error(
             string(
                 "Output file already exists. ",
@@ -194,8 +193,8 @@ function clean_hcup_nis_csv_icd9(
     icd_code_list = strip.(icd_code_list)
 
     for i = 1:length(input_file_name_list)
-        if something_exists_at_path(temp_file_name_vector[i])
-            error("something_exists_at_path(temp_file_name_vector[i])")
+        if ispath(temp_file_name_vector[i])
+            error("ispath(temp_file_name_vector[i])")
         end
         info(
             string(

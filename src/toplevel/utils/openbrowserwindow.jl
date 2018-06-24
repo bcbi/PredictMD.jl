@@ -19,7 +19,7 @@ function open_browser_window(filename::AbstractString, a::Associative = ENV)
         warn("filename is an empty string")
         return nothing
     end
-    if !something_exists_at_path(filename)
+    if !ispath(filename)
         warn(
             string(
                 "No file exists at path \"",

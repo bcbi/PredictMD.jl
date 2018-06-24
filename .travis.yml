@@ -58,13 +58,17 @@ before_install:
 
 script:
     - julia --check-bounds=yes --color=yes -e '
-        Pkg.clone(pwd(), "PredictMD")'
+        Pkg.clone(pwd(), "PredictMD")
+        '
     - julia --check-bounds=yes --color=yes -e '
-        Pkg.build("PredictMD")'
+        Pkg.build("PredictMD")
+        '
     - julia --check-bounds=yes --color=yes -e '
-        import PredictMD'
+        import PredictMD
+        '
     - julia --check-bounds=yes --color=yes -e '
-        Pkg.test("PredictMD"; coverage=true)'
+        Pkg.test("PredictMD"; coverage=true)
+        '
 
 after_success:
     - julia --check-bounds=yes --color=yes -e 'Pkg.add("Coverage");'
@@ -72,4 +76,4 @@ after_success:
         using Coverage; Codecov.submit(Codecov.process_folder());'
     - julia --check-bounds=yes --color=yes -e '
         cd(Pkg.dir("PredictMD"));
-            include(joinpath("docs", "deploy_docs.jl"))'
+            include(joinpath("docs", "deploy.jl"))'
