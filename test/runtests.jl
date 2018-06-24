@@ -62,28 +62,23 @@ Base.Test.@testset "PredictMD test suite" begin
                 )
         end
     end
+    if is_travis_ci()
+        temp_docs_dir = joinpath(
+              tempdir(),
+              "travis",
+              "PredictMDTEMP",
+              "docs",
+              )
+    else
+        temp_docs_dir = joinpath(
+              tempname(),
+              "PredictMDTEMP",
+              "docs",
+              )
+    end
     Base.Test.@testset "Generate documentation and examples" begin
-        Base.Test.@testset "Generate examples" begin
-            info("Generating examples")
-            include(
-                joinpath(
-                    "..",
-                    "docs",
-                    "make_examples.jl",
-                    )
-                )
-        end
-        Base.Test.@testset "Generate documentation" begin
-            info("Generating documentation")
-            include(
-                joinpath(
-                    "..",
-                    "docs",
-                    "make_docs.jl",
-                    )
-                )
-        end
-                    end
+        info("Generating examples and documentation")
+    end
     Base.Test.@testset "Test examples (CPU)" begin
         info("testing examples (CPU)")
         Base.Test.@testset "Boston housing regression (CPU)" begin

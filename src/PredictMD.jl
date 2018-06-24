@@ -72,13 +72,17 @@ include(
 # toplevel/integrations/
 include(
     joinpath(
-        ".", "toplevel", "integrations", "ide", "atom.jl",
+        ".", "toplevel", "integrations", "docs", "generate_docs.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "integrations", "literate_programming",
-        "literate.jl",
+        ".", "toplevel", "integrations", "examples", "generate_examples.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "integrations", "ide", "atom.jl",
         )
     )
 
@@ -368,6 +372,11 @@ include(
 include(
     joinpath(
         ".", "toplevel", "utils", "openplotsduringtestsenv.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "pkg_dir.jl",
         )
     )
 include(
