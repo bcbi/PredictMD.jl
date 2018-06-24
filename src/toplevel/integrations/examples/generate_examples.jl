@@ -21,7 +21,7 @@ function generate_examples(
     end
     info("Generating examples...")
     temp_examples_dir = joinpath(
-        tempname(),
+        mktempdir(),
         "generate_examples",
         "PredictMDTemp",
         "docs",
@@ -58,6 +58,7 @@ function generate_examples(
             [endswith(x, ".jl") for x in
                 boston_housing_input_file_list]
             ]
+    sort!(boston_housing_input_file_list)
     for input_file in boston_housing_input_file_list
         input_file_full_path = joinpath(
             boston_housing_input_directory,
@@ -104,6 +105,7 @@ function generate_examples(
             [endswith(x, ".jl") for x in
                 breast_cancer_biopsy_input_file_list]
             ]
+    sort!(breast_cancer_biopsy_input_file_list)
     for input_file in breast_cancer_biopsy_input_file_list
         input_file_full_path = joinpath(
             breast_cancer_biopsy_input_directory,
