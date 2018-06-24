@@ -59,22 +59,20 @@ function generate_examples(
                 boston_housing_input_file_list]
             ]
     for input_file in boston_housing_input_file_list
+        input_file_full_path = joinpath(
+            boston_housing_input_directory,
+            input_file,
+            )
         if markdown
             Literate.markdown(
-                joinpath(
-                    boston_housing_input_directory,
-                    input_file,
-                    ),
+                input_file_full_path,
                 boston_housing_output_directory;
                 documenter = true,
                 )
         end
         if notebooks
             Literate.notebook(
-                joinpath(
-                    boston_housing_input_directory,
-                    input_file,
-                    ),
+                input_file_full_path,
                 boston_housing_output_directory;
                 documenter = true,
                 execute = execute_notebooks,
@@ -82,10 +80,7 @@ function generate_examples(
         end
         if scripts
             Literate.script(
-                joinpath(
-                    boston_housing_input_directory,
-                    input_file,
-                    ),
+                input_file_full_path,
                 boston_housing_output_directory;
                 documenter = true,
                 keep_comments = true,
@@ -103,29 +98,27 @@ function generate_examples(
         )
     mkpath(breast_cancer_biopsy_output_directory)
     breast_cancer_biopsy_input_file_list =
-        readdir(boston_housing_input_directory)
+        readdir(breast_cancer_biopsy_input_directory)
     breast_cancer_biopsy_input_file_list =
         breast_cancer_biopsy_input_file_list[
             [endswith(x, ".jl") for x in
                 breast_cancer_biopsy_input_file_list]
             ]
     for input_file in breast_cancer_biopsy_input_file_list
+        input_file_full_path = joinpath(
+            breast_cancer_biopsy_input_directory,
+            input_file,
+            )
         if markdown
             Literate.markdown(
-                joinpath(
-                    breast_cancer_biopsy_input_directory,
-                    input_file,
-                    ),
+                input_file_full_path,
                 breast_cancer_biopsy_output_directory;
                 documenter = true,
                 )
         end
         if notebooks
             Literate.notebook(
-                joinpath(
-                    breast_cancer_biopsy_input_directory,
-                    input_file,
-                    ),
+                input_file_full_path,
                 breast_cancer_biopsy_output_directory;
                 documenter = true,
                 execute = execute_notebooks,
@@ -133,17 +126,14 @@ function generate_examples(
         end
         if scripts
             Literate.script(
-                joinpath(
-                    breast_cancer_biopsy_input_directory,
-                    input_file,
-                    ),
+                input_file_full_path,
                 breast_cancer_biopsy_output_directory;
                 documenter = true,
                 keep_comments = true,
                 )
         end
     end
-
+    mkpath(dirname(output_directory))
     cp(
         temp_examples_dir,
         output_directory;
@@ -151,4 +141,5 @@ function generate_examples(
         )
     info("Finished generating examples.")
     ENV["PREDICTMD_IS_MAKE_EXAMPLES"] = "false"
+    return output_directory
 end

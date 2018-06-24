@@ -20,6 +20,7 @@ function generate_docs(output_directory::AbstractString)
         "docs",
         )
     original_docs_directory = dir("docs")
+    mkpath(dirname(temp_generatedocs_dir))
     cp(
         original_docs_directory,
         temp_generatedocs_dir;
@@ -69,10 +70,12 @@ function generate_docs(output_directory::AbstractString)
             )
         cd(previous_working_directory)
     end
+    mkpath(dirname(output_directory))
     cp(
         temp_generatedocs_dir,
         output_directory,
         )
     info("Finished generating docs.")
     ENV["PREDICTMD_IS_MAKE_DOCS"] = "false"
+    return output_directory
 end
