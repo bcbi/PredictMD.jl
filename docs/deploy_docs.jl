@@ -5,10 +5,6 @@ srand(999)
 
 ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "true"
 
-
-
-
-
 if is_travis_ci()
     previous_working_directory = pwd()
     temp_docs_dir = joinpath(
@@ -35,7 +31,5 @@ if is_travis_ci()
 
     cd(previous_working_directory)
 end
-
-
 
 ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "false"
