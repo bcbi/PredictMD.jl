@@ -62,7 +62,7 @@ Base.Test.@testset "PredictMD test suite" begin
                 )
         end
     end
-    if is_travis_ci()
+    if PredictMD.is_travis_ci()
         temp_makedocs_dir = joinpath(
               tempdir(),
               "travis",
