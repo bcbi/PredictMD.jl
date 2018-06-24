@@ -1,3 +1,4 @@
+import Documenter
 import Literate
 
 function generate_examples(
@@ -18,6 +19,7 @@ function generate_examples(
                 )
             )
     end
+    info("Generating examples...")
     temp_examples_dir = joinpath(
         tempname(),
         "generate_examples",
@@ -147,6 +149,6 @@ function generate_examples(
         output_directory;
         remove_destination = true,
         )
-
+    info("Finished generating examples.")
     ENV["PREDICTMD_IS_MAKE_EXAMPLES"] = "false"
 end
