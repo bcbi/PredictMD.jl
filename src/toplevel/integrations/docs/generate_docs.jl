@@ -61,12 +61,13 @@ function generate_docs(output_directory::AbstractString)
                 PredictMD.Clean,
                 PredictMD.GPU,
                 ],
-            sitename = "PredictMD documentation",
             pages = Any[
                 "index.md",
                 "requirements_for_plotting.md",
                 "library/internals.md",
                 ],
+            root = temp_generatedocs_dir,
+            sitename = "PredictMD documentation",
             )
         cd(previous_working_directory)
     end
