@@ -4,5 +4,5 @@ codecov:
 comment: true
 
 ignore:
-    - "src/submodules/Clean/**/*
-    - "src/submodules/GPU/**/*
+    - "src/submodules/Clean/**/*"
+    - "src/submodules/GPU/**/*"
