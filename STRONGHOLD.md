@@ -3,27 +3,21 @@
 This document provides instructions for using PredictMD in the [Stronghold](https://it.brown.edu/services/type/stronghold-data-compliance-research-environment) research environment for data compliance.
 
 ### Table of Contents
+- [First-time setup]()
 - [Usage](#usage)
 
-## Usage
+## First-time setup
 
-### Step 1:
+Open the file `$HOME/.juliarc.jl` (creating it if it does not exist) and make sure that it contains the following line:
+```julia
+Base.LOAD_CACHE_PATH[1] = joinpath(ENV["HOME"], ".julia_cache")
+```
+
+## Usage
 
 In Stronghold, open a new Terminal window and run the following command:
 ```bash
 module load conda/bcbi_v0.0.1
 ```
 
-### Step 2:
-
-Open a new Julia session by typing `julia` and pressing enter.
-
-### Step 3:
-
-Inside Julia, load PredictMD by running the following command:
-
-```julia
-import PredictMD
-```
-
-Now PredictMD is available for use.
+Now Julia and PredictMD are available in your bash session.
