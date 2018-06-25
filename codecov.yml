@@ -4,5 +4,9 @@ codecov:
 comment: true
 
 ignore:
+    # ignore PredictMD.Clean
+    - "src/submodules/Clean"
     - "src/submodules/Clean/**/*"
+    # ignore PredictMD.GPU
+    - "src/submodules/GPU"
     - "src/submodules/GPU/**/*"
