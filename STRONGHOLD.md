@@ -1,6 +1,6 @@
 # PredictMD on Stronghold
 
-This document provides instructions for using PredictMD in the Stronghold secure computing environment.
+This document provides instructions for using PredictMD in the [Stronghold](https://it.brown.edu/services/type/stronghold-data-compliance-research-environment) research environment for data compliance.
 
 ### Table of Contents
 - [Usage](#usage)
@@ -25,3 +25,5 @@ Inside Julia, load PredictMD by running the following command:
 ```julia
 import PredictMD
 ```
+
+Now PredictMD is available for use.
