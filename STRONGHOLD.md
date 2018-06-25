@@ -3,7 +3,7 @@
 This document provides instructions for using PredictMD in the [Stronghold](https://it.brown.edu/services/type/stronghold-data-compliance-research-environment) research environment for data compliance.
 
 ### Table of Contents
-- [First-time setup]()
+- [First-time setup](#first-time-setup)
 - [Usage](#usage)
 
 ## First-time setup
