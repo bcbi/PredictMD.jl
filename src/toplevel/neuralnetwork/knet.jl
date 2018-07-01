@@ -1,4 +1,6 @@
 import AutoGrad
+import CUDAapi
+import GPUArrays
 import Knet
 import ProgressMeter
 import ValueHistories
