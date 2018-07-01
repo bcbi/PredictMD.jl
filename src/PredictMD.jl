@@ -39,6 +39,14 @@ include(
 
 # toplevel/calibration/
 
+
+# toplevel/code_loading/
+include(
+    joinpath(
+        ".", "toplevel", "code_loading", "requires.jl",
+        )
+    )
+
 # toplevel/classimbalance/
 include(
     joinpath(
