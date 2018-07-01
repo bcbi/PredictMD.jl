@@ -61,6 +61,11 @@ include(
     )
 include(
     joinpath(
+        ".", "toplevel", "datasets", "mldatasets.jl",
+        )
+    )
+include(
+    joinpath(
         ".", "toplevel", "datasets", "rdatasets.jl",
         )
     )
