@@ -8,12 +8,13 @@ struct PackageVersionRequirement
 end
 
 function require_version(package::Symbol, varargs...)
-    if lowercase(strip(string(package))) == "julia"
+    package_name_string_lowercase = lowercase(strip(string(package)))
+    if package_name_string_lowercase == "julia"
         result = require_version(
             JuliaVersionRequirement,
             varargs...
             )
-    elseif lowercase(strip(string(package))) == "predictmd"
+    elseif package_name_string_lowercase == "predictmd"
         result = require_version(
             PredictMDVersionRequirement,
             varargs...
@@ -33,16 +34,17 @@ function require_version(
         varargs...
         )
     current_version = Base.VERSION
-    answer = does_current_version_meet_requirements(
+    version_meets_requirements = does_current_version_meet_requirements(
         current_version,
         varargs...
         )
-    if !answer
+    if !version_meets_requirements
         error(
             string(
                 "Current Julia version (",
                 current_version,
-                ") does not match the user-specified version requirements.",
+                ") does not match the ",
+                "user-specified version requirements.",
                 )
             )
     end
@@ -54,16 +56,17 @@ function require_version(
         varargs...
         )
     current_version = version()
-    answer = does_current_version_meet_requirements(
+    version_meets_requirements = does_current_version_meet_requirements(
         current_version,
         varargs...
         )
-    if !answer
+    if !version_meets_requirements
         error(
             string(
                 "Current PredictMD version (",
                 current_version,
-                ") does not match the user-specified version requirements.",
+                ") does not match the ",
+                "user-specified version requirements.",
                 )
             )
     end
@@ -77,27 +80,19 @@ function require_version(
         )
     package_name_string = strip(string(package))
     current_version = Pkg.installed(package_name_string)
-    # if is_nothing(current_version)
-    #     error(
-    #         string(
-    #             "Package \"",
-    #             package,
-    #             "\" is not installed.",
-    #             )
-    #         )
-    # end
-    answer = does_current_version_meet_requirements(
+    version_meets_requirements = does_current_version_meet_requirements(
         current_version,
         varargs...
         )
-    if !answer
+    if !version_meets_requirements
         error(
             string(
                 "Current \"",
                 package,
                 "\" version (",
                 current_version,
-                ") does not match the user-specified version requirements.",
+                ") does not match the ",
+                "user-specified version requirements.",
                 )
             )
     end
