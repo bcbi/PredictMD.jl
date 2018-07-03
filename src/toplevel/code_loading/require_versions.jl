@@ -1,10 +1,12 @@
-struct JuliaVersionRequirement
+abstract type AbstractVersionRequirement end
+
+struct JuliaVersionRequirement <: AbstractVersionRequirement
 end
 
-struct PredictMDVersionRequirement
+struct PredictMDVersionRequirement <: AbstractVersionRequirement
 end
 
-struct PackageVersionRequirement
+struct PackageVersionRequirement <: AbstractVersionRequirement
 end
 
 function require_version(package::Symbol, varargs...)
