@@ -39,11 +39,15 @@ include(
 
 # toplevel/calibration/
 
-
 # toplevel/code_loading/
 include(
     joinpath(
         ".", "toplevel", "code_loading", "requires.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "code_loading", "require_versions.jl",
         )
     )
 

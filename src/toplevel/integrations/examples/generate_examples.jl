@@ -1,6 +1,14 @@
 import Documenter
 import Literate
 
+function preprocess_example(content::AbstractString)
+    content = replace(
+        content,
+        "PREDICTMD_CURRENT_VERSION" => string(version())
+        )
+    return content
+end
+
 function generate_examples(
         output_directory::AbstractString;
         execute_notebooks = false,
@@ -69,6 +77,7 @@ function generate_examples(
                 input_file_full_path,
                 boston_housing_output_directory;
                 documenter = true,
+                preprocess = preprocess_example,
                 )
         end
         if notebooks
@@ -77,6 +86,7 @@ function generate_examples(
                 boston_housing_output_directory;
                 documenter = true,
                 execute = execute_notebooks,
+                preprocess = preprocess_example,
                 )
         end
         if scripts
@@ -85,6 +95,7 @@ function generate_examples(
                 boston_housing_output_directory;
                 documenter = true,
                 keep_comments = true,
+                preprocess = preprocess_example,
                 )
         end
     end
@@ -116,6 +127,7 @@ function generate_examples(
                 input_file_full_path,
                 breast_cancer_biopsy_output_directory;
                 documenter = true,
+                preprocess = preprocess_example,
                 )
         end
         if notebooks
@@ -124,6 +136,7 @@ function generate_examples(
                 breast_cancer_biopsy_output_directory;
                 documenter = true,
                 execute = execute_notebooks,
+                preprocess = preprocess_example,
                 )
         end
         if scripts
@@ -132,6 +145,7 @@ function generate_examples(
                 breast_cancer_biopsy_output_directory;
                 documenter = true,
                 keep_comments = true,
+                preprocess = preprocess_example,
                 )
         end
     end

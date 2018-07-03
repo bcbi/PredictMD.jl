@@ -4,6 +4,10 @@ import PredictMD
 
 #### Begin project-specific settings
 
+PredictMD.require_version(:Julia, "v0.6")
+
+PredictMD.require_version(:PredictMD, "PREDICTMD_CURRENT_VERSION")
+
 PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
     homedir(),
     "Desktop",
