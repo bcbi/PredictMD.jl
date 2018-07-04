@@ -136,7 +136,7 @@ function does_current_version_meet_requirements(
             answer_for_each_interval[num_intervals] =
                 does_current_version_meet_requirements(
                     current_version,
-                    version_requirements[2*interval - 1],
+                    version_requirements[2*num_intervals - 1],
                     )
         end
         answer = any(answer_for_each_interval)
