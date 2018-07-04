@@ -2,7 +2,7 @@
 
 """
 """
-function dir(parts...)
+function predictmd_package_directory(parts...)
     predictmd_root_dir = dirname( # PredictMD/
         dirname( # PredictMD/src/
             dirname( # PredictMD/src/./

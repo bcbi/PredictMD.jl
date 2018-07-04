@@ -6,7 +6,18 @@ import Literate
 function preprocess_example(content::AbstractString)
     content = replace(
         content,
-        "PREDICTMD_CURRENT_VERSION" => string(version())
+        "PREDICTMD_CURRENT_VERSION" => string(
+            version()
+            )
+        )
+    content = replace(
+        content,
+        "PREDICTMD_NEXT_MINOR_VERSION" => string(
+            next_minor_version(
+                version();
+                add_trailing_minus = true,
+                )
+            )
         )
     return content
 end
@@ -40,7 +51,8 @@ function generate_examples(
         )
     mkpath(temp_examples_dir)
 
-    examples_input_parent_directory = PredictMD.dir("examples")
+    examples_input_parent_directory =
+        PredictMD.predictmd_package_directory("examples")
 
     cpu_examples_input_parent_directory = joinpath(
         examples_input_parent_directory,
