@@ -24,7 +24,7 @@ Base.Test.@testset "PredictMD test suite" begin
                     "test_version.jl",)
                 )
         end
-        Base.Test.@testset "base" begin
+        Base.Test.@testset "code_loading" begin
             include(
                 joinpath(
                     ".", "cpu", "unit", "toplevel", "code_loading",
