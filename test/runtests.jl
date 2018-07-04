@@ -16,11 +16,19 @@ ENV["PREDICTMD_IS_RUNTESTS"] = "true"
 Base.Test.@testset "PredictMD test suite" begin
     Base.Test.@testset "Unit tests (CPU)" begin
         info("Running unit tests (CPU)")
+
         Base.Test.@testset "base" begin
             include(
                 joinpath(
                     ".", "cpu", "unit", "base",
                     "test_version.jl",)
+                )
+        end
+        Base.Test.@testset "base" begin
+            include(
+                joinpath(
+                    ".", "cpu", "unit", "toplevel", "code_loading",
+                    "test_require_versions.jl",)
                 )
         end
         Base.Test.@testset "metrics" begin
