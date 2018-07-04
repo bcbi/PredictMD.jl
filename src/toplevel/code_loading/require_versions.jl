@@ -40,7 +40,7 @@ function require_version(
     current_version = Base.VERSION
     version_meets_requirements = does_current_version_meet_requirements(
         current_version,
-        varargs...
+        collect(varargs),
         )
     if !version_meets_requirements
         error(
@@ -62,7 +62,7 @@ function require_version(
     current_version = version()
     version_meets_requirements = does_current_version_meet_requirements(
         current_version,
-        varargs...
+        collect(varargs),
         )
     if !version_meets_requirements
         error(
@@ -86,7 +86,7 @@ function require_version(
     current_version = Pkg.installed(package_name_string)
     version_meets_requirements = does_current_version_meet_requirements(
         current_version,
-        varargs...
+        collect(varargs),
         )
     if !version_meets_requirements
         error(
