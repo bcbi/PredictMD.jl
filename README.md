@@ -8,6 +8,7 @@ uniform interface for using multiple different machine learning packages.
 ### Table of Contents
 - [Installation](#installation)
 - [Documentation](#documentation)
+- [Citing](#citing)
 - [CI/CD](#cicd)
 
 ## Installation
@@ -32,6 +33,10 @@ The [PredictMD documentation](https://www.predictmd.net/stable) contains
 useful information, including instructions for use, example code, and a
 description of
 PredictMD's internals.
+
+## Citing
+
+If you use PredictMD in research, please cite the software using the following DOI: <a href="https://zenodo.org/badge/latestdoi/109460252"> <img src="https://zenodo.org/badge/109460252.svg"/></a>
 
 ## CI/CD
 
