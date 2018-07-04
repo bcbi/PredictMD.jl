@@ -1,9 +1,9 @@
 .btn-grid
 {
-    margin: -2px 0;
+    margin: 0px 100;
 }
 
 .btn-grid > .btn
 {
-    margin: 2px 0;
+    margin: 4px 0;
 }
