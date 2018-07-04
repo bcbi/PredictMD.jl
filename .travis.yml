@@ -1,3 +1,5 @@
+##### Beginning of file
+
 addons:
     apt:
         packages:
@@ -77,3 +79,5 @@ after_success:
     - julia --check-bounds=yes --color=yes -e '
         cd(Pkg.dir("PredictMD"));
             include(joinpath("docs", "deploy.jl"))'
+
+##### End of file
