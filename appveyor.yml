@@ -1,3 +1,5 @@
+##### Beginning of file
+
 branches:
     except:
         - gh-pages
@@ -59,3 +61,5 @@ test_script:
 on_success:
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e "Pkg.add(\"Coverage\");"
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e "cd(Pkg.dir(\"PredictMD\")); using Coverage; Codecov.submit(Codecov.process_folder());"
+
+##### End of file

@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import NumericalIntegration
 
 """
@@ -34,3 +36,5 @@ function trapz(
     end
     return I
 end
+
+##### End of file

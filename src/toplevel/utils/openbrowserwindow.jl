@@ -1,3 +1,5 @@
+##### Beginning of file
+
 # Parts of this file are based on:
 # 1. https://github.com/JuliaPlots/Plots.jl/blob/master/src/backends/web.jl
 # 2. https://github.com/JuliaGraphics/Luxor.jl/blob/master/src/Luxor.jl
@@ -117,3 +119,5 @@ function open_browser_window(filename::AbstractString, a::Associative = ENV)
         end
     end
 end
+
+##### End of file

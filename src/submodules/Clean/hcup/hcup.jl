@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import CSV
 import CSVFiles
 import DataFrames
@@ -500,3 +502,5 @@ function clean_hcup_nis_csv_icd9(
 
     return output_file_name
 end
+
+##### End of file

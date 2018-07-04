@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import Documenter
 import Literate
 
@@ -80,3 +82,5 @@ function generate_docs(output_directory::AbstractString)
     ENV["PREDICTMD_IS_MAKE_DOCS"] = "false"
     return output_directory
 end
+
+##### End of file

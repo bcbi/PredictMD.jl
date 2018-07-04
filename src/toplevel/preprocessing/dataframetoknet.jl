@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import DataFrames
 import StatsModels
 
@@ -440,3 +442,5 @@ function transform(
     end
     return featuresarray
 end
+
+##### End of file

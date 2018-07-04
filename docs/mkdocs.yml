@@ -1,3 +1,5 @@
+##### Beginning of file
+
 site_name: PredictMD documentation
 # repo_url: https://github.com/bcbi/PredictMD.jl
 site_description: PredictMD - uniform interface for machine learning in Julia
@@ -69,3 +71,5 @@ pages:
                         09_get_model_output.md"
     - "Library":
         - "Internals": "library/internals.md"
+
+##### End of file

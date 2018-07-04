@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import Documenter
 import Literate
 
@@ -159,3 +161,5 @@ function generate_examples(
     ENV["PREDICTMD_IS_MAKE_EXAMPLES"] = "false"
     return output_directory
 end
+
+##### End of file

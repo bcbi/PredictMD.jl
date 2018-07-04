@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import Requires
 
 """
@@ -22,3 +24,5 @@ Requires.@require CuArrays begin
             )
         )
 end
+
+##### End of file

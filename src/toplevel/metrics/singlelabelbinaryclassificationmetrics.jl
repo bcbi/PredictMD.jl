@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import DataFrames
 import MLBase
 import StatsBase
@@ -287,3 +289,5 @@ function singlelabelbinaryclassificationmetrics(
     end
     return result
 end
+
+##### End of file

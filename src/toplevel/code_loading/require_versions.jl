@@ -1,3 +1,5 @@
+##### Beginning of file
+
 abstract type AbstractVersionRequirement end
 
 struct JuliaVersionRequirement <: AbstractVersionRequirement
@@ -161,3 +163,5 @@ function does_current_version_meet_requirements(
     answer = min_version <= current_version < max_version
     return answer
 end
+
+##### End of file

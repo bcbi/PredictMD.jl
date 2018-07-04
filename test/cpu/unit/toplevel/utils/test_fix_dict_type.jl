@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import Base.Test
 
 dict_1 = Dict()
@@ -27,3 +29,5 @@ Base.Test.@test(length(dict_4) == 3)
 Base.Test.@test(dict_1[:x] == 1.1)
 Base.Test.@test(dict_1[:y] == 2.2)
 Base.Test.@test(dict_1[:z] == 3.3)
+
+##### End of file

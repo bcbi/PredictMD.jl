@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
 """
 function dir(parts...)
@@ -15,3 +17,5 @@ function dir(parts...)
     result = joinpath(predictmd_root_dir, parts...)
     return result
 end
+
+##### End of file

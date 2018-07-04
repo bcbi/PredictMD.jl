@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import TikzPictures
 
 """
@@ -180,3 +182,5 @@ function open_plot(
     open_result = open_browser_window(filename)
     return filename
 end
+
+##### End of file

@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import DataFrames
 import GLM
 import StatsModels
@@ -391,3 +393,5 @@ function singlelabeldataframelinearregression(
         error("$(package) is not a valid value for package")
     end
 end
+
+##### End of file

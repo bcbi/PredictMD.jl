@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import Base.Test
 
 vector_1 = []
@@ -149,3 +151,5 @@ Base.Test.@test(array_4[2,3,1] == 210)
 Base.Test.@test(array_4[2,3,2] == 220)
 Base.Test.@test(array_4[2,3,3] == 230)
 Base.Test.@test(array_4[2,3,4] == 240)
+
+##### End of file

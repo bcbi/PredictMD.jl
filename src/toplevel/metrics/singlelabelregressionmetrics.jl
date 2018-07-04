@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import DataFrames
 import MLBase
 import StatsBase
@@ -111,3 +113,5 @@ function singlelabelregressionmetrics(
     end
     return result
 end
+
+##### End of file

@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import Documenter
 import Literate
 import PredictMD
@@ -38,3 +40,5 @@ else
 end
 
 ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "false"
+
+##### End of file

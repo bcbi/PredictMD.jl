@@ -1,3 +1,5 @@
+<!-- Beginning of file -->
+
 # PredictMD
 
 PredictMD is a free and open-source Julia package that provides a uniform
@@ -19,3 +21,5 @@ following command in Julia:
 ```julia
 Pkg.test("PredictMD")
 ```
+
+<!-- End of file -->

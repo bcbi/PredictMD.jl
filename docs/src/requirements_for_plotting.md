@@ -1,6 +1,8 @@
+<!-- Beginning of file -->
+
 # Requirements for plotting
 
-There are no requirements in order to run PredictMD---you can train, run,
+There are no requirements in order to run PredictMD--you can train, run,
 and evaluate models without installing any additional software. However, in
 order to generate plots (e.g. ROC curves), you need to install the following
 additional software packages on your system:
@@ -64,3 +66,5 @@ pdf2svg from the appropriate link below:
     http://brewinstall.org/Install-pdf2svg-on-Mac-with-Brew/)
 * GNU/Linux: [http://www.cityinthesky.co.uk/opensource/pdf2svg/](
     http://www.cityinthesky.co.uk/opensource/pdf2svg/)
+
+<!-- End of file -->

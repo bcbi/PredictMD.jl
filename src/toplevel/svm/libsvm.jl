@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import LIBSVM
 
 """
@@ -438,3 +440,5 @@ function singlelabeldataframesvmregression(
         error("$(package) is not a valid value for package")
     end
 end
+
+##### End of file

@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
 """
 struct SimplePipeline <: AbstractPipeline
@@ -169,3 +171,5 @@ function predict_proba(
     end
     return output
 end
+
+##### End of file

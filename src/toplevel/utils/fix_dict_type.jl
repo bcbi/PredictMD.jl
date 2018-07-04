@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
 """
 function fix_dict_type(
@@ -19,3 +21,5 @@ function fix_dict_type(
 end
 
 fix_dict_type(x::Void) = x
+
+##### End of file

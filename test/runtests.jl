@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import Base.Test
 
 info("Printing Julia version info:")
@@ -211,3 +213,5 @@ Base.Test.@testset "PredictMD test suite" begin
 end
 
 ENV["PREDICTMD_IS_RUNTESTS"] = "false"
+
+##### End of file

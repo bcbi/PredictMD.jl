@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
 """
 struct ImmutablePackageSingleLabelPredictProbaTransformer <:
@@ -82,3 +84,5 @@ function predict_proba(
     result = fix_dict_type(result)
     return result
 end
+
+##### End of file

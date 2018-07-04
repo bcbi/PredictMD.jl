@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
 """
 struct ImmutablePackageSingleLabelPredictionTransformer <:
@@ -81,3 +83,5 @@ function predict_proba(
         return varargs
     end
 end
+
+##### End of file

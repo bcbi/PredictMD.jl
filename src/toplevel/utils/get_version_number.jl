@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
 """
 version_julia6() = PredictMD.VERSION_NUMBER
@@ -30,3 +32,5 @@ function version_julia7()
 
     return version_number
 end
+
+##### End of file
