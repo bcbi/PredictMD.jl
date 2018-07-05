@@ -1,15 +1,58 @@
 ##### Beginning of file
 
+ENV["PREDICTMD_IS_RUNTESTS"] = "true"
+
 import Base.Test
 
-info("Printing Julia version info:")
+info(
+    string(
+        "Julia package directory: \"",
+        Pkg.dir(),
+        "\"",
+        )
+    )
+
+info(
+    string(
+        "Julia cache path(s): ",
+        "[",
+        join(
+            "\"" .* Base.LOAD_CACHE_PATH .* "\"",
+            ", "
+            ),
+        "]",
+        )
+    )
+
+info(
+    string(
+        "Printing Julia version info:",
+        )
+    )
 versioninfo(true)
 
-info("Attempting to import PredictMD")
+info(
+    string(
+        "Attempting to import PredictMD...",
+        )
+    )
+
 import PredictMD
-info("Successfully imported PredictMD")
-info("Printing PredictMD version info:")
-println(string("PredictMD Version ", PredictMD.version()))
+
+info(
+    string(
+        "Successfully imported PredictMD version ",
+        PredictMD.version(),
+        )
+    )
+
+info(
+    string(
+        "PredictMD package directory: \"",
+        PredictMD.predictmd_package_directory(),
+        "\"",
+        )
+    )
 
 srand(999)
 
