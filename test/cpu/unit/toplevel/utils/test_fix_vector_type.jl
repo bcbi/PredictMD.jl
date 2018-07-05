@@ -2,6 +2,9 @@
 
 import Base.Test
 
+Base.Test.@test( PredictMD.fix_array_type(nothing) == nothing )
+Base.Test.@test( PredictMD.fix_vector_type(nothing) == nothing )
+
 vector_1 = []
 push!(vector_1, Float64(1.0))
 push!(vector_1, Float64(2.0))

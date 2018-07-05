@@ -2,6 +2,8 @@
 
 import Base.Test
 
+Base.Test.@test( PredictMD.fix_dict_type(nothing) == nothing )
+
 dict_1 = Dict()
 dict_1[Symbol(:x)] = Float64(1.1)
 dict_1[Symbol(:y)] = Float64(2.2)
