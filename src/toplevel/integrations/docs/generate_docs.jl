@@ -21,7 +21,7 @@ function generate_docs(output_directory::AbstractString)
         "PredictMDTemp",
         "docs",
         )
-    original_docs_directory = dir("docs")
+    original_docs_directory = predictmd_package_directory("docs")
     mkpath(dirname(temp_generatedocs_dir))
     cp(
         original_docs_directory,
