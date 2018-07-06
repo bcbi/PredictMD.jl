@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import Documenter
 import Literate
 import PredictMD
@@ -21,3 +23,5 @@ temp_makedocs_dir = joinpath(
       )
 
 PredictMD.generate_docs(temp_makedocs_dir)
+
+##### End of file

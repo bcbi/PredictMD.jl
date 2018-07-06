@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import MLBase
 import StatsBase
 
@@ -33,3 +35,5 @@ function roccurve(
     allthresholds = allthresholds[permutation]
     return allfpr, alltpr, allthresholds
 end
+
+##### End of file

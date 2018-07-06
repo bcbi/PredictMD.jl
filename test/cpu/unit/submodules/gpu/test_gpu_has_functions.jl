@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import PredictMD
 import PredictMD.GPU
 
@@ -16,3 +18,5 @@ Base.Test.@test(
 Base.Test.@test(
     PredictMD.GPU.has_llvm() || !PredictMD.GPU.has_llvm()
     )
+
+##### End of file

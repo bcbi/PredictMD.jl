@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import Requires
 
 """
@@ -9,3 +11,5 @@ Requires.@require Clang begin
 
     has_clang() = true
 end
+
+##### End of file

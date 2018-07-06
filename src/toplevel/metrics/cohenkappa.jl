@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import MLBase
 
 """
@@ -63,3 +65,5 @@ function cohen_kappa(rocnums::MLBase.ROCNums)
     result = cohen_kappa(contingency_table)
     return result
 end
+
+##### End of file

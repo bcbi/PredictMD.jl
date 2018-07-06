@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import MLBase
 import ROCAnalysis
 import StatsBase
@@ -55,3 +57,5 @@ function aurocc(
     end
     return aurocc_trapz_value
 end
+
+##### End of file

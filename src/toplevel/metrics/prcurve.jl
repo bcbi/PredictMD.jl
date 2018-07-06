@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import MLBase
 import StatsBase
 
@@ -32,3 +34,5 @@ function prcurve(
     allthresholds = allthresholds[permutation]
     return allprecisions, allrecalls, allthresholds
 end
+
+##### End of file

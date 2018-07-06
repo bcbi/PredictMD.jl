@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
 """
 struct ImmutablePredictProbaSingleLabelInt2StringTransformer <:
@@ -89,3 +91,5 @@ function predict_proba(
     result = fix_dict_type(result)
     return result
 end
+
+##### End of file

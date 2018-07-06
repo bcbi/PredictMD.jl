@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import Requires
 
 """
@@ -20,3 +22,5 @@ Requires.@require CLArrays begin
             )
         )
 end
+
+##### End of file

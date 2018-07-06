@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import MLBase
 import NumericalIntegration
 import StatsBase
@@ -23,3 +25,5 @@ function auprc(
     areaunderprcurve = trapz(x, y)
     return areaunderprcurve
 end
+
+##### End of file

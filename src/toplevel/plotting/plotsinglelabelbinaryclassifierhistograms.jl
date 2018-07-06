@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import LaTeXStrings
 import PGFPlots
 import PGFPlotsX
@@ -58,3 +60,5 @@ function plotsinglelabelbinaryclassifierhistogram(
     tikzpicture = PGFPlots.plot(axisobject)
     return tikzpicture
 end
+
+##### End of file

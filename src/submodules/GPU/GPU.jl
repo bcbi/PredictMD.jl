@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
 """
 module GPU # begin submodule PredictMD.GPU
@@ -28,3 +30,5 @@ include(joinpath(".", "gpuarrays", "gpuarrays.jl",))
 include(joinpath(".", "llvm", "llvm.jl",))
 
 end # end submodule PredictMD.GPU
+
+##### End of file

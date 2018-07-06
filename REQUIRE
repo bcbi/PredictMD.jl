@@ -1,7 +1,9 @@
-##### Minimum supported version of Julia: 0.6
+##### Beginning of file
+
+### Minimum supported version of Julia: 0.6
 julia 0.6
 
-##### Required Julia packages
+### Required Julia packages
 Atom
 CSVFiles
 CUDAapi
@@ -30,10 +32,12 @@ ROCAnalysis
 Requires
 ValueHistories
 
-##### The following Julia packages are not required, but will be used by
-##### PredictMD if the user runs `import PACKAGENAME` or `using PACKAGENAME`
+### The following Julia packages are not required, but will be used by
+### PredictMD if the user runs `import PACKAGENAME` or `using PACKAGENAME`
 # CLArrays
 # Clang
 # CuArrays
 # Cxx
 # LLVM
+
+##### End of file

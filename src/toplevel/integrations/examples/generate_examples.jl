@@ -1,5 +1,26 @@
+##### Beginning of file
+
 import Documenter
 import Literate
+
+function preprocess_example(content::AbstractString)
+    content = replace(
+        content,
+        "PREDICTMD_CURRENT_VERSION" => string(
+            version()
+            )
+        )
+    content = replace(
+        content,
+        "PREDICTMD_NEXT_MINOR_VERSION" => string(
+            next_minor_version(
+                version();
+                add_trailing_minus = true,
+                )
+            )
+        )
+    return content
+end
 
 function generate_examples(
         output_directory::AbstractString;
@@ -30,7 +51,8 @@ function generate_examples(
         )
     mkpath(temp_examples_dir)
 
-    examples_input_parent_directory = PredictMD.dir("examples")
+    examples_input_parent_directory =
+        PredictMD.predictmd_package_directory("examples")
 
     cpu_examples_input_parent_directory = joinpath(
         examples_input_parent_directory,
@@ -69,6 +91,7 @@ function generate_examples(
                 input_file_full_path,
                 boston_housing_output_directory;
                 documenter = true,
+                preprocess = preprocess_example,
                 )
         end
         if notebooks
@@ -77,6 +100,7 @@ function generate_examples(
                 boston_housing_output_directory;
                 documenter = true,
                 execute = execute_notebooks,
+                preprocess = preprocess_example,
                 )
         end
         if scripts
@@ -85,6 +109,7 @@ function generate_examples(
                 boston_housing_output_directory;
                 documenter = true,
                 keep_comments = true,
+                preprocess = preprocess_example,
                 )
         end
     end
@@ -116,6 +141,7 @@ function generate_examples(
                 input_file_full_path,
                 breast_cancer_biopsy_output_directory;
                 documenter = true,
+                preprocess = preprocess_example,
                 )
         end
         if notebooks
@@ -124,6 +150,7 @@ function generate_examples(
                 breast_cancer_biopsy_output_directory;
                 documenter = true,
                 execute = execute_notebooks,
+                preprocess = preprocess_example,
                 )
         end
         if scripts
@@ -132,6 +159,7 @@ function generate_examples(
                 breast_cancer_biopsy_output_directory;
                 documenter = true,
                 keep_comments = true,
+                preprocess = preprocess_example,
                 )
         end
     end
@@ -145,3 +173,5 @@ function generate_examples(
     ENV["PREDICTMD_IS_MAKE_EXAMPLES"] = "false"
     return output_directory
 end
+
+##### End of file

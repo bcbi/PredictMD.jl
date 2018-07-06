@@ -1,3 +1,5 @@
+##### Beginning of file
+
 table1 = [20 5; 10 15]
 Base.Test.@test(
     isapprox(PredictMD.cohen_kappa(table1), 0.4; atol = 0.00000000001)
@@ -17,3 +19,5 @@ table4 = [9 3 1; 4 8 2 ; 2 1 6]
 Base.Test.@test(
     isapprox(PredictMD.cohen_kappa(table4), 0.45; atol = 0.001)
     )
+
+##### End of file

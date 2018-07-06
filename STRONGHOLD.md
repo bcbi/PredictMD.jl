@@ -1,3 +1,5 @@
+<!-- Beginning of file -->
+
 # PredictMD on Stronghold
 
 This document provides instructions for using PredictMD inside the [Stronghold](https://it.brown.edu/services/type/stronghold-data-compliance-research-environment) research environment for data compliance.
@@ -21,3 +23,5 @@ module load conda/bcbi_v0.0.1
 ```
 
 Now Julia and PredictMD are available in your bash session.
+
+<!-- End of file -->

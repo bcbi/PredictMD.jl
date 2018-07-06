@@ -1,4 +1,8 @@
+##### Beginning of file
+
 import Base.Test
+
+Base.Test.@test( PredictMD.fix_dict_type(nothing) == nothing )
 
 dict_1 = Dict()
 dict_1[Symbol(:x)] = Float64(1.1)
@@ -27,3 +31,5 @@ Base.Test.@test(length(dict_4) == 3)
 Base.Test.@test(dict_1[:x] == 1.1)
 Base.Test.@test(dict_1[:y] == 2.2)
 Base.Test.@test(dict_1[:z] == 3.3)
+
+##### End of file

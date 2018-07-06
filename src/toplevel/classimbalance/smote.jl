@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import ClassImbalance
 import DataFrames
 
@@ -110,3 +112,5 @@ function smote(
     smotedlabels_df[labelname] = smotedlabelsstringarray
     return smotedfeatures_df, smotedlabels_df
 end
+
+##### End of file

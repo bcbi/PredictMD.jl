@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import LaTeXStrings
 import PGFPlots
 import PGFPlotsX
@@ -237,3 +239,5 @@ function probability_calibration_metrics(
     end
     return result
 end
+
+##### End of file
