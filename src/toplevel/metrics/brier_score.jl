@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
     binary_brier_score(ytrue, yscore)
 
@@ -22,3 +24,5 @@ function binary_brier_score(
     result = mean_square_error(ytrue, yscore)
     return result
 end
+
+##### End of file

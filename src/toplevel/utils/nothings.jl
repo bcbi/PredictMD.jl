@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
 """
 function delete_nothings!(x::AbstractVector)
@@ -11,3 +13,5 @@ is_nothing(x::Any) = false
 """
 """
 is_nothing
+
+##### End of file

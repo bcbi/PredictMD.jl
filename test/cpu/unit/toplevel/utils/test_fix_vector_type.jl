@@ -1,4 +1,9 @@
+##### Beginning of file
+
 import Base.Test
+
+Base.Test.@test( PredictMD.fix_array_type(nothing) == nothing )
+Base.Test.@test( PredictMD.fix_vector_type(nothing) == nothing )
 
 vector_1 = []
 push!(vector_1, Float64(1.0))
@@ -149,3 +154,5 @@ Base.Test.@test(array_4[2,3,1] == 210)
 Base.Test.@test(array_4[2,3,2] == 220)
 Base.Test.@test(array_4[2,3,3] == 230)
 Base.Test.@test(array_4[2,3,4] == 240)
+
+##### End of file

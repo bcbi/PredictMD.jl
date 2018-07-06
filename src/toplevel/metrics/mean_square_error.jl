@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
     mean_square_error(ytrue, ypred)
 """
@@ -23,3 +25,5 @@ mean_squared_deviation(ytrue,ypred) = mean_square_error(ytrue,ypred)
 root_mean_squared_error(ytrue,ypred) = root_mean_square_error(ytrue,ypred)
 root_mean_square_deviation(ytrue,ypred) = root_mean_square_error(ytrue,ypred)
 root_mean_squared_deviation(ytrue,ypred) = root_mean_square_error(ytrue,ypred)
+
+##### End of file

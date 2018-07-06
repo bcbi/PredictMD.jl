@@ -1,3 +1,5 @@
+##### Beginning of file
+
 # Parts of this file are based on:
 # 1. https://github.com/KristofferC/PGFPlotsX.jl/blob/master/deps/build.jl
 
@@ -86,3 +88,4 @@ if !isfile(PREAMBLE_PATH)
     touch(PREAMBLE_PATH)
 end
 
+##### End of file

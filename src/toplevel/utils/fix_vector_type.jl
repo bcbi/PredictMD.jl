@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
 """
 function fix_vector_type(x::AbstractVector)
@@ -15,3 +17,5 @@ function fix_array_type(x::AbstractArray)
 end
 
 fix_array_type(x::Void) = x
+
+##### End of file

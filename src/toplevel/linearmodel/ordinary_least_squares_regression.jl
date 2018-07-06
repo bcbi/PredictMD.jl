@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import DataFrames
 import GLM
 import StatsModels
@@ -54,3 +56,5 @@ function ordinary_least_squares_regression(
     end
     return estimated_intercept, estimated_x_coefficient
 end
+
+##### End of file

@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
 """
 function _getlabelstring2intmap(
@@ -31,3 +33,5 @@ function _getlabelint2stringmap(
     result = fix_dict_type(result)
     return result
 end
+
+##### End of file

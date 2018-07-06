@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import LaTeXStrings
 import PGFPlots
 import PGFPlotsX
@@ -277,3 +279,5 @@ function plotlearningcurves(
 end
 
 const plotlearningcurve = plotlearningcurves
+
+##### End of file

@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import LaTeXStrings
 import PGFPlots
 import PGFPlotsX
@@ -72,3 +74,5 @@ function plotsinglelabelregressiontrueversuspredicted(
     tikzpicture = PGFPlots.plot(axisobject)
     return tikzpicture
 end
+
+##### End of file

@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
     AbstractEstimator
 """
@@ -24,3 +26,5 @@ const Fittable = Union{AbstractEstimator,AbstractPipeline,AbstractTransformer}
     Fittable
 """
 Fittable
+
+##### End of file

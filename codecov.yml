@@ -1,3 +1,5 @@
+##### Beginning of file
+
 codecov:
     branch: develop
 
@@ -10,3 +12,5 @@ ignore:
     # ignore PredictMD.GPU
     - "src/submodules/GPU"
     - "src/submodules/GPU/**/*"
+
+##### End of file

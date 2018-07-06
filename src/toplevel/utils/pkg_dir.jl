@@ -1,6 +1,8 @@
+##### Beginning of file
+
 """
 """
-function dir(parts...)
+function predictmd_package_directory(parts...)
     predictmd_root_dir = dirname( # PredictMD/
         dirname( # PredictMD/src/
             dirname( # PredictMD/src/./
@@ -15,3 +17,5 @@ function dir(parts...)
     result = joinpath(predictmd_root_dir, parts...)
     return result
 end
+
+##### End of file

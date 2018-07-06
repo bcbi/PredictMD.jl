@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import Requires
 
 """
@@ -9,3 +11,5 @@ Requires.@require LLVM begin
 
     has_llvm() = true
 end
+
+##### End of file

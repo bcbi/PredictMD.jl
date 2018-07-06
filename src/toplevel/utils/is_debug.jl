@@ -1,3 +1,5 @@
+##### Beginning of file
+
 function is_debug(a::Associative = ENV)
     result = lowercase(strip(get(a, "DEBUG", ""))) == "true" ||
         lowercase(strip(get(a, "PREDICTMD_DEBUG", ""))) == "true" ||
@@ -6,3 +8,5 @@ function is_debug(a::Associative = ENV)
         lowercase(strip(get(a, "DEBUGPREDICTMD", ""))) == "true"
     return result
 end
+
+##### End of file

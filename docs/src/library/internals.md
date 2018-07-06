@@ -1,3 +1,5 @@
+<!-- Beginning of file -->
+
 # Documentation of internals
 
 ```@contents
@@ -63,3 +65,5 @@ Order = [:macro]
 
 ```@index
 ```
+
+<!-- End of file -->
