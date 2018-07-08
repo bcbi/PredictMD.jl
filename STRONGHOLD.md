@@ -12,7 +12,7 @@ This document provides instructions for using PredictMD inside the [Stronghold](
 
 Open the file `$HOME/.juliarc.jl` (creating it if it does not exist) and make sure that it contains the following line:
 ```julia
-Base.LOAD_CACHE_PATH[1] = joinpath(ENV["HOME"], ".julia_cache")
+Base.LOAD_CACHE_PATH[1] = joinpath(homedir(), ".julia_cache")
 ```
 
 ## Usage
