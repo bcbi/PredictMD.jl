@@ -4,55 +4,29 @@ ENV["PREDICTMD_IS_RUNTESTS"] = "true"
 
 import Base.Test
 
-info(
-    string(
-        "Julia package directory: \"",
-        Pkg.dir(),
-        "\"",
-        )
-    )
+info(string("Julia package directory: \"",Pkg.dir(),"\"",))
 
-info(
-    string(
+info(string(
         "Julia cache path(s): ",
         "[",
-        join(
-            "\"" .* Base.LOAD_CACHE_PATH .* "\"",
-            ", "
-            ),
+        join("\"" .* Base.LOAD_CACHE_PATH .* "\"",", "),
         "]",
-        )
-    )
+        ))
 
-info(
-    string(
-        "Printing Julia version info:",
-        )
-    )
+info(string("Printing Julia version info:",))
 versioninfo(true)
 
-info(
-    string(
-        "Attempting to import PredictMD...",
-        )
-    )
+info(string("Attempting to import PredictMD...",))
 
 import PredictMD
 
-info(
-    string(
-        "Successfully imported PredictMD version ",
-        PredictMD.version(),
-        )
-    )
+info(string("Successfully imported PredictMD version ",PredictMD.version(),))
 
-info(
-    string(
+info(string(
         "PredictMD package directory: \"",
         PredictMD.predictmd_package_directory(),
         "\"",
-        )
-    )
+        ))
 
 srand(999)
 
@@ -61,6 +35,26 @@ ENV["PREDICTMD_IS_RUNTESTS"] = "true"
 Base.Test.@testset "PredictMD test suite" begin
     Base.Test.@testset "Unit tests (CPU)" begin
         info("Running unit tests (CPU)")
+
+        Base.Test.@testset "Module names are defined" begin
+            Base.Test.@test( isdefined(:PredictMD) )
+            Base.Test.@test( isdefined(Main, :PredictMD) )
+            Base.Test.@test( isa(PredictMD, Module) )
+            Base.Test.@test( typeof(PredictMD) == Module )
+            Base.Test.@test( typeof(PredictMD) === Module )
+        end
+
+        Base.Test.@testset "Submodule names are defined" begin
+            Base.Test.@test( isdefined(PredictMD, :Clean) )
+            Base.Test.@test( isa(PredictMD.Clean, Module) )
+            Base.Test.@test( typeof(PredictMD.Clean) == Module )
+            Base.Test.@test( typeof(PredictMD.Clean) === Module )
+
+            Base.Test.@test( isdefined(PredictMD, :GPU) )
+            Base.Test.@test( isa(PredictMD.GPU, Module) )
+            Base.Test.@test( typeof(PredictMD.GPU) == Module )
+            Base.Test.@test( typeof(PredictMD.GPU) === Module )
+        end
 
         Base.Test.@testset "base" begin
             include(
