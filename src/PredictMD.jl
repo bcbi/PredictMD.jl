@@ -80,6 +80,11 @@ include(
     )
 include(
     joinpath(
+        ".", "toplevel", "datasets", "mnist.jl",
+        )
+    )
+include(
+    joinpath(
         ".", "toplevel", "datasets", "rdatasets.jl",
         )
     )
@@ -218,6 +223,11 @@ include(
 include(
     joinpath(
         ".", "toplevel", "neuralnetwork", "knet.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "neuralnetwork", "merlin.jl",
         )
     )
 
