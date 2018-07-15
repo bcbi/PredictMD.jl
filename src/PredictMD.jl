@@ -70,6 +70,11 @@ include(
     )
 include(
     joinpath(
+        ".", "toplevel", "datasets", "datadeps.jl",
+        )
+    )
+include(
+    joinpath(
         ".", "toplevel", "datasets", "gzip.jl",
         )
     )
