@@ -10,8 +10,8 @@
 - [Installation](#installation)
 - [Documentation](#documentation)
 - [Citing](#citing)
-- [Contributing to PredictMD](#)
-- [Using PredictMD in Stronghold](#)
+- [Contributing to PredictMD](#contributing-to-predictmd)
+- [Using PredictMD in Stronghold](#using-predictmd-in-stronghold)
 - [CI/CD](#cicd)
 
 ## Installation
