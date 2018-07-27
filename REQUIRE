@@ -19,7 +19,7 @@ GLM
 GPUArrays
 JLD2
 Knet
-LIBSVM
+LIBSVM 0.1.1 0.2.0-
 Literate
 MLBase
 MNIST
@@ -36,10 +36,5 @@ ValueHistories
 
 ### The following Julia packages are not required, but will be used by
 ### PredictMD if the user runs `import PACKAGENAME` or `using PACKAGENAME`
-# CLArrays
-# Clang
-# CuArrays
-# Cxx
-# LLVM
 
 ##### End of file
