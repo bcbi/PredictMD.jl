@@ -1,7 +1,7 @@
 ##### Beginning of file
 
 function directory(parts...)
-    if is_ci_or_runtests_or_docs_or_examples()
+    if is_ci_or_runtests_or_docs_or_examples() && !is_travis_ci_on_apple()
         true_path = get_temp_directory()
     else
         true_path = joinpath(parts...)
@@ -11,17 +11,17 @@ function directory(parts...)
 end
 
 function get_temp_directory(
-        env::Associative = ENV,
+        a::Associative = ENV,
         environment_variable::AbstractString = "__PREDICTMDTEMPDIRECTORY__",
     )
-    if haskey(env, environment_variable)
-        result = env[environment_variable]
+    if haskey(a, environment_variable)
+        result = a[environment_variable]
     else
         result = create_new_temp_directory()
     end
     mkpath(result)
-    if !haskey(env, environment_variable)
-        env[environment_variable] = result
+    if !haskey(a, environment_variable)
+        a[environment_variable] = result
     end
     return result
 end

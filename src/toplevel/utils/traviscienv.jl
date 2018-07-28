@@ -11,6 +11,20 @@ end
 
 """
 """
+function is_travis_ci_on_linux(a::Associative = ENV)
+    result = is_travis_ci(a) && is_linux()
+    return result
+end
+
+"""
+"""
+function is_travis_ci_on_apple(a::Associative = ENV)
+    result = is_travis_ci(a) && is_apple()
+    return result
+end
+
+"""
+"""
 function is_appveyor_ci(a::Associative = ENV)
     result = ( lowercase(strip(get(a, "CI", ""))) == "true" ) &&
         ( lowercase(strip(get(a, "APPVEYOR", ""))) == "true" )
