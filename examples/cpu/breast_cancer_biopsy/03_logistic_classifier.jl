@@ -184,8 +184,8 @@ PredictMD.open_plot(logistic_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
     logistic_classifier,
-    testing_features_df,
-    testing_labels_df,
+    smoted_training_features_df,
+    smoted_training_labels_df,
     singlelabelname,
     positiveclass;
     sensitivity = 0.95,
