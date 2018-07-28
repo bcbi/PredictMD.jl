@@ -111,14 +111,14 @@ Base.Test.@testset "PredictMD test suite" begin
     end
     rm(
           joinpath(
-                get_temp_directory(),
+                PredictMD.get_temp_directory(),
                 "make_docs",
                 );
           force = true,
           recursive = true,
           )
     temp_makedocs_dir = joinpath(
-          get_temp_directory(),
+          PredictMD.get_temp_directory(),
           "make_docs",
           "PredictMDTEMP",
           "docs",
