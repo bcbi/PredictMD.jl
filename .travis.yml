@@ -20,12 +20,14 @@ git:
 
 julia:
     - 0.6
+    - 0.7
     - nightly
 
 language: julia
 
 matrix:
     allow_failures:
+        - julia: 0.7
         - julia: nightly
     fast_finish: true
 
@@ -68,6 +70,9 @@ script:
     - julia --check-bounds=yes --color=yes -e '
         import PredictMD
         '
+    - ls -la $HOME/.julia
+    - chmod -R u-w,g-w,o-r $HOME/.julia
+    - ls -la $HOME/.julia
     - julia --check-bounds=yes --color=yes -e '
         Pkg.test("PredictMD"; coverage=true)
         '
