@@ -18,11 +18,9 @@ function get_temp_directory(
         result = a[environment_variable]
     else
         result = create_new_temp_directory()
-    end
-    mkpath(result)
-    if !haskey(a, environment_variable)
         a[environment_variable] = result
     end
+    mkpath(result)
     return result
 end
 
