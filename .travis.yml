@@ -20,12 +20,14 @@ git:
 
 julia:
     - 0.6
+    - 0.7
     - nightly
 
 language: julia
 
 matrix:
     allow_failures:
+        - julia: 0.7
         - julia: nightly
     fast_finish: true
 
