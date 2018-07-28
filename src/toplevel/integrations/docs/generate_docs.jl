@@ -14,7 +14,7 @@ function generate_docs(output_directory::AbstractString)
                 )
             )
     end
-    info("Generating docs...")
+    info(string("Generating docs...",))
     temp_generatedocs_dir = joinpath(
         mktempdir(),
         "generate_docs",
@@ -78,7 +78,14 @@ function generate_docs(output_directory::AbstractString)
         temp_generatedocs_dir,
         output_directory,
         )
-    info("Finished generating docs.")
+    info(
+        string(
+            "Finished generating docs. ",
+            "Files were written to: \"",
+            output_directory,
+            "\".",
+            )
+        )
     ENV["PREDICTMD_IS_MAKE_DOCS"] = "false"
     return output_directory
 end

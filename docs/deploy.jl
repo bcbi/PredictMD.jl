@@ -11,12 +11,21 @@ ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "true"
 if is_travis_ci()
     previous_working_directory = pwd()
     temp_makedocs_dir = joinpath(
-          get_temp_directory(),
+          PredictMD.get_temp_directory(),
           "make_docs",
           "PredictMDTEMP",
           "docs",
           )
     cd(temp_makedocs_dir)
+    info(
+        string(
+            "This is a Travis build, ",
+            "so Documenter.deploy_docs will now be run. ",
+            "Current directory: \"",
+            pwd(),
+            "\".",
+            )
+        )
     Documenter.deploydocs(
         branch = "gh-pages",
         deps = Documenter.Deps.pip(
@@ -34,7 +43,8 @@ if is_travis_ci()
 else
     warn(
         string(
-            "This is not a Travis build, so deploy_docs will not be run",
+            "This is not a Travis build, ",
+            "so Documenter.deploy_docs will not be run.",
             )
         )
 end

@@ -40,7 +40,7 @@ function generate_examples(
                 )
             )
     end
-    info("Generating examples...")
+    info(string("Generating examples...",))
     temp_examples_dir = joinpath(
         mktempdir(),
         "generate_examples",
@@ -169,7 +169,14 @@ function generate_examples(
         output_directory;
         remove_destination = true,
         )
-    info("Finished generating examples.")
+    info(
+        string(
+            "Finished generating examples. ",
+            "Files were written to: \"",
+            output_directory,
+            "\".",
+            )
+        )
     ENV["PREDICTMD_IS_MAKE_EXAMPLES"] = "false"
     return output_directory
 end
