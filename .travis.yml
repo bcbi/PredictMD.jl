@@ -73,7 +73,6 @@ script:
     - ls -la $HOME/.julia
     - chmod -R u-w,g-w,o-r $HOME/.julia
     - ls -la $HOME/.julia
-
     - julia --check-bounds=yes --color=yes -e '
         Pkg.test("PredictMD"; coverage=true)
         '
