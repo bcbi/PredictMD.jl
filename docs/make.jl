@@ -8,7 +8,7 @@ srand(999)
 
 rm(
       joinpath(
-            tempdir(),
+            get_temp_directory(),
             "make_docs",
             );
       force = true,
@@ -16,7 +16,7 @@ rm(
       )
 
 temp_makedocs_dir = joinpath(
-      tempdir(),
+      get_temp_directory(),
       "make_docs",
       "PredictMDTEMP",
       "docs",

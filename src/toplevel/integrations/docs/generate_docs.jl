@@ -16,7 +16,7 @@ function generate_docs(output_directory::AbstractString)
     end
     info("Generating docs...")
     temp_generatedocs_dir = joinpath(
-        mktempdir(),
+        get_temp_directory(),
         "generate_docs",
         "PredictMDTemp",
         "docs",

@@ -11,7 +11,7 @@ ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "true"
 if is_travis_ci()
     previous_working_directory = pwd()
     temp_makedocs_dir = joinpath(
-          tempdir(),
+          get_temp_directory(),
           "make_docs",
           "PredictMDTEMP",
           "docs",
