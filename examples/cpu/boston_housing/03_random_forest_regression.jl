@@ -133,7 +133,7 @@ random_forest_regression =
         singlelabelname;
         nsubfeatures = 2,
         ntrees = 20,
-        package = :DecisionTreejl,
+        package = :DecisionTree,
         name = "Random forest",
         feature_contrasts = feature_contrasts,
         )

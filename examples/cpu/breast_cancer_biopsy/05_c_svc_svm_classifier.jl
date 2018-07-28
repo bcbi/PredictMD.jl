@@ -150,7 +150,7 @@ c_svc_svm_classifier =
         featurenames,
         singlelabelname,
         singlelabellevels;
-        package = :LIBSVMjl,
+        package = :LIBSVM,
         svmtype = LIBSVM.SVC,
         name = "SVM (C-SVC)",
         verbose = false,

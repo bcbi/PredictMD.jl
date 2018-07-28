@@ -150,7 +150,7 @@ nu_svc_svm_classifier =
         featurenames,
         singlelabelname,
         singlelabellevels;
-        package = :LIBSVMjl,
+        package = :LIBSVM,
         svmtype = LIBSVM.NuSVC,
         name = "SVM (nu-SVC)",
         verbose = false,

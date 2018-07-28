@@ -149,7 +149,7 @@ logistic_classifier =
         featurenames,
         singlelabelname,
         singlelabellevels;
-        package = :GLMjl,
+        package = :GLM,
         intercept = true,
         interactions = 1,
         name = "Logistic regression",

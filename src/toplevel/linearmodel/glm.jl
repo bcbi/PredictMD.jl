@@ -85,7 +85,7 @@ function fit!(
         labels_df::DataFrames.AbstractDataFrame,
         )
     labelsandfeatures_df = hcat(labels_df, features_df)
-    info(string("Starting to train GLM.jl model."))
+    info(string("Starting to train GLM model."))
     glm = try
         GLM.glm(
             estimator.formula,
@@ -96,14 +96,14 @@ function fit!(
     catch e
         warn(
             string(
-                "while training GLM.jl model, ignored error: ",
+                "while training GLM model, ignored error: ",
                 e,
                 )
             )
         nothing
     end
     # glm =
-    info(string("Finished training GLM.jl model."))
+    info(string("Finished training GLM model."))
     estimator.underlyingglm = glm
     return estimator
 end
@@ -242,7 +242,7 @@ function singlelabelbinaryclassdataframelogisticclassifier(
         interactions::Integer = 1,
         name::AbstractString = "",
         )
-    if package == :GLMjl
+    if package == :GLM
         result =_singlelabelbinaryclassdataframelogisticclassifier_GLM(
             featurenames,
             singlelabelname,
@@ -324,7 +324,7 @@ function singlelabelbinaryclassdataframeprobitclassifier(
         interactions::Integer = 1,
         name::AbstractString = "",
         )
-    if package == :GLMjl
+    if package == :GLM
         result =_singlelabelbinaryclassdataframeprobitclassifier_GLM(
             featurenames,
             singlelabelname,
@@ -380,7 +380,7 @@ function singlelabeldataframelinearregression(
         interactions::Integer = 1,
         name::AbstractString = "",
         )
-    if package == :GLMjl
+    if package == :GLM
         result =_singlelabeldataframelinearregression_GLM(
             featurenames,
             singlelabelname;

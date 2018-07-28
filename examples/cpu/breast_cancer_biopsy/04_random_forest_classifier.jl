@@ -151,7 +151,7 @@ random_forest_classifier =
         singlelabellevels;
         nsubfeatures = 4,
         ntrees = 200,
-        package = :DecisionTreejl,
+        package = :DecisionTree,
         name = "Random forest",
         feature_contrasts = feature_contrasts,
         )

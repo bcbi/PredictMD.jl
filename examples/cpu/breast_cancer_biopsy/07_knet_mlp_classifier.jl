@@ -228,7 +228,7 @@ knet_mlp_classifier =
         featurenames,
         singlelabelname,
         singlelabellevels;
-        package = :Knetjl,
+        package = :Knet,
         name = "Knet MLP",
         predict_function_source = knet_mlp_predict_function_source,
         loss_function_source = knet_mlp_loss_function_source,

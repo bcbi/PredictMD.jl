@@ -96,7 +96,7 @@ function fit!(
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
-    info(string("Starting to train DecisionTree.jl model."))
+    info(string("Starting to train DecisionTree model."))
     randomforest = try
         DecisionTree.build_forest(
             labelsarray,
@@ -107,13 +107,13 @@ function fit!(
     catch e
         warn(
             string(
-                "While training DecisionTree.jl model, ignored error: ",
+                "While training DecisionTree model, ignored error: ",
                 e,
                 )
             )
         nothing
     end
-    info(string("Finished training DecisionTree.jl model."))
+    info(string("Finished training DecisionTree model."))
     estimator.underlyingrandomforest = randomforest
     return estimator
 end
@@ -243,7 +243,7 @@ function singlelabelmulticlassdataframerandomforestclassifier(
         ntrees::Integer = 10,
         feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
-    if package == :DecisionTreejl
+    if package == :DecisionTree
         result =
             _singlelabelmulticlassdfrandomforestclassifier_DecisionTree(
                 featurenames,
@@ -310,7 +310,7 @@ function singlelabeldataframerandomforestregression(
         ntrees::Integer = 10,
         feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
-    if package == :DecisionTreejl
+    if package == :DecisionTree
         result = _singlelabeldataframerandomforestregression_DecisionTree(
             featurenames,
             singlelabelname;

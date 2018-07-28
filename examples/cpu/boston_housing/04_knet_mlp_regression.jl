@@ -189,7 +189,7 @@ knetmlp_maxepochs = 1_000
 knet_mlp_regression = PredictMD.singlelabeldataframeknetregression(
     featurenames,
     singlelabelname;
-    package = :Knetjl,
+    package = :Knet,
     name = "Knet MLP",
     predict_function_source = knet_mlp_predict_function_source,
     loss_function_source = knet_mlp_loss_function_source,

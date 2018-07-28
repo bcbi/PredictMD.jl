@@ -118,7 +118,7 @@ function fit!(
             "Could not figure out if model is classification or regression"
             )
     end
-    info(string("Starting to train LIBSVM.jl model."))
+    info(string("Starting to train LIBSVM model."))
     svm = try
         LIBSVM.svmtrain(
             featuresarray,
@@ -129,14 +129,14 @@ function fit!(
     catch e
         warn(
             string(
-                "While training LIBSVM.jl model, ignored error: ",
+                "While training LIBSVM model, ignored error: ",
                 e,
                 )
             )
         nothing
     end
     # svm =
-    info(string("Finished training LIBSVM.jl model."))
+    info(string("Finished training LIBSVM model."))
     estimator.underlyingsvm = svm
     estimator.levels = estimator.underlyingsvm.labels
     return estimator
@@ -303,7 +303,7 @@ function singlelabelmulticlassdataframesvmclassifier(
         verbose::Bool = true,
         feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
-    if package == :LIBSVMjl
+    if package == :LIBSVM
         result = _singlelabelmulticlassdataframesvmclassifier_LIBSVM(
             featurenames,
             singlelabelname,
@@ -415,7 +415,7 @@ function singlelabeldataframesvmregression(
         verbose::Bool = true,
         feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
-    if package == :LIBSVMjl
+    if package == :LIBSVM
         result = _singlelabeldataframesvmregression_LIBSVM(
             featurenames,
             singlelabelname;

@@ -195,7 +195,7 @@ function fit!(
     last_epoch = all_epochs_so_far[end]
     info(
         string(
-            "Starting to train Knet.jl model. Max epochs: ",
+            "Starting to train Knet model. Max epochs: ",
             estimator.maxepochs,
             ".",
             )
@@ -335,7 +335,7 @@ function fit!(
             end
         end
     end # end while
-    info(string("Finished training Knet.jl model."))
+    info(string("Finished training Knet model."))
     return estimator
 end
 
@@ -495,7 +495,7 @@ function singlelabelmulticlassdataframeknetclassifier(
         feature_contrasts::Union{Void, AbstractFeatureContrasts} =
             nothing,
         )
-    if package == :Knetjl
+    if package == :Knet
         result = _singlelabelmulticlassdataframeknetclassifier_Knet(
             featurenames,
             singlelabelname,
@@ -597,7 +597,7 @@ function singlelabeldataframeknetregression(
         feature_contrasts::Union{Void, AbstractFeatureContrasts} =
             nothing,
         )
-    if package == :Knetjl
+    if package == :Knet
         result = _singlelabeldataframeknetregression_Knet(
             featurenames,
             singlelabelname;
