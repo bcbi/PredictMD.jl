@@ -183,7 +183,7 @@ knetmlp_losshyperparameters[:L2] = Cfloat(0.0)
 knetmlp_optimizationalgorithm = :Adam
 knetmlp_optimizerhyperparameters = Dict()
 knetmlp_minibatchsize = 48
-knetmlp_maxepochs = 1_000
+knetmlp_maxepochs = 200
 
 knet_mlp_regression = PredictMD.singlelabeldataframeknetregression(
     featurenames,
@@ -211,6 +211,8 @@ PredictMD.fit!(
     validation_features_df,
     validation_labels_df,
     )
+
+PredictMD.set_max_epochs!(knet_mlp_regression, 1_000)
 
 knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
     knet_mlp_regression,
