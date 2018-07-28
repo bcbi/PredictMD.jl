@@ -183,7 +183,6 @@ knetmlp_losshyperparameters[:L2] = Cfloat(0.0)
 knetmlp_optimizationalgorithm = :Adam
 knetmlp_optimizerhyperparameters = Dict()
 knetmlp_minibatchsize = 48
-knetmlp_maxepochs = 200
 
 knet_mlp_regression = PredictMD.singlelabeldataframeknetregression(
     featurenames,
@@ -197,7 +196,7 @@ knet_mlp_regression = PredictMD.singlelabeldataframeknetregression(
     optimizerhyperparameters = knetmlp_optimizerhyperparameters,
     minibatchsize = knetmlp_minibatchsize,
     modelweights = knetmlp_modelweights,
-    maxepochs = knetmlp_maxepochs,
+    maxepochs = 200,
     printlosseverynepochs = 100,
     feature_contrasts = feature_contrasts,
     )
@@ -213,6 +212,14 @@ PredictMD.fit!(
     )
 
 PredictMD.set_max_epochs!(knet_mlp_regression, 1_000)
+
+PredictMD.fit!(
+    knet_mlp_regression,
+    training_features_df,
+    training_labels_df,
+    validation_features_df,
+    validation_labels_df,
+    )
 
 knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
     knet_mlp_regression,

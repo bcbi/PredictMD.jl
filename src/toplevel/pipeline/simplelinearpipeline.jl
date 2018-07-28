@@ -22,6 +22,21 @@ end
 
 """
 """
+function set_max_epochs!(
+        x::SimplePipeline,
+        new_max_epochs::Integer,
+        )
+    for i = 1:length(x.objectsvector)
+        set_max_epochs!(
+            x.objectsvector[i],
+            new_max_epochs,
+            )
+    end
+    return nothing
+end
+
+"""
+"""
 function set_feature_contrasts!(
         x::SimplePipeline,
         feature_contrasts::AbstractFeatureContrasts,
