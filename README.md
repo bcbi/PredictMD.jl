@@ -10,8 +10,8 @@
 - [Installation](#installation)
 - [Documentation](#documentation)
 - [Citing](#citing)
-- [Contributing to PredictMD](#contributing-to-predictmd)
-- [Using PredictMD in Stronghold](#using-predictmd-in-stronghold)
+- [Contributing](#contributing)
+- [Stronghold](#stronghold)
 - [CI/CD](#cicd)
 
 ## Installation
@@ -41,11 +41,11 @@ PredictMD's internals.
 
 If you use PredictMD in research, please cite the software using the following DOI: <a href="https://zenodo.org/badge/latestdoi/109460252"> <img src="https://zenodo.org/badge/109460252.svg"/></a>
 
-## Contributing to PredictMD
+## Contributing
 
 If you would like to contribute to the PredictMD source code, please read the instructions in [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## Using PredictMD in Stronghold
+## Stronghold
 
 If you are using PredictMD inside the Stronghold secure computing environment, please read the instructions in [STRONGHOLD.md](STRONGHOLD.md).
 
