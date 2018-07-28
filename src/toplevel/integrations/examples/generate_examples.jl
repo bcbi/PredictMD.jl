@@ -42,7 +42,7 @@ function generate_examples(
     end
     info("Generating examples...")
     temp_examples_dir = joinpath(
-        get_temp_directory(),
+        mktempdir(),
         "generate_examples",
         "PredictMDTemp",
         "docs",
