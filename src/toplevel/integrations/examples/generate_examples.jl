@@ -26,11 +26,18 @@ function generate_examples(
         output_directory::AbstractString;
         execute_notebooks = false,
         markdown = false,
-        notebooks = true,
-        scripts = true,
+        notebooks = false,
+        scripts = false,
         remove_existing_output_directory = false,
         )
     ENV["PREDICTMD_IS_MAKE_EXAMPLES"] = "true"
+    if !markdown && !notebooks && !scripts
+        error(
+            string(
+                "At least one of markdown, notebooks, scripts must be true",
+                )
+            )
+    end
     if ispath(output_directory) && !remove_existing_output_directory
         error(
             string(
