@@ -221,7 +221,6 @@ knetmlp_losshyperparameters[:L2] = Cfloat(0.0)
 knetmlp_optimizationalgorithm = :Momentum
 knetmlp_optimizerhyperparameters = Dict()
 knetmlp_minibatchsize = 48
-knetmlp_maxepochs = 1_000
 
 knet_mlp_classifier =
     PredictMD.singlelabelmulticlassdataframeknetclassifier(
@@ -238,11 +237,21 @@ knet_mlp_classifier =
         minibatchsize = knetmlp_minibatchsize,
         modelweights = knetmlp_modelweights,
         printlosseverynepochs = 100,
-        maxepochs = knetmlp_maxepochs,
+        maxepochs = 200,
         feature_contrasts = feature_contrasts,
         )
 
 PredictMD.parse_functions!(knet_mlp_classifier)
+
+PredictMD.fit!(
+    knet_mlp_classifier,
+    smoted_training_features_df,
+    smoted_training_labels_df,
+    validation_features_df,
+    validation_labels_df,
+    )
+
+PredictMD.set_max_epochs!(knet_mlp_classifier, 1_000)
 
 PredictMD.fit!(
     knet_mlp_classifier,

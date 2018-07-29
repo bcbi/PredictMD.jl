@@ -19,14 +19,15 @@ end
 ############################################################################
 
 # base/
+# types.jl needs to be included first
 include(
     joinpath(
-        ".", "base", "interface.jl",
+        ".", "base", "types.jl",
         )
     )
 include(
     joinpath(
-        ".", "base", "types.jl",
+        ".", "base", "interface.jl",
         )
     )
 include(

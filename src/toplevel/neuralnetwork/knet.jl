@@ -108,6 +108,16 @@ end
 
 """
 """
+function set_max_epochs!(
+        x::KnetModel,
+        new_max_epochs::Integer,
+        )
+    x.maxepochs = new_max_epochs
+    return nothing
+end
+
+"""
+"""
 function get_underlying(
         x::KnetModel;
         saving::Bool = false,
