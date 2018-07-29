@@ -27,10 +27,9 @@ temp_makedocs_dir = joinpath(
 PredictMD.generate_docs(temp_makedocs_dir)
 
 if PredictMD.is_travis_ci()
-    FileIO.save(
-        joinpath(homedir(), "travis_temp_makedocs_dir.jld2"),
-        "temp_makedocs_dir",
-        temp_makedocs_dir,
-        )
+    filename = joinpath(homedir(), "travis_temp_makedocs_dir.jld2")
+    rm(filename; force = true, recursive = true)
+    FileIO.save(filename, "temp_makedocs_dir", temp_makedocs_dir)
 end
+
 ##### End of file
