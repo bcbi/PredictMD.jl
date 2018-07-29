@@ -79,7 +79,6 @@ include(
         ".", "toplevel", "datasets", "gzip.jl",
         )
     )
-a
 include(
     joinpath(
         ".", "toplevel", "datasets", "juliadb.jl",
