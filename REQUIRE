@@ -5,7 +5,7 @@ julia 0.6
 
 ### Required Julia packages
 Atom
-CSVFiles
+CSVFiles # remove once I make a fork of queryverse/Queryverse.jl
 CUDAapi
 ClassImbalance
 Combinatorics
@@ -30,6 +30,7 @@ NumericalIntegration
 PGFPlots
 PGFPlotsX
 ProgressMeter
+Query # remove once I make a fork of queryverse/Queryverse.jl
 RDatasets
 ROCAnalysis
 ValueHistories
