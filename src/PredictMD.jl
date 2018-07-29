@@ -94,7 +94,6 @@ include(
         ".", "toplevel", "datasets", "mnist.jl",
         )
     )
-a
 include(
     joinpath(
         ".", "toplevel", "datasets", "queryverse.jl",
