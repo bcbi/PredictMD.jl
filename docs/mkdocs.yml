@@ -27,7 +27,9 @@ pages:
     - "Home": "index.md"
     - "Requirements for plotting (optional)":
             "requirements_for_plotting.md"
-    - "examples":
+    - "Examples":
+        - "Generating these example files on your computer":
+            "generate_examples/generate_examples.md"
         - "Boston housing (single label regression)":
             - "1. Preprocess data":
                     "examples/cpu/boston_housing/01_preprocess_data.md"
