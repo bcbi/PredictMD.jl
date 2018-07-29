@@ -18,6 +18,7 @@ FluxJS
 GLM
 GPUArrays
 JLD2
+JuliaDB
 Knet
 LIBSVM 0.1.1 0.2.0-
 Literate
@@ -31,7 +32,6 @@ PGFPlotsX
 ProgressMeter
 RDatasets
 ROCAnalysis
-Requires
 ValueHistories
 
 ### The following Julia packages are not required, but will be used by

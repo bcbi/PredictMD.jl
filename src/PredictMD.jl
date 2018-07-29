@@ -79,6 +79,12 @@ include(
         ".", "toplevel", "datasets", "gzip.jl",
         )
     )
+a
+include(
+    joinpath(
+        ".", "toplevel", "datasets", "juliadb.jl",
+        )
+    )
 include(
     joinpath(
         ".", "toplevel", "datasets", "mldatasets.jl",
@@ -87,6 +93,12 @@ include(
 include(
     joinpath(
         ".", "toplevel", "datasets", "mnist.jl",
+        )
+    )
+a
+include(
+    joinpath(
+        ".", "toplevel", "datasets", "queryverse.jl",
         )
     )
 include(
