@@ -1,10 +1,8 @@
 ##### Beginning of file
 
-function require_julia_version(
-        varargs...
-        )::VersionNumber
-    current_julia_version = Base.VERSION
-    version_meets_requirements = does_current_version_meet_requirements(
+function require_julia_version(varargs...)::VersionNumber
+    current_julia_version = VersionNumber(Base.VERSION)
+    version_meets_requirements = does_given_version_meet_requirements(
         current_julia_version,
         collect(varargs),
         )
@@ -13,20 +11,17 @@ function require_julia_version(
             string(
                 "Current Julia version (",
                 current_julia_version,
-                ") does not match the ",
-                "user-specified version requirements.",
+                ") does not match any of the ",
+                "user-specified version intervals.",
                 )
             )
     end
     return current_julia_version
 end
 
-function require_predictmd_version(
-        ::Type{PredictMDVersionRequirement},
-        varargs...
-        )::VersionNumber
-    current_predictmd_version = version()
-    version_meets_requirements = does_current_version_meet_requirements(
+function require_predictmd_version(varargs...)::VersionNumber
+    current_predictmd_version = VersionNumber(version())
+    version_meets_requirements = does_given_version_meet_requirements(
         current_predictmd_version,
         collect(varargs),
         )
@@ -35,18 +30,18 @@ function require_predictmd_version(
             string(
                 "Current PredictMD version (",
                 current_predictmd_version,
-                ") does not match the ",
-                "user-specified version requirements.",
+                ") does not match any of the ",
+                "user-specified version intervals.",
                 )
             )
     end
     return current_predictmd_version
 end
 
-function does_current_version_meet_requirements(
-        current_version::VersionNumber,
+function does_given_version_meet_requirements(
+        given_version::VersionNumber,
         version_requirements::AbstractVector,
-        )
+        )::Bool
     num_version_requirements = length(version_requirements)
     if num_version_requirements == 0
         answer = true
@@ -56,8 +51,8 @@ function does_current_version_meet_requirements(
             answer_for_each_interval = Vector{Bool}(num_intervals)
             for interval = (1):(num_intervals)
                 answer_for_each_interval[interval] =
-                    does_current_version_meet_requirements(
-                        current_version,
+                    does_given_version_meet_requirements(
+                        given_version,
                         version_requirements[2*interval - 1],
                         version_requirements[2*interval],
                         )
@@ -67,15 +62,15 @@ function does_current_version_meet_requirements(
             answer_for_each_interval = Vector{Bool}(num_intervals)
             for interval = (1):(num_intervals - 1)
                 answer_for_each_interval[interval] =
-                    does_current_version_meet_requirements(
-                        current_version,
+                    does_given_version_meet_requirements(
+                        given_version,
                         version_requirements[2*interval - 1],
                         version_requirements[2*interval],
                         )
             end
             answer_for_each_interval[num_intervals] =
-                does_current_version_meet_requirements(
-                    current_version,
+                does_given_version_meet_requirements(
+                    given_version,
                     version_requirements[2*num_intervals - 1],
                     )
         end
@@ -84,23 +79,23 @@ function does_current_version_meet_requirements(
     return answer
 end
 
-function does_current_version_meet_requirements(
-        current_version::VersionNumber,
+function does_given_version_meet_requirements(
+        given_version::VersionNumber,
         min_version,
-        )
+        )::Bool
     min_version = VersionNumber(min_version)
-    answer = min_version <= current_version
+    answer = min_version <= given_version
     return answer
 end
 
-function does_current_version_meet_requirements(
-        current_version::VersionNumber,
+function does_given_version_meet_requirements(
+        given_version::VersionNumber,
         min_version,
         max_version,
-        )
+        )::Bool
     min_version = VersionNumber(min_version)
     max_version = VersionNumber(max_version)
-    answer = min_version <= current_version < max_version
+    answer = min_version <= given_version < max_version
     return answer
 end
 
