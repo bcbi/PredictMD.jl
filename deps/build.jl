@@ -51,8 +51,8 @@ if !have_pdftoppm
 end
 
 print(STDERR, "Looking for pdf2svg...")
-pdfpath = joinpath(@__DIR__, "pdf2svg.pdf")
-svgpath = joinpath(@__DIR__, "pdf2svg.svg")
+pdfpath = joinpath(@__DIR__, "pdf2svg-example-file.pdf")
+svgpath = joinpath(@__DIR__, "pdf2svg-example-file.svg")
 have_pdf2svg = try success(`pdf2svg $pdfpath $svgpath`); catch; false; end
 println(STDERR, "    ", have_pdf2svg ? OK : X)
 if !have_pdf2svg

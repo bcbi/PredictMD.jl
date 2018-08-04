@@ -14,7 +14,7 @@ function generate_docs(output_directory::AbstractString)
                 )
             )
     end
-    info("Generating docs...")
+    info("Beginning to generate docs...")
     temp_generatedocs_dir = joinpath(
         mktempdir(),
         "generate_docs",

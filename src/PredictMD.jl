@@ -7,37 +7,19 @@ __precompile__(true)
 module PredictMD # begin module PredictMD
 
 ############################################################################
-# PredictMD.__init__() #####################################################
-############################################################################
-
-function __init__()
-    info(string("Loading PredictMD version ", PredictMD.version(),))
-end
-
-############################################################################
-# PredictMD base files (top level namespace) ###############################
+# PredictMD base files (names here go in the top level namespace) ##########
 ############################################################################
 
 # base/
-# types.jl needs to be included first
-include(
-    joinpath(
-        ".", "base", "types.jl",
-        )
-    )
-include(
-    joinpath(
-        ".", "base", "interface.jl",
-        )
-    )
-include(
-    joinpath(
-        ".", "base", "version.jl",
-        )
-    )
+
+include(joinpath(".", "base", "types.jl",)) # base/types.jl MUST go first
+
+include(joinpath(".", "base", "init.jl",))
+include(joinpath(".", "base", "interface.jl",))
+include(joinpath(".", "base", "version.jl",))
 
 ############################################################################
-# PredictMD source files (top level namespace) #############################
+# PredictMD source files (names here also go in the top level namespace) ###
 ############################################################################
 
 # toplevel/calibration/
@@ -81,12 +63,22 @@ include(
     )
 include(
     joinpath(
+        ".", "toplevel", "datasets", "juliadb.jl",
+        )
+    )
+include(
+    joinpath(
         ".", "toplevel", "datasets", "mldatasets.jl",
         )
     )
 include(
     joinpath(
         ".", "toplevel", "datasets", "mnist.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "datasets", "queryverse.jl",
         )
     )
 include(
@@ -456,7 +448,7 @@ include(
     )
 
 ############################################################################
-# PredictMD submodules #####################################################
+# PredictMD submodules (names here go in submodule namespaces) #############
 ############################################################################
 
 # submodules/clean/
