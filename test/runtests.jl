@@ -94,13 +94,6 @@ Base.Test.@testset "PredictMD test suite" begin
                     "test_fix_vector_type.jl",)
                 )
         end
-        Base.Test.@testset "\"has\" functions" begin
-            include(
-                joinpath(
-                    ".", "cpu", "unit", "submodules", "gpu",
-                    "test_gpu_has_functions.jl",)
-                )
-        end
         Base.Test.@testset "hcup utility functions" begin
             include(
                 joinpath(

@@ -5,7 +5,7 @@ julia 0.6
 
 ### Required Julia packages
 Atom
-CSVFiles
+CSVFiles # remove once I make a fork of queryverse/Queryverse.jl
 CUDAapi
 ClassImbalance
 Combinatorics
@@ -18,6 +18,7 @@ FluxJS
 GLM
 GPUArrays
 JLD2
+JuliaDB
 Knet
 LIBSVM 0.1.1 0.2.0-
 Literate
@@ -29,9 +30,9 @@ NumericalIntegration
 PGFPlots
 PGFPlotsX
 ProgressMeter
+Query # remove once I make a fork of queryverse/Queryverse.jl
 RDatasets
 ROCAnalysis
-Requires
 ValueHistories
 
 ### The following Julia packages are not required, but will be used by
