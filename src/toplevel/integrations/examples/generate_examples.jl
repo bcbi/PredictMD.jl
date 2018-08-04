@@ -47,7 +47,7 @@ function generate_examples(
                 )
             )
     end
-    info("Generating examples...")
+    info("Beginning to generate examples...")
     temp_examples_dir = joinpath(
         mktempdir(),
         "generate_examples",

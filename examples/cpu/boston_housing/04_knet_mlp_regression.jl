@@ -9,9 +9,9 @@ import PredictMD
 
 PredictMD.require_julia_version("v0.6")
 
-PredictMD.require_predictmd_version( | :w | :bd"PREDICTMD_CURRENT_VERSION")
+PredictMD.require_predictmd_version("PREDICTMD_CURRENT_VERSION")
 
-## PredictMD.require_predictmd_version( | :w | :bd"PREDICTMD_CURRENT_VERSION", "PREDICTMD_NEXT_MINOR_VERSION")
+## PredictMD.require_predictmd_version("PREDICTMD_CURRENT_VERSION", "PREDICTMD_NEXT_MINOR_VERSION")
 
 PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
     homedir(),
