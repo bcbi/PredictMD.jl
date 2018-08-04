@@ -1,5 +1,6 @@
 ##### Beginning of file
 
+import Adapt
 import CUDAapi
 import Flux
 import FluxJS
