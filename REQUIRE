@@ -22,14 +22,17 @@ GPUArrays
 # Genie
 GnuTLS
 HTTP
+HTTPClient
 HttpServer
 JLD2
 JuliaDB
+JuliaWebAPI
 Knet
 LIBSVM 0.1.1 0.2.0-
 Literate
 MLBase
 MNIST
+MbedTLS
 Merlin
 Metalhead
 Mux
