@@ -96,12 +96,7 @@ Base.Test.@testset "PredictMD test suite" begin
             include(
                 joinpath(
                     ".", "cpu", "unit", "toplevel", "utils",
-                    "test_fix_dict_type.jl",)
-                )
-            include(
-                joinpath(
-                    ".", "cpu", "unit", "toplevel", "utils",
-                    "test_fix_vector_type.jl",)
+                    "test_fix_type.jl",)
                 )
             include(
                 joinpath(

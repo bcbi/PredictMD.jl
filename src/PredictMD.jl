@@ -385,12 +385,7 @@ include(
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "fix_dict_type.jl",
-        )
-    )
-include(
-    joinpath(
-        ".", "toplevel", "utils", "fix_vector_type.jl",
+        ".", "toplevel", "utils", "fix_type.jl",
         )
     )
 include(
