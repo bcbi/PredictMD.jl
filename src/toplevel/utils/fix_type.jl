@@ -4,6 +4,8 @@
 """
 function fix_type end
 
+fix_type(x::Any, T) = convert(T, fix_type(x))
+
 fix_type(x::Any) = x
 
 function fix_type(x::AbstractArray)::Array

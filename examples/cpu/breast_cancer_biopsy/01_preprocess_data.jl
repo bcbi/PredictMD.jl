@@ -25,6 +25,7 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
 
 import CSV
 import DataFrames
+import FileIO
 import JLD2
 import RDatasets
 import StatsBase
@@ -33,18 +34,22 @@ srand(999)
 
 df = RDatasets.dataset("MASS", "biopsy")
 
-categorical_feature_names = Symbol[]
-continuous_feature_names = Symbol[
-    :V1,
-    :V2,
-    :V3,
-    :V4,
-    :V5,
-    :V6,
-    :V7,
-    :V8,
-    :V9,
-    ]
+categorical_feature_names_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    "categorical_feature_names.jld2",
+    )
+continuous_feature_names_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    "continuous_feature_names.jld2",
+    )
+categorical_feature_names = FileIO.load(
+    categorical_feature_names_filename,
+    "categorical_feature_names",
+    )
+continuous_feature_names = FileIO.load(
+    continuous_feature_names_filename,
+    "continuous_feature_names",
+    )
 feature_names = vcat(categorical_feature_names, continuous_feature_names)
 
 single_label_name = :Class
@@ -52,12 +57,29 @@ negative_class = "benign"
 positive_class = "malignant"
 single_label_levels = [negative_class, positive_class]
 
-label_names = [single_label_name]
+categorical_label_names = Symbol[single_label_name]
+continuous_label_names = Symbol[]
+label_names = vcat(categorical_label_names, continuous_label_names)
 
 df = df[:, vcat(feature_names, label_names)]
 DataFrames.dropmissing!(df)
 PredictMD.shuffle_rows!(df)
 
+PredictMD.fix_column_types!(
+    df;
+    categorical_feature_names = categorical_feature_names,
+    continuous_feature_names = continuous_feature_names,
+    categorical_label_names = categorical_label_names,
+    continuous_label_names = continuous_label_names,
+    )
+PredictMD.check_column_types(
+    df;
+    categorical_feature_names = categorical_feature_names,
+    continuous_feature_names = continuous_feature_names,
+    categorical_label_names = categorical_label_names,
+    continuous_label_names = continuous_label_names,
+    )
+    
 features_df = df[feature_names]
 labels_df = df[label_names]
 

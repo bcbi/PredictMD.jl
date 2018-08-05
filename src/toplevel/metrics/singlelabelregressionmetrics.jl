@@ -8,12 +8,9 @@ import StatsBase
 """
 function singlelabelregressionytrue(
         labels::AbstractVector;
-        floattype::Type = Cfloat,
+        float_type::Type{<:AbstractFloat} = Cfloat,
         )
-    if !(floattype <: AbstractFloat)
-        error("!(floattype <: AbstractFloat)")
-    end
-    result = floattype.(labels)
+    result = float_type.(labels)
     return result
 end
 
@@ -21,12 +18,9 @@ end
 """
 function singlelabelregressionypred(
         labels::AbstractVector;
-        floattype::Type = Cfloat,
+        float_type::Type{<:AbstractFloat} = Cfloat,
         )
-    if !(floattype <: AbstractFloat)
-        error("!(floattype <: AbstractFloat)")
-    end
-    result = floattype.(labels)
+    result = float_type.(labels)
     return result
 end
 

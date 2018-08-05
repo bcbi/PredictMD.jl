@@ -25,6 +25,7 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
 
 import CSV
 import DataFrames
+import FileIO
 import JLD2
 import Knet
 
@@ -103,26 +104,29 @@ validation_labels_df = CSV.read(
     rows_for_type_detect = 100,
     )
 
-categorical_feature_names = Symbol[]
-continuous_feature_names = Symbol[
-    :Crim,
-    :Zn,
-    :Indus,
-    :Chas,
-    :NOx,
-    :Rm,
-    :Age,
-    :Dis,
-    :Rad,
-    :Tax,
-    :PTRatio,
-    :Black,
-    :LStat,
-    ]
+categorical_feature_names_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    "categorical_feature_names.jld2",
+    )
+continuous_feature_names_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    "continuous_feature_names.jld2",
+    )
+categorical_feature_names = FileIO.load(
+    categorical_feature_names_filename,
+    "categorical_feature_names",
+    )
+continuous_feature_names = FileIO.load(
+    continuous_feature_names_filename,
+    "continuous_feature_names",
+    )
 feature_names = vcat(categorical_feature_names, continuous_feature_names)
 
 single_label_name = :MedV
-label_names = [single_label_name]
+
+continuous_label_names = Symbol[single_label_name]
+categorical_label_names = Symbol[]
+label_names = vcat(categorical_label_names, continuous_label_names)
 
 knet_mlp_predict_function_source = """
 function knetmlp_predict(

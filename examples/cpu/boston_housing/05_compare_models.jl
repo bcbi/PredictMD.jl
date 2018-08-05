@@ -25,6 +25,7 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
 
 import CSV
 import DataFrames
+import FileIO
 import JLD2
 import Knet
 
@@ -131,6 +132,10 @@ all_models = PredictMD.Fittable[
     ]
 
 single_label_name = :MedV
+
+continuous_label_names = Symbol[single_label_name]
+categorical_label_names = Symbol[]
+label_names = vcat(categorical_label_names, continuous_label_names)
 
 showall(PredictMD.singlelabelregressionmetrics(
     all_models,

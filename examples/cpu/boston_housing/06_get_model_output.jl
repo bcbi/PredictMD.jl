@@ -25,6 +25,7 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
 
 import CSV
 import DataFrames
+import FileIO
 import JLD2
 import Knet
 

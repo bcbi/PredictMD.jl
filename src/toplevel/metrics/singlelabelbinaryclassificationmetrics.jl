@@ -23,12 +23,9 @@ end
 function singlelabelbinaryyscore(
         single_labelprobabilities::Associative,
         positive_class::AbstractString;
-        floattype::Type = Cfloat,
+        float_type::Type{<:AbstractFloat} = Cfloat,
         )
-    if !(floattype <: AbstractFloat)
-        error("!(floattype <: AbstractFloat)")
-    end
-    result = floattype.(single_labelprobabilities[positive_class])
+    result = float_type.(single_labelprobabilities[positive_class])
     return result
 end
 

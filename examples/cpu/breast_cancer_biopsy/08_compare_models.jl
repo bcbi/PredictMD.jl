@@ -25,6 +25,7 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
 
 import CSV
 import DataFrames
+import FileIO
 import JLD2
 import Knet
 
@@ -166,6 +167,12 @@ all_models = PredictMD.Fittable[
 single_label_name = :Class
 negative_class = "benign"
 positive_class = "malignant"
+
+single_label_levels = [negative_class, positive_class]
+
+categorical_label_names = Symbol[single_label_name]
+continuous_label_names = Symbol[]
+label_names = vcat(categorical_label_names, continuous_label_names)
 
 showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
