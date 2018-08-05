@@ -1,7 +1,7 @@
 ##### Beginning of file
 
 function is_force_test_plots(a::Associative = ENV)
-    result = lowercase(strip(get(a, "PREDICTMD_FORCE_TEST_PLOTS", ""))) ==
+    result = lowercase(strip(get(a, "PREDICTMD_TEST_PLOTS", ""))) ==
         "true"
     return result
 end
@@ -13,7 +13,7 @@ function handle_plotting_error(
     if is_force_test_plots(a)
         warn(
             string(
-                "PREDICTMD_FORCE_TEST_PLOTS is true ,",
+                "PREDICTMD_TEST_PLOTS is true ,",
                 "so rethrowing the error."
                 )
             )

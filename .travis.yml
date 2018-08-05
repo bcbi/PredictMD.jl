@@ -17,9 +17,9 @@ branches:
 
 env:
     global:
-        - PREDICTMD_FORCE_TEST_PLOTS=true
+        - PREDICTMD_TEST_PLOTS=true
     matrix:
-        - PREDICTMD_TEST_SUITE=true
+        - PREDICTMD_TEST_GROUP=1
 
 git:
     depth: 99999999
