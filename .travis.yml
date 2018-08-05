@@ -15,6 +15,9 @@ branches:
     except:
         - gh-pages
 
+env:
+    - PREDICTMD_FORCE_TEST_PLOTS=true
+
 git:
     depth: 99999999
 
@@ -73,6 +76,7 @@ script:
     - julia --check-bounds=yes --color=yes -e '
         import PredictMD
         '
+    -
     - julia --check-bounds=yes --color=yes -e '
         Pkg.test("PredictMD"; coverage=true)
         '
