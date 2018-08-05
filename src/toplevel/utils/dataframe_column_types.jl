@@ -39,32 +39,19 @@ function fix_column_types!(
         return new_vector
     end
     for x in categorical_feature_names
-        transform_columns!(
-            df,
-            make_categorical_column,
-            x,
-            )
+        transform_columns!(df, make_categorical_column, x)
     end
     for x in continuous_feature_names
-        transform_columns!(
-            df,
-            make_continuous_column,
-            x,
-            )
+        transform_columns!(df, make_continuous_column, x)
     end
     for x in categorical_label_names
-        transform_columns!(
-            df,
-            make_categorical_column,
-            x,
-            )
+        transform_columns!(df, make_categorical_column, x)
     end
     for x in continuous_label_names
-        transform_columns!(
-            df,
-            make_continuous_column,
-            x,
-            )
+        transform_columns!(df, make_continuous_column, x)
+    end
+    for x in DataFrames.names(df)
+        transform_columns!(df, fix_type, x)
     end
     return nothing
 end

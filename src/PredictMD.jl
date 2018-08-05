@@ -394,6 +394,11 @@ include(
 # toplevel/utils/
 include(
     joinpath(
+        ".", "toplevel", "utils", "constant_columns.jl",
+        )
+    )
+include(
+    joinpath(
         ".", "toplevel", "utils", "dataframe_column_types.jl",
         )
     )

@@ -163,6 +163,8 @@ PredictMD.check_column_types(
     categorical_label_names = categorical_label_names,
     continuous_label_names = continuous_label_names,
     )
+PredictMD.check_no_constant_columns(smoted_training_features_df)
+PredictMD.check_no_constant_columns(smoted_training_labels_df)
 
 DataFrames.describe(smoted_training_labels_df[single_label_name])
 StatsBase.countmap(smoted_training_labels_df[single_label_name])

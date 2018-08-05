@@ -105,6 +105,7 @@ PredictMD.check_column_types(
     categorical_label_names = categorical_label_names,
     continuous_label_names = continuous_label_names,
     )
+PredictMD.check_no_constant_columns(df)
 
 features_df = df[feature_names]
 labels_df = df[label_names]
