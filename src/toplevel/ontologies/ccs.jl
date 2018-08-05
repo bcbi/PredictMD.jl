@@ -5,6 +5,11 @@ _ICD9_CODE_TO_SINGLE_LEVEL_DX_CCS = Dict{String, Int}()
 _SINGLE_LEVEL_DX_CCS_NUMBER_TO_NAME = Dict{Int, String}()
 _SINGLE_LEVEL_DX_CCS_TO_LIST_OF_ICD9_CODES = Dict{Int, String}()
 
+function remove_all_full_stops(x::AbstractString)::String
+    result = replace(x, "\.", "")
+    return result
+end
+
 function _parse_icd_icd9_ccs_appendixasingledx_file!()::Void
     if _ICD_ICD9_CCS_APPENDIXASINGLEDX_FILE_HAS_BEEN_PARSED
     else
@@ -67,8 +72,9 @@ function icd9_code_to_single_level_dx_ccs(
         icd9_code::AbstractString,
         )::Int
     _parse_icd_icd9_ccs_appendixasingledx_file!()
-    icd9_code = string(icd9_code)
-    result = _ICD9_CODE_TO_SINGLE_LEVEL_DX_CCS[icd9_code]
+    result = _ICD9_CODE_TO_SINGLE_LEVEL_DX_CCS[
+        remove_all_full_stops(string(icd9_code))
+        ]
     return result
 end
 

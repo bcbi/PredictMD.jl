@@ -33,68 +33,70 @@ mutable struct KnetModel <: AbstractEstimator
     # learning state
     history::T16 where T16 <: ValueHistories.MultivalueHistory
 
-    function KnetModel(
-            ;
-            name::AbstractString = "",
-            predict_function_source::AbstractString = "",
-            loss_function_source::AbstractString = "",
-            predict_function::Function = identity,
-            loss_function::Function = identity,
-            losshyperparameters::Associative = Dict(),
-            optimizationalgorithm::Symbol = :nothing,
-            optimizerhyperparameters::Associative = Dict(),
-            minibatchsize::Integer = 0,
-            modelweights::AbstractArray = [],
-            isclassificationmodel::Bool = false,
-            isregressionmodel::Bool = false,
-            maxepochs::Integer = 0,
-            printlosseverynepochs::Integer = 0,
-            )
-        optimizersymbol2type = Dict()
-        optimizersymbol2type[:Sgd] = Knet.Sgd
-        optimizersymbol2type[:Momentum] = Knet.Momentum
-        optimizersymbol2type[:Nesterov] = Knet.Nesterov
-        optimizersymbol2type[:Rmsprop] = Knet.Rmsprop
-        optimizersymbol2type[:Adagrad] = Knet.Adagrad
-        optimizersymbol2type[:Adadelta] = Knet.Adadelta
-        optimizersymbol2type[:Adam] = Knet.Adam
-        optimizersymbol2type = fix_type(optimizersymbol2type)
-        modelweightoptimizers = Knet.optimizers(
-            modelweights,
-            optimizersymbol2type[optimizationalgorithm];
-            optimizerhyperparameters...
-            )
-        lastepoch = 0
-        lastiteration = 0
-        history = ValueHistories.MVHistory()
-        ValueHistories.push!(
-            history,
-            :epoch_at_iteration,
-            0,
-            0,
-            )
-        losshyperparameters = fix_type(losshyperparameters)
-        optimizerhyperparameters = fix_type(optimizerhyperparameters)
-        result = new(
-            name,
-            isclassificationmodel,
-            isregressionmodel,
-            predict_function_source,
-            loss_function_source,
-            predict_function,
-            loss_function,
-            losshyperparameters,
-            optimizationalgorithm,
-            optimizerhyperparameters,
-            minibatchsize,
-            maxepochs,
-            printlosseverynepochs,
-            modelweights,
-            modelweightoptimizers,
-            history,
-            )
-        return result
-    end
+
+end
+
+function KnetModel(
+        ;
+        name::AbstractString = "",
+        predict_function_source::AbstractString = "",
+        loss_function_source::AbstractString = "",
+        predict_function::Function = identity,
+        loss_function::Function = identity,
+        losshyperparameters::Associative = Dict(),
+        optimizationalgorithm::Symbol = :nothing,
+        optimizerhyperparameters::Associative = Dict(),
+        minibatchsize::Integer = 0,
+        modelweights::AbstractArray = [],
+        isclassificationmodel::Bool = false,
+        isregressionmodel::Bool = false,
+        maxepochs::Integer = 0,
+        printlosseverynepochs::Integer = 0,
+        )
+    optimizersymbol2type = Dict()
+    optimizersymbol2type[:Sgd] = Knet.Sgd
+    optimizersymbol2type[:Momentum] = Knet.Momentum
+    optimizersymbol2type[:Nesterov] = Knet.Nesterov
+    optimizersymbol2type[:Rmsprop] = Knet.Rmsprop
+    optimizersymbol2type[:Adagrad] = Knet.Adagrad
+    optimizersymbol2type[:Adadelta] = Knet.Adadelta
+    optimizersymbol2type[:Adam] = Knet.Adam
+    optimizersymbol2type = fix_type(optimizersymbol2type)
+    modelweightoptimizers = Knet.optimizers(
+        modelweights,
+        optimizersymbol2type[optimizationalgorithm];
+        optimizerhyperparameters...
+        )
+    lastepoch = 0
+    lastiteration = 0
+    history = ValueHistories.MVHistory()
+    ValueHistories.push!(
+        history,
+        :epoch_at_iteration,
+        0,
+        0,
+        )
+    losshyperparameters = fix_type(losshyperparameters)
+    optimizerhyperparameters = fix_type(optimizerhyperparameters)
+    result = KnetModel(
+        name,
+        isclassificationmodel,
+        isregressionmodel,
+        predict_function_source,
+        loss_function_source,
+        predict_function,
+        loss_function,
+        losshyperparameters,
+        optimizationalgorithm,
+        optimizerhyperparameters,
+        minibatchsize,
+        maxepochs,
+        printlosseverynepochs,
+        modelweights,
+        modelweightoptimizers,
+        history,
+        )
+    return result
 end
 
 """

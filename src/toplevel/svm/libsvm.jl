@@ -15,55 +15,56 @@ mutable struct LIBSVMModel <: AbstractEstimator
     hyperparameters::T5 where T5 <: Associative
 
     # parameters (learned from data):
-    underlyingsvm::T6 where T6 <: Union{Void, LIBSVM.SVM}
+    underlyingsvm::T6 where T6 <:
+        Union{AbstractNonExistentUnderlyingObject, LIBSVM.SVM}
+end
 
-    function LIBSVMModel(
-            ;
-            single_label_levels::AbstractVector = [],
-            name::AbstractString = "",
-            isclassificationmodel::Bool = false,
-            isregressionmodel::Bool = false,
-            svmtype::Type = LIBSVM.SVC,
-            kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
-            degree::Integer = 3,
-            gamma::AbstractFloat = 0.1,
-            coef0::AbstractFloat = 0.0,
-            cost::AbstractFloat = 1.0,
-            nu::AbstractFloat = 0.5,
-            epsilon::AbstractFloat = 0.1,
-            tolerance::AbstractFloat = 0.001,
-            shrinking::Bool = true,
-            weights::Union{Dict, Void} = nothing,
-            cachesize::AbstractFloat = 100.0,
-            verbose::Bool = true,
-            )
-        hyperparameters = Dict()
-        hyperparameters[:svmtype] = svmtype
-        hyperparameters[:kernel] = kernel
-        hyperparameters[:degree] = degree
-        hyperparameters[:gamma] = gamma
-        hyperparameters[:coef0] = coef0
-        hyperparameters[:cost] = cost
-        hyperparameters[:nu] = nu
-        hyperparameters[:epsilon] = epsilon
-        hyperparameters[:tolerance] = tolerance
-        hyperparameters[:shrinking] = shrinking
-        weights = fix_type(weights)
-        hyperparameters[:weights] = weights
-        hyperparameters[:cachesize] = cachesize
-        hyperparameters[:verbose] = verbose
-        hyperparameters = fix_type(hyperparameters)
-        underlyingsvm = nothing
-        result = new(
-            name,
-            isclassificationmodel,
-            isregressionmodel,
-            single_label_levels,
-            hyperparameters,
-            underlyingsvm,
-            )
-        return result
-    end
+function LIBSVMModel(
+        ;
+        single_label_levels::AbstractVector = [],
+        name::AbstractString = "",
+        isclassificationmodel::Bool = false,
+        isregressionmodel::Bool = false,
+        svmtype::Type = LIBSVM.SVC,
+        kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
+        degree::Integer = 3,
+        gamma::AbstractFloat = 0.1,
+        coef0::AbstractFloat = 0.0,
+        cost::AbstractFloat = 1.0,
+        nu::AbstractFloat = 0.5,
+        epsilon::AbstractFloat = 0.1,
+        tolerance::AbstractFloat = 0.001,
+        shrinking::Bool = true,
+        weights::Union{Dict, Void} = nothing,
+        cachesize::AbstractFloat = 100.0,
+        verbose::Bool = true,
+        )
+    hyperparameters = Dict()
+    hyperparameters[:svmtype] = svmtype
+    hyperparameters[:kernel] = kernel
+    hyperparameters[:degree] = degree
+    hyperparameters[:gamma] = gamma
+    hyperparameters[:coef0] = coef0
+    hyperparameters[:cost] = cost
+    hyperparameters[:nu] = nu
+    hyperparameters[:epsilon] = epsilon
+    hyperparameters[:tolerance] = tolerance
+    hyperparameters[:shrinking] = shrinking
+    weights = fix_type(weights)
+    hyperparameters[:weights] = weights
+    hyperparameters[:cachesize] = cachesize
+    hyperparameters[:verbose] = verbose
+    hyperparameters = fix_type(hyperparameters)
+    underlyingsvm = FitNotYetRunUnderlyingObject()
+    result = LIBSVMModel(
+        name,
+        isclassificationmodel,
+        isregressionmodel,
+        single_label_levels,
+        hyperparameters,
+        underlyingsvm,
+        )
+    return result
 end
 
 """
@@ -133,7 +134,7 @@ function fit!(
                 e,
                 )
             )
-        nothing
+        FitFailedUnderlyingObject()
     end
     # svm =
     info(string("Finished training LIBSVM model."))

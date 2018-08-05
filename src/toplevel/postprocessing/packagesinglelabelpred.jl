@@ -2,8 +2,7 @@
 
 """
 """
-struct ImmutablePackageSingleLabelPredictionTransformer <:
-        AbstractEstimator
+struct ImmutablePackageSingleLabelPredictionTransformer <: AbstractEstimator
     single_label_name::T1 where T1 <: Symbol
 end
 

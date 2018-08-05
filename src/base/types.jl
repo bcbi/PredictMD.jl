@@ -10,6 +10,12 @@ abstract type AbstractEstimator end
 """
 abstract type AbstractFeatureContrasts end
 
+abstract type AbstractNonExistentFeatureContrasts <: AbstractFeatureContrasts
+end
+
+struct FeatureContrastsNotYetGenerated <: AbstractNonExistentFeatureContrasts
+end
+
 """
     AbstractPipeline
 """

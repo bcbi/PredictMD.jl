@@ -18,33 +18,33 @@ mutable struct DecisionTreeModel <:
 
     # parameters (learned from data):
     underlyingrandomforest::T7 where T7 <:
-        Union{Void, DecisionTree.Ensemble}
+        Union{AbstractNonExistentUnderlyingObject, DecisionTree.Ensemble}
+end
 
-    function DecisionTreeModel(
-            single_label_name::Symbol;
-            name::AbstractString = "",
-            nsubfeatures::Integer = 2,
-            ntrees::Integer = 20,
-            isclassificationmodel::Bool = false,
-            isregressionmodel::Bool = false,
-            levels::AbstractVector = [],
-            )
-        hyperparameters = Dict()
-        hyperparameters[:nsubfeatures] = nsubfeatures
-        hyperparameters[:ntrees] = ntrees
-        hyperparameters = fix_type(hyperparameters)
-        underlyingrandomforest = nothing
-        result = new(
-            name,
-            isclassificationmodel,
-            isregressionmodel,
-            single_label_name,
-            levels,
-            hyperparameters,
-            underlyingrandomforest,
-            )
-        return result
-    end
+function DecisionTreeModel(
+        single_label_name::Symbol;
+        name::AbstractString = "",
+        nsubfeatures::Integer = 2,
+        ntrees::Integer = 20,
+        isclassificationmodel::Bool = false,
+        isregressionmodel::Bool = false,
+        levels::AbstractVector = [],
+        )
+    hyperparameters = Dict()
+    hyperparameters[:nsubfeatures] = nsubfeatures
+    hyperparameters[:ntrees] = ntrees
+    hyperparameters = fix_type(hyperparameters)
+    underlyingrandomforest = FitNotYetRunUnderlyingObject()
+    result = DecisionTreeModel(
+        name,
+        isclassificationmodel,
+        isregressionmodel,
+        single_label_name,
+        levels,
+        hyperparameters,
+        underlyingrandomforest,
+        )
+    return result
 end
 
 """
@@ -111,7 +111,7 @@ function fit!(
                 e,
                 )
             )
-        nothing
+        FitFailedUnderlyingObject()
     end
     info(string("Finished training DecisionTree model."))
     estimator.underlyingrandomforest = randomforest

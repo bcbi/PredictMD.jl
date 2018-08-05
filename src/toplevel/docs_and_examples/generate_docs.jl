@@ -21,7 +21,7 @@ function generate_docs(
             )
     end
 
-    info("Beginning to generate docs...")
+    info("Starting to generate docs...")
 
     temp_generatedocs_dir = joinpath(
         mktempdir(),

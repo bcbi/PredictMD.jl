@@ -261,7 +261,11 @@ include(
     )
 
 # toplevel/plotting/
-
+include(
+    joinpath(
+        ".", "toplevel", "plotting", "catch_plotting_errors.jl",
+        )
+    )
 include(
     joinpath(
         ".", "toplevel", "plotting", "pgfplots.jl",

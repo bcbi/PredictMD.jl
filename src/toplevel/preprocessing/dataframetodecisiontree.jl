@@ -10,18 +10,21 @@ mutable struct MutableDataFrame2DecisionTreeTransformer <: AbstractEstimator
     single_label_name::T2 where T2 <: Symbol
     levels::T3 where T3 <: AbstractVector
     dffeaturecontrasts::T4 where T4 <: AbstractFeatureContrasts
-    function MutableDataFrame2DecisionTreeTransformer(
-            feature_names::AbstractVector,
-            single_label_name::Symbol;
-            levels::AbstractVector = [],
-            )
-        result = new(
-            feature_names,
-            single_label_name,
-            levels,
-            )
-        return result
-    end
+end
+
+function MutableDataFrame2DecisionTreeTransformer(
+        feature_names::AbstractVector,
+        single_label_name::Symbol;
+        levels::AbstractVector = [],
+        )
+    dffeaturecontrasts = FeatureContrastsNotYetGenerated()
+    result = MutableDataFrame2DecisionTreeTransformer(
+        feature_names,
+        single_label_name,
+        levels,
+        dffeaturecontrasts,
+        )
+    return result
 end
 
 """

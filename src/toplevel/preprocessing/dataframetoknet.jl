@@ -14,24 +14,27 @@ mutable struct MutableDataFrame2ClassificationKnetTransformer <:
     transposefeatures::T5 where T5 <: Bool
     transposelabels::T6 where T6 <: Bool
     dffeaturecontrasts::T7 where T7 <: AbstractFeatureContrasts
-    function MutableDataFrame2ClassificationKnetTransformer(
-            feature_names::AbstractVector,
-            label_names::AbstractVector{Symbol},
-            label_levels::Associative,
-            index::Integer;
-            transposefeatures::Bool = true,
-            transposelabels::Bool = false,
-            )
-        result = new(
-            feature_names,
-            label_names,
-            label_levels,
-            index,
-            transposefeatures,
-            transposelabels,
-            )
-        return result
-    end
+end
+
+function MutableDataFrame2ClassificationKnetTransformer(
+        feature_names::AbstractVector,
+        label_names::AbstractVector{Symbol},
+        label_levels::Associative,
+        index::Integer;
+        transposefeatures::Bool = true,
+        transposelabels::Bool = false,
+        )
+    dffeaturecontrasts = FeatureContrastsNotYetGenerated()
+    result = MutableDataFrame2ClassificationKnetTransformer(
+        feature_names,
+        label_names,
+        label_levels,
+        index,
+        transposefeatures,
+        transposelabels,
+        dffeaturecontrasts,
+        )
+    return result
 end
 
 """

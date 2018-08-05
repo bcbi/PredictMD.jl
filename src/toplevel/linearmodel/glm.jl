@@ -17,28 +17,29 @@ mutable struct GLMModel <: AbstractEstimator
 
     # parameters (learned from data):
     underlyingglm::T7 where T7 <:
-        Union{Void, StatsModels.DataFrameRegressionModel}
+        Union{AbstractNonExistentUnderlyingObject,
+            StatsModels.DataFrameRegressionModel}
+end
 
-    function GLMModel(
-            formula::StatsModels.Formula,
-            family::GLM.Distribution,
-            link::GLM.Link;
-            name::AbstractString = "",
-            isclassificationmodel::Bool = false,
-            isregressionmodel::Bool = false,
-            )
-        underlyingglm = nothing
-        result = new(
-            name,
-            isclassificationmodel,
-            isregressionmodel,
-            formula,
-            family,
-            link,
-            underlyingglm,
-            )
-        return result
-    end
+function GLMModel(
+        formula::StatsModels.Formula,
+        family::GLM.Distribution,
+        link::GLM.Link;
+        name::AbstractString = "",
+        isclassificationmodel::Bool = false,
+        isregressionmodel::Bool = false,
+        )
+    underlyingglm = FitNotYetRunUnderlyingObject()
+    result = GLMModel(
+        name,
+        isclassificationmodel,
+        isregressionmodel,
+        formula,
+        family,
+        link,
+        underlyingglm,
+        )
+    return result
 end
 
 """
@@ -100,7 +101,7 @@ function fit!(
                 e,
                 )
             )
-        nothing
+        FitFailedUnderlyingObject()
     end
     # glm =
     info(string("Finished training GLM model."))
@@ -127,7 +128,7 @@ function predict(
         result[label_name] = predictionsvector
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
-        if is_nothing(estimator.underlyingglm)
+        if isa(estimator.underlyingglm, AbstractNonExistentUnderlyingObject)
             glmpredictoutput = zeros(size(features_df,1))
         else
             glmpredictoutput = GLM.predict(
@@ -153,7 +154,7 @@ function predict_proba(
         features_df::DataFrames.AbstractDataFrame,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
-        if is_nothing(estimator.underlyingglm,)
+        if isa(estimator.underlyingglm, AbstractNonExistentUnderlyingObject)
             glmpredictoutput = zeros(size(features_df, 1))
         else
             glmpredictoutput = GLM.predict(
