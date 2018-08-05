@@ -10,7 +10,6 @@ module Server # begin submodule PredictMD.Server
 
 # submodules/Server/cryptography/
 include(joinpath(".", "cryptography", "mbedtls.jl",))
-include(joinpath(".", "cryptography", "gnutls.jl",))
 include(joinpath(".", "cryptography", "transportlayersecurity.jl",))
 
 # submodules/Server/web/
