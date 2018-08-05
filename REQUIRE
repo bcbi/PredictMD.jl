@@ -10,6 +10,7 @@ CSVFiles # remove once I make a fork of queryverse/Queryverse.jl
 CUDAapi
 ClassImbalance
 Combinatorics
+Compat
 DataDeps
 DataFrames 0.11 0.12
 DecisionTree
@@ -25,7 +26,7 @@ HTTPClient
 HttpServer
 JLD2
 JuliaDB
-JuliaWebAPI
+# JuliaWebAPI
 Knet
 LIBSVM 0.1.1 0.2.0-
 Literate

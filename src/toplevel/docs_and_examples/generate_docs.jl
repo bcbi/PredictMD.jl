@@ -3,7 +3,13 @@
 import Documenter
 import Literate
 
-function generate_docs(output_directory::AbstractString)
+function generate_docs(
+        output_directory::AbstractString;
+        execute_notebooks = false,
+        markdown = false,
+        notebooks = false,
+        scripts = false,
+        )
     ENV["PREDICTMD_IS_MAKE_DOCS"] = "true"
     if ispath(output_directory)
         error(
@@ -43,11 +49,9 @@ function generate_docs(output_directory::AbstractString)
     generate_examples(
         temp_examples_dir;
         execute_notebooks = execute_notebooks,
-        markdown = true,
-        notebooks = true,
-        scripts = true,
-        remove_existing_output_directory =
-            true,
+        markdown = markdown,
+        notebooks = notebooks,
+        scripts = scripts,
         )
     if is_windows()
         warn(

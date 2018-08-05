@@ -24,7 +24,13 @@ temp_makedocs_dir = joinpath(
     "docs",
     )
 
-PredictMD.generate_docs(temp_makedocs_dir)
+PredictMD.generate_docs(
+    temp_makedocs_dir;
+    execute_notebooks = true,
+    markdown = true,
+    notebooks = true,
+    scripts = true,
+    )
 
 if PredictMD.is_travis_ci()
     filename = joinpath(homedir(), "travis_temp_makedocs_dir.jld2")

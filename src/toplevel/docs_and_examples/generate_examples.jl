@@ -28,17 +28,16 @@ function generate_examples(
         markdown = false,
         notebooks = false,
         scripts = false,
-        remove_existing_output_directory = false,
         )
     ENV["PREDICTMD_IS_MAKE_EXAMPLES"] = "true"
     if !markdown && !notebooks && !scripts
         error(
             string(
-                "At least one of markdown, notebooks, scripts must be true",
+                "At least one of markdown, notebooks, scripts must be true.",
                 )
             )
     end
-    if ispath(output_directory) && !remove_existing_output_directory
+    if ispath(output_directory)
         error(
             string(
                 "The output directory already exists. ",
@@ -47,9 +46,9 @@ function generate_examples(
                 )
             )
     end
-    
+
     info("Beginning to generate examples...")
-    
+
     temp_examples_dir = joinpath(
         mktempdir(),
         "generate_examples",

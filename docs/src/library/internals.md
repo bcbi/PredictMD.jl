@@ -12,7 +12,9 @@ Pages = ["internals.md"]
 Modules = [
     PredictMD,
     PredictMD.Cleaning,
+    PredictMD.Compilation,
     PredictMD.GPU,
+    PredictMD.Server,
     ]
 Order = [:module]
 ```
@@ -23,7 +25,9 @@ Order = [:module]
 Modules = [
     PredictMD,
     PredictMD.Cleaning,
+    PredictMD.Compilation,
     PredictMD.GPU,
+    PredictMD.Server,
     ]
 Order = [:constant]
 ```
@@ -34,7 +38,9 @@ Order = [:constant]
 Modules = [
     PredictMD,
     PredictMD.Cleaning,
+    PredictMD.Compilation,
     PredictMD.GPU,
+    PredictMD.Server,
     ]
 Order = [:type]
 ```
@@ -45,7 +51,9 @@ Order = [:type]
 Modules = [
     PredictMD,
     PredictMD.Cleaning,
+    PredictMD.Compilation,
     PredictMD.GPU,
+    PredictMD.Server,
     ]
 Order = [:function]
 ```
@@ -56,7 +64,9 @@ Order = [:function]
 Modules = [
     PredictMD,
     PredictMD.Cleaning,
+    PredictMD.Compilation,
     PredictMD.GPU,
+    PredictMD.Server,
     ]
 Order = [:macro]
 ```

@@ -5,8 +5,7 @@ import StatsModels
 
 """
 """
-struct ImmutableFeatureArrayTransposerTransformer <:
-        AbstractEstimator
+struct ImmutableFeatureArrayTransposerTransformer <: AbstractEstimator
 end
 
 """

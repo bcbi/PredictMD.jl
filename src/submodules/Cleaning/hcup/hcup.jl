@@ -5,11 +5,11 @@ import CSVFiles
 import DataFrames
 import FileIO
 
-# imports from PredictMD
+# import selected names from PredictMD
+import ..convert_value_to_missing!
 import ..filename_extension
 import ..fix_type
 import ..is_nothing
-import ..make_missing_anywhere!
 
 """
 """
@@ -477,9 +477,21 @@ function clean_hcup_nis_csv_icd9(
         end
     end
 
-    make_missing_anywhere!(combined_df, "A")
-    make_missing_anywhere!(combined_df, "C")
-    make_missing_anywhere!(combined_df, -99)
+    convert_value_to_missing!(
+        combined_df,
+        "A",
+        DataFrames.names(combined_df),
+        )
+    convert_value_to_missing!(
+        combined_df,
+        "C",
+        DataFrames.names(combined_df),
+        )
+    convert_value_to_missing!(
+        combined_df,
+        -99,
+        DataFrames.names(combined_df),
+        )
 
     mkpath(dirname(output_file_name))
 

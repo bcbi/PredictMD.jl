@@ -1,5 +1,6 @@
 ##### Beginning of file
 
+import Compat
 import Requires
 
 function __init__()::Void

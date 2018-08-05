@@ -79,7 +79,13 @@ function check_column_types(
         continuous_label_names::AbstractVector{Symbol} = Symbol[],
         )::Void
     for column_name in DataFrames.names(df)
-        column_eltype = eltype(df[column_name])
+        column_eltype = eltype(
+            collect(
+                DataFrames.skipmissing(
+                    df[column_name]
+                    )
+                )
+            )
         if column_name in categorical_feature_names
             if column_eltype <: AbstractString
             else
@@ -88,7 +94,7 @@ function check_column_types(
                         "Column \"",
                         column_name,
                         "\" has eltype \"",
-                        column_eltype
+                        column_eltype,
                         "\". However, this column is categorical,",
                         "and therefore its eltype must be a subtype of ",
                         "AbstractString.",
@@ -103,7 +109,7 @@ function check_column_types(
                         "Column \"",
                         column_name,
                         "\" has eltype \"",
-                        column_eltype
+                        column_eltype,
                         "\". However, this column is categorical,",
                         "and therefore its eltype must be a subtype of ",
                         "AbstractString.",
@@ -118,7 +124,7 @@ function check_column_types(
                         "Column \"",
                         column_name,
                         "\" has eltype \"",
-                        column_eltype
+                        column_eltype,
                         "\". However, this column is continuous,",
                         "and therefore its eltype must be a subtype of ",
                         "AbstractFloat.",
@@ -133,7 +139,7 @@ function check_column_types(
                         "Column \"",
                         column_name,
                         "\" has eltype \"",
-                        column_eltype
+                        column_eltype,
                         "\". However, this column is continuous,",
                         "and therefore its eltype must be a subtype of ",
                         "AbstractFloat.",
@@ -148,7 +154,7 @@ function check_column_types(
                         "Column \"",
                         column_name,
                         "\" has eltype \"",
-                        column_eltype
+                        column_eltype,
                         "\". However, we only allow AbstractStrings and ",
                         "AbstractFloats. Use a subtype of AbstractString if",
                         "it is a categorical column. Use a subtype of ",

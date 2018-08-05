@@ -2,8 +2,7 @@
 
 """
 """
-struct ImmutablePackageMultiLabelPredictionTransformer <:
-        AbstractEstimator
+struct ImmutablePackageMultiLabelPredictionTransformer <: AbstractEstimator
     label_names::T1 where T1 <: AbstractVector{Symbol}
 end
 

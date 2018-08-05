@@ -27,4 +27,12 @@ const Fittable = Union{AbstractEstimator,AbstractPipeline,AbstractTransformer}
 """
 Fittable
 
+abstract type AbstractNonExistentUnderlyingObject end
+
+struct FitNotYetRunUnderlyingObject <: AbstractNonExistentUnderlyingObject
+end
+
+struct FitFailedUnderlyingObject <: AbstractNonExistentUnderlyingObject
+end
+
 ##### End of file
