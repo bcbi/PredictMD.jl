@@ -36,18 +36,6 @@ include(
         )
     )
 
-# toplevel/compilation/
-include(
-    joinpath(
-        ".", "toplevel", "compilation", "buildexecutable.jl",
-        )
-    )
-include(
-    joinpath(
-        ".", "toplevel", "compilation", "packagecompiler.jl",
-        )
-    )
-
 # toplevel/classimbalance/
 include(
     joinpath(
@@ -247,10 +235,11 @@ include(
         ".", "toplevel", "neuralnetwork", "merlin.jl",
         )
     )
+
 # toplevel/online/
 include(
     joinpath(
-        ".", "toplevel", "pipeline", "onlinestats.jl",
+        ".", "toplevel", "online", "onlinestats.jl",
         )
     )
 
@@ -304,6 +293,12 @@ include(
     joinpath(
         ".", "toplevel", "plotting",
         "probability_calibration_plots.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "plotting",
+        "unicodeplots.jl",
         )
     )
 

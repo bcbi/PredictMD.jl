@@ -21,15 +21,6 @@ include(joinpath(".", "web", "juliawebapi.jl",))
 include(joinpath(".", "web", "mux.jl",))
 include(joinpath(".", "web", "websockets.jl",))
 
-# submodules/Server/SUBFOLDER/
-include(joinpath(".", "SUBFOLDER", "FILENAME.jl",))
-
-# submodules/Server/SUBFOLDER/
-include(joinpath(".", "SUBFOLDER", "FILENAME.jl",))
-
-# submodules/Server/SUBFOLDER/
-include(joinpath(".", "SUBFOLDER", "FILENAME.jl",))
-
 end # end submodule PredictMD.Server
 
 ##### End of file
