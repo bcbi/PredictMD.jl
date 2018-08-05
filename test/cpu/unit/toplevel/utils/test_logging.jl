@@ -1,0 +1,1 @@
+PredictMD.test_logging()

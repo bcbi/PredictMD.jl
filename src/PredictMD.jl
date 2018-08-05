@@ -243,6 +243,13 @@ include(
         )
     )
 
+# toplevel/ontologies/
+include(
+    joinpath(
+        ".", "toplevel", "ontologies", "ccs.jl",
+        )
+    )
+
 # toplevel/pipeline/
 include(
     joinpath(
@@ -459,6 +466,11 @@ include(
 include(
     joinpath(
         ".", "toplevel", "utils", "simplemovingaverage.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "test_logging.jl",
         )
     )
 include(

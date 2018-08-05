@@ -50,10 +50,20 @@ Base.Test.@testset "PredictMD test suite" begin
             Base.Test.@test( typeof(PredictMD.Cleaning) == Module )
             Base.Test.@test( typeof(PredictMD.Cleaning) === Module )
 
+            Base.Test.@test( isdefined(PredictMD, :Compilation) )
+            Base.Test.@test( isa(PredictMD.Compilation, Module) )
+            Base.Test.@test( typeof(PredictMD.Compilation) == Module )
+            Base.Test.@test( typeof(PredictMD.Compilation) === Module )
+
             Base.Test.@test( isdefined(PredictMD, :GPU) )
             Base.Test.@test( isa(PredictMD.GPU, Module) )
             Base.Test.@test( typeof(PredictMD.GPU) == Module )
             Base.Test.@test( typeof(PredictMD.GPU) === Module )
+
+            Base.Test.@test( isdefined(PredictMD, :Server) )
+            Base.Test.@test( isa(PredictMD.Server, Module) )
+            Base.Test.@test( typeof(PredictMD.Server) == Module )
+            Base.Test.@test( typeof(PredictMD.Server) === Module )
         end
 
         Base.Test.@testset "base" begin
@@ -92,6 +102,11 @@ Base.Test.@testset "PredictMD test suite" begin
                 joinpath(
                     ".", "cpu", "unit", "toplevel", "utils",
                     "test_fix_vector_type.jl",)
+                )
+            include(
+                joinpath(
+                    ".", "cpu", "unit", "toplevel", "utils",
+                    "test_logging.jl",)
                 )
         end
         Base.Test.@testset "hcup utility functions" begin

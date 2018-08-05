@@ -12,8 +12,8 @@ version() = version_julia6()
 """
 function version_julia7()
     version_number = try
-        get_version_number_jl_file_name = @__FILE__
-        utils_directory = dirname(get_version_number_jl_file_name)
+        thisfile_file_name = @__FILE__
+        utils_directory = dirname(thisfile_file_name)
         toplevel_directory = dirname(utils_directory)
         src_directory = dirname(toplevel_directory)
         PredictMD_directory = dirname(src_directory)
