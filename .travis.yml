@@ -19,7 +19,7 @@ env:
     global:
         - PREDICTMD_FORCE_TEST_PLOTS=true
     matrix:
-        - TEST123=true
+        - PREDICTMD_TEST_SUITE=true
 
 git:
     depth: 99999999
