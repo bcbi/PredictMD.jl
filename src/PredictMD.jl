@@ -36,6 +36,18 @@ include(
         )
     )
 
+# toplevel/compilation/
+include(
+    joinpath(
+        ".", "toplevel", "compilation", "buildexecutable.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "compilation", "packagecompiler.jl",
+        )
+    )
+
 # toplevel/classimbalance/
 include(
     joinpath(
@@ -87,24 +99,31 @@ include(
         )
     )
 
+# toplevel/docs_and_examples/
+include(
+    joinpath(
+        ".", "toplevel", "docs_and_examples", "generate_docs.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "docs_and_examples", "generate_examples.jl",
+        )
+    )
+
 # toplevel/decomposition/
 
 # toplevel/ensemble/
 
-# toplevel/integrations/
+# toplevel/ide/
 include(
     joinpath(
-        ".", "toplevel", "integrations", "docs", "generate_docs.jl",
+        ".", "toplevel", "ide", "atom.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "integrations", "examples", "generate_examples.jl",
-        )
-    )
-include(
-    joinpath(
-        ".", "toplevel", "integrations", "ide", "atom.jl",
+        ".", "toplevel", "ide", "revise.jl",
         )
     )
 
@@ -228,6 +247,12 @@ include(
         ".", "toplevel", "neuralnetwork", "merlin.jl",
         )
     )
+# toplevel/online/
+include(
+    joinpath(
+        ".", "toplevel", "pipeline", "onlinestats.jl",
+        )
+    )
 
 # toplevel/pipeline/
 include(
@@ -238,6 +263,16 @@ include(
 
 # toplevel/plotting/
 
+include(
+    joinpath(
+        ".", "toplevel", "plotting", "pgfplots.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "plotting", "pgfplotsx.jl",
+        )
+    )
 include(
     joinpath(
         ".", "toplevel", "plotting", "plotlearningcurve.jl",
@@ -451,17 +486,25 @@ include(
 # PredictMD submodules (names here go in submodule namespaces) #############
 ############################################################################
 
-# submodules/clean/
+# submodules/Clean/
 include(
     joinpath(
         ".", "submodules", "Clean", "Clean.jl",
         )
     )
 
-# submodules/gpu/
+# submodules/GPU/
 include(
     joinpath(
         ".", "submodules", "GPU", "GPU.jl",
+        )
+    )
+
+a
+# submodules/Server/
+include(
+    joinpath(
+        ".", "submodules", "Server", "Server.jl",
         )
     )
 

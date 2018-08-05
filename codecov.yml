@@ -6,11 +6,14 @@ codecov:
 comment: true
 
 ignore:
-    # ignore PredictMD.Clean
+    # ignore the entire PredictMD.Clean submodule
     - "src/submodules/Clean"
     - "src/submodules/Clean/**/*"
-    # ignore PredictMD.GPU
+    # ignore the entire PredictMD.GPU submodule
     - "src/submodules/GPU"
     - "src/submodules/GPU/**/*"
+    # ignore the entire PredictMD.Server submodule
+    - "src/submodules/Server"
+    - "src/submodules/Server/**/*"
 
 ##### End of file
