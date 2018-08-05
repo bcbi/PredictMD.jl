@@ -6,9 +6,9 @@ codecov:
 comment: true
 
 ignore:
-    # ignore the entire PredictMD.Clean submodule
-    - "src/submodules/Clean"
-    - "src/submodules/Clean/**/*"
+    # ignore the entire PredictMD.Cleaning submodule
+    - "src/submodules/Cleaning"
+    - "src/submodules/Cleaning/**/*"
 
     # ignore the entire PredictMD.Compilation submodule
     - "src/submodules/Compilation"

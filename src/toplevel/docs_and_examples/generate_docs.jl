@@ -62,7 +62,7 @@ function generate_docs(output_directory::AbstractString)
         Documenter.makedocs(
             modules = [
                 PredictMD,
-                PredictMD.Clean,
+                PredictMD.Cleaning,
                 PredictMD.GPU,
                 ],
             pages = Any[

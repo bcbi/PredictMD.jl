@@ -2,15 +2,15 @@
 
 """
 """
-module Clean # begin submodule PredictMD.Clean
+module Cleaning # begin submodule PredictMD.Cleaning
 
 ############################################################################
-# PredictMD.Clean source files #############################################
+# PredictMD.Cleaning source files #############################################
 ############################################################################
 
-# submodules/Clean/hcup/
+# submodules/Cleaning/hcup/
 include(joinpath(".", "hcup", "hcup.jl",))
 
-end # begin submodule PredictMD.Clean
+end # begin submodule PredictMD.Cleaning
 
 ##### End of file

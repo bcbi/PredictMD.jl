@@ -11,7 +11,7 @@ Pages = ["internals.md"]
 ```@autodocs
 Modules = [
     PredictMD,
-    PredictMD.Clean,
+    PredictMD.Cleaning,
     PredictMD.GPU,
     ]
 Order = [:module]
@@ -22,7 +22,7 @@ Order = [:module]
 ```@autodocs
 Modules = [
     PredictMD,
-    PredictMD.Clean,
+    PredictMD.Cleaning,
     PredictMD.GPU,
     ]
 Order = [:constant]
@@ -33,7 +33,7 @@ Order = [:constant]
 ```@autodocs
 Modules = [
     PredictMD,
-    PredictMD.Clean,
+    PredictMD.Cleaning,
     PredictMD.GPU,
     ]
 Order = [:type]
@@ -44,7 +44,7 @@ Order = [:type]
 ```@autodocs
 Modules = [
     PredictMD,
-    PredictMD.Clean,
+    PredictMD.Cleaning,
     PredictMD.GPU,
     ]
 Order = [:function]
@@ -55,7 +55,7 @@ Order = [:function]
 ```@autodocs
 Modules = [
     PredictMD,
-    PredictMD.Clean,
+    PredictMD.Cleaning,
     PredictMD.GPU,
     ]
 Order = [:macro]

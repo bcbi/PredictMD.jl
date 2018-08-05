@@ -60,8 +60,8 @@ df = DataFrames.DataFrame(
         )
     )
 
-showall(PredictMD.Clean.ccs_onehot_names(df))
-showall(PredictMD.Clean.ccs_onehot_names(df, "ccs_onehot_"))
+showall(PredictMD.Cleaning.ccs_onehot_names(df))
+showall(PredictMD.Cleaning.ccs_onehot_names(df, "ccs_onehot_"))
 ```
 """
 function ccs_onehot_names(
@@ -115,7 +115,7 @@ input_file_name_list = [
     ]
 output_file_name = "./output/hcup_nis_pr_8841.csv"
 
-PredictMD.Clean.clean_hcup_nis_csv_icd9(
+PredictMD.Cleaning.clean_hcup_nis_csv_icd9(
     icd_code_list,
     input_file_name_list,
     output_file_name;
@@ -130,7 +130,7 @@ df = DataFrames.DataFrame(
         )
     )
 
-showall(PredictMD.Clean.ccs_onehot_names(df))
+showall(PredictMD.Cleaning.ccs_onehot_names(df))
 ```
 """
 function clean_hcup_nis_csv_icd9(

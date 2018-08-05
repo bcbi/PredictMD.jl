@@ -45,10 +45,10 @@ Base.Test.@testset "PredictMD test suite" begin
         end
 
         Base.Test.@testset "Submodule names are defined" begin
-            Base.Test.@test( isdefined(PredictMD, :Clean) )
-            Base.Test.@test( isa(PredictMD.Clean, Module) )
-            Base.Test.@test( typeof(PredictMD.Clean) == Module )
-            Base.Test.@test( typeof(PredictMD.Clean) === Module )
+            Base.Test.@test( isdefined(PredictMD, :Cleaning) )
+            Base.Test.@test( isa(PredictMD.Cleaning, Module) )
+            Base.Test.@test( typeof(PredictMD.Cleaning) == Module )
+            Base.Test.@test( typeof(PredictMD.Cleaning) === Module )
 
             Base.Test.@test( isdefined(PredictMD, :GPU) )
             Base.Test.@test( isa(PredictMD.GPU, Module) )

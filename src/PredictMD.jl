@@ -486,11 +486,11 @@ include(
 # PredictMD submodules (names here go in submodule namespaces) #############
 ############################################################################
 
-# PredictMD.Clean submodule
-# submodules/Clean/
+# PredictMD.Cleaning submodule
+# submodules/Cleaning/
 include(
     joinpath(
-        ".", "submodules", "Clean", "Clean.jl",
+        ".", "submodules", "Cleaning", "Cleaning.jl",
         )
     )
 
