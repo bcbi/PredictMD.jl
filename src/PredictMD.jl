@@ -317,12 +317,12 @@ include(
     )
 include(
     joinpath(
-        ".", "toplevel", "postprocessing", "packagesingle_labelpred.jl",
+        ".", "toplevel", "postprocessing", "packagesinglelabelpred.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "postprocessing", "packagesingle_labelproba.jl",
+        ".", "toplevel", "postprocessing", "packagesinglelabelproba.jl",
         )
     )
 include(
@@ -478,6 +478,12 @@ include(
 include(
     joinpath(
         ".", "toplevel", "utils", "tikzpictures.jl",
+        )
+    )
+
+include(
+    joinpath(
+        ".", "toplevel", "utils", "transform_columns.jl",
         )
     )
 include(

@@ -26,6 +26,7 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
 import CSV
 import DataFrames
 import GZip
+import JLD2
 import StatsBase
 
 srand(999)
