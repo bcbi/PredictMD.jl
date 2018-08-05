@@ -16,7 +16,10 @@ branches:
         - gh-pages
 
 env:
-    - PREDICTMD_FORCE_TEST_PLOTS=true
+    global:
+        - PREDICTMD_FORCE_TEST_PLOTS=true
+    matrix:
+        - TEST123=true
 
 git:
     depth: 99999999
