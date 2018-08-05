@@ -73,21 +73,16 @@ script:
     - julia --check-bounds=yes --color=yes -e '
         import PredictMD
         '
-    - ls -la $HOME/.julia
-    - chmod -R u-w,g-w,o-w $HOME/.julia
-    - ls -la $HOME/.julia
     - julia --check-bounds=yes --color=yes -e '
         Pkg.test("PredictMD"; coverage=true)
         '
 
 after_success:
-    - ls -la $HOME/.julia
-    - chmod -R u+w $HOME/.julia
-    - ls -la $HOME/.julia
     - julia --check-bounds=yes --color=yes -e 'Pkg.add("Coverage")'
-    - julia --check-bounds=yes --color=yes -e 'import Coverage'
-    - julia --check-bounds=yes --color=yes -e 'cd(Pkg.dir("PredictMD"));
-        using Coverage; Codecov.submit(Codecov.process_folder());'
+    - julia --check-bounds=yes --color=yes -e '
+        cd(Pkg.dir("PredictMD"));
+        import Coverage;
+        Coverage.Codecov.submit(Coverage.Codecov.process_folder());'
     - julia --check-bounds=yes --color=yes -e '
         cd(Pkg.dir("PredictMD"));
             include(joinpath("docs", "deploy.jl"));'
