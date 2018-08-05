@@ -9,9 +9,15 @@ ignore:
     # ignore the entire PredictMD.Clean submodule
     - "src/submodules/Clean"
     - "src/submodules/Clean/**/*"
+
+    # ignore the entire PredictMD.Compilation submodule
+    - "src/submodules/Compilation"
+    - "src/submodules/Compilation/**/*"
+
     # ignore the entire PredictMD.GPU submodule
     - "src/submodules/GPU"
     - "src/submodules/GPU/**/*"
+
     # ignore the entire PredictMD.Server submodule
     - "src/submodules/Server"
     - "src/submodules/Server/**/*"

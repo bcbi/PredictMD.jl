@@ -5,7 +5,7 @@
 module Server # begin submodule PredictMD.Server
 
 ############################################################################
-# PredictMD.Server source files ###############################################
+# PredictMD.Server source files ############################################
 ############################################################################
 
 # submodules/Server/cryptography/

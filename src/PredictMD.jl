@@ -486,6 +486,7 @@ include(
 # PredictMD submodules (names here go in submodule namespaces) #############
 ############################################################################
 
+# PredictMD.Clean submodule
 # submodules/Clean/
 include(
     joinpath(
@@ -493,6 +494,15 @@ include(
         )
     )
 
+# PredictMD.Compilation submodule
+# submodules/Compilation/
+include(
+    joinpath(
+        ".", "submodules", "Compilation", "Compilation.jl",
+        )
+    )
+
+# PredictMD.GPU submodule
 # submodules/GPU/
 include(
     joinpath(
@@ -500,7 +510,7 @@ include(
         )
     )
 
-a
+# PredictMD.Server submodule
 # submodules/Server/
 include(
     joinpath(
