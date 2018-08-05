@@ -4,7 +4,7 @@
 """
 struct ImmutablePackageSingleLabelPredictProbaTransformer <:
         AbstractEstimator
-    singlelabelname::T1 where T1 <: Symbol
+    single_label_name::T1 where T1 <: Symbol
 end
 
 """
@@ -76,12 +76,12 @@ end
 """
 function predict_proba(
         transformer::ImmutablePackageSingleLabelPredictProbaTransformer,
-        singlelabelprobabilities::Associative;
+        single_labelprobabilities::Associative;
         kwargs...
         )
     result = Dict()
-    result[transformer.singlelabelname] = singlelabelprobabilities
-    result = fix_dict_type(result)
+    result[transformer.single_label_name] = single_labelprobabilities
+    result = fix_type(result)
     return result
 end
 

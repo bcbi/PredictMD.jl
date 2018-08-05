@@ -4,8 +4,8 @@
 """
 function tuplify end
 
-tuplify(x::Any)::Tuple = (fix_type(x),)
+tuplify(x::Any)::Tuple = (x,)
 
-tuplify(x::Tuple)::Tuple = fix_type(x)
+tuplify(x::Tuple)::Tuple = x
 
 ##### End of file

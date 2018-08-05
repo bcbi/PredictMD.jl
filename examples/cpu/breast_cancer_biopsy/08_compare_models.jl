@@ -162,40 +162,40 @@ all_models = PredictMD.Fittable[
     knet_mlp_classifier,
     ]
 
-singlelabelname = :Class
-negativeclass = "benign"
-positiveclass = "malignant"
+single_label_name = :Class
+negative_class = "benign"
+positive_class = "malignant"
 
 showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     training_features_df,
     training_labels_df,
-    singlelabelname,
-    positiveclass;
+    single_label_name,
+    positive_class;
     sensitivity = 0.95,
     ))
 showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     training_features_df,
     training_labels_df,
-    singlelabelname,
-    positiveclass;
+    single_label_name,
+    positive_class;
     specificity = 0.95,
     ))
 showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     training_features_df,
     training_labels_df,
-    singlelabelname,
-    positiveclass;
+    single_label_name,
+    positive_class;
     maximize = :f1score,
     ))
 showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     training_features_df,
     training_labels_df,
-    singlelabelname,
-    positiveclass;
+    single_label_name,
+    positive_class;
     maximize = :cohen_kappa,
     ))
 
@@ -203,32 +203,32 @@ showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     testing_features_df,
     testing_labels_df,
-    singlelabelname,
-    positiveclass;
+    single_label_name,
+    positive_class;
     sensitivity = 0.95,
     ))
 showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     testing_features_df,
     testing_labels_df,
-    singlelabelname,
-    positiveclass;
+    single_label_name,
+    positive_class;
     specificity = 0.95,
     ))
 showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     testing_features_df,
     testing_labels_df,
-    singlelabelname,
-    positiveclass;
+    single_label_name,
+    positive_class;
     maximize = :f1score,
     ))
 showall(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     testing_features_df,
     testing_labels_df,
-    singlelabelname,
-    positiveclass;
+    single_label_name,
+    positive_class;
     maximize = :cohen_kappa,
     ))
 
@@ -236,8 +236,8 @@ rocplottesting = PredictMD.plotroccurves(
     all_models,
     testing_features_df,
     testing_labels_df,
-    singlelabelname,
-    positiveclass,
+    single_label_name,
+    positive_class,
     )
 PredictMD.open_plot(rocplottesting)
 
@@ -245,8 +245,8 @@ prplottesting = PredictMD.plotprcurves(
     all_models,
     testing_features_df,
     testing_labels_df,
-    singlelabelname,
-    positiveclass,
+    single_label_name,
+    positive_class,
     )
 PredictMD.open_plot(prplottesting)
 

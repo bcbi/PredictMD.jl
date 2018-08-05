@@ -121,8 +121,8 @@ smoted_training_labels_df = CSV.read(
     rows_for_type_detect = 100,
     )
 
-categoricalfeaturenames = Symbol[]
-continuousfeaturenames = Symbol[
+categorical_feature_names = Symbol[]
+continuous_feature_names = Symbol[
     :V1,
     :V2,
     :V3,
@@ -133,12 +133,12 @@ continuousfeaturenames = Symbol[
     :V8,
     :V9,
     ]
-featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
+feature_names = vcat(categorical_feature_names, continuous_feature_names)
 
-singlelabelname = :Class
-negativeclass = "benign"
-positiveclass = "malignant"
-singlelabellevels = [negativeclass, positiveclass]
+single_label_name = :Class
+negative_class = "benign"
+positive_class = "malignant"
+single_label_levels = [negative_class, positive_class]
 
 knet_mlp_predict_function_source = """
 function knetmlp_predict(
@@ -190,7 +190,7 @@ end
 
 feature_contrasts = PredictMD.generate_feature_contrasts(
     smoted_training_features_df,
-    featurenames,
+    feature_names,
     )
 
 knetmlp_modelweights = Any[
@@ -223,10 +223,10 @@ knetmlp_optimizerhyperparameters = Dict()
 knetmlp_minibatchsize = 48
 
 knet_mlp_classifier =
-    PredictMD.singlelabelmulticlassdataframeknetclassifier(
-        featurenames,
-        singlelabelname,
-        singlelabellevels;
+    PredictMD.single_labelmulticlassdataframeknetclassifier(
+        feature_names,
+        single_label_name,
+        single_label_levels;
         package = :Knet,
         name = "Knet MLP",
         predict_function_source = knet_mlp_predict_function_source,
@@ -299,8 +299,8 @@ knet_mlp_classifier_hist_training =
         knet_mlp_classifier,
         smoted_training_features_df,
         smoted_training_labels_df,
-        singlelabelname,
-        singlelabellevels,
+        single_label_name,
+        single_label_levels,
         )
 PredictMD.open_plot(knet_mlp_classifier_hist_training)
 
@@ -309,8 +309,8 @@ knet_mlp_classifier_hist_testing =
         knet_mlp_classifier,
         testing_features_df,
         testing_labels_df,
-        singlelabelname,
-        singlelabellevels,
+        single_label_name,
+        single_label_levels,
         )
 PredictMD.open_plot(knet_mlp_classifier_hist_testing)
 
@@ -318,8 +318,8 @@ PredictMD.singlelabelbinaryclassificationmetrics(
     knet_mlp_classifier,
     smoted_training_features_df,
     smoted_training_labels_df,
-    singlelabelname,
-    positiveclass;
+    single_label_name,
+    positive_class;
     sensitivity = 0.95,
     )
 
@@ -327,8 +327,8 @@ PredictMD.singlelabelbinaryclassificationmetrics(
     knet_mlp_classifier,
     testing_features_df,
     testing_labels_df,
-    singlelabelname,
-    positiveclass;
+    single_label_name,
+    positive_class;
     sensitivity = 0.95,
     )
 

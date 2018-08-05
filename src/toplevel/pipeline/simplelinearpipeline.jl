@@ -123,8 +123,7 @@ function fit!(
         kwargs...
         )
     for i = 2:length(simplelinearpipeline.objectsvector)
-        input = output
-        input = tuplify(input)
+        input = tuplify(output)
         output = fit!(
             simplelinearpipeline.objectsvector[i],
             input...;

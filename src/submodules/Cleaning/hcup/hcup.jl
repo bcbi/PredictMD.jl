@@ -7,7 +7,7 @@ import FileIO
 
 # imports from PredictMD
 import ..filename_extension
-import ..fix_dict_type
+import ..fix_type
 import ..is_nothing
 import ..make_missing_anywhere!
 
@@ -407,7 +407,7 @@ function clean_hcup_nis_csv_icd9(
     for k = 1:length(index_to_ccs)
         ccs_to_index[  index_to_ccs[ k ]  ] = k
     end
-    ccs_to_index = fix_dict_type(ccs_to_index)
+    ccs_to_index = fix_type(ccs_to_index)
 
     row_i_has_vcode_dx_in_kth_ccs = Matrix{Bool}(
         size(combined_df, 1),

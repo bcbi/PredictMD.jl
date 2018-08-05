@@ -4,14 +4,9 @@
 """
 function fix_type end
 
-fix_type(x::T)::T where T<:Any = x
+fix_type(x::Any) = x
 
-function fix_type(x::Tuple)::Tuple
-    result = (fix_type(collect(x))...)
-    return result
-end
-
-function fix_type(x::AbstractArray)::AbstractArray
+function fix_type(x::AbstractArray)::Array
     result = reshape(
         [[fix_type(element) for element in x]...],
         size(x),

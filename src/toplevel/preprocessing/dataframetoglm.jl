@@ -7,7 +7,7 @@ import DataFrames
 struct ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer <:
         AbstractEstimator
     label::T1 where T1 <: Symbol
-    positiveclass::T2 where T2 <: AbstractString
+    positive_class::T2 where T2 <: AbstractString
 end
 
 """
@@ -49,9 +49,9 @@ function transform(
         )
     transformedlabels_df = DataFrames.DataFrame()
     label = transformer.label
-    positiveclass = transformer.positiveclass
+    positive_class = transformer.positive_class
     originallabelcolumn = labels_df[label]
-    transformedlabelcolumn = Int.(originallabelcolumn .== positiveclass)
+    transformedlabelcolumn = Int.(originallabelcolumn .== positive_class)
     transformedlabels_df[label] = transformedlabelcolumn
     return features_df, transformedlabels_df
 end

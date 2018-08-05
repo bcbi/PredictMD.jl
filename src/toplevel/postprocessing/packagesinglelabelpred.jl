@@ -4,7 +4,7 @@
 """
 struct ImmutablePackageSingleLabelPredictionTransformer <:
         AbstractEstimator
-    singlelabelname::T1 where T1 <: Symbol
+    single_label_name::T1 where T1 <: Symbol
 end
 
 """
@@ -62,11 +62,11 @@ end
 """
 function predict(
         transformer::ImmutablePackageSingleLabelPredictionTransformer,
-        singlelabelpredictions::AbstractVector,
+        single_labelpredictions::AbstractVector,
         )
     result = DataFrames.DataFrame()
-    labelname = transformer.singlelabelname
-    result[labelname] = singlelabelpredictions
+    label_name = transformer.single_label_name
+    result[label_name] = single_labelpredictions
     return result
 end
 

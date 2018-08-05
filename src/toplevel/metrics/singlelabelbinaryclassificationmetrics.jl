@@ -8,27 +8,27 @@ import StatsBase
 """
 function singlelabelbinaryytrue(
         labels::AbstractVector,
-        positiveclass::AbstractString;
+        positive_class::AbstractString;
         inttype::Type = Int,
         )
     if !(inttype <: Integer)
         error("!(inttype <: Integer)")
     end
-    result = inttype.(labels .== positiveclass)
+    result = inttype.(labels .== positive_class)
     return result
 end
 
 """
 """
 function singlelabelbinaryyscore(
-        singlelabelprobabilities::Associative,
-        positiveclass::AbstractString;
+        single_labelprobabilities::Associative,
+        positive_class::AbstractString;
         floattype::Type = Cfloat,
         )
     if !(floattype <: AbstractFloat)
         error("!(floattype <: AbstractFloat)")
     end
-    result = floattype.(singlelabelprobabilities[positiveclass])
+    result = floattype.(single_labelprobabilities[positive_class])
     return result
 end
 
@@ -115,7 +115,7 @@ function _singlelabelbinaryclassificationmetrics_tunableparam(
         metricdisplaynames[:specificity] =
             string("* Specificity (true negative rate)")
     end
-    metricdisplaynames = fix_dict_type(metricdisplaynames)
+    metricdisplaynames = fix_type(metricdisplaynames)
     return selectedtunableparam, selectedparamtomax, metricdisplaynames
 end
 
@@ -125,27 +125,27 @@ function _singlelabelbinaryclassificationmetrics(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol,
-        positiveclass::AbstractString;
+        single_label_name::Symbol,
+        positive_class::AbstractString;
         kwargs...
         )
     #
     kwargsdict = Dict(kwargs)
-    kwargsdict = fix_dict_type(kwargsdict)
+    kwargsdict = fix_type(kwargsdict)
     selectedtunableparam, selectedparamtomax, metricdisplaynames =
         _singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
     #
     predictedprobabilitiesalllabels = predict_proba(estimator, features_df)
     yscore = Cfloat.(
         singlelabelbinaryyscore(
-            predictedprobabilitiesalllabels[singlelabelname],
-            positiveclass,
+            predictedprobabilitiesalllabels[single_label_name],
+            positive_class,
             )
         )
     ytrue = Int.(
         singlelabelbinaryytrue(
-            labels_df[singlelabelname],
-            positiveclass,
+            labels_df[single_label_name],
+            positive_class,
             )
         )
     results = Dict()
@@ -205,7 +205,7 @@ function _singlelabelbinaryclassificationmetrics(
     results[:recall] = recall(bestrocnums)
     results[:f1score] = f1score(bestrocnums)
     results[:cohen_kappa] = cohen_kappa(bestrocnums)
-    results = fix_dict_type(results)
+    results = fix_type(results)
     return results
 end
 
@@ -215,8 +215,8 @@ function singlelabelbinaryclassificationmetrics(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol,
-        positiveclass::AbstractString;
+        single_label_name::Symbol,
+        positive_class::AbstractString;
         kwargs...
         )
     vectorofestimators = Fittable[estimator]
@@ -224,8 +224,8 @@ function singlelabelbinaryclassificationmetrics(
         vectorofestimators,
         features_df,
         labels_df,
-        singlelabelname,
-        positiveclass;
+        single_label_name,
+        positive_class;
         kwargs...
         )
     return result
@@ -237,12 +237,12 @@ function singlelabelbinaryclassificationmetrics(
         vectorofestimators::AbstractVector{Fittable},
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol,
-        positiveclass::AbstractString;
+        single_label_name::Symbol,
+        positive_class::AbstractString;
         kwargs...
         )
     kwargsdict = Dict(kwargs)
-    kwargsdict = fix_dict_type(kwargsdict)
+    kwargsdict = fix_type(kwargsdict)
     selectedtunableparam, selectedparamtomax, metricdisplaynames =
         _singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
     metricsforeachestimator = [
@@ -250,8 +250,8 @@ function singlelabelbinaryclassificationmetrics(
             est,
             features_df,
             labels_df,
-            singlelabelname,
-            positiveclass;
+            single_label_name,
+            positive_class;
             kwargs...
             )
             for est in vectorofestimators

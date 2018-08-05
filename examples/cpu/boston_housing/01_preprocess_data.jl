@@ -43,8 +43,8 @@ df = CSV.read(
     rows_for_type_detect = 100,
     )
 
-categoricalfeaturenames = Symbol[]
-continuousfeaturenames = Symbol[
+categorical_feature_names = Symbol[]
+continuous_feature_names = Symbol[
     :Crim,
     :Zn,
     :Indus,
@@ -59,19 +59,19 @@ continuousfeaturenames = Symbol[
     :Black,
     :LStat,
     ]
-featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
+feature_names = vcat(categorical_feature_names, continuous_feature_names)
 
-singlelabelname = :MedV
-labelnames = [singlelabelname]
+single_label_name = :MedV
+label_names = [single_label_name]
 
-df = df[:, vcat(featurenames, labelnames)]
+df = df[:, vcat(feature_names, label_names)]
 DataFrames.dropmissing!(df)
 PredictMD.shuffle_rows!(df)
 
-features_df = df[featurenames]
-labels_df = df[labelnames]
+features_df = df[feature_names]
+labels_df = df[label_names]
 
-DataFrames.describe(labels_df[singlelabelname])
+DataFrames.describe(labels_df[single_label_name])
 
 (trainingandvalidation_features_df,
     trainingandvalidation_labels_df,

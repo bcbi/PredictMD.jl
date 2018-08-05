@@ -7,18 +7,18 @@ import StatsModels
 """
 mutable struct MutableDataFrame2DecisionTreeTransformer <:
         AbstractEstimator
-    featurenames::T1 where T1 <: AbstractVector
-    singlelabelname::T2 where T2 <: Symbol
+    feature_names::T1 where T1 <: AbstractVector
+    single_label_name::T2 where T2 <: Symbol
     levels::T3 where T3 <: AbstractVector
     dffeaturecontrasts::T4 where T4 <: AbstractFeatureContrasts
     function MutableDataFrame2DecisionTreeTransformer(
-            featurenames::AbstractVector,
-            singlelabelname::Symbol;
+            feature_names::AbstractVector,
+            single_label_name::Symbol;
             levels::AbstractVector = [],
             )
         result = new(
-            featurenames,
-            singlelabelname,
+            feature_names,
+            single_label_name,
             levels,
             )
         return result
@@ -64,11 +64,11 @@ function transform(
         labels_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    singlelabelname = transformer.singlelabelname
-    labelsarray = convert(Array, labels_df[singlelabelname])
+    single_label_name = transformer.single_label_name
+    labelsarray = convert(Array, labels_df[single_label_name])
     modelformula = generate_formula(
-        transformer.featurenames[1],
-        transformer.featurenames;
+        transformer.feature_names[1],
+        transformer.feature_names;
         intercept = false
         )
     modelframe = StatsModels.ModelFrame(
@@ -89,8 +89,8 @@ function transform(
         kwargs...
         )
     modelformula = generate_formula(
-        transformer.featurenames[1],
-        transformer.featurenames;
+        transformer.feature_names[1],
+        transformer.feature_names;
         intercept = false
         )
     modelframe = StatsModels.ModelFrame(

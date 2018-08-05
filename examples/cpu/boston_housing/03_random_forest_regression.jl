@@ -101,8 +101,8 @@ validation_labels_df = CSV.read(
     rows_for_type_detect = 100,
     )
 
-categoricalfeaturenames = Symbol[]
-continuousfeaturenames = Symbol[
+categorical_feature_names = Symbol[]
+continuous_feature_names = Symbol[
     :Crim,
     :Zn,
     :Indus,
@@ -117,20 +117,20 @@ continuousfeaturenames = Symbol[
     :Black,
     :LStat,
     ]
-featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
+feature_names = vcat(categorical_feature_names, continuous_feature_names)
 
-singlelabelname = :MedV
-labelnames = [singlelabelname]
+single_label_name = :MedV
+label_names = [single_label_name]
 
 feature_contrasts = PredictMD.generate_feature_contrasts(
     training_features_df,
-    featurenames,
+    feature_names,
     )
 
 random_forest_regression =
-    PredictMD.singlelabeldataframerandomforestregression(
-        featurenames,
-        singlelabelname;
+    PredictMD.single_labeldataframerandomforestregression(
+        feature_names,
+        single_label_name;
         nsubfeatures = 2,
         ntrees = 20,
         package = :DecisionTree,
@@ -149,7 +149,7 @@ random_forest_regression_plot_training =
         random_forest_regression,
         training_features_df,
         training_labels_df,
-        singlelabelname,
+        single_label_name,
         )
 PredictMD.open_plot(random_forest_regression_plot_training)
 
@@ -158,7 +158,7 @@ random_forest_regression_plot_testing =
         random_forest_regression,
         testing_features_df,
         testing_labels_df,
-        singlelabelname,
+        single_label_name,
         )
 PredictMD.open_plot(random_forest_regression_plot_testing)
 
@@ -166,14 +166,14 @@ PredictMD.singlelabelregressionmetrics(
     random_forest_regression,
     training_features_df,
     training_labels_df,
-    singlelabelname,
+    single_label_name,
     )
 
 PredictMD.singlelabelregressionmetrics(
     random_forest_regression,
     testing_features_df,
     testing_labels_df,
-    singlelabelname,
+    single_label_name,
     )
 
 random_forest_regression_filename = joinpath(

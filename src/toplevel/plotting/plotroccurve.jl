@@ -10,16 +10,16 @@ function plotroccurves(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol,
-        positiveclass::AbstractString,
+        single_label_name::Symbol,
+        positive_class::AbstractString,
         )
     vectorofestimators = [estimator]
     result = plotroccurve(
         vectorofestimators,
         features_df,
         labels_df,
-        singlelabelname,
-        positiveclass,
+        single_label_name,
+        positive_class,
         )
     return result
 end
@@ -30,8 +30,8 @@ function plotroccurves(
         vectorofestimators::AbstractVector{Fittable},
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol,
-        positiveclass::AbstractString,
+        single_label_name::Symbol,
+        positive_class::AbstractString,
         )
     if length(vectorofestimators) == 0
         error("length(vectorofestimators) == 0")
@@ -43,8 +43,8 @@ function plotroccurves(
             estimator_i,
             features_df,
             labels_df,
-            singlelabelname,
-            positiveclass;
+            single_label_name,
+            positive_class;
             threshold = 0.5,
             )
         ytrue_i = metrics_i[:ytrue]

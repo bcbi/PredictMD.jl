@@ -317,12 +317,12 @@ include(
     )
 include(
     joinpath(
-        ".", "toplevel", "postprocessing", "packagesinglelabelpred.jl",
+        ".", "toplevel", "postprocessing", "packagesingle_labelpred.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "postprocessing", "packagesinglelabelproba.jl",
+        ".", "toplevel", "postprocessing", "packagesingle_labelproba.jl",
         )
     )
 include(
@@ -367,6 +367,13 @@ include(
 include(
     joinpath(
         ".", "toplevel", "svm", "libsvm.jl",
+        )
+    )
+
+# toplevel/time_series/
+include(
+    joinpath(
+        ".", "toplevel", "time_series", "timeseries.jl",
         )
     )
 
@@ -481,6 +488,11 @@ include(
 include(
     joinpath(
         ".", "toplevel", "utils", "traviscienv.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "tuplify.jl",
         )
     )
 

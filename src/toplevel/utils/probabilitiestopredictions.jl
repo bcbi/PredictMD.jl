@@ -7,10 +7,10 @@ function multilabelprobabilitiestopredictions(
         floattype::Type = Cfloat,
         )
     result = Dict()
-    labelnames = sort(unique(collect(keys(probabilitiesassoc))))
-    for j = 1:length(labelnames)
-        result[labelnames[j]] = singlelabelprobabilitiestopredictions(
-            probabilitiesassoc[labelnames[j]];
+    label_names = sort(unique(collect(keys(probabilitiesassoc))))
+    for j = 1:length(label_names)
+        result[label_names[j]] = single_labelprobabilitiestopredictions(
+            probabilitiesassoc[label_names[j]];
             floattype = floattype,
             )
     end
@@ -22,7 +22,7 @@ const probabilitiestopredictions = multilabelprobabilitiestopredictions
 
 """
 """
-function singlelabelprobabilitiestopredictions(
+function single_labelprobabilitiestopredictions(
         probabilitiesassoc::Associative;
         floattype::Type = Cfloat,
         )

@@ -7,25 +7,25 @@ import StatsModels
 """
 mutable struct MutableDataFrame2ClassificationKnetTransformer <:
         AbstractEstimator
-    featurenames::T1 where T1 <: AbstractVector
-    labelnames::T2 where T2 <: AbstractVector{Symbol}
-    labellevels::T3 where T3 <: Associative
+    feature_names::T1 where T1 <: AbstractVector
+    label_names::T2 where T2 <: AbstractVector{Symbol}
+    label_levels::T3 where T3 <: Associative
     index::T4 where T4 <: Integer
     transposefeatures::T5 where T5 <: Bool
     transposelabels::T6 where T6 <: Bool
     dffeaturecontrasts::T7 where T7 <: AbstractFeatureContrasts
     function MutableDataFrame2ClassificationKnetTransformer(
-            featurenames::AbstractVector,
-            labelnames::AbstractVector{Symbol},
-            labellevels::Associative,
+            feature_names::AbstractVector,
+            label_names::AbstractVector{Symbol},
+            label_levels::Associative,
             index::Integer;
             transposefeatures::Bool = true,
             transposelabels::Bool = false,
             )
         result = new(
-            featurenames,
-            labelnames,
-            labellevels,
+            feature_names,
+            label_names,
+            label_levels,
             index,
             transposefeatures,
             transposelabels,
@@ -38,20 +38,20 @@ end
 """
 mutable struct MutableDataFrame2RegressionKnetTransformer <:
         AbstractEstimator
-    featurenames::T1 where T1 <: AbstractVector
-    labelnames::T2 where T2 <: AbstractVector{Symbol}
+    feature_names::T1 where T1 <: AbstractVector
+    label_names::T2 where T2 <: AbstractVector{Symbol}
     transposefeatures::T3 where T3 <: Bool
     transposelabels::T4 where T4 <: Bool
     dffeaturecontrasts::T5 where T5 <: AbstractFeatureContrasts
     function MutableDataFrame2RegressionKnetTransformer(
-            featurenames::AbstractVector,
-            labelnames::AbstractVector{Symbol};
+            feature_names::AbstractVector,
+            label_names::AbstractVector{Symbol};
             transposefeatures::Bool = true,
             transposelabels::Bool = false,
             )
         result = new(
-            featurenames,
-            labelnames,
+            feature_names,
+            label_names,
             transposefeatures,
             transposelabels,
             )
@@ -260,11 +260,11 @@ function transform(
                 )
             )
     end
-    if length(transformer.labelnames) == 0
-        error("length(transformer.labelnames) == 0")
-    elseif length(transformer.labelnames) == 1
-        label_1 = transformer.labelnames[1]
-        levels_1 = transformer.labellevels[label_1]
+    if length(transformer.label_names) == 0
+        error("length(transformer.label_names) == 0")
+    elseif length(transformer.label_names) == 1
+        label_1 = transformer.label_names[1]
+        levels_1 = transformer.label_levels[label_1]
         labelstring2intmap_1 = _getlabelstring2intmap(
             levels_1,
             transformer.index,
@@ -274,11 +274,11 @@ function transform(
     else
         training_labels_array = Array{Int}(
             size(training_labels_df, 1),
-            length(transformer.labelnames),
+            length(transformer.label_names),
             )
-        for j = 1:length(transformer.labelnames)
-            label_j = transformer.labelnames[j]
-            levels_j = transformer.labellevels[label_j]
+        for j = 1:length(transformer.label_names)
+            label_j = transformer.label_names[j]
+            levels_j = transformer.label_levels[label_j]
             labelstring2intmap_j = _getlabelstring2intmap(
                 levels_j,
                 transformer.index,
@@ -288,8 +288,8 @@ function transform(
         end
     end
     modelformula = generate_formula(
-        transformer.featurenames[1],
-        transformer.featurenames;
+        transformer.feature_names[1],
+        transformer.feature_names;
         intercept = false
         )
     training_modelframe = StatsModels.ModelFrame(
@@ -332,8 +332,8 @@ function transform(
         kwargs...
         )
     modelformula = generate_formula(
-        transformer.featurenames[1],
-        transformer.featurenames;
+        transformer.feature_names[1],
+        transformer.feature_names;
         intercept = false
         )
     modelframe = StatsModels.ModelFrame(
@@ -378,12 +378,12 @@ function transform(
     end
     training_labels_array = hcat(
         [
-            training_labels_df[label] for label in transformer.labelnames
+            training_labels_df[label] for label in transformer.label_names
             ]...
         )
     modelformula = generate_formula(
-        transformer.featurenames[1],
-        transformer.featurenames;
+        transformer.feature_names[1],
+        transformer.feature_names;
         intercept = false
         )
     training_modelframe = StatsModels.ModelFrame(
@@ -426,8 +426,8 @@ function transform(
         kwargs...
         )
     modelformula = generate_formula(
-        transformer.featurenames[1],
-        transformer.featurenames;
+        transformer.feature_names[1],
+        transformer.feature_names;
         intercept = false
         )
     modelframe = StatsModels.ModelFrame(

@@ -32,8 +32,8 @@ srand(999)
 
 df = RDatasets.dataset("MASS", "biopsy")
 
-categoricalfeaturenames = Symbol[]
-continuousfeaturenames = Symbol[
+categorical_feature_names = Symbol[]
+continuous_feature_names = Symbol[
     :V1,
     :V2,
     :V3,
@@ -44,21 +44,21 @@ continuousfeaturenames = Symbol[
     :V8,
     :V9,
     ]
-featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
+feature_names = vcat(categorical_feature_names, continuous_feature_names)
 
-singlelabelname = :Class
-negativeclass = "benign"
-positiveclass = "malignant"
-singlelabellevels = [negativeclass, positiveclass]
+single_label_name = :Class
+negative_class = "benign"
+positive_class = "malignant"
+single_label_levels = [negative_class, positive_class]
 
-labelnames = [singlelabelname]
+label_names = [single_label_name]
 
-df = df[:, vcat(featurenames, labelnames)]
+df = df[:, vcat(feature_names, label_names)]
 DataFrames.dropmissing!(df)
 PredictMD.shuffle_rows!(df)
 
-features_df = df[featurenames]
-labels_df = df[labelnames]
+features_df = df[feature_names]
+labels_df = df[label_names]
 
 (trainingandvalidation_features_df,
     trainingandvalidation_labels_df,

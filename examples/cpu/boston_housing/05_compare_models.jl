@@ -129,20 +129,20 @@ all_models = PredictMD.Fittable[
     knet_mlp_regression,
     ]
 
-singlelabelname = :MedV
+single_label_name = :MedV
 
 showall(PredictMD.singlelabelregressionmetrics(
     all_models,
     training_features_df,
     training_labels_df,
-    singlelabelname,
+    single_label_name,
     ))
 
 showall(PredictMD.singlelabelregressionmetrics(
     all_models,
     testing_features_df,
     testing_labels_df,
-    singlelabelname,
+    single_label_name,
     ))
 
 ### End model comparison code

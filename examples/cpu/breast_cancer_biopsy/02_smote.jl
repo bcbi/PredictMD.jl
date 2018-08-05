@@ -102,8 +102,8 @@ validation_labels_df = CSV.read(
     rows_for_type_detect = 100,
     )
 
-categoricalfeaturenames = Symbol[]
-continuousfeaturenames = Symbol[
+categorical_feature_names = Symbol[]
+continuous_feature_names = Symbol[
     :V1,
     :V2,
     :V3,
@@ -114,15 +114,15 @@ continuousfeaturenames = Symbol[
     :V8,
     :V9,
     ]
-featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
+feature_names = vcat(categorical_feature_names, continuous_feature_names)
 
-singlelabelname = :Class
-negativeclass = "benign"
-positiveclass = "malignant"
-singlelabellevels = [negativeclass, positiveclass]
+single_label_name = :Class
+negative_class = "benign"
+positive_class = "malignant"
+single_label_levels = [negative_class, positive_class]
 
-DataFrames.describe(training_labels_df[singlelabelname])
-StatsBase.countmap(training_labels_df[singlelabelname])
+DataFrames.describe(training_labels_df[single_label_name])
+StatsBase.countmap(training_labels_df[single_label_name])
 
 majorityclass = "benign"
 minorityclass = "malignant"
@@ -130,8 +130,8 @@ minorityclass = "malignant"
 (smoted_training_features_df, smoted_training_labels_df,) = PredictMD.smote(
     training_features_df,
     training_labels_df,
-    featurenames,
-    singlelabelname;
+    feature_names,
+    single_label_name;
     majorityclass = majorityclass,
     minorityclass = minorityclass,
     pct_over = 100,
@@ -139,8 +139,8 @@ minorityclass = "malignant"
     k = 5,
     )
 
-DataFrames.describe(smoted_training_labels_df[singlelabelname])
-StatsBase.countmap(smoted_training_labels_df[singlelabelname])
+DataFrames.describe(smoted_training_labels_df[single_label_name])
+StatsBase.countmap(smoted_training_labels_df[single_label_name])
 
 
 smoted_training_features_df_filename = joinpath(

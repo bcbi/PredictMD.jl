@@ -101,8 +101,8 @@ validation_labels_df = CSV.read(
     rows_for_type_detect = 100,
     )
 
-categoricalfeaturenames = Symbol[]
-continuousfeaturenames = Symbol[
+categorical_feature_names = Symbol[]
+continuous_feature_names = Symbol[
     :Crim,
     :Zn,
     :Indus,
@@ -117,14 +117,14 @@ continuousfeaturenames = Symbol[
     :Black,
     :LStat,
     ]
-featurenames = vcat(categoricalfeaturenames, continuousfeaturenames)
+feature_names = vcat(categorical_feature_names, continuous_feature_names)
 
-singlelabelname = :MedV
-labelnames = [singlelabelname]
+single_label_name = :MedV
+label_names = [single_label_name]
 
-linear_regression = PredictMD.singlelabeldataframelinearregression(
-    featurenames,
-    singlelabelname;
+linear_regression = PredictMD.single_labeldataframelinearregression(
+    feature_names,
+    single_label_name;
     package = :GLM,
     intercept = true,
     interactions = 1,
@@ -140,7 +140,7 @@ linear_regression_plot_training =
         linear_regression,
         training_features_df,
         training_labels_df,
-        singlelabelname,
+        single_label_name,
         )
 PredictMD.open_plot(linear_regression_plot_training)
 
@@ -149,7 +149,7 @@ linear_regression_plot_testing =
         linear_regression,
         testing_features_df,
         testing_labels_df,
-        singlelabelname
+        single_label_name
         )
 PredictMD.open_plot(linear_regression_plot_testing)
 
@@ -157,14 +157,14 @@ PredictMD.singlelabelregressionmetrics(
     linear_regression,
     training_features_df,
     training_labels_df,
-    singlelabelname,
+    single_label_name,
     )
 
 PredictMD.singlelabelregressionmetrics(
     linear_regression,
     testing_features_df,
     testing_labels_df,
-    singlelabelname,
+    single_label_name,
     )
 
 linear_regression_filename = joinpath(

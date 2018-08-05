@@ -45,6 +45,7 @@ RDatasets
 ROCAnalysis
 Revise
 # SearchLight
+TimeSeries
 # TransportLayerSecurity
 UnicodePlots
 ValueHistories

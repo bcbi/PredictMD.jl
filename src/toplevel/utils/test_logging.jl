@@ -4,3 +4,7 @@ function test_logging()::Void
     warn(string("This is an example warning."))
     return nothing
 end
+
+function test_error()
+    error(string("This is an example error."))
+end

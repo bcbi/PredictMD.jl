@@ -25,8 +25,8 @@ end
 function smote(
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        featurenames::AbstractVector{Symbol},
-        labelname::Symbol;
+        feature_names::AbstractVector{Symbol},
+        label_name::Symbol;
         majorityclass::AbstractString = "",
         minorityclass::AbstractString = "",
         pct_over::Real = 0,
@@ -37,8 +37,8 @@ function smote(
         Base.GLOBAL_RNG,
         features_df,
         labels_df,
-        featurenames,
-        labelname,
+        feature_names,
+        label_name,
         majorityclass = majorityclass,
         minorityclass = minorityclass,
         pct_over = pct_over,
@@ -54,8 +54,8 @@ function smote(
         rng::AbstractRNG,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        featurenames::AbstractVector{Symbol},
-        labelname::Symbol;
+        feature_names::AbstractVector{Symbol},
+        label_name::Symbol;
         majorityclass::AbstractString = "",
         minorityclass::AbstractString = "",
         pct_over::Real = 0,
@@ -79,7 +79,7 @@ function smote(
     if size(features_df, 1) == 0
         error("size(features_df, 1) == 0")
     end
-    labelsstringarray = labels_df[labelname]
+    labelsstringarray = labels_df[label_name]
     labelsbinaryarray = zeros(Int, length(labelsstringarray))
     for i = 1:length(labelsstringarray)
         # Paul's smote code assumes 1 = minority, 0 = majority
@@ -92,7 +92,7 @@ function smote(
         end
     end
     smotedfeatures_df, smotedlabelsbinaryarray = ClassImbalance.smote(
-        features_df[featurenames],
+        features_df[feature_names],
         labelsbinaryarray;
         k = k,
         pct_over = pct_over,
@@ -109,7 +109,7 @@ function smote(
         end
     end
     smotedlabels_df = DataFrames.DataFrame()
-    smotedlabels_df[labelname] = smotedlabelsstringarray
+    smotedlabels_df[label_name] = smotedlabelsstringarray
     return smotedfeatures_df, smotedlabels_df
 end
 
