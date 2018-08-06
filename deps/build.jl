@@ -3,20 +3,23 @@
 # Parts of this file are based on:
 # 1. https://github.com/KristofferC/PGFPlotsX.jl/blob/master/deps/build.jl
 
-import Crayons
-
 srand(999)
 
-const OK =  Crayons.Box.GREEN_FG * Crayons.Box.BOLD("OK")
-const X =  Crayons.Box.RED_FG * Crayons.Box.BOLD("X")
-
-print(STDERR, "Looking for lualatex...")
+info(string("Looking for lualatex..."))
 have_lualatex = try success(`lualatex -v`); catch; false; end
-println(STDERR, "   ", have_lualatex ? OK : X)
+if have_lualatex
+    info(string("Found lualatex."))
+else
+    warn(string("Did not find lualatex."))
+end
 
-print(STDERR, "Looking for pdflatex...")
+info(string("Looking for pdflatex..."))
 have_pdflatex = try success(`pdflatex -v`); catch; false; end
-println(STDERR, "   ", have_pdflatex ? OK : X)
+if have_pdflatex
+    info(string("Found pdflatex."))
+else
+    warn(string("Did not find pdflatex."))
+end
 
 default_engine = ""
 if have_lualatex
@@ -35,9 +38,14 @@ else
         )
 end
 
-print(STDERR, "Looking for pdftoppm...")
+info(string("Looking for pdftoppm..."))
 have_pdftoppm =  try success(`pdftoppm  -v`); catch; false; end
-println(STDERR, "   ", have_pdftoppm ? OK : X)
+if have_pdftoppm
+    info(string("Found pdftoppm."))
+else
+    warn(string("Did not find pdftoppm."))
+end
+
 if !have_pdftoppm
     warn(
         string(
@@ -50,11 +58,18 @@ if !have_pdftoppm
         )
 end
 
-print(STDERR, "Looking for pdf2svg...")
+# print(STDERR, )
+info(string("Looking for pdf2svg..."))
 pdfpath = joinpath(@__DIR__, "pdf2svg-example-file.pdf")
 svgpath = joinpath(@__DIR__, "pdf2svg-example-file.svg")
 have_pdf2svg = try success(`pdf2svg $pdfpath $svgpath`); catch; false; end
-println(STDERR, "    ", have_pdf2svg ? OK : X)
+# println(STDERR, "    ", have_pdf2svg ? OK : X)
+if have_pdf2svg
+    info(string("Found pdf2svg."))
+else
+    warn(string("Did not find pdf2svg."))
+end
+
 if !have_pdf2svg
     warn(
         string(
@@ -77,10 +92,26 @@ if !have_pdf2svg && !have_pdftoppm
         )
 end
 
+line_1_default_engine = string(
+    "DEFAULT_ENGINE = \"",
+    default_engine,
+    "\"",
+    )
+line_2_have_pdftoppm = string(
+    "HAVE_PDFTOPPM = ",
+    have_pdftoppm,
+    )
+line_3_have_pdftosvg = string(
+    "HAVE_PDFTOSVG = ",
+    have_pdf2svg,
+    )
+info(line_1_default_engine)
+info(line_2_have_pdftoppm)
+info(line_3_have_pdftosvg)
 open(joinpath(@__DIR__, "deps.jl"), "w") do f
-    println(f, "DEFAULT_ENGINE = \"", default_engine, "\"")
-    println(f, "HAVE_PDFTOPPM = ", have_pdftoppm)
-    println(f, "HAVE_PDFTOSVG = ", have_pdf2svg)
+    println(f, line_1_default_engine)
+    println(f, line_2_have_pdftoppm)
+    println(f, line_3_have_pdftosvg)
 end
 
 const PREAMBLE_PATH = joinpath(@__DIR__, "custom_preamble.tex")

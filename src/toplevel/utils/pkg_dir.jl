@@ -2,7 +2,9 @@
 
 """
 """
-function predictmd_package_directory(parts...)
+function predictmd_package_directory end
+
+function predictmd_package_directory()
     predictmd_root_dir = dirname( # PredictMD/
         dirname( # PredictMD/src/
             dirname( # PredictMD/src/./
@@ -14,6 +16,11 @@ function predictmd_package_directory(parts...)
                 )
             )
         )
+    return predictmd_root_dir
+end
+
+function predictmd_package_directory(parts...)
+    predictmd_root_dir = predictmd_package_directory()
     result = joinpath(predictmd_root_dir, parts...)
     return result
 end

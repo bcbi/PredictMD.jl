@@ -3,7 +3,13 @@
 import Documenter
 import Literate
 
-function generate_docs(output_directory::AbstractString)
+function generate_docs(
+        output_directory::AbstractString;
+        execute_notebooks = false,
+        markdown = false,
+        notebooks = false,
+        scripts = false,
+        )
     ENV["PREDICTMD_IS_MAKE_DOCS"] = "true"
     if ispath(output_directory)
         error(
@@ -14,7 +20,9 @@ function generate_docs(output_directory::AbstractString)
                 )
             )
     end
-    info("Beginning to generate docs...")
+
+    info("Starting to generate docs...")
+
     temp_generatedocs_dir = joinpath(
         mktempdir(),
         "generate_docs",
@@ -41,11 +49,9 @@ function generate_docs(output_directory::AbstractString)
     generate_examples(
         temp_examples_dir;
         execute_notebooks = execute_notebooks,
-        markdown = true,
-        notebooks = true,
-        scripts = true,
-        remove_existing_output_directory =
-            true,
+        markdown = markdown,
+        notebooks = notebooks,
+        scripts = scripts,
         )
     if is_windows()
         warn(
@@ -60,7 +66,7 @@ function generate_docs(output_directory::AbstractString)
         Documenter.makedocs(
             modules = [
                 PredictMD,
-                PredictMD.Clean,
+                PredictMD.Cleaning,
                 PredictMD.GPU,
                 ],
             pages = Any[
@@ -78,7 +84,14 @@ function generate_docs(output_directory::AbstractString)
         temp_generatedocs_dir,
         output_directory,
         )
-    info("Finished generating docs.")
+    info(
+        string(
+            "Finished generating docs. ",
+            "Files were written to: \"",
+            output_directory,
+            "\".",
+            )
+        )
     ENV["PREDICTMD_IS_MAKE_DOCS"] = "false"
     return output_directory
 end

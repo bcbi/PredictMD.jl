@@ -275,23 +275,31 @@ Open the source file `src/base/version.jl` and change
 the version number. For example, if the file looks like this:
 
 ```julia
-const VERSION_NUMBER = try
-    convert(VersionNumber, "THE OLD VERSION_NUMBER NUMBER WILL BE HERE")
+##### Beginning of file
+
+const PREDICTMD_VERSION = try
+    convert(VersionNumber, "THE OLD VERSION NUMBER WILL BE HERE")
 catch e
-    warn("While creating PredictMD.VERSION_NUMBER, ignoring error $(e)")
+    warn("While creating PredictMD.PREDICTMD_VERSION, ignoring error $(e)")
     VersionNumber(0)
 end
+
+##### End of file
 ```
 
 Then you would edit it to look like this:
 
 ```julia
-const VERSION_NUMBER = try
+##### Beginning of file
+
+const PREDICTMD_VERSION = try
     convert(VersionNumber, "v3.6.0")
 catch e
-    warn("While creating PredictMD.VERSION_NUMBER, ignoring error $(e)")
+    warn("While creating PredictMD.PREDICTMD_VERSION, ignoring error $(e)")
     VersionNumber(0)
 end
+
+##### End of file
 ```
 
 #### Step 8:
@@ -437,24 +445,32 @@ number accordingly. For example, to set the version number
 to `v3.7.0-DEV`, edit `src/base/version.jl` to look like
 this. **Remember to include "-DEV" at the end of the version number.**
 ```julia
-const VERSION_NUMBER = try
+##### Beginning of file
+
+const PREDICTMD_VERSION = try
     convert(VersionNumber, "v3.7.0-DEV")
 catch e
-    warn("While creating PredictMD.VERSION_NUMBER, ignoring error $(e)")
+    warn("While creating PredictMD.PREDICTMD_VERSION, ignoring error $(e)")
     VersionNumber(0)
 end
+
+##### End of file
 ```
 
 On the other hand, to set the version number to `v4.0.0-DEV`,
 edit `src/base/version.jl` to look like this. **Remember to
 include "-DEV" at the end of the version number.**
 ```julia
-const VERSION_NUMBER = try
+##### Beginning of file
+
+const PREDICTMD_VERSION = try
     convert(VersionNumber, "v4.0.0-DEV")
 catch e
-    warn("While creating PredictMD.VERSION_NUMBER, ignoring error $(e)")
+    warn("While creating PredictMD.PREDICTMD_VERSION, ignoring error $(e)")
     VersionNumber(0)
 end
+
+##### End of file
 ```
 
 #### Step 17:

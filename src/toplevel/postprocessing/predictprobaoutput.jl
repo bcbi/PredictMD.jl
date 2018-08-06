@@ -77,7 +77,7 @@ end
 """
 function predict_proba(
         transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer,
-        singlelabelprobabilities::Associative;
+        single_labelprobabilities::Associative;
         kwargs...
         )
     labelint2stringmap = _getlabelint2stringmap(
@@ -85,10 +85,10 @@ function predict_proba(
         transformer.index,
         )
     result = Dict()
-    for key in keys(singlelabelprobabilities)
-        result[labelint2stringmap[key]] = singlelabelprobabilities[key]
+    for key in keys(single_labelprobabilities)
+        result[labelint2stringmap[key]] = single_labelprobabilities[key]
     end
-    result = fix_dict_type(result)
+    result = fix_type(result)
     return result
 end
 

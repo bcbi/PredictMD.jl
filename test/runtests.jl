@@ -45,24 +45,27 @@ Base.Test.@testset "PredictMD test suite" begin
         end
 
         Base.Test.@testset "Submodule names are defined" begin
-            Base.Test.@test( isdefined(PredictMD, :Clean) )
-            Base.Test.@test( isa(PredictMD.Clean, Module) )
-            Base.Test.@test( typeof(PredictMD.Clean) == Module )
-            Base.Test.@test( typeof(PredictMD.Clean) === Module )
+            Base.Test.@test( isdefined(PredictMD, :Cleaning) )
+            Base.Test.@test( isa(PredictMD.Cleaning, Module) )
+            Base.Test.@test( typeof(PredictMD.Cleaning) == Module )
+            Base.Test.@test( typeof(PredictMD.Cleaning) === Module )
+
+            Base.Test.@test( isdefined(PredictMD, :Compilation) )
+            Base.Test.@test( isa(PredictMD.Compilation, Module) )
+            Base.Test.@test( typeof(PredictMD.Compilation) == Module )
+            Base.Test.@test( typeof(PredictMD.Compilation) === Module )
 
             Base.Test.@test( isdefined(PredictMD, :GPU) )
             Base.Test.@test( isa(PredictMD.GPU, Module) )
             Base.Test.@test( typeof(PredictMD.GPU) == Module )
             Base.Test.@test( typeof(PredictMD.GPU) === Module )
+
+            Base.Test.@test( isdefined(PredictMD, :Server) )
+            Base.Test.@test( isa(PredictMD.Server, Module) )
+            Base.Test.@test( typeof(PredictMD.Server) == Module )
+            Base.Test.@test( typeof(PredictMD.Server) === Module )
         end
 
-        Base.Test.@testset "base" begin
-            include(
-                joinpath(
-                    ".", "cpu", "unit", "base",
-                    "test_version.jl",)
-                )
-        end
         Base.Test.@testset "code_loading" begin
             include(
                 joinpath(
@@ -86,12 +89,22 @@ Base.Test.@testset "PredictMD test suite" begin
             include(
                 joinpath(
                     ".", "cpu", "unit", "toplevel", "utils",
-                    "test_fix_dict_type.jl",)
+                    "test_fix_type.jl",)
                 )
             include(
                 joinpath(
                     ".", "cpu", "unit", "toplevel", "utils",
-                    "test_fix_vector_type.jl",)
+                    "test_get_version_number.jl",)
+                )
+            include(
+                joinpath(
+                    ".", "cpu", "unit", "toplevel", "utils",
+                    "test_logging.jl",)
+                )
+            include(
+                joinpath(
+                    ".", "cpu", "unit", "toplevel", "utils",
+                    "test_pkg_dir.jl",)
                 )
         end
         Base.Test.@testset "hcup utility functions" begin
@@ -104,14 +117,14 @@ Base.Test.@testset "PredictMD test suite" begin
     end
     rm(
           joinpath(
-                tempdir(),
+                PredictMD.get_temp_directory(),
                 "make_docs",
                 );
           force = true,
           recursive = true,
           )
     temp_makedocs_dir = joinpath(
-          tempdir(),
+          PredictMD.get_temp_directory(),
           "make_docs",
           "PredictMDTEMP",
           "docs",

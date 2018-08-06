@@ -8,12 +8,9 @@ import StatsBase
 """
 function singlelabelregressionytrue(
         labels::AbstractVector;
-        floattype::Type = Cfloat,
+        float_type::Type{<:AbstractFloat} = Cfloat,
         )
-    if !(floattype <: AbstractFloat)
-        error("!(floattype <: AbstractFloat)")
-    end
-    result = floattype.(labels)
+    result = float_type.(labels)
     return result
 end
 
@@ -21,12 +18,9 @@ end
 """
 function singlelabelregressionypred(
         labels::AbstractVector;
-        floattype::Type = Cfloat,
+        float_type::Type{<:AbstractFloat} = Cfloat,
         )
-    if !(floattype <: AbstractFloat)
-        error("!(floattype <: AbstractFloat)")
-    end
-    result = floattype.(labels)
+    result = float_type.(labels)
     return result
 end
 
@@ -36,14 +30,14 @@ function _singlelabelregressionmetrics(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol,
+        single_label_name::Symbol,
         )
     ytrue = singlelabelregressionytrue(
-        labels_df[singlelabelname],
+        labels_df[single_label_name],
         )
     predictionsalllabels = predict(estimator, features_df)
     ypred = singlelabelregressionypred(
-        predictionsalllabels[singlelabelname],
+        predictionsalllabels[single_label_name],
         )
     results = Dict()
     results[:r2_score] = r2_score(
@@ -58,7 +52,7 @@ function _singlelabelregressionmetrics(
         ytrue,
         ypred,
         )
-    results = fix_dict_type(results)
+    results = fix_type(results)
     return results
 end
 
@@ -68,14 +62,14 @@ function singlelabelregressionmetrics(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol,
+        single_label_name::Symbol,
         )
     vectorofestimators = Fittable[estimator]
     result = singlelabelregressionmetrics(
         vectorofestimators,
         features_df,
         labels_df,
-        singlelabelname,
+        single_label_name,
         )
     return result
 end
@@ -86,7 +80,7 @@ function singlelabelregressionmetrics(
         vectorofestimators::AbstractVector{Fittable},
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol;
+        single_label_name::Symbol;
         kwargs...
         )
     metricsforeachestimator = [
@@ -94,7 +88,7 @@ function singlelabelregressionmetrics(
             est,
             features_df,
             labels_df,
-            singlelabelname,
+            single_label_name,
             )
             for est in vectorofestimators
         ]

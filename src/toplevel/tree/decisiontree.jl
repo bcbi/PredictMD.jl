@@ -10,7 +10,7 @@ mutable struct DecisionTreeModel <:
     isclassificationmodel::T2 where T2 <: Bool
     isregressionmodel::T3 where T3 <: Bool
 
-    singlelabelname::T4 where T4 <: Symbol
+    single_label_name::T4 where T4 <: Symbol
     levels::T5 where T5 <: AbstractVector
 
     # hyperparameters (not learned from data):
@@ -18,33 +18,33 @@ mutable struct DecisionTreeModel <:
 
     # parameters (learned from data):
     underlyingrandomforest::T7 where T7 <:
-        Union{Void, DecisionTree.Ensemble}
+        Union{AbstractNonExistentUnderlyingObject, DecisionTree.Ensemble}
+end
 
-    function DecisionTreeModel(
-            singlelabelname::Symbol;
-            name::AbstractString = "",
-            nsubfeatures::Integer = 2,
-            ntrees::Integer = 20,
-            isclassificationmodel::Bool = false,
-            isregressionmodel::Bool = false,
-            levels::AbstractVector = [],
-            )
-        hyperparameters = Dict()
-        hyperparameters[:nsubfeatures] = nsubfeatures
-        hyperparameters[:ntrees] = ntrees
-        hyperparameters = fix_dict_type(hyperparameters)
-        underlyingrandomforest = nothing
-        result = new(
-            name,
-            isclassificationmodel,
-            isregressionmodel,
-            singlelabelname,
-            levels,
-            hyperparameters,
-            underlyingrandomforest,
-            )
-        return result
-    end
+function DecisionTreeModel(
+        single_label_name::Symbol;
+        name::AbstractString = "",
+        nsubfeatures::Integer = 2,
+        ntrees::Integer = 20,
+        isclassificationmodel::Bool = false,
+        isregressionmodel::Bool = false,
+        levels::AbstractVector = [],
+        )
+    hyperparameters = Dict()
+    hyperparameters[:nsubfeatures] = nsubfeatures
+    hyperparameters[:ntrees] = ntrees
+    hyperparameters = fix_type(hyperparameters)
+    underlyingrandomforest = FitNotYetRunUnderlyingObject()
+    result = DecisionTreeModel(
+        name,
+        isclassificationmodel,
+        isregressionmodel,
+        single_label_name,
+        levels,
+        hyperparameters,
+        underlyingrandomforest,
+        )
+    return result
 end
 
 """
@@ -96,7 +96,7 @@ function fit!(
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
-    info(string("Starting to train DecisionTree.jl model."))
+    info(string("Starting to train DecisionTree model."))
     randomforest = try
         DecisionTree.build_forest(
             labelsarray,
@@ -107,13 +107,13 @@ function fit!(
     catch e
         warn(
             string(
-                "While training DecisionTree.jl model, ignored error: ",
+                "While training DecisionTree model, ignored error: ",
                 e,
                 )
             )
-        nothing
+        FitFailedUnderlyingObject()
     end
-    info(string("Finished training DecisionTree.jl model."))
+    info(string("Finished training DecisionTree model."))
     estimator.underlyingrandomforest = randomforest
     return estimator
 end
@@ -129,7 +129,7 @@ function predict(
             estimator,
             featuresarray,
             )
-        predictionsvector = singlelabelprobabilitiestopredictions(
+        predictionsvector = single_labelprobabilitiestopredictions(
             probabilitiesassoc
             )
         return predictionsvector
@@ -174,7 +174,7 @@ function predict_proba(
         for i = 1:length(estimator.levels)
             result[estimator.levels[i]] = predictedprobabilities[:, i]
         end
-        result = fix_dict_type(result)
+        result = fix_type(result)
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         error("predict_proba is not defined for regression models")
@@ -187,34 +187,34 @@ end
 
 """
 """
-function _singlelabelmulticlassdfrandomforestclassifier_DecisionTree(
-        featurenames::AbstractVector,
-        singlelabelname::Symbol,
-        singlelabellevels::AbstractVector;
+function _single_labelmulticlassdfrandomforestclassifier_DecisionTree(
+        feature_names::AbstractVector,
+        single_label_name::Symbol,
+        single_label_levels::AbstractVector;
         name::AbstractString = "",
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
         feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     dftransformer = MutableDataFrame2DecisionTreeTransformer(
-        featurenames,
-        singlelabelname;
-        levels = singlelabellevels,
+        feature_names,
+        single_label_name;
+        levels = single_label_levels,
         )
     randomforestestimator = DecisionTreeModel(
-        singlelabelname;
+        single_label_name;
         name = name,
         nsubfeatures = nsubfeatures,
         ntrees = ntrees,
         isclassificationmodel = true,
         isregressionmodel = false,
-        levels = singlelabellevels,
+        levels = single_label_levels,
         )
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
-        singlelabelname,
+        single_label_name,
         )
     predpackager = ImmutablePackageSingleLabelPredictionTransformer(
-        singlelabelname,
+        single_label_name,
         )
     finalpipeline = SimplePipeline(
         Fittable[
@@ -233,22 +233,22 @@ end
 
 """
 """
-function singlelabelmulticlassdataframerandomforestclassifier(
-        featurenames::AbstractVector,
-        singlelabelname::Symbol,
-        singlelabellevels::AbstractVector;
+function single_labelmulticlassdataframerandomforestclassifier(
+        feature_names::AbstractVector,
+        single_label_name::Symbol,
+        single_label_levels::AbstractVector;
         name::AbstractString = "",
         package::Symbol = :none,
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
         feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
-    if package == :DecisionTreejl
+    if package == :DecisionTree
         result =
-            _singlelabelmulticlassdfrandomforestclassifier_DecisionTree(
-                featurenames,
-                singlelabelname,
-                singlelabellevels;
+            _single_labelmulticlassdfrandomforestclassifier_DecisionTree(
+                feature_names,
+                single_label_name,
+                single_label_levels;
                 name = name,
                 nsubfeatures = nsubfeatures,
                 ntrees = ntrees,
@@ -262,20 +262,20 @@ end
 
 """
 """
-function _singlelabeldataframerandomforestregression_DecisionTree(
-        featurenames::AbstractVector,
-        singlelabelname::Symbol;
+function _single_labeldataframerandomforestregression_DecisionTree(
+        feature_names::AbstractVector,
+        single_label_name::Symbol;
         name::AbstractString = "",
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
         feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
     dftransformer = MutableDataFrame2DecisionTreeTransformer(
-        featurenames,
-        singlelabelname,
+        feature_names,
+        single_label_name,
         )
     randomforestestimator = DecisionTreeModel(
-        singlelabelname;
+        single_label_name;
         name = name,
         nsubfeatures = nsubfeatures,
         ntrees = ntrees,
@@ -283,7 +283,7 @@ function _singlelabeldataframerandomforestregression_DecisionTree(
         isregressionmodel = true,
         )
     predpackager = ImmutablePackageSingleLabelPredictionTransformer(
-        singlelabelname,
+        single_label_name,
         )
     finalpipeline = SimplePipeline(
         Fittable[
@@ -301,19 +301,19 @@ end
 
 """
 """
-function singlelabeldataframerandomforestregression(
-        featurenames::AbstractVector,
-        singlelabelname::Symbol;
+function single_labeldataframerandomforestregression(
+        feature_names::AbstractVector,
+        single_label_name::Symbol;
         name::AbstractString = "",
         package::Symbol = :none,
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
         feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
         )
-    if package == :DecisionTreejl
-        result = _singlelabeldataframerandomforestregression_DecisionTree(
-            featurenames,
-            singlelabelname;
+    if package == :DecisionTree
+        result = _single_labeldataframerandomforestregression_DecisionTree(
+            feature_names,
+            single_label_name;
             name = name,
             nsubfeatures = nsubfeatures,
             ntrees = ntrees,

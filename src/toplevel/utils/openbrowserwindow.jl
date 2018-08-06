@@ -10,27 +10,12 @@ import FileIO
 """
 function open_browser_window(filename::Void, a::Associative = ENV)
     warn("no filename to open!")
-    return nothing
+    return filename
 end
 
 """
 """
 function open_browser_window(filename::AbstractString, a::Associative = ENV)
-    filename = strip(filename)
-    if length(filename) == 0
-        warn("filename is an empty string")
-        return nothing
-    end
-    if !ispath(filename)
-        warn(
-            string(
-                "No file exists at path \"",
-                filename,
-                "\".",
-                )
-            )
-        return nothing
-    end
     extension = filename_extension(filename)
     is_svg_file = extension == ".svg"
     is_png_file = extension == ".png"
@@ -45,7 +30,6 @@ function open_browser_window(filename::AbstractString, a::Associative = ENV)
                     readstring(f),
                     )
             end
-            # return filename
         elseif is_png_file
             # We use Base.invokelatest to avoid world age errors
             Base.invokelatest(
@@ -53,16 +37,7 @@ function open_browser_window(filename::AbstractString, a::Associative = ENV)
                 "image/png",
                 FileIO.load(filename),
                 )
-            # return filename
         end
-    elseif is_travis_ci(a)
-        info(
-            string(
-                "DEBUG: Skipping opening file during Travis build: ",
-                filename,
-                )
-            )
-        return nothing
     elseif is_runtests(a) && !open_plots_during_tests(a)
         info(
             string(
@@ -70,7 +45,6 @@ function open_browser_window(filename::AbstractString, a::Associative = ENV)
                 filename,
                 )
             )
-        return nothing
     elseif is_make_examples(a)
         info(
             string(
@@ -78,7 +52,6 @@ function open_browser_window(filename::AbstractString, a::Associative = ENV)
                 filename,
                 )
             )
-        return nothing
     elseif is_make_docs(a)
         info(
             string(
@@ -86,31 +59,28 @@ function open_browser_window(filename::AbstractString, a::Associative = ENV)
                 filename,
                 )
             )
-        return nothing
-    elseif is_deploy_docs(a)
-        info(
-            string(
-                "DEBUG: Skipping opening file during deploy_docs: ",
-                filename,
-                )
-            )
-        return nothing
     else
         info(string("DEBUG: Opening file ",filename,))
         if is_apple()
-            run_result = run(`open $(filename)`)
-            return filename
-        elseif is_linux()
-            run_result = run(`xdg-open $(filename)`)
-            return filename
-        elseif is_bsd()
-            run_result = run(`xdg-open $(filename)`)
-            return filename
+            try
+                run(`open $(filename)`)
+            catch e
+                warn(string("ignoring error: ", e))
+            end
+        elseif is_linux() || is_bsd()
+            try
+                run(`xdg-open $(filename)`)
+            catch e
+                warn(string("ignoring error: ", e))
+            end
         elseif is_windows()
-            run_result = run(`$(ENV["COMSPEC"]) /c start "" "$(filename)"`)
-            return filename
+            try
+                run(`$(ENV["COMSPEC"]) /c start "" "$(filename)"`)
+            catch e
+                warn(string("ignoring error: ", e))
+            end
         else
-            error(
+            warn(
                 string(
                     "unknown operating system; could not open file ",
                     filename,
@@ -118,6 +88,7 @@ function open_browser_window(filename::AbstractString, a::Associative = ENV)
                 )
         end
     end
+    return filename
 end
 
 ##### End of file

@@ -13,7 +13,7 @@ function _getlabelstring2intmap(
     for i = 1:length(levels)
         result[levels[i]] = i - 1 + index
     end
-    result = fix_dict_type(result)
+    result = fix_type(result)
     return result
 end
 
@@ -30,7 +30,7 @@ function _getlabelint2stringmap(
     for i = 1:length(levels)
         result[i - 1 + index] = levels[i]
     end
-    result = fix_dict_type(result)
+    result = fix_type(result)
     return result
 end
 

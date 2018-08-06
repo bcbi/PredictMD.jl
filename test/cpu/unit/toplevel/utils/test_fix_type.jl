@@ -1,9 +1,52 @@
 ##### Beginning of file
 
 import Base.Test
+import DataFrames
 
-Base.Test.@test( PredictMD.fix_array_type(nothing) == nothing )
-Base.Test.@test( PredictMD.fix_vector_type(nothing) == nothing )
+my_vector = Vector{Any}(5)
+my_vector[1] = Cfloat(1.1)
+my_vector[2] = Cfloat(2.2)
+my_vector[3] = DataFrames.missing
+my_vector[4] = Cfloat(4.4)
+my_vector[5] = DataFrames.missing
+Base.Test.@test(eltype(my_vector) == Any)
+my_vector_fixed = PredictMD.fix_type(my_vector)
+Base.Test.@test(eltype(my_vector_fixed) == Union{Cfloat, DataFrames.Missing})
+
+Base.Test.@test( PredictMD.fix_type(nothing) == nothing )
+
+Base.Test.@test( PredictMD.fix_type(3.14) == 3.14 )
+
+dict_1 = Dict()
+dict_1[Symbol(:x)] = Float64(1.1)
+dict_1[Symbol(:y)] = Float64(2.2)
+dict_1[Symbol(:z)] = Float64(3.3)
+Base.Test.@test(typeof(dict_1) <: Dict{Any, Any})
+Base.Test.@test(length(dict_1) == 3)
+
+dict_2 = PredictMD.fix_type(dict_1)
+Base.Test.@test(typeof(dict_2) <: Dict{Symbol, Float64})
+Base.Test.@test(length(dict_2) == 3)
+Base.Test.@test(dict_1[:x] == 1.1)
+Base.Test.@test(dict_1[:y] == 2.2)
+Base.Test.@test(dict_1[:z] == 3.3)
+
+dict_3 = PredictMD.fix_type(dict_2)
+Base.Test.@test(typeof(dict_3) <: Dict{Symbol, Float64})
+Base.Test.@test(length(dict_3) == 3)
+Base.Test.@test(dict_1[:x] == 1.1)
+Base.Test.@test(dict_1[:y] == 2.2)
+Base.Test.@test(dict_1[:z] == 3.3)
+
+dict_4 = PredictMD.fix_type(dict_3)
+Base.Test.@test(typeof(dict_4) <: Dict{Symbol, Float64})
+Base.Test.@test(length(dict_4) == 3)
+Base.Test.@test(dict_1[:x] == 1.1)
+Base.Test.@test(dict_1[:y] == 2.2)
+Base.Test.@test(dict_1[:z] == 3.3)
+
+Base.Test.@test( PredictMD.fix_type(nothing) == nothing )
+Base.Test.@test( PredictMD.fix_type(nothing) == nothing )
 
 vector_1 = []
 push!(vector_1, Float64(1.0))
@@ -13,7 +56,7 @@ Base.Test.@test(typeof(vector_1) <: Vector{Any})
 Base.Test.@test(length(vector_1) == 3)
 Base.Test.@test(size(vector_1) == (3,))
 
-vector_2 = PredictMD.fix_vector_type(vector_1)
+vector_2 = PredictMD.fix_type(vector_1)
 Base.Test.@test(typeof(vector_2) <: Vector{Float64})
 Base.Test.@test(length(vector_2) == 3)
 Base.Test.@test(size(vector_2) == (3,))
@@ -21,7 +64,7 @@ Base.Test.@test(vector_1[1] == 1.0)
 Base.Test.@test(vector_1[2] == 2.0)
 Base.Test.@test(vector_1[3] == 3.0)
 
-vector_3 = PredictMD.fix_vector_type(vector_2)
+vector_3 = PredictMD.fix_type(vector_2)
 Base.Test.@test(typeof(vector_3) <: Vector{Float64})
 Base.Test.@test(length(vector_3) == 3)
 Base.Test.@test(size(vector_3) == (3,))
@@ -29,7 +72,7 @@ Base.Test.@test(vector_1[1] == 1.0)
 Base.Test.@test(vector_1[2] == 2.0)
 Base.Test.@test(vector_1[3] == 3.0)
 
-vector_4 = PredictMD.fix_vector_type(vector_3)
+vector_4 = PredictMD.fix_type(vector_3)
 Base.Test.@test(length(vector_4) == 3)
 Base.Test.@test(size(vector_4) == (3,))
 Base.Test.@test(typeof(vector_4) <: Vector{Float64})
@@ -68,7 +111,7 @@ Base.Test.@test(typeof(array_1) <: Array{Any, 3})
 Base.Test.@test(length(array_1) == 24)
 Base.Test.@test(size(array_1) == (2,3,4,))
 
-array_2 = PredictMD.fix_array_type(array_1)
+array_2 = PredictMD.fix_type(array_1)
 Base.Test.@test(typeof(array_2) <: Array{Float64, 3})
 Base.Test.@test(length(array_2) == 24)
 Base.Test.@test(size(array_2) == (2,3,4,))
@@ -97,7 +140,7 @@ Base.Test.@test(array_2[2,3,2] == 220)
 Base.Test.@test(array_2[2,3,3] == 230)
 Base.Test.@test(array_2[2,3,4] == 240)
 
-array_3 = PredictMD.fix_array_type(array_2)
+array_3 = PredictMD.fix_type(array_2)
 Base.Test.@test(typeof(array_3) <: Array{Float64, 3})
 Base.Test.@test(length(array_3) == 24)
 Base.Test.@test(size(array_3) == (2,3,4,))
@@ -126,7 +169,7 @@ Base.Test.@test(array_3[2,3,2] == 220)
 Base.Test.@test(array_3[2,3,3] == 230)
 Base.Test.@test(array_3[2,3,4] == 240)
 
-array_4 = PredictMD.fix_array_type(array_3)
+array_4 = PredictMD.fix_type(array_3)
 Base.Test.@test(typeof(array_4) <: Array{Float64, 3})
 Base.Test.@test(length(array_4) == 24)
 Base.Test.@test(size(array_4) == (2,3,4,))

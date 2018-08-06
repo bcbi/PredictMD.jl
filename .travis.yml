@@ -15,6 +15,12 @@ branches:
     except:
         - gh-pages
 
+env:
+    global:
+        - PREDICTMD_TEST_PLOTS=true
+    matrix:
+        - PREDICTMD_TEST_GROUP=1
+
 git:
     depth: 99999999
 
@@ -68,21 +74,24 @@ script:
         Pkg.build("PredictMD")
         '
     - julia --check-bounds=yes --color=yes -e '
+        Pkg.update()
+        '
+    - julia --check-bounds=yes --color=yes -e '
         import PredictMD
         '
-    - ls -la $HOME/.julia
-    - chmod -R u-w,g-w,o-r $HOME/.julia
-    - ls -la $HOME/.julia
+    -
     - julia --check-bounds=yes --color=yes -e '
         Pkg.test("PredictMD"; coverage=true)
         '
 
 after_success:
-    - julia --check-bounds=yes --color=yes -e 'Pkg.add("Coverage");'
-    - julia --check-bounds=yes --color=yes -e 'cd(Pkg.dir("PredictMD"));
-        using Coverage; Codecov.submit(Codecov.process_folder());'
+    - julia --check-bounds=yes --color=yes -e 'Pkg.add("Coverage")'
     - julia --check-bounds=yes --color=yes -e '
         cd(Pkg.dir("PredictMD"));
-            include(joinpath("docs", "deploy.jl"))'
+        import Coverage;
+        Coverage.Codecov.submit(Coverage.Codecov.process_folder());'
+    - julia --check-bounds=yes --color=yes -e '
+        cd(Pkg.dir("PredictMD"));
+            include(joinpath("docs", "deploy.jl"));'
 
 ##### End of file

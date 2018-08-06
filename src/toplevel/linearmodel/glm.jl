@@ -17,28 +17,29 @@ mutable struct GLMModel <: AbstractEstimator
 
     # parameters (learned from data):
     underlyingglm::T7 where T7 <:
-        Union{Void, StatsModels.DataFrameRegressionModel}
+        Union{AbstractNonExistentUnderlyingObject,
+            StatsModels.DataFrameRegressionModel}
+end
 
-    function GLMModel(
-            formula::StatsModels.Formula,
-            family::GLM.Distribution,
-            link::GLM.Link;
-            name::AbstractString = "",
-            isclassificationmodel::Bool = false,
-            isregressionmodel::Bool = false,
-            )
-        underlyingglm = nothing
-        result = new(
-            name,
-            isclassificationmodel,
-            isregressionmodel,
-            formula,
-            family,
-            link,
-            underlyingglm,
-            )
-        return result
-    end
+function GLMModel(
+        formula::StatsModels.Formula,
+        family::GLM.Distribution,
+        link::GLM.Link;
+        name::AbstractString = "",
+        isclassificationmodel::Bool = false,
+        isregressionmodel::Bool = false,
+        )
+    underlyingglm = FitNotYetRunUnderlyingObject()
+    result = GLMModel(
+        name,
+        isclassificationmodel,
+        isregressionmodel,
+        formula,
+        family,
+        link,
+        underlyingglm,
+        )
+    return result
 end
 
 """
@@ -85,7 +86,7 @@ function fit!(
         labels_df::DataFrames.AbstractDataFrame,
         )
     labelsandfeatures_df = hcat(labels_df, features_df)
-    info(string("Starting to train GLM.jl model."))
+    info(string("Starting to train GLM model."))
     glm = try
         GLM.glm(
             estimator.formula,
@@ -96,14 +97,14 @@ function fit!(
     catch e
         warn(
             string(
-                "while training GLM.jl model, ignored error: ",
+                "while training GLM model, ignored error: ",
                 e,
                 )
             )
-        nothing
+        FitFailedUnderlyingObject()
     end
     # glm =
-    info(string("Finished training GLM.jl model."))
+    info(string("Finished training GLM model."))
     estimator.underlyingglm = glm
     return estimator
 end
@@ -119,15 +120,15 @@ function predict(
             estimator,
             features_df,
             )
-        predictionsvector = singlelabelprobabilitiestopredictions(
+        predictionsvector = single_labelprobabilitiestopredictions(
             probabilitiesassoc
             )
         result = DataFrames.DataFrame()
-        labelname = estimator.formula.lhs
-        result[labelname] = predictionsvector
+        label_name = estimator.formula.lhs
+        result[label_name] = predictionsvector
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
-        if is_nothing(estimator.underlyingglm)
+        if isa(estimator.underlyingglm, AbstractNonExistentUnderlyingObject)
             glmpredictoutput = zeros(size(features_df,1))
         else
             glmpredictoutput = GLM.predict(
@@ -136,8 +137,8 @@ function predict(
                 )
         end
         result = DataFrames.DataFrame()
-        labelname = estimator.formula.lhs
-        result[labelname] = glmpredictoutput
+        label_name = estimator.formula.lhs
+        result[label_name] = glmpredictoutput
         return result
     else
         error(
@@ -153,7 +154,7 @@ function predict_proba(
         features_df::DataFrames.AbstractDataFrame,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
-        if is_nothing(estimator.underlyingglm,)
+        if isa(estimator.underlyingglm, AbstractNonExistentUnderlyingObject)
             glmpredictoutput = zeros(size(features_df, 1))
         else
             glmpredictoutput = GLM.predict(
@@ -164,7 +165,7 @@ function predict_proba(
         result = Dict()
         result[1] = glmpredictoutput
         result[0] = 1 - glmpredictoutput
-        result = fix_dict_type(result)
+        result = fix_type(result)
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         error("predict_proba is not defined for regression models")
@@ -178,25 +179,25 @@ end
 """
 """
 function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
-        featurenames::AbstractVector,
-        singlelabelname::Symbol,
-        singlelabellevels::AbstractVector;
+        feature_names::AbstractVector,
+        single_label_name::Symbol,
+        single_label_levels::AbstractVector;
         intercept::Bool = true,
         interactions::Integer = 1,
         name::AbstractString = "",
         )
-    negativeclass = singlelabellevels[1]
-    positiveclass = singlelabellevels[2]
+    negative_class = single_label_levels[1]
+    positive_class = single_label_levels[2]
     formula = generate_formula(
-        [singlelabelname],
-        featurenames;
+        [single_label_name],
+        feature_names;
         intercept = intercept,
         interactions = interactions,
         )
     dftransformer =
         ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer(
-            singlelabelname,
-            positiveclass,
+            single_label_name,
+            positive_class,
             )
     glmestimator = GLMModel(
         formula,
@@ -208,15 +209,15 @@ function _singlelabelbinaryclassdataframelogisticclassifier_GLM(
     predictlabelfixer =
         ImmutablePredictionsSingleLabelInt2StringTransformer(
             0,
-            singlelabellevels,
+            single_label_levels,
             )
     predprobalabelfixer =
         ImmutablePredictProbaSingleLabelInt2StringTransformer(
             0,
-            singlelabellevels,
+            single_label_levels,
             )
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
-        singlelabelname,
+        single_label_name,
         )
     finalpipeline = SimplePipeline(
         Fittable[
@@ -234,19 +235,19 @@ end
 """
 """
 function singlelabelbinaryclassdataframelogisticclassifier(
-        featurenames::AbstractVector,
-        singlelabelname::Symbol,
-        singlelabellevels::AbstractVector;
+        feature_names::AbstractVector,
+        single_label_name::Symbol,
+        single_label_levels::AbstractVector;
         package::Symbol = :none,
         intercept::Bool = true,
         interactions::Integer = 1,
         name::AbstractString = "",
         )
-    if package == :GLMjl
+    if package == :GLM
         result =_singlelabelbinaryclassdataframelogisticclassifier_GLM(
-            featurenames,
-            singlelabelname,
-            singlelabellevels;
+            feature_names,
+            single_label_name,
+            single_label_levels;
             intercept = intercept,
             interactions = interactions,
             name = name,
@@ -260,25 +261,25 @@ end
 """
 """
 function _singlelabelbinaryclassdataframeprobitclassifier_GLM(
-        featurenames::AbstractVector,
-        singlelabelname::Symbol,
-        singlelabellevels::AbstractVector;
+        feature_names::AbstractVector,
+        single_label_name::Symbol,
+        single_label_levels::AbstractVector;
         intercept::Bool = true,
         interactions::Integer = 1,
         name::AbstractString = "",
         )
-    negativeclass = singlelabellevels[1]
-    positiveclass = singlelabellevels[2]
+    negative_class = single_label_levels[1]
+    positive_class = single_label_levels[2]
     formula = generate_formula(
-        [singlelabelname],
-        featurenames;
+        [single_label_name],
+        feature_names;
         intercept = intercept,
         interactions = interactions,
         )
     dftransformer =
         ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer(
-            singlelabelname,
-            positiveclass,
+            single_label_name,
+            positive_class,
             )
     glmestimator = GLMModel(
         formula,
@@ -290,15 +291,15 @@ function _singlelabelbinaryclassdataframeprobitclassifier_GLM(
     predictlabelfixer =
         ImmutablePredictionsSingleLabelInt2StringTransformer(
             0,
-            singlelabellevels,
+            single_label_levels,
             )
     predprobalabelfixer =
         ImmutablePredictProbaSingleLabelInt2StringTransformer(
             0,
-            singlelabellevels,
+            single_label_levels,
             )
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
-        singlelabelname,
+        single_label_name,
         )
     finalpipeline = SimplePipeline(
         Fittable[
@@ -316,19 +317,19 @@ end
 """
 """
 function singlelabelbinaryclassdataframeprobitclassifier(
-        featurenames::AbstractVector,
-        singlelabelname::Symbol,
-        singlelabellevels::AbstractVector;
+        feature_names::AbstractVector,
+        single_label_name::Symbol,
+        single_label_levels::AbstractVector;
         package::Symbol = :none,
         intercept::Bool = true,
         interactions::Integer = 1,
         name::AbstractString = "",
         )
-    if package == :GLMjl
+    if package == :GLM
         result =_singlelabelbinaryclassdataframeprobitclassifier_GLM(
-            featurenames,
-            singlelabelname,
-            singlelabellevels;
+            feature_names,
+            single_label_name,
+            single_label_levels;
             intercept = intercept,
             interactions = interactions,
             name = name,
@@ -341,16 +342,16 @@ end
 
 """
 """
-function _singlelabeldataframelinearregression_GLM(
-        featurenames::AbstractVector,
-        singlelabelname::Symbol;
+function _single_labeldataframelinearregression_GLM(
+        feature_names::AbstractVector,
+        single_label_name::Symbol;
         intercept::Bool = true,
         interactions::Integer = 1,
         name::AbstractString = "",
         )
     formula = generate_formula(
-        [singlelabelname],
-        featurenames;
+        [single_label_name],
+        feature_names;
         intercept = intercept,
         interactions = interactions,
         )
@@ -372,18 +373,18 @@ end
 
 """
 """
-function singlelabeldataframelinearregression(
-        featurenames::AbstractVector,
-        singlelabelname::Symbol;
+function single_labeldataframelinearregression(
+        feature_names::AbstractVector,
+        single_label_name::Symbol;
         package::Symbol = :none,
         intercept::Bool = true,
         interactions::Integer = 1,
         name::AbstractString = "",
         )
-    if package == :GLMjl
-        result =_singlelabeldataframelinearregression_GLM(
-            featurenames,
-            singlelabelname;
+    if package == :GLM
+        result =_single_labeldataframelinearregression_GLM(
+            feature_names,
+            single_label_name;
             intercept = intercept,
             interactions = interactions,
             name = name,

@@ -4,46 +4,6 @@ import TikzPictures
 
 """
 """
-function is_force_test_plots(a::Associative = ENV)
-    result = lowercase(strip(get(a, "PREDICTMD_FORCE_TEST_PLOTS", ""))) ==
-        "true"
-    return result
-end
-
-"""
-"""
-function warn_on_tikzpictures_save_error(
-        e::Exception,
-        a::Associative = ENV,
-        )
-    if is_travis_ci(a)
-        warn(
-            string(
-                "this is a travis build, so rethrowing the exception",
-                )
-            )
-        rethrow(e)
-    elseif is_force_test_plots(a)
-        warn(
-            string(
-                "PREDICTMD_IS_FORCE_TEST_PLOTS is true, ",
-                "so rethrowing the exception",
-                )
-            )
-        rethrow(e)
-    else
-        warn(
-            string(
-                "Ignoring error: ",
-                e,
-                )
-            )
-        return nothing
-    end
-end
-
-"""
-"""
 function save_plot(filename::AbstractString, tp::TikzPictures.TikzPicture)
     filename = strip(filename)
     if length(filename) == 0
@@ -83,7 +43,7 @@ function save_plot_pdf(
     save_result = try
         TikzPictures.save(TikzPictures.PDF(filename), tp)
     catch e
-        warn_on_tikzpictures_save_error(e)
+        handle_plotting_error(e)
     end
     return filename
 end
@@ -107,7 +67,7 @@ function save_plot_tex(
     save_result = try
         TikzPictures.save(TikzPictures.TEX(filename), tp)
     catch e
-        warn_on_tikzpictures_save_error(e)
+        handle_plotting_error(e)
     end
     return filename
 end
@@ -131,7 +91,7 @@ function save_plot_tikz(
     save_result = try
         TikzPictures.save(TikzPictures.TIKZ(filename), tp)
     catch e
-        warn_on_tikzpictures_save_error(e)
+        handle_plotting_error(e)
     end
     return filename
 end
@@ -155,7 +115,7 @@ function save_plot_svg(
     save_result = try
         TikzPictures.save(TikzPictures.SVG(filename), tp)
     catch e
-        warn_on_tikzpictures_save_error(e)
+        handle_plotting_error(e)
     end
     return filename
 end

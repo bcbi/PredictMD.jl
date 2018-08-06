@@ -123,10 +123,7 @@ function fit!(
         kwargs...
         )
     for i = 2:length(simplelinearpipeline.objectsvector)
-        input = output
-        if !(typeof(input) <: Tuple)
-            input = tuple(input)
-        end
+        input = tuplify(output)
         output = fit!(
             simplelinearpipeline.objectsvector[i],
             input...;
@@ -150,9 +147,7 @@ function predict(
         )
     for i = 2:length(simplelinearpipeline.objectsvector)
         input = output
-        if !(typeof(input) <: Tuple)
-            input = tuple(input)
-        end
+        input = tuplify(input)
         output = predict(
             simplelinearpipeline.objectsvector[i],
             input...;
@@ -175,9 +170,7 @@ function predict_proba(
         )
     for i = 2:length(simplelinearpipeline.objectsvector)
         input = output
-        if !(typeof(input) <: Tuple)
-            input = tuple(input)
-        end
+        input = tuplify(input)
         output = predict_proba(
             simplelinearpipeline.objectsvector[i],
             input...;

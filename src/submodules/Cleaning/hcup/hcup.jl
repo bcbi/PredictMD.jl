@@ -5,11 +5,11 @@ import CSVFiles
 import DataFrames
 import FileIO
 
-# imports from PredictMD
+# import selected names from PredictMD
+import ..convert_value_to_missing!
 import ..filename_extension
-import ..fix_dict_type
+import ..fix_type
 import ..is_nothing
-import ..make_missing_anywhere!
 
 """
 """
@@ -60,8 +60,8 @@ df = DataFrames.DataFrame(
         )
     )
 
-showall(PredictMD.Clean.ccs_onehot_names(df))
-showall(PredictMD.Clean.ccs_onehot_names(df, "ccs_onehot_"))
+showall(PredictMD.Cleaning.ccs_onehot_names(df))
+showall(PredictMD.Cleaning.ccs_onehot_names(df, "ccs_onehot_"))
 ```
 """
 function ccs_onehot_names(
@@ -115,7 +115,7 @@ input_file_name_list = [
     ]
 output_file_name = "./output/hcup_nis_pr_8841.csv"
 
-PredictMD.Clean.clean_hcup_nis_csv_icd9(
+PredictMD.Cleaning.clean_hcup_nis_csv_icd9(
     icd_code_list,
     input_file_name_list,
     output_file_name;
@@ -130,7 +130,7 @@ df = DataFrames.DataFrame(
         )
     )
 
-showall(PredictMD.Clean.ccs_onehot_names(df))
+showall(PredictMD.Cleaning.ccs_onehot_names(df))
 ```
 """
 function clean_hcup_nis_csv_icd9(
@@ -407,7 +407,7 @@ function clean_hcup_nis_csv_icd9(
     for k = 1:length(index_to_ccs)
         ccs_to_index[  index_to_ccs[ k ]  ] = k
     end
-    ccs_to_index = fix_dict_type(ccs_to_index)
+    ccs_to_index = fix_type(ccs_to_index)
 
     row_i_has_vcode_dx_in_kth_ccs = Matrix{Bool}(
         size(combined_df, 1),
@@ -477,9 +477,21 @@ function clean_hcup_nis_csv_icd9(
         end
     end
 
-    make_missing_anywhere!(combined_df, "A")
-    make_missing_anywhere!(combined_df, "C")
-    make_missing_anywhere!(combined_df, -99)
+    convert_value_to_missing!(
+        combined_df,
+        "A",
+        DataFrames.names(combined_df),
+        )
+    convert_value_to_missing!(
+        combined_df,
+        "C",
+        DataFrames.names(combined_df),
+        )
+    convert_value_to_missing!(
+        combined_df,
+        -99,
+        DataFrames.names(combined_df),
+        )
 
     mkpath(dirname(output_file_name))
 

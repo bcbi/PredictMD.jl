@@ -6,6 +6,9 @@ __precompile__(true)
 """
 module PredictMD # begin module PredictMD
 
+import Compat
+import Requires
+
 ############################################################################
 # PredictMD base files (names here go in the top level namespace) ##########
 ############################################################################
@@ -87,24 +90,31 @@ include(
         )
     )
 
+# toplevel/docs_and_examples/
+include(
+    joinpath(
+        ".", "toplevel", "docs_and_examples", "generate_docs.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "docs_and_examples", "generate_examples.jl",
+        )
+    )
+
 # toplevel/decomposition/
 
 # toplevel/ensemble/
 
-# toplevel/integrations/
+# toplevel/ide/
 include(
     joinpath(
-        ".", "toplevel", "integrations", "docs", "generate_docs.jl",
+        ".", "toplevel", "ide", "atom.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "integrations", "examples", "generate_examples.jl",
-        )
-    )
-include(
-    joinpath(
-        ".", "toplevel", "integrations", "ide", "atom.jl",
+        ".", "toplevel", "ide", "revise.jl",
         )
     )
 
@@ -229,6 +239,20 @@ include(
         )
     )
 
+# toplevel/online/
+include(
+    joinpath(
+        ".", "toplevel", "online", "onlinestats.jl",
+        )
+    )
+
+# toplevel/ontologies/
+include(
+    joinpath(
+        ".", "toplevel", "ontologies", "ccs.jl",
+        )
+    )
+
 # toplevel/pipeline/
 include(
     joinpath(
@@ -237,7 +261,21 @@ include(
     )
 
 # toplevel/plotting/
-
+include(
+    joinpath(
+        ".", "toplevel", "plotting", "catch_plotting_errors.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "plotting", "pgfplots.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "plotting", "pgfplotsx.jl",
+        )
+    )
 include(
     joinpath(
         ".", "toplevel", "plotting", "plotlearningcurve.jl",
@@ -269,6 +307,12 @@ include(
     joinpath(
         ".", "toplevel", "plotting",
         "probability_calibration_plots.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "plotting",
+        "unicodeplots.jl",
         )
     )
 
@@ -333,6 +377,13 @@ include(
         )
     )
 
+# toplevel/time_series/
+include(
+    joinpath(
+        ".", "toplevel", "time_series", "timeseries.jl",
+        )
+    )
+
 # toplevel/tree/
 include(
     joinpath(
@@ -343,17 +394,22 @@ include(
 # toplevel/utils/
 include(
     joinpath(
+        ".", "toplevel", "utils", "constant_columns.jl",
+        )
+    )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "dataframe_column_types.jl",
+        )
+    )
+include(
+    joinpath(
         ".", "toplevel", "utils", "filename_extension.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "fix_dict_type.jl",
-        )
-    )
-include(
-    joinpath(
-        ".", "toplevel", "utils", "fix_vector_type.jl",
+        ".", "toplevel", "utils", "fix_type.jl",
         )
     )
 include(
@@ -433,7 +489,18 @@ include(
     )
 include(
     joinpath(
+        ".", "toplevel", "utils", "test_logging.jl",
+        )
+    )
+include(
+    joinpath(
         ".", "toplevel", "utils", "tikzpictures.jl",
+        )
+    )
+
+include(
+    joinpath(
+        ".", "toplevel", "utils", "transform_columns.jl",
         )
     )
 include(
@@ -446,22 +513,45 @@ include(
         ".", "toplevel", "utils", "traviscienv.jl",
         )
     )
+include(
+    joinpath(
+        ".", "toplevel", "utils", "tuplify.jl",
+        )
+    )
 
 ############################################################################
 # PredictMD submodules (names here go in submodule namespaces) #############
 ############################################################################
 
-# submodules/clean/
+# PredictMD.Cleaning submodule
+# submodules/Cleaning/
 include(
     joinpath(
-        ".", "submodules", "Clean", "Clean.jl",
+        ".", "submodules", "Cleaning", "Cleaning.jl",
         )
     )
 
-# submodules/gpu/
+# PredictMD.Compilation submodule
+# submodules/Compilation/
+include(
+    joinpath(
+        ".", "submodules", "Compilation", "Compilation.jl",
+        )
+    )
+
+# PredictMD.GPU submodule
+# submodules/GPU/
 include(
     joinpath(
         ".", "submodules", "GPU", "GPU.jl",
+        )
+    )
+
+# PredictMD.Server submodule
+# submodules/Server/
+include(
+    joinpath(
+        ".", "submodules", "Server", "Server.jl",
         )
     )
 
