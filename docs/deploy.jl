@@ -15,7 +15,6 @@ if PredictMD.is_travis_ci()
     temp_makedocs_dir = FileIO.load(
         joinpath(homedir(), "travis_temp_makedocs_dir.jld2"),
         "temp_makedocs_dir",
-        temp_makedocs_dir,
         )
     cd(temp_makedocs_dir)
     info(
