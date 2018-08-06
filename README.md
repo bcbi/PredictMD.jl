@@ -10,7 +10,7 @@
 - [Installation](#installation)
 - [Documentation](#documentation)
 - [Citing](#citing)
-- [Repository Status](#)
+- [Repository Status](#repository-status)
 - [CI/CD](#cicd)
 
 ## Installation
