@@ -27,7 +27,7 @@ skip_non_tags: false
 
 skip_tags: false
 
-version: '{build}'
+version: '{build}-{branch}'
 
 ############################################################################
 
