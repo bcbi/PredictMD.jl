@@ -16,8 +16,10 @@ branches:
         - gh-pages
 
 env:
+    global:
+        - DOCUMENTER_DEBUG="true"
     matrix:
-        - PREDICTMD_TEST_GROUP=1
+        - PREDICTMD_TEST_GROUP="1"
 
 git:
     depth: 99999999

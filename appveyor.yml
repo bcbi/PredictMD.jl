@@ -5,9 +5,10 @@ branches:
         - gh-pages
 
 environment:
+    DOCUMENTER_DEBUG: "true"
     matrix:
         - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.6/julia-0.6-latest-win64.exe"
-          PREDICTMD_TEST_GROUP: 1
+          PREDICTMD_TEST_GROUP: "1"
 
 image: Visual Studio 2015
 
