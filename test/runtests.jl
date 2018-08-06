@@ -32,6 +32,11 @@ srand(999)
 
 ENV["PREDICTMD_IS_RUNTESTS"] = "true"
 
+if lowercase(strip(get(ENV, "PREDICTMD_TEST_GROUP", ""))) == "true"
+    info(string("Setting \"PREDICTMD_TEST_PLOTS\" to \"true\""))
+    ENV["PREDICTMD_TEST_PLOTS"] = "true"
+end
+
 Base.Test.@testset "PredictMD test suite" begin
     Base.Test.@testset "Unit tests (CPU)" begin
         info("Running unit tests (CPU)")
