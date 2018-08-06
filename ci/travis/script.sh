@@ -17,10 +17,6 @@ julia --check-bounds=yes --color=yes -e '
     '
 
 julia --check-bounds=yes --color=yes -e '
-    Pkg.update();
-    '
-
-julia --check-bounds=yes --color=yes -e '
     import PredictMD;
     '
 
