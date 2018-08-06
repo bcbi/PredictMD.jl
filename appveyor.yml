@@ -4,6 +4,9 @@ branches:
     except:
         - gh-pages
 
+build:
+    verbosity: detailed
+
 environment:
     global:
         DOCUMENTER_DEBUG: "true"
@@ -21,6 +24,9 @@ notifications:
       on_build_success: true
       on_build_failure: true
       on_build_status_changed: true
+
+pull_requests:
+    do_not_increment_build_number: true
 
 skip_branch_with_pr: false
 
@@ -61,7 +67,7 @@ test_script:
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
         "import PredictMD"
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
-        "Pkg.test(\"PredictMD\"; coverage=true)
+        "Pkg.test(\"PredictMD\"; coverage=true)"
 
 on_success:
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
@@ -70,5 +76,6 @@ on_success:
         "import Coverage"
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
         "cd(Pkg.dir(\"PredictMD\"));using Coverage;Codecov.submit(Codecov.process_folder());"
+
 
 ##### End of file
