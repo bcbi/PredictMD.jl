@@ -5,11 +5,16 @@ import Literate
 
 function generate_docs(
         output_directory::AbstractString;
-        execute_notebooks = false,
-        markdown = false,
-        notebooks = false,
-        scripts = false,
+        execute_notebooks = true,
+        markdown = true,
+        notebooks = true,
+        scripts = true,
         )
+
+    if is_windows()
+        execute_notebooks = false
+    end
+
     ENV["PREDICTMD_IS_MAKE_DOCS"] = "true"
     if ispath(output_directory)
         error(
@@ -41,11 +46,7 @@ function generate_docs(
         "src",
         "examples",
         )
-    if is_windows()
-        execute_notebooks = false
-    else
-        execute_notebooks = true
-    end
+
     generate_examples(
         temp_examples_dir;
         execute_notebooks = execute_notebooks,

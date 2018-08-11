@@ -5,10 +5,9 @@
 function pkg_dir end
 
 function pkg_dir()::String
-    pkg_dir_filename = @__FILE__ # PredictMD/src/toplevel/utils/pkg_dir.jl
-    utils_dir = dirname(pkg_dir_filename) # PredictMD/src/toplevel/utils
-    toplevel_dir = dirname(utils_dir) # PredictMD/src/toplevel
-    src_dir = dirname(toplevel_dir) # PredictMD/src
+    pkg_dir_filename = @__FILE__ # PredictMD/src/base/pkg_dir.jl
+    base_dir = dirname(pkg_dir_filename) # PredictMD/src/base
+    src_dir = dirname(base_dir) # PredictMD/src
     predictmd_root_directory = dirname(src_dir) # PredictMD
     return predictmd_root_directory
 end
