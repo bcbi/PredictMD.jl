@@ -68,7 +68,9 @@ function generate_docs(
             modules = [
                 PredictMD,
                 PredictMD.Cleaning,
+                PredictMD.Compilation,
                 PredictMD.GPU,
+                PredictMD.Server,
                 ],
             pages = Any[
                 "index.md",
