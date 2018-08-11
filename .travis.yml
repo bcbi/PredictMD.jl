@@ -19,7 +19,7 @@ env:
     global:
         - DOCUMENTER_DEBUG="true"
     matrix:
-        - PREDICTMD_TEST_GROUP="appveyor-1"
+        - GROUP="appveyor-1"
 
 git:
     depth: 99999999

@@ -1,5 +1,31 @@
 ##### Beginning of file
 
+import PredictMD
+
+if is_travis_ci() && !haskey(ENV, "PREDICTMD_TEST_GROUP")
+    ENV["PREDICTMD_TEST_GROUP"] = lowercase(
+        strip(
+            get(
+                ENV,
+                "GROUP",
+                "",
+                )
+            )
+        )
+end
+
+if is_appveyor_ci && !haskey(ENV, "PREDICTMD_TEST_GROUP")
+    ENV["PREDICTMD_TEST_GROUP"] = lowercase(
+        strip(
+            get(
+                ENV,
+                "GROUP",
+                "",
+                )
+            )
+        )
+end
+
 const _test_group_environment_variable = lowercase(
     strip(
         get(
