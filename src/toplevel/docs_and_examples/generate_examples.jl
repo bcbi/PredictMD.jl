@@ -3,7 +3,7 @@
 import Documenter
 import Literate
 
-function preprocess_example(content::AbstractString)
+function preprocess_example(content::AbstractString)::String
     content = replace(
         content,
         "PREDICTMD_CURRENT_VERSION" => string(
@@ -28,7 +28,7 @@ function generate_examples(
         markdown = false,
         notebooks = false,
         scripts = false,
-        )
+        )::String
     ENV["PREDICTMD_IS_MAKE_EXAMPLES"] = "true"
     if !markdown && !notebooks && !scripts
         error(
@@ -98,6 +98,7 @@ function generate_examples(
             Literate.markdown(
                 input_file_full_path,
                 boston_housing_output_directory;
+                codefence = "```@example boston_housing" => "```",
                 documenter = true,
                 preprocess = preprocess_example,
                 )
@@ -148,6 +149,7 @@ function generate_examples(
             Literate.markdown(
                 input_file_full_path,
                 breast_cancer_biopsy_output_directory;
+                codefence = "```@example breast_cancer_biopsy" => "```",
                 documenter = true,
                 preprocess = preprocess_example,
                 )
