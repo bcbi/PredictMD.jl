@@ -3,13 +3,13 @@
 addons:
     apt:
         packages:
-        # - pdf2svg
+        - pdf2svg
         - pgf
         - poppler-utils
         - texlive-binaries
         - texlive-latex-base
-        # - texlive-latex-extra
-        # - texlive-pictures
+        - texlive-latex-extra
+        - texlive-pictures
 
 branches:
     except:
@@ -19,7 +19,7 @@ env:
     global:
         - DOCUMENTER_DEBUG="true"
     matrix:
-        - GROUP="appveyor-1"
+        - GROUP="travis-1"
 
 git:
     depth: 99999999
