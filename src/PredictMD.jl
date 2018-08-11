@@ -17,8 +17,10 @@ import Requires
 
 include(joinpath("base", "types.jl",)) # base/types.jl MUST go first
 
+include(joinpath("base", "get_version_number.jl",))
 include(joinpath("base", "init.jl",))
 include(joinpath("base", "interface.jl",))
+include(joinpath("base", "pkg_dir.jl",))
 include(joinpath("base", "version.jl",))
 
 ############################################################################
@@ -419,11 +421,6 @@ include(
     )
 include(
     joinpath(
-        "toplevel", "utils", "get_version_number.jl",
-        )
-    )
-include(
-    joinpath(
         "toplevel", "utils", "inverse-dictionary.jl",
         )
     )
@@ -460,11 +457,6 @@ include(
 include(
     joinpath(
         "toplevel", "utils", "openplotsduringtestsenv.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "pkg_dir.jl",
         )
     )
 include(
