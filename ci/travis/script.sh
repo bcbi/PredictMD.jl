@@ -41,7 +41,7 @@ pwd
 ls -la
 
 julia --check-bounds=yes --color=yes -e '
-    include(joinpath(Pkg.dir("PredictMD")), "docs", "deploy.jl"));
-    '
+    include(joinpath(Pkg.dir("PredictMD"), "docs", "deploy.jl",));
+'
 
 ##### End of file
