@@ -1,8 +1,6 @@
 ##### Beginning of file
 
 import Documenter
-import FileIO
-import JLD2
 import Literate
 import PredictMD
 
@@ -33,9 +31,9 @@ PredictMD.generate_docs(
     )
 
 if PredictMD.is_travis_ci()
-    filename = joinpath(homedir(), "travis_temp_makedocs_dir.jld2")
+    filename = joinpath(homedir(), "travis_temp_makedocs_dir.txt")
     rm(filename; force = true, recursive = true)
-    FileIO.save(filename, "temp_makedocs_dir", temp_makedocs_dir)
+    write(filename, temp_makedocs_dir)
 end
 
 ##### End of file
