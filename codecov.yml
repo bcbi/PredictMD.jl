@@ -22,4 +22,7 @@ ignore:
     - "src/submodules/Server"
     - "src/submodules/Server/**/*"
 
+    # ignore src/toplevel/utils/openbrowserwindow.jl
+    - "src/toplevel/utils/openbrowserwindow.jl"
+
 ##### End of file

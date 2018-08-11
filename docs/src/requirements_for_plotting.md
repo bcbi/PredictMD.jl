@@ -14,7 +14,7 @@ See below for instructions on installing these software packages.
 Once you have installed the required software, you can test PredictMD's
 plotting functionality by running the following command in Julia:
 ```julia
-ENV["PREDICTMD_TEST_PLOTS"] = "true"; Pkg.test("PredictMD");
+ENV["PREDICTMD_TEST_GROUP"] = "test-plots"; Pkg.test("PredictMD");
 ```
 
 ## Installing LaTeX

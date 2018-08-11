@@ -1,22 +1,25 @@
+##### Beginning of file
+
+import Base.Test
 import PredictMD
 
-a = PredictMD.predictmd_package_directory()
+a = PredictMD.pkg_dir()
 Base.Test.@test( isdir(a) )
 
-b = PredictMD.predictmd_package_directory(
+b = PredictMD.pkg_dir(
     "assets",
     )
 Base.Test.@test( isdir(b) )
 Base.Test.@test( dirname(b) == a )
 
-c = PredictMD.predictmd_package_directory(
+c = PredictMD.pkg_dir(
     "assets",
     "icd",
     )
 Base.Test.@test( isdir(c) )
 Base.Test.@test( dirname(c) == b )
 
-d = PredictMD.predictmd_package_directory(
+d = PredictMD.pkg_dir(
     "assets",
     "icd",
     "icd9",
@@ -24,7 +27,7 @@ d = PredictMD.predictmd_package_directory(
 Base.Test.@test( isdir(d) )
 Base.Test.@test( dirname(d) == c )
 
-e = PredictMD.predictmd_package_directory(
+e = PredictMD.pkg_dir(
     "assets",
     "icd",
     "icd9",
@@ -33,7 +36,7 @@ e = PredictMD.predictmd_package_directory(
 Base.Test.@test( isdir(e) )
 Base.Test.@test( dirname(e) == d )
 
-f = PredictMD.predictmd_package_directory(
+f = PredictMD.pkg_dir(
     "assets",
     "icd",
     "icd9",
@@ -42,3 +45,5 @@ f = PredictMD.predictmd_package_directory(
     )
 Base.Test.@test( dirname(f) == e )
 Base.Test.@test( isfile(f) )
+
+##### End of file

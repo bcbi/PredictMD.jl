@@ -4,15 +4,26 @@ branches:
     except:
         - gh-pages
 
+build:
+    verbosity: detailed
+
 environment:
-    PREDICTMD_TEST_PLOTS: false
+    global:
+        DOCUMENTER_DEBUG: "true"
     matrix:
-        - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.6/julia-0.6-latest-win64.exe"
-          PREDICTMD_TEST_GROUP: 1
+        - GROUP: "appveyor-1"
+          JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.6/julia-0.6-latest-win64.exe"
+        - GROUP: "appveyor-1"
+          JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.7/julia-0.7-latest-win64.exe"
+        - GROUP: "appveyor-1"
+          JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/1.0/julia-1.0-latest-win64.exe"
 
 image: Visual Studio 2015
 
 matrix:
+    allow_failures:
+        - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.7/julia-0.7-latest-win64.exe"
+        - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/1.0/julia-1.0-latest-win64.exe"
     fast_finish: true # immediately finish build once one of the jobs fails
 
 notifications:
@@ -21,13 +32,16 @@ notifications:
       on_build_failure: true
       on_build_status_changed: true
 
+pull_requests:
+    do_not_increment_build_number: true
+
 skip_branch_with_pr: false
 
 skip_non_tags: false
 
 skip_tags: false
 
-version: '{build}'
+version: '{build}-{branch}'
 
 ############################################################################
 
@@ -55,21 +69,18 @@ build_script:
         "Pkg.clone(pwd(), \"PredictMD\")"
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
         "Pkg.build(\"PredictMD\")"
-    - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
-        "Pkg.update()"
 
 test_script:
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
         "import PredictMD"
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
-        "Pkg.test(\"PredictMD\"; coverage=true)
+        "Pkg.test(\"PredictMD\"; coverage=true)"
 
 on_success:
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
         "Pkg.add(\"Coverage\")"
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
-        "import Coverage"
-    - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
         "cd(Pkg.dir(\"PredictMD\"));using Coverage;Codecov.submit(Codecov.process_folder());"
+
 
 ##### End of file

@@ -13,7 +13,7 @@ PredictMD.require_predictmd_version("PREDICTMD_CURRENT_VERSION")
 
 ## PredictMD.require_predictmd_version("PREDICTMD_CURRENT_VERSION", "PREDICTMD_NEXT_MINOR_VERSION")
 
-PROJECT_OUTPUT_DIRECTORY = PredictMD.directory(
+PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
     homedir(),
     "Desktop",
     "breast_cancer_biopsy_example",
