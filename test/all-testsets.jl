@@ -11,87 +11,95 @@ end
 Base.Test.@testset "Unit tests (CPU)                         " begin
     info("Running unit tests (CPU)")
 
-    Base.Test.@testset "code_loading          " begin
-    include(
-        joinpath(
-            "cpu", "unit",
-            "toplevel", "code_loading",
-            "test_require_versions.jl",
+    Base.Test.@testset "base        " begin
+        include(
+            joinpath(
+                "cpu", "unit",
+                "base",
+                "test_get_version_number.jl",
+                )
             )
-        )
+
+        include(
+            joinpath(
+                "cpu", "unit",
+                "base",
+                "test_pkg_dir.jl",
+                )
+            )
     end
 
-    Base.Test.@testset "metrics               " begin
-    include(
-        joinpath(
-            "cpu", "unit",
-            "toplevel", "metrics",
-            "test_coefficientofdetermination.jl",
+    Base.Test.@testset "code_loading" begin
+        include(
+            joinpath(
+                "cpu", "unit",
+                "toplevel", "code_loading",
+                "test_require_versions.jl",
+                )
             )
-        )
-    include(
-        joinpath(
-            "cpu", "unit",
-            "toplevel", "metrics",
-            "test_cohenkappa.jl",
-            )
-        )
     end
 
-    Base.Test.@testset "utils                 " begin
-    include(
-        joinpath(
-            "cpu", "unit",
-            "toplevel", "utils",
-            "test_fix_type.jl",
+    Base.Test.@testset "metrics     " begin
+        include(
+            joinpath(
+                "cpu", "unit",
+                "toplevel", "metrics",
+                "test_coefficientofdetermination.jl",
+                )
             )
-        )
-    include(
-        joinpath(
-            "cpu", "unit",
-            "toplevel", "utils",
-            "test_get_version_number.jl",
+
+        include(
+            joinpath(
+                "cpu", "unit",
+                "toplevel", "metrics",
+                "test_cohenkappa.jl",
+                )
             )
-        )
-    include(
-        joinpath(
-            "cpu", "unit",
-            "toplevel", "utils",
-            "test-inverse-dictionary.jl",
-            )
-        )
-    include(
-        joinpath(
-            "cpu", "unit",
-            "toplevel", "utils",
-            "test_logging.jl",
-            )
-        )
-    include(
-        joinpath(
-            "cpu", "unit",
-            "toplevel", "utils",
-            "test-open-browser-window.jl",
-            )
-        )
-    include(
-        joinpath(
-            "cpu", "unit",
-            "toplevel", "utils",
-            "test_pkg_dir.jl",
-            )
-        )
     end
 
-    Base.Test.@testset "hcup" begin
-    include(
-        joinpath(
-            "cpu", "unit",
-            "submodules", "clean",
-            "hcup",
-            "test_hcup_utility_functions.jl",
+    Base.Test.@testset "utils       " begin
+        include(
+            joinpath(
+                "cpu", "unit",
+                "toplevel", "utils",
+                "test_fix_type.jl",
+                )
             )
-        )
+
+        include(
+            joinpath(
+                "cpu", "unit",
+                "toplevel", "utils",
+                "test-inverse-dictionary.jl",
+                )
+            )
+
+        include(
+            joinpath(
+                "cpu", "unit",
+                "toplevel", "utils",
+                "test_logging.jl",
+                )
+            )
+
+        include(
+            joinpath(
+                "cpu", "unit",
+                "toplevel", "utils",
+                "test-open-browser-window.jl",
+                )
+            )
+    end
+
+    Base.Test.@testset "hcup        " begin
+        include(
+            joinpath(
+                "cpu", "unit",
+                "submodules", "clean",
+                "hcup",
+                "test_hcup_utility_functions.jl",
+                )
+            )
     end
 end
 
