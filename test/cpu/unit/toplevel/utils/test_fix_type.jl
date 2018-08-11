@@ -2,6 +2,7 @@
 
 import Base.Test
 import DataFrames
+import PredictMD
 
 my_vector = Vector{Any}(5)
 my_vector[1] = Cfloat(1.1)

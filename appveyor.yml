@@ -12,11 +12,18 @@ environment:
         DOCUMENTER_DEBUG: "true"
     matrix:
         - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.6/julia-0.6-latest-win64.exe"
-          PREDICTMD_TEST_GROUP: "1"
+          PREDICTMD_TEST_GROUP: "appveyor-1"
+        - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.7/julia-0.7-latest-win64.exe"
+          PREDICTMD_TEST_GROUP: "appveyor-1"
+        - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/1.0/julia-1.0-latest-win64.exe"
+          PREDICTMD_TEST_GROUP: "appveyor-1"
 
 image: Visual Studio 2015
 
 matrix:
+    allow_failures:
+        - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.7/julia-0.7-latest-win64.exe"
+        - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/1.0/julia-1.0-latest-win64.exe"
     fast_finish: true # immediately finish build once one of the jobs fails
 
 notifications:

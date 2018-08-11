@@ -22,7 +22,7 @@ end
 
 function version_julia7()::VersionNumber
     version_number = try
-        predictmd_project_toml_file_name = predictmd_package_directory(
+        predictmd_project_toml_file_name = pkg_dir(
             "Project.toml",
             )
         predictmd_project_toml_file_contents = read(

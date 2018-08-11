@@ -1,5 +1,8 @@
 ##### Beginning of file
 
+import Base.Test
+import PredictMD
+
 table1 = [20 5; 10 15]
 Base.Test.@test(
     isapprox(PredictMD.cohen_kappa(table1), 0.4; atol = 0.00000000001)

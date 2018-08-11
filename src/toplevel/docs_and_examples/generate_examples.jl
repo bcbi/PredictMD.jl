@@ -60,7 +60,7 @@ function generate_examples(
     mkpath(temp_examples_dir)
 
     examples_input_parent_directory =
-        PredictMD.predictmd_package_directory("examples")
+        PredictMD.pkg_dir("examples")
 
     cpu_examples_input_parent_directory = joinpath(
         examples_input_parent_directory,

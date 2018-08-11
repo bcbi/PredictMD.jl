@@ -3,13 +3,13 @@
 addons:
     apt:
         packages:
-        - pdf2svg
+        # - pdf2svg
         - pgf
         - poppler-utils
         - texlive-binaries
         - texlive-latex-base
-        - texlive-latex-extra
-        - texlive-pictures
+        # - texlive-latex-extra
+        # - texlive-pictures
 
 branches:
     except:
@@ -19,7 +19,7 @@ env:
     global:
         - DOCUMENTER_DEBUG="true"
     matrix:
-        - PREDICTMD_TEST_GROUP="1"
+        - PREDICTMD_TEST_GROUP="appveyor-1"
 
 git:
     depth: 99999999
@@ -27,6 +27,7 @@ git:
 julia:
     - 0.6
     - 0.7
+    - 1.0
     - nightly
 
 language: julia
@@ -34,6 +35,7 @@ language: julia
 matrix:
     allow_failures:
         - julia: 0.7
+        - julia: 1.0
         - julia: nightly
     fast_finish: true
 
