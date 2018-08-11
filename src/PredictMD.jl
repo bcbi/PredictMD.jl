@@ -15,11 +15,11 @@ import Requires
 
 # base/
 
-include(joinpath(".", "base", "types.jl",)) # base/types.jl MUST go first
+include(joinpath("base", "types.jl",)) # base/types.jl MUST go first
 
-include(joinpath(".", "base", "init.jl",))
-include(joinpath(".", "base", "interface.jl",))
-include(joinpath(".", "base", "version.jl",))
+include(joinpath("base", "init.jl",))
+include(joinpath("base", "interface.jl",))
+include(joinpath("base", "version.jl",))
 
 ############################################################################
 # PredictMD source files (names here also go in the top level namespace) ###
@@ -30,19 +30,19 @@ include(joinpath(".", "base", "version.jl",))
 # toplevel/code_loading/
 include(
     joinpath(
-        ".", "toplevel", "code_loading", "requires.jl",
+        "toplevel", "code_loading", "requires.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "code_loading", "require_versions.jl",
+        "toplevel", "code_loading", "require_versions.jl",
         )
     )
 
 # toplevel/classimbalance/
 include(
     joinpath(
-        ".", "toplevel", "classimbalance", "smote.jl",
+        "toplevel", "classimbalance", "smote.jl",
         )
     )
 
@@ -51,54 +51,54 @@ include(
 # toplevel/datasets/
 include(
     joinpath(
-        ".", "toplevel", "datasets", "csv.jl",
+        "toplevel", "datasets", "csv.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "datasets", "datadeps.jl",
+        "toplevel", "datasets", "datadeps.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "datasets", "gzip.jl",
+        "toplevel", "datasets", "gzip.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "datasets", "juliadb.jl",
+        "toplevel", "datasets", "juliadb.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "datasets", "mldatasets.jl",
+        "toplevel", "datasets", "mldatasets.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "datasets", "mnist.jl",
+        "toplevel", "datasets", "mnist.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "datasets", "queryverse.jl",
+        "toplevel", "datasets", "queryverse.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "datasets", "rdatasets.jl",
+        "toplevel", "datasets", "rdatasets.jl",
         )
     )
 
 # toplevel/docs_and_examples/
 include(
     joinpath(
-        ".", "toplevel", "docs_and_examples", "generate_docs.jl",
+        "toplevel", "docs_and_examples", "generate_docs.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "docs_and_examples", "generate_examples.jl",
+        "toplevel", "docs_and_examples", "generate_examples.jl",
         )
     )
 
@@ -109,31 +109,31 @@ include(
 # toplevel/ide/
 include(
     joinpath(
-        ".", "toplevel", "ide", "atom.jl",
+        "toplevel", "ide", "atom.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "ide", "revise.jl",
+        "toplevel", "ide", "revise.jl",
         )
     )
 
 # toplevel/io/
 include(
     joinpath(
-        ".", "toplevel", "io", "saveload.jl",
+        "toplevel", "io", "saveload.jl",
         )
     )
 
 # linearmodel/
 include(
     joinpath(
-        ".", "toplevel", "linearmodel", "glm.jl",
+        "toplevel", "linearmodel", "glm.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "linearmodel",
+        "toplevel", "linearmodel",
         "ordinary_least_squares_regression.jl",
         )
     )
@@ -141,80 +141,80 @@ include(
 # toplevel/metrics/
 include(
     joinpath(
-        ".", "toplevel", "metrics", "auprc.jl",
+        "toplevel", "metrics", "auprc.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "metrics", "aurocc.jl",
+        "toplevel", "metrics", "aurocc.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "metrics", "averageprecisionscore.jl",
+        "toplevel", "metrics", "averageprecisionscore.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "metrics", "brier_score.jl",
+        "toplevel", "metrics", "brier_score.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "metrics", "coefficientofdetermination.jl",
+        "toplevel", "metrics", "coefficientofdetermination.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "metrics", "cohenkappa.jl",
+        "toplevel", "metrics", "cohenkappa.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "metrics", "getbinarythresholds.jl",
+        "toplevel", "metrics", "getbinarythresholds.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "metrics", "mean_square_error.jl",
+        "toplevel", "metrics", "mean_square_error.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "metrics", "prcurve.jl",
+        "toplevel", "metrics", "prcurve.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "metrics", "risk_score_cutoff_values.jl",
+        "toplevel", "metrics", "risk_score_cutoff_values.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "metrics", "roccurve.jl",
+        "toplevel", "metrics", "roccurve.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "metrics", "rocnumsmetrics.jl",
+        "toplevel", "metrics", "rocnumsmetrics.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "metrics",
+        "toplevel", "metrics",
         "singlelabelbinaryclassificationmetrics.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "metrics", "singlelabelregressionmetrics.jl",
+        "toplevel", "metrics", "singlelabelregressionmetrics.jl",
         )
     )
 
 # toplevel/modelselection/
 include(
     joinpath(
-        ".", "toplevel", "modelselection", "split_data.jl",
+        "toplevel", "modelselection", "split_data.jl",
         )
     )
 
@@ -225,93 +225,93 @@ include(
 # toplevel/neuralnetwork/
 include(
     joinpath(
-        ".", "toplevel", "neuralnetwork", "flux.jl",
+        "toplevel", "neuralnetwork", "flux.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "neuralnetwork", "knet.jl",
+        "toplevel", "neuralnetwork", "knet.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "neuralnetwork", "merlin.jl",
+        "toplevel", "neuralnetwork", "merlin.jl",
         )
     )
 
 # toplevel/online/
 include(
     joinpath(
-        ".", "toplevel", "online", "onlinestats.jl",
+        "toplevel", "online", "onlinestats.jl",
         )
     )
 
 # toplevel/ontologies/
 include(
     joinpath(
-        ".", "toplevel", "ontologies", "ccs.jl",
+        "toplevel", "ontologies", "ccs.jl",
         )
     )
 
 # toplevel/pipeline/
 include(
     joinpath(
-        ".", "toplevel", "pipeline", "simplelinearpipeline.jl",
+        "toplevel", "pipeline", "simplelinearpipeline.jl",
         )
     )
 
 # toplevel/plotting/
 include(
     joinpath(
-        ".", "toplevel", "plotting", "catch_plotting_errors.jl",
+        "toplevel", "plotting", "catch_plotting_errors.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "plotting", "pgfplots.jl",
+        "toplevel", "plotting", "pgfplots.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "plotting", "pgfplotsx.jl",
+        "toplevel", "plotting", "pgfplotsx.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "plotting", "plotlearningcurve.jl",
+        "toplevel", "plotting", "plotlearningcurve.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "plotting", "plotprcurve.jl",
+        "toplevel", "plotting", "plotprcurve.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "plotting", "plotroccurve.jl",
+        "toplevel", "plotting", "plotroccurve.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "plotting",
+        "toplevel", "plotting",
         "plotsinglelabelregressiontruevspredicted.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "plotting",
+        "toplevel", "plotting",
         "plotsinglelabelbinaryclassifierhistograms.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "plotting",
+        "toplevel", "plotting",
         "probability_calibration_plots.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "plotting",
+        "toplevel", "plotting",
         "unicodeplots.jl",
         )
     )
@@ -319,208 +319,208 @@ include(
 # toplevel/postprocessing/
 include(
     joinpath(
-        ".", "toplevel", "postprocessing", "packagemultilabelpred.jl",
+        "toplevel", "postprocessing", "packagemultilabelpred.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "postprocessing", "packagesinglelabelpred.jl",
+        "toplevel", "postprocessing", "packagesinglelabelpred.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "postprocessing", "packagesinglelabelproba.jl",
+        "toplevel", "postprocessing", "packagesinglelabelproba.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "postprocessing", "predictoutput.jl",
+        "toplevel", "postprocessing", "predictoutput.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "postprocessing", "predictprobaoutput.jl",
+        "toplevel", "postprocessing", "predictprobaoutput.jl",
         )
     )
 
 # toplevel/preprocessing/
 include(
     joinpath(
-        ".", "toplevel", "preprocessing", "dataframecontrasts.jl",
+        "toplevel", "preprocessing", "dataframecontrasts.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "preprocessing", "dataframetodecisiontree.jl",
+        "toplevel", "preprocessing", "dataframetodecisiontree.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "preprocessing", "dataframetoglm.jl",
+        "toplevel", "preprocessing", "dataframetoglm.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "preprocessing", "dataframetoknet.jl",
+        "toplevel", "preprocessing", "dataframetoknet.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "preprocessing", "dataframetosvm.jl",
+        "toplevel", "preprocessing", "dataframetosvm.jl",
         )
     )
 
 # toplevel/svm/
 include(
     joinpath(
-        ".", "toplevel", "svm", "libsvm.jl",
+        "toplevel", "svm", "libsvm.jl",
         )
     )
 
 # toplevel/time_series/
 include(
     joinpath(
-        ".", "toplevel", "time_series", "timeseries.jl",
+        "toplevel", "time_series", "timeseries.jl",
         )
     )
 
 # toplevel/tree/
 include(
     joinpath(
-        ".", "toplevel", "tree", "decisiontree.jl",
+        "toplevel", "tree", "decisiontree.jl",
         )
     )
 
 # toplevel/utils/
 include(
     joinpath(
-        ".", "toplevel", "utils", "constant_columns.jl",
+        "toplevel", "utils", "constant_columns.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "dataframe_column_types.jl",
+        "toplevel", "utils", "dataframe_column_types.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "filename_extension.jl",
+        "toplevel", "utils", "filename_extension.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "fix_type.jl",
+        "toplevel", "utils", "fix_type.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "formulas.jl",
+        "toplevel", "utils", "formulas.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "get_version_number.jl",
+        "toplevel", "utils", "get_version_number.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "inverse-dictionary.jl",
+        "toplevel", "utils", "inverse-dictionary.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "is_debug.jl",
+        "toplevel", "utils", "is_debug.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "labelstringintmaps.jl",
+        "toplevel", "utils", "labelstringintmaps.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "make_directory.jl",
+        "toplevel", "utils", "make_directory.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "missings.jl",
+        "toplevel", "utils", "missings.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "nothings.jl",
+        "toplevel", "utils", "nothings.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "openbrowserwindow.jl",
+        "toplevel", "utils", "openbrowserwindow.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "openplotsduringtestsenv.jl",
+        "toplevel", "utils", "openplotsduringtestsenv.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "pkg_dir.jl",
+        "toplevel", "utils", "pkg_dir.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "predictionsassoctodataframe.jl",
+        "toplevel", "utils", "predictionsassoctodataframe.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "probabilitiestopredictions.jl",
+        "toplevel", "utils", "probabilitiestopredictions.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "runtestsenv.jl",
+        "toplevel", "utils", "runtestsenv.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "shufflerows.jl",
+        "toplevel", "utils", "shufflerows.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "simplemovingaverage.jl",
+        "toplevel", "utils", "simplemovingaverage.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "test_logging.jl",
+        "toplevel", "utils", "test_logging.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "tikzpictures.jl",
+        "toplevel", "utils", "tikzpictures.jl",
         )
     )
 
 include(
     joinpath(
-        ".", "toplevel", "utils", "transform_columns.jl",
+        "toplevel", "utils", "transform_columns.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "trapz.jl",
+        "toplevel", "utils", "trapz.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "traviscienv.jl",
+        "toplevel", "utils", "traviscienv.jl",
         )
     )
 include(
     joinpath(
-        ".", "toplevel", "utils", "tuplify.jl",
+        "toplevel", "utils", "tuplify.jl",
         )
     )
 
@@ -532,7 +532,7 @@ include(
 # submodules/Cleaning/
 include(
     joinpath(
-        ".", "submodules", "Cleaning", "Cleaning.jl",
+        "submodules", "Cleaning", "Cleaning.jl",
         )
     )
 
@@ -540,7 +540,7 @@ include(
 # submodules/Compilation/
 include(
     joinpath(
-        ".", "submodules", "Compilation", "Compilation.jl",
+        "submodules", "Compilation", "Compilation.jl",
         )
     )
 
@@ -548,7 +548,7 @@ include(
 # submodules/GPU/
 include(
     joinpath(
-        ".", "submodules", "GPU", "GPU.jl",
+        "submodules", "GPU", "GPU.jl",
         )
     )
 
@@ -556,7 +556,7 @@ include(
 # submodules/Server/
 include(
     joinpath(
-        ".", "submodules", "Server", "Server.jl",
+        "submodules", "Server", "Server.jl",
         )
     )
 

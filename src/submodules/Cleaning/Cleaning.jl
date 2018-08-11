@@ -9,7 +9,7 @@ module Cleaning # begin submodule PredictMD.Cleaning
 ############################################################################
 
 # submodules/Cleaning/hcup/
-include(joinpath(".", "hcup", "hcup.jl",))
+include(joinpath("hcup", "hcup.jl",))
 
 end # begin submodule PredictMD.Cleaning
 
