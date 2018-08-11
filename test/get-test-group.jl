@@ -39,7 +39,7 @@ const _test_group_environment_variable = lowercase(
 if length(_test_group_environment_variable) == 0
     const _test_group_value = "default"
 else
-    const _test_group_value = test_group_environment_variable
+    const _test_group_value = _test_group_environment_variable
 end
 
 if haskey(TEST_GROUP_STRING_TO_INSTANCE, _test_group_value)
