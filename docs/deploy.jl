@@ -1,8 +1,6 @@
 ##### Beginning of file
 
 import Documenter
-import FileIO
-import JLD2
 import Literate
 import PredictMD
 
@@ -12,10 +10,8 @@ ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "true"
 
 if PredictMD.is_travis_ci()
     original_working_directory = pwd()
-    temp_makedocs_dir = FileIO.load(
-        joinpath(homedir(), "travis_temp_makedocs_dir.jld2"),
-        "temp_makedocs_dir",
-        )
+    filename = joinpath(homedir(), "travis_temp_makedocs_dir.txt")
+    temp_makedocs_dir = strip(readstring(filename))
     cd(temp_makedocs_dir)
     info(
         string(

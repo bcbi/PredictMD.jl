@@ -34,10 +34,14 @@ julia --check-bounds=yes --color=yes -e '
     Coverage.Codecov.submit(Coverage.Codecov.process_folder());
     '
 
+cd `cat ~/travis_temp_makedocs_dir.txt`
+
+pwd
+
+ls -la
+
 julia --check-bounds=yes --color=yes -e '
-    import PredictMD;
-    cd(Pkg.dir("PredictMD"));
-    include(joinpath("docs", "deploy.jl"));
-    '
+    include(joinpath(Pkg.dir("PredictMD"), "docs", "deploy.jl",));
+'
 
 ##### End of file
