@@ -1,9 +1,7 @@
 ##### Beginning of file
 
-### Minimum supported version of Julia: 0.6
 julia 0.6
 
-### Required Julia packages
 Atom
 BuildExecutable
 CSVFiles
@@ -42,6 +40,7 @@ PGFPlotsX
 PackageCompiler
 ProgressMeter
 Query
+RData
 RDatasets
 ROCAnalysis
 Revise
@@ -51,8 +50,5 @@ TimeSeries
 UnicodePlots
 ValueHistories
 WebSockets
-
-### The following Julia packages are not required, but will be used by
-### PredictMD if the user runs `import PACKAGENAME` or `using PACKAGENAME`
 
 ##### End of file

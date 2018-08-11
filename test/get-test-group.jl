@@ -2,7 +2,7 @@
 
 import PredictMD
 
-if is_travis_ci() && !haskey(ENV, "PREDICTMD_TEST_GROUP")
+if PredictMD.is_travis_ci() && !haskey(ENV, "PREDICTMD_TEST_GROUP")
     ENV["PREDICTMD_TEST_GROUP"] = lowercase(
         strip(
             get(
@@ -14,7 +14,7 @@ if is_travis_ci() && !haskey(ENV, "PREDICTMD_TEST_GROUP")
         )
 end
 
-if is_appveyor_ci && !haskey(ENV, "PREDICTMD_TEST_GROUP")
+if PredictMD.is_appveyor_ci() && !haskey(ENV, "PREDICTMD_TEST_GROUP")
     ENV["PREDICTMD_TEST_GROUP"] = lowercase(
         strip(
             get(

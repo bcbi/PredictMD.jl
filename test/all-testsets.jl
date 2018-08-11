@@ -5,6 +5,9 @@ import Base.Test
 srand(999)
 
 Base.Test.@testset "PredictMD test suite" begin
+    Base.Test.@testset "Julia version requirements" begin
+        Base.Test.@test(Base.VERSION >= VersionNumber("0.6"))
+    end
     Base.Test.@testset "Unit tests (CPU)" begin
         info("Running unit tests (CPU)")
         Base.Test.@testset "code_loading" begin
