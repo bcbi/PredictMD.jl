@@ -389,15 +389,14 @@ Temporarily modify the branch protections for
 the `master` and `develop` branches:
 
 First, the `master` branch: go to
-[https://github.com/bcbi/PredictMD.jl/settings/branches/master](https://github.com/bcbi/PredictMD.jl/settings/branches/master),
-scroll down, UNCHECK the box next to "Include administrators", scroll
+[https://github.com/bcbi/PredictMD.jl/settings/branches](https://github.com/bcbi/PredictMD.jl/settings/branches), scroll down, click the "Edit" button in the `master` row, scroll down, UNCHECK the box next to "Include administrators", scroll
 to the bottom of the page, and click the green "Save changes" button.
 You may be asked to enter your GitHub password.
 
-Now do the same thing for the `develop` branch: Go to
-[https://github.com/bcbi/PredictMD.jl/settings/branches/develop](https://github.com/bcbi/PredictMD.jl/settings/branches/develop),
-scroll down, UNCHECK the box next to "Include administrators", scroll to
-the bottom of the page, and click the green "Save changes" button.
+Now do the same thing for the `develop` branch: go to
+[https://github.com/bcbi/PredictMD.jl/settings/branches](https://github.com/bcbi/PredictMD.jl/settings/branches), scroll down, click the "Edit" button in the `develop` row, scroll down, UNCHECK the box next to "Include administrators", scroll
+to the bottom of the page, and click the green "Save changes" button.
+You may be asked to enter your GitHub password.
 
 #### Step 14:
 Push the new release to GitHub:
@@ -495,16 +494,14 @@ git push origin develop
 Re-enable the branch protection settings:
 
 `master` branch: go to
-[https://github.com/bcbi/PredictMD.jl/settings/branches/master](https://github.com/bcbi/PredictMD.jl/settings/branches/master),
-scroll down, CHECK the box next to "Include administrators",
-scroll to the bottom of the page, and click the green
-"Save changes" button.
+[https://github.com/bcbi/PredictMD.jl/settings/branches](https://github.com/bcbi/PredictMD.jl/settings/branches), scroll down, click the "Edit" button in the `master` row, scroll down, CHECK the box next to "Include administrators", scroll
+to the bottom of the page, and click the green "Save changes" button.
+You may be asked to enter your GitHub password.
 
 `develop` branch: go to
-[https://github.com/bcbi/PredictMD.jl/settings/branches/develop](https://github.com/bcbi/PredictMD.jl/settings/branches/develop),
-scroll down, CHECK the box next to "Include administrators", scroll to
-the bottom of the page, and click the green
-"Save changes" button.
+[https://github.com/bcbi/PredictMD.jl/settings/branches](https://github.com/bcbi/PredictMD.jl/settings/branches), scroll down, click the "Edit" button in the `develop` row, scroll down, CHECK the box next to "Include administrators", scroll
+to the bottom of the page, and click the green "Save changes" button.
+You may be asked to enter your GitHub password.
 
 #### Step 20:
 Delete the release branch, which is no longer needed. To do
