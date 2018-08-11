@@ -50,6 +50,11 @@ Base.Test.@testset "PredictMD test suite" begin
             include(
                 joinpath(
                     ".", "cpu", "unit", "toplevel", "utils",
+                    "test-open-browser-window.jl",)
+                )
+            include(
+                joinpath(
+                    ".", "cpu", "unit", "toplevel", "utils",
                     "test_pkg_dir.jl",)
                 )
         end
