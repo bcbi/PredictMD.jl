@@ -25,7 +25,7 @@ info(string("PredictMD version: ",PredictMD.version(),))
 info(
     string(
         "PredictMD package directory: \"",
-        PredictMD.predictmd_package_directory(),
+        PredictMD.pkg_dir(),
         "\"",
         )
     )

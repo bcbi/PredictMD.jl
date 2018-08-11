@@ -38,24 +38,12 @@ function open_browser_window(filename::AbstractString, a::Associative = ENV)
                 FileIO.load(filename),
                 )
         end
-    elseif is_runtests(a) && !open_plots_during_tests(a)
+    elseif (is_make_examples(a)) ||
+            (is_make_docs(a)) ||
+            (is_runtests(a) && !open_plots_during_tests(a))
         info(
             string(
-                "DEBUG: Skipping opening file during package tests: ",
-                filename,
-                )
-            )
-    elseif is_make_examples(a)
-        info(
-            string(
-                "DEBUG: Skipping opening file during make_examples: ",
-                filename,
-                )
-            )
-    elseif is_make_docs(a)
-        info(
-            string(
-                "DEBUG: Skipping opening file during make_docs: ",
+                "DEBUG: Skipping opening file: ",
                 filename,
                 )
             )
