@@ -3,6 +3,19 @@
 import Documenter
 import Literate
 
+function fix_example_blocks(filename::AbstractString)::Void
+    content = read(filename, String)
+    rm(filename; force = true, recursive = true,)
+    content = replace(
+        content,
+        r"```@example \w*\n" => "```julia\n",
+        )
+    write(filename, content)
+    return nothing
+end
+
+"""
+"""
 function generate_docs(
         output_directory::AbstractString;
         execute_notebooks = true,
@@ -80,6 +93,14 @@ function generate_docs(
             root = temp_generatedocs_dir,
             sitename = "PredictMD documentation",
             )
+        for (root, dirs, files) in walkdir(temp_generatedocs_dir)
+            for file in files
+                filename = joinpath(root, file)
+                if filename_extension(filename) == ".md"
+                    fix_example_blocks(filename)
+                end
+            end
+        end
         cd(previous_working_directory)
     end
     mkpath(dirname(output_directory))
