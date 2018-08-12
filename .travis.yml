@@ -25,18 +25,18 @@ git:
     depth: 99999999
 
 julia:
-    - 0.6
-    - 0.7
-    - 1.0
-    - nightly
+    - "0.6"
+    - "0.7"
+    - "1.0"
+    - "nightly"
 
 language: julia
 
 matrix:
     allow_failures:
-        - julia: 0.7
-        - julia: 1.0
-        - julia: nightly
+        - julia: "0.7"
+        - julia: "1.0"
+        - julia: "nightly"
     fast_finish: true
 
 notifications:
