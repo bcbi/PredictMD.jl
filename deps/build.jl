@@ -5,20 +5,18 @@
 
 srand(999)
 
-info(string("Looking for lualatex..."))
 have_lualatex = try success(`lualatex -v`); catch; false; end
 if have_lualatex
-    info(string("Found lualatex."))
+    info(string("SUCCESS: Found lualatex."))
 else
-    warn(string("Did not find lualatex."))
+    warn(string("FAILURE: Did not find lualatex."))
 end
 
-info(string("Looking for pdflatex..."))
 have_pdflatex = try success(`pdflatex -v`); catch; false; end
 if have_pdflatex
-    info(string("Found pdflatex."))
+    info(string("SUCCESS: Found pdflatex."))
 else
-    warn(string("Did not find pdflatex."))
+    warn(string("FAILURE: Did not find pdflatex."))
 end
 
 default_engine = ""
@@ -38,12 +36,11 @@ else
         )
 end
 
-info(string("Looking for pdftoppm..."))
 have_pdftoppm =  try success(`pdftoppm  -v`); catch; false; end
 if have_pdftoppm
-    info(string("Found pdftoppm."))
+    info(string("SUCCESS: Found pdftoppm."))
 else
-    warn(string("Did not find pdftoppm."))
+    warn(string("FAILURE: Did not find pdftoppm."))
 end
 
 if !have_pdftoppm
@@ -58,16 +55,13 @@ if !have_pdftoppm
         )
 end
 
-# print(STDERR, )
-info(string("Looking for pdf2svg..."))
 pdfpath = joinpath(@__DIR__, "pdf2svg-example-file.pdf")
 svgpath = joinpath(@__DIR__, "pdf2svg-example-file.svg")
 have_pdf2svg = try success(`pdf2svg $pdfpath $svgpath`); catch; false; end
-# println(STDERR, "    ", have_pdf2svg ? OK : X)
 if have_pdf2svg
-    info(string("Found pdf2svg."))
+    info(string("SUCCESS: Found pdf2svg."))
 else
-    warn(string("Did not find pdf2svg."))
+    warn(string("FAILURE: Did not find pdf2svg."))
 end
 
 if !have_pdf2svg
