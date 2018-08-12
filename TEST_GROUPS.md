@@ -1,6 +1,6 @@
 | group| Unit tests | Integration tests | Plotting tests | 
 | :--- | :---: | :---: | :---: |
-| default| <a href="#"><img alt="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"> </a>| <a href="#"><img src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> | <a href="#"><img src="https://via.placeholder.com/25x25/ff0000/ffffff.png?text=+"></a> |
+| default| <a href="#"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"> </a>| <a href="#"><img src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> | <a href="#"><img src="https://via.placeholder.com/25x25/ff0000/ffffff.png?text=+"></a> |
 | all | <a href="#"><img src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> | <a href="#"><img src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> | <a href="#"><img src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> |
 | test-plots | <a href="#"><img src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> | <a href="#"><img src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"> </a>| <img src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> |
 | travis-1 | <a href="#"><img src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> | <a href="#"><img src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> | <a href="#"><img src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> |
