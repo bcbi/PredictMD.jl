@@ -9,17 +9,10 @@ srand(999)
 ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "true"
 
 if PredictMD.is_travis_ci()
-    original_working_directory = pwd()
-    filename = joinpath(homedir(), "travis_temp_makedocs_dir.txt")
-    temp_makedocs_dir = strip(readstring(filename))
-    cd(temp_makedocs_dir)
     info(
         string(
             "This is a Travis build, ",
-            "so Documenter.deploy_docs will now be run. ",
-            "Current directory: \"",
-            pwd(),
-            "\".",
+            "so Documenter.deploy_docs will now be run.",
             )
         )
     Documenter.deploydocs(
@@ -35,7 +28,6 @@ if PredictMD.is_travis_ci()
         repo = "github.com/bcbi/PredictMD.jl.git",
         target = "site",
         )
-    cd(original_working_directory)
 else
     warn(
         string(
