@@ -6,10 +6,9 @@ import Literate
 function fix_example_blocks(filename::AbstractString)::Void
     content = read(filename, String)
     rm(filename; force = true, recursive = true,)
-    content = replace(
-        content,
-        r"```@example \w*\n" => "```julia\n",
-        )
+    pattern = r"```@example \w*\n"
+    replacement = "```julia\n"
+    content = replace(content, pattern, replacement)
     write(filename, content)
     return nothing
 end
@@ -22,11 +21,8 @@ function generate_docs(
         markdown = true,
         notebooks = true,
         scripts = true,
+        include_test_statements::Bool = false,
         )
-
-    if is_windows()
-        execute_notebooks = false
-    end
 
     ENV["PREDICTMD_IS_MAKE_DOCS"] = "true"
     if ispath(output_directory)
@@ -66,6 +62,7 @@ function generate_docs(
         markdown = markdown,
         notebooks = notebooks,
         scripts = scripts,
+        include_test_statements = include_test_statements,
         )
     if is_windows()
         warn(

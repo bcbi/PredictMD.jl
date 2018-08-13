@@ -18,6 +18,7 @@ branches:
 env:
     global:
         - DOCUMENTER_DEBUG="true"
+        - JULIA_DEBUG="all"
     matrix:
         - GROUP="travis-1"
 

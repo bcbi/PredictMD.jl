@@ -10,6 +10,7 @@ build:
 environment:
     global:
         DOCUMENTER_DEBUG: "true"
+        JULIA_DEBUG: "all"
     matrix:
         - GROUP: "appveyor-1"
           JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.6/julia-0.6-latest-win64.exe"
