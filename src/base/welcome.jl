@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-function print_welcome_message()::Nothing
+function print_welcome_message()::Void
     predictmd_version::VersionNumber = version()
     predictmd_pkgdir::String = pkg_dir()
     info(string("This is PredictMD, version ", predictmd_version, ))

@@ -2,51 +2,9 @@
 
 """
 """
-function version end
-
 function version()::VersionNumber
-    if Base.VERSION < VersionNumber("0.7.0")
-        result = version_julia6()
-    else
-        result = version_julia7()
-    end
-    return result
-end
-
-# version()::VersionNumber = version_julia6()
-
-function version_julia6()::VersionNumber
     result = PREDICTMD_VERSION
     return result
-end
-
-function version_julia7()::VersionNumber
-    version_number = try
-        predictmd_project_toml_file_name = pkg_dir(
-            "Project.toml",
-            )
-        predictmd_project_toml_file_contents = read(
-            predictmd_project_toml_file_name,
-            String,
-            )
-        predictmd_project_toml_file_parsed = Pkg.TOML.parse(
-            predictmd_project_toml_file_contents,
-            )
-        version_string = predictmd_project_toml_file_parsed["version"]
-        convert(VersionNumber, version_string)
-    catch e
-        warn(
-            string(
-                "While attempting to parse Project.toml ",
-                "(in order to obtain PredictMD version number), ",
-                "encountered error: \"",
-                e,
-                "\".",
-                )
-            )
-        VersionNumber(0)
-    end
-    return version_number
 end
 
 """
