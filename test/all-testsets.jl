@@ -74,13 +74,6 @@ Base.Test.@testset "Unit tests       " begin
             joinpath(
                 "cpu", "unit",
                 "toplevel", "utils",
-                "test_logging.jl",
-                )
-            )
-        include(
-            joinpath(
-                "cpu", "unit",
-                "toplevel", "utils",
                 "test-open-browser-window.jl",
                 )
             )
