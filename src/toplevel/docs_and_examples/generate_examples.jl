@@ -6,7 +6,7 @@ import Literate
 function _preprocess_example_shared(
         content::AbstractString;
         )::String
-    pattern = r"error\(\"This file is not meant to be run\. Use the `PredictMD\.generate_examples\(\)` function to generate examples that you can run\.\"\)\n{0,5}"
+    pattern = r"error\(string\(\"This file is not meant to be run\. Use the `PredictMD\.generate_examples\(\)` function to generate examples that you can run\.\"\)\)\n{0,5}"
     replacement = ""
     content = replace(content, pattern, replacement)
 

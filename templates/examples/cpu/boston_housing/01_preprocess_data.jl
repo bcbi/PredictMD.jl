@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-error("This file is not meant to be run. Use the `PredictMD.generate_examples()` function to generate examples that you can run.")
+error(string("This file is not meant to be run. Use the `PredictMD.generate_examples()` function to generate examples that you can run."))
 
 %PREDICTMD_GENERATED_BY%
 
