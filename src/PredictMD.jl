@@ -487,11 +487,6 @@ include(
     )
 include(
     joinpath(
-        "toplevel", "utils", "test_logging.jl",
-        )
-    )
-include(
-    joinpath(
         "toplevel", "utils", "tikzpictures.jl",
         )
     )
