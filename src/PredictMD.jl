@@ -22,6 +22,7 @@ include(joinpath("base", "init.jl",))
 include(joinpath("base", "interface.jl",))
 include(joinpath("base", "pkg_dir.jl",))
 include(joinpath("base", "version.jl",))
+include(joinpath("base", "welcome.jl",))
 
 ############################################################################
 # PredictMD source files (names here also go in the top level namespace) ###
