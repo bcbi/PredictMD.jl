@@ -14,7 +14,7 @@ Compat.@info(string("Julia cache path(s): ", julia_cache_paths, ".", ))
 
 Compat.@info(string("Printing Julia version info:",))
 
-versionCompat.@info(true)
+versioninfo(true)
 
 Compat.@info(string("Attempting to import PredictMD...",))
 
