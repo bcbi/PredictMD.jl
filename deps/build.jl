@@ -3,6 +3,8 @@
 # Parts of this file are based on:
 # 1. https://github.com/KristofferC/PGFPlotsX.jl/blob/master/deps/build.jl
 
+import Compat
+
 srand(999)
 
 have_lualatex = try success(`lualatex -v`); catch; false; end
