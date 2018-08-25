@@ -1,5 +1,6 @@
 ##### Beginning of file
 
+import Compat
 import CSV
 import CSVFiles
 import DataFrames
