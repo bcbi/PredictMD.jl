@@ -1,5 +1,7 @@
 ##### Beginning of file
 
+import Compat
+
 Compat.@info(string("Julia package directory: \"", Pkg.dir(), "\"",))
 
 const julia_cache_paths = string(
