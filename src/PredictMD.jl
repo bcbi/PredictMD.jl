@@ -14,7 +14,8 @@ import Compat
 
 # base/
 
-include(joinpath("base", "types.jl",)) # base/types.jl MUST go first
+include(joinpath("base", "backends.jl",))
+include(joinpath("base", "types.jl",))
 
 include(joinpath("base", "get_version_number.jl",))
 include(joinpath("base", "init.jl",))
