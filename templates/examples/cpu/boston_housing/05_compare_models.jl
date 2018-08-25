@@ -143,14 +143,14 @@ continuous_label_names = Symbol[single_label_name]
 categorical_label_names = Symbol[]
 label_names = vcat(categorical_label_names, continuous_label_names)
 
-showall(PredictMD.singlelabelregressionmetrics(
+Compat.@info(PredictMD.singlelabelregressionmetrics(
     all_models,
     training_features_df,
     training_labels_df,
     single_label_name,
     ))
 
-showall(PredictMD.singlelabelregressionmetrics(
+Compat.@info(PredictMD.singlelabelregressionmetrics(
     all_models,
     testing_features_df,
     testing_labels_df,

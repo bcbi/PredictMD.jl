@@ -60,8 +60,8 @@ df = DataFrames.DataFrame(
         )
     )
 
-showall(PredictMD.Cleaning.ccs_onehot_names(df))
-showall(PredictMD.Cleaning.ccs_onehot_names(df, "ccs_onehot_"))
+Compat.@info(PredictMD.Cleaning.ccs_onehot_names(df))
+Compat.@info(PredictMD.Cleaning.ccs_onehot_names(df, "ccs_onehot_"))
 ```
 """
 function ccs_onehot_names(
@@ -130,7 +130,7 @@ df = DataFrames.DataFrame(
         )
     )
 
-showall(PredictMD.Cleaning.ccs_onehot_names(df))
+Compat.@info(PredictMD.Cleaning.ccs_onehot_names(df))
 ```
 """
 function clean_hcup_nis_csv_icd9(
@@ -198,7 +198,7 @@ function clean_hcup_nis_csv_icd9(
         if ispath(temp_file_name_vector[i])
             error("ispath(temp_file_name_vector[i])")
         end
-        info(
+        Compat.@info(
             string(
                 "Starting to read input file ",
                 i,
@@ -223,7 +223,7 @@ function clean_hcup_nis_csv_icd9(
                     line_number += 1
                     if (print_every_n_lines >= 0) &&
                             (line_number % print_every_n_lines == 0)
-                        info(
+                        Compat.@info(
                             string(
                                 "Input file ",
                                 i,
@@ -237,7 +237,7 @@ function clean_hcup_nis_csv_icd9(
                 end
             end
         end
-        info(
+        Compat.@info(
             string(
                 "Finished reading input file ",
                 i,
@@ -251,7 +251,7 @@ function clean_hcup_nis_csv_icd9(
     df_vector = Vector{DataFrames.DataFrame}(length(input_file_name_list))
 
     for i = 1:length(temp_file_name_vector)
-        info(
+        Compat.@info(
             string(
                 "Starting to read temporary file ",
                 i,
@@ -269,7 +269,7 @@ function clean_hcup_nis_csv_icd9(
                 )
             )
         df_vector[i] = df_i
-        info(
+        Compat.@info(
             string(
                 "Finished reading temporary file ",
                 i,
@@ -331,7 +331,7 @@ function clean_hcup_nis_csv_icd9(
                 length(icd_code_column_names),
                 )
         for j = 1:length(icd_code_column_names)
-            info(
+            Compat.@info(
                 string(
                     "icd9 code ",
                     k,
@@ -367,7 +367,7 @@ function clean_hcup_nis_csv_icd9(
     num_rows_before = size(combined_df, 1)
     combined_df = combined_df[matching_rows, :]
     num_rows_after = size(combined_df, 1)
-    info(
+    Compat.@info(
         string(
             "I initially identified ",
             num_rows_before,
@@ -415,7 +415,7 @@ function clean_hcup_nis_csv_icd9(
         )
 
     for j = 1:length(dx_column_names)
-        info(
+        Compat.@info(
             string(
                 "Processing DXCCS column ",
                 j,
@@ -495,14 +495,14 @@ function clean_hcup_nis_csv_icd9(
 
     mkpath(dirname(output_file_name))
 
-    info(string("Attempting to write output file..."))
+    Compat.@info(string("Attempting to write output file..."))
 
     CSV.write(
         output_file_name,
         combined_df,
         )
 
-    info(
+    Compat.@info(
         string(
             "Wrote ",
             size(combined_df, 1),

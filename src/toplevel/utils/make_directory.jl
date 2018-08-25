@@ -27,7 +27,7 @@ end
 function create_new_temp_directory()
     result = joinpath(mktempdir(), "PREDICTMDTEMPDIRECTORY")
     mkpath(result)
-    info(string("DEBUG: Created new PredictMD temp directory: \"", result))
+    Compat.@debug(string("Created new PredictMD temp directory: \"", result))
     return result
 end
 

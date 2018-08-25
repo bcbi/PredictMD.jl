@@ -5,7 +5,7 @@ import Base.Test
 srand(999)
 
 Base.Test.@testset "Unit tests       " begin
-    info(string("Running unit tests..."))
+    Compat.@info(string("Running unit tests..."))
 
     Base.Test.@testset "Julia version requirements" begin
         Base.Test.@test(Base.VERSION >= VersionNumber("0.6"))
@@ -92,7 +92,7 @@ Base.Test.@testset "Unit tests       " begin
 end
 
 Base.Test.@testset "Integration tests" begin
-    info(string("Running integration tests..."))
+    Compat.@info(string("Running integration tests..."))
 
     Base.Test.@testset "Generate documentation and examples      " begin
         rm(
@@ -114,7 +114,7 @@ Base.Test.@testset "Integration tests" begin
     end
 
     Base.Test.@testset "Boston housing regression example (CPU)  " begin
-        info("Testing Boston housing regression example (CPU)")
+        Compat.@info("Testing Boston housing regression example (CPU)")
         include(
             joinpath(
                 temp_makedocs_dir, "src", "examples", "cpu",
@@ -160,7 +160,7 @@ Base.Test.@testset "Integration tests" begin
     end
 
     Base.Test.@testset "Breast cancer biopsy classification (CPU)" begin
-        info("Testing breast cancer biopsy classification example (CPU)")
+        Compat.@info("Testing breast cancer biopsy classification example (CPU)")
         include(
             joinpath(
                 temp_makedocs_dir, "src", "examples", "cpu",

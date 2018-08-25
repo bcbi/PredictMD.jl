@@ -119,7 +119,7 @@ function fit!(
             "Could not figure out if model is classification or regression"
             )
     end
-    info(string("Starting to train LIBSVM model."))
+    Compat.@info(string("Starting to train LIBSVM model."))
     svm = try
         LIBSVM.svmtrain(
             featuresarray,
@@ -128,7 +128,7 @@ function fit!(
             estimator.hyperparameters...
             )
     catch e
-        warn(
+        Compat.@warn(
             string(
                 "While training LIBSVM model, ignored error: ",
                 e,
@@ -137,7 +137,7 @@ function fit!(
         FitFailedUnderlyingObject()
     end
     # svm =
-    info(string("Finished training LIBSVM model."))
+    Compat.@info(string("Finished training LIBSVM model."))
     estimator.underlyingsvm = svm
     estimator.levels = estimator.underlyingsvm.labels
     return estimator

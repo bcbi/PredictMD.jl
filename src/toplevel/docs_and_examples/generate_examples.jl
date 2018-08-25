@@ -92,7 +92,7 @@ function generate_examples(
         preprocess_example = _preprocess_example_do_not_include_test_statements
     end
 
-    info("Starting to generate examples...")
+    Compat.@info("Starting to generate examples...")
 
     temp_examples_dir = joinpath(
         mktempdir(),
@@ -224,7 +224,7 @@ function generate_examples(
         output_directory;
         remove_destination = true,
         )
-    info(
+    Compat.@info(
         string(
             "Finished generating examples. ",
             "Files were written to: \"",

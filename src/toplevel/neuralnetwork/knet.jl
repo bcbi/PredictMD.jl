@@ -205,7 +205,7 @@ function fit!(
         )
     last_iteration = all_iterations_so_far[end]
     last_epoch = all_epochs_so_far[end]
-    info(
+    Compat.@info(
         string(
             "Starting to train Knet model. Max epochs: ",
             estimator.maxepochs,
@@ -230,7 +230,7 @@ function fit!(
     end
     if (estimator.printlosseverynepochs) > 0
         if has_validation_data
-            info(
+            Compat.@info(
                 string(
                     "Epoch: ",
                     last_epoch,
@@ -242,7 +242,7 @@ function fit!(
                     )
                 )
         else
-            info(
+            Compat.@info(
                 string(
                     "Epoch: ",
                     lastepoch,
@@ -323,7 +323,7 @@ function fit!(
                     estimator.printlosseverynepochs) == 0 ) )
         if printlossthisepoch
             if has_validation_data
-                info(
+                Compat.@info(
                    string(
                        "Epoch: ",
                        last_epoch,
@@ -335,7 +335,7 @@ function fit!(
                        ),
                    )
             else
-                info(
+                Compat.@info(
                    string(
                        "Epoch: ",
                        last_epoch,
@@ -347,7 +347,7 @@ function fit!(
             end
         end
     end # end while
-    info(string("Finished training Knet model."))
+    Compat.@info(string("Finished training Knet model."))
     return estimator
 end
 
