@@ -8,7 +8,7 @@ CSVFiles
 CUDAapi
 ClassImbalance
 Combinatorics
-Compat
+Compat 1.0.0
 DataDeps
 DataFrames 0.11 0.12
 DecisionTree

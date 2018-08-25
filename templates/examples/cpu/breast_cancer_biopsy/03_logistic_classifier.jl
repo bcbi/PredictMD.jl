@@ -30,6 +30,7 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 ### Begin logistic classifier code
 
 import CSV
+import Compat
 import DataFrames
 import FileIO
 import JLD2
