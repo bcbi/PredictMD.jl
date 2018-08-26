@@ -221,6 +221,7 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 ### Begin model output code
 
 import CSV
+import Compat
 import DataFrames
 import FileIO
 import JLD2
@@ -397,16 +398,16 @@ PredictMD.predict(knet_mlp_classifier,testing_features_df,)
 ##### End of file
 </code></pre>
 
-<pre><code>INFO: Attempting to load model...
-INFO: Loaded model from file &quot;/tmp/tmpNOtib4/PREDICTMDTEMPDIRECTORY/logistic_classifier.jld2&quot;
-INFO: Attempting to load model...
-INFO: Loaded model from file &quot;/tmp/tmpNOtib4/PREDICTMDTEMPDIRECTORY/random_forest_classifier.jld2&quot;
-INFO: Attempting to load model...
-INFO: Loaded model from file &quot;/tmp/tmpNOtib4/PREDICTMDTEMPDIRECTORY/c_svc_svm_classifier.jld2&quot;
-INFO: Attempting to load model...
-INFO: Loaded model from file &quot;/tmp/tmpNOtib4/PREDICTMDTEMPDIRECTORY/nu_svc_svm_classifier.jld2&quot;
-INFO: Attempting to load model...
-INFO: Loaded model from file &quot;/tmp/tmpNOtib4/PREDICTMDTEMPDIRECTORY/knet_mlp_classifier.jld2&quot;
+<pre><code>Info: Attempting to load model...
+Info: Loaded model from file &quot;/tmp/tmpZrZgBR/PREDICTMDTEMPDIRECTORY/logistic_classifier.jld2&quot;
+Info: Attempting to load model...
+Info: Loaded model from file &quot;/tmp/tmpZrZgBR/PREDICTMDTEMPDIRECTORY/random_forest_classifier.jld2&quot;
+Info: Attempting to load model...
+Info: Loaded model from file &quot;/tmp/tmpZrZgBR/PREDICTMDTEMPDIRECTORY/c_svc_svm_classifier.jld2&quot;
+Info: Attempting to load model...
+Info: Loaded model from file &quot;/tmp/tmpZrZgBR/PREDICTMDTEMPDIRECTORY/nu_svc_svm_classifier.jld2&quot;
+Info: Attempting to load model...
+Info: Loaded model from file &quot;/tmp/tmpZrZgBR/PREDICTMDTEMPDIRECTORY/knet_mlp_classifier.jld2&quot;
 WARNING: Method definition knetmlp_predict(Any, AbstractArray{T, N} where N where T) in module PredictMD at none:5 overwritten at none:6.
 WARNING: Method definition #knetmlp_predict(Array{Any, 1}, typeof(PredictMD.knetmlp_predict), Any, AbstractArray{T, N} where N where T) in module PredictMD overwritten.
 WARNING: Method definition knetmlp_loss(Function, Any, AbstractArray{T, N} where N where T, AbstractArray{T, N} where N where T) in module PredictMD at none:9 overwritten at none:9.
