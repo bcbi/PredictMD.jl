@@ -20,9 +20,13 @@ julia --check-bounds=yes --color=yes -e '
     import PredictMD;
     '
 
+chmod -Rf u-w,g-w,o-w .julia
+
 julia --check-bounds=yes --color=yes -e '
     Pkg.test("PredictMD"; coverage=true);
     '
+
+chmod -Rf u+w .julia
 
 julia --check-bounds=yes --color=yes -e '
     Pkg.add("Coverage");
