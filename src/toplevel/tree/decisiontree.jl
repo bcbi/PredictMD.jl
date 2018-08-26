@@ -96,7 +96,7 @@ function fit!(
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
-    info(string("Starting to train DecisionTree model."))
+    Compat.@info(string("Starting to train DecisionTree model."))
     randomforest = try
         DecisionTree.build_forest(
             labelsarray,
@@ -105,7 +105,7 @@ function fit!(
             estimator.hyperparameters[:ntrees],
             )
     catch e
-        warn(
+        Compat.@warn(
             string(
                 "While training DecisionTree model, ignored error: ",
                 e,
@@ -113,7 +113,7 @@ function fit!(
             )
         FitFailedUnderlyingObject()
     end
-    info(string("Finished training DecisionTree model."))
+    Compat.@info(string("Finished training DecisionTree model."))
     estimator.underlyingrandomforest = randomforest
     return estimator
 end

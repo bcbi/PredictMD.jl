@@ -7,7 +7,6 @@ __precompile__(true)
 module PredictMD # begin module PredictMD
 
 import Compat
-import Requires
 
 ############################################################################
 # PredictMD base files (names here go in the top level namespace) ##########
@@ -15,7 +14,8 @@ import Requires
 
 # base/
 
-include(joinpath("base", "types.jl",)) # base/types.jl MUST go first
+include(joinpath("base", "backends.jl",))
+include(joinpath("base", "types.jl",))
 
 include(joinpath("base", "get_version_number.jl",))
 include(joinpath("base", "init.jl",))

@@ -30,6 +30,7 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 ### Begin Knet neural network classifier code
 
 import CSV
+import Compat
 import DataFrames
 import FileIO
 import JLD2

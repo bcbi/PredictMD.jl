@@ -30,6 +30,7 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 ### Begin data preprocessing code
 
 import CSV
+import Compat
 import DataFrames
 import FileIO
 import JLD2

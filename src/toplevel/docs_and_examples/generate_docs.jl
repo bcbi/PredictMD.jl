@@ -35,7 +35,7 @@ function generate_docs(
             )
     end
 
-    info("Starting to generate docs...")
+    Compat.@info("Starting to generate docs...")
 
     temp_generatedocs_dir = joinpath(
         mktempdir(),
@@ -65,7 +65,7 @@ function generate_docs(
         include_test_statements = include_test_statements,
         )
     if is_windows()
-        warn(
+        Compat.@warn(
             string(
                 "documentation generation is not supported on Windows, ",
                 "so Documenter.makedocs will not be run",
@@ -105,7 +105,7 @@ function generate_docs(
         temp_generatedocs_dir,
         output_directory,
         )
-    info(
+    Compat.@info(
         string(
             "Finished generating docs. ",
             "Files were written to: \"",

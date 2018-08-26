@@ -9,7 +9,7 @@ import FileIO
 """
 """
 function open_browser_window(filename::Void, a::Associative = ENV)
-    warn("no filename to open")
+    Compat.@warn("no filename to open")
     return filename
 end
 
@@ -41,34 +41,34 @@ function open_browser_window(filename::AbstractString, a::Associative = ENV)
     elseif (is_make_examples(a)) ||
             (is_make_docs(a)) ||
             (is_runtests(a) && !open_plots_during_tests(a))
-        info(
+        Compat.@debug(
             string(
-                "DEBUG: Skipping opening file: ",
+                "Skipping opening file: ",
                 filename,
                 )
             )
     else
-        info(string("DEBUG: Opening file ",filename,))
+        Compat.@debug(string("Opening file ",filename,))
         if is_apple()
             try
                 run(`open $(filename)`)
             catch e
-                warn(string("ignoring error: ", e))
+                Compat.@warn(string("ignoring error: ", e))
             end
         elseif is_linux() || is_bsd()
             try
                 run(`xdg-open $(filename)`)
             catch e
-                warn(string("ignoring error: ", e))
+                Compat.@warn(string("ignoring error: ", e))
             end
         elseif is_windows()
             try
                 run(`$(ENV["COMSPEC"]) /c start "" "$(filename)"`)
             catch e
-                warn(string("ignoring error: ", e))
+                Compat.@warn(string("ignoring error: ", e))
             end
         else
-            warn(
+            Compat.@warn(
                 string(
                     "unknown operating system; could not open file ",
                     filename,
