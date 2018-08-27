@@ -1,13 +1,20 @@
+<!-- Beginning of file -->
+
 # PredictMD - Uniform interface for machine learning in Julia
 
-<a href="https://github.com/bcbi/PredictMD.jl/releases/latest"><img alt="Current release" title="Current release" src="https://img.shields.io/github/release/bcbi/PredictMD.svg" /> </a> <a href="https://zenodo.org/badge/latestdoi/109460252"> <img alt="DOI for current release" title="DOI for current release" src="https://zenodo.org/badge/109460252.svg"/></a>
+# Website: [https://www.predictmd.net](https://www.predictmd.net)
 
-[PredictMD](https://www.predictmd.net) is a Julia package that provides a
-uniform interface for using multiple different machine learning packages.
+<a href="https://github.com/bcbi/PredictMD.jl/releases/latest"><img src="https://img.shields.io/github/release/bcbi/PredictMD.svg" /> </a> <a href="https://zenodo.org/badge/latestdoi/109460252"> <img src="https://zenodo.org/badge/109460252.svg"/></a>
+
+[PredictMD](https://www.predictmd.net) is a free and open-source Julia package that provides a uniform interface for machine learning.
 
 ### Table of Contents
 - [Installation](#installation)
 - [Documentation](#documentation)
+- [Citing](#citing)
+- [Contributing](#contributing)
+- [Stronghold](#stronghold)
+- [Repository Status](#repository-status)
 - [CI/CD](#cicd)
 
 ## Installation
@@ -33,6 +40,22 @@ useful information, including instructions for use, example code, and a
 description of
 PredictMD's internals.
 
+## Citing
+
+If you use PredictMD in research, please cite the software using the following DOI: <a href="https://zenodo.org/badge/latestdoi/109460252"> <img src="https://zenodo.org/badge/109460252.svg"/></a>
+
+## Contributing
+
+If you would like to contribute to the PredictMD source code, please read the instructions in [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Stronghold
+
+If you are using PredictMD inside the Stronghold secure computing environment, please read the instructions in [STRONGHOLD.md](STRONGHOLD.md).
+
+## Repository Status
+
+<a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." /></a>
+
 ## CI/CD
 
 <table>
@@ -47,13 +70,11 @@ PredictMD's internals.
         <tr>
             <td>Travis CI</td>
             <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches">
-            <img alt="Travis build status (master)"
-            title="Travis build status (master)"
+            <img
             src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master"
             /></a></td>
             <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches">
-            <img alt="Travis build status (develop)"
-            title="Travis build status (develop)"
+            <img
             src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=develop"
             /></a></td>
         </tr>
@@ -62,13 +83,13 @@ PredictMD's internals.
             <td>
             <a
             href="https://ci.appveyor.com/project/mirestrepo/predictmd-jl/history">
-            <img alt="AppVeyor build status (master)"
+            <img
             title="AppVeyor build status (master)" src="https://ci.appveyor.com/api/projects/status/github/bcbi/PredictMD.jl?branch=master&svg=true"
             />
             </a></td>
             <td><a href="https://ci.appveyor.com/project/mirestrepo/predictmd-jl/history">
-            <img alt="AppVeyor build status (develop)"
-            title="AppVeyor build status (develop)" src="https://ci.appveyor.com/api/projects/status/github/bcbi/PredictMD.jl?branch=develop&svg=true"
+            <img
+            src="https://ci.appveyor.com/api/projects/status/github/bcbi/PredictMD.jl?branch=develop&svg=true"
             />
             </a></td>
         </tr>
@@ -77,21 +98,19 @@ PredictMD's internals.
             <td>
             <a
             href="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master">
-            <img alt="CodeCov (master)" title="CodeCov (master)"
+            <img
             src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master/graph/badge.svg"
             /></a></td>
             <td>
             <a
             href="https://codecov.io/gh/bcbi/PredictMD.jl/branch/develop">
-            <img alt="CodeCov (develop)" title="CodeCov (develop)" src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/develop/graph/badge.svg"
+            <img src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/develop/graph/badge.svg"
             /></a></td>
         </tr>
         <tr>
             <td>docs</td>
             <td><a href="https://www.predictmd.net/stable">
             <img
-            alt="Documentation (stable)"
-            title="Documentation (stable)"
             src="https://img.shields.io/badge/docs-stable-blue.svg" />
             </a>
             </td>
@@ -99,11 +118,11 @@ PredictMD's internals.
             <a
             href="https://www.predictmd.net/latest">
             <img
-            alt="Documentation (latest)"
-            title="Documentation (latest)"
             src="https://img.shields.io/badge/docs-latest-blue.svg" />
             </a>
             </td>
         </tr>
     </tbody>
 </table>
+
+<!-- End of file -->

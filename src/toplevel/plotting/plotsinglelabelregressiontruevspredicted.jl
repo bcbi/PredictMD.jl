@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import LaTeXStrings
 import PGFPlots
 import PGFPlotsX
@@ -8,15 +10,15 @@ function plotsinglelabelregressiontrueversuspredicted(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol;
+        single_label_name::Symbol;
         includeorigin::Bool = false,
         )
     ytrue = singlelabelregressionytrue(
-        labels_df[singlelabelname],
+        labels_df[single_label_name],
         )
     predictionsalllabels = predict(estimator, features_df)
     ypred = singlelabelregressionypred(
-        predictionsalllabels[singlelabelname],
+        predictionsalllabels[single_label_name],
         )
     truevalueversuspredictedvalue_linearplotobject = PGFPlots.Plots.Linear(
         ypred,
@@ -72,3 +74,5 @@ function plotsinglelabelregressiontrueversuspredicted(
     tikzpicture = PGFPlots.plot(axisobject)
     return tikzpicture
 end
+
+##### End of file

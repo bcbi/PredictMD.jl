@@ -1,8 +1,9 @@
+##### Beginning of file
+
 """
 """
-struct ImmutablePackageSingleLabelPredictionTransformer <:
-        AbstractEstimator
-    singlelabelname::T1 where T1 <: Symbol
+struct ImmutablePackageSingleLabelPredictionTransformer <: AbstractEstimator
+    single_label_name::T1 where T1 <: Symbol
 end
 
 """
@@ -60,11 +61,11 @@ end
 """
 function predict(
         transformer::ImmutablePackageSingleLabelPredictionTransformer,
-        singlelabelpredictions::AbstractVector,
+        single_labelpredictions::AbstractVector,
         )
     result = DataFrames.DataFrame()
-    labelname = transformer.singlelabelname
-    result[labelname] = singlelabelpredictions
+    label_name = transformer.single_label_name
+    result[label_name] = single_labelpredictions
     return result
 end
 
@@ -81,3 +82,5 @@ function predict_proba(
         return varargs
     end
 end
+
+##### End of file

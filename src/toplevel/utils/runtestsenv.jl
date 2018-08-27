@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
 """
 function is_runtests(a::Associative = ENV)
@@ -36,3 +38,5 @@ end
 """
 is_docs_or_examples(a::Associative = ENV) =
     is_make_examples(a) || is_make_docs(a) || is_deploy_docs(a)
+
+##### End of file

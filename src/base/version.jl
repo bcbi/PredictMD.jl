@@ -1,11 +1,10 @@
-const VERSION_NUMBER = try
-    convert(VersionNumber, "v0.18.0")
+##### Beginning of file
+
+const PREDICTMD_VERSION = try
+    convert(VersionNumber, "v0.19.0")
 catch e
-    warn("While creating PredictMD.VERSION_NUMBER, ignoring error $(e)")
+    Compat.@warn("While creating PredictMD.PREDICTMD_VERSION, ignoring error $(e)")
     VersionNumber(0)
 end
 
-"""
-    VERSION_NUMBER
-"""
-VERSION_NUMBER
+##### End of file

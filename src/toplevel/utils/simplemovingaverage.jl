@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
 """
 function simple_moving_average(
@@ -16,3 +18,5 @@ function simple_moving_average(
     end
     return result
 end
+
+##### End of file

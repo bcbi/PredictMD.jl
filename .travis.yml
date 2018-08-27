@@ -1,3 +1,5 @@
+##### Beginning of file
+
 addons:
     apt:
         packages:
@@ -13,18 +15,29 @@ branches:
     except:
         - gh-pages
 
+env:
+    global:
+        - DOCUMENTER_DEBUG="true"
+        - JULIA_DEBUG="all"
+    matrix:
+        - GROUP="travis-1"
+
 git:
     depth: 99999999
 
 julia:
-    - 0.6
-    - nightly
+    - "0.6"
+    - "0.7"
+    - "1.0"
+    - "nightly"
 
 language: julia
 
 matrix:
     allow_failures:
-        - julia: nightly
+        - julia: "0.7"
+        - julia: "1.0"
+        - julia: "nightly"
     fast_finish: true
 
 notifications:
@@ -38,38 +51,8 @@ os:
 
 ############################################################################
 
-before_install:
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]];
-        then brew update; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]];
-        then brew cask install basictex; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]];
-        then export PATH=/Library/TeX/texbin:"$PATH"; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]];
-        then sudo tlmgr update --self; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]];
-        then sudo tlmgr install luatex85; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]];
-        then sudo tlmgr install pgfplots; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]];
-        then sudo tlmgr install standalone; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]];
-        then brew install pdf2svg; fi
+before_install: ./ci/travis/before_install.sh
 
-script:
-    - julia --check-bounds=yes --color=yes -e '
-        Pkg.clone(pwd(), "PredictMD")'
-    - julia --check-bounds=yes --color=yes -e '
-        Pkg.build("PredictMD")'
-    - julia --check-bounds=yes --color=yes -e '
-        import PredictMD'
-    - julia --check-bounds=yes --color=yes -e '
-        Pkg.test("PredictMD"; coverage=true)'
+script: ./ci/travis/script.sh
 
-after_success:
-    - julia --check-bounds=yes --color=yes -e 'Pkg.add("Coverage");'
-    - julia --check-bounds=yes --color=yes -e 'cd(Pkg.dir("PredictMD"));
-        using Coverage; Codecov.submit(Codecov.process_folder());'
-    - julia --check-bounds=yes --color=yes -e '
-        cd(Pkg.dir("PredictMD"));
-            include(joinpath("docs", "deploy_docs.jl"))'
+##### End of file

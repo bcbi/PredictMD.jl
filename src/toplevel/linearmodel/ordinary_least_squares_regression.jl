@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import DataFrames
 import GLM
 import StatsModels
@@ -37,7 +39,7 @@ function ordinary_least_squares_regression(
             # estimated x coefficient: coefficients[2]
             coefficients[1], coefficients[2]
         catch e
-            info(string("DEBUG: Ignored error: ", e))
+            Compat.@debug(string("Ignored error: ", e))
             0, 0
         end
     else
@@ -48,9 +50,11 @@ function ordinary_least_squares_regression(
             # estimated x coefficient: coefficients[1]
             0, coefficients[1]
         catch e
-            info(string("DEBUG: Ignored error: ", e))
+            Compat.@debug(string("Ignored error: ", e))
             0, 0
         end
     end
     return estimated_intercept, estimated_x_coefficient
 end
+
+##### End of file

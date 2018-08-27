@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import DataFrames
 import StatsBase
 
@@ -22,3 +24,5 @@ function shuffle_rows!(
     dataframe[:, :] = dataframe[rowpermutation, :]
     return dataframe
 end
+
+##### End of file

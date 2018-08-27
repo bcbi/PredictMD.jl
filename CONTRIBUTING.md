@@ -1,3 +1,5 @@
+<!-- Beginning of file -->
+
 # Contributing to PredictMD
 
 This document provides information on contributing to the
@@ -273,23 +275,31 @@ Open the source file `src/base/version.jl` and change
 the version number. For example, if the file looks like this:
 
 ```julia
-const VERSION_NUMBER = try
-    convert(VersionNumber, "THE OLD VERSION_NUMBER NUMBER WILL BE HERE")
+##### Beginning of file
+
+const PREDICTMD_VERSION = try
+    convert(VersionNumber, "THE OLD VERSION NUMBER WILL BE HERE")
 catch e
-    warn("While creating PredictMD.VERSION_NUMBER, ignoring error $(e)")
+    warn("While creating PredictMD.PREDICTMD_VERSION, ignoring error $(e)")
     VersionNumber(0)
 end
+
+##### End of file
 ```
 
 Then you would edit it to look like this:
 
 ```julia
-const VERSION_NUMBER = try
+##### Beginning of file
+
+const PREDICTMD_VERSION = try
     convert(VersionNumber, "v3.6.0")
 catch e
-    warn("While creating PredictMD.VERSION_NUMBER, ignoring error $(e)")
+    warn("While creating PredictMD.PREDICTMD_VERSION, ignoring error $(e)")
     VersionNumber(0)
 end
+
+##### End of file
 ```
 
 #### Step 8:
@@ -379,15 +389,14 @@ Temporarily modify the branch protections for
 the `master` and `develop` branches:
 
 First, the `master` branch: go to
-[https://github.com/bcbi/PredictMD.jl/settings/branches/master](https://github.com/bcbi/PredictMD.jl/settings/branches/master),
-scroll down, UNCHECK the box next to "Include administrators", scroll
+[https://github.com/bcbi/PredictMD.jl/settings/branches](https://github.com/bcbi/PredictMD.jl/settings/branches), scroll down, click the "Edit" button in the `master` row, scroll down, UNCHECK the box next to "Include administrators", scroll
 to the bottom of the page, and click the green "Save changes" button.
 You may be asked to enter your GitHub password.
 
-Now do the same thing for the `develop` branch: Go to
-[https://github.com/bcbi/PredictMD.jl/settings/branches/develop](https://github.com/bcbi/PredictMD.jl/settings/branches/develop),
-scroll down, UNCHECK the box next to "Include administrators", scroll to
-the bottom of the page, and click the green "Save changes" button.
+Now do the same thing for the `develop` branch: go to
+[https://github.com/bcbi/PredictMD.jl/settings/branches](https://github.com/bcbi/PredictMD.jl/settings/branches), scroll down, click the "Edit" button in the `develop` row, scroll down, UNCHECK the box next to "Include administrators", scroll
+to the bottom of the page, and click the green "Save changes" button.
+You may be asked to enter your GitHub password.
 
 #### Step 14:
 Push the new release to GitHub:
@@ -435,24 +444,32 @@ number accordingly. For example, to set the version number
 to `v3.7.0-DEV`, edit `src/base/version.jl` to look like
 this. **Remember to include "-DEV" at the end of the version number.**
 ```julia
-const VERSION_NUMBER = try
+##### Beginning of file
+
+const PREDICTMD_VERSION = try
     convert(VersionNumber, "v3.7.0-DEV")
 catch e
-    warn("While creating PredictMD.VERSION_NUMBER, ignoring error $(e)")
+    warn("While creating PredictMD.PREDICTMD_VERSION, ignoring error $(e)")
     VersionNumber(0)
 end
+
+##### End of file
 ```
 
 On the other hand, to set the version number to `v4.0.0-DEV`,
 edit `src/base/version.jl` to look like this. **Remember to
 include "-DEV" at the end of the version number.**
 ```julia
-const VERSION_NUMBER = try
+##### Beginning of file
+
+const PREDICTMD_VERSION = try
     convert(VersionNumber, "v4.0.0-DEV")
 catch e
-    warn("While creating PredictMD.VERSION_NUMBER, ignoring error $(e)")
+    warn("While creating PredictMD.PREDICTMD_VERSION, ignoring error $(e)")
     VersionNumber(0)
 end
+
+##### End of file
 ```
 
 #### Step 17:
@@ -477,16 +494,14 @@ git push origin develop
 Re-enable the branch protection settings:
 
 `master` branch: go to
-[https://github.com/bcbi/PredictMD.jl/settings/branches/master](https://github.com/bcbi/PredictMD.jl/settings/branches/master),
-scroll down, CHECK the box next to "Include administrators",
-scroll to the bottom of the page, and click the green
-"Save changes" button.
+[https://github.com/bcbi/PredictMD.jl/settings/branches](https://github.com/bcbi/PredictMD.jl/settings/branches), scroll down, click the "Edit" button in the `master` row, scroll down, CHECK the box next to "Include administrators", scroll
+to the bottom of the page, and click the green "Save changes" button.
+You may be asked to enter your GitHub password.
 
 `develop` branch: go to
-[https://github.com/bcbi/PredictMD.jl/settings/branches/develop](https://github.com/bcbi/PredictMD.jl/settings/branches/develop),
-scroll down, CHECK the box next to "Include administrators", scroll to
-the bottom of the page, and click the green
-"Save changes" button.
+[https://github.com/bcbi/PredictMD.jl/settings/branches](https://github.com/bcbi/PredictMD.jl/settings/branches), scroll down, click the "Edit" button in the `develop` row, scroll down, CHECK the box next to "Include administrators", scroll
+to the bottom of the page, and click the green "Save changes" button.
+You may be asked to enter your GitHub password.
 
 #### Step 20:
 Delete the release branch, which is no longer needed. To do
@@ -507,7 +522,7 @@ The final step is to go to the Zenodo entry for the newly created release and pu
 ##### Basic information -> Authors:
 
 | Name | Affiliation | ORCID |
-| ---- | ----------- | ----- |
+| --- | -------- | ---- |
 | Aluthge DP | Brown Center for Biomedical Informatics, Brown University | 0000-0002-9247-0530 |
 | Sinha I | Brown Center for Biomedical Informatics, Brown University |  |
 | Stey P | Brown Center for Biomedical Informatics, Brown University |  |
@@ -538,10 +553,12 @@ The final step is to go to the Zenodo entry for the newly created release and pu
 (Replace `vMAJOR.MINOR.PATCH` with the appropriate version number. In our example, you would replace `vMAJOR.MINOR.PATCH` with `v3.6.0`.)
 
 | Identifier | Relationship |
-| ----- | ----- |
+| ---- | ---- |
 | `https://www.predictmd.net` | compiled/created this upload |
 | `https://www.predictmd.net/vMAJOR.MINOR.PATCH` | documents this upload |
 | `https://github.com/bcbi/PredictMD.jl/releases/tag/vMAJOR.MINOR.PATCH` | is an alternate identifier of this upload |
 | `https://github.com/bcbi/PredictMD.jl/tree/vMAJOR.MINOR.PATCH` | is an alternate identifier of this upload |
 
 After you have entered the correct information in all of the above fields, click the white "Save" button, and then click the blue "Publish" button. Congratulations, you are finished!
+
+<!-- End of file -->

@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import MLBase
 import StatsBase
 
@@ -46,3 +48,5 @@ function averageprecisionscore(
         )
     return avgprecision
 end
+
+##### End of file

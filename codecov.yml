@@ -1,12 +1,28 @@
+##### Beginning of file
+
 codecov:
     branch: develop
 
 comment: true
 
 ignore:
-    - "src/submodules/clean/hcup/hcup.jl"
-    - "src/submodules/gpu/clang/clang.jl"
-    - "src/submodules/gpu/clarrays/clarrays.jl"
-    - "src/submodules/gpu/cuarrays/cuarrays.jl"
-    - "src/submodules/gpu/cxx/cxx.jl"
-    - "src/submodules/gpu/llvm/llvm.jl"
+    # ignore the entire PredictMD.Cleaning submodule
+    - "src/submodules/Cleaning"
+    - "src/submodules/Cleaning/**/*"
+
+    # ignore the entire PredictMD.Compilation submodule
+    - "src/submodules/Compilation"
+    - "src/submodules/Compilation/**/*"
+
+    # ignore the entire PredictMD.GPU submodule
+    - "src/submodules/GPU"
+    - "src/submodules/GPU/**/*"
+
+    # ignore the entire PredictMD.Server submodule
+    - "src/submodules/Server"
+    - "src/submodules/Server/**/*"
+
+    # ignore src/toplevel/utils/openbrowserwindow.jl
+    - "src/toplevel/utils/openbrowserwindow.jl"
+
+##### End of file

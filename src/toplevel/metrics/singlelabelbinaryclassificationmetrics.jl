@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import DataFrames
 import MLBase
 import StatsBase
@@ -6,27 +8,24 @@ import StatsBase
 """
 function singlelabelbinaryytrue(
         labels::AbstractVector,
-        positiveclass::AbstractString;
+        positive_class::AbstractString;
         inttype::Type = Int,
         )
     if !(inttype <: Integer)
         error("!(inttype <: Integer)")
     end
-    result = inttype.(labels .== positiveclass)
+    result = inttype.(labels .== positive_class)
     return result
 end
 
 """
 """
 function singlelabelbinaryyscore(
-        singlelabelprobabilities::Associative,
-        positiveclass::AbstractString;
-        floattype::Type = Cfloat,
+        single_labelprobabilities::Associative,
+        positive_class::AbstractString;
+        float_type::Type{<:AbstractFloat} = Cfloat,
         )
-    if !(floattype <: AbstractFloat)
-        error("!(floattype <: AbstractFloat)")
-    end
-    result = floattype.(singlelabelprobabilities[positiveclass])
+    result = float_type.(single_labelprobabilities[positive_class])
     return result
 end
 
@@ -69,52 +68,52 @@ function _singlelabelbinaryclassificationmetrics_tunableparam(
         selectedparamtomax = :notapplicable
     end
     #
-    metricprintnames = Dict()
-    metricprintnames[:AUPRC] = string("AUPRC")
-    metricprintnames[:AUROCC] = string("AUROCC")
-    metricprintnames[:AveragePrecision] = string("Average precision")
+    metricdisplaynames = Dict()
+    metricdisplaynames[:AUPRC] = string("AUPRC")
+    metricdisplaynames[:AUROCC] = string("AUROCC")
+    metricdisplaynames[:AveragePrecision] = string("Average precision")
     if selectedtunableparam == :threshold
-        metricprintnames[:threshold] = string("[fix] * Threshold")
+        metricdisplaynames[:threshold] = string("[fix] * Threshold")
     else
-        metricprintnames[:threshold] = string("* Threshold")
+        metricdisplaynames[:threshold] = string("* Threshold")
     end
-    metricprintnames[:accuracy] = string("* Accuracy")
+    metricdisplaynames[:accuracy] = string("* Accuracy")
     if selectedtunableparam == :maximize && selectedparamtomax ==
             :cohen_kappa
-        metricprintnames[:cohen_kappa] =
+        metricdisplaynames[:cohen_kappa] =
             string("[max] * Cohen's Kappa statistic")
     else
-        metricprintnames[:cohen_kappa] =
+        metricdisplaynames[:cohen_kappa] =
             string("* Cohen's Kappa statistic")
     end
     if selectedtunableparam == :maximize && selectedparamtomax ==
             :f1score
-        metricprintnames[:f1score] = string("[max] * F1 score")
+        metricdisplaynames[:f1score] = string("[max] * F1 score")
     else
-        metricprintnames[:f1score] = string("* F1 Score")
+        metricdisplaynames[:f1score] = string("* F1 Score")
     end
-    metricprintnames[:precision] =
+    metricdisplaynames[:precision] =
         string("* Precision (positive predictive value)")
-    metricprintnames[:negative_predictive_value] =
+    metricdisplaynames[:negative_predictive_value] =
         string("* Negative predictive value")
-    metricprintnames[:recall] =
+    metricdisplaynames[:recall] =
         string("* Recall (sensitivity, true positive rate)")
     if selectedtunableparam == :sensitivity
-        metricprintnames[:sensitivity] =
+        metricdisplaynames[:sensitivity] =
             string("[fix] * Sensitivity (recall, true positive rate)")
     else
-        metricprintnames[:sensitivity] =
+        metricdisplaynames[:sensitivity] =
             string("* Sensitivity (recall, true positive rate)")
     end
     if selectedtunableparam == :specificity
-        metricprintnames[:specificity] =
+        metricdisplaynames[:specificity] =
             string("[fix] * Specificity (true negative rate)")
     else
-        metricprintnames[:specificity] =
+        metricdisplaynames[:specificity] =
             string("* Specificity (true negative rate)")
     end
-    metricprintnames = fix_dict_type(metricprintnames)
-    return selectedtunableparam, selectedparamtomax, metricprintnames
+    metricdisplaynames = fix_type(metricdisplaynames)
+    return selectedtunableparam, selectedparamtomax, metricdisplaynames
 end
 
 """
@@ -123,27 +122,27 @@ function _singlelabelbinaryclassificationmetrics(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol,
-        positiveclass::AbstractString;
+        single_label_name::Symbol,
+        positive_class::AbstractString;
         kwargs...
         )
     #
     kwargsdict = Dict(kwargs)
-    kwargsdict = fix_dict_type(kwargsdict)
-    selectedtunableparam, selectedparamtomax, metricprintnames =
+    kwargsdict = fix_type(kwargsdict)
+    selectedtunableparam, selectedparamtomax, metricdisplaynames =
         _singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
     #
     predictedprobabilitiesalllabels = predict_proba(estimator, features_df)
     yscore = Cfloat.(
         singlelabelbinaryyscore(
-            predictedprobabilitiesalllabels[singlelabelname],
-            positiveclass,
+            predictedprobabilitiesalllabels[single_label_name],
+            positive_class,
             )
         )
     ytrue = Int.(
         singlelabelbinaryytrue(
-            labels_df[singlelabelname],
-            positiveclass,
+            labels_df[single_label_name],
+            positive_class,
             )
         )
     results = Dict()
@@ -203,7 +202,7 @@ function _singlelabelbinaryclassificationmetrics(
     results[:recall] = recall(bestrocnums)
     results[:f1score] = f1score(bestrocnums)
     results[:cohen_kappa] = cohen_kappa(bestrocnums)
-    results = fix_dict_type(results)
+    results = fix_type(results)
     return results
 end
 
@@ -213,8 +212,8 @@ function singlelabelbinaryclassificationmetrics(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol,
-        positiveclass::AbstractString;
+        single_label_name::Symbol,
+        positive_class::AbstractString;
         kwargs...
         )
     vectorofestimators = Fittable[estimator]
@@ -222,8 +221,8 @@ function singlelabelbinaryclassificationmetrics(
         vectorofestimators,
         features_df,
         labels_df,
-        singlelabelname,
-        positiveclass;
+        single_label_name,
+        positive_class;
         kwargs...
         )
     return result
@@ -235,39 +234,39 @@ function singlelabelbinaryclassificationmetrics(
         vectorofestimators::AbstractVector{Fittable},
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol,
-        positiveclass::AbstractString;
+        single_label_name::Symbol,
+        positive_class::AbstractString;
         kwargs...
         )
     kwargsdict = Dict(kwargs)
-    kwargsdict = fix_dict_type(kwargsdict)
-    selectedtunableparam, selectedparamtomax, metricprintnames =
+    kwargsdict = fix_type(kwargsdict)
+    selectedtunableparam, selectedparamtomax, metricdisplaynames =
         _singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
     metricsforeachestimator = [
         _singlelabelbinaryclassificationmetrics(
             est,
             features_df,
             labels_df,
-            singlelabelname,
-            positiveclass;
+            single_label_name,
+            positive_class;
             kwargs...
             )
             for est in vectorofestimators
         ]
     result = DataFrames.DataFrame()
     result[:metric] = [
-        metricprintnames[:AUPRC],
-        metricprintnames[:AUROCC],
-        metricprintnames[:AveragePrecision],
-        metricprintnames[:threshold],
-        metricprintnames[:accuracy],
-        metricprintnames[:cohen_kappa],
-        metricprintnames[:f1score],
-        metricprintnames[:precision],
-        metricprintnames[:negative_predictive_value],
-        metricprintnames[:recall],
-        metricprintnames[:sensitivity],
-        metricprintnames[:specificity],
+        metricdisplaynames[:AUPRC],
+        metricdisplaynames[:AUROCC],
+        metricdisplaynames[:AveragePrecision],
+        metricdisplaynames[:threshold],
+        metricdisplaynames[:accuracy],
+        metricdisplaynames[:cohen_kappa],
+        metricdisplaynames[:f1score],
+        metricdisplaynames[:precision],
+        metricdisplaynames[:negative_predictive_value],
+        metricdisplaynames[:recall],
+        metricdisplaynames[:sensitivity],
+        metricdisplaynames[:specificity],
         ]
     for i = 1:length(vectorofestimators)
         result[Symbol(vectorofestimators[i].name)] = [
@@ -287,3 +286,5 @@ function singlelabelbinaryclassificationmetrics(
     end
     return result
 end
+
+##### End of file

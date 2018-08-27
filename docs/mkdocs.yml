@@ -1,7 +1,9 @@
-site_name: PredictMD.jl
+##### Beginning of file
+
+site_name: PredictMD documentation
 # repo_url: https://github.com/bcbi/PredictMD.jl
-site_description: Uniform interface for machine learning in Julia
-site_author: Center for Biomedical Informatics, Brown University
+site_description: PredictMD - uniform interface for machine learning in Julia
+site_author: Brown Center for Biomedical Informatics, Brown University
 
 theme: readthedocs
 
@@ -25,7 +27,9 @@ pages:
     - "Home": "index.md"
     - "Requirements for plotting (optional)":
             "requirements_for_plotting.md"
-    - "examples":
+    - "Examples":
+        - "Generating these example files on your computer":
+            "generate_examples/generate_examples.md"
         - "Boston housing (single label regression)":
             - "1. Preprocess data":
                     "examples/cpu/boston_housing/01_preprocess_data.md"
@@ -69,3 +73,5 @@ pages:
                         09_get_model_output.md"
     - "Library":
         - "Internals": "library/internals.md"
+
+##### End of file

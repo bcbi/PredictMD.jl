@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import LaTeXStrings
 import PGFPlots
 import PGFPlotsX
@@ -8,47 +10,47 @@ function plotsinglelabelbinaryclassifierhistogram(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol,
-        singlelabellevels::AbstractVector{<:AbstractString};
+        single_label_name::Symbol,
+        single_label_levels::AbstractVector{<:AbstractString};
         numbins::Integer = 25,
         )
-    if length(singlelabellevels) != length(unique(singlelabellevels))
-        error("there are duplicate values in singlelabellevels")
+    if length(single_label_levels) != length(unique(single_label_levels))
+        error("there are duplicate values in single_label_levels")
     end
-    if length(singlelabellevels) != 2
-        error("length(singlelabellevels) != 2")
+    if length(single_label_levels) != 2
+        error("length(single_label_levels) != 2")
     end
-    negativeclass = singlelabellevels[1]
-    positiveclass = singlelabellevels[2]
+    negative_class = single_label_levels[1]
+    positive_class = single_label_levels[2]
     predictedprobabilitiesalllabels = predict_proba(estimator, features_df)
     yscore = Cfloat.(
         singlelabelbinaryyscore(
-            predictedprobabilitiesalllabels[singlelabelname],
-            positiveclass,
+            predictedprobabilitiesalllabels[single_label_name],
+            positive_class,
             )
         )
     ytrue = Int.(
         singlelabelbinaryytrue(
-            labels_df[singlelabelname],
-            positiveclass,
+            labels_df[single_label_name],
+            positive_class,
             )
         )
-    histogramobjectnegativeclass = PGFPlots.Plots.Histogram(
+    histogramobjectnegative_class = PGFPlots.Plots.Histogram(
         yscore[ytrue .== 0],
         bins = numbins,
         style = "blue, opacity = 0.5, fill=blue, fill opacity=0.5",
         )
-    histogramobjectpositiveclass = PGFPlots.Plots.Histogram(
+    histogramobjectpositive_class = PGFPlots.Plots.Histogram(
         yscore[ytrue .== 1],
         bins = numbins,
         style = "red, opacity = 0.5, fill=red, fill opacity=0.5",
         )
     axisobject = PGFPlots.Axis(
         [
-            histogramobjectnegativeclass,
-            PGFPlots.Plots.Command("\\addlegendentry{$(negativeclass)}"),
-            histogramobjectpositiveclass,
-            PGFPlots.Plots.Command("\\addlegendentry{$(positiveclass)}"),
+            histogramobjectnegative_class,
+            PGFPlots.Plots.Command("\\addlegendentry{$(negative_class)}"),
+            histogramobjectpositive_class,
+            PGFPlots.Plots.Command("\\addlegendentry{$(positive_class)}"),
             ],
         style = "reverse legend",
         xlabel = LaTeXStrings.LaTeXString("Classifier score"),
@@ -58,3 +60,5 @@ function plotsinglelabelbinaryclassifierhistogram(
     tikzpicture = PGFPlots.plot(axisobject)
     return tikzpicture
 end
+
+##### End of file

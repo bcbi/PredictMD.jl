@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import DataFrames
 
 """
@@ -63,17 +65,17 @@ end
 """
 function predict(
         transformer::ImmutablePredictionsSingleLabelInt2StringTransformer,
-        singlelabelpredictions::AbstractVector;
+        single_labelpredictions::AbstractVector;
         kwargs...
         )
-    singlelabelpredictions = parse.(Int, singlelabelpredictions)
+    single_labelpredictions = parse.(Int, single_labelpredictions)
     labelint2stringmap = _getlabelint2stringmap(
         transformer.levels,
         transformer.index,
         )
-    result = Vector{String}(length(singlelabelpredictions))
+    result = Vector{String}(length(single_labelpredictions))
     for i = 1:length(result)
-        result[i] = labelint2stringmap[singlelabelpredictions[i]]
+        result[i] = labelint2stringmap[single_labelpredictions[i]]
     end
     return result
 end
@@ -82,15 +84,15 @@ end
 """
 function predict(
         transformer::ImmutablePredictionsSingleLabelInt2StringTransformer,
-        singlelabelpredictions::DataFrames.AbstractDataFrame;
+        single_labelpredictions::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    labelnames = DataFrames.names(singlelabelpredictions)
+    label_names = DataFrames.names(single_labelpredictions)
     result = DataFrames.DataFrame()
-    for i = 1:length(labelnames)
-        result[labelnames[i]] = predict(
+    for i = 1:length(label_names)
+        result[label_names[i]] = predict(
             transformer,
-            singlelabelpredictions[labelnames[i]];
+            single_labelpredictions[label_names[i]];
             kwargs...
             )
     end
@@ -110,3 +112,5 @@ function predict_proba(
         return varargs
     end
 end
+
+##### End of file

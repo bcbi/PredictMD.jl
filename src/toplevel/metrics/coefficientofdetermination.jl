@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import StatsBase
 
 """
@@ -26,3 +28,5 @@ function r2_score(
     R2 = 1 - SSres/SStot
     return R2
 end
+
+##### End of file

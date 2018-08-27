@@ -1,3 +1,5 @@
+<!-- Beginning of file -->
+
 # Documentation of internals
 
 ```@contents
@@ -9,8 +11,10 @@ Pages = ["internals.md"]
 ```@autodocs
 Modules = [
     PredictMD,
-    PredictMD.Clean,
+    PredictMD.Cleaning,
+    PredictMD.Compilation,
     PredictMD.GPU,
+    PredictMD.Server,
     ]
 Order = [:module]
 ```
@@ -20,8 +24,10 @@ Order = [:module]
 ```@autodocs
 Modules = [
     PredictMD,
-    PredictMD.Clean,
+    PredictMD.Cleaning,
+    PredictMD.Compilation,
     PredictMD.GPU,
+    PredictMD.Server,
     ]
 Order = [:constant]
 ```
@@ -31,8 +37,10 @@ Order = [:constant]
 ```@autodocs
 Modules = [
     PredictMD,
-    PredictMD.Clean,
+    PredictMD.Cleaning,
+    PredictMD.Compilation,
     PredictMD.GPU,
+    PredictMD.Server,
     ]
 Order = [:type]
 ```
@@ -42,8 +50,10 @@ Order = [:type]
 ```@autodocs
 Modules = [
     PredictMD,
-    PredictMD.Clean,
+    PredictMD.Cleaning,
+    PredictMD.Compilation,
     PredictMD.GPU,
+    PredictMD.Server,
     ]
 Order = [:function]
 ```
@@ -53,8 +63,10 @@ Order = [:function]
 ```@autodocs
 Modules = [
     PredictMD,
-    PredictMD.Clean,
+    PredictMD.Cleaning,
+    PredictMD.Compilation,
     PredictMD.GPU,
+    PredictMD.Server,
     ]
 Order = [:macro]
 ```
@@ -63,3 +75,5 @@ Order = [:macro]
 
 ```@index
 ```
+
+<!-- End of file -->

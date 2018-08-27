@@ -1,3 +1,5 @@
+##### Beginning of file
+
 """
 """
 struct SimplePipeline <: AbstractPipeline
@@ -16,6 +18,21 @@ function SimplePipeline(
         objectsvector,
         )
     return result
+end
+
+"""
+"""
+function set_max_epochs!(
+        x::SimplePipeline,
+        new_max_epochs::Integer,
+        )
+    for i = 1:length(x.objectsvector)
+        set_max_epochs!(
+            x.objectsvector[i],
+            new_max_epochs,
+            )
+    end
+    return nothing
 end
 
 """
@@ -106,10 +123,7 @@ function fit!(
         kwargs...
         )
     for i = 2:length(simplelinearpipeline.objectsvector)
-        input = output
-        if !(typeof(input) <: Tuple)
-            input = tuple(input)
-        end
+        input = tuplify(output)
         output = fit!(
             simplelinearpipeline.objectsvector[i],
             input...;
@@ -133,9 +147,7 @@ function predict(
         )
     for i = 2:length(simplelinearpipeline.objectsvector)
         input = output
-        if !(typeof(input) <: Tuple)
-            input = tuple(input)
-        end
+        input = tuplify(input)
         output = predict(
             simplelinearpipeline.objectsvector[i],
             input...;
@@ -158,9 +170,7 @@ function predict_proba(
         )
     for i = 2:length(simplelinearpipeline.objectsvector)
         input = output
-        if !(typeof(input) <: Tuple)
-            input = tuple(input)
-        end
+        input = tuplify(input)
         output = predict_proba(
             simplelinearpipeline.objectsvector[i],
             input...;
@@ -169,3 +179,5 @@ function predict_proba(
     end
     return output
 end
+
+##### End of file

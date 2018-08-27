@@ -1,20 +1,25 @@
+##### Beginning of file
+
 # Parts of this file are based on:
 # 1. https://github.com/KristofferC/PGFPlotsX.jl/blob/master/deps/build.jl
 
-import Crayons
+import Compat
 
 srand(999)
 
-const OK =  Crayons.Box.GREEN_FG * Crayons.Box.BOLD("OK")
-const X =  Crayons.Box.RED_FG * Crayons.Box.BOLD("X")
-
-print(STDERR, "Looking for lualatex...")
 have_lualatex = try success(`lualatex -v`); catch; false; end
-println(STDERR, "   ", have_lualatex ? OK : X)
+if have_lualatex
+    Compat.@info(string("SUCCESS: Found lualatex."))
+else
+    Compat.@warn(string("FAILURE: Did not find lualatex."))
+end
 
-print(STDERR, "Looking for pdflatex...")
 have_pdflatex = try success(`pdflatex -v`); catch; false; end
-println(STDERR, "   ", have_pdflatex ? OK : X)
+if have_pdflatex
+    Compat.@info(string("SUCCESS: Found pdflatex."))
+else
+    Compat.@warn(string("FAILURE: Did not find pdflatex."))
+end
 
 default_engine = ""
 if have_lualatex
@@ -22,7 +27,7 @@ if have_lualatex
 elseif have_pdflatex
     default_engine = "PDFLATEX"
 else
-    warn(
+    Compat.@warn(
         string(
             "No LaTeX installation found, ",
             "figures will not be generated. ",
@@ -33,11 +38,15 @@ else
         )
 end
 
-print(STDERR, "Looking for pdftoppm...")
 have_pdftoppm =  try success(`pdftoppm  -v`); catch; false; end
-println(STDERR, "   ", have_pdftoppm ? OK : X)
+if have_pdftoppm
+    Compat.@info(string("SUCCESS: Found pdftoppm."))
+else
+    Compat.@warn(string("FAILURE: Did not find pdftoppm."))
+end
+
 if !have_pdftoppm
-    warn(
+    Compat.@warn(
         string(
             "Did not find `pdftoppm`, ",
             "png output will be disabled. ",
@@ -48,13 +57,17 @@ if !have_pdftoppm
         )
 end
 
-print(STDERR, "Looking for pdf2svg...")
-pdfpath = joinpath(@__DIR__, "pdf2svg.pdf")
-svgpath = joinpath(@__DIR__, "pdf2svg.svg")
+pdfpath = joinpath(@__DIR__, "pdf2svg-example-file.pdf")
+svgpath = joinpath(@__DIR__, "pdf2svg-example-file.svg")
 have_pdf2svg = try success(`pdf2svg $pdfpath $svgpath`); catch; false; end
-println(STDERR, "    ", have_pdf2svg ? OK : X)
+if have_pdf2svg
+    Compat.@info(string("SUCCESS: Found pdf2svg."))
+else
+    Compat.@warn(string("FAILURE: Did not find pdf2svg."))
+end
+
 if !have_pdf2svg
-    warn(
+    Compat.@warn(
         string(
             "Did not find `pdf2svg`, ",
             "svg output will be disabled. ",
@@ -66,7 +79,7 @@ if !have_pdf2svg
 end
 
 if !have_pdf2svg && !have_pdftoppm
-    warn(
+    Compat.@warn(
         string(
             "Found neither pdf2svg or pdftoppm, ",
             "figures will not be viewable in ",
@@ -75,10 +88,26 @@ if !have_pdf2svg && !have_pdftoppm
         )
 end
 
+line_1_default_engine = string(
+    "DEFAULT_ENGINE = \"",
+    default_engine,
+    "\"",
+    )
+line_2_have_pdftoppm = string(
+    "HAVE_PDFTOPPM = ",
+    have_pdftoppm,
+    )
+line_3_have_pdftosvg = string(
+    "HAVE_PDFTOSVG = ",
+    have_pdf2svg,
+    )
+Compat.@info(line_1_default_engine)
+Compat.@info(line_2_have_pdftoppm)
+Compat.@info(line_3_have_pdftosvg)
 open(joinpath(@__DIR__, "deps.jl"), "w") do f
-    println(f, "DEFAULT_ENGINE = \"", default_engine, "\"")
-    println(f, "HAVE_PDFTOPPM = ", have_pdftoppm)
-    println(f, "HAVE_PDFTOSVG = ", have_pdf2svg)
+    println(f, line_1_default_engine)
+    println(f, line_2_have_pdftoppm)
+    println(f, line_3_have_pdftosvg)
 end
 
 const PREAMBLE_PATH = joinpath(@__DIR__, "custom_preamble.tex")
@@ -86,3 +115,4 @@ if !isfile(PREAMBLE_PATH)
     touch(PREAMBLE_PATH)
 end
 
+##### End of file

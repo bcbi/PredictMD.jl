@@ -1,3 +1,5 @@
+##### Beginning of file
+
 import LaTeXStrings
 import PGFPlots
 import PGFPlotsX
@@ -8,22 +10,22 @@ function probability_calibration_scores_and_fractions(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol,
-        positiveclass::AbstractString;
+        single_label_name::Symbol,
+        positive_class::AbstractString;
         window::Real = 0.1,
         multiply_by::Real = 1.0,
         )
     ytrue = Int.(
         singlelabelbinaryytrue(
-            labels_df[singlelabelname],
-            positiveclass,
+            labels_df[single_label_name],
+            positive_class,
             )
         )
     predictedprobabilitiesalllabels = predict_proba(estimator, features_df)
     yscore = Cfloat.(
         singlelabelbinaryyscore(
-            predictedprobabilitiesalllabels[singlelabelname],
-            positiveclass,
+            predictedprobabilitiesalllabels[single_label_name],
+            positive_class,
             )
         )
     scores, fractions = probability_calibration_scores_and_fractions(
@@ -79,8 +81,8 @@ function plot_probability_calibration_curve(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol,
-        positiveclass::AbstractString;
+        single_label_name::Symbol,
+        positive_class::AbstractString;
         window::Real = 0.1,
         multiply_by::Real = 1.0,
         )
@@ -88,8 +90,8 @@ function plot_probability_calibration_curve(
         estimator,
         features_df,
         labels_df,
-        singlelabelname,
-        positiveclass;
+        single_label_name,
+        positive_class;
         window = window,
         multiply_by = multiply_by,
         )
@@ -163,8 +165,8 @@ function probability_calibration_metrics(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol,
-        positiveclass::AbstractString;
+        single_label_name::Symbol,
+        positive_class::AbstractString;
         window::Real = 0.1,
         multiply_by::Real = 1.0,
         )
@@ -173,8 +175,8 @@ function probability_calibration_metrics(
         vectorofestimators,
         features_df,
         labels_df,
-        singlelabelname,
-        positiveclass,
+        single_label_name,
+        positive_class,
         )
     return result
 end
@@ -185,8 +187,8 @@ function probability_calibration_metrics(
         vectorofestimators::AbstractVector{Fittable},
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
-        singlelabelname::Symbol,
-        positiveclass::AbstractString,
+        single_label_name::Symbol,
+        positive_class::AbstractString,
         window::Real = 0.1,
         multiply_by::Real = 1.0,
         )
@@ -200,8 +202,8 @@ function probability_calibration_metrics(
     for i = 1:length(vectorofestimators)
         ytrue = Int.(
             singlelabelbinaryytrue(
-                labels_df[singlelabelname],
-                positiveclass,
+                labels_df[single_label_name],
+                positive_class,
                 )
             )
         predictedprobabilitiesalllabels = predict_proba(
@@ -210,8 +212,8 @@ function probability_calibration_metrics(
                 )
         yscore = Cfloat.(
             singlelabelbinaryyscore(
-                predictedprobabilitiesalllabels[singlelabelname],
-                positiveclass,
+                predictedprobabilitiesalllabels[single_label_name],
+                positive_class,
                 )
         )
         binary_brier_score_value = binary_brier_score(ytrue, yscore)
@@ -237,3 +239,5 @@ function probability_calibration_metrics(
     end
     return result
 end
+
+##### End of file

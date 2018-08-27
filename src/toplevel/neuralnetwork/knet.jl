@@ -1,4 +1,8 @@
+##### Beginning of file
+
 import AutoGrad
+import CUDAapi
+import GPUArrays
 import Knet
 import ProgressMeter
 import ValueHistories
@@ -29,68 +33,70 @@ mutable struct KnetModel <: AbstractEstimator
     # learning state
     history::T16 where T16 <: ValueHistories.MultivalueHistory
 
-    function KnetModel(
-            ;
-            name::AbstractString = "",
-            predict_function_source::AbstractString = "",
-            loss_function_source::AbstractString = "",
-            predict_function::Function = identity,
-            loss_function::Function = identity,
-            losshyperparameters::Associative = Dict(),
-            optimizationalgorithm::Symbol = :nothing,
-            optimizerhyperparameters::Associative = Dict(),
-            minibatchsize::Integer = 0,
-            modelweights::AbstractArray = [],
-            isclassificationmodel::Bool = false,
-            isregressionmodel::Bool = false,
-            maxepochs::Integer = 0,
-            printlosseverynepochs::Integer = 0,
-            )
-        optimizersymbol2type = Dict()
-        optimizersymbol2type[:Sgd] = Knet.Sgd
-        optimizersymbol2type[:Momentum] = Knet.Momentum
-        optimizersymbol2type[:Nesterov] = Knet.Nesterov
-        optimizersymbol2type[:Rmsprop] = Knet.Rmsprop
-        optimizersymbol2type[:Adagrad] = Knet.Adagrad
-        optimizersymbol2type[:Adadelta] = Knet.Adadelta
-        optimizersymbol2type[:Adam] = Knet.Adam
-        optimizersymbol2type = fix_dict_type(optimizersymbol2type)
-        modelweightoptimizers = Knet.optimizers(
-            modelweights,
-            optimizersymbol2type[optimizationalgorithm];
-            optimizerhyperparameters...
-            )
-        lastepoch = 0
-        lastiteration = 0
-        history = ValueHistories.MVHistory()
-        ValueHistories.push!(
-            history,
-            :epoch_at_iteration,
-            0,
-            0,
-            )
-        losshyperparameters = fix_dict_type(losshyperparameters)
-        optimizerhyperparameters = fix_dict_type(optimizerhyperparameters)
-        result = new(
-            name,
-            isclassificationmodel,
-            isregressionmodel,
-            predict_function_source,
-            loss_function_source,
-            predict_function,
-            loss_function,
-            losshyperparameters,
-            optimizationalgorithm,
-            optimizerhyperparameters,
-            minibatchsize,
-            maxepochs,
-            printlosseverynepochs,
-            modelweights,
-            modelweightoptimizers,
-            history,
-            )
-        return result
-    end
+
+end
+
+function KnetModel(
+        ;
+        name::AbstractString = "",
+        predict_function_source::AbstractString = "",
+        loss_function_source::AbstractString = "",
+        predict_function::Function = identity,
+        loss_function::Function = identity,
+        losshyperparameters::Associative = Dict(),
+        optimizationalgorithm::Symbol = :nothing,
+        optimizerhyperparameters::Associative = Dict(),
+        minibatchsize::Integer = 0,
+        modelweights::AbstractArray = [],
+        isclassificationmodel::Bool = false,
+        isregressionmodel::Bool = false,
+        maxepochs::Integer = 0,
+        printlosseverynepochs::Integer = 0,
+        )
+    optimizersymbol2type = Dict()
+    optimizersymbol2type[:Sgd] = Knet.Sgd
+    optimizersymbol2type[:Momentum] = Knet.Momentum
+    optimizersymbol2type[:Nesterov] = Knet.Nesterov
+    optimizersymbol2type[:Rmsprop] = Knet.Rmsprop
+    optimizersymbol2type[:Adagrad] = Knet.Adagrad
+    optimizersymbol2type[:Adadelta] = Knet.Adadelta
+    optimizersymbol2type[:Adam] = Knet.Adam
+    optimizersymbol2type = fix_type(optimizersymbol2type)
+    modelweightoptimizers = Knet.optimizers(
+        modelweights,
+        optimizersymbol2type[optimizationalgorithm];
+        optimizerhyperparameters...
+        )
+    lastepoch = 0
+    lastiteration = 0
+    history = ValueHistories.MVHistory()
+    ValueHistories.push!(
+        history,
+        :epoch_at_iteration,
+        0,
+        0,
+        )
+    losshyperparameters = fix_type(losshyperparameters)
+    optimizerhyperparameters = fix_type(optimizerhyperparameters)
+    result = KnetModel(
+        name,
+        isclassificationmodel,
+        isregressionmodel,
+        predict_function_source,
+        loss_function_source,
+        predict_function,
+        loss_function,
+        losshyperparameters,
+        optimizationalgorithm,
+        optimizerhyperparameters,
+        minibatchsize,
+        maxepochs,
+        printlosseverynepochs,
+        modelweights,
+        modelweightoptimizers,
+        history,
+        )
+    return result
 end
 
 """
@@ -99,6 +105,16 @@ function set_feature_contrasts!(
         x::KnetModel,
         feature_contrasts::AbstractFeatureContrasts,
         )
+    return nothing
+end
+
+"""
+"""
+function set_max_epochs!(
+        x::KnetModel,
+        new_max_epochs::Integer,
+        )
+    x.maxepochs = new_max_epochs
     return nothing
 end
 
@@ -189,9 +205,9 @@ function fit!(
         )
     last_iteration = all_iterations_so_far[end]
     last_epoch = all_epochs_so_far[end]
-    info(
+    Compat.@info(
         string(
-            "Starting to train Knet.jl model. Max epochs: ",
+            "Starting to train Knet model. Max epochs: ",
             estimator.maxepochs,
             ".",
             )
@@ -214,7 +230,7 @@ function fit!(
     end
     if (estimator.printlosseverynepochs) > 0
         if has_validation_data
-            info(
+            Compat.@info(
                 string(
                     "Epoch: ",
                     last_epoch,
@@ -226,7 +242,7 @@ function fit!(
                     )
                 )
         else
-            info(
+            Compat.@info(
                 string(
                     "Epoch: ",
                     lastepoch,
@@ -307,7 +323,7 @@ function fit!(
                     estimator.printlosseverynepochs) == 0 ) )
         if printlossthisepoch
             if has_validation_data
-                info(
+                Compat.@info(
                    string(
                        "Epoch: ",
                        last_epoch,
@@ -319,7 +335,7 @@ function fit!(
                        ),
                    )
             else
-                info(
+                Compat.@info(
                    string(
                        "Epoch: ",
                        last_epoch,
@@ -331,7 +347,7 @@ function fit!(
             end
         end
     end # end while
-    info(string("Finished training Knet.jl model."))
+    Compat.@info(string("Finished training Knet model."))
     return estimator
 end
 
@@ -346,7 +362,7 @@ function predict(
             estimator,
             featuresarray,
             )
-        predictionsvector = singlelabelprobabilitiestopredictions(
+        predictionsvector = single_labelprobabilitiestopredictions(
             probabilitiesassoc
             )
         return predictionsvector
@@ -391,10 +407,10 @@ end
 
 """
 """
-function _singlelabelmulticlassdataframeknetclassifier_Knet(
-        featurenames::AbstractVector,
-        singlelabelname::Symbol,
-        singlelabellevels::AbstractVector;
+function _single_labelmulticlassdataframeknetclassifier_Knet(
+        feature_names::AbstractVector,
+        single_label_name::Symbol,
+        single_label_levels::AbstractVector;
         name::AbstractString = "",
         predict_function_source::AbstractString = "",
         loss_function_source::AbstractString = "",
@@ -408,17 +424,17 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
         feature_contrasts::Union{Void, AbstractFeatureContrasts} =
             nothing,
         )
-    labelnames = [singlelabelname]
-    labellevels = Dict()
-    labellevels[singlelabelname] = singlelabellevels
-    labellevels = fix_dict_type(labellevels)
+    label_names = [single_label_name]
+    label_levels = Dict()
+    label_levels[single_label_name] = single_label_levels
+    label_levels = fix_type(label_levels)
     dftransformer_index = 1
     dftransformer_transposefeatures = true
     dftransformer_transposelabels = true
     dftransformer = MutableDataFrame2ClassificationKnetTransformer(
-        featurenames,
-        labelnames,
-        labellevels,
+        feature_names,
+        label_names,
+        label_levels,
         dftransformer_index;
         transposefeatures = dftransformer_transposefeatures,
         transposelabels = dftransformer_transposelabels,
@@ -441,18 +457,18 @@ function _singlelabelmulticlassdataframeknetclassifier_Knet(
     predprobalabelfixer =
             ImmutablePredictProbaSingleLabelInt2StringTransformer(
                         1,
-                        singlelabellevels
+                        single_label_levels
                         )
     predictlabelfixer =
             ImmutablePredictionsSingleLabelInt2StringTransformer(
                         1,
-                        singlelabellevels
+                        single_label_levels
                         )
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
-        singlelabelname,
+        single_label_name,
         )
     predpackager = ImmutablePackageSingleLabelPredictionTransformer(
-        singlelabelname,
+        single_label_name,
         )
     finalpipeline = SimplePipeline(
         Fittable[
@@ -473,10 +489,10 @@ end
 
 """
 """
-function singlelabelmulticlassdataframeknetclassifier(
-        featurenames::AbstractVector,
-        singlelabelname::Symbol,
-        singlelabellevels::AbstractVector;
+function single_labelmulticlassdataframeknetclassifier(
+        feature_names::AbstractVector,
+        single_label_name::Symbol,
+        single_label_levels::AbstractVector;
         package::Symbol = :none,
         name::AbstractString = "",
         predict_function_source::AbstractString = "",
@@ -491,11 +507,11 @@ function singlelabelmulticlassdataframeknetclassifier(
         feature_contrasts::Union{Void, AbstractFeatureContrasts} =
             nothing,
         )
-    if package == :Knetjl
-        result = _singlelabelmulticlassdataframeknetclassifier_Knet(
-            featurenames,
-            singlelabelname,
-            singlelabellevels;
+    if package == :Knet
+        result = _single_labelmulticlassdataframeknetclassifier_Knet(
+            feature_names,
+            single_label_name,
+            single_label_levels;
             name = name,
             predict_function_source = predict_function_source,
             loss_function_source = loss_function_source,
@@ -516,9 +532,9 @@ end
 
 """
 """
-function _singlelabeldataframeknetregression_Knet(
-        featurenames::AbstractVector,
-        singlelabelname::Symbol;
+function _single_labeldataframeknetregression_Knet(
+        feature_names::AbstractVector,
+        single_label_name::Symbol;
         name::AbstractString = "",
         predict_function_source::AbstractString = "",
         loss_function_source::AbstractString = "",
@@ -532,13 +548,13 @@ function _singlelabeldataframeknetregression_Knet(
         feature_contrasts::Union{Void, AbstractFeatureContrasts} =
             nothing,
         )
-    labelnames = [singlelabelname]
+    label_names = [single_label_name]
     dftransformer_index = 1
     dftransformer_transposefeatures = true
     dftransformer_transposelabels = true
     dftransformer = MutableDataFrame2RegressionKnetTransformer(
-        featurenames,
-        labelnames;
+        feature_names,
+        label_names;
         transposefeatures = true,
         transposelabels = true,
         )
@@ -558,7 +574,7 @@ function _singlelabeldataframeknetregression_Knet(
         printlosseverynepochs = printlosseverynepochs,
         )
     predpackager = ImmutablePackageMultiLabelPredictionTransformer(
-        [singlelabelname,],
+        [single_label_name,],
         )
     finalpipeline = SimplePipeline(
         Fittable[
@@ -576,9 +592,9 @@ end
 
 """
 """
-function singlelabeldataframeknetregression(
-        featurenames::AbstractVector,
-        singlelabelname::Symbol;
+function single_labeldataframeknetregression(
+        feature_names::AbstractVector,
+        single_label_name::Symbol;
         package::Symbol = :none,
         name::AbstractString = "",
         predict_function_source::AbstractString = "",
@@ -593,10 +609,10 @@ function singlelabeldataframeknetregression(
         feature_contrasts::Union{Void, AbstractFeatureContrasts} =
             nothing,
         )
-    if package == :Knetjl
-        result = _singlelabeldataframeknetregression_Knet(
-            featurenames,
-            singlelabelname;
+    if package == :Knet
+        result = _single_labeldataframeknetregression_Knet(
+            feature_names,
+            single_label_name;
             name = name,
             predict_function_source = predict_function_source,
             loss_function_source = loss_function_source,
@@ -614,3 +630,5 @@ function singlelabeldataframeknetregression(
         error("$(package) is not a valid value for package")
     end
 end
+
+##### End of file

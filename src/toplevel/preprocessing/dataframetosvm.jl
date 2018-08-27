@@ -1,10 +1,11 @@
+##### Beginning of file
+
 import DataFrames
 import StatsModels
 
 """
 """
-struct ImmutableFeatureArrayTransposerTransformer <:
-        AbstractEstimator
+struct ImmutableFeatureArrayTransposerTransformer <: AbstractEstimator
 end
 
 """
@@ -101,13 +102,13 @@ end
 """
 """
 function DataFrame2LIBSVMTransformer(
-        featurenames::AbstractVector,
-        singlelabelname::Symbol;
+        feature_names::AbstractVector,
+        single_label_name::Symbol;
         levels::AbstractVector = [],
         )
     df2decisiontreetransformer = MutableDataFrame2DecisionTreeTransformer(
-        featurenames,
-        singlelabelname;
+        feature_names,
+        single_label_name;
         levels = levels,
         )
     featuretransposetransformer =
@@ -120,3 +121,5 @@ function DataFrame2LIBSVMTransformer(
         )
     return result
 end
+
+##### End of file
