@@ -172,7 +172,7 @@ function plotlearningcurves(
         window::Integer = 0,
         legendPos::AbstractString = "north east",
         sampleevery::Integer = 1,
-        validation_yvalues::Union{Void, AbstractVector{<:Real}} = nothing,
+        validation_yvalues::Union{Nothing, AbstractVector{<:Real}} = nothing,
         show_raw::Bool = true,
         show_smoothed::Bool = true,
         )

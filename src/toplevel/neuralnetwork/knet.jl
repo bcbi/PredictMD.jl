@@ -17,8 +17,8 @@ mutable struct KnetModel <: AbstractEstimator
     # hyperparameters (not learned from data):
     predict_function_source::T4 where T4 <: AbstractString
     loss_function_source::T5 where T5 <: AbstractString
-    predict_function::T6 where T6 <: Union{Void, Function, Any}
-    loss_function::T7 where T7 <: Union{Void, Function, Any}
+    predict_function::T6 where T6 <: Union{Nothing, Function, Any}
+    loss_function::T7 where T7 <: Union{Nothing, Function, Any}
     losshyperparameters::T8 where T8 <: Associative
     optimizationalgorithm::T9 where T9 <: Symbol
     optimizerhyperparameters::T10 where T10 <: Associative
@@ -164,8 +164,8 @@ function fit!(
         estimator::KnetModel,
         training_features_array::AbstractArray,
         training_labels_array::AbstractArray,
-        validation_features_array::Union{Void, AbstractArray} = nothing,
-        validation_labels_array::Union{Void, AbstractArray} = nothing,
+        validation_features_array::Union{Nothing, AbstractArray} = nothing,
+        validation_labels_array::Union{Nothing, AbstractArray} = nothing,
         )
     if is_nothing(validation_features_array) &&
             is_nothing(validation_labels_array)
@@ -421,7 +421,7 @@ function _single_labelmulticlassdataframeknetclassifier_Knet(
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} =
             nothing,
         )
     label_names = [single_label_name]
@@ -504,7 +504,7 @@ function single_labelmulticlassdataframeknetclassifier(
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} =
             nothing,
         )
     if package == :Knet
@@ -545,7 +545,7 @@ function _single_labeldataframeknetregression_Knet(
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} =
             nothing,
         )
     label_names = [single_label_name]
@@ -606,7 +606,7 @@ function single_labeldataframeknetregression(
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} =
             nothing,
         )
     if package == :Knet

@@ -34,7 +34,7 @@ end
 
 function check_no_constant_columns(
         df::DataFrames.AbstractDataFrame,
-        )::Void
+        )::Nothing
     list_of_constant_column_names = find_constant_columns(df)
     if length(list_of_constant_column_names) > 0
         error(

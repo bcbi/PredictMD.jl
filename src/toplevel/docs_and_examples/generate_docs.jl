@@ -3,7 +3,7 @@
 import Documenter
 import Literate
 
-function fix_example_blocks(filename::AbstractString)::Void
+function fix_example_blocks(filename::AbstractString)::Nothing
     content = read(filename, String)
     rm(filename; force = true, recursive = true,)
     pattern = r"```@example \w*\n"

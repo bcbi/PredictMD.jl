@@ -139,11 +139,11 @@ function clean_hcup_nis_csv_icd9(
         output_file_name::AbstractString;
         header_row::Bool = true,
         print_every_n_lines::Integer = 1_000_000,
-        icd_code_type::Union{Void, Symbol} = nothing,
+        icd_code_type::Union{Nothing, Symbol} = nothing,
         num_dx_columns::Integer = 25,
         num_pr_columns::Integer = 15,
         ccs_onehot_prefix::AbstractString = "ccs_onehot_",
-        rows_for_type_detect::Union{Void, Integer} = nothing,
+        rows_for_type_detect::Union{Nothing, Integer} = nothing,
         )
     if is_nothing(rows_for_type_detect)
         error("you need to specify rows_for_type_detect")

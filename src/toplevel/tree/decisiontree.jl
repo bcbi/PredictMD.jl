@@ -194,7 +194,7 @@ function _single_labelmulticlassdfrandomforestclassifier_DecisionTree(
         name::AbstractString = "",
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} = nothing,
         )
     dftransformer = MutableDataFrame2DecisionTreeTransformer(
         feature_names,
@@ -241,7 +241,7 @@ function single_labelmulticlassdataframerandomforestclassifier(
         package::Symbol = :none,
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} = nothing,
         )
     if package == :DecisionTree
         result =
@@ -268,7 +268,7 @@ function _single_labeldataframerandomforestregression_DecisionTree(
         name::AbstractString = "",
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} = nothing,
         )
     dftransformer = MutableDataFrame2DecisionTreeTransformer(
         feature_names,
@@ -308,7 +308,7 @@ function single_labeldataframerandomforestregression(
         package::Symbol = :none,
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} = nothing,
         )
     if package == :DecisionTree
         result = _single_labeldataframerandomforestregression_DecisionTree(

@@ -8,7 +8,7 @@ import FileIO
 
 """
 """
-function open_browser_window(filename::Void, a::Associative = ENV)
+function open_browser_window(filename::Nothing, a::Associative = ENV)
     @warn("no filename to open")
     return filename
 end

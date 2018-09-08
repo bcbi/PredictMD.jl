@@ -9,7 +9,7 @@ function fix_column_types!(
         categorical_label_names::AbstractVector{Symbol} = Symbol[],
         continuous_label_names::AbstractVector{Symbol} = Symbol[],
         float_type::Type{<:AbstractFloat} = Cfloat,
-        )::Void
+        )::Nothing
     function make_categorical_column(
             old_vector::AbstractVector,
             )::Vector{Any}
@@ -64,7 +64,7 @@ function check_column_types(
         continuous_feature_names::AbstractVector{Symbol} = Symbol[],
         categorical_label_names::AbstractVector{Symbol} = Symbol[],
         continuous_label_names::AbstractVector{Symbol} = Symbol[],
-        )::Void
+        )::Nothing
     for column_name in DataFrames.names(df)
         column_eltype = eltype(
             collect(

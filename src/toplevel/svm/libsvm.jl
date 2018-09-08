@@ -35,7 +35,7 @@ function LIBSVMModel(
         epsilon::AbstractFloat = 0.1,
         tolerance::AbstractFloat = 0.001,
         shrinking::Bool = true,
-        weights::Union{Dict, Void} = nothing,
+        weights::Union{Dict, Nothing} = nothing,
         cachesize::AbstractFloat = 100.0,
         verbose::Bool = true,
         )
@@ -229,10 +229,10 @@ function _single_labelmulticlassdataframesvmclassifier_LIBSVM(
         epsilon::AbstractFloat = 0.1,
         tolerance::AbstractFloat = 0.001,
         shrinking::Bool = true,
-        weights::Union{Dict, Void} = nothing,
+        weights::Union{Dict, Nothing} = nothing,
         cachesize::AbstractFloat = 100.0,
         verbose::Bool = true,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} =
             nothing,
         )
     dftransformer = DataFrame2LIBSVMTransformer(
@@ -299,10 +299,10 @@ function single_labelmulticlassdataframesvmclassifier(
         epsilon::AbstractFloat = 0.1,
         tolerance::AbstractFloat = 0.001,
         shrinking::Bool = true,
-        weights::Union{Dict, Void} = nothing,
+        weights::Union{Dict, Nothing} = nothing,
         cachesize::AbstractFloat = 100.0,
         verbose::Bool = true,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} = nothing,
         )
     if package == :LIBSVM
         result = _single_labelmulticlassdataframesvmclassifier_LIBSVM(
@@ -347,10 +347,10 @@ function _single_labeldataframesvmregression_LIBSVM(
         epsilon::AbstractFloat = 0.1,
         tolerance::AbstractFloat = 0.001,
         shrinking::Bool = true,
-        weights::Union{Dict, Void} = nothing,
+        weights::Union{Dict, Nothing} = nothing,
         cachesize::AbstractFloat = 100.0,
         verbose::Bool = true,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} =
                 nothing,
         )
     dftransformer = DataFrame2LIBSVMTransformer(
@@ -411,10 +411,10 @@ function single_labeldataframesvmregression(
         epsilon::AbstractFloat = 0.1,
         tolerance::AbstractFloat = 0.001,
         shrinking::Bool = true,
-        weights::Union{Dict, Void} = nothing,
+        weights::Union{Dict, Nothing} = nothing,
         cachesize::AbstractFloat = 100.0,
         verbose::Bool = true,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} = nothing,
         )
     if package == :LIBSVM
         result = _single_labeldataframesvmregression_LIBSVM(

@@ -10,7 +10,7 @@ function remove_all_full_stops(x::AbstractString)::String
     return result
 end
 
-function _parse_icd_icd9_ccs_appendixasingledx_file!()::Void
+function _parse_icd_icd9_ccs_appendixasingledx_file!()::Nothing
     if _ICD_ICD9_CCS_APPENDIXASINGLEDX_FILE_HAS_BEEN_PARSED
     else
         filename = pkg_dir(

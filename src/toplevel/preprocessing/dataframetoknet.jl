@@ -146,9 +146,9 @@ function fit!(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
         training_labels_df::DataFrames.AbstractDataFrame,
-        validation_features_df::Union{Void, DataFrames.AbstractDataFrame} =
+        validation_features_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing,
-        validation_labels_df::Union{Void, DataFrames.AbstractDataFrame} =
+        validation_labels_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing;
         kwargs...
         )
@@ -169,9 +169,9 @@ function fit!(
         transformer::MutableDataFrame2RegressionKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
         training_labels_df::DataFrames.AbstractDataFrame,
-        validation_features_df::Union{Void, DataFrames.AbstractDataFrame} =
+        validation_features_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing,
-        validation_labels_df::Union{Void, DataFrames.AbstractDataFrame} =
+        validation_labels_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing;
         kwargs...
         )
@@ -242,9 +242,9 @@ function transform(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
         training_labels_df::DataFrames.AbstractDataFrame,
-        validation_features_df::Union{Void, DataFrames.AbstractDataFrame} =
+        validation_features_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing,
-        validation_labels_df::Union{Void, DataFrames.AbstractDataFrame} =
+        validation_labels_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing;
         kwargs...
         )
@@ -358,9 +358,9 @@ function transform(
         transformer::MutableDataFrame2RegressionKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
         training_labels_df::DataFrames.AbstractDataFrame,
-        validation_features_df::Union{Void, DataFrames.AbstractDataFrame} =
+        validation_features_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing,
-        validation_labels_df::Union{Void, DataFrames.AbstractDataFrame} =
+        validation_labels_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing;
         kwargs...
         )
