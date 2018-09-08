@@ -6,7 +6,7 @@ _SINGLE_LEVEL_DX_CCS_NUMBER_TO_NAME = Dict{Int, String}()
 _SINGLE_LEVEL_DX_CCS_TO_LIST_OF_ICD9_CODES = Dict{Int, String}()
 
 function remove_all_full_stops(x::AbstractString)::String
-    result = replace(x, "\.", "")
+    result = replace(x, "." => "")
     return result
 end
 
