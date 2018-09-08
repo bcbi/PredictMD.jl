@@ -6,6 +6,8 @@ __precompile__(true)
 """
 module PredictMD # begin module PredictMD
 
+using Random
+
 include(joinpath("package_directory.jl"))
 
 include(joinpath("version.jl"))
