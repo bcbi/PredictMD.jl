@@ -36,6 +36,7 @@ Pkg.add("DataFrames")
 Pkg.add("FileIO")
 Pkg.add("GZip")
 Pkg.add("JLD2")
+Pkg.add("RDatasets")
 Pkg.add("StatsBase")
 
 import CSV
@@ -43,6 +44,7 @@ import DataFrames
 import FileIO
 import GZip
 import JLD2
+import RDatasets
 import Random
 import StatsBase
 
@@ -51,11 +53,8 @@ Random.seed!(999)
 df = CSV.read(
     GZip.gzopen(
         joinpath(
-            Pkg.dir("RDatasets"),
-            "data",
-            "MASS",
-            "Boston.csv.gz",
-            ),
+            dirname(pathof(RDatasets)), "..", "data", "MASS", "Boston.csv.gz",
+            )
         ),
     DataFrames.DataFrame;
     rows_for_type_detect = 100,
