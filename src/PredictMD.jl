@@ -23,7 +23,6 @@ include(joinpath("init.jl"))
 include(joinpath("base", "backends.jl",))
 include(joinpath("base", "types.jl",))
 
-include(joinpath("base", "get_version_number.jl",))
 include(joinpath("base", "next_version_number.jl",))
 include(joinpath("base", "interface.jl",))
 
