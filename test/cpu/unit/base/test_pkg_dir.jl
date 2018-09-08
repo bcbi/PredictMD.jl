@@ -1,31 +1,31 @@
 ##### Beginning of file
 
-import Base.Test
+import Test
 import PredictMD
 
 a = PredictMD.package_directory()
-Base.Test.@test( isdir(a) )
+Test.@test( isdir(a) )
 
 b = PredictMD.package_directory(
     "assets",
     )
-Base.Test.@test( isdir(b) )
-Base.Test.@test( dirname(b) == a )
+Test.@test( isdir(b) )
+Test.@test( dirname(b) == a )
 
 c = PredictMD.package_directory(
     "assets",
     "icd",
     )
-Base.Test.@test( isdir(c) )
-Base.Test.@test( dirname(c) == b )
+Test.@test( isdir(c) )
+Test.@test( dirname(c) == b )
 
 d = PredictMD.package_directory(
     "assets",
     "icd",
     "icd9",
     )
-Base.Test.@test( isdir(d) )
-Base.Test.@test( dirname(d) == c )
+Test.@test( isdir(d) )
+Test.@test( dirname(d) == c )
 
 e = PredictMD.package_directory(
     "assets",
@@ -33,8 +33,8 @@ e = PredictMD.package_directory(
     "icd9",
     "ccs"
     )
-Base.Test.@test( isdir(e) )
-Base.Test.@test( dirname(e) == d )
+Test.@test( isdir(e) )
+Test.@test( dirname(e) == d )
 
 f = PredictMD.package_directory(
     "assets",
@@ -43,7 +43,7 @@ f = PredictMD.package_directory(
     "ccs",
     "AppendixASingleDX.txt"
     )
-Base.Test.@test( dirname(f) == e )
-Base.Test.@test( isfile(f) )
+Test.@test( dirname(f) == e )
+Test.@test( isfile(f) )
 
 ##### End of file

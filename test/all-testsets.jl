@@ -1,17 +1,17 @@
 ##### Beginning of file
 
-import Base.Test
+import Test
 
 srand(999)
 
-Base.Test.@testset "Unit tests       " begin
+Test.@testset "Unit tests       " begin
     @info(string("Running unit tests..."))
 
-    Base.Test.@testset "Julia version requirements" begin
-        Base.Test.@test(Base.VERSION >= VersionNumber("0.6"))
+    Test.@testset "Julia version requirements" begin
+        Test.@test(Base.VERSION >= VersionNumber("0.6"))
     end
 
-    Base.Test.@testset "base                      " begin
+    Test.@testset "base                      " begin
         include(
             joinpath(
                 "cpu", "unit",
@@ -28,7 +28,7 @@ Base.Test.@testset "Unit tests       " begin
             )
     end
 
-    Base.Test.@testset "code_loading              " begin
+    Test.@testset "code_loading              " begin
         include(
             joinpath(
                 "cpu", "unit",
@@ -38,7 +38,7 @@ Base.Test.@testset "Unit tests       " begin
             )
     end
 
-    Base.Test.@testset "metrics                   " begin
+    Test.@testset "metrics                   " begin
         include(
             joinpath(
                 "cpu", "unit",
@@ -55,7 +55,7 @@ Base.Test.@testset "Unit tests       " begin
             )
     end
 
-    Base.Test.@testset "utils                     " begin
+    Test.@testset "utils                     " begin
         include(
             joinpath(
                 "cpu", "unit",
@@ -79,7 +79,7 @@ Base.Test.@testset "Unit tests       " begin
             )
     end
 
-    Base.Test.@testset "hcup                      " begin
+    Test.@testset "hcup                      " begin
         include(
             joinpath(
                 "cpu", "unit",
@@ -91,10 +91,10 @@ Base.Test.@testset "Unit tests       " begin
     end
 end
 
-Base.Test.@testset "Integration tests" begin
+Test.@testset "Integration tests" begin
     @info(string("Running integration tests..."))
 
-    Base.Test.@testset "Generate documentation and examples      " begin
+    Test.@testset "Generate documentation and examples      " begin
         rm(
             joinpath(PredictMD.get_temp_directory(), "make_docs",);
             force = true,
@@ -113,7 +113,7 @@ Base.Test.@testset "Integration tests" begin
             )
     end
 
-    Base.Test.@testset "Boston housing regression example (CPU)  " begin
+    Test.@testset "Boston housing regression example (CPU)  " begin
         @info("Testing Boston housing regression example (CPU)")
         include(
             joinpath(
@@ -159,7 +159,7 @@ Base.Test.@testset "Integration tests" begin
             )
     end
 
-    Base.Test.@testset "Breast cancer biopsy classification (CPU)" begin
+    Test.@testset "Breast cancer biopsy classification (CPU)" begin
         @info("Testing breast cancer biopsy classification example (CPU)")
         include(
             joinpath(

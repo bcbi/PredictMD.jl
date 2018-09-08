@@ -5,8 +5,8 @@ error(string("This file is not meant to be run. Use the `PredictMD.generate_exam
 %PREDICTMD_GENERATED_BY%
 
 # BEGIN TEST STATEMENTS
-import Base.Test
-Base.Test.@test( 1 == 1 )
+import Test
+Test.@test( 1 == 1 )
 # END TEST STATEMENTS
 
 import PredictMD
