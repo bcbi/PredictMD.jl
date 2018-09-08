@@ -163,19 +163,27 @@ continuous_label_names = Symbol[single_label_name]
 categorical_label_names = Symbol[]
 label_names = vcat(categorical_label_names, continuous_label_names)
 
-@info(PredictMD.singlelabelregressionmetrics(
-    all_models,
-    training_features_df,
-    training_labels_df,
-    single_label_name,
-    ))
+println("Single label regression metrics, training set: ")
+show(
+    PredictMD.singlelabelregressionmetrics(
+        all_models,
+        training_features_df,
+        training_labels_df,
+        single_label_name,
+        ),
+    true,
+    )
 
-@info(PredictMD.singlelabelregressionmetrics(
-    all_models,
-    testing_features_df,
-    testing_labels_df,
-    single_label_name,
-    ))
+println("Single label regression metrics, testing set: ")
+show(
+    PredictMD.singlelabelregressionmetrics(
+        all_models,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        ),
+    true,
+    )
 
 ### End model comparison code
 
