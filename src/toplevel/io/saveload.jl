@@ -42,7 +42,10 @@ function save_model_jld2(
     @info("Attempting to save model...")
     # make sure the parent directory exists
     parent_directory = Base.Filesystem.dirname(filename)
-    Base.Filesystem.mkpath(parent_directory)
+    try
+        Base.Filesystem.mkpath(parent_directory)
+    catch
+    end
     # save the .jld2 file
     FileIO.save(filename, dict_of_objects_to_save)
     @info(string("Saved model to file \"", filename, "\""))
@@ -67,7 +70,10 @@ function save_model_bson(
     @info("Attempting to save model...")
     # make sure the parent directory exists
     parent_directory = Base.Filesystem.dirname(filename)
-    Base.Filesystem.mkpath(parent_directory)
+    try
+        Base.Filesystem.mkpath(parent_directory)
+    catch
+    end
     # save the .bson file
     BSON.bson(filename, dict_of_objects_to_save)
     @info(string("Saved model to file \"", filename, "\""))

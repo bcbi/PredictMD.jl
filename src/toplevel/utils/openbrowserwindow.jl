@@ -53,19 +53,19 @@ function open_browser_window(filename::AbstractString, a::AbstractDict = ENV)
             try
                 run(`open $(filename)`)
             catch e
-                @warn(string("ignoring error: ", e))
+                @warn(string("ignoring error: "), e)
             end
         elseif Base.Sys.islinux() || is_bsd()
             try
                 run(`xdg-open $(filename)`)
             catch e
-                @warn(string("ignoring error: ", e))
+                @warn(string("ignoring error: "), e)
             end
         elseif Base.Sys.iswindows()
             try
                 run(`$(ENV["COMSPEC"]) /c start "" "$(filename)"`)
             catch e
-                @warn(string("ignoring error: ", e))
+                @warn(string("ignoring error: "), e)
             end
         else
             @warn(

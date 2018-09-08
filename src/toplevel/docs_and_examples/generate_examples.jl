@@ -102,7 +102,10 @@ function generate_examples(
         "src",
         "examples",
         )
-    mkpath(temp_examples_dir)
+    try
+        mkpath(temp_examples_dir)
+    catch
+    end
 
     examples_input_parent_directory =
         PredictMD.package_directory("templates", "examples")
@@ -115,7 +118,10 @@ function generate_examples(
         temp_examples_dir,
         "cpu",
         )
-    mkpath(cpu_examples_output_parent_directory)
+    try
+        mkpath(cpu_examples_output_parent_directory)
+    catch
+    end
 
     boston_housing_input_directory = joinpath(
         cpu_examples_input_parent_directory,
@@ -125,7 +131,10 @@ function generate_examples(
         cpu_examples_output_parent_directory,
         "boston_housing",
         )
-    mkpath(boston_housing_output_directory)
+    try
+        mkpath(boston_housing_output_directory)
+    catch
+    end
     boston_housing_input_file_list =
         readdir(boston_housing_input_directory)
     boston_housing_input_file_list =
@@ -176,7 +185,10 @@ function generate_examples(
         cpu_examples_output_parent_directory,
         "breast_cancer_biopsy",
         )
-    mkpath(breast_cancer_biopsy_output_directory)
+    try
+        mkpath(breast_cancer_biopsy_output_directory)
+    catch
+    end
     breast_cancer_biopsy_input_file_list =
         readdir(breast_cancer_biopsy_input_directory)
     breast_cancer_biopsy_input_file_list =
@@ -218,7 +230,10 @@ function generate_examples(
                 )
         end
     end
-    mkpath(dirname(output_directory))
+    try
+        mkpath(dirname(output_directory))
+    catch
+    end
     cp(
         temp_examples_dir,
         output_directory;

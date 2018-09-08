@@ -39,7 +39,10 @@ function save_plot_pdf(
         error("filename must end in .pdf")
     end
     parent_directory = Base.Filesystem.dirname(filename)
-    Base.Filesystem.mkpath(parent_directory)
+    try
+        Base.Filesystem.mkpath(parent_directory)
+    catch
+    end
     save_result = try
         TikzPictures.save(TikzPictures.PDF(filename), tp)
     catch e
@@ -63,7 +66,10 @@ function save_plot_tex(
         error("filename must end in .tex")
     end
     parent_directory = Base.Filesystem.dirname(filename)
-    Base.Filesystem.mkpath(parent_directory)
+    try
+        Base.Filesystem.mkpath(parent_directory)
+    catch
+    end
     save_result = try
         TikzPictures.save(TikzPictures.TEX(filename), tp)
     catch e
@@ -87,7 +93,10 @@ function save_plot_tikz(
     end
     extension = filename_extension(filename)
     parent_directory = Base.Filesystem.dirname(filename)
-    Base.Filesystem.mkpath(parent_directory)
+    try
+        Base.Filesystem.mkpath(parent_directory)
+    catch
+    end
     save_result = try
         TikzPictures.save(TikzPictures.TIKZ(filename), tp)
     catch e
@@ -111,7 +120,10 @@ function save_plot_svg(
         error("filename must end in .svg")
     end
     parent_directory = Base.Filesystem.dirname(filename)
-    Base.Filesystem.mkpath(parent_directory)
+    try
+        Base.Filesystem.mkpath(parent_directory)
+    catch
+    end
     save_result = try
         TikzPictures.save(TikzPictures.SVG(filename), tp)
     catch e

@@ -6,7 +6,10 @@ function project_directory(parts...)
     else
         true_path = joinpath(parts...)
     end
-    mkpath(true_path)
+    try
+        mkpath(true_path)
+    catch
+    end
     return true_path
 end
 
@@ -20,13 +23,19 @@ function get_temp_directory(
         result = create_new_temp_directory()
         a[environment_variable] = result
     end
-    mkpath(result)
+    try
+        mkpath(result)
+    catch
+    end
     return result
 end
 
 function create_new_temp_directory()
     result = joinpath(mktempdir(), "PREDICTMDTEMPDIRECTORY")
-    mkpath(result)
+    try
+        mkpath(result)
+    catch
+    end
     @debug(string("Created new PredictMD temp directory: \"", result))
     return result
 end

@@ -58,7 +58,7 @@ function plotsinglelabelregressiontrueversuspredicted(
             )
     bestfitline_linearplotobject = PGFPlots.Plots.Linear(
         perfectlinevalues,
-        estimated_intercept + estimated_x_coefficient*perfectlinevalues,
+        estimated_intercept .+ estimated_x_coefficient*perfectlinevalues,
         mark = "none",
         style = "dashed, fill=blue",
         )

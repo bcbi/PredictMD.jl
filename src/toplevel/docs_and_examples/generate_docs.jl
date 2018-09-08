@@ -44,7 +44,10 @@ function generate_docs(
         "docs",
         )
     original_docs_directory = package_directory("docs")
-    mkpath(dirname(temp_generatedocs_dir))
+    try
+        mkpath(dirname(temp_generatedocs_dir))
+    catch
+    end
     cp(
         original_docs_directory,
         temp_generatedocs_dir;
@@ -100,7 +103,10 @@ function generate_docs(
         end
         cd(previous_working_directory)
     end
-    mkpath(dirname(output_directory))
+    try
+        mkpath(dirname(output_directory))
+    catch
+    end
     cp(
         temp_generatedocs_dir,
         output_directory,

@@ -493,7 +493,10 @@ function clean_hcup_nis_csv_icd9(
         DataFrames.names(combined_df),
         )
 
-    mkpath(dirname(output_file_name))
+    try
+        mkpath(dirname(output_file_name))
+    catch
+    end
 
     @info(string("Attempting to write output file..."))
 

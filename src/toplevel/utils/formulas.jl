@@ -5,7 +5,7 @@ import StatsModels
 
 """
 """
-generate_formula(x::AbstractString) = generate_formula(parse(x))
+generate_formula(x::AbstractString) = generate_formula(Meta.parse(x))
 
 """
 """
@@ -104,7 +104,7 @@ function generate_interaction_terms(
             interactions,
             )
         )
-    interaction_terms = Vector{String}(length(combinations))
+    interaction_terms = Vector{String}(undef, length(combinations))
     for k = 1:length(combinations)
         interaction_terms[k] = string(join(combinations[k], "*"))
     end
