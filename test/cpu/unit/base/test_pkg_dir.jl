@@ -3,23 +3,23 @@
 import Base.Test
 import PredictMD
 
-a = PredictMD.pkg_dir()
+a = PredictMD.package_directory()
 Base.Test.@test( isdir(a) )
 
-b = PredictMD.pkg_dir(
+b = PredictMD.package_directory(
     "assets",
     )
 Base.Test.@test( isdir(b) )
 Base.Test.@test( dirname(b) == a )
 
-c = PredictMD.pkg_dir(
+c = PredictMD.package_directory(
     "assets",
     "icd",
     )
 Base.Test.@test( isdir(c) )
 Base.Test.@test( dirname(c) == b )
 
-d = PredictMD.pkg_dir(
+d = PredictMD.package_directory(
     "assets",
     "icd",
     "icd9",
@@ -27,7 +27,7 @@ d = PredictMD.pkg_dir(
 Base.Test.@test( isdir(d) )
 Base.Test.@test( dirname(d) == c )
 
-e = PredictMD.pkg_dir(
+e = PredictMD.package_directory(
     "assets",
     "icd",
     "icd9",
@@ -36,7 +36,7 @@ e = PredictMD.pkg_dir(
 Base.Test.@test( isdir(e) )
 Base.Test.@test( dirname(e) == d )
 
-f = PredictMD.pkg_dir(
+f = PredictMD.package_directory(
     "assets",
     "icd",
     "icd9",

@@ -43,7 +43,7 @@ function generate_docs(
         "PredictMDTemp",
         "docs",
         )
-    original_docs_directory = pkg_dir("docs")
+    original_docs_directory = package_directory("docs")
     mkpath(dirname(temp_generatedocs_dir))
     cp(
         original_docs_directory,
