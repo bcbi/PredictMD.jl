@@ -17,7 +17,7 @@ end
 """
 function generate_docs(
         output_directory::AbstractString;
-        execute_notebooks = true,
+        execute_notebooks = false,
         markdown = true,
         notebooks = true,
         scripts = true,

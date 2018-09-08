@@ -25,7 +25,7 @@ temp_makedocs_dir = joinpath(
 
 PredictMD.generate_docs(
     temp_makedocs_dir;
-    execute_notebooks = true,
+    execute_notebooks = false,
     markdown = true,
     notebooks = true,
     scripts = true,
