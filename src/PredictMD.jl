@@ -6,6 +6,14 @@ __precompile__(true)
 """
 module PredictMD # begin module PredictMD
 
+include(joinpath("package_directory.jl"))
+
+include(joinpath("version.jl"))
+
+include(joinpath("welcome.jl"))
+
+include(joinpath("init.jl"))
+
 ############################################################################
 # PredictMD base files (names here go in the top level namespace) ##########
 ############################################################################
