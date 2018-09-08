@@ -8,14 +8,14 @@ import FileIO
 
 """
 """
-function open_browser_window(filename::Nothing, a::Associative = ENV)
+function open_browser_window(filename::Nothing, a::AbstractDict = ENV)
     @warn("no filename to open")
     return filename
 end
 
 """
 """
-function open_browser_window(filename::AbstractString, a::Associative = ENV)
+function open_browser_window(filename::AbstractString, a::AbstractDict = ENV)
     extension = filename_extension(filename)
     is_svg_file = extension == ".svg"
     is_png_file = extension == ".png"

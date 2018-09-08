@@ -5,7 +5,7 @@ import DataFrames
 """
 """
 function predictionsassoctodataframe(
-        probabilitiesassoc::Associative,
+        probabilitiesassoc::AbstractDict,
         label_names::AbstractVector = [],
         )
     if length(label_names) == 0

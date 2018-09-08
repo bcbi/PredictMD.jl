@@ -11,7 +11,7 @@ function project_directory(parts...)
 end
 
 function get_temp_directory(
-        a::Associative = ENV,
+        a::AbstractDict = ENV,
         environment_variable::AbstractString = "__PREDICTMDTEMPDIRECTORY__",
     )
     if haskey(a, environment_variable)

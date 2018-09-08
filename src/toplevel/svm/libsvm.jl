@@ -12,7 +12,7 @@ mutable struct LIBSVMModel <: AbstractEstimator
     levels::T4 where T4 <: AbstractVector
 
     # hyperparameters (not learned from data):
-    hyperparameters::T5 where T5 <: Associative
+    hyperparameters::T5 where T5 <: AbstractDict
 
     # parameters (learned from data):
     underlyingsvm::T6 where T6 <:

@@ -9,7 +9,7 @@ mutable struct MutableDataFrame2ClassificationKnetTransformer <:
         AbstractEstimator
     feature_names::T1 where T1 <: AbstractVector
     label_names::T2 where T2 <: AbstractVector{Symbol}
-    label_levels::T3 where T3 <: Associative
+    label_levels::T3 where T3 <: AbstractDict
     index::T4 where T4 <: Integer
     transposefeatures::T5 where T5 <: Bool
     transposelabels::T6 where T6 <: Bool
@@ -19,7 +19,7 @@ end
 function MutableDataFrame2ClassificationKnetTransformer(
         feature_names::AbstractVector,
         label_names::AbstractVector{Symbol},
-        label_levels::Associative,
+        label_levels::AbstractDict,
         index::Integer;
         transposefeatures::Bool = true,
         transposelabels::Bool = false,

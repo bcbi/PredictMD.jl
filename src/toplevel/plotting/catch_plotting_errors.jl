@@ -1,13 +1,13 @@
 ##### Beginning of file
 
-function is_force_test_plots(a::Associative = ENV)
+function is_force_test_plots(a::AbstractDict = ENV)
     result = lowercase(strip(get(a, "PREDICTMD_TEST_PLOTS", ""))) == "true"
     return result
 end
 
 function handle_plotting_error(
         e::Exception,
-        a::Associative = ENV,
+        a::AbstractDict = ENV,
         )
     if is_force_test_plots(a)
         @warn(

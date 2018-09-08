@@ -19,9 +19,9 @@ mutable struct KnetModel <: AbstractEstimator
     loss_function_source::T5 where T5 <: AbstractString
     predict_function::T6 where T6 <: Union{Nothing, Function, Any}
     loss_function::T7 where T7 <: Union{Nothing, Function, Any}
-    losshyperparameters::T8 where T8 <: Associative
+    losshyperparameters::T8 where T8 <: AbstractDict
     optimizationalgorithm::T9 where T9 <: Symbol
-    optimizerhyperparameters::T10 where T10 <: Associative
+    optimizerhyperparameters::T10 where T10 <: AbstractDict
     minibatchsize::T11 where T11 <: Integer
     maxepochs::T12 where T12 <: Integer
     printlosseverynepochs::T13 where T13 <: Integer
@@ -43,9 +43,9 @@ function KnetModel(
         loss_function_source::AbstractString = "",
         predict_function::Function = identity,
         loss_function::Function = identity,
-        losshyperparameters::Associative = Dict(),
+        losshyperparameters::AbstractDict = Dict(),
         optimizationalgorithm::Symbol = :nothing,
-        optimizerhyperparameters::Associative = Dict(),
+        optimizerhyperparameters::AbstractDict = Dict(),
         minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
         isclassificationmodel::Bool = false,
@@ -414,9 +414,9 @@ function _single_labelmulticlassdataframeknetclassifier_Knet(
         name::AbstractString = "",
         predict_function_source::AbstractString = "",
         loss_function_source::AbstractString = "",
-        losshyperparameters::Associative = Dict(),
+        losshyperparameters::AbstractDict = Dict(),
         optimizationalgorithm::Symbol = :nothing,
-        optimizerhyperparameters::Associative = Dict(),
+        optimizerhyperparameters::AbstractDict = Dict(),
         minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
@@ -497,9 +497,9 @@ function single_labelmulticlassdataframeknetclassifier(
         name::AbstractString = "",
         predict_function_source::AbstractString = "",
         loss_function_source::AbstractString = "",
-        losshyperparameters::Associative = Dict(),
+        losshyperparameters::AbstractDict = Dict(),
         optimizationalgorithm::Symbol = :nothing,
-        optimizerhyperparameters::Associative = Dict(),
+        optimizerhyperparameters::AbstractDict = Dict(),
         minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
@@ -538,9 +538,9 @@ function _single_labeldataframeknetregression_Knet(
         name::AbstractString = "",
         predict_function_source::AbstractString = "",
         loss_function_source::AbstractString = "",
-        losshyperparameters::Associative = Dict(),
+        losshyperparameters::AbstractDict = Dict(),
         optimizationalgorithm::Symbol = :nothing,
-        optimizerhyperparameters::Associative = Dict(),
+        optimizerhyperparameters::AbstractDict = Dict(),
         minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
@@ -599,9 +599,9 @@ function single_labeldataframeknetregression(
         name::AbstractString = "",
         predict_function_source::AbstractString = "",
         loss_function_source::AbstractString = "",
-        losshyperparameters::Associative = Dict(),
+        losshyperparameters::AbstractDict = Dict(),
         optimizationalgorithm::Symbol = :nothing,
-        optimizerhyperparameters::Associative = Dict(),
+        optimizerhyperparameters::AbstractDict = Dict(),
         minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,

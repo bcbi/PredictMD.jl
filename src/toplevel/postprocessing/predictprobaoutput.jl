@@ -77,7 +77,7 @@ end
 """
 function predict_proba(
         transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer,
-        single_labelprobabilities::Associative;
+        single_labelprobabilities::AbstractDict;
         kwargs...
         )
     labelint2stringmap = _getlabelint2stringmap(

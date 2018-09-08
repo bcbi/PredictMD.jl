@@ -14,7 +14,7 @@ mutable struct DecisionTreeModel <:
     levels::T5 where T5 <: AbstractVector
 
     # hyperparameters (not learned from data):
-    hyperparameters::T6 where T6 <: Associative
+    hyperparameters::T6 where T6 <: AbstractDict
 
     # parameters (learned from data):
     underlyingrandomforest::T7 where T7 <:
