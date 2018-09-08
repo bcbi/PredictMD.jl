@@ -29,14 +29,23 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin data preprocessing code
 
+import Pkg
+
+Pkg.add("CSV")
+Pkg.add("DataFrames")
+Pkg.add("FileIO")
+Pkg.add("GZip")
+Pkg.add("JLD2")
+Pkg.add("StatsBase")
+
 import CSV
 import DataFrames
 import FileIO
 import GZip
 import JLD2
+import Random
 import StatsBase
 
-import Random
 Random.seed!(999)
 
 df = CSV.read(

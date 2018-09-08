@@ -16,11 +16,7 @@ Pkg.status(Pkg.PKGMODE_MANIFEST)
 @info(string("Attempting to import PredictMD...",))
 import PredictMD
 @info(string("Successfully imported PredictMD.",))
-@info(string("PredictMD version: ",PredictMD.version(),))
-
-@info(
-    string("PredictMD package directory: "),
-    PredictMD.package_directory(),
-    )
+@info(string("PredictMD version: "),PredictMD.version(),)
+@info(string("PredictMD package directory: "),PredictMD.package_directory(),)
 
 ##### End of file

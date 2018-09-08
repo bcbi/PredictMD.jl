@@ -29,13 +29,21 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin model output code
 
+import Pkg
+
+Pkg.add("CSV")
+Pkg.add("DataFrames")
+Pkg.add("FileIO")
+Pkg.add("JLD2")
+Pkg.add("Knet")
+
 import CSV
 import DataFrames
 import FileIO
 import JLD2
 import Knet
-
 import Random
+
 Random.seed!(999)
 
 trainingandvalidation_features_df_filename = joinpath(

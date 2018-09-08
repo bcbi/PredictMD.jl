@@ -1,7 +1,7 @@
 ##### Beginning of file
 
 function require_julia_version(varargs...)::VersionNumber
-    current_julia_version = VersionNumber(Base.VERSION)
+    current_julia_version = convert(VersionNumber, Base.VERSION)
     version_meets_requirements = does_given_version_meet_requirements(
         current_julia_version,
         collect(varargs),
@@ -20,7 +20,7 @@ function require_julia_version(varargs...)::VersionNumber
 end
 
 function require_predictmd_version(varargs...)::VersionNumber
-    current_predictmd_version = VersionNumber(version())
+    current_predictmd_version = convert(VersionNumber, version())
     version_meets_requirements = does_given_version_meet_requirements(
         current_predictmd_version,
         collect(varargs),
