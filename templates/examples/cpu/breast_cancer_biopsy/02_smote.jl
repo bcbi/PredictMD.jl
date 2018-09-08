@@ -35,7 +35,8 @@ import FileIO
 import JLD2
 import StatsBase
 
-srand(999)
+import Random
+Random.seed!(999)
 
 trainingandvalidation_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,

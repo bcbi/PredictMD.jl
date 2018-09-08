@@ -36,7 +36,8 @@ import JLD2
 import RDatasets
 import StatsBase
 
-srand(999)
+import Random
+Random.seed!(999)
 
 df = RDatasets.dataset("MASS", "biopsy")
 

@@ -8,7 +8,7 @@ function _preprocess_example_shared(
         )::String
     pattern = r"error\(string\(\"This file is not meant to be run\. Use the `PredictMD\.generate_examples\(\)` function to generate examples that you can run\.\"\)\)\n{0,5}"
     replacement = ""
-    content = replace(content, pattern, replacement)
+    content = replace(content, pattern => replacement)
 
     pattern = "%PREDICTMD_GENERATED_BY%\n"
     replacement = string(
@@ -18,17 +18,17 @@ function _preprocess_example_shared(
         "## For help, please visit https://www.predictmd.net",
         "\n",
         )
-    content = replace(content, pattern, replacement)
+    content = replace(content, pattern => replacement)
 
     pattern = "%PREDICTMD_CURRENT_VERSION%"
     replacement = string(version())
-    content = replace(content, pattern, replacement)
+    content = replace(content, pattern => replacement)
 
     pattern = "%PREDICTMD_NEXT_MINOR_VERSION%"
     replacement = string(
         next_minor_version(version(); add_trailing_minus = true)
         )
-    content = replace(content, pattern, replacement)
+    content = replace(content, pattern => replacement)
     return content
 end
 
@@ -38,7 +38,7 @@ function _preprocess_example_do_not_include_test_statements(
     content = _preprocess_example_shared(content)
     pattern = r"# BEGIN TEST STATEMENTS[\S\s]*# END TEST STATEMENTS\n{0,5}"
     replacement = ""
-    content = replace(content, pattern, replacement)
+    content = replace(content, pattern => replacement)
     return content
 end
 
@@ -49,11 +49,11 @@ function _preprocess_example_include_test_statements(
 
     pattern = r"# BEGIN TEST STATEMENTS\n{0,2}"
     replacement = ""
-    content = replace(content, pattern, replacement)
+    content = replace(content, pattern => replacement)
 
     pattern = r"# END TEST STATEMENTS\n{0,2}"
     replacement = ""
-    content = replace(content, pattern, replacement)
+    content = replace(content, pattern => replacement)
     return content
 end
 
@@ -65,7 +65,7 @@ function generate_examples(
         scripts = false,
         include_test_statements::Bool = false,
         )::String
-    if is_windows()
+    if Base.Sys.iswindows()
         execute_notebooks = false
     end
     ENV["PREDICTMD_IS_MAKE_EXAMPLES"] = "true"
@@ -222,7 +222,7 @@ function generate_examples(
     cp(
         temp_examples_dir,
         output_directory;
-        remove_destination = true,
+        force = true,
         )
     @info(
         string(

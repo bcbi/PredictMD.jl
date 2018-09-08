@@ -15,8 +15,7 @@ mutable struct LIBSVMModel <: AbstractEstimator
     hyperparameters::T5 where T5 <: AbstractDict
 
     # parameters (learned from data):
-    underlyingsvm::T6 where T6 <:
-        Union{AbstractNonExistentUnderlyingObject, LIBSVM.SVM}
+    underlyingsvm::T6 where T6 <: Any
 end
 
 function LIBSVMModel(

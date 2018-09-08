@@ -4,7 +4,8 @@ import Documenter
 import Literate
 import PredictMD
 
-srand(999)
+import Random
+Random.seed!(999)
 
 rm(
     joinpath(

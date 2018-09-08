@@ -8,7 +8,7 @@ function fix_example_blocks(filename::AbstractString)::Nothing
     rm(filename; force = true, recursive = true,)
     pattern = r"```@example \w*\n"
     replacement = "```julia\n"
-    content = replace(content, pattern, replacement)
+    content = replace(content, pattern => replacement)
     write(filename, content)
     return nothing
 end
@@ -48,7 +48,7 @@ function generate_docs(
     cp(
         original_docs_directory,
         temp_generatedocs_dir;
-        remove_destination = true,
+        force = true,
         )
     temp_examples_dir = joinpath(
         temp_generatedocs_dir,
@@ -64,7 +64,7 @@ function generate_docs(
         scripts = scripts,
         include_test_statements = include_test_statements,
         )
-    if is_windows()
+    if Base.Sys.iswindows()
         @warn(
             string(
                 "documentation generation is not supported on Windows, ",

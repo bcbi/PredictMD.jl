@@ -21,7 +21,7 @@ function x_contains_y(
         return false
     end
     for i = 1:length(y)
-        if contains(x, y[i])
+        if occursin(y[i], x)
             return true
         end
     end

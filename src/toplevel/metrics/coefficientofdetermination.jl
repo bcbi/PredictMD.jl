@@ -1,5 +1,6 @@
 ##### Beginning of file
 
+import Statistics
 import StatsBase
 
 """
@@ -19,7 +20,7 @@ function r2_score(
         error("length(ytrue) == 0")
     end
     # ybar = mean of the true y values
-    ybar = mean(ytrue)
+    ybar = Statistics.mean(ytrue)
     # SStot = total sum of squares
     SStot = sum( (ytrue .- ybar).^2 )
     # SSres = sum of squares of residuals

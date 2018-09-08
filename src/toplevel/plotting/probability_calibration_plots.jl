@@ -3,6 +3,7 @@
 import LaTeXStrings
 import PGFPlots
 import PGFPlotsX
+import Statistics
 
 """
 """
@@ -64,7 +65,7 @@ function probability_calibration_scores_and_fractions(
         if length(rows_that_have_approximately_the_kth_score) == 0
             fractions[k] = -999
         else
-            fractions[k] = mean(
+            fractions[k] = Statistics.mean(
                 ytrue[rows_that_have_approximately_the_kth_score]
                 )
         end

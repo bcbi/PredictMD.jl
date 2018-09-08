@@ -17,8 +17,7 @@ mutable struct DecisionTreeModel <:
     hyperparameters::T6 where T6 <: AbstractDict
 
     # parameters (learned from data):
-    underlyingrandomforest::T7 where T7 <:
-        Union{AbstractNonExistentUnderlyingObject, DecisionTree.Ensemble}
+    underlyingrandomforest::T7 where T7 <: Any
 end
 
 function DecisionTreeModel(

@@ -17,8 +17,8 @@ mutable struct KnetModel <: AbstractEstimator
     # hyperparameters (not learned from data):
     predict_function_source::T4 where T4 <: AbstractString
     loss_function_source::T5 where T5 <: AbstractString
-    predict_function::T6 where T6 <: Union{Nothing, Function, Any}
-    loss_function::T7 where T7 <: Union{Nothing, Function, Any}
+    predict_function::T6 where T6 <: Any
+    loss_function::T7 where T7 <: Any
     losshyperparameters::T8 where T8 <: AbstractDict
     optimizationalgorithm::T9 where T9 <: Symbol
     optimizerhyperparameters::T10 where T10 <: AbstractDict
@@ -31,8 +31,7 @@ mutable struct KnetModel <: AbstractEstimator
     modelweightoptimizers::T15 where T15 <: Any
 
     # learning state
-    history::T16 where T16 <: ValueHistories.MultivalueHistory
-
+    history::T16 where T16 <: Any
 
 end
 

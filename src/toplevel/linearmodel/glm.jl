@@ -11,14 +11,12 @@ mutable struct GLMModel <: AbstractEstimator
     isclassificationmodel::T2 where T2 <: Bool
     isregressionmodel::T3 where T3 <: Bool
 
-    formula::T4 where T4 <: StatsModels.Formula
-    family::T5 where T5 <: GLM.Distribution
-    link::T6 where T6 <: GLM.Link
+    formula::T4 where T4 <: Any
+    family::T5 where T5 <: Any
+    link::T6 where T6 <: Any
 
     # parameters (learned from data):
-    underlyingglm::T7 where T7 <:
-        Union{AbstractNonExistentUnderlyingObject,
-            StatsModels.DataFrameRegressionModel}
+    underlyingglm::T7 where T7 <: Any
 end
 
 function GLMModel(

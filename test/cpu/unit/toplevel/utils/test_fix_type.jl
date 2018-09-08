@@ -4,7 +4,7 @@ import Test
 import DataFrames
 import PredictMD
 
-my_vector = Vector{Any}(5)
+my_vector = Vector{Any}(undef, 5)
 my_vector[1] = Cfloat(1.1)
 my_vector[2] = Cfloat(2.2)
 my_vector[3] = DataFrames.missing
@@ -83,7 +83,7 @@ Test.@test(vector_1[3] == 3.0)
 
 ##############################################################################
 
-array_1 = Array{Any}(2,3,4)
+array_1 = Array{Any}(undef, 2,3,4)
 array_1[1,1,1] = Float64(10)
 array_1[1,1,2] = Float64(20)
 array_1[1,1,3] = Float64(30)

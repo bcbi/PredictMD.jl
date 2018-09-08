@@ -2,7 +2,8 @@
 
 import Test
 
-srand(999)
+import Random
+Random.seed!(999)
 
 Test.@testset "Unit tests       " begin
     @info(string("Running unit tests..."))

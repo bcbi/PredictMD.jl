@@ -34,8 +34,10 @@ import DataFrames
 import FileIO
 import JLD2
 import Knet
+import Statistics
 
-srand(999)
+import Random
+Random.seed!(999)
 
 trainingandvalidation_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
@@ -154,7 +156,7 @@ function knetmlp_loss(
         L1::Real = Cfloat(0),
         L2::Real = Cfloat(0),
         )
-    loss = mean(
+    loss = Statistics.mean(
         abs2,
         ytrue - predict_function(
             modelweights,

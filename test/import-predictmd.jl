@@ -3,11 +3,11 @@
 @info(string("Julia depot paths: "), Base.DEPOT_PATH)
 
 @info(string("Printing Julia version info:",))
+import InteractiveUtils
 InteractiveUtils.versioninfo(verbose=true)
 
-import Pkg
-
 @info(string("Packages in the project (explicitly added): ",))
+import Pkg
 Pkg.status(Pkg.PKGMODE_PROJECT)
 
 @info(string("Packages in the manifest (recursive dependencies): ",))

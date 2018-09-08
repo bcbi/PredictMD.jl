@@ -36,7 +36,8 @@ import GZip
 import JLD2
 import StatsBase
 
-srand(999)
+import Random
+Random.seed!(999)
 
 df = CSV.read(
     GZip.gzopen(
