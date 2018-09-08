@@ -6,8 +6,6 @@ __precompile__(true)
 """
 module PredictMD # begin module PredictMD
 
-import Compat
-
 ############################################################################
 # PredictMD base files (names here go in the top level namespace) ##########
 ############################################################################
