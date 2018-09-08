@@ -30,7 +30,6 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 ### Begin model comparison code
 
 import CSV
-import Compat
 import DataFrames
 import FileIO
 import JLD2
@@ -181,7 +180,7 @@ categorical_label_names = Symbol[single_label_name]
 continuous_label_names = Symbol[]
 label_names = vcat(categorical_label_names, continuous_label_names)
 
-Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
+@info(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     training_features_df,
     training_labels_df,
@@ -189,7 +188,7 @@ Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
     positive_class;
     sensitivity = 0.95,
     ))
-Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
+@info(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     training_features_df,
     training_labels_df,
@@ -197,7 +196,7 @@ Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
     positive_class;
     specificity = 0.95,
     ))
-Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
+@info(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     training_features_df,
     training_labels_df,
@@ -205,7 +204,7 @@ Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
     positive_class;
     maximize = :f1score,
     ))
-Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
+@info(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     training_features_df,
     training_labels_df,
@@ -214,7 +213,7 @@ Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
     maximize = :cohen_kappa,
     ))
 
-Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
+@info(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     testing_features_df,
     testing_labels_df,
@@ -222,7 +221,7 @@ Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
     positive_class;
     sensitivity = 0.95,
     ))
-Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
+@info(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     testing_features_df,
     testing_labels_df,
@@ -230,7 +229,7 @@ Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
     positive_class;
     specificity = 0.95,
     ))
-Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
+@info(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     testing_features_df,
     testing_labels_df,
@@ -238,7 +237,7 @@ Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
     positive_class;
     maximize = :f1score,
     ))
-Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
+@info(PredictMD.singlelabelbinaryclassificationmetrics(
     all_models,
     testing_features_df,
     testing_labels_df,

@@ -39,7 +39,7 @@ function ordinary_least_squares_regression(
             # estimated x coefficient: coefficients[2]
             coefficients[1], coefficients[2]
         catch e
-            Compat.@debug(string("Ignored error: ", e))
+            @debug(string("Ignored error: ", e))
             0, 0
         end
     else
@@ -50,7 +50,7 @@ function ordinary_least_squares_regression(
             # estimated x coefficient: coefficients[1]
             0, coefficients[1]
         catch e
-            Compat.@debug(string("Ignored error: ", e))
+            @debug(string("Ignored error: ", e))
             0, 0
         end
     end

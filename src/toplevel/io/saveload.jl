@@ -39,13 +39,13 @@ function save_model_jld2(
     dict_of_objects_to_save = Dict(
         "jld2_saved_model" => fittable_object_to_save,
         )
-    Compat.@info("Attempting to save model...")
+    @info("Attempting to save model...")
     # make sure the parent directory exists
     parent_directory = Base.Filesystem.dirname(filename)
     Base.Filesystem.mkpath(parent_directory)
     # save the .jld2 file
     FileIO.save(filename, dict_of_objects_to_save)
-    Compat.@info(string("Saved model to file \"", filename, "\""))
+    @info(string("Saved model to file \"", filename, "\""))
     return filename
 end
 
@@ -64,13 +64,13 @@ function save_model_bson(
     dict_of_objects_to_save = Dict(
         :bson_saved_model => fittable_object_to_save,
         )
-    Compat.@info("Attempting to save model...")
+    @info("Attempting to save model...")
     # make sure the parent directory exists
     parent_directory = Base.Filesystem.dirname(filename)
     Base.Filesystem.mkpath(parent_directory)
     # save the .bson file
     BSON.bson(filename, dict_of_objects_to_save)
-    Compat.@info(string("Saved model to file \"", filename, "\""))
+    @info(string("Saved model to file \"", filename, "\""))
     return filename
 end
 
@@ -97,10 +97,10 @@ function load_model_jld2(filename::AbstractString)
                 "\" does not end in \".jld2\"")
             )
     end
-    Compat.@info("Attempting to load model...")
+    @info("Attempting to load model...")
     dict_of_loaded_objects = FileIO.load(filename)
     loaded_fittable_object = dict_of_loaded_objects["jld2_saved_model"]
-    Compat.@info(string("Loaded model from file \"", filename, "\""))
+    @info(string("Loaded model from file \"", filename, "\""))
     return loaded_fittable_object
 end
 
@@ -113,10 +113,10 @@ function load_model_bson(filename::AbstractString)
                 "\" does not end in \".bson\"")
             )
     end
-    Compat.@info("Attempting to load model...")
+    @info("Attempting to load model...")
     dict_of_loaded_objects = BSON.load(filename)
     loaded_fittable_object = dict_of_loaded_objects[:bson_saved_model]
-    Compat.@info(string("Loaded model from file \"", filename, "\""))
+    @info(string("Loaded model from file \"", filename, "\""))
     return loaded_fittable_object
 end
 

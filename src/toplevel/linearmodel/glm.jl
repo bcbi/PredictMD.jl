@@ -86,7 +86,7 @@ function fit!(
         labels_df::DataFrames.AbstractDataFrame,
         )
     labelsandfeatures_df = hcat(labels_df, features_df)
-    Compat.@info(string("Starting to train GLM model."))
+    @info(string("Starting to train GLM model."))
     glm = try
         GLM.glm(
             estimator.formula,
@@ -95,7 +95,7 @@ function fit!(
             estimator.link,
             )
     catch e
-        Compat.@warn(
+        @warn(
             string(
                 "while training GLM model, ignored error: ",
                 e,
@@ -104,7 +104,7 @@ function fit!(
         FitFailedUnderlyingObject()
     end
     # glm =
-    Compat.@info(string("Finished training GLM model."))
+    @info(string("Finished training GLM model."))
     estimator.underlyingglm = glm
     return estimator
 end

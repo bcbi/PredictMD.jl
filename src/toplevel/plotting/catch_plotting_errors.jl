@@ -10,7 +10,7 @@ function handle_plotting_error(
         a::Associative = ENV,
         )
     if is_force_test_plots(a)
-        Compat.@warn(
+        @warn(
             string(
                 "PREDICTMD_TEST_PLOTS is true ,",
                 "so rethrowing the error.",
@@ -18,7 +18,7 @@ function handle_plotting_error(
             )
         rethrow(e)
     else
-        Compat.@warn(string("ignoring error:", e))
+        @warn(string("ignoring error:", e))
         return nothing
     end
 end

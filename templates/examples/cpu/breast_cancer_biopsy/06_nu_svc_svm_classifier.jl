@@ -30,7 +30,6 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 ### Begin nu-SVC code
 
 import CSV
-import Compat
 import DataFrames
 import FileIO
 import JLD2

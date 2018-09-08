@@ -30,7 +30,6 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 ### Begin logistic classifier code
 
 import CSV
-import Compat
 import DataFrames
 import FileIO
 import JLD2
@@ -247,14 +246,14 @@ logistic_cutoffs, logistic_risk_group_prevalences =
         positive_class;
         average_function = mean,
         )
-Compat.@info(
+@info(
     string(
         "Low risk: 0 to $(logistic_cutoffs[1]).",
         " Medium risk: $(logistic_cutoffs[1]) to $(logistic_cutoffs[2]).",
         " High risk: $(logistic_cutoffs[2]) to 1.",
         )
     )
-Compat.@info(logistic_risk_group_prevalences)
+@info(logistic_risk_group_prevalences)
 logistic_cutoffs, logistic_risk_group_prevalences =
     PredictMD.risk_score_cutoff_values(
         logistic_classifier,
@@ -264,14 +263,14 @@ logistic_cutoffs, logistic_risk_group_prevalences =
         positive_class;
         average_function = median,
         )
-Compat.@info(
+@info(
     string(
         "Low risk: 0 to $(logistic_cutoffs[1]).",
         " Medium risk: $(logistic_cutoffs[1]) to $(logistic_cutoffs[2]).",
         " High risk: $(logistic_cutoffs[2]) to 1.",
         )
     )
-Compat.@info(logistic_risk_group_prevalences)
+@info(logistic_risk_group_prevalences)
 
 logistic_classifier_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,

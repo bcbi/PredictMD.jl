@@ -1,8 +1,6 @@
 ##### Beginning of file
 
-import Compat
-
-Compat.@info(string("Julia package directory: \"", Pkg.dir(), "\"",))
+@info(string("Julia package directory: \"", Pkg.dir(), "\"",))
 
 const julia_cache_paths = string(
     "[\"",
@@ -10,21 +8,21 @@ const julia_cache_paths = string(
     "\"]",
     )
 
-Compat.@info(string("Julia cache path(s): ", julia_cache_paths, ".", ))
+@info(string("Julia cache path(s): ", julia_cache_paths, ".", ))
 
-Compat.@info(string("Printing Julia version info:",))
+@info(string("Printing Julia version info:",))
 
 versioninfo(true)
 
-Compat.@info(string("Attempting to import PredictMD...",))
+@info(string("Attempting to import PredictMD...",))
 
 import PredictMD
 
-Compat.@info(string("Successfully imported PredictMD.",))
+@info(string("Successfully imported PredictMD.",))
 
-Compat.@info(string("PredictMD version: ",PredictMD.version(),))
+@info(string("PredictMD version: ",PredictMD.version(),))
 
-Compat.@info(
+@info(
     string(
         "PredictMD package directory: \"",
         PredictMD.pkg_dir(),

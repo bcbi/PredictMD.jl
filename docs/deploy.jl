@@ -9,7 +9,7 @@ srand(999)
 ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "true"
 
 if PredictMD.is_travis_ci()
-    Compat.@info(
+    @info(
         string(
             "This is a Travis build, ",
             "so Documenter.deploy_docs will now be run.",
@@ -29,7 +29,7 @@ if PredictMD.is_travis_ci()
         target = "site",
         )
 else
-    Compat.@warn(
+    @warn(
         string(
             "This is not a Travis build, ",
             "so Documenter.deploy_docs will not be run.",
