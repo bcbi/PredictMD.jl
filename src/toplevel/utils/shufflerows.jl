@@ -1,6 +1,7 @@
 ##### Beginning of file
 
 import DataFrames
+import Random
 import StatsBase
 
 """
@@ -8,7 +9,7 @@ import StatsBase
 function shuffle_rows!(
         dataframe::DataFrames.AbstractDataFrame,
         )
-    result = shuffle_rows!(Base.GLOBAL_RNG, dataframe)
+    result = shuffle_rows!(Random.GLOBAL_RNG, dataframe)
     return result
 end
 

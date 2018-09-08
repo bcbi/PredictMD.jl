@@ -176,7 +176,7 @@ function knetmlp_predict(
     x3 = w[5]*x2 .+ w[6]
     unnormalizedlogprobs = x3
     if probabilities
-        normalizedlogprobs = Knet.logp(unnormalizedlogprobs, 1)
+        normalizedlogprobs = Knet.logp(unnormalizedlogprobs; dims = 1)
         normalizedprobs = exp.(normalizedlogprobs)
         return normalizedprobs
     else
@@ -200,8 +200,8 @@ function knetmlp_loss(
             x;
             probabilities = false,
             ),
-        ytrue,
-        1,
+        ytrue;
+        dims = 1,
         )
     if L1 != 0
         loss += L1 * sum(sum(abs, w_i) for w_i in modelweights[1:2:end])

@@ -141,14 +141,14 @@ end
 
 function parse_functions!(estimator::KnetModel)
     estimator.predict_function = eval(
-        parse(
+        Meta.parse(
             strip(
                 estimator.predict_function_source
                 )
             )
         )
     estimator.loss_function = eval(
-        parse(
+        Meta.parse(
             strip(
                 estimator.loss_function_source
                 )

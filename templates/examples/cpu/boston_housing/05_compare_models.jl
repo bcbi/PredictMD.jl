@@ -33,16 +33,27 @@ import Pkg
 
 Pkg.add("CSV")
 Pkg.add("DataFrames")
+Pkg.add("DecisionTree")
+Pkg.add("Distributions")
 Pkg.add("FileIO")
+Pkg.add("GLM")
 Pkg.add("JLD2")
 Pkg.add("Knet")
+Pkg.add("StatsModels")
+Pkg.add("ValueHistories")
 
 import CSV
 import DataFrames
+import DecisionTree
+import Distributions
 import FileIO
+import GLM
 import JLD2
 import Knet
+import LinearAlgebra
 import Random
+import StatsModels
+import ValueHistories
 
 Random.seed!(999)
 
