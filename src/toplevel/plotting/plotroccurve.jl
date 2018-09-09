@@ -10,7 +10,8 @@ function plotroccurves(
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol,
-        positive_class::AbstractString,
+        positive_class::AbstractString;
+        kwargs...,
         )
     vectorofestimators = [estimator]
     result = plotroccurve(
@@ -18,7 +19,8 @@ function plotroccurves(
         features_df,
         labels_df,
         single_label_name,
-        positive_class,
+        positive_class;
+        kwargs...,
         )
     return result
 end
@@ -30,8 +32,10 @@ function plotroccurves(
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol,
-        positive_class::AbstractString,
+        positive_class::AbstractString;
+        legend_pos::AbstractString = "outer north east",
         )
+    legend_pos::String = convert(String, legend_pos)
     if length(vectorofestimators) == 0
         error("length(vectorofestimators) == 0")
     end
@@ -75,7 +79,7 @@ function plotroccurves(
                 xlabel = "False positive rate",
                 ylabel = "True positive rate",
                 no_markers,
-                legend_pos="outer north east",
+                legend_pos = legend_pos,
                 },
             all_plots_and_legends...,
             ),
