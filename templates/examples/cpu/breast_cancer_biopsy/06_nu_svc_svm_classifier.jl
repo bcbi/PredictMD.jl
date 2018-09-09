@@ -13,7 +13,7 @@ import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version("v0.6")
+PredictMD.require_julia_version("%PREDICTMD_MINIMUM_REQUIRED_JULIA_VERSION%")
 
 PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
 
@@ -36,12 +36,14 @@ Pkg.add("DataFrames")
 Pkg.add("FileIO")
 Pkg.add("JLD2")
 Pkg.add("LIBSVM")
+Pkg.add("PGFPlotsX")
 
 import CSV
 import DataFrames
 import FileIO
 import JLD2
 import LIBSVM
+import PGFPlotsX
 import Random
 
 Random.seed!(999)
@@ -195,8 +197,7 @@ nu_svc_svm_classifier_hist_training =
         smoted_training_labels_df,
         single_label_name,
         single_label_levels,
-        )
-# PredictMD.open_plot(nu_svc_svm_classifier_hist_training)
+        );
 display(nu_svc_svm_classifier_hist_training)
 
 nu_svc_svm_classifier_hist_testing =
@@ -206,8 +207,7 @@ nu_svc_svm_classifier_hist_testing =
         testing_labels_df,
         single_label_name,
         single_label_levels,
-        )
-# PredictMD.open_plot(nu_svc_svm_classifier_hist_testing)
+        );
 display(nu_svc_svm_classifier_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(

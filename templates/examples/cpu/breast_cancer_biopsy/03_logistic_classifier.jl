@@ -13,7 +13,7 @@ import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version("v0.6")
+PredictMD.require_julia_version("%PREDICTMD_MINIMUM_REQUIRED_JULIA_VERSION%")
 
 PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
 
@@ -35,11 +35,13 @@ Pkg.add("CSV")
 Pkg.add("DataFrames")
 Pkg.add("FileIO")
 Pkg.add("JLD2")
+Pkg.add("PGFPlotsX")
 
 import CSV
 import DataFrames
 import FileIO
 import JLD2
+import PGFPlotsX
 import Random
 
 Random.seed!(999)
@@ -194,8 +196,7 @@ logistic_hist_training =
         smoted_training_labels_df,
         single_label_name,
         single_label_levels,
-        )
-# PredictMD.open_plot(logistic_hist_training)
+        );
 display(logistic_hist_training)
 
 logistic_hist_testing =
@@ -205,8 +206,7 @@ logistic_hist_testing =
         testing_labels_df,
         single_label_name,
         single_label_levels,
-        )
-# PredictMD.open_plot(logistic_hist_testing)
+        );
 display(logistic_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
@@ -235,8 +235,7 @@ logistic_calibration_curve =
         single_label_name,
         positive_class;
         window = 0.2,
-        )
-# PredictMD.open_plot(logistic_calibration_curve)
+        );
 display(logistic_calibration_curve)
 
 PredictMD.probability_calibration_metrics(

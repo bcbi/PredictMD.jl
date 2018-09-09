@@ -13,7 +13,7 @@ import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version("v0.6")
+PredictMD.require_julia_version("%PREDICTMD_MINIMUM_REQUIRED_JULIA_VERSION%")
 
 PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
 
@@ -36,12 +36,14 @@ Pkg.add("DataFrames")
 Pkg.add("FileIO")
 Pkg.add("JLD2")
 Pkg.add("Knet")
+Pkg.add("PGFPlotsX")
 
 import CSV
 import DataFrames
 import FileIO
 import JLD2
 import Knet
+import PGFPlotsX
 import Random
 import Statistics
 
@@ -246,8 +248,7 @@ PredictMD.fit!(
 knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
     knet_mlp_regression,
     :loss_vs_epoch;
-    )
-# PredictMD.open_plot(knet_learningcurve_lossvsepoch)
+    );
 display(knet_learningcurve_lossvsepoch)
 
 knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
@@ -255,8 +256,7 @@ knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
     :loss_vs_epoch;
     startat = 10,
     endat = :end,
-    )
-# PredictMD.open_plot(knet_learningcurve_lossvsepoch_skip10epochs)
+    );
 display(knet_learningcurve_lossvsepoch_skip10epochs)
 
 knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
@@ -264,8 +264,7 @@ knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
     :loss_vs_iteration;
     window = 50,
     sampleevery = 10,
-    )
-# PredictMD.open_plot(knet_learningcurve_lossvsiteration)
+    );
 display(knet_learningcurve_lossvsiteration)
 
 knet_learningcurve_lossvsiteration_skip100iterations =
@@ -276,8 +275,7 @@ knet_learningcurve_lossvsiteration_skip100iterations =
         sampleevery = 10,
         startat = 100,
         endat = :end,
-        )
-# PredictMD.open_plot(knet_learningcurve_lossvsiteration_skip100iterations)
+        );
 display(knet_learningcurve_lossvsiteration_skip100iterations)
 
 knet_mlp_regression_plot_training =
@@ -286,8 +284,7 @@ knet_mlp_regression_plot_training =
         training_features_df,
         training_labels_df,
         single_label_name,
-        )
-# PredictMD.open_plot(knet_mlp_regression_plot_training)
+        );
 display(knet_mlp_regression_plot_training)
 
 knet_mlp_regression_plot_testing =
@@ -296,8 +293,7 @@ knet_mlp_regression_plot_testing =
         testing_features_df,
         testing_labels_df,
         single_label_name,
-        )
-# PredictMD.open_plot(knet_mlp_regression_plot_testing)
+        );
 display(knet_mlp_regression_plot_testing)
 
 PredictMD.singlelabelregressionmetrics(

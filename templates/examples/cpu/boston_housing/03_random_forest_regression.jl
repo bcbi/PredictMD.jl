@@ -13,7 +13,7 @@ import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version("v0.6")
+PredictMD.require_julia_version("%PREDICTMD_MINIMUM_REQUIRED_JULIA_VERSION%")
 
 PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
 
@@ -35,11 +35,13 @@ Pkg.add("CSV")
 Pkg.add("DataFrames")
 Pkg.add("FileIO")
 Pkg.add("JLD2")
+Pkg.add("PGFPlotsX")
 
 import CSV
 import DataFrames
 import FileIO
 import JLD2
+import PGFPlotsX
 import Random
 
 Random.seed!(999)
@@ -169,8 +171,7 @@ random_forest_regression_plot_training =
         training_features_df,
         training_labels_df,
         single_label_name,
-        )
-# PredictMD.open_plot(random_forest_regression_plot_training)
+        );
 display(random_forest_regression_plot_training)
 
 random_forest_regression_plot_testing =
@@ -179,8 +180,7 @@ random_forest_regression_plot_testing =
         testing_features_df,
         testing_labels_df,
         single_label_name,
-        )
-# PredictMD.open_plot(random_forest_regression_plot_testing)
+        );
 display(random_forest_regression_plot_testing)
 
 PredictMD.singlelabelregressionmetrics(

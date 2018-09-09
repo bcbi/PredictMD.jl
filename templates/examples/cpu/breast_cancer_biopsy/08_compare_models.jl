@@ -13,7 +13,7 @@ import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version("v0.6")
+PredictMD.require_julia_version("%PREDICTMD_MINIMUM_REQUIRED_JULIA_VERSION%")
 
 PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
 
@@ -40,6 +40,7 @@ Pkg.add("GLM")
 Pkg.add("JLD2")
 Pkg.add("Knet")
 Pkg.add("LIBSVM")
+Pkg.add("PGFPlotsX")
 Pkg.add("StatsModels")
 Pkg.add("ValueHistories")
 
@@ -54,6 +55,7 @@ import Knet
 import LIBSVM
 Kernel = LIBSVM.Kernel
 import LinearAlgebra
+import PGFPlotsX
 import Random
 import StatsModels
 import ValueHistories
@@ -347,8 +349,7 @@ rocplottesting = PredictMD.plotroccurves(
     testing_labels_df,
     single_label_name,
     positive_class,
-    )
-# PredictMD.open_plot(rocplottesting)
+    );
 display(rocplottesting)
 
 prplottesting = PredictMD.plotprcurves(
@@ -357,8 +358,7 @@ prplottesting = PredictMD.plotprcurves(
     testing_labels_df,
     single_label_name,
     positive_class,
-    )
-# PredictMD.open_plot(prplottesting)
+    );
 display(prplottesting)
 
 ### End model comparison code
