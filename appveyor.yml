@@ -14,8 +14,6 @@ environment:
         PREDICTMD_OPEN_PLOTS_DURING_TESTS: "false"
     matrix:
         - GROUP: "appveyor-1"
-          JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.6/julia-0.6-latest-win64.exe"
-        - GROUP: "appveyor-1"
           JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.7/julia-0.7-latest-win64.exe"
         - GROUP: "appveyor-1"
           JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/1.0/julia-1.0-latest-win64.exe"
