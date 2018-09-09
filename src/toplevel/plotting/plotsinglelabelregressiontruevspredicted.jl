@@ -50,10 +50,9 @@ function plotsinglelabelregressiontrueversuspredicted(
     #     style = "dotted, fill=red",
     #     )
     # estimated_intercept,
-    #     estimated_x_coefficient = ordinary_least_squares_regression(
+    #     estimated_x_coefficient = simple_linear_regression(
     #         Float64.(ypred), # X
-    #         Float64.(ytrue); # Y
-    #         intercept = true,
+    #         Float64.(ytrue), # Y
     #         )
     # bestfitline_linearplotobject = PGFPlots.Plots.Linear(
     #     perfectlinevalues,

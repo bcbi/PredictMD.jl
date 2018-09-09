@@ -1,96 +1,48 @@
 ##### Beginning of file
 
-import DataFrames
-import GLM
-import StatsModels
+import Statistics
 
 """
-    ordinary_least_squares_regression(x, y; intercept = true)
+    simple_linear_regression(x, y)
 
-Find the best fit line to the set of 2-dimensional points (x, y) using the
-ordinary least squares method.
+Simple linear regression: find the best fit line to the set of
+2-dimensional points (x, y) using the ordinary least squares method.
 
-If intercept is true (default), fit a line of the form y = a + b*x (where a
-and b are real numbers) and return the tuple (a, b)
+simple_linear_regression(x, y) fits a line of the form y = a + b*x
+(where a and b are real numbers) and returns the tuple (a, b).
 
-If intercept is false, fit a line of the form y = b*x (where b is a real
-number) and return the tuple (0, b)
 """
-function ordinary_least_squares_regression(
-        x::AbstractVector{T},
-        y::AbstractVector{T};
-        intercept::Bool = true,
-        ) where T <: Real
+function simple_linear_regression(
+        x::AbstractVector,
+        y::AbstractVector,
+        )::Tuple
     if length(x) != length(y)
         error("length(x) != length(y)")
     end
     if length(x) == 0
         error("length(x) == 0")
     end
-    data = DataFrames.DataFrame(
-        x = x,
-        y = y,
-        )
-    if intercept
-        estimated_intercept, estimated_x_coefficient = try
-            ols_regression = GLM.lm(
-                StatsModels.@formula(y ~ 1 + x),
-                data,
-                )
-            coefficients = ols_regression.model.pp.beta0
-            # estimated intercept: coefficients[1]
-            # estimated x coefficient: coefficients[2]
-            coefficients[1], coefficients[2]
-        catch e_1a
-            @debug(string("Ignored error: ", e_1a))
-            @debug(string("Retrying with allowrankdeficient = true"))
-            allowrankdeficient = true
-            try
-                ols_regression = GLM.lm(
-                    StatsModels.@formula(y ~ 1 + x),
-                    data,
-                    allowrankdeficient,
-                    )
-                coefficients = ols_regression.model.pp.beta0
-                # estimated intercept: coefficients[1]
-                # estimated x coefficient: coefficients[2]
-                coefficients[1], coefficients[2]
-            catch e_1b
-                @debug(string("Ignored error: ", e_1b))
-                0, 0
-            end
-        end
+    x_bar = Statistics.mean(x)
+    y_bar = Statistics.mean(y)
+    var_x = Statistics.var(x)
+    cov_x_y = Statistics.cov(x,y)
+    beta_hat = cov_x_y/var_x
+    if isfinite(beta_hat)
+        alpha_hat = y_bar - beta_hat*x_bar
+        intercept = alpha_hat
+        coefficient = beta_hat
     else
-        estimated_intercept, estimated_x_coefficient = try
-            ols_regression = GLM.lm(
-                StatsModels.@formula(y ~ 0 + x),
-                data,
+        @warn(
+            string(
+                "The best-fit line does not have a finite slope. ",
+                "I will ignore this result, and instead I will return ",
+                "intercept = 0 and coefficient = 0.",
                 )
-            coefficients = ols_regression.model.pp.beta0
-            # intercept: 0
-            # estimated x coefficient: coefficients[1]
-            0, coefficients[1]
-        catch e_2a
-            @debug(string("Ignored error: ", e_2a))
-            @debug(string("Retrying with allowrankdeficient = true"))
-            allowrankdeficient = true
-            try
-                ols_regression = GLM.lm(
-                    StatsModels.@formula(y ~ 0 + x),
-                    data,
-                    allowrankdeficient,
-                    )
-                coefficients = ols_regression.model.pp.beta0
-                # intercept: 0
-                # estimated x coefficient: coefficients[1]
-                0, coefficients[1]
-            catch e_2b
-                @debug(string("Ignored error: ", e_2b))
-                0, 0
-            end
-        end
+            )
+        intercept = 0
+        coefficient = 0
     end
-    return estimated_intercept, estimated_x_coefficient
+    return intercept, coefficient
 end
 
 ##### End of file

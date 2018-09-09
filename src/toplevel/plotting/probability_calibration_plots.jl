@@ -147,10 +147,9 @@ function plot_probability_calibration_curve(
             )
         )
     estimated_intercept, estimated_x_coefficient =
-        ordinary_least_squares_regression(
+        simple_linear_regression(
             scores, # X
-            fractions; # Y
-            intercept = true,
+            fractions, # Y
             )
     println(string("*********estimated_intercept: ", estimated_intercept,))
     println(string("*********estimated_x_coefficient: ", estimated_x_coefficient,))
@@ -257,10 +256,9 @@ function probability_calibration_metrics(
             )
         r2_score_value = r2_score(scores, fractions)
         estimated_intercept, estimated_x_coefficient =
-            ordinary_least_squares_regression(
+            simple_linear_regression(
                 Float64.(scores), # X
-                Float64.(fractions); # Y
-                intercept = true,
+                Float64.(fractions), # Y
                 )
         result[Symbol(vectorofestimators[i].name)] = [
             r2_score_value,
