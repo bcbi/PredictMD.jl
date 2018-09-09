@@ -3,14 +3,11 @@
 import Statistics
 
 """
-    simple_linear_regression(x, y)
+    simple_linear_regression(x::AbstractVector, y::AbstractVector)
 
-Simple linear regression: find the best fit line to the set of
-2-dimensional points (x, y) using the ordinary least squares method.
-
-simple_linear_regression(x, y) fits a line of the form y = a + b*x
-(where a and b are real numbers) and returns the tuple (a, b).
-
+Simple linear regression - given a set of two-dimensional points (x, y), use 
+the ordinary least squares method to find the best fit line of the form 
+y = a + b*x (where a and b are real numbers) and return the tuple (a, b).
 """
 function simple_linear_regression(
         x::AbstractVector,
@@ -31,11 +28,16 @@ function simple_linear_regression(
         alpha_hat = y_bar - beta_hat*x_bar
         intercept = alpha_hat
         coefficient = beta_hat
+        @debug(
+            string("Found best fit line: "),
+            intercept,
+            coefficient,
+            )
     else
         @warn(
             string(
-                "The best-fit line does not have a finite slope. ",
-                "I will ignore this result, and instead I will return ",
+                "The best fit line does not have a finite slope. ",
+                "I will ignore this result and will instead return ",
                 "intercept = 0 and coefficient = 0.",
                 )
             )

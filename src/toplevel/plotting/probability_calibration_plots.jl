@@ -151,8 +151,6 @@ function plot_probability_calibration_curve(
             scores, # X
             fractions, # Y
             )
-    println(string("*********estimated_intercept: ", estimated_intercept,))
-    println(string("*********estimated_x_coefficient: ", estimated_x_coefficient,))
     bestfitline_xs = [
         zero_coordinate,
         one_coordinate,
