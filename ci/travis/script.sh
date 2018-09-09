@@ -9,10 +9,6 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
 fi
 
 julia --check-bounds=yes --color=yes -e '
-    Pkg.clone(pwd(), "PredictMD");
-    '
-
-julia --check-bounds=yes --color=yes -e '
     Pkg.build("PredictMD");
     '
 
