@@ -100,11 +100,6 @@ include(
 # toplevel/docs_and_examples/
 include(
     joinpath(
-        "toplevel", "docs_and_examples", "generate_docs.jl",
-        )
-    )
-include(
-    joinpath(
         "toplevel", "docs_and_examples", "generate_examples.jl",
         )
     )

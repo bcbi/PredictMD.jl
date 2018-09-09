@@ -1,5 +1,7 @@
 ##### Beginning of file
 
+import Pkg
+
 Pkg.add("Documenter")
 Pkg.add("Literate")
 
@@ -12,7 +14,17 @@ Random.seed!(999)
 
 ENV["PREDICTMD_IS_MAKE_DOCS"] = "true"
 
-generate_examples_output_directory =
+generate_examples_output_directory = PredictMD.package_directory(
+    "docs",
+    "src",
+    "examples",
+    )
+
+rm(
+    generate_examples_output_directory;
+    force = true,
+    recursive = true,
+    )
 
 PredictMD.generate_examples(
     generate_examples_output_directory;
@@ -36,10 +48,30 @@ Documenter.makedocs(
         "requirements_for_plotting.md",
         "library/internals.md",
         ],
-    root = @__DIR__,
+    root = PredictMD.package_directory(
+        "docs",
+        ),
     sitename = "PredictMD documentation",
     )
 
 ENV["PREDICTMD_IS_MAKE_DOCS"] = "false"
+
+ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "true"
+
+Documenter.deploydocs(
+    branch = "gh-pages",
+    deps = Documenter.Deps.pip(
+        "mkdocs",
+        "pygments",
+        "python-markdown-math",
+        ),
+    julia = "0.7",
+    latest = "develop",
+    osname = "linux",
+    repo = "github.com/bcbi/PredictMD.jl.git",
+    target = "site",
+    )
+
+ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "false"
 
 ##### End of file
