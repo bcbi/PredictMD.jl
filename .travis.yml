@@ -19,6 +19,7 @@ env:
     global:
         - DOCUMENTER_DEBUG="true"
         - JULIA_DEBUG="all"
+        - PREDICTMD_OPEN_PLOTS_DURING_TESTS="true"
     matrix:
         - GROUP="travis-1"
 

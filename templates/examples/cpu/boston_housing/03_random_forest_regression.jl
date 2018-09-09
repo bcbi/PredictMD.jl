@@ -170,7 +170,8 @@ random_forest_regression_plot_training =
         training_labels_df,
         single_label_name,
         )
-PredictMD.open_plot(random_forest_regression_plot_training)
+# PredictMD.open_plot(random_forest_regression_plot_training)
+display(random_forest_regression_plot_training)
 
 random_forest_regression_plot_testing =
     PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -179,7 +180,8 @@ random_forest_regression_plot_testing =
         testing_labels_df,
         single_label_name,
         )
-PredictMD.open_plot(random_forest_regression_plot_testing)
+# PredictMD.open_plot(random_forest_regression_plot_testing)
+display(random_forest_regression_plot_testing)
 
 PredictMD.singlelabelregressionmetrics(
     random_forest_regression,

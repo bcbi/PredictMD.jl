@@ -161,7 +161,8 @@ linear_regression_plot_training =
         training_labels_df,
         single_label_name,
         )
-PredictMD.open_plot(linear_regression_plot_training)
+# PredictMD.open_plot(linear_regression_plot_training)
+display(linear_regression_plot_training)
 
 linear_regression_plot_testing =
     PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -170,7 +171,8 @@ linear_regression_plot_testing =
         testing_labels_df,
         single_label_name
         )
-PredictMD.open_plot(linear_regression_plot_testing)
+# PredictMD.open_plot(linear_regression_plot_testing)
+display(linear_regression_plot_testing)
 
 PredictMD.singlelabelregressionmetrics(
     linear_regression,

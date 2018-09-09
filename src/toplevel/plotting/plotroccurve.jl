@@ -1,7 +1,6 @@
 ##### Beginning of file
 
 import LaTeXStrings
-import PGFPlots
 import PGFPlotsX
 
 """
@@ -36,7 +35,7 @@ function plotroccurves(
     if length(vectorofestimators) == 0
         error("length(vectorofestimators) == 0")
     end
-    alllinearplotobjects = []
+    all_plots_and_legends = []
     for i = 1:length(vectorofestimators)
         estimator_i = vectorofestimators[i]
         metrics_i = _singlelabelbinaryclassificationmetrics(
@@ -53,22 +52,36 @@ function plotroccurves(
             ytrue_i,
             yscore_i,
             )
-        linearplotobject_i = PGFPlots.Plots.Linear(
-            allfpr_i,
-            alltpr_i,
-            legendentry = LaTeXStrings.LaTeXString(estimator_i.name),
-            mark = "none",
+        plot_i = PGFPlotsX.@pgf(
+            PGFPlotsX.Plot(
+                PGFPlotsX.Coordinates(
+                    allfpr_i,
+                    alltpr_i,
+                    ),
+                ),
             )
-        push!(alllinearplotobjects, linearplotobject_i)
+        legend_i = PGFPlotsX.@pgf(
+            PGFPlotsX.LegendEntry(
+                LaTeXStrings.LaTeXString(estimator_i.name)
+                ),
+            )
+        push!(all_plots_and_legends, plot_i)
+        push!(all_plots_and_legends, legend_i)
     end
-    axisobject = PGFPlots.Axis(
-        [alllinearplotobjects...],
-        xlabel = LaTeXStrings.LaTeXString("False positive rate"),
-        ylabel = LaTeXStrings.LaTeXString("True positive rate"),
-        legendPos = "outer north east",
+    all_plots_and_legends = [all_plots_and_legends...]
+    p = PGFPlotsX.@pgf(
+        PGFPlotsX.Axis(
+            {
+                xlabel = "False positive rate",
+                ylabel = "True positive rate",
+                no_markers,
+                legend_pos="outer north east",
+                },
+            all_plots_and_legends...,
+            ),
         )
-    tikzpicture = PGFPlots.plot(axisobject)
-    return tikzpicture
+    wrapper = PGFPlotsXPlot(p)
+    return wrapper
 end
 
 const plotroccurve = plotroccurves

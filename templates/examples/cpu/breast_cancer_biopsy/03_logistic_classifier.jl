@@ -195,7 +195,8 @@ logistic_hist_training =
         single_label_name,
         single_label_levels,
         )
-PredictMD.open_plot(logistic_hist_training)
+# PredictMD.open_plot(logistic_hist_training)
+display(logistic_hist_training)
 
 logistic_hist_testing =
     PredictMD.plotsinglelabelbinaryclassifierhistogram(
@@ -205,7 +206,8 @@ logistic_hist_testing =
         single_label_name,
         single_label_levels,
         )
-PredictMD.open_plot(logistic_hist_testing)
+# PredictMD.open_plot(logistic_hist_testing)
+display(logistic_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
     logistic_classifier,
@@ -234,7 +236,8 @@ logistic_calibration_curve =
         positive_class;
         window = 0.2,
         )
-PredictMD.open_plot(logistic_calibration_curve)
+# PredictMD.open_plot(logistic_calibration_curve)
+display(logistic_calibration_curve)
 
 PredictMD.probability_calibration_metrics(
     logistic_classifier,

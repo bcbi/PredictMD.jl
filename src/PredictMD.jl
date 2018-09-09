@@ -275,6 +275,11 @@ include(
     )
 include(
     joinpath(
+        "toplevel", "plotting", "defaultapplication.jl",
+        )
+    )
+include(
+    joinpath(
         "toplevel", "plotting", "pgfplots.jl",
         )
     )

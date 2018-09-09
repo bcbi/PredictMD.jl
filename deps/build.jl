@@ -3,9 +3,6 @@
 # Parts of this file are based on:
 # 1. https://github.com/KristofferC/PGFPlotsX.jl/blob/master/deps/build.jl
 
-import Random
-Random.seed!(999)
-
 have_lualatex = try success(`lualatex -v`); catch; false; end
 if have_lualatex
     @info(string("SUCCESS: Found lualatex."))
@@ -20,11 +17,11 @@ else
     @warn(string("FAILURE: Did not find pdflatex."))
 end
 
-default_engine = ""
+default_latex_engine = ""
 if have_lualatex
-    default_engine = "LUALATEX"
+    default_latex_engine = "LUALATEX"
 elseif have_pdflatex
-    default_engine = "PDFLATEX"
+    default_latex_engine = "PDFLATEX"
 else
     @warn(
         string(
@@ -37,7 +34,7 @@ else
         )
 end
 
-have_pdftoppm =  try success(`pdftoppm  -v`); catch; false; end
+have_pdftoppm =  try success(`pdftoppm -v`); catch; false; end
 if have_pdftoppm
     @info(string("SUCCESS: Found pdftoppm."))
 else
@@ -56,9 +53,25 @@ if !have_pdftoppm
         )
 end
 
-pdfpath = joinpath(@__DIR__, "pdf2svg-example-file.pdf")
-svgpath = joinpath(@__DIR__, "pdf2svg-example-file.svg")
-have_pdf2svg = try success(`pdf2svg $pdfpath $svgpath`); catch; false; end
+pdf2svg_temp_directory = mktempdir()
+pdf_original = joinpath(
+    @__DIR__,
+    "pdf2svg-example-file.pdf",
+    )
+pdfpath = joinpath(
+    pdf2svg_temp_directory,
+    "pdf2svg-example-file.pdf",
+    )
+cp(
+    pdf_original,
+    pdfpath;
+    force = true,
+    )
+svgpath = joinpath(
+    pdf2svg_temp_directory,
+    "pdf2svg-example-file.svg",
+    )
+have_pdf2svg = try success(`pdf2svg $(pdfpath) $(svgpath)`); catch; false; end
 if have_pdf2svg
     @info(string("SUCCESS: Found pdf2svg."))
 else
@@ -87,31 +100,37 @@ if !have_pdf2svg && !have_pdftoppm
         )
 end
 
-line_1_default_engine = string(
-    "DEFAULT_ENGINE = \"",
-    default_engine,
+line_1_default_latex_engine = string(
+    "PREDICTMD_DEFAULT_LATEX_ENGINE = \"",
+    default_latex_engine,
     "\"",
     )
 line_2_have_pdftoppm = string(
-    "HAVE_PDFTOPPM = ",
+    "PREDICTMD_HAVE_PDFTOPPM = ",
     have_pdftoppm,
     )
 line_3_have_pdftosvg = string(
-    "HAVE_PDFTOSVG = ",
+    "PREDICTMD_HAVE_PDFTOSVG = ",
     have_pdf2svg,
     )
-@info(line_1_default_engine)
+@info(line_1_default_latex_engine)
 @info(line_2_have_pdftoppm)
 @info(line_3_have_pdftosvg)
-open(joinpath(@__DIR__, "deps.jl"), "w") do f
-    println(f, line_1_default_engine)
-    println(f, line_2_have_pdftoppm)
-    println(f, line_3_have_pdftosvg)
+try
+    open(joinpath(@__DIR__, "deps.jl"), "w") do f
+        println(f, line_1_default_latex_engine)
+        println(f, line_2_have_pdftoppm)
+        println(f, line_3_have_pdftosvg)
+    end
+catch
 end
 
 const PREAMBLE_PATH = joinpath(@__DIR__, "custom_preamble.tex")
 if !isfile(PREAMBLE_PATH)
-    touch(PREAMBLE_PATH)
+    try
+        touch(PREAMBLE_PATH)
+    catch
+    end
 end
 
 ##### End of file

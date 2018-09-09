@@ -290,7 +290,8 @@ knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
     knet_mlp_classifier,
     :loss_vs_epoch;
     )
-PredictMD.open_plot(knet_learningcurve_lossvsepoch)
+# PredictMD.open_plot(knet_learningcurve_lossvsepoch)
+display(knet_learningcurve_lossvsepoch)
 
 knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
     knet_mlp_classifier,
@@ -298,7 +299,8 @@ knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
     startat = 10,
     endat = :end,
     )
-PredictMD.open_plot(knet_learningcurve_lossvsepoch_skip10epochs)
+# PredictMD.open_plot(knet_learningcurve_lossvsepoch_skip10epochs)
+display(knet_learningcurve_lossvsepoch_skip10epochs)
 
 knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
     knet_mlp_classifier,
@@ -306,7 +308,8 @@ knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
     window = 50,
     sampleevery = 10,
     )
-PredictMD.open_plot(knet_learningcurve_lossvsiteration)
+# PredictMD.open_plot(knet_learningcurve_lossvsiteration)
+display(knet_learningcurve_lossvsiteration)
 
 knet_learningcurve_lossvsiteration_skip100iterations =
     PredictMD.plotlearningcurve(
@@ -317,7 +320,8 @@ knet_learningcurve_lossvsiteration_skip100iterations =
         startat = 100,
         endat = :end,
         )
-PredictMD.open_plot(knet_learningcurve_lossvsiteration_skip100iterations)
+# PredictMD.open_plot(knet_learningcurve_lossvsiteration_skip100iterations)
+display(knet_learningcurve_lossvsiteration_skip100iterations)
 
 knet_mlp_classifier_hist_training =
     PredictMD.plotsinglelabelbinaryclassifierhistogram(
@@ -327,7 +331,8 @@ knet_mlp_classifier_hist_training =
         single_label_name,
         single_label_levels,
         )
-PredictMD.open_plot(knet_mlp_classifier_hist_training)
+# PredictMD.open_plot(knet_mlp_classifier_hist_training)
+display(knet_mlp_classifier_hist_training)
 
 knet_mlp_classifier_hist_testing =
         PredictMD.plotsinglelabelbinaryclassifierhistogram(
@@ -337,7 +342,8 @@ knet_mlp_classifier_hist_testing =
         single_label_name,
         single_label_levels,
         )
-PredictMD.open_plot(knet_mlp_classifier_hist_testing)
+# PredictMD.open_plot(knet_mlp_classifier_hist_testing)
+display(knet_mlp_classifier_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
     knet_mlp_classifier,

@@ -194,7 +194,8 @@ random_forest_classifier_hist_training =
         single_label_name,
         single_label_levels,
         )
-PredictMD.open_plot(random_forest_classifier_hist_training)
+# PredictMD.open_plot(random_forest_classifier_hist_training)
+display(random_forest_classifier_hist_training)
 
 random_forest_classifier_hist_testing =
     PredictMD.plotsinglelabelbinaryclassifierhistogram(
@@ -204,7 +205,8 @@ random_forest_classifier_hist_testing =
         single_label_name,
         single_label_levels,
         )
-PredictMD.open_plot(random_forest_classifier_hist_testing)
+# PredictMD.open_plot(random_forest_classifier_hist_testing)
+display(random_forest_classifier_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
     random_forest_classifier,

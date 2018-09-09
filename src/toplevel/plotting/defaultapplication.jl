@@ -1,5 +1,5 @@
 ##### Beginning of file
 
-# import PGFPlots
+import DefaultApplication
 
 ##### End of file

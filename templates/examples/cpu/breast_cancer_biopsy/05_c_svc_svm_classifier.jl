@@ -196,7 +196,8 @@ c_svc_svm_classifier_hist_training =
         single_label_name,
         single_label_levels,
         )
-PredictMD.open_plot(c_svc_svm_classifier_hist_training)
+# PredictMD.open_plot(c_svc_svm_classifier_hist_training)
+display(c_svc_svm_classifier_hist_training)
 
 c_svc_svm_classifier_hist_testing =
     PredictMD.plotsinglelabelbinaryclassifierhistogram(
@@ -206,7 +207,8 @@ c_svc_svm_classifier_hist_testing =
         single_label_name,
         single_label_levels,
         )
-PredictMD.open_plot(c_svc_svm_classifier_hist_testing)
+# PredictMD.open_plot(c_svc_svm_classifier_hist_testing)
+display(c_svc_svm_classifier_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
     c_svc_svm_classifier,

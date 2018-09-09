@@ -1,7 +1,6 @@
 ##### Beginning of file
 
 import LaTeXStrings
-import PGFPlots
 import PGFPlotsX
 import StatsBase
 import ValueHistories
@@ -176,106 +175,110 @@ function plotlearningcurves(
         show_raw::Bool = true,
         show_smoothed::Bool = true,
         )
-    if !show_raw && !show_smoothed
-        error("At least one of show_raw, show_smoothed must be true.")
-    end
-    if is_nothing(validation_yvalues)
-        has_validation = false
-    else
-        has_validation = true
-    end
-    if has_validation
-        training_legendentry = string(strip(legendentry),
-                ", training set")
-        validation_legendentry = string(strip(legendentry),
-                ", validation set")
-    else
-        training_legendentry = string(strip(legendentry),
-                ", training set")
-    end
-    if sampleevery < 1
-        error("sampleevery must be >=1")
-    end
-    if length(xvalues) != length(training_yvalues)
-        error("length(xvalues) != length(training_yvalues)")
-    end
-    if length(xvalues) == 0
-        error("length(xvalues) == 0")
-    end
-    xvalues = xvalues[1:sampleevery:end]
-    training_yvalues = training_yvalues[1:sampleevery:end]
-    if has_validation
-        validation_yvalues = validation_yvalues[1:sampleevery:end]
-    end
-    allplotobjects = []
-    if show_raw
-        training_linearplotobject_yraw = PGFPlots.Plots.Linear(
-            xvalues,
-            training_yvalues,
-            legendentry = LaTeXStrings.LaTeXString(training_legendentry),
-            mark = "none",
-            )
-        push!(allplotobjects, training_linearplotobject_yraw)
-        if has_validation
-            validation_linearplotobject_yraw = PGFPlots.Plots.Linear(
-                xvalues,
-                validation_yvalues,
-                legendentry =
-                        LaTeXStrings.LaTeXString(validation_legendentry),
-                mark = "none",
-                )
-            push!(allplotobjects, validation_linearplotobject_yraw)
-        end
-        #
-
-    end
-    if show_smoothed && window > 0
-        training_yvaluessmoothed = simple_moving_average(
-            training_yvalues,
-            window,
-            )
-        training_legendentry_smoothed = string(
-                strip(training_legendentry),
-                " (smoothed)",
-                )
-        training_linearplotobject_ysmoothed = PGFPlots.Plots.Linear(
-            xvalues,
-            training_yvaluessmoothed,
-            legendentry =
-                LaTeXStrings.LaTeXString(training_legendentry_smoothed),
-            mark = "none",
-            )
-        push!(allplotobjects, training_linearplotobject_ysmoothed)
-        #
-        if has_validation
-            validation_yvaluessmoothed = simple_moving_average(
-                validation_yvalues,
-                window,
-                )
-            validation_legendentry_smoothed = string(
-                    strip(validation_legendentry),
-                    " (smoothed)",
-                    )
-            validation_linearplotobject_ysmoothed = PGFPlots.Plots.Linear(
-                xvalues,
-                validation_yvaluessmoothed,
-                legendentry =
-                    LaTeXStrings.LaTeXString(
-                        validation_legendentry_smoothed
-                        ),
-                mark = "none",
-                )
-            push!(allplotobjects, validation_linearplotobject_ysmoothed)
-        end
-    end
-    axisobject = PGFPlots.Axis(
-        [allplotobjects...],
-        xlabel = LaTeXStrings.LaTeXString(xlabel),
-        ylabel = LaTeXStrings.LaTeXString(ylabel),
-        legendPos = legendPos,
-        )
-    tikzpicture = PGFPlots.plot(axisobject)
-    return tikzpicture
+    # if !show_raw && !show_smoothed
+    #     error("At least one of show_raw, show_smoothed must be true.")
+    # end
+    # if is_nothing(validation_yvalues)
+    #     has_validation = false
+    # else
+    #     has_validation = true
+    # end
+    # if has_validation
+    #     training_legendentry = string(strip(legendentry),
+    #             ", training set")
+    #     validation_legendentry = string(strip(legendentry),
+    #             ", validation set")
+    # else
+    #     training_legendentry = string(strip(legendentry),
+    #             ", training set")
+    # end
+    # if sampleevery < 1
+    #     error("sampleevery must be >=1")
+    # end
+    # if length(xvalues) != length(training_yvalues)
+    #     error("length(xvalues) != length(training_yvalues)")
+    # end
+    # if length(xvalues) == 0
+    #     error("length(xvalues) == 0")
+    # end
+    # xvalues = xvalues[1:sampleevery:end]
+    # training_yvalues = training_yvalues[1:sampleevery:end]
+    # if has_validation
+    #     validation_yvalues = validation_yvalues[1:sampleevery:end]
+    # end
+    # allplotobjects = []
+    # if show_raw
+    #     training_linearplotobject_yraw = PGFPlots.Plots.Linear(
+    #         xvalues,
+    #         training_yvalues,
+    #         legendentry = LaTeXStrings.LaTeXString(training_legendentry),
+    #         mark = "none",
+    #         )
+    #     push!(allplotobjects, training_linearplotobject_yraw)
+    #     if has_validation
+    #         validation_linearplotobject_yraw = PGFPlots.Plots.Linear(
+    #             xvalues,
+    #             validation_yvalues,
+    #             legendentry =
+    #                     LaTeXStrings.LaTeXString(validation_legendentry),
+    #             mark = "none",
+    #             )
+    #         push!(allplotobjects, validation_linearplotobject_yraw)
+    #     end
+    # end
+    # if show_smoothed && window > 0
+    #     training_yvaluessmoothed = simple_moving_average(
+    #         training_yvalues,
+    #         window,
+    #         )
+    #     training_legendentry_smoothed = string(
+    #             strip(training_legendentry),
+    #             " (smoothed)",
+    #             )
+    #     training_linearplotobject_ysmoothed = PGFPlots.Plots.Linear(
+    #         xvalues,
+    #         training_yvaluessmoothed,
+    #         legendentry =
+    #             LaTeXStrings.LaTeXString(training_legendentry_smoothed),
+    #         mark = "none",
+    #         )
+    #     push!(allplotobjects, training_linearplotobject_ysmoothed)
+    #     #
+    #     if has_validation
+    #         validation_yvaluessmoothed = simple_moving_average(
+    #             validation_yvalues,
+    #             window,
+    #             )
+    #         validation_legendentry_smoothed = string(
+    #                 strip(validation_legendentry),
+    #                 " (smoothed)",
+    #                 )
+    #         validation_linearplotobject_ysmoothed = PGFPlots.Plots.Linear(
+    #             xvalues,
+    #             validation_yvaluessmoothed,
+    #             legendentry =
+    #                 LaTeXStrings.LaTeXString(
+    #                     validation_legendentry_smoothed
+    #                     ),
+    #             mark = "none",
+    #             )
+    #         push!(allplotobjects, validation_linearplotobject_ysmoothed)
+    #     end
+    # end
+    # axisobject = PGFPlots.Axis(
+    #     [allplotobjects...],
+    #     xlabel = LaTeXStrings.LaTeXString(xlabel),
+    #     ylabel = LaTeXStrings.LaTeXString(ylabel),
+    #     legendPos = legendPos,
+    #     )
+    # tikzpicture = PGFPlots.plot(axisobject)
+    # # return tikzpicture
+    # p = PGFPlotsX.@pgf(
+    #
+    #     )
+    # wrapper = PGFPlotsXPlot(p)
+    wrapper = PGFPlotsXPlot(nothing)
+    return wrapper
 end
 
 const plotlearningcurve = plotlearningcurves

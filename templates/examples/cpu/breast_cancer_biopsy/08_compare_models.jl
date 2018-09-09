@@ -348,7 +348,8 @@ rocplottesting = PredictMD.plotroccurves(
     single_label_name,
     positive_class,
     )
-PredictMD.open_plot(rocplottesting)
+# PredictMD.open_plot(rocplottesting)
+display(rocplottesting)
 
 prplottesting = PredictMD.plotprcurves(
     all_models,
@@ -357,7 +358,8 @@ prplottesting = PredictMD.plotprcurves(
     single_label_name,
     positive_class,
     )
-PredictMD.open_plot(prplottesting)
+# PredictMD.open_plot(prplottesting)
+display(prplottesting)
 
 ### End model comparison code
 
