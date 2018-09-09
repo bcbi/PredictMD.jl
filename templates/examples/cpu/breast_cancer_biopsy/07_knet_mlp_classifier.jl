@@ -24,15 +24,6 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin Knet neural network classifier code
 
-import Pkg
-
-Pkg.add("CSV")
-Pkg.add("DataFrames")
-Pkg.add("FileIO")
-Pkg.add("JLD2")
-Pkg.add("Knet")
-Pkg.add("PGFPlotsX")
-
 import CSV
 import DataFrames
 import FileIO
@@ -290,7 +281,7 @@ knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
 
 # BEGIN TEST STATEMENTS
 filename = string(
-    tempfile(),
+    tempname(),
     "_",
     "knet_learningcurve_lossvsepoch",
     ".pdf",
@@ -314,7 +305,7 @@ knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
 
 # BEGIN TEST STATEMENTS
 filename = string(
-    tempfile(),
+    tempname(),
     "_",
     "knet_learningcurve_lossvsepoch_skip10epochs",
     ".pdf",
@@ -338,7 +329,7 @@ knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
 
 # BEGIN TEST STATEMENTS
 filename = string(
-    tempfile(),
+    tempname(),
     "_",
     "knet_learningcurve_lossvsiteration",
     ".pdf",
@@ -365,7 +356,7 @@ knet_learningcurve_lossvsiteration_skip100iterations =
 
 # BEGIN TEST STATEMENTS
 filename = string(
-    tempfile(),
+    tempname(),
     "_",
     "knet_learningcurve_lossvsiteration_skip100iterations",
     ".pdf",
@@ -391,7 +382,7 @@ knet_mlp_classifier_hist_training =
 
 # BEGIN TEST STATEMENTS
 filename = string(
-    tempfile(),
+    tempname(),
     "_",
     "knet_mlp_classifier_hist_training",
     ".pdf",
@@ -417,7 +408,7 @@ knet_mlp_classifier_hist_testing =
 
 # BEGIN TEST STATEMENTS
 filename = string(
-    tempfile(),
+    tempname(),
     "_",
     "knet_mlp_classifier_hist_testing",
     ".pdf",

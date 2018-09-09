@@ -24,15 +24,6 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin data preprocessing code
 
-import Pkg
-
-Pkg.add("CSV")
-Pkg.add("DataFrames")
-Pkg.add("FileIO")
-Pkg.add("JLD2")
-Pkg.add("RDatasets")
-Pkg.add("StatsBase")
-
 import CSV
 import DataFrames
 import FileIO

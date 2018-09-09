@@ -24,21 +24,6 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin model comparison code
 
-import Pkg
-
-Pkg.add("CSV")
-Pkg.add("DataFrames")
-Pkg.add("DecisionTree")
-Pkg.add("Distributions")
-Pkg.add("FileIO")
-Pkg.add("GLM")
-Pkg.add("JLD2")
-Pkg.add("Knet")
-Pkg.add("LIBSVM")
-Pkg.add("PGFPlotsX")
-Pkg.add("StatsModels")
-Pkg.add("ValueHistories")
-
 import CSV
 import DataFrames
 import DecisionTree
@@ -348,7 +333,7 @@ rocplottesting = PredictMD.plotroccurves(
 
 # BEGIN TEST STATEMENTS
 filename = string(
-    tempfile(),
+    tempname(),
     "_",
     "rocplottesting",
     ".pdf",
@@ -373,7 +358,7 @@ prplottesting = PredictMD.plotprcurves(
 
 # BEGIN TEST STATEMENTS
 filename = string(
-    tempfile(),
+    tempname(),
     "_",
     "prplottesting",
     ".pdf",

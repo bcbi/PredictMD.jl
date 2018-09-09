@@ -92,21 +92,23 @@ Test.@testset "Unit tests       " begin
     end
 end
 
+temp_generate_examples_dir = joinpath(
+    PredictMD.get_temp_directory(),
+    "generate_examples",
+    "PredictMDTEMP",
+    "examples",
+    )
+
+rm(
+    temp_generate_examples_dir;
+    force = true,
+    recursive = true,
+    )
+
 Test.@testset "Integration tests" begin
     @info(string("Running integration tests..."))
 
     Test.@testset "Generate examples      " begin
-        rm(
-            joinpath(PredictMD.get_temp_directory(), "generate_examples",);
-            force = true,
-            recursive = true,
-            )
-        temp_generate_examples_dir = joinpath(
-            PredictMD.get_temp_directory(),
-            "generate_examples",
-            "PredictMDTEMP",
-            "examples",
-            )
         PredictMD.generate_examples(
             temp_generate_examples_dir;
             scripts = true,

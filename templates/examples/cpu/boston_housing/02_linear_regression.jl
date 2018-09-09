@@ -24,14 +24,6 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin linear regression code
 
-import Pkg
-
-Pkg.add("CSV")
-Pkg.add("DataFrames")
-Pkg.add("FileIO")
-Pkg.add("JLD2")
-Pkg.add("PGFPlotsX")
-
 import CSV
 import DataFrames
 import FileIO
@@ -161,7 +153,7 @@ linear_regression_plot_training =
 
 # BEGIN TEST STATEMENTS
 filename = string(
-    tempfile(),
+    tempname(),
     "_",
     "linear_regression_plot_training",
     ".pdf",
@@ -186,7 +178,7 @@ linear_regression_plot_testing =
 
 # BEGIN TEST STATEMENTS
 filename = string(
-    tempfile(),
+    tempname(),
     "_",
     "linear_regression_plot_testing",
     ".pdf",

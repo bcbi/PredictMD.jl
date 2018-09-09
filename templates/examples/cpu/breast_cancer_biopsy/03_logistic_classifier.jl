@@ -24,14 +24,6 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin logistic classifier code
 
-import Pkg
-
-Pkg.add("CSV")
-Pkg.add("DataFrames")
-Pkg.add("FileIO")
-Pkg.add("JLD2")
-Pkg.add("PGFPlotsX")
-
 import CSV
 import DataFrames
 import FileIO
@@ -195,7 +187,7 @@ logistic_hist_training =
 
 # BEGIN TEST STATEMENTS
 filename = string(
-    tempfile(),
+    tempname(),
     "_",
     "logistic_hist_training",
     ".pdf",
@@ -221,7 +213,7 @@ logistic_hist_testing =
 
 # BEGIN TEST STATEMENTS
 filename = string(
-    tempfile(),
+    tempname(),
     "_",
     "logistic_hist_testing",
     ".pdf",

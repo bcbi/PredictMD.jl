@@ -24,14 +24,6 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin random forest regression code
 
-import Pkg
-
-Pkg.add("CSV")
-Pkg.add("DataFrames")
-Pkg.add("FileIO")
-Pkg.add("JLD2")
-Pkg.add("PGFPlotsX")
-
 import CSV
 import DataFrames
 import FileIO
@@ -170,7 +162,7 @@ random_forest_regression_plot_training =
 
 # BEGIN TEST STATEMENTS
 filename = string(
-    tempfile(),
+    tempname(),
     "_",
     "random_forest_regression_plot_training",
     ".pdf",
@@ -195,7 +187,7 @@ random_forest_regression_plot_testing =
 
 # BEGIN TEST STATEMENTS
 filename = string(
-    tempfile(),
+    tempname(),
     "_",
     "random_forest_regression_plot_testing",
     ".pdf",

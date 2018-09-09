@@ -39,10 +39,22 @@ function PGFPlotsX.save(
     underlying_object = get_underlying(p)
     result = PGFPlotsX.save(
         filename,
-        document;
+        underlying_object;
         kwargs...
         )
     return result
+end
+
+function PGFPlotsX.save(
+        filename::String,
+        p::Nothing;
+        kwargs...,
+        )::Nothing
+    try
+        touch(filename)
+    catch
+    end
+    return nothing
 end
 
 ##### End of file

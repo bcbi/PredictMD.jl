@@ -115,6 +115,7 @@ function plot_probability_calibration_curve(
     score_versus_fraction_linearplotobject = PGFPlotsX.@pgf(
         PGFPlotsX.Plot(
             {
+                only_marks,
                 style = "black, fill = black",
                 },
             PGFPlotsX.Coordinates(
@@ -123,8 +124,8 @@ function plot_probability_calibration_curve(
                 )
             )
         )
-    zero_coordinate = zero(F)
-    one_coordinate = one(F) * multiply_by
+    zero_coordinate = convert(F, zero(F))
+    one_coordinate = convert(F, one(F) * multiply_by)
     perfectline_xs = [
         zero_coordinate,
         one_coordinate,
@@ -151,13 +152,15 @@ function plot_probability_calibration_curve(
             fractions; # Y
             intercept = true,
             )
+    println(string("*********estimated_intercept: ", estimated_intercept,))
+    println(string("*********estimated_x_coefficient: ", estimated_x_coefficient,))
     bestfitline_xs = [
         zero_coordinate,
         one_coordinate,
         ]
     bestfitline_ys = [
-        estimated_intercept + estimated_x_coefficient * zero_coordinate,
-        estimated_intercept + estimated_x_coefficient * one_coordinate],
+        estimated_intercept,
+        estimated_intercept + estimated_x_coefficient * one_coordinate,
         ]
     bestfitline_linearplotobject = PGFPlotsX.@pgf(
         PGFPlotsX.Plot(

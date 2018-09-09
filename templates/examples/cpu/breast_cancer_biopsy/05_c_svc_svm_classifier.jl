@@ -24,15 +24,6 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin C-SVC code
 
-import Pkg
-
-Pkg.add("CSV")
-Pkg.add("DataFrames")
-Pkg.add("FileIO")
-Pkg.add("JLD2")
-Pkg.add("LIBSVM")
-Pkg.add("PGFPlotsX")
-
 import CSV
 import DataFrames
 import FileIO
@@ -196,7 +187,7 @@ c_svc_svm_classifier_hist_training =
 
 # BEGIN TEST STATEMENTS
 filename = string(
-    tempfile(),
+    tempname(),
     "_",
     "c_svc_svm_classifier_hist_training",
     ".pdf",
@@ -222,7 +213,7 @@ c_svc_svm_classifier_hist_testing =
 
 # BEGIN TEST STATEMENTS
 filename = string(
-    tempfile(),
+    tempname(),
     "_",
     "c_svc_svm_classifier_hist_testing",
     ".pdf",

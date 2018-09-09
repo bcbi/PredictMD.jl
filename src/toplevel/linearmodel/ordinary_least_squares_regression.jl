@@ -33,25 +33,61 @@ function ordinary_least_squares_regression(
         )
     if intercept
         estimated_intercept, estimated_x_coefficient = try
-            ols_regression = GLM.lm(StatsModels.@formula(y ~ 1 + x),data,)
+            ols_regression = GLM.lm(
+                StatsModels.@formula(y ~ 1 + x),
+                data,
+                )
             coefficients = ols_regression.model.pp.beta0
             # estimated intercept: coefficients[1]
             # estimated x coefficient: coefficients[2]
             coefficients[1], coefficients[2]
-        catch e
-            @debug(string("Ignored error: ", e))
-            0, 0
+        catch e_1a
+            @debug(string("Ignored error: ", e_1a))
+            @debug(string("Retrying with allowrankdeficient = true"))
+            allowrankdeficient = true
+            try
+                ols_regression = GLM.lm(
+                    StatsModels.@formula(y ~ 1 + x),
+                    data,
+                    allowrankdeficient,
+                    )
+                coefficients = ols_regression.model.pp.beta0
+                # estimated intercept: coefficients[1]
+                # estimated x coefficient: coefficients[2]
+                coefficients[1], coefficients[2]
+            catch e_1b
+                @debug(string("Ignored error: ", e_1b))
+                0, 0
+            end
         end
     else
         estimated_intercept, estimated_x_coefficient = try
-            ols_regression = GLM.lm(StatsModels.@formula(y ~ 0 + x),data,)
+            ols_regression = GLM.lm(
+                StatsModels.@formula(y ~ 0 + x),
+                data,
+                )
             coefficients = ols_regression.model.pp.beta0
             # intercept: 0
             # estimated x coefficient: coefficients[1]
             0, coefficients[1]
-        catch e
-            @debug(string("Ignored error: ", e))
-            0, 0
+        catch e_2a
+            @debug(string("Ignored error: ", e_2a))
+            @debug(string("Retrying with allowrankdeficient = true"))
+            allowrankdeficient = true
+            try
+                ols_regression = GLM.lm(
+                    StatsModels.@formula(y ~ 0 + x),
+                    data,
+                    allowrankdeficient,
+                    )
+                coefficients = ols_regression.model.pp.beta0
+                # intercept: 0
+                # estimated x coefficient: coefficients[1]
+                0, coefficients[1]
+            catch e_2b
+                @debug(string("Ignored error: ", e_2b))
+                0, 0
+            end
         end
     end
     return estimated_intercept, estimated_x_coefficient
