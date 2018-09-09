@@ -1,5 +1,8 @@
 ##### Beginning of file
 
+Pkg.add("Documenter")
+Pkg.add("Literate")
+
 import Documenter
 import Literate
 import PredictMD
@@ -7,34 +10,36 @@ import PredictMD
 import Random
 Random.seed!(999)
 
-rm(
-    joinpath(
-        PredictMD.get_temp_directory(),
-        "make_docs",
-        );
-    force = true,
-    recursive = true,
-    )
+ENV["PREDICTMD_IS_MAKE_DOCS"] = "true"
 
-temp_makedocs_dir = joinpath(
-    PredictMD.get_temp_directory(),
-    "make_docs",
-    "PredictMDTEMP",
-    "docs",
-    )
+generate_examples_output_directory =
 
-PredictMD.generate_docs(
-    temp_makedocs_dir;
+PredictMD.generate_examples(
+    generate_examples_output_directory;
     execute_notebooks = false,
     markdown = true,
     notebooks = true,
     scripts = true,
+    include_test_statements = false,
     )
 
-if PredictMD.is_travis_ci()
-    filename = joinpath(homedir(), "travis_temp_makedocs_dir.txt")
-    rm(filename; force = true, recursive = true)
-    write(filename, temp_makedocs_dir)
-end
+Documenter.makedocs(
+    modules = [
+        PredictMD,
+        PredictMD.Cleaning,
+        PredictMD.Compilation,
+        PredictMD.GPU,
+        PredictMD.Server,
+        ],
+    pages = Any[
+        "index.md",
+        "requirements_for_plotting.md",
+        "library/internals.md",
+        ],
+    root = @__DIR__,
+    sitename = "PredictMD documentation",
+    )
+
+ENV["PREDICTMD_IS_MAKE_DOCS"] = "false"
 
 ##### End of file

@@ -61,6 +61,18 @@ function _preprocess_example_include_test_statements(
     return content
 end
 
+function _fix_example_blocks(filename::AbstractString)::Nothing
+    if filename_extension(filename) == ".md"
+        content = read(filename, String)
+        rm(filename; force = true, recursive = true,)
+        pattern = r"```@example \w*\n"
+        replacement = "```julia\n"
+        content = replace(content, pattern => replacement)
+        write(filename, content)
+    end
+    return nothing
+end
+
 function generate_examples(
         output_directory::AbstractString;
         execute_notebooks = false,
@@ -234,15 +246,25 @@ function generate_examples(
                 )
         end
     end
+
+    for (root, dirs, files) in walkdir(temp_examples_dir)
+        for f in files
+            filename = joinpath(root, f)
+            _fix_example_blocks(filename)
+        end
+    end
+
     try
         mkpath(dirname(output_directory))
     catch
     end
+
     cp(
         temp_examples_dir,
         output_directory;
         force = true,
         )
+
     @info(
         string(
             "Finished generating examples. ",
