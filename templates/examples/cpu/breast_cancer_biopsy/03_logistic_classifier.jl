@@ -4,11 +4,6 @@ error(string("This file is not meant to be run. Use the `PredictMD.generate_exam
 
 %PREDICTMD_GENERATED_BY%
 
-# BEGIN TEST STATEMENTS
-import Test
-Test.@test( 1 == 1 )
-# END TEST STATEMENTS
-
 import PredictMD
 
 ### Begin project-specific settings
@@ -197,6 +192,22 @@ logistic_hist_training =
         single_label_name,
         single_label_levels,
         );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempfile(),
+    "_",
+    "logistic_hist_training",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, logistic_hist_training)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
 display(logistic_hist_training)
 
 logistic_hist_testing =
@@ -207,6 +218,22 @@ logistic_hist_testing =
         single_label_name,
         single_label_levels,
         );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempfile(),
+    "_",
+    "logistic_hist_testing",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, logistic_hist_testing)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
 display(logistic_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
@@ -236,6 +263,10 @@ logistic_calibration_curve =
         positive_class;
         window = 0.2,
         );
+
+# BEGIN TEST STATEMENTS
+# END TEST STATEMENTS
+
 display(logistic_calibration_curve)
 
 PredictMD.probability_calibration_metrics(

@@ -4,11 +4,6 @@ error(string("This file is not meant to be run. Use the `PredictMD.generate_exam
 
 %PREDICTMD_GENERATED_BY%
 
-# BEGIN TEST STATEMENTS
-import Test
-Test.@test( 1 == 1 )
-# END TEST STATEMENTS
-
 import PredictMD
 
 ### Begin project-specific settings
@@ -249,6 +244,22 @@ knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
     knet_mlp_regression,
     :loss_vs_epoch;
     );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempfile(),
+    "_",
+    "knet_learningcurve_lossvsepoch",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, knet_learningcurve_lossvsepoch)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
 display(knet_learningcurve_lossvsepoch)
 
 knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
@@ -257,6 +268,22 @@ knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
     startat = 10,
     endat = :end,
     );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempfile(),
+    "_",
+    "knet_learningcurve_lossvsepoch_skip10epochs",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, knet_learningcurve_lossvsepoch_skip10epochs)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
 display(knet_learningcurve_lossvsepoch_skip10epochs)
 
 knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
@@ -265,6 +292,22 @@ knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
     window = 50,
     sampleevery = 10,
     );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempfile(),
+    "_",
+    "knet_learningcurve_lossvsiteration",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, knet_learningcurve_lossvsiteration)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
 display(knet_learningcurve_lossvsiteration)
 
 knet_learningcurve_lossvsiteration_skip100iterations =
@@ -276,6 +319,22 @@ knet_learningcurve_lossvsiteration_skip100iterations =
         startat = 100,
         endat = :end,
         );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempfile(),
+    "_",
+    "knet_learningcurve_lossvsiteration_skip100iterations",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, knet_learningcurve_lossvsiteration_skip100iterations)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
 display(knet_learningcurve_lossvsiteration_skip100iterations)
 
 knet_mlp_regression_plot_training =
@@ -285,6 +344,22 @@ knet_mlp_regression_plot_training =
         training_labels_df,
         single_label_name,
         );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempfile(),
+    "_",
+    "knet_mlp_regression_plot_training",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, knet_mlp_regression_plot_training)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
 display(knet_mlp_regression_plot_training)
 
 knet_mlp_regression_plot_testing =
@@ -294,6 +369,22 @@ knet_mlp_regression_plot_testing =
         testing_labels_df,
         single_label_name,
         );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempfile(),
+    "_",
+    "knet_mlp_regression_plot_testing",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, knet_mlp_regression_plot_testing)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
 display(knet_mlp_regression_plot_testing)
 
 PredictMD.singlelabelregressionmetrics(

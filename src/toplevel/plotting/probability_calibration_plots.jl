@@ -115,7 +115,6 @@ function plot_probability_calibration_curve(
     score_versus_fraction_linearplotobject = PGFPlotsX.@pgf(
         PGFPlotsX.Plot(
             {
-                no_marks,
                 style = "black, fill = black",
                 },
             PGFPlotsX.Coordinates(
@@ -126,17 +125,23 @@ function plot_probability_calibration_curve(
         )
     zero_coordinate = zero(F)
     one_coordinate = one(F) * multiply_by
+    perfectline_xs = [
+        zero_coordinate,
+        one_coordinate,
+        ]
+    perfectline_ys = [
+        zero_coordinate,
+        one_coordinate,
+        ]
     perfectline_linearplotobject = PGFPlotsX.@pgf(
         PGFPlotsX.Plot(
             {
                 no_marks,
-                style = "dotted, fill=red",
+                style = "dotted, red, color=red, fill=red",
                 },
             PGFPlotsX.Coordinates(
-                [
-                    (zero_coordinate, zero_coordinate),
-                    (one_coordinate, one_coordinate),
-                    ]
+                perfectline_xs,
+                perfectline_ys,
                 ),
             )
         )
@@ -146,19 +151,23 @@ function plot_probability_calibration_curve(
             fractions; # Y
             intercept = true,
             )
+    bestfitline_xs = [
+        zero_coordinate,
+        one_coordinate,
+        ]
+    bestfitline_ys = [
+        estimated_intercept + estimated_x_coefficient * zero_coordinate,
+        estimated_intercept + estimated_x_coefficient * one_coordinate],
+        ]
     bestfitline_linearplotobject = PGFPlotsX.@pgf(
         PGFPlotsX.Plot(
             {
                 no_marks,
-                style = "dashed, fill=blue",
+                style = "dashed, blue, color=blue, fill=blue",
                 },
             PGFPlotsX.Coordinates(
-                [
-                    (zero_coordinate, estimated_intercept +
-                        estimated_x_coefficient * zero_coordinate),
-                    (one_coordinate, estimated_intercept +
-                        estimated_x_coefficient * one_coordinate),
-                    ]
+                bestfitline_xs,
+                bestfitline_ys,
                 ),
             )
         )

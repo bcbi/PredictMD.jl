@@ -4,11 +4,6 @@ error(string("This file is not meant to be run. Use the `PredictMD.generate_exam
 
 %PREDICTMD_GENERATED_BY%
 
-# BEGIN TEST STATEMENTS
-import Test
-Test.@test( 1 == 1 )
-# END TEST STATEMENTS
-
 import PredictMD
 
 ### Begin project-specific settings
@@ -350,6 +345,22 @@ rocplottesting = PredictMD.plotroccurves(
     single_label_name,
     positive_class,
     );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempfile(),
+    "_",
+    "rocplottesting",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, rocplottesting)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
 display(rocplottesting)
 
 prplottesting = PredictMD.plotprcurves(
@@ -359,6 +370,22 @@ prplottesting = PredictMD.plotprcurves(
     single_label_name,
     positive_class,
     );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempfile(),
+    "_",
+    "prplottesting",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, prplottesting)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
 display(prplottesting)
 
 ### End model comparison code

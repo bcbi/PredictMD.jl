@@ -4,11 +4,6 @@ error(string("This file is not meant to be run. Use the `PredictMD.generate_exam
 
 %PREDICTMD_GENERATED_BY%
 
-# BEGIN TEST STATEMENTS
-import Test
-Test.@test( 1 == 1 )
-# END TEST STATEMENTS
-
 import PredictMD
 
 ### Begin project-specific settings
@@ -198,6 +193,22 @@ nu_svc_svm_classifier_hist_training =
         single_label_name,
         single_label_levels,
         );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempfile(),
+    "_",
+    "nu_svc_svm_classifier_hist_training",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, nu_svc_svm_classifier_hist_training)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
 display(nu_svc_svm_classifier_hist_training)
 
 nu_svc_svm_classifier_hist_testing =
@@ -208,6 +219,22 @@ nu_svc_svm_classifier_hist_testing =
         single_label_name,
         single_label_levels,
         );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempfile(),
+    "_",
+    "nu_svc_svm_classifier_hist_testing",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, nu_svc_svm_classifier_hist_testing)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
 display(nu_svc_svm_classifier_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
