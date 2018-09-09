@@ -68,21 +68,21 @@ build_script:
     # Need to convert from shallow to complete for Pkg.clone to work
     - IF EXIST .git\shallow (git fetch --unshallow)
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
-        "Pkg.clone(pwd(), \"PredictMD\")"
+        "import Pkg; Pkg.clone(pwd(), \"PredictMD\")"
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
-        "Pkg.build(\"PredictMD\")"
+        "import Pkg; Pkg.build(\"PredictMD\")"
 
 test_script:
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
         "import PredictMD"
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
-        "Pkg.test(\"PredictMD\"; coverage=true)"
+        "import Pkg; Pkg.test(\"PredictMD\"; coverage=true)"
 
 on_success:
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
-        "Pkg.add(\"Coverage\")"
+        "import Pkg; Pkg.add(\"Coverage\")"
     - C:\projects\julia\bin\julia --check-bounds=yes --color=yes -e
-        "cd(Pkg.dir(\"PredictMD\"));using Coverage;Codecov.submit(Codecov.process_folder());"
+        "import Pkg; cd(Pkg.dir(\"PredictMD\"));using Coverage;Codecov.submit(Codecov.process_folder());"
 
 
 ##### End of file

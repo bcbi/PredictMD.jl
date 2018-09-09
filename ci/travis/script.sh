@@ -9,6 +9,7 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
 fi
 
 julia --check-bounds=yes --color=yes -e '
+    import Pkg;
     Pkg.build("PredictMD");
     '
 
@@ -17,20 +18,24 @@ julia --check-bounds=yes --color=yes -e '
     '
 
 julia --check-bounds=yes --color=yes -e '
+    import Pkg;
     Pkg.test("PredictMD"; coverage=true);
     '
 
 julia --check-bounds=yes --color=yes -e '
+    import Pkg;
     Pkg.add("Coverage");
     '
 
 julia --check-bounds=yes --color=yes -e '
+    import Pkg;
     cd(Pkg.dir("PredictMD"));
     import Coverage;
     Coverage.Codecov.submit(Coverage.Codecov.process_folder());
     '
 
 julia --check-bounds=yes --color=yes -e '
+    import Pkg;
     include(joinpath(Pkg.dir("PredictMD"), "docs", "make.jl",));
 '
 
