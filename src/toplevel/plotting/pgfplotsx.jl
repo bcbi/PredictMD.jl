@@ -47,16 +47,4 @@ function PGFPlotsX.save(
     return nothing
 end
 
-function PGFPlotsX.save(
-        filename::String,
-        p::Nothing;
-        kwargs...,
-        )::Nothing
-    try
-        touch(filename)
-    catch
-    end
-    return nothing
-end
-
 ##### End of file
