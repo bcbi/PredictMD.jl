@@ -1,35 +1,22 @@
 ##### Beginning of file
 
-import Compat
+@info(string("Julia depot paths: "), Base.DEPOT_PATH)
 
-Compat.@info(string("Julia package directory: \"", Pkg.dir(), "\"",))
+@info(string("Printing Julia version info:",))
+import InteractiveUtils
+InteractiveUtils.versioninfo(verbose=true)
 
-const julia_cache_paths = string(
-    "[\"",
-    join(Base.LOAD_CACHE_PATH,"\", \""),
-    "\"]",
-    )
+@info(string("Packages in the project (explicitly added): ",))
+import Pkg
+Pkg.status(Pkg.PKGMODE_PROJECT)
 
-Compat.@info(string("Julia cache path(s): ", julia_cache_paths, ".", ))
+@info(string("Packages in the manifest (recursive dependencies): ",))
+Pkg.status(Pkg.PKGMODE_MANIFEST)
 
-Compat.@info(string("Printing Julia version info:",))
-
-versioninfo(true)
-
-Compat.@info(string("Attempting to import PredictMD...",))
-
+@info(string("Attempting to import PredictMD...",))
 import PredictMD
-
-Compat.@info(string("Successfully imported PredictMD.",))
-
-Compat.@info(string("PredictMD version: ",PredictMD.version(),))
-
-Compat.@info(
-    string(
-        "PredictMD package directory: \"",
-        PredictMD.pkg_dir(),
-        "\"",
-        )
-    )
+@info(string("Successfully imported PredictMD.",))
+@info(string("PredictMD version: "),PredictMD.version(),)
+@info(string("PredictMD package directory: "),PredictMD.package_directory(),)
 
 ##### End of file

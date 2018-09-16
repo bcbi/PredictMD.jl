@@ -10,7 +10,7 @@ function convert_value_to_missing!(
         df::DataFrames.AbstractDataFrame,
         value,
         column_names::AbstractArray{Symbol},
-        )::Void
+        )::Nothing
     function f(old_vector::AbstractVector)::Vector{Any}
         new_vector = Vector{Any}(length(old_vector))
         for i = 1:length(old_vector)
@@ -33,7 +33,7 @@ function convert_value_to_missing!(
         df::DataFrames.AbstractDataFrame,
         value,
         column_name::Symbol,
-        )::Void
+        )::Nothing
     convert_value_to_missing!(df, value, Symbol[column_name])
     return nothing
 end

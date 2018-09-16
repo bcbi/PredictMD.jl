@@ -1,6 +1,7 @@
 ##### Beginning of file
 
 import DataFrames
+import Statistics
 
 """
 """
@@ -90,14 +91,14 @@ function risk_score_cutoff_values(
         average_function( ytrue[high_risk_group_rows] ),
         ]
     risk_group_prevalences[:Arithmetic_mean] = [
-        Base.mean( ytrue[low_risk_group_rows] ),
-        Base.mean( ytrue[medium_risk_group_rows] ),
-        Base.mean( ytrue[high_risk_group_rows] ),
+        Statistics.mean( ytrue[low_risk_group_rows] ),
+        Statistics.mean( ytrue[medium_risk_group_rows] ),
+        Statistics.mean( ytrue[high_risk_group_rows] ),
         ]
     risk_group_prevalences[:Median] = [
-        Base.median( ytrue[low_risk_group_rows] ),
-        Base.median( ytrue[medium_risk_group_rows] ),
-        Base.median( ytrue[high_risk_group_rows] ),
+        Statistics.median( ytrue[low_risk_group_rows] ),
+        Statistics.median( ytrue[medium_risk_group_rows] ),
+        Statistics.median( ytrue[high_risk_group_rows] ),
         ]
     if average_function == Base.mean || average_function == Base.median
         delete!(risk_group_prevalences, :User_supplied_average_function)

@@ -1,14 +1,5 @@
 ##### Beginning of file
 
-"""
-"""
-function version()::VersionNumber
-    result = PREDICTMD_VERSION
-    return result
-end
-
-"""
-"""
 function next_major_version(
         current_version::VersionNumber;
         add_trailing_minus::Bool = false,
@@ -31,8 +22,6 @@ function next_major_version(
     return result
 end
 
-"""
-"""
 function next_minor_version(
         current_version::VersionNumber;
         add_trailing_minus::Bool = false,

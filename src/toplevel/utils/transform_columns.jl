@@ -8,7 +8,7 @@ function transform_columns!(
         df::DataFrames.AbstractDataFrame,
         f::Function,
         column_name::Symbol,
-        )::Void
+        )::Nothing
     old_column = df[column_name]
     DataFrames.delete!(df, column_name)
     new_column = fix_type(f(old_column))
@@ -20,7 +20,7 @@ function transform_columns!(
         df::DataFrames.AbstractDataFrame,
         f::Function,
         column_names::AbstractArray{Symbol},
-        )::Void
+        )::Nothing
     for column_name in column_names
         transform_columns!(df, f, column_name)
     end

@@ -1,6 +1,5 @@
 ##### Beginning of file
 
-import Compat
 import CSV
 import CSVFiles
 import DataFrames
@@ -22,7 +21,7 @@ function x_contains_y(
         return false
     end
     for i = 1:length(y)
-        if contains(x, y[i])
+        if occursin(y[i], x)
             return true
         end
     end
@@ -61,8 +60,8 @@ df = DataFrames.DataFrame(
         )
     )
 
-Compat.@info(PredictMD.Cleaning.ccs_onehot_names(df))
-Compat.@info(PredictMD.Cleaning.ccs_onehot_names(df, "ccs_onehot_"))
+@info(PredictMD.Cleaning.ccs_onehot_names(df))
+@info(PredictMD.Cleaning.ccs_onehot_names(df, "ccs_onehot_"))
 ```
 """
 function ccs_onehot_names(
@@ -131,7 +130,7 @@ df = DataFrames.DataFrame(
         )
     )
 
-Compat.@info(PredictMD.Cleaning.ccs_onehot_names(df))
+@info(PredictMD.Cleaning.ccs_onehot_names(df))
 ```
 """
 function clean_hcup_nis_csv_icd9(
@@ -140,11 +139,11 @@ function clean_hcup_nis_csv_icd9(
         output_file_name::AbstractString;
         header_row::Bool = true,
         print_every_n_lines::Integer = 1_000_000,
-        icd_code_type::Union{Void, Symbol} = nothing,
+        icd_code_type::Union{Nothing, Symbol} = nothing,
         num_dx_columns::Integer = 25,
         num_pr_columns::Integer = 15,
         ccs_onehot_prefix::AbstractString = "ccs_onehot_",
-        rows_for_type_detect::Union{Void, Integer} = nothing,
+        rows_for_type_detect::Union{Nothing, Integer} = nothing,
         )
     if is_nothing(rows_for_type_detect)
         error("you need to specify rows_for_type_detect")
@@ -199,7 +198,7 @@ function clean_hcup_nis_csv_icd9(
         if ispath(temp_file_name_vector[i])
             error("ispath(temp_file_name_vector[i])")
         end
-        Compat.@info(
+        @info(
             string(
                 "Starting to read input file ",
                 i,
@@ -224,7 +223,7 @@ function clean_hcup_nis_csv_icd9(
                     line_number += 1
                     if (print_every_n_lines >= 0) &&
                             (line_number % print_every_n_lines == 0)
-                        Compat.@info(
+                        @info(
                             string(
                                 "Input file ",
                                 i,
@@ -238,7 +237,7 @@ function clean_hcup_nis_csv_icd9(
                 end
             end
         end
-        Compat.@info(
+        @info(
             string(
                 "Finished reading input file ",
                 i,
@@ -252,7 +251,7 @@ function clean_hcup_nis_csv_icd9(
     df_vector = Vector{DataFrames.DataFrame}(length(input_file_name_list))
 
     for i = 1:length(temp_file_name_vector)
-        Compat.@info(
+        @info(
             string(
                 "Starting to read temporary file ",
                 i,
@@ -270,7 +269,7 @@ function clean_hcup_nis_csv_icd9(
                 )
             )
         df_vector[i] = df_i
-        Compat.@info(
+        @info(
             string(
                 "Finished reading temporary file ",
                 i,
@@ -332,7 +331,7 @@ function clean_hcup_nis_csv_icd9(
                 length(icd_code_column_names),
                 )
         for j = 1:length(icd_code_column_names)
-            Compat.@info(
+            @info(
                 string(
                     "icd9 code ",
                     k,
@@ -368,7 +367,7 @@ function clean_hcup_nis_csv_icd9(
     num_rows_before = size(combined_df, 1)
     combined_df = combined_df[matching_rows, :]
     num_rows_after = size(combined_df, 1)
-    Compat.@info(
+    @info(
         string(
             "I initially identified ",
             num_rows_before,
@@ -416,7 +415,7 @@ function clean_hcup_nis_csv_icd9(
         )
 
     for j = 1:length(dx_column_names)
-        Compat.@info(
+        @info(
             string(
                 "Processing DXCCS column ",
                 j,
@@ -494,16 +493,19 @@ function clean_hcup_nis_csv_icd9(
         DataFrames.names(combined_df),
         )
 
-    mkpath(dirname(output_file_name))
+    try
+        mkpath(dirname(output_file_name))
+    catch
+    end
 
-    Compat.@info(string("Attempting to write output file..."))
+    @info(string("Attempting to write output file..."))
 
     CSV.write(
         output_file_name,
         combined_df,
         )
 
-    Compat.@info(
+    @info(
         string(
             "Wrote ",
             size(combined_df, 1),

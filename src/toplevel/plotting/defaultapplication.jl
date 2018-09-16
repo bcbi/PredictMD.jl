@@ -1,5 +1,5 @@
 ##### Beginning of file
 
-# import BuildExecutable
+import DefaultApplication
 
 ##### End of file

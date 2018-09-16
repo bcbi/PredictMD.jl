@@ -6,7 +6,15 @@ __precompile__(true)
 """
 module PredictMD # begin module PredictMD
 
-import Compat
+using Random
+
+include(joinpath("package_directory.jl"))
+
+include(joinpath("version.jl"))
+
+include(joinpath("welcome.jl"))
+
+include(joinpath("init.jl"))
 
 ############################################################################
 # PredictMD base files (names here go in the top level namespace) ##########
@@ -17,12 +25,8 @@ import Compat
 include(joinpath("base", "backends.jl",))
 include(joinpath("base", "types.jl",))
 
-include(joinpath("base", "get_version_number.jl",))
-include(joinpath("base", "init.jl",))
+include(joinpath("base", "next_version_number.jl",))
 include(joinpath("base", "interface.jl",))
-include(joinpath("base", "pkg_dir.jl",))
-include(joinpath("base", "version.jl",))
-include(joinpath("base", "welcome.jl",))
 
 ############################################################################
 # PredictMD source files (names here also go in the top level namespace) ###
@@ -94,11 +98,6 @@ include(
     )
 
 # toplevel/docs_and_examples/
-include(
-    joinpath(
-        "toplevel", "docs_and_examples", "generate_docs.jl",
-        )
-    )
 include(
     joinpath(
         "toplevel", "docs_and_examples", "generate_examples.jl",
@@ -267,6 +266,11 @@ include(
 include(
     joinpath(
         "toplevel", "plotting", "catch_plotting_errors.jl",
+        )
+    )
+include(
+    joinpath(
+        "toplevel", "plotting", "defaultapplication.jl",
         )
     )
 include(

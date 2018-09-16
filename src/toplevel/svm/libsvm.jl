@@ -12,11 +12,10 @@ mutable struct LIBSVMModel <: AbstractEstimator
     levels::T4 where T4 <: AbstractVector
 
     # hyperparameters (not learned from data):
-    hyperparameters::T5 where T5 <: Associative
+    hyperparameters::T5 where T5 <: AbstractDict
 
     # parameters (learned from data):
-    underlyingsvm::T6 where T6 <:
-        Union{AbstractNonExistentUnderlyingObject, LIBSVM.SVM}
+    underlyingsvm::T6 where T6 <: Any
 end
 
 function LIBSVMModel(
@@ -35,7 +34,7 @@ function LIBSVMModel(
         epsilon::AbstractFloat = 0.1,
         tolerance::AbstractFloat = 0.001,
         shrinking::Bool = true,
-        weights::Union{Dict, Void} = nothing,
+        weights::Union{Dict, Nothing} = nothing,
         cachesize::AbstractFloat = 100.0,
         verbose::Bool = true,
         )
@@ -119,7 +118,7 @@ function fit!(
             "Could not figure out if model is classification or regression"
             )
     end
-    Compat.@info(string("Starting to train LIBSVM model."))
+    @info(string("Starting to train LIBSVM model."))
     svm = try
         LIBSVM.svmtrain(
             featuresarray,
@@ -128,7 +127,7 @@ function fit!(
             estimator.hyperparameters...
             )
     catch e
-        Compat.@warn(
+        @warn(
             string(
                 "While training LIBSVM model, ignored error: ",
                 e,
@@ -137,7 +136,7 @@ function fit!(
         FitFailedUnderlyingObject()
     end
     # svm =
-    Compat.@info(string("Finished training LIBSVM model."))
+    @info(string("Finished training LIBSVM model."))
     estimator.underlyingsvm = svm
     estimator.levels = estimator.underlyingsvm.labels
     return estimator
@@ -229,10 +228,10 @@ function _single_labelmulticlassdataframesvmclassifier_LIBSVM(
         epsilon::AbstractFloat = 0.1,
         tolerance::AbstractFloat = 0.001,
         shrinking::Bool = true,
-        weights::Union{Dict, Void} = nothing,
+        weights::Union{Dict, Nothing} = nothing,
         cachesize::AbstractFloat = 100.0,
         verbose::Bool = true,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} =
             nothing,
         )
     dftransformer = DataFrame2LIBSVMTransformer(
@@ -299,10 +298,10 @@ function single_labelmulticlassdataframesvmclassifier(
         epsilon::AbstractFloat = 0.1,
         tolerance::AbstractFloat = 0.001,
         shrinking::Bool = true,
-        weights::Union{Dict, Void} = nothing,
+        weights::Union{Dict, Nothing} = nothing,
         cachesize::AbstractFloat = 100.0,
         verbose::Bool = true,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} = nothing,
         )
     if package == :LIBSVM
         result = _single_labelmulticlassdataframesvmclassifier_LIBSVM(
@@ -347,10 +346,10 @@ function _single_labeldataframesvmregression_LIBSVM(
         epsilon::AbstractFloat = 0.1,
         tolerance::AbstractFloat = 0.001,
         shrinking::Bool = true,
-        weights::Union{Dict, Void} = nothing,
+        weights::Union{Dict, Nothing} = nothing,
         cachesize::AbstractFloat = 100.0,
         verbose::Bool = true,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} =
                 nothing,
         )
     dftransformer = DataFrame2LIBSVMTransformer(
@@ -411,10 +410,10 @@ function single_labeldataframesvmregression(
         epsilon::AbstractFloat = 0.1,
         tolerance::AbstractFloat = 0.001,
         shrinking::Bool = true,
-        weights::Union{Dict, Void} = nothing,
+        weights::Union{Dict, Nothing} = nothing,
         cachesize::AbstractFloat = 100.0,
         verbose::Bool = true,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} = nothing,
         )
     if package == :LIBSVM
         result = _single_labeldataframesvmregression_LIBSVM(

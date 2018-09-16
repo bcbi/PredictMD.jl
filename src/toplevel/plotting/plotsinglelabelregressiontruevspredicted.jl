@@ -1,7 +1,6 @@
 ##### Beginning of file
 
 import LaTeXStrings
-import PGFPlots
 import PGFPlotsX
 
 """
@@ -12,7 +11,8 @@ function plotsinglelabelregressiontrueversuspredicted(
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol;
         includeorigin::Bool = false,
-        )
+        legend_pos::AbstractString = "outer north east",
+        )::PGFPlotsXPlot
     ytrue = singlelabelregressionytrue(
         labels_df[single_label_name],
         )
@@ -20,11 +20,17 @@ function plotsinglelabelregressiontrueversuspredicted(
     ypred = singlelabelregressionypred(
         predictionsalllabels[single_label_name],
         )
-    truevalueversuspredictedvalue_linearplotobject = PGFPlots.Plots.Linear(
-        ypred,
-        ytrue,
-        onlyMarks = true,
-        style = "black, fill = black",
+    truevalueversuspredictedvalue_linearplotobject = PGFPlotsX.@pgf(
+        PGFPlotsX.Plot(
+            {
+                only_marks,
+                style = "black, fill = black",
+                },
+            PGFPlotsX.Coordinates(
+                ypred,
+                ytrue,
+                ),
+            )
         )
     if includeorigin
         perfectlinevalues = sort(
@@ -44,35 +50,53 @@ function plotsinglelabelregressiontrueversuspredicted(
             rev = false,
             )
     end
-    perfectline_linearplotobject = PGFPlots.Plots.Linear(
-        perfectlinevalues,
-        perfectlinevalues,
-        mark = "none",
-        style = "dotted, fill=red",
-        )
+    perfectline_linearplotobject = PGFPlotsX.@pgf(
+        PGFPlotsX.Plot(
+            {
+                no_marks,
+                style = "dotted, red, color=red, fill=red",
+                },
+            PGFPlotsX.Coordinates(
+                perfectlinevalues,
+                perfectlinevalues,
+                ),
+            ),
+    )
     estimated_intercept,
-        estimated_x_coefficient = ordinary_least_squares_regression(
+        estimated_x_coefficient = simple_linear_regression(
             Float64.(ypred), # X
-            Float64.(ytrue); # Y
-            intercept = true,
+            Float64.(ytrue), # Y
             )
-    bestfitline_linearplotobject = PGFPlots.Plots.Linear(
-        perfectlinevalues,
-        estimated_intercept + estimated_x_coefficient*perfectlinevalues,
-        mark = "none",
-        style = "dashed, fill=blue",
+    bestfitline_linearplotobject = PGFPlotsX.@pgf(
+        PGFPlotsX.Plot(
+            {
+                no_marks,
+                style = "dashed, blue, color=blue, fill=blue",
+                },
+            PGFPlotsX.Coordinates(
+                perfectlinevalues,
+                estimated_intercept .+ estimated_x_coefficient*perfectlinevalues,
+                ),
+            ),
         )
-    axisobject = PGFPlots.Axis(
-        [
+    p = PGFPlotsX.@pgf(
+        PGFPlotsX.Axis(
+            {
+                xlabel = LaTeXStrings.LaTeXString(
+                    "Predicted value"
+                    ),
+                ylabel = LaTeXStrings.LaTeXString(
+                    "True value"
+                    ),
+                legend_pos = legend_pos,
+                },
             truevalueversuspredictedvalue_linearplotobject,
             perfectline_linearplotobject,
             bestfitline_linearplotobject,
-            ],
-        xlabel = LaTeXStrings.LaTeXString("Predicted value"),
-        ylabel = LaTeXStrings.LaTeXString("True value"),
+            ),
         )
-    tikzpicture = PGFPlots.plot(axisobject)
-    return tikzpicture
+    wrapper = PGFPlotsXPlot(p)
+    return wrapper
 end
 
 ##### End of file

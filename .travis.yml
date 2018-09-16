@@ -19,6 +19,7 @@ env:
     global:
         - DOCUMENTER_DEBUG="true"
         - JULIA_DEBUG="all"
+        - PREDICTMD_OPEN_PLOTS_DURING_TESTS="true"
     matrix:
         - GROUP="travis-1"
 
@@ -26,7 +27,6 @@ git:
     depth: 99999999
 
 julia:
-    - "0.6"
     - "0.7"
     - "1.0"
     - "nightly"
@@ -35,14 +35,13 @@ language: julia
 
 matrix:
     allow_failures:
-        - julia: "0.7"
         - julia: "1.0"
         - julia: "nightly"
     fast_finish: true
 
 notifications:
     email:
-        on_success: always # default: change
+        on_success: change # default: change
         on_failure: always # default: always
 
 os:

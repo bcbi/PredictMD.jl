@@ -76,7 +76,7 @@ end
 """
 function predict_proba(
         transformer::ImmutablePackageSingleLabelPredictProbaTransformer,
-        single_labelprobabilities::Associative;
+        single_labelprobabilities::AbstractDict;
         kwargs...
         )
     result = Dict()

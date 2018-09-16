@@ -8,7 +8,11 @@ function _preprocess_example_shared(
         )::String
     pattern = r"error\(string\(\"This file is not meant to be run\. Use the `PredictMD\.generate_examples\(\)` function to generate examples that you can run\.\"\)\)\n{0,5}"
     replacement = ""
-    content = replace(content, pattern, replacement)
+    content = replace(content, pattern => replacement)
+
+    pattern = "%PREDICTMD_MINIMUM_REQUIRED_JULIA_VERSION%"
+    replacement = string("v0.7.0")
+    content = replace(content, pattern => replacement)
 
     pattern = "%PREDICTMD_GENERATED_BY%\n"
     replacement = string(
@@ -18,17 +22,17 @@ function _preprocess_example_shared(
         "## For help, please visit https://www.predictmd.net",
         "\n",
         )
-    content = replace(content, pattern, replacement)
+    content = replace(content, pattern => replacement)
 
     pattern = "%PREDICTMD_CURRENT_VERSION%"
     replacement = string(version())
-    content = replace(content, pattern, replacement)
+    content = replace(content, pattern => replacement)
 
     pattern = "%PREDICTMD_NEXT_MINOR_VERSION%"
     replacement = string(
         next_minor_version(version(); add_trailing_minus = true)
         )
-    content = replace(content, pattern, replacement)
+    content = replace(content, pattern => replacement)
     return content
 end
 
@@ -38,7 +42,7 @@ function _preprocess_example_do_not_include_test_statements(
     content = _preprocess_example_shared(content)
     pattern = r"# BEGIN TEST STATEMENTS[\S\s]*# END TEST STATEMENTS\n{0,5}"
     replacement = ""
-    content = replace(content, pattern, replacement)
+    content = replace(content, pattern => replacement)
     return content
 end
 
@@ -49,12 +53,24 @@ function _preprocess_example_include_test_statements(
 
     pattern = r"# BEGIN TEST STATEMENTS\n{0,2}"
     replacement = ""
-    content = replace(content, pattern, replacement)
+    content = replace(content, pattern => replacement)
 
     pattern = r"# END TEST STATEMENTS\n{0,2}"
     replacement = ""
-    content = replace(content, pattern, replacement)
+    content = replace(content, pattern => replacement)
     return content
+end
+
+function _fix_example_blocks(filename::AbstractString)::Nothing
+    if filename_extension(filename) == ".md"
+        content = read(filename, String)
+        rm(filename; force = true, recursive = true,)
+        pattern = r"```@example \w*\n"
+        replacement = "```julia\n"
+        content = replace(content, pattern => replacement)
+        write(filename, content)
+    end
+    return nothing
 end
 
 function generate_examples(
@@ -65,7 +81,7 @@ function generate_examples(
         scripts = false,
         include_test_statements::Bool = false,
         )::String
-    if is_windows()
+    if Base.Sys.iswindows()
         execute_notebooks = false
     end
     ENV["PREDICTMD_IS_MAKE_EXAMPLES"] = "true"
@@ -92,7 +108,7 @@ function generate_examples(
         preprocess_example = _preprocess_example_do_not_include_test_statements
     end
 
-    Compat.@info("Starting to generate examples...")
+    @info("Starting to generate examples...")
 
     temp_examples_dir = joinpath(
         mktempdir(),
@@ -102,10 +118,13 @@ function generate_examples(
         "src",
         "examples",
         )
-    mkpath(temp_examples_dir)
+    try
+        mkpath(temp_examples_dir)
+    catch
+    end
 
     examples_input_parent_directory =
-        PredictMD.pkg_dir("templates", "examples")
+        PredictMD.package_directory("templates", "examples")
 
     cpu_examples_input_parent_directory = joinpath(
         examples_input_parent_directory,
@@ -115,7 +134,10 @@ function generate_examples(
         temp_examples_dir,
         "cpu",
         )
-    mkpath(cpu_examples_output_parent_directory)
+    try
+        mkpath(cpu_examples_output_parent_directory)
+    catch
+    end
 
     boston_housing_input_directory = joinpath(
         cpu_examples_input_parent_directory,
@@ -125,7 +147,10 @@ function generate_examples(
         cpu_examples_output_parent_directory,
         "boston_housing",
         )
-    mkpath(boston_housing_output_directory)
+    try
+        mkpath(boston_housing_output_directory)
+    catch
+    end
     boston_housing_input_file_list =
         readdir(boston_housing_input_directory)
     boston_housing_input_file_list =
@@ -176,7 +201,10 @@ function generate_examples(
         cpu_examples_output_parent_directory,
         "breast_cancer_biopsy",
         )
-    mkpath(breast_cancer_biopsy_output_directory)
+    try
+        mkpath(breast_cancer_biopsy_output_directory)
+    catch
+    end
     breast_cancer_biopsy_input_file_list =
         readdir(breast_cancer_biopsy_input_directory)
     breast_cancer_biopsy_input_file_list =
@@ -218,13 +246,26 @@ function generate_examples(
                 )
         end
     end
-    mkpath(dirname(output_directory))
+
+    for (root, dirs, files) in walkdir(temp_examples_dir)
+        for f in files
+            filename = joinpath(root, f)
+            _fix_example_blocks(filename)
+        end
+    end
+
+    try
+        mkpath(dirname(output_directory))
+    catch
+    end
+
     cp(
         temp_examples_dir,
         output_directory;
-        remove_destination = true,
+        force = true,
         )
-    Compat.@info(
+
+    @info(
         string(
             "Finished generating examples. ",
             "Files were written to: \"",

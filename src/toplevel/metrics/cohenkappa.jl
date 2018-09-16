@@ -1,5 +1,6 @@
 ##### Beginning of file
 
+import LinearAlgebra
 import MLBase
 
 """
@@ -18,7 +19,7 @@ function cohen_kappa(contingency_table::AbstractMatrix)
     end
     totalnumcases = sum(contingency_table)
     # p_o = "relative observed agreement among raters (identical to accuracy)"
-    p_o = sum(diag(contingency_table))/totalnumcases
+    p_o = sum(LinearAlgebra.diag(contingency_table))/totalnumcases
     # n_k1 = number of times rater 1 predicted class k
     # n_k2 = number of times rater 2 predicted class k
     # rater 1 = rows

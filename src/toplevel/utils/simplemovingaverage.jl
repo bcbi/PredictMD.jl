@@ -1,5 +1,7 @@
 ##### Beginning of file
 
+import Statistics
+
 """
 """
 function simple_moving_average(
@@ -14,7 +16,7 @@ function simple_moving_average(
     for i = 1:n
         lower_bound = max(1, i - window)
         upper_bound = min(n, i + window)
-        result[i] = mean(x[lower_bound:upper_bound])
+        result[i] = Statistics.mean(x[lower_bound:upper_bound])
     end
     return result
 end

@@ -14,11 +14,10 @@ mutable struct DecisionTreeModel <:
     levels::T5 where T5 <: AbstractVector
 
     # hyperparameters (not learned from data):
-    hyperparameters::T6 where T6 <: Associative
+    hyperparameters::T6 where T6 <: AbstractDict
 
     # parameters (learned from data):
-    underlyingrandomforest::T7 where T7 <:
-        Union{AbstractNonExistentUnderlyingObject, DecisionTree.Ensemble}
+    underlyingrandomforest::T7 where T7 <: Any
 end
 
 function DecisionTreeModel(
@@ -96,7 +95,7 @@ function fit!(
         featuresarray::AbstractArray,
         labelsarray::AbstractArray,
         )
-    Compat.@info(string("Starting to train DecisionTree model."))
+    @info(string("Starting to train DecisionTree model."))
     randomforest = try
         DecisionTree.build_forest(
             labelsarray,
@@ -105,7 +104,7 @@ function fit!(
             estimator.hyperparameters[:ntrees],
             )
     catch e
-        Compat.@warn(
+        @warn(
             string(
                 "While training DecisionTree model, ignored error: ",
                 e,
@@ -113,7 +112,7 @@ function fit!(
             )
         FitFailedUnderlyingObject()
     end
-    Compat.@info(string("Finished training DecisionTree model."))
+    @info(string("Finished training DecisionTree model."))
     estimator.underlyingrandomforest = randomforest
     return estimator
 end
@@ -194,7 +193,7 @@ function _single_labelmulticlassdfrandomforestclassifier_DecisionTree(
         name::AbstractString = "",
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} = nothing,
         )
     dftransformer = MutableDataFrame2DecisionTreeTransformer(
         feature_names,
@@ -241,7 +240,7 @@ function single_labelmulticlassdataframerandomforestclassifier(
         package::Symbol = :none,
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} = nothing,
         )
     if package == :DecisionTree
         result =
@@ -268,7 +267,7 @@ function _single_labeldataframerandomforestregression_DecisionTree(
         name::AbstractString = "",
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} = nothing,
         )
     dftransformer = MutableDataFrame2DecisionTreeTransformer(
         feature_names,
@@ -308,7 +307,7 @@ function single_labeldataframerandomforestregression(
         package::Symbol = :none,
         nsubfeatures::Integer = 2,
         ntrees::Integer = 10,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} = nothing,
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} = nothing,
         )
     if package == :DecisionTree
         result = _single_labeldataframerandomforestregression_DecisionTree(

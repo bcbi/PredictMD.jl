@@ -1,5 +1,7 @@
 ##### Beginning of file
 
+import Statistics
+
 """
     mean_square_error(ytrue, ypred)
 """
@@ -7,7 +9,7 @@ function mean_square_error(
         ytrue::AbstractVector{<:Real},
         ypred::AbstractVector{<:Real},
         )
-    result = mean(abs2, ytrue .- ypred)
+    result = Statistics.mean(abs2, ytrue .- ypred)
     return result
 end
 

@@ -9,7 +9,7 @@ mutable struct MutableDataFrame2ClassificationKnetTransformer <:
         AbstractEstimator
     feature_names::T1 where T1 <: AbstractVector
     label_names::T2 where T2 <: AbstractVector{Symbol}
-    label_levels::T3 where T3 <: Associative
+    label_levels::T3 where T3 <: AbstractDict
     index::T4 where T4 <: Integer
     transposefeatures::T5 where T5 <: Bool
     transposelabels::T6 where T6 <: Bool
@@ -19,7 +19,7 @@ end
 function MutableDataFrame2ClassificationKnetTransformer(
         feature_names::AbstractVector,
         label_names::AbstractVector{Symbol},
-        label_levels::Associative,
+        label_levels::AbstractDict,
         index::Integer;
         transposefeatures::Bool = true,
         transposelabels::Bool = false,
@@ -146,9 +146,9 @@ function fit!(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
         training_labels_df::DataFrames.AbstractDataFrame,
-        validation_features_df::Union{Void, DataFrames.AbstractDataFrame} =
+        validation_features_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing,
-        validation_labels_df::Union{Void, DataFrames.AbstractDataFrame} =
+        validation_labels_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing;
         kwargs...
         )
@@ -169,9 +169,9 @@ function fit!(
         transformer::MutableDataFrame2RegressionKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
         training_labels_df::DataFrames.AbstractDataFrame,
-        validation_features_df::Union{Void, DataFrames.AbstractDataFrame} =
+        validation_features_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing,
-        validation_labels_df::Union{Void, DataFrames.AbstractDataFrame} =
+        validation_labels_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing;
         kwargs...
         )
@@ -242,9 +242,9 @@ function transform(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
         training_labels_df::DataFrames.AbstractDataFrame,
-        validation_features_df::Union{Void, DataFrames.AbstractDataFrame} =
+        validation_features_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing,
-        validation_labels_df::Union{Void, DataFrames.AbstractDataFrame} =
+        validation_labels_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing;
         kwargs...
         )
@@ -358,9 +358,9 @@ function transform(
         transformer::MutableDataFrame2RegressionKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
         training_labels_df::DataFrames.AbstractDataFrame,
-        validation_features_df::Union{Void, DataFrames.AbstractDataFrame} =
+        validation_features_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing,
-        validation_labels_df::Union{Void, DataFrames.AbstractDataFrame} =
+        validation_labels_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing;
         kwargs...
         )

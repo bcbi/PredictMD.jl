@@ -16,7 +16,7 @@ if isa(TEST_GROUP, TestGroupTravis1)
     ENV["PREDICTMD_TEST_PLOTS"] = "true"
 end
 
-Compat.@info(
+@info(
     string(
         "PREDICTMD_TEST_PLOTS: \"",
         ENV["PREDICTMD_TEST_PLOTS"],

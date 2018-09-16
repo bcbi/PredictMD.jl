@@ -17,7 +17,7 @@ function fix_type(x::AbstractArray)::Array
 end
 
 function fix_type(
-        x::Associative;
+        x::AbstractDict;
         default_key_type::Type = Any,
         default_value_type::Type = Any,
         )::Dict

@@ -1,6 +1,11 @@
 ##### Beginning of file
 
 """
+    AbstractPlot{T}
+"""
+abstract type AbstractPlot{T} end
+
+"""
     AbstractEstimator
 """
 abstract type AbstractEstimator end

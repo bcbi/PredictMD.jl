@@ -9,11 +9,11 @@ function fix_column_types!(
         categorical_label_names::AbstractVector{Symbol} = Symbol[],
         continuous_label_names::AbstractVector{Symbol} = Symbol[],
         float_type::Type{<:AbstractFloat} = Cfloat,
-        )::Void
+        )::Nothing
     function make_categorical_column(
             old_vector::AbstractVector,
             )::Vector{Any}
-        new_vector = Vector{Any}(length(old_vector))
+        new_vector = Vector{Any}(undef, length(old_vector))
         for i = 1:length(old_vector)
             old_vector_ith_element = old_vector[i]
             if DataFrames.ismissing(old_vector_ith_element)
@@ -27,7 +27,7 @@ function fix_column_types!(
     function make_continuous_column(
             old_vector::AbstractVector,
             )::Vector{Any}
-        new_vector = Vector{Any}(length(old_vector))
+        new_vector = Vector{Any}(undef, length(old_vector))
         for i = 1:length(old_vector)
             old_vector_ith_element = old_vector[i]
             if DataFrames.ismissing(old_vector_ith_element)
@@ -64,7 +64,7 @@ function check_column_types(
         continuous_feature_names::AbstractVector{Symbol} = Symbol[],
         categorical_label_names::AbstractVector{Symbol} = Symbol[],
         continuous_label_names::AbstractVector{Symbol} = Symbol[],
-        )::Void
+        )::Nothing
     for column_name in DataFrames.names(df)
         column_eltype = eltype(
             collect(
