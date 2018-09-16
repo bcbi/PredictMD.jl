@@ -66,7 +66,7 @@ function check_column_types(
         continuous_label_names::AbstractVector{Symbol} = Symbol[],
         )::Nothing
     for column_name in DataFrames.names(df)
-        column_eltype = eltype(
+        column_eltype=eltype(
             collect(
                 DataFrames.skipmissing(
                     df[column_name]
@@ -74,77 +74,77 @@ function check_column_types(
                 )
             )
         if column_name in categorical_feature_names
-            if column_eltype <: AbstractString
+            if column_eltype<:AbstractString
             else
                 error(
                     string(
                         "Column \"",
                         column_name,
-                        "\" has eltype \"",
+                        "\" has eltype() \"",
                         column_eltype,
                         "\". However, this column is categorical,",
-                        "and therefore its eltype must be a subtype of ",
+                        "and therefore its eltype() must be <: ",
                         "AbstractString.",
                         )
                     )
             end
         elseif column_name in categorical_label_names
-            if column_eltype <: AbstractString
+            if column_eltype<:AbstractString
             else
                 error(
                     string(
                         "Column \"",
                         column_name,
-                        "\" has eltype \"",
+                        "\" has eltype() \"",
                         column_eltype,
                         "\". However, this column is categorical,",
-                        "and therefore its eltype must be a subtype of ",
+                        "and therefore its eltype() must be <: ",
                         "AbstractString.",
                         )
                     )
             end
         elseif column_name in continuous_feature_names
-            if column_eltype <: AbstractFloat
+            if column_eltype<:AbstractFloat
             else
                 error(
                     string(
                         "Column \"",
                         column_name,
-                        "\" has eltype \"",
+                        "\" has eltype() \"",
                         column_eltype,
                         "\". However, this column is continuous,",
-                        "and therefore its eltype must be a subtype of ",
+                        "and therefore its eltype() must be <:",
                         "AbstractFloat.",
                         )
                     )
             end
         elseif column_name in continuous_label_names
-            if column_eltype <: AbstractFloat
+            if column_eltype<:AbstractFloat
             else
                 error(
                     string(
                         "Column \"",
                         column_name,
-                        "\" has eltype \"",
+                        "\" has eltype() \"",
                         column_eltype,
                         "\". However, this column is continuous,",
-                        "and therefore its eltype must be a subtype of ",
+                        "and therefore its eltype() must be <:",
                         "AbstractFloat.",
                         )
                     )
             end
         else
-            if column_eltype <: AbstractString
-            elseif column_eltype <: AbstractFloat
+            if column_eltype<:AbstractString
+            elseif column_eltype<:AbstractFloat
                 error(
                     string(
                         "Column \"",
                         column_name,
-                        "\" has eltype \"",
+                        "\" has eltype() \"",
                         column_eltype,
                         "\". However, we only allow AbstractStrings and ",
-                        "AbstractFloats. Use a subtype of AbstractString if",
-                        "it is a categorical column. Use a subtype of ",
+                        "AbstractFloats. Use T <: AbstractString if",
+                        "it is a categorical column. Use T <: ",
                         "AbstractFloat if it is a continuous column."
                         )
                     )

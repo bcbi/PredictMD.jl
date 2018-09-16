@@ -9,10 +9,10 @@ import StatsBase
 function singlelabelbinaryytrue(
         labels::AbstractVector,
         positive_class::AbstractString;
-        inttype::Type = Int,
+        inttype::Type=Int,
         )
-    if !(inttype <: Integer)
-        error("!(inttype <: Integer)")
+    if !(inttype<:Integer)
+        error("!(inttype<:Integer)")
     end
     result = inttype.(labels .== positive_class)
     return result

@@ -2,13 +2,6 @@
 
 """
 """
-struct ImmutablePackageSingleLabelPredictProbaTransformer <:
-        AbstractEstimator
-    single_label_name::T1 where T1 <: Symbol
-end
-
-"""
-"""
 function set_feature_contrasts!(
         x::ImmutablePackageSingleLabelPredictProbaTransformer,
         feature_contrasts::AbstractFeatureContrasts,

@@ -2,29 +2,13 @@
 
 import LIBSVM
 
-"""
-"""
-mutable struct LIBSVMModel <: AbstractEstimator
-    name::T1 where T1 <: AbstractString
-    isclassificationmodel::T2 where T2 <: Bool
-    isregressionmodel::T3 where T3 <: Bool
-
-    levels::T4 where T4 <: AbstractVector
-
-    # hyperparameters (not learned from data):
-    hyperparameters::T5 where T5 <: AbstractDict
-
-    # parameters (learned from data):
-    underlyingsvm::T6 where T6 <: Any
-end
-
 function LIBSVMModel(
         ;
         single_label_levels::AbstractVector = [],
         name::AbstractString = "",
         isclassificationmodel::Bool = false,
         isregressionmodel::Bool = false,
-        svmtype::Type = LIBSVM.SVC,
+        svmtype::Type=LIBSVM.SVC,
         kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
         degree::Integer = 3,
         gamma::AbstractFloat = 0.1,
@@ -218,7 +202,7 @@ function _single_labelmulticlassdataframesvmclassifier_LIBSVM(
         single_label_name::Symbol,
         single_label_levels::AbstractVector;
         name::AbstractString = "",
-        svmtype::Type = LIBSVM.SVC,
+        svmtype::Type=LIBSVM.SVC,
         kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
         degree::Integer = 3,
         gamma::AbstractFloat = 0.1,
@@ -245,7 +229,7 @@ function _single_labelmulticlassdataframesvmclassifier_LIBSVM(
         single_label_levels = single_label_levels,
         isclassificationmodel = true,
         isregressionmodel = false,
-        svmtype = svmtype,
+        svmtype=svmtype,
         kernel = kernel,
         degree = degree,
         gamma = gamma,
@@ -288,7 +272,7 @@ function single_labelmulticlassdataframesvmclassifier(
         single_label_levels::AbstractVector;
         package::Symbol = :none,
         name::AbstractString = "",
-        svmtype::Type = LIBSVM.SVC,
+        svmtype::Type=LIBSVM.SVC,
         kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
         degree::Integer = 3,
         gamma::AbstractFloat = 0.1,
@@ -309,7 +293,7 @@ function single_labelmulticlassdataframesvmclassifier(
             single_label_name,
             single_label_levels;
             name = name,
-            svmtype = svmtype,
+            svmtype=svmtype,
             kernel = kernel,
             degree = degree,
             gamma = gamma,
@@ -336,7 +320,7 @@ function _single_labeldataframesvmregression_LIBSVM(
         feature_names::AbstractVector,
         single_label_name::Symbol;
         name::AbstractString = "",
-        svmtype::Type = LIBSVM.EpsilonSVR,
+        svmtype::Type=LIBSVM.EpsilonSVR,
         kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
         degree::Integer = 3,
         gamma::AbstractFloat = 0.1,
@@ -361,7 +345,7 @@ function _single_labeldataframesvmregression_LIBSVM(
         name = name,
         isclassificationmodel = false,
         isregressionmodel = true,
-        svmtype = svmtype,
+        svmtype=svmtype,
         kernel = kernel,
         degree = degree,
         gamma = gamma,
@@ -400,7 +384,7 @@ function single_labeldataframesvmregression(
         ;
         package::Symbol = :none,
         name::AbstractString = "",
-        svmtype::Type = LIBSVM.EpsilonSVR,
+        svmtype::Type=LIBSVM.EpsilonSVR,
         kernel::LIBSVM.Kernel.KERNEL = LIBSVM.Kernel.RadialBasis,
         degree::Integer = 3,
         gamma::AbstractFloat = 0.1,
@@ -420,7 +404,7 @@ function single_labeldataframesvmregression(
             feature_names,
             single_label_name;
             name = name,
-            svmtype = svmtype,
+            svmtype=svmtype,
             kernel = kernel,
             degree = degree,
             gamma = gamma,

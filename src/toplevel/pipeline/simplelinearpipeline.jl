@@ -2,13 +2,6 @@
 
 """
 """
-struct SimplePipeline <: AbstractPipeline
-    name::T1 where T1 <: AbstractString
-    objectsvector::T2 where T2 <: AbstractVector{Fittable}
-end
-
-"""
-"""
 function SimplePipeline(
         objectsvector::AbstractVector{Fittable};
         name::AbstractString = "",

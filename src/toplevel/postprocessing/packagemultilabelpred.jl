@@ -2,12 +2,6 @@
 
 """
 """
-struct ImmutablePackageMultiLabelPredictionTransformer <: AbstractEstimator
-    label_names::T1 where T1 <: AbstractVector{Symbol}
-end
-
-"""
-"""
 function set_feature_contrasts!(
         x::ImmutablePackageMultiLabelPredictionTransformer,
         feature_contrasts::AbstractFeatureContrasts,
