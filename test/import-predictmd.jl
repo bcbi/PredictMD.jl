@@ -1,17 +1,25 @@
 ##### Beginning of file
 
+import InteractiveUtils
+import Pkg
+import Test
+
 @info(string("Julia depot paths: "), Base.DEPOT_PATH)
 
-@info(string("Printing Julia version info:",))
-import InteractiveUtils
+@info(string("Julia version info: ",))
 InteractiveUtils.versioninfo(verbose=true)
 
-@info(string("Packages in the project (explicitly added): ",))
-import Pkg
-Pkg.status(Pkg.PKGMODE_PROJECT)
+@info(string("Output of Pkg.status():",),)
+Pkg.status()
 
-@info(string("Packages in the manifest (recursive dependencies): ",))
-Pkg.status(Pkg.PKGMODE_MANIFEST)
+@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_PROJECT):",),)
+Pkg.status(Pkg.Types.PKGMODE_PROJECT)
+
+@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_MANIFEST):",),)
+Pkg.status(Pkg.Types.PKGMODE_MANIFEST)
+
+@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_COMBINED):",),)
+Pkg.status(Pkg.Types.PKGMODE_COMBINED)
 
 @info(string("Attempting to import PredictMD...",))
 import PredictMD
