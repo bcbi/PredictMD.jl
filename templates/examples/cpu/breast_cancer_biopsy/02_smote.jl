@@ -24,6 +24,10 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin SMOTE class-balancing code
 
+# BEGIN TEST STATEMENTS
+import Test
+# END TEST STATEMENTS
+
 import Pkg
 
 try Pkg.add("CSV") catch end

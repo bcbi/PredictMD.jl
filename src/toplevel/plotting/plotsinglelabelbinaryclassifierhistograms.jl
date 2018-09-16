@@ -4,7 +4,34 @@ import LaTeXStrings
 import PGFPlotsX
 import StatsBase
 
+function num_histogram_bins(
+        v::AbstractVector;
+        closed::Symbol = :left,
+        )::Integer
+    h = StatsBase.fit(
+        StatsBase.Histogram,
+        v;
+        closed = closed,
+        )
+    result = length(h.weights)
+    return result
+end
 
+function normalized_histogram_weights(
+        v::AbstractVector,
+        edges::AbstractRange;
+        closed::Symbol = :left,
+        )
+    h = StatsBase.fit(
+        StatsBase.Histogram,
+        v,
+        edges;
+        closed = closed,
+        )
+    unnormalized_weights = h.weights
+    normalized_weights = unnormalized_weights/sum(unnormalized_weights)
+    return normalized_weights
+end
 
 """
 """
@@ -14,8 +41,8 @@ function plotsinglelabelbinaryclassifierhistogram(
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol,
         single_label_levels::AbstractVector{<:AbstractString};
-        nbins::Union{Nothing, Integer} = nothing,
-        closed::Symbol = :right,
+        num_bins::Integer = 0,
+        closed::Symbol = :left,
         legend_pos::AbstractString = "outer north east",
         )::PGFPlotsXPlot
     if length(single_label_levels) != length(unique(single_label_levels))
@@ -39,35 +66,32 @@ function plotsinglelabelbinaryclassifierhistogram(
             positive_class,
             )
         )
-    if isa(nbins, Nothing)
-        negative_class_histogram = StatsBase.fit(
-            StatsBase.Histogram,
-            yscore[ytrue .== 0];
-            closed = closed,
-
-            )
-        positive_class_histogram = StatsBase.fit(
-            StatsBase.Histogram,
-            yscore[ytrue .== 1];
-            closed = closed,
-            )
-    else
-        negative_class_histogram = StatsBase.fit(
-            StatsBase.Histogram,
-            yscore[ytrue .== 0];
-            closed = closed,
-            nbins = nbins,
-            )
-        positive_class_histogram = StatsBase.fit(
-            StatsBase.Histogram,
-            yscore[ytrue .== 1];
-            closed = closed,
-            nbins = nbins,
-            )
+    if num_bins < 1
+        num_bins_negative_class = num_histogram_bins(yscore[ytrue .== 0])
+        num_bins_positive_class = num_histogram_bins(yscore[ytrue .== 1])
+        num_bins = max(num_bins_negative_class, num_bins_positive_class)
     end
+    bin_width = 1/num_bins
+    edges_range = 0:bin_width:1
+    negative_class_histogram = normalized_histogram_weights(
+        yscore[ytrue .== 0],
+        edges_range;
+        closed = closed,
+        )
+    positive_class_histogram = normalized_histogram_weights(
+        yscore[ytrue .== 1],
+        edges_range;
+        closed = closed,
+        )
+    x_values = collect(edges_range)
+    negative_class_y_values = vcat(negative_class_histogram..., 0)
+    positive_class_y_values = vcat(positive_class_histogram..., 0)
     p = PGFPlotsX.@pgf(
         PGFPlotsX.Axis(
             {
+                ymin = 0.0,
+                ymax = 1.0,
+                no_markers,
                 legend_pos = legend_pos,
                 xlabel = LaTeXStrings.LaTeXString(
                     "Classifier score"
@@ -75,26 +99,53 @@ function plotsinglelabelbinaryclassifierhistogram(
                 ylabel = LaTeXStrings.LaTeXString(
                     "Frequency"
                     ),
-                "ybar interval",
-                "xticklabel interval boundaries",
-                xmajorgrids = false,
-                xticklabel = raw"$[\pgfmathprintnumber\tick,\pgfmathprintnumber\nexttick)$",
-                "xticklabel style" = {font = raw"\tiny", },
                 },
-            PGFPlotsX.Plot(
+            PGFPlotsX.PlotInc(
                 {
-                    style = "blue, opacity = 0.5, fill=blue, fill opacity=0.5",
+                    "ybar interval",
                     },
-                PGFPlotsX.Table(negative_class_histogram),
+                PGFPlotsX.Coordinates(
+                    x_values,
+                    negative_class_y_values,
+                    ),
                 ),
-            PGFPlotsX.Plot(
+            PGFPlotsX.PlotInc(
                 {
-                    style = "red, opacity = 0.5, fill=red, fill opacity=0.5",
+                    "ybar interval",
                     },
-                PGFPlotsX.Table(positive_class_histogram),
+                PGFPlotsX.Coordinates(
+                    x_values,
+                    positive_class_y_values,
+                    ),
                 ),
             ),
         )
+    #             # "ybar interval",
+    #             # "ybar",
+    #             # bar_shift = "0pt",
+    #             # "xticklabel interval boundaries",
+    #             # xmajorgrids = false,
+    #             # xtick = [0.0, 0.25, 0.5, 0.75, 1.0,],
+    #             # xtick = [0.0, 0.5, 1.0,],
+    #             # xticklabel = raw"$[\pgfmathprintnumber\tick,\pgfmathprintnumber\nexttick)$",
+    #             # "xticklabel style" = {font = raw"\tiny", },
+    #             },
+    #         PGFPlotsX.Plot(
+    #             {
+    #                 style = "blue, opacity = 0.5, fill=blue, fill opacity=0.5",
+    #                 ybar,
+    #                 },
+    #             PGFPlotsX.Table(negative_class_histogram),
+    #             ),
+    #         PGFPlotsX.Plot(
+    #             {
+    #                 style = "red, opacity = 0.5, fill=red, fill opacity=0.5",
+    #                 ybar,
+    #                 },
+    #             PGFPlotsX.Table(positive_class_histogram),
+    #             ),
+    #         ),
+    #     )
     # axisobject = PGFPlots.Axis(
     #     [
     #         histogramobjectnegative_class,
