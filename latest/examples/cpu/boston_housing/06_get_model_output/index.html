@@ -204,7 +204,7 @@ import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version(&quot;v0.6&quot;)
+PredictMD.require_julia_version(&quot;v0.7.0&quot;)
 
 PredictMD.require_predictmd_version(&quot;0.20.0-DEV&quot;)
 
@@ -220,14 +220,33 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin model output code
 
+import Pkg
+
+try Pkg.add(&quot;CSV&quot;) catch end
+try Pkg.add(&quot;DataFrames&quot;) catch end
+try Pkg.add(&quot;DecisionTree&quot;) catch end
+try Pkg.add(&quot;Distributions&quot;) catch end
+try Pkg.add(&quot;FileIO&quot;) catch end
+try Pkg.add(&quot;GLM&quot;) catch end
+try Pkg.add(&quot;JLD2&quot;) catch end
+try Pkg.add(&quot;Knet&quot;) catch end
+try Pkg.add(&quot;StatsModels&quot;) catch end
+try Pkg.add(&quot;ValueHistories&quot;) catch end
+
 import CSV
-import Compat
 import DataFrames
+import DecisionTree
+import Distributions
 import FileIO
+import GLM
 import JLD2
 import Knet
+import LinearAlgebra
+import Random
+import StatsModels
+import ValueHistories
 
-srand(999)
+Random.seed!(999)
 
 trainingandvalidation_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,

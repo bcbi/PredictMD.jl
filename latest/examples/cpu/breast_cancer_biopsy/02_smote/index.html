@@ -204,7 +204,7 @@ import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version(&quot;v0.6&quot;)
+PredictMD.require_julia_version(&quot;v0.7.0&quot;)
 
 PredictMD.require_predictmd_version(&quot;0.20.0-DEV&quot;)
 
@@ -220,14 +220,22 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin SMOTE class-balancing code
 
+import Pkg
+
+try Pkg.add(&quot;CSV&quot;) catch end
+try Pkg.add(&quot;DataFrames&quot;) catch end
+try Pkg.add(&quot;FileIO&quot;) catch end
+try Pkg.add(&quot;JLD2&quot;) catch end
+try Pkg.add(&quot;StatsBase&quot;) catch end
+
 import CSV
-import Compat
 import DataFrames
 import FileIO
 import JLD2
+import Random
 import StatsBase
 
-srand(999)
+Random.seed!(999)
 
 trainingandvalidation_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
@@ -387,16 +395,6 @@ CSV.write(
 ### End SMOTE class-balancing code
 
 ##### End of file
-</code></pre>
-
-<pre><code>Summary Stats:
-Length:         341
-Type:           Union{CategoricalArrays.CategoricalString{UInt32}, Missings.Missing}
-Number Unique:  2
-Summary Stats:
-Length:         504
-Type:           String
-Number Unique:  2
 </code></pre>
 
 <p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p>

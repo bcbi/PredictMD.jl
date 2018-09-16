@@ -204,7 +204,7 @@ import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version(&quot;v0.6&quot;)
+PredictMD.require_julia_version(&quot;v0.7.0&quot;)
 
 PredictMD.require_predictmd_version(&quot;0.20.0-DEV&quot;)
 
@@ -220,15 +220,24 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin data preprocessing code
 
+import Pkg
+
+try Pkg.add(&quot;CSV&quot;) catch end
+try Pkg.add(&quot;DataFrames&quot;) catch end
+try Pkg.add(&quot;FileIO&quot;) catch end
+try Pkg.add(&quot;JLD2&quot;) catch end
+try Pkg.add(&quot;RDatasets&quot;) catch end
+try Pkg.add(&quot;StatsBase&quot;) catch end
+
 import CSV
-import Compat
 import DataFrames
 import FileIO
 import JLD2
 import RDatasets
+import Random
 import StatsBase
 
-srand(999)
+Random.seed!(999)
 
 df = RDatasets.dataset(&quot;MASS&quot;, &quot;biopsy&quot;)
 

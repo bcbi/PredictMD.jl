@@ -204,7 +204,7 @@ import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version(&quot;v0.6&quot;)
+PredictMD.require_julia_version(&quot;v0.7.0&quot;)
 
 PredictMD.require_predictmd_version(&quot;0.20.0-DEV&quot;)
 
@@ -220,24 +220,32 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin data preprocessing code
 
+import Pkg
+
+try Pkg.add(&quot;CSV&quot;) catch end
+try Pkg.add(&quot;DataFrames&quot;) catch end
+try Pkg.add(&quot;FileIO&quot;) catch end
+try Pkg.add(&quot;GZip&quot;) catch end
+try Pkg.add(&quot;JLD2&quot;) catch end
+try Pkg.add(&quot;RDatasets&quot;) catch end
+try Pkg.add(&quot;StatsBase&quot;) catch end
+
 import CSV
-import Compat
 import DataFrames
 import FileIO
 import GZip
 import JLD2
+import RDatasets
+import Random
 import StatsBase
 
-srand(999)
+Random.seed!(999)
 
 df = CSV.read(
     GZip.gzopen(
         joinpath(
-            Pkg.dir(&quot;RDatasets&quot;),
-            &quot;data&quot;,
-            &quot;MASS&quot;,
-            &quot;Boston.csv.gz&quot;,
-            ),
+            dirname(pathof(RDatasets)), &quot;..&quot;, &quot;data&quot;, &quot;MASS&quot;, &quot;Boston.csv.gz&quot;,
+            )
         ),
     DataFrames.DataFrame;
     rows_for_type_detect = 100,
@@ -395,17 +403,6 @@ CSV.write(
 ### End data preprocessing code
 
 ##### End of file
-</code></pre>
-
-<pre><code>Summary Stats:
-Mean:           22.532799
-Minimum:        5.000000
-1st Quartile:   17.025000
-Median:         21.200001
-3rd Quartile:   25.000000
-Maximum:        50.000000
-Length:         506
-Type:           Float32
 </code></pre>
 
 <p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p>
