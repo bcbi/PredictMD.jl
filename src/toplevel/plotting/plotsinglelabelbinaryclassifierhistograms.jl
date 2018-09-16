@@ -44,6 +44,12 @@ function plotsinglelabelbinaryclassifierhistogram(
         num_bins::Integer = 0,
         closed::Symbol = :left,
         legend_pos::AbstractString = "outer north east",
+        # style = "blue,opacity = 0.5,fill=blue,fill opacity=0.5",
+        negative_style::AbstractString =
+            "blue, opacity=1.0, fill=blue, fill opacity = 0.5",
+        positive_style::AbstractString =
+            "red, opacity=1.0, fill=red, fill opacity = 0.5",
+        # style = "red,opacity = 0.5,fill=red,fill opacity=0.5",
         )::PGFPlotsXPlot
     if length(single_label_levels) != length(unique(single_label_levels))
         error("there are duplicate values in single_label_levels")
@@ -103,6 +109,7 @@ function plotsinglelabelbinaryclassifierhistogram(
             PGFPlotsX.PlotInc(
                 {
                     "ybar interval",
+                    style = negative_style,
                     },
                 PGFPlotsX.Coordinates(
                     x_values,
@@ -112,6 +119,7 @@ function plotsinglelabelbinaryclassifierhistogram(
             PGFPlotsX.PlotInc(
                 {
                     "ybar interval",
+                    style = positive_style,
                     },
                 PGFPlotsX.Coordinates(
                     x_values,
@@ -130,22 +138,6 @@ function plotsinglelabelbinaryclassifierhistogram(
     #             # xticklabel = raw"$[\pgfmathprintnumber\tick,\pgfmathprintnumber\nexttick)$",
     #             # "xticklabel style" = {font = raw"\tiny", },
     #             },
-    #         PGFPlotsX.Plot(
-    #             {
-    #                 style = "blue, opacity = 0.5, fill=blue, fill opacity=0.5",
-    #                 ybar,
-    #                 },
-    #             PGFPlotsX.Table(negative_class_histogram),
-    #             ),
-    #         PGFPlotsX.Plot(
-    #             {
-    #                 style = "red, opacity = 0.5, fill=red, fill opacity=0.5",
-    #                 ybar,
-    #                 },
-    #             PGFPlotsX.Table(positive_class_histogram),
-    #             ),
-    #         ),
-    #     )
     # axisobject = PGFPlots.Axis(
     #     [
     #         histogramobjectnegative_class,
