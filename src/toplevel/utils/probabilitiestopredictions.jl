@@ -11,7 +11,7 @@ function multilabelprobabilitiestopredictions(
     for j = 1:length(label_names)
         result[label_names[j]] = single_labelprobabilitiestopredictions(
             probabilitiesassoc[label_names[j]];
-            float_type = float_type,
+            float_type=float_type,
             )
     end
     result = Dict()

@@ -36,7 +36,7 @@ function plotlearningcurves(
         show_smoothed::Bool = true,
         )
     legend_pos::String = convert(String, legend_pos)
-    if curvetype == :loss_vs_iteration
+    if curvetype==:loss_vs_iteration
         has_validation = include_validation &&
                 haskey(history, :validation_loss_at_iteration)
         xlabel = "Iteration"
@@ -52,7 +52,7 @@ function plotlearningcurves(
                 :validation_loss_at_iteration,
                 )
         end
-    elseif curvetype == :loss_vs_epoch
+    elseif curvetype==:loss_vs_epoch
         has_validation = include_validation &&
            haskey(history, :validation_loss_at_epoch)
         xlabel = "Epoch"
@@ -69,7 +69,7 @@ function plotlearningcurves(
                 )
         end
     else
-        error("curvetype must be one of: :loss_vs_iteration, :loss_vs_epoch")
+        error("\"curvetype\" must be one of: :loss_vs_iteration, :loss_vs_epoch")
     end
     if length(training_xvalues) != length(training_yvalues)
         error("length(training_xvalues) != length(training_yvalues)")

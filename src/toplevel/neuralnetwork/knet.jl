@@ -52,7 +52,7 @@ function KnetModel(
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
         )
-    optimizersymbol2type = Dict()
+    optimizersymbol2type=Dict()
     optimizersymbol2type[:Sgd] = Knet.Sgd
     optimizersymbol2type[:Momentum] = Knet.Momentum
     optimizersymbol2type[:Nesterov] = Knet.Nesterov
@@ -60,7 +60,7 @@ function KnetModel(
     optimizersymbol2type[:Adagrad] = Knet.Adagrad
     optimizersymbol2type[:Adadelta] = Knet.Adadelta
     optimizersymbol2type[:Adam] = Knet.Adam
-    optimizersymbol2type = fix_type(optimizersymbol2type)
+    optimizersymbol2type=fix_type(optimizersymbol2type)
     modelweightoptimizers = Knet.optimizers(
         modelweights,
         optimizersymbol2type[optimizationalgorithm];

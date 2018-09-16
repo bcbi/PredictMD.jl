@@ -26,8 +26,8 @@ function inverse(x::AbstractDict)::Dict
     values_array = fix_type(collect(values(x)))
 
 
-    key_type = eltype(keys_array)
-    value_type = eltype(values_array)
+    key_type=eltype(keys_array)
+    value_type=eltype(values_array)
 
     result = Dict{value_type, key_type}()
 
