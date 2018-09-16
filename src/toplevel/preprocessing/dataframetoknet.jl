@@ -3,19 +3,6 @@
 import DataFrames
 import StatsModels
 
-"""
-"""
-mutable struct MutableDataFrame2ClassificationKnetTransformer <:
-        AbstractEstimator
-    feature_names::T1 where T1 <: AbstractVector
-    label_names::T2 where T2 <: AbstractVector{Symbol}
-    label_levels::T3 where T3 <: AbstractDict
-    index::T4 where T4 <: Integer
-    transposefeatures::T5 where T5 <: Bool
-    transposelabels::T6 where T6 <: Bool
-    dffeaturecontrasts::T7 where T7 <: AbstractFeatureContrasts
-end
-
 function MutableDataFrame2ClassificationKnetTransformer(
         feature_names::AbstractVector,
         label_names::AbstractVector{Symbol},
@@ -35,31 +22,6 @@ function MutableDataFrame2ClassificationKnetTransformer(
         dffeaturecontrasts,
         )
     return result
-end
-
-"""
-"""
-mutable struct MutableDataFrame2RegressionKnetTransformer <:
-        AbstractEstimator
-    feature_names::T1 where T1 <: AbstractVector
-    label_names::T2 where T2 <: AbstractVector{Symbol}
-    transposefeatures::T3 where T3 <: Bool
-    transposelabels::T4 where T4 <: Bool
-    dffeaturecontrasts::T5 where T5 <: AbstractFeatureContrasts
-    function MutableDataFrame2RegressionKnetTransformer(
-            feature_names::AbstractVector,
-            label_names::AbstractVector{Symbol};
-            transposefeatures::Bool = true,
-            transposelabels::Bool = false,
-            )
-        result = new(
-            feature_names,
-            label_names,
-            transposefeatures,
-            transposelabels,
-            )
-        return result
-    end
 end
 
 """

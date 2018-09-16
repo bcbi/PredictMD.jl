@@ -107,7 +107,7 @@ import FileIO
 import PredictMD
 
 icd_code_list = ["8841"]
-icd_code_type = :procedure
+icd_code_type=:procedure
 input_file_name_list = [
     "./data/nis_2012_core.csv",
     "./data/nis_2013_core.csv",
@@ -119,7 +119,7 @@ PredictMD.Cleaning.clean_hcup_nis_csv_icd9(
     icd_code_list,
     input_file_name_list,
     output_file_name;
-    icd_code_type = icd_code_type,
+    icd_code_type=icd_code_type,
     rows_for_type_detect = 30_000,
     )
 
@@ -155,10 +155,10 @@ function clean_hcup_nis_csv_icd9(
     if is_nothing(icd_code_type)
         error("you need to specify icd_code_type")
     end
-    if icd_code_type == :diagnosis
-    elseif icd_code_type == :procedure
+    if icd_code_type==:diagnosis
+    elseif icd_code_type==:procedure
     else
-        error("icd_code_type must be one of: :diagnosis, :procedure")
+        error("\"icd_code_type\" must be one of: :diagnosis, :procedure")
     end
 
     if length(input_file_name_list) == 0
@@ -307,16 +307,16 @@ function clean_hcup_nis_csv_icd9(
         df_vector[i] = DataFrames.DataFrame()
     end
 
-    if icd_code_type == :diagnosis
+    if icd_code_type==:diagnosis
         icd_code_column_names = Symbol[
             Symbol( string("DX", j) ) for j = 1:num_dx_columns
             ]
-    elseif icd_code_type == :procedure
+    elseif icd_code_type==:procedure
         icd_code_column_names = Symbol[
             Symbol( string("PR", j) ) for j = 1:num_pr_columns
             ]
     else
-        error("icd_code_type must be one of: :diagnosis, :procedure")
+        error("\"icd_code_type\" must be one of: :diagnosis, :procedure")
     end
 
     row_i_has_kth_icd_code_matrix = Matrix{Bool}(

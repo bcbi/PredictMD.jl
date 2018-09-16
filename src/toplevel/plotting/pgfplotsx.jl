@@ -2,10 +2,6 @@
 
 import PGFPlotsX
 
-struct PGFPlotsXPlot{T} <: AbstractPlot{T}
-    underlying_object::T
-end
-
 function get_underlying(p::PGFPlotsXPlot{T})::T where T
     result = p.underlying_object
     return result

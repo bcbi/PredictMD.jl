@@ -7,34 +7,6 @@ import Knet
 import ProgressMeter
 import ValueHistories
 
-"""
-"""
-mutable struct KnetModel <: AbstractEstimator
-    name::T1 where T1 <: AbstractString
-    isclassificationmodel::T2 where T2 <: Bool
-    isregressionmodel::T3 where T3 <: Bool
-
-    # hyperparameters (not learned from data):
-    predict_function_source::T4 where T4 <: AbstractString
-    loss_function_source::T5 where T5 <: AbstractString
-    predict_function::T6 where T6 <: Any
-    loss_function::T7 where T7 <: Any
-    losshyperparameters::T8 where T8 <: AbstractDict
-    optimizationalgorithm::T9 where T9 <: Symbol
-    optimizerhyperparameters::T10 where T10 <: AbstractDict
-    minibatchsize::T11 where T11 <: Integer
-    maxepochs::T12 where T12 <: Integer
-    printlosseverynepochs::T13 where T13 <: Integer
-
-    # parameters (learned from data):
-    modelweights::T14 where T14 <: AbstractArray
-    modelweightoptimizers::T15 where T15 <: Any
-
-    # learning state
-    history::T16 where T16 <: Any
-
-end
-
 function KnetModel(
         ;
         name::AbstractString = "",

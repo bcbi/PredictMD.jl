@@ -2,24 +2,6 @@
 
 import DecisionTree
 
-"""
-"""
-mutable struct DecisionTreeModel <:
-        AbstractEstimator
-    name::T1 where T1 <: AbstractString
-    isclassificationmodel::T2 where T2 <: Bool
-    isregressionmodel::T3 where T3 <: Bool
-
-    single_label_name::T4 where T4 <: Symbol
-    levels::T5 where T5 <: AbstractVector
-
-    # hyperparameters (not learned from data):
-    hyperparameters::T6 where T6 <: AbstractDict
-
-    # parameters (learned from data):
-    underlyingrandomforest::T7 where T7 <: Any
-end
-
 function DecisionTreeModel(
         single_label_name::Symbol;
         name::AbstractString = "",

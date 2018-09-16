@@ -2,22 +2,6 @@
 
 import LIBSVM
 
-"""
-"""
-mutable struct LIBSVMModel <: AbstractEstimator
-    name::T1 where T1 <: AbstractString
-    isclassificationmodel::T2 where T2 <: Bool
-    isregressionmodel::T3 where T3 <: Bool
-
-    levels::T4 where T4 <: AbstractVector
-
-    # hyperparameters (not learned from data):
-    hyperparameters::T5 where T5 <: AbstractDict
-
-    # parameters (learned from data):
-    underlyingsvm::T6 where T6 <: Any
-end
-
 function LIBSVMModel(
         ;
         single_label_levels::AbstractVector = [],

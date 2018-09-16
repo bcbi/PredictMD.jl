@@ -5,11 +5,6 @@ import StatsModels
 
 """
 """
-struct ImmutableFeatureArrayTransposerTransformer <: AbstractEstimator
-end
-
-"""
-"""
 function set_feature_contrasts!(
         x::ImmutableFeatureArrayTransposerTransformer,
         feature_contrasts::AbstractFeatureContrasts,
