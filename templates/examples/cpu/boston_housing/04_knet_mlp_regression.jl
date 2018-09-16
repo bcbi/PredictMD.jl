@@ -24,14 +24,14 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin Knet neural network regression code
 
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
+import Pkg
+
+try Pkg.add("CSV") catch end
+try Pkg.add("DataFrames") catch end
+try Pkg.add("FileIO") catch end
+try Pkg.add("JLD2") catch end
+try Pkg.add("Knet") catch end
+try Pkg.add("PGFPlotsX") catch end
 
 import CSV
 import DataFrames

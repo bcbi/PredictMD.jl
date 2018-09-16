@@ -24,20 +24,18 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin model output code
 
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
-Pkg.add("")
+import Pkg
+
+try Pkg.add("CSV") catch end
+try Pkg.add("DataFrames") catch end
+try Pkg.add("DecisionTree") catch end
+try Pkg.add("Distributions") catch end
+try Pkg.add("FileIO") catch end
+try Pkg.add("GLM") catch end
+try Pkg.add("JLD2") catch end
+try Pkg.add("Knet") catch end
+try Pkg.add("StatsModels") catch end
+try Pkg.add("ValueHistories") catch end
 
 import CSV
 import DataFrames

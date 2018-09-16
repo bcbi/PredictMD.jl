@@ -24,11 +24,13 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin SMOTE class-balancing code
 
-Pkg.add("CSV")
-Pkg.add("DataFrames")
-Pkg.add("FileIO")
-Pkg.add("JLD2")
-Pkg.add("StatsBase")
+import Pkg
+
+try Pkg.add("CSV") catch end
+try Pkg.add("DataFrames") catch end
+try Pkg.add("FileIO") catch end
+try Pkg.add("JLD2") catch end
+try Pkg.add("StatsBase") catch end
 
 import CSV
 import DataFrames
