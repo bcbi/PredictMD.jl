@@ -5,6 +5,7 @@ import Pkg
 import Test
 
 @info(string("Julia depot paths: "), Base.DEPOT_PATH)
+@info(string("Julia load paths: "), Base.LOAD_PATH)
 
 @info(string("Julia version info: ",))
 InteractiveUtils.versioninfo(verbose=true)
@@ -26,5 +27,8 @@ import PredictMD
 @info(string("Successfully imported PredictMD.",))
 @info(string("PredictMD version: "),PredictMD.version(),)
 @info(string("PredictMD package directory: "),PredictMD.package_directory(),)
+
+@info(string("Julia depot paths: "), Base.DEPOT_PATH)
+@info(string("Julia load paths: "), Base.LOAD_PATH)
 
 ##### End of file
