@@ -24,6 +24,12 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin random forest classifier code
 
+Pkg.add("CSV")
+Pkg.add("DataFrames")
+Pkg.add("FileIO")
+Pkg.add("JLD2")
+Pkg.add("PGFPlotsX")
+
 import CSV
 import DataFrames
 import FileIO

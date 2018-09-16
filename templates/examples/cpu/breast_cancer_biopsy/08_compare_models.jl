@@ -24,6 +24,19 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin model comparison code
 
+Pkg.add("CSV")
+Pkg.add("DataFrames")
+Pkg.add("DecisionTree")
+Pkg.add("Distributions")
+Pkg.add("FileIO")
+Pkg.add("GLM")
+Pkg.add("JLD2")
+Pkg.add("Knet")
+Pkg.add("LIBSVM")
+Pkg.add("PGFPlotsX")
+Pkg.add("StatsModels")
+Pkg.add("ValueHistories")
+
 import CSV
 import DataFrames
 import DecisionTree
