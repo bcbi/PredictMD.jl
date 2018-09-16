@@ -37,6 +37,10 @@ julia --check-bounds=yes --color=yes -e '
 julia --check-bounds=yes --color=yes -e '
     import Pkg;
     include(joinpath(Pkg.dir("PredictMD"), "docs", "make.jl",));
-'
+    '
+    
+cat Project.toml
+
+cat Manifest.toml
 
 ##### End of file
