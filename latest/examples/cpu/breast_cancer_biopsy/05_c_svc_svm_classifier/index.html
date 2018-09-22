@@ -220,6 +220,187 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin C-SVC code
 
+import Pkg
+
+try Pkg.add(&quot;CSV&quot;) catch end
+try Pkg.add(&quot;DataFrames&quot;) catch end
+try Pkg.add(&quot;FileIO&quot;) catch end
+try Pkg.add(&quot;JLD2&quot;) catch end
+try Pkg.add(&quot;LIBSVM&quot;) catch end
+try Pkg.add(&quot;PGFPlotsX&quot;) catch end
+
+import CSV
+import DataFrames
+import FileIO
+import JLD2
+import LIBSVM
+import PGFPlotsX
+import Random
+
+Random.seed!(999)
+
+trainingandvalidation_features_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;trainingandvalidation_features_df.csv&quot;,
+    )
+trainingandvalidation_labels_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;trainingandvalidation_labels_df.csv&quot;,
+    )
+testing_features_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;testing_features_df.csv&quot;,
+    )
+testing_labels_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;testing_labels_df.csv&quot;,
+    )
+training_features_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;training_features_df.csv&quot;,
+    )
+training_labels_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;training_labels_df.csv&quot;,
+    )
+validation_features_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;validation_features_df.csv&quot;,
+    )
+validation_labels_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;validation_labels_df.csv&quot;,
+    )
+trainingandvalidation_features_df = CSV.read(
+    trainingandvalidation_features_df_filename,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
+    )
+trainingandvalidation_labels_df = CSV.read(
+    trainingandvalidation_labels_df_filename,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
+    )
+testing_features_df = CSV.read(
+    testing_features_df_filename,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
+    )
+testing_labels_df = CSV.read(
+    testing_labels_df_filename,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
+    )
+training_features_df = CSV.read(
+    training_features_df_filename,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
+    )
+training_labels_df = CSV.read(
+    training_labels_df_filename,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
+    )
+validation_features_df = CSV.read(
+    validation_features_df_filename,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
+    )
+validation_labels_df = CSV.read(
+    validation_labels_df_filename,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
+    )
+
+smoted_training_features_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;smoted_training_features_df.csv&quot;,
+    )
+smoted_training_labels_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;smoted_training_labels_df.csv&quot;,
+    )
+smoted_training_features_df = CSV.read(
+    smoted_training_features_df_filename,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
+    )
+smoted_training_labels_df = CSV.read(
+    smoted_training_labels_df_filename,
+    DataFrames.DataFrame;
+    rows_for_type_detect = 100,
+    )
+
+categorical_feature_names_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;categorical_feature_names.jld2&quot;,
+    )
+continuous_feature_names_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;continuous_feature_names.jld2&quot;,
+    )
+categorical_feature_names = FileIO.load(
+    categorical_feature_names_filename,
+    &quot;categorical_feature_names&quot;,
+    )
+continuous_feature_names = FileIO.load(
+    continuous_feature_names_filename,
+    &quot;continuous_feature_names&quot;,
+    )
+feature_names = vcat(categorical_feature_names, continuous_feature_names)
+
+single_label_name = :Class
+negative_class = &quot;benign&quot;
+positive_class = &quot;malignant&quot;
+single_label_levels = [negative_class, positive_class]
+
+categorical_label_names = Symbol[single_label_name]
+continuous_label_names = Symbol[]
+label_names = vcat(categorical_label_names, continuous_label_names)
+
+feature_contrasts = PredictMD.generate_feature_contrasts(
+    smoted_training_features_df,
+    feature_names,
+    )
+
+c_svc_svm_classifier =
+    PredictMD.single_labelmulticlassdataframesvmclassifier(
+        feature_names,
+        single_label_name,
+        single_label_levels;
+        package = :LIBSVM,
+        svmtype = LIBSVM.SVC,
+        name = &quot;SVM (C-SVC)&quot;,
+        verbose = false,
+        feature_contrasts = feature_contrasts,
+        )
+
+PredictMD.fit!(
+    c_svc_svm_classifier,
+    smoted_training_features_df,
+    smoted_training_labels_df,
+    )
+
+c_svc_svm_classifier_hist_training =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        c_svc_svm_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
+        single_label_name,
+        single_label_levels,
+        );
+
+display(c_svc_svm_classifier_hist_training)
+
+c_svc_svm_classifier_hist_testing =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        c_svc_svm_classifier,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        single_label_levels,
+        );
+
 display(c_svc_svm_classifier_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
