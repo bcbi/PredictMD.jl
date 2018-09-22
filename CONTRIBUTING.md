@@ -285,42 +285,29 @@ you can list all of the release branches by running the following
 command:* `git flow release list`
 
 #### Step 9:
-Open the source file `src/base/version.jl` and change
-the version number. For example, if the file looks like this:
+Open the file `Project.toml` and change the version number
+on line 4. For example, if line 4 of `Project.toml` looks
+like this:
 
 ```julia
-##### Beginning of file
-
-const PREDICTMD_VERSION = try
-    convert(VersionNumber, "THE OLD VERSION NUMBER WILL BE HERE")
-catch e
-    warn("While creating PredictMD.PREDICTMD_VERSION, ignoring error $(e)")
-    VersionNumber(0)
-end
-
-##### End of file
+version = "THE OLD VERSION NUMBER WILL BE HERE"
 ```
 
-Then you would edit it to look like this:
+Then you would edit line 4 to look like this:
 
 ```julia
-##### Beginning of file
-
-const PREDICTMD_VERSION = try
-    convert(VersionNumber, "v3.6.0")
-catch e
-    warn("While creating PredictMD.PREDICTMD_VERSION, ignoring error $(e)")
-    VersionNumber(0)
-end
-
-##### End of file
+version = "3.6.0"
 ```
+
+**Only change line 4 of `Project.toml`
+(the line that begins with `version =`.
+Do not change any of the other lines.**
 
 #### Step 10:
 Commit your changes:
 
 ```bash
-git add src/base/version.jl
+git add Project.toml
 
 git commit
 ```
