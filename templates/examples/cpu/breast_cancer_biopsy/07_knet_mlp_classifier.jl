@@ -4,16 +4,11 @@ error(string("This file is not meant to be run. Use the `PredictMD.generate_exam
 
 %PREDICTMD_GENERATED_BY%
 
-# BEGIN TEST STATEMENTS
-import Base.Test
-Base.Test.@test( 1 == 1 )
-# END TEST STATEMENTS
-
 import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version("v0.6")
+PredictMD.require_julia_version("%PREDICTMD_MINIMUM_REQUIRED_JULIA_VERSION%")
 
 PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
 
@@ -29,14 +24,28 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin Knet neural network classifier code
 
+# BEGIN TEST STATEMENTS
+import Test
+# END TEST STATEMENTS
+
+import Pkg
+
+try Pkg.add("CSV") catch end
+try Pkg.add("DataFrames") catch end
+try Pkg.add("FileIO") catch end
+try Pkg.add("JLD2") catch end
+try Pkg.add("Knet") catch end
+try Pkg.add("PGFPlotsX") catch end
+
 import CSV
-import Compat
 import DataFrames
 import FileIO
 import JLD2
 import Knet
+import PGFPlotsX
+import Random
 
-srand(999)
+Random.seed!(999)
 
 trainingandvalidation_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
@@ -168,7 +177,7 @@ function knetmlp_predict(
     x3 = w[5]*x2 .+ w[6]
     unnormalizedlogprobs = x3
     if probabilities
-        normalizedlogprobs = Knet.logp(unnormalizedlogprobs, 1)
+        normalizedlogprobs = Knet.logp(unnormalizedlogprobs; dims = 1)
         normalizedprobs = exp.(normalizedlogprobs)
         return normalizedprobs
     else
@@ -192,8 +201,8 @@ function knetmlp_loss(
             x;
             probabilities = false,
             ),
-        ytrue,
-        1,
+        ytrue;
+        dims = 1,
         )
     if L1 != 0
         loss += L1 * sum(sum(abs, w_i) for w_i in modelweights[1:2:end])
@@ -281,24 +290,72 @@ PredictMD.fit!(
 knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
     knet_mlp_classifier,
     :loss_vs_epoch;
+    );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempname(),
+    "_",
+    "knet_learningcurve_lossvsepoch",
+    ".pdf",
     )
-PredictMD.open_plot(knet_learningcurve_lossvsepoch)
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, knet_learningcurve_lossvsepoch)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
+display(knet_learningcurve_lossvsepoch)
 
 knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
     knet_mlp_classifier,
     :loss_vs_epoch;
     startat = 10,
     endat = :end,
+    );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempname(),
+    "_",
+    "knet_learningcurve_lossvsepoch_skip10epochs",
+    ".pdf",
     )
-PredictMD.open_plot(knet_learningcurve_lossvsepoch_skip10epochs)
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, knet_learningcurve_lossvsepoch_skip10epochs)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
+display(knet_learningcurve_lossvsepoch_skip10epochs)
 
 knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
     knet_mlp_classifier,
     :loss_vs_iteration;
     window = 50,
     sampleevery = 10,
+    );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempname(),
+    "_",
+    "knet_learningcurve_lossvsiteration",
+    ".pdf",
     )
-PredictMD.open_plot(knet_learningcurve_lossvsiteration)
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, knet_learningcurve_lossvsiteration)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
+display(knet_learningcurve_lossvsiteration)
 
 knet_learningcurve_lossvsiteration_skip100iterations =
     PredictMD.plotlearningcurve(
@@ -308,8 +365,24 @@ knet_learningcurve_lossvsiteration_skip100iterations =
         sampleevery = 10,
         startat = 100,
         endat = :end,
-        )
-PredictMD.open_plot(knet_learningcurve_lossvsiteration_skip100iterations)
+        );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempname(),
+    "_",
+    "knet_learningcurve_lossvsiteration_skip100iterations",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, knet_learningcurve_lossvsiteration_skip100iterations)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
+display(knet_learningcurve_lossvsiteration_skip100iterations)
 
 knet_mlp_classifier_hist_training =
     PredictMD.plotsinglelabelbinaryclassifierhistogram(
@@ -318,8 +391,24 @@ knet_mlp_classifier_hist_training =
         smoted_training_labels_df,
         single_label_name,
         single_label_levels,
-        )
-PredictMD.open_plot(knet_mlp_classifier_hist_training)
+        );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempname(),
+    "_",
+    "knet_mlp_classifier_hist_training",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, knet_mlp_classifier_hist_training)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
+display(knet_mlp_classifier_hist_training)
 
 knet_mlp_classifier_hist_testing =
         PredictMD.plotsinglelabelbinaryclassifierhistogram(
@@ -328,8 +417,24 @@ knet_mlp_classifier_hist_testing =
         testing_labels_df,
         single_label_name,
         single_label_levels,
-        )
-PredictMD.open_plot(knet_mlp_classifier_hist_testing)
+        );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempname(),
+    "_",
+    "knet_mlp_classifier_hist_testing",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, knet_mlp_classifier_hist_testing)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
+display(knet_mlp_classifier_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
     knet_mlp_classifier,

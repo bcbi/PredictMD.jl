@@ -4,16 +4,11 @@ error(string("This file is not meant to be run. Use the `PredictMD.generate_exam
 
 %PREDICTMD_GENERATED_BY%
 
-# BEGIN TEST STATEMENTS
-import Base.Test
-Base.Test.@test( 1 == 1 )
-# END TEST STATEMENTS
-
 import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version("v0.6")
+PredictMD.require_julia_version("%PREDICTMD_MINIMUM_REQUIRED_JULIA_VERSION%")
 
 PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
 
@@ -29,14 +24,42 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin model comparison code
 
+# BEGIN TEST STATEMENTS
+import Test
+# END TEST STATEMENTS
+
+import Pkg
+
+try Pkg.add("CSV") catch end
+try Pkg.add("DataFrames") catch end
+try Pkg.add("DecisionTree") catch end
+try Pkg.add("Distributions") catch end
+try Pkg.add("FileIO") catch end
+try Pkg.add("GLM") catch end
+try Pkg.add("JLD2") catch end
+try Pkg.add("Knet") catch end
+try Pkg.add("LIBSVM") catch end
+try Pkg.add("PGFPlotsX") catch end
+try Pkg.add("StatsModels") catch end
+try Pkg.add("ValueHistories") catch end
+
 import CSV
-import Compat
 import DataFrames
+import DecisionTree
+import Distributions
 import FileIO
+import GLM
 import JLD2
 import Knet
+import LIBSVM
+Kernel = LIBSVM.Kernel
+import LinearAlgebra
+import PGFPlotsX
+import Random
+import StatsModels
+import ValueHistories
 
-srand(999)
+Random.seed!(999)
 
 trainingandvalidation_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
@@ -181,71 +204,143 @@ categorical_label_names = Symbol[single_label_name]
 continuous_label_names = Symbol[]
 label_names = vcat(categorical_label_names, continuous_label_names)
 
-Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
-    all_models,
-    training_features_df,
-    training_labels_df,
-    single_label_name,
-    positive_class;
-    sensitivity = 0.95,
-    ))
-Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
-    all_models,
-    training_features_df,
-    training_labels_df,
-    single_label_name,
-    positive_class;
-    specificity = 0.95,
-    ))
-Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
-    all_models,
-    training_features_df,
-    training_labels_df,
-    single_label_name,
-    positive_class;
-    maximize = :f1score,
-    ))
-Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
-    all_models,
-    training_features_df,
-    training_labels_df,
-    single_label_name,
-    positive_class;
-    maximize = :cohen_kappa,
-    ))
+println(
+    string(
+        "Single label binary classification metrics, training set, ",
+        "fix sensitivity",
+        )
+    )
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        all_models,
+        training_features_df,
+        training_labels_df,
+        single_label_name,
+        positive_class;
+        sensitivity = 0.95,
+        ),
+    true,
+    )
+println(
+    string(
+        "Single label binary classification metrics, training set, ",
+        "fix specificity",
+        )
+    )
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        all_models,
+        training_features_df,
+        training_labels_df,
+        single_label_name,
+        positive_class;
+        specificity = 0.95,
+        ),
+    true,
+    )
+println(
+    string(
+        "Single label binary classification metrics, training set, ",
+        "maximize F1 score",
+        )
+    )
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        all_models,
+        training_features_df,
+        training_labels_df,
+        single_label_name,
+        positive_class;
+        maximize = :f1score,
+        ),
+    true,
+    )
+println(
+    string(
+        "Single label binary classification metrics, training set, ",
+        "maximize Cohen's kappa",
+        )
+    )
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        all_models,
+        training_features_df,
+        training_labels_df,
+        single_label_name,
+        positive_class;
+        maximize = :cohen_kappa,
+        ),
+    true,
+    )
 
-Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
-    all_models,
-    testing_features_df,
-    testing_labels_df,
-    single_label_name,
-    positive_class;
-    sensitivity = 0.95,
-    ))
-Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
-    all_models,
-    testing_features_df,
-    testing_labels_df,
-    single_label_name,
-    positive_class;
-    specificity = 0.95,
-    ))
-Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
-    all_models,
-    testing_features_df,
-    testing_labels_df,
-    single_label_name,
-    positive_class;
-    maximize = :f1score,
-    ))
-Compat.@info(PredictMD.singlelabelbinaryclassificationmetrics(
-    all_models,
-    testing_features_df,
-    testing_labels_df,
-    single_label_name,
-    positive_class;
-    maximize = :cohen_kappa,
-    ))
+println(
+    string(
+        "Single label binary classification metrics, testing set, ",
+        "fix sensitivity",
+        )
+    )
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        all_models,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        positive_class;
+        sensitivity = 0.95,
+        ),
+    true,
+    )
+println(
+    string(
+        "Single label binary classification metrics, testing set, ",
+        "fix specificity",
+        )
+    )
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        all_models,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        positive_class;
+        specificity = 0.95,
+        ),
+    true,
+    )
+println(
+    string(
+        "Single label binary classification metrics, testing set, ",
+        "maximize F1 score",
+        )
+    )
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        all_models,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        positive_class;
+        maximize = :f1score,
+        ),
+    true,
+    )
+println(
+    string(
+        "Single label binary classification metrics, testing set, ",
+        "maximize Cohen's kappa",
+        )
+    )
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        all_models,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        positive_class;
+        maximize = :cohen_kappa,
+        ),
+    true,
+    )
 
 rocplottesting = PredictMD.plotroccurves(
     all_models,
@@ -253,8 +348,24 @@ rocplottesting = PredictMD.plotroccurves(
     testing_labels_df,
     single_label_name,
     positive_class,
+    );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempname(),
+    "_",
+    "rocplottesting",
+    ".pdf",
     )
-PredictMD.open_plot(rocplottesting)
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, rocplottesting)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
+display(rocplottesting)
 
 prplottesting = PredictMD.plotprcurves(
     all_models,
@@ -262,8 +373,24 @@ prplottesting = PredictMD.plotprcurves(
     testing_labels_df,
     single_label_name,
     positive_class,
+    );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempname(),
+    "_",
+    "prplottesting",
+    ".pdf",
     )
-PredictMD.open_plot(prplottesting)
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, prplottesting)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
+display(prplottesting)
 
 ### End model comparison code
 

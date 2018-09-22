@@ -2,13 +2,6 @@
 
 """
 """
-struct ImmutablePackageSingleLabelPredictProbaTransformer <:
-        AbstractEstimator
-    single_label_name::T1 where T1 <: Symbol
-end
-
-"""
-"""
 function set_feature_contrasts!(
         x::ImmutablePackageSingleLabelPredictProbaTransformer,
         feature_contrasts::AbstractFeatureContrasts,
@@ -76,7 +69,7 @@ end
 """
 function predict_proba(
         transformer::ImmutablePackageSingleLabelPredictProbaTransformer,
-        single_labelprobabilities::Associative;
+        single_labelprobabilities::AbstractDict;
         kwargs...
         )
     result = Dict()

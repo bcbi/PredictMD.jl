@@ -3,7 +3,7 @@
 """
 """
 function multilabelprobabilitiestopredictions(
-        probabilitiesassoc::Associative;
+        probabilitiesassoc::AbstractDict;
         float_type::Type{<:AbstractFloat} = Cfloat,
         )
     result = Dict()
@@ -11,7 +11,7 @@ function multilabelprobabilitiestopredictions(
     for j = 1:length(label_names)
         result[label_names[j]] = single_labelprobabilitiestopredictions(
             probabilitiesassoc[label_names[j]];
-            float_type = float_type,
+            float_type=float_type,
             )
     end
     result = Dict()
@@ -23,7 +23,7 @@ const probabilitiestopredictions = multilabelprobabilitiestopredictions
 """
 """
 function single_labelprobabilitiestopredictions(
-        probabilitiesassoc::Associative;
+        probabilitiesassoc::AbstractDict;
         float_type::Type{<:AbstractFloat} = Cfloat,
         )
     classes = sort(unique(collect(keys(probabilitiesassoc))))

@@ -1,17 +1,18 @@
 ##### Beginning of file
 
-import Base.Test
+import Test
 
-srand(999)
+import Random
+Random.seed!(999)
 
-Base.Test.@testset "Unit tests       " begin
-    Compat.@info(string("Running unit tests..."))
+Test.@testset "Unit tests       " begin
+    @info(string("Running unit tests..."))
 
-    Base.Test.@testset "Julia version requirements" begin
-        Base.Test.@test(Base.VERSION >= VersionNumber("0.6"))
+    Test.@testset "Julia version requirements" begin
+        Test.@test(Base.VERSION >= VersionNumber("0.6"))
     end
 
-    Base.Test.@testset "base                      " begin
+    Test.@testset "base                      " begin
         include(
             joinpath(
                 "cpu", "unit",
@@ -28,7 +29,7 @@ Base.Test.@testset "Unit tests       " begin
             )
     end
 
-    Base.Test.@testset "code_loading              " begin
+    Test.@testset "code_loading              " begin
         include(
             joinpath(
                 "cpu", "unit",
@@ -38,7 +39,7 @@ Base.Test.@testset "Unit tests       " begin
             )
     end
 
-    Base.Test.@testset "metrics                   " begin
+    Test.@testset "metrics                   " begin
         include(
             joinpath(
                 "cpu", "unit",
@@ -55,7 +56,7 @@ Base.Test.@testset "Unit tests       " begin
             )
     end
 
-    Base.Test.@testset "utils                     " begin
+    Test.@testset "utils                     " begin
         include(
             joinpath(
                 "cpu", "unit",
@@ -79,7 +80,7 @@ Base.Test.@testset "Unit tests       " begin
             )
     end
 
-    Base.Test.@testset "hcup                      " begin
+    Test.@testset "hcup                      " begin
         include(
             joinpath(
                 "cpu", "unit",
@@ -91,135 +92,140 @@ Base.Test.@testset "Unit tests       " begin
     end
 end
 
-Base.Test.@testset "Integration tests" begin
-    Compat.@info(string("Running integration tests..."))
+temp_generate_examples_dir = joinpath(
+    PredictMD.get_temp_directory(),
+    "generate_examples",
+    "PredictMDTEMP",
+    "examples",
+    )
 
-    Base.Test.@testset "Generate documentation and examples      " begin
-        rm(
-            joinpath(PredictMD.get_temp_directory(), "make_docs",);
-            force = true,
-            recursive = true,
-            )
-        temp_makedocs_dir = joinpath(
-            PredictMD.get_temp_directory(),
-            "make_docs",
-            "PredictMDTEMP",
-            "docs",
-            )
-        include(
-            joinpath(
-                "..", "docs", "make.jl",
-                )
+rm(
+    temp_generate_examples_dir;
+    force = true,
+    recursive = true,
+    )
+
+Test.@testset "Integration tests" begin
+    @info(string("Running integration tests..."))
+
+    Test.@testset "Generate examples      " begin
+        PredictMD.generate_examples(
+            temp_generate_examples_dir;
+            scripts = true,
+            include_test_statements = true,
+            markdown = false,
+            notebooks = false,
+            execute_notebooks = false,
             )
     end
 
-    Base.Test.@testset "Boston housing regression example (CPU)  " begin
-        Compat.@info("Testing Boston housing regression example (CPU)")
+    Test.@testset "Boston housing regression example (CPU)  " begin
+        @info("Testing Boston housing regression example (CPU)")
         include(
             joinpath(
-                temp_makedocs_dir, "src", "examples", "cpu",
+                temp_generate_examples_dir, "cpu",
                 "boston_housing",
                 "01_preprocess_data.jl",
                 )
             )
         include(
             joinpath(
-                temp_makedocs_dir, "src", "examples", "cpu",
+                temp_generate_examples_dir, "cpu",
                 "boston_housing",
                 "02_linear_regression.jl",
                 )
             )
         include(
             joinpath(
-                temp_makedocs_dir, "src", "examples", "cpu",
+                temp_generate_examples_dir, "cpu",
                 "boston_housing",
                 "03_random_forest_regression.jl",
                 )
             )
         include(
             joinpath(
-                temp_makedocs_dir, "src", "examples", "cpu",
+                temp_generate_examples_dir, "cpu",
                 "boston_housing",
                 "04_knet_mlp_regression.jl",
                 )
             )
         include(
             joinpath(
-                temp_makedocs_dir, "src", "examples", "cpu",
+                temp_generate_examples_dir, "cpu",
                 "boston_housing",
                 "05_compare_models.jl",
                 )
             )
         include(
             joinpath(
-                temp_makedocs_dir, "src", "examples", "cpu",
+                temp_generate_examples_dir, "cpu",
                 "boston_housing",
                 "06_get_model_output.jl",
                 )
             )
     end
 
-    Base.Test.@testset "Breast cancer biopsy classification (CPU)" begin
-        Compat.@info("Testing breast cancer biopsy classification example (CPU)")
+    Test.@testset "Breast cancer biopsy classification (CPU)" begin
+        @info("Testing breast cancer biopsy classification example (CPU)")
         include(
             joinpath(
-                temp_makedocs_dir, "src", "examples", "cpu",
+                temp_generate_examples_dir, "cpu",
                 "breast_cancer_biopsy",
                 "01_preprocess_data.jl",
                 )
             )
         include(
             joinpath(
-                temp_makedocs_dir, "src", "examples", "cpu",
+                temp_generate_examples_dir, "cpu",
                 "breast_cancer_biopsy",
                 "02_smote.jl",
                 )
             )
         include(
             joinpath(
-                temp_makedocs_dir, "src", "examples", "cpu",
+                temp_generate_examples_dir, "cpu",
                 "breast_cancer_biopsy",
                 "03_logistic_classifier.jl",
                 )
             )
         include(
             joinpath(
-                temp_makedocs_dir, "src", "examples", "cpu",
+                temp_generate_examples_dir, "cpu",
                 "breast_cancer_biopsy",
                 "04_random_forest_classifier.jl",
                 )
             )
         include(
             joinpath(
-                temp_makedocs_dir, "src", "examples", "cpu",
+                temp_generate_examples_dir, "cpu",
                 "breast_cancer_biopsy",
                 "05_c_svc_svm_classifier.jl",
                 )
             )
         include(
             joinpath(
-                temp_makedocs_dir, "src", "examples", "cpu",
+                temp_generate_examples_dir, "cpu",
                 "breast_cancer_biopsy",
                 "06_nu_svc_svm_classifier.jl",
                 )
             )
         include(
             joinpath(
-                temp_makedocs_dir, "src", "examples", "cpu",
+                temp_generate_examples_dir, "cpu",
                 "breast_cancer_biopsy",
                 "07_knet_mlp_classifier.jl",
                 )
             )
         include(
             joinpath(
-                temp_makedocs_dir, "src", "examples", "cpu",
+                temp_generate_examples_dir, "cpu",
                 "breast_cancer_biopsy",
                 "08_compare_models.jl",
                 )
             )
         include(
             joinpath(
-                temp_makedocs_dir, "src", "examples", "cpu",
+                temp_generate_examples_dir, "cpu",
                 "breast_cancer_biopsy",
                 "09_get_model_output.jl",
                 )

@@ -2,6 +2,7 @@
 
 import ClassImbalance
 import DataFrames
+import Random
 
 """
 """
@@ -34,7 +35,7 @@ function smote(
         k::Integer = 5,
         )
     result = smote(
-        Base.GLOBAL_RNG,
+        Random.GLOBAL_RNG,
         features_df,
         labels_df,
         feature_names,

@@ -7,35 +7,6 @@ import Knet
 import ProgressMeter
 import ValueHistories
 
-"""
-"""
-mutable struct KnetModel <: AbstractEstimator
-    name::T1 where T1 <: AbstractString
-    isclassificationmodel::T2 where T2 <: Bool
-    isregressionmodel::T3 where T3 <: Bool
-
-    # hyperparameters (not learned from data):
-    predict_function_source::T4 where T4 <: AbstractString
-    loss_function_source::T5 where T5 <: AbstractString
-    predict_function::T6 where T6 <: Union{Void, Function, Any}
-    loss_function::T7 where T7 <: Union{Void, Function, Any}
-    losshyperparameters::T8 where T8 <: Associative
-    optimizationalgorithm::T9 where T9 <: Symbol
-    optimizerhyperparameters::T10 where T10 <: Associative
-    minibatchsize::T11 where T11 <: Integer
-    maxepochs::T12 where T12 <: Integer
-    printlosseverynepochs::T13 where T13 <: Integer
-
-    # parameters (learned from data):
-    modelweights::T14 where T14 <: AbstractArray
-    modelweightoptimizers::T15 where T15 <: Any
-
-    # learning state
-    history::T16 where T16 <: ValueHistories.MultivalueHistory
-
-
-end
-
 function KnetModel(
         ;
         name::AbstractString = "",
@@ -43,9 +14,9 @@ function KnetModel(
         loss_function_source::AbstractString = "",
         predict_function::Function = identity,
         loss_function::Function = identity,
-        losshyperparameters::Associative = Dict(),
+        losshyperparameters::AbstractDict = Dict(),
         optimizationalgorithm::Symbol = :nothing,
-        optimizerhyperparameters::Associative = Dict(),
+        optimizerhyperparameters::AbstractDict = Dict(),
         minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
         isclassificationmodel::Bool = false,
@@ -53,7 +24,7 @@ function KnetModel(
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
         )
-    optimizersymbol2type = Dict()
+    optimizersymbol2type=Dict()
     optimizersymbol2type[:Sgd] = Knet.Sgd
     optimizersymbol2type[:Momentum] = Knet.Momentum
     optimizersymbol2type[:Nesterov] = Knet.Nesterov
@@ -61,7 +32,7 @@ function KnetModel(
     optimizersymbol2type[:Adagrad] = Knet.Adagrad
     optimizersymbol2type[:Adadelta] = Knet.Adadelta
     optimizersymbol2type[:Adam] = Knet.Adam
-    optimizersymbol2type = fix_type(optimizersymbol2type)
+    optimizersymbol2type=fix_type(optimizersymbol2type)
     modelweightoptimizers = Knet.optimizers(
         modelweights,
         optimizersymbol2type[optimizationalgorithm];
@@ -142,14 +113,14 @@ end
 
 function parse_functions!(estimator::KnetModel)
     estimator.predict_function = eval(
-        parse(
+        Meta.parse(
             strip(
                 estimator.predict_function_source
                 )
             )
         )
     estimator.loss_function = eval(
-        parse(
+        Meta.parse(
             strip(
                 estimator.loss_function_source
                 )
@@ -164,8 +135,8 @@ function fit!(
         estimator::KnetModel,
         training_features_array::AbstractArray,
         training_labels_array::AbstractArray,
-        validation_features_array::Union{Void, AbstractArray} = nothing,
-        validation_labels_array::Union{Void, AbstractArray} = nothing,
+        validation_features_array::Union{Nothing, AbstractArray} = nothing,
+        validation_labels_array::Union{Nothing, AbstractArray} = nothing,
         )
     if is_nothing(validation_features_array) &&
             is_nothing(validation_labels_array)
@@ -205,7 +176,7 @@ function fit!(
         )
     last_iteration = all_iterations_so_far[end]
     last_epoch = all_epochs_so_far[end]
-    Compat.@info(
+    @info(
         string(
             "Starting to train Knet model. Max epochs: ",
             estimator.maxepochs,
@@ -230,7 +201,7 @@ function fit!(
     end
     if (estimator.printlosseverynepochs) > 0
         if has_validation_data
-            Compat.@info(
+            @info(
                 string(
                     "Epoch: ",
                     last_epoch,
@@ -242,7 +213,7 @@ function fit!(
                     )
                 )
         else
-            Compat.@info(
+            @info(
                 string(
                     "Epoch: ",
                     lastepoch,
@@ -323,7 +294,7 @@ function fit!(
                     estimator.printlosseverynepochs) == 0 ) )
         if printlossthisepoch
             if has_validation_data
-                Compat.@info(
+                @info(
                    string(
                        "Epoch: ",
                        last_epoch,
@@ -335,7 +306,7 @@ function fit!(
                        ),
                    )
             else
-                Compat.@info(
+                @info(
                    string(
                        "Epoch: ",
                        last_epoch,
@@ -347,7 +318,7 @@ function fit!(
             end
         end
     end # end while
-    Compat.@info(string("Finished training Knet model."))
+    @info(string("Finished training Knet model."))
     return estimator
 end
 
@@ -414,14 +385,14 @@ function _single_labelmulticlassdataframeknetclassifier_Knet(
         name::AbstractString = "",
         predict_function_source::AbstractString = "",
         loss_function_source::AbstractString = "",
-        losshyperparameters::Associative = Dict(),
+        losshyperparameters::AbstractDict = Dict(),
         optimizationalgorithm::Symbol = :nothing,
-        optimizerhyperparameters::Associative = Dict(),
+        optimizerhyperparameters::AbstractDict = Dict(),
         minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} =
             nothing,
         )
     label_names = [single_label_name]
@@ -497,14 +468,14 @@ function single_labelmulticlassdataframeknetclassifier(
         name::AbstractString = "",
         predict_function_source::AbstractString = "",
         loss_function_source::AbstractString = "",
-        losshyperparameters::Associative = Dict(),
+        losshyperparameters::AbstractDict = Dict(),
         optimizationalgorithm::Symbol = :nothing,
-        optimizerhyperparameters::Associative = Dict(),
+        optimizerhyperparameters::AbstractDict = Dict(),
         minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} =
             nothing,
         )
     if package == :Knet
@@ -538,14 +509,14 @@ function _single_labeldataframeknetregression_Knet(
         name::AbstractString = "",
         predict_function_source::AbstractString = "",
         loss_function_source::AbstractString = "",
-        losshyperparameters::Associative = Dict(),
+        losshyperparameters::AbstractDict = Dict(),
         optimizationalgorithm::Symbol = :nothing,
-        optimizerhyperparameters::Associative = Dict(),
+        optimizerhyperparameters::AbstractDict = Dict(),
         minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} =
             nothing,
         )
     label_names = [single_label_name]
@@ -599,14 +570,14 @@ function single_labeldataframeknetregression(
         name::AbstractString = "",
         predict_function_source::AbstractString = "",
         loss_function_source::AbstractString = "",
-        losshyperparameters::Associative = Dict(),
+        losshyperparameters::AbstractDict = Dict(),
         optimizationalgorithm::Symbol = :nothing,
-        optimizerhyperparameters::Associative = Dict(),
+        optimizerhyperparameters::AbstractDict = Dict(),
         minibatchsize::Integer = 0,
         modelweights::AbstractArray = [],
         maxepochs::Integer = 0,
         printlosseverynepochs::Integer = 0,
-        feature_contrasts::Union{Void, AbstractFeatureContrasts} =
+        feature_contrasts::Union{Nothing, AbstractFeatureContrasts} =
             nothing,
         )
     if package == :Knet

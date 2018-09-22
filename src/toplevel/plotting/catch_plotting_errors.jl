@@ -1,16 +1,13 @@
 ##### Beginning of file
 
-function is_force_test_plots(a::Associative = ENV)
+function is_force_test_plots(a::AbstractDict = ENV)
     result = lowercase(strip(get(a, "PREDICTMD_TEST_PLOTS", ""))) == "true"
     return result
 end
 
-function handle_plotting_error(
-        e::Exception,
-        a::Associative = ENV,
-        )
+function handle_plotting_error(e::Exception, a::AbstractDict = ENV)::Nothing
     if is_force_test_plots(a)
-        Compat.@warn(
+        @warn(
             string(
                 "PREDICTMD_TEST_PLOTS is true ,",
                 "so rethrowing the error.",
@@ -18,7 +15,7 @@ function handle_plotting_error(
             )
         rethrow(e)
     else
-        Compat.@warn(string("ignoring error:", e))
+        @warn(string("ignoring error:", e))
         return nothing
     end
 end

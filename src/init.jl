@@ -1,8 +1,6 @@
 ##### Beginning of file
 
-import Requires
-
-function __init__()::Void
+function __init__()::Nothing
     _print_welcome_message()
     return nothing
 end

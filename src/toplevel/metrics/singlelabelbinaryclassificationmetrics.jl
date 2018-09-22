@@ -9,10 +9,10 @@ import StatsBase
 function singlelabelbinaryytrue(
         labels::AbstractVector,
         positive_class::AbstractString;
-        inttype::Type = Int,
+        inttype::Type=Int,
         )
-    if !(inttype <: Integer)
-        error("!(inttype <: Integer)")
+    if !(inttype<:Integer)
+        error("!(inttype<:Integer)")
     end
     result = inttype.(labels .== positive_class)
     return result
@@ -21,7 +21,7 @@ end
 """
 """
 function singlelabelbinaryyscore(
-        single_labelprobabilities::Associative,
+        single_labelprobabilities::AbstractDict,
         positive_class::AbstractString;
         float_type::Type{<:AbstractFloat} = Cfloat,
         )
@@ -32,7 +32,7 @@ end
 """
 """
 function _singlelabelbinaryclassificationmetrics_tunableparam(
-        kwargsassoc::Associative,
+        kwargsassoc::AbstractDict,
         )
     tunableparams = [
         :threshold,

@@ -228,20 +228,34 @@ git fetch --all --prune
 ```
 
 #### Step 3:
-Checkout the `develop` branch:
+Checkout the `master` branch:
 
 ```bash
-git checkout develop
+git checkout master
 ```
 
 #### Step 4:
-Pull the latest version of `develop`.
+Pull the latest version of `master`.
 
 ```bash
 git pull
 ```
 
 #### Step 5:
+Checkout the `develop` branch:
+
+```bash
+git checkout develop
+```
+
+#### Step 6:
+Pull the latest version of `develop`.
+
+```bash
+git pull
+```
+
+#### Step 7:
 Determine the version number that you are going to
 release. We use the Semantic Versioning
 system: [https://semver.org](https://semver.org). In Semantic
@@ -257,7 +271,7 @@ is `v3.5.12` and that we are adding functionality in a
 backwards-compatible manner. So we increment the `MINOR` version,
 which means the new version that we are tagging is `v3.6.0`.
 
-#### Step 6:
+#### Step 8:
 Start a new release branch.
 
 ```bash
@@ -270,43 +284,30 @@ git flow release start v3.6.0
 you can list all of the release branches by running the following
 command:* `git flow release list`
 
-#### Step 7:
-Open the source file `src/base/version.jl` and change
-the version number. For example, if the file looks like this:
+#### Step 9:
+Open the file `Project.toml` and change the version number
+on line 4. For example, if line 4 of `Project.toml` looks
+like this:
 
 ```julia
-##### Beginning of file
-
-const PREDICTMD_VERSION = try
-    convert(VersionNumber, "THE OLD VERSION NUMBER WILL BE HERE")
-catch e
-    warn("While creating PredictMD.PREDICTMD_VERSION, ignoring error $(e)")
-    VersionNumber(0)
-end
-
-##### End of file
+version = "THE OLD VERSION NUMBER WILL BE HERE"
 ```
 
-Then you would edit it to look like this:
+Then you would edit line 4 to look like this:
 
 ```julia
-##### Beginning of file
-
-const PREDICTMD_VERSION = try
-    convert(VersionNumber, "v3.6.0")
-catch e
-    warn("While creating PredictMD.PREDICTMD_VERSION, ignoring error $(e)")
-    VersionNumber(0)
-end
-
-##### End of file
+version = "3.6.0"
 ```
 
-#### Step 8:
+**Only change line 4 of `Project.toml`
+(the line that begins with `version =`.
+Do not change any of the other lines.**
+
+#### Step 10:
 Commit your changes:
 
 ```bash
-git add src/base/version.jl
+git add Project.toml
 
 git commit
 ```
@@ -314,14 +315,14 @@ An commit message editor will open. Type an appropriate commit
 message (e.g. "Bump version number"), save the file, and quit the
 editor.
 
-#### Step 9:
+#### Step 11:
 Push the release branch to GitHub.
 
 ```bash
 git push origin release/v3.6.0
 ```
 
-#### Step 10:
+#### Step 12:
 Wait for all of the tests to pass. You can check on
 the status of the tests by going to
 [https://github.com/bcbi/PredictMD.jl/branches/yours](https://github.com/bcbi/PredictMD.jl/branches/yours)
@@ -340,7 +341,7 @@ you can continue.**
 This is especially common with the Mac builds on Travis. You can usually
 resolve this error by restarting the failed build.*
 
-#### Step 11:
+#### Step 13:
 Once all of the tests have passed, you can finish
 tagging your release using the git-flow tools:
 
@@ -363,7 +364,7 @@ the file, and close the editor.
 Once you have finished all of the commits and tags, you must verify
 that you have correctly signed the release tag:
 
-#### Step 12:
+#### Step 14:
 Verify that you have correctly signed the release tag:
 ```bash
 git tag -v v3.6.0
@@ -377,14 +378,14 @@ gpg: Good signature from "Dilum Aluthge <dilum@aluthge.com>" [ultimate]
 ```
 
 then you have successfully signed the release, and you may proceed
-to Step 13. However, if you see a different message, then you have
+to the next step. However, if you see a different message, then you have
 not signed the tag successfully, and you may NOT proceed. At this
 point, you should
 [open a new issue](https://github.com/bcbi/PredictMD.jl/issues/new)
 and mention [@DilumAluthge](https://github.com/DilumAluthge) in the
 issue body.
 
-#### Step 13:
+#### Step 15:
 Temporarily modify the branch protections for
 the `master` and `develop` branches:
 
@@ -398,7 +399,7 @@ Now do the same thing for the `develop` branch: go to
 to the bottom of the page, and click the green "Save changes" button.
 You may be asked to enter your GitHub password.
 
-#### Step 14:
+#### Step 16:
 Push the new release to GitHub:
 
 ```bash
@@ -407,7 +408,7 @@ git push origin develop # push the updated "develop" branch
 git push origin --tags # push the new "v3.6.0" tag
 ```
 
-#### Step 15:
+#### Step 17:
 Create a release on GitHub using the tag you just
 created, signed, and pushed. First, go to
 [https://github.com/bcbi/PredictMD.jl/releases/new](https://github.com/bcbi/PredictMD.jl/releases/new).
@@ -417,7 +418,7 @@ text box that reads "Release title", type an appropriate title, such
 as "PredictMD version 3.6.0". Finally, click the green
 "Publish release" button.
 
-#### Step 16:
+#### Step 18:
 Update the version number in the `develop` branch:
 
 First, use Semantic Versioning ([https://semver.org](https://semver.org))
@@ -434,9 +435,10 @@ current version number to `v3.7.0-DEV`. In contrast, if the next
 version number will be `v4.0.0`, the you should set the current
 version number to `v4.0.0-DEV`.
 
-Third, checkout the `develop` branch:
+Third, checkout and pull the `develop` branch:
 ```bash
 git checkout develop
+git pull
 ```
 
 Fourth, open the `src/base/version.jl` file and edit the version
@@ -472,7 +474,7 @@ end
 ##### End of file
 ```
 
-#### Step 17:
+#### Step 19:
 Commit your changes:
 
 ```bash
@@ -484,13 +486,13 @@ An commit message editor will open. Type an appropriate commit
 message (e.g. "Bump version number"), save the file, and quit
 the editor.
 
-#### Step 18:
+#### Step 20:
 Push the updated develop branch:
 ```bash
 git push origin develop
 ```
 
-#### Step 19:
+#### Step 21:
 Re-enable the branch protection settings:
 
 `master` branch: go to
@@ -503,14 +505,14 @@ You may be asked to enter your GitHub password.
 to the bottom of the page, and click the green "Save changes" button.
 You may be asked to enter your GitHub password.
 
-#### Step 20:
+#### Step 22:
 Delete the release branch, which is no longer needed. To do
 this, go to
 [https://github.com/bcbi/PredictMD.jl/branches/yours](https://github.com/bcbi/PredictMD.jl/branches/yours),
 scroll down to find the release branch, and then click the
 trash can icon to delete the branch.
 
-#### Step 21:
+#### Step 23:
 The final step is to go to the Zenodo entry for the newly created release and put in the correct information. First go to [https://www.predictmd.net/zenodo](https://www.predictmd.net/zenodo), and then click on the yellow "Edit" button to edit the most recent release. Then, fill out the following fields with the specified values:
 
 ##### Upload type:

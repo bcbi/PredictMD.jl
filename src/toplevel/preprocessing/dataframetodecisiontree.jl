@@ -3,15 +3,6 @@
 import DataFrames
 import StatsModels
 
-"""
-"""
-mutable struct MutableDataFrame2DecisionTreeTransformer <: AbstractEstimator
-    feature_names::T1 where T1 <: AbstractVector
-    single_label_name::T2 where T2 <: Symbol
-    levels::T3 where T3 <: AbstractVector
-    dffeaturecontrasts::T4 where T4 <: AbstractFeatureContrasts
-end
-
 function MutableDataFrame2DecisionTreeTransformer(
         feature_names::AbstractVector,
         single_label_name::Symbol;

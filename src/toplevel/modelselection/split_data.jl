@@ -1,6 +1,7 @@
 ##### Beginning of file
 
 import DataFrames
+import Random
 import StatsBase
 
 """
@@ -11,7 +12,7 @@ function split_data(
         split::Real,
         )
     result = split_data(
-        Base.GLOBAL_RNG,
+        Random.GLOBAL_RNG,
         features_df,
         labels_df,
         split,

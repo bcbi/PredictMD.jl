@@ -4,16 +4,11 @@ error(string("This file is not meant to be run. Use the `PredictMD.generate_exam
 
 %PREDICTMD_GENERATED_BY%
 
-# BEGIN TEST STATEMENTS
-import Base.Test
-Base.Test.@test( 1 == 1 )
-# END TEST STATEMENTS
-
 import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version("v0.6")
+PredictMD.require_julia_version("%PREDICTMD_MINIMUM_REQUIRED_JULIA_VERSION%")
 
 PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
 
@@ -29,14 +24,40 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin model output code
 
+# BEGIN TEST STATEMENTS
+import Test
+# END TEST STATEMENTS
+
+import Pkg
+
+try Pkg.add("CSV") catch end
+try Pkg.add("DataFrames") catch end
+try Pkg.add("DecisionTree") catch end
+try Pkg.add("Distributions") catch end
+try Pkg.add("FileIO") catch end
+try Pkg.add("GLM") catch end
+try Pkg.add("JLD2") catch end
+try Pkg.add("Knet") catch end
+try Pkg.add("LIBSVM") catch end
+try Pkg.add("StatsModels") catch end
+try Pkg.add("ValueHistories") catch end
+
 import CSV
-import Compat
 import DataFrames
+import DecisionTree
+import Distributions
 import FileIO
+import GLM
 import JLD2
 import Knet
+import LIBSVM
+Kernel = LIBSVM.Kernel
+import LinearAlgebra
+import Random
+import StatsModels
+import ValueHistories
 
-srand(999)
+Random.seed!(999)
 
 trainingandvalidation_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,

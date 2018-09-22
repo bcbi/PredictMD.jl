@@ -4,16 +4,11 @@ error(string("This file is not meant to be run. Use the `PredictMD.generate_exam
 
 %PREDICTMD_GENERATED_BY%
 
-# BEGIN TEST STATEMENTS
-import Base.Test
-Base.Test.@test( 1 == 1 )
-# END TEST STATEMENTS
-
 import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version("v0.6")
+PredictMD.require_julia_version("%PREDICTMD_MINIMUM_REQUIRED_JULIA_VERSION%")
 
 PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
 
@@ -29,13 +24,26 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 
 ### Begin logistic classifier code
 
+# BEGIN TEST STATEMENTS
+import Test
+# END TEST STATEMENTS
+
+import Pkg
+
+try Pkg.add("CSV") catch end
+try Pkg.add("DataFrames") catch end
+try Pkg.add("FileIO") catch end
+try Pkg.add("JLD2") catch end
+try Pkg.add("PGFPlotsX") catch end
+
 import CSV
-import Compat
 import DataFrames
 import FileIO
 import JLD2
+import PGFPlotsX
+import Random
 
-srand(999)
+Random.seed!(999)
 
 trainingandvalidation_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
@@ -187,8 +195,24 @@ logistic_hist_training =
         smoted_training_labels_df,
         single_label_name,
         single_label_levels,
-        )
-PredictMD.open_plot(logistic_hist_training)
+        );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempname(),
+    "_",
+    "logistic_hist_training",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, logistic_hist_training)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
+display(logistic_hist_training)
 
 logistic_hist_testing =
     PredictMD.plotsinglelabelbinaryclassifierhistogram(
@@ -197,8 +221,24 @@ logistic_hist_testing =
         testing_labels_df,
         single_label_name,
         single_label_levels,
-        )
-PredictMD.open_plot(logistic_hist_testing)
+        );
+
+# BEGIN TEST STATEMENTS
+filename = string(
+    tempname(),
+    "_",
+    "logistic_hist_testing",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+Test.@test(!isfile(filename))
+PGFPlotsX.save(filename, logistic_hist_testing)
+if PredictMD.is_force_test_plots()
+    Test.@test(isfile(filename))
+end
+# END TEST STATEMENTS
+
+display(logistic_hist_testing)
 
 PredictMD.singlelabelbinaryclassificationmetrics(
     logistic_classifier,
@@ -226,8 +266,12 @@ logistic_calibration_curve =
         single_label_name,
         positive_class;
         window = 0.2,
-        )
-PredictMD.open_plot(logistic_calibration_curve)
+        );
+
+# BEGIN TEST STATEMENTS
+# END TEST STATEMENTS
+
+display(logistic_calibration_curve)
 
 PredictMD.probability_calibration_metrics(
     logistic_classifier,
@@ -247,14 +291,14 @@ logistic_cutoffs, logistic_risk_group_prevalences =
         positive_class;
         average_function = mean,
         )
-Compat.@info(
+@info(
     string(
         "Low risk: 0 to $(logistic_cutoffs[1]).",
         " Medium risk: $(logistic_cutoffs[1]) to $(logistic_cutoffs[2]).",
         " High risk: $(logistic_cutoffs[2]) to 1.",
         )
     )
-Compat.@info(logistic_risk_group_prevalences)
+@info(logistic_risk_group_prevalences)
 logistic_cutoffs, logistic_risk_group_prevalences =
     PredictMD.risk_score_cutoff_values(
         logistic_classifier,
@@ -264,14 +308,14 @@ logistic_cutoffs, logistic_risk_group_prevalences =
         positive_class;
         average_function = median,
         )
-Compat.@info(
+@info(
     string(
         "Low risk: 0 to $(logistic_cutoffs[1]).",
         " Medium risk: $(logistic_cutoffs[1]) to $(logistic_cutoffs[2]).",
         " High risk: $(logistic_cutoffs[2]) to 1.",
         )
     )
-Compat.@info(logistic_risk_group_prevalences)
+@info(logistic_risk_group_prevalences)
 
 logistic_classifier_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,

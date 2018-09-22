@@ -1,35 +1,34 @@
 ##### Beginning of file
 
-import Compat
+import InteractiveUtils
+import Pkg
+import Test
 
-Compat.@info(string("Julia package directory: \"", Pkg.dir(), "\"",))
+@info(string("Julia depot paths: "), Base.DEPOT_PATH)
+@info(string("Julia load paths: "), Base.LOAD_PATH)
 
-const julia_cache_paths = string(
-    "[\"",
-    join(Base.LOAD_CACHE_PATH,"\", \""),
-    "\"]",
-    )
+@info(string("Julia version info: ",))
+InteractiveUtils.versioninfo(verbose=true)
 
-Compat.@info(string("Julia cache path(s): ", julia_cache_paths, ".", ))
+@info(string("Output of Pkg.status():",),)
+Pkg.status()
 
-Compat.@info(string("Printing Julia version info:",))
+@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_PROJECT):",),)
+Pkg.status(Pkg.Types.PKGMODE_PROJECT)
 
-versioninfo(true)
+@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_MANIFEST):",),)
+Pkg.status(Pkg.Types.PKGMODE_MANIFEST)
 
-Compat.@info(string("Attempting to import PredictMD...",))
+@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_COMBINED):",),)
+Pkg.status(Pkg.Types.PKGMODE_COMBINED)
 
+@info(string("Attempting to import PredictMD...",))
 import PredictMD
+@info(string("Successfully imported PredictMD.",))
+@info(string("PredictMD version: "),PredictMD.version(),)
+@info(string("PredictMD package directory: "),PredictMD.package_directory(),)
 
-Compat.@info(string("Successfully imported PredictMD.",))
-
-Compat.@info(string("PredictMD version: ",PredictMD.version(),))
-
-Compat.@info(
-    string(
-        "PredictMD package directory: \"",
-        PredictMD.pkg_dir(),
-        "\"",
-        )
-    )
+@info(string("Julia depot paths: "), Base.DEPOT_PATH)
+@info(string("Julia load paths: "), Base.LOAD_PATH)
 
 ##### End of file

@@ -1,39 +1,77 @@
 ##### Beginning of file
 
+import Pkg
+
+Pkg.add("Documenter")
+Pkg.add("Literate")
+
 import Documenter
 import Literate
 import PredictMD
 
-srand(999)
+import Random
+Random.seed!(999)
+
+ENV["PREDICTMD_IS_MAKE_DOCS"] = "true"
+
+generate_examples_output_directory = PredictMD.package_directory(
+    "docs",
+    "src",
+    "examples",
+    )
 
 rm(
-    joinpath(
-        PredictMD.get_temp_directory(),
-        "make_docs",
-        );
+    generate_examples_output_directory;
     force = true,
     recursive = true,
     )
 
-temp_makedocs_dir = joinpath(
-    PredictMD.get_temp_directory(),
-    "make_docs",
-    "PredictMDTEMP",
-    "docs",
-    )
-
-PredictMD.generate_docs(
-    temp_makedocs_dir;
-    execute_notebooks = true,
+PredictMD.generate_examples(
+    generate_examples_output_directory;
+    execute_notebooks = false,
     markdown = true,
     notebooks = true,
     scripts = true,
+    include_test_statements = false,
     )
 
-if PredictMD.is_travis_ci()
-    filename = joinpath(homedir(), "travis_temp_makedocs_dir.txt")
-    rm(filename; force = true, recursive = true)
-    write(filename, temp_makedocs_dir)
-end
+Documenter.makedocs(
+    modules = [
+        PredictMD,
+        PredictMD.Cleaning,
+        PredictMD.Compilation,
+        PredictMD.GPU,
+        PredictMD.Server,
+        ],
+    pages = Any[
+        "index.md",
+        "requirements_for_plotting.md",
+        "library/internals.md",
+        ],
+    root = PredictMD.package_directory(
+        "docs",
+        ),
+    sitename = "PredictMD documentation",
+    )
+
+ENV["PREDICTMD_IS_MAKE_DOCS"] = "false"
+
+ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "true"
+
+Documenter.deploydocs(
+    branch = "gh-pages",
+    deps = Documenter.Deps.pip(
+        "mkdocs",
+        "pygments",
+        "python-markdown-math",
+        ),
+    julia = "0.7",
+    latest = "develop",
+    osname = "linux",
+    repo = "github.com/bcbi/PredictMD.jl.git",
+    target = "site",
+    )
+
+ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "false"
 
 ##### End of file

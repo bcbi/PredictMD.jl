@@ -1,8 +1,8 @@
 ##### Beginning of file
 
 import LaTeXStrings
-import PGFPlots
 import PGFPlotsX
+import Statistics
 
 """
 """
@@ -13,7 +13,6 @@ function probability_calibration_scores_and_fractions(
         single_label_name::Symbol,
         positive_class::AbstractString;
         window::Real = 0.1,
-        multiply_by::Real = 1.0,
         )
     ytrue = Int.(
         singlelabelbinaryytrue(
@@ -32,7 +31,6 @@ function probability_calibration_scores_and_fractions(
         ytrue,
         yscore;
         window = window,
-        multiply_by = multiply_by,
         )
     return scores, fractions
 end
@@ -43,7 +41,6 @@ function probability_calibration_scores_and_fractions(
         ytrue::AbstractVector{<:Integer},
         yscore::AbstractVector{<:AbstractFloat};
         window::Real = 0.1,
-        multiply_by::Real = 1.0,
         )
     scores = sort(
         unique(
@@ -64,7 +61,7 @@ function probability_calibration_scores_and_fractions(
         if length(rows_that_have_approximately_the_kth_score) == 0
             fractions[k] = -999
         else
-            fractions[k] = mean(
+            fractions[k] = Statistics.mean(
                 ytrue[rows_that_have_approximately_the_kth_score]
                 )
         end
@@ -85,6 +82,7 @@ function plot_probability_calibration_curve(
         positive_class::AbstractString;
         window::Real = 0.1,
         multiply_by::Real = 1.0,
+        legend_pos::AbstractString = "outer north east",
         )
     scores, fractions = probability_calibration_scores_and_fractions(
         estimator,
@@ -93,70 +91,104 @@ function plot_probability_calibration_curve(
         single_label_name,
         positive_class;
         window = window,
-        multiply_by = multiply_by,
         )
-    result = plot_probability_calibration_curve(scores, fractions)
+    result = plot_probability_calibration_curve(
+        scores,
+        fractions;
+        multiply_by = multiply_by,
+        legend_pos = legend_pos,
+        )
     return result
 end
 
 """
 """
 function plot_probability_calibration_curve(
-        scores::AbstractVector{<:AbstractFloat},
-        fractions::AbstractVector{<:AbstractFloat},
+        scores::AbstractVector{F},
+        fractions::AbstractVector{F};
         multiply_by::Real = 1.0,
+        legend_pos::AbstractString = "outer north east",
+        )::PGFPlotsXPlot where F <: AbstractFloat
+    legend_pos::String = convert(String, legend_pos)
+    scores = convert(Vector{F}, scores * multiply_by)
+    fractions = convert(Vector{F}, fractions * multiply_by)
+    score_versus_fraction_linearplotobject = PGFPlotsX.@pgf(
+        PGFPlotsX.Plot(
+            {
+                only_marks,
+                style = "black, fill = black",
+                },
+            PGFPlotsX.Coordinates(
+                scores,
+                fractions,
+                )
+            )
         )
-    scores = scores * multiply_by
-    fractions = fractions * multiply_by
-    score_versus_fraction_linearplotobject = PGFPlots.Plots.Linear(
-        scores,
-        fractions,
-        onlyMarks = true,
-        style = "black, fill = black",
-        )
-    point_at_zero = zero(eltype(fractions))
-    point_at_one = multiply_by*one(eltype(fractions))
-    perfectline_linearplotobject = PGFPlots.Plots.Linear(
-        [
-            point_at_zero,
-            point_at_one,
-            ],
-        [
-            point_at_zero,
-            point_at_one,
-            ],
-        mark = "none",
-        style = "dotted, fill=red",
+    zero_coordinate = convert(F, zero(F))
+    one_coordinate = convert(F, one(F) * multiply_by)
+    perfectline_xs = [
+        zero_coordinate,
+        one_coordinate,
+        ]
+    perfectline_ys = [
+        zero_coordinate,
+        one_coordinate,
+        ]
+    perfectline_linearplotobject = PGFPlotsX.@pgf(
+        PGFPlotsX.Plot(
+            {
+                no_marks,
+                style = "dotted, red, color=red, fill=red",
+                },
+            PGFPlotsX.Coordinates(
+                perfectline_xs,
+                perfectline_ys,
+                ),
+            )
         )
     estimated_intercept, estimated_x_coefficient =
-        ordinary_least_squares_regression(
+        simple_linear_regression(
             scores, # X
-            fractions; # Y
-            intercept = true,
+            fractions, # Y
             )
-    bestfitline_linearplotobject = PGFPlots.Plots.Linear(
-        [
-            point_at_zero,
-            point_at_one,
-            ],
-        [
-            estimated_intercept + estimated_x_coefficient*point_at_zero,
-            estimated_intercept + estimated_x_coefficient*point_at_one,
-            ],
-        mark = "none",
-        style = "dashed, fill=blue",
+    bestfitline_xs = [
+        zero_coordinate,
+        one_coordinate,
+        ]
+    bestfitline_ys = [
+        estimated_intercept,
+        estimated_intercept + estimated_x_coefficient * one_coordinate,
+        ]
+    bestfitline_linearplotobject = PGFPlotsX.@pgf(
+        PGFPlotsX.Plot(
+            {
+                no_marks,
+                style = "dashed, blue, color=blue, fill=blue",
+                },
+            PGFPlotsX.Coordinates(
+                bestfitline_xs,
+                bestfitline_ys,
+                ),
+            )
         )
-    axisobject = PGFPlots.Axis(
-        [
+    p = PGFPlotsX.@pgf(
+        PGFPlotsX.Axis(
+            {
+                xlabel = LaTeXStrings.LaTeXString(
+                    "Probability of positive class"
+                    ),
+                ylabel = LaTeXStrings.LaTeXString(
+                    "Fraction of positive class"
+                    ),
+                legend_pos = legend_pos,
+                },
             score_versus_fraction_linearplotobject,
             perfectline_linearplotobject,
             bestfitline_linearplotobject,
-            ],
-        xlabel = LaTeXStrings.LaTeXString("Probability of positive class"),
-        ylabel = LaTeXStrings.LaTeXString("Fraction of positive class"),
+            ),
         )
-    tikzpicture = PGFPlots.plot(axisobject)
-    return tikzpicture
+    wrapper = PGFPlotsXPlot(p)
+    return wrapper
 end
 
 """
@@ -168,7 +200,6 @@ function probability_calibration_metrics(
         single_label_name::Symbol,
         positive_class::AbstractString;
         window::Real = 0.1,
-        multiply_by::Real = 1.0,
         )
     vectorofestimators = Fittable[estimator]
     result = probability_calibration_metrics(
@@ -190,7 +221,6 @@ function probability_calibration_metrics(
         single_label_name::Symbol,
         positive_class::AbstractString,
         window::Real = 0.1,
-        multiply_by::Real = 1.0,
         )
     result = DataFrames.DataFrame()
     result[:metric] = [
@@ -221,14 +251,12 @@ function probability_calibration_metrics(
             ytrue,
             yscore;
             window = window,
-            multiply_by = multiply_by,
             )
         r2_score_value = r2_score(scores, fractions)
         estimated_intercept, estimated_x_coefficient =
-            ordinary_least_squares_regression(
+            simple_linear_regression(
                 Float64.(scores), # X
-                Float64.(fractions); # Y
-                intercept = true,
+                Float64.(fractions), # Y
                 )
         result[Symbol(vectorofestimators[i].name)] = [
             r2_score_value,

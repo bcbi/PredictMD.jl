@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-import PackageCompiler
-import SnoopCompile
+# import PackageCompiler
+# import SnoopCompile
 
 ##### End of file

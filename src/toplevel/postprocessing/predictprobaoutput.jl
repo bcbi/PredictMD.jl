@@ -2,14 +2,6 @@
 
 """
 """
-struct ImmutablePredictProbaSingleLabelInt2StringTransformer <:
-        AbstractEstimator
-    index::T1 where T1 <: Integer
-    levels::T2 where T2 <: AbstractVector
-end
-
-"""
-"""
 function set_feature_contrasts!(
         x::ImmutablePredictProbaSingleLabelInt2StringTransformer,
         feature_contrasts::AbstractFeatureContrasts,
@@ -77,7 +69,7 @@ end
 """
 function predict_proba(
         transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer,
-        single_labelprobabilities::Associative;
+        single_labelprobabilities::AbstractDict;
         kwargs...
         )
     labelint2stringmap = _getlabelint2stringmap(

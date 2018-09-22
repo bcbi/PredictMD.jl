@@ -2,7 +2,7 @@
 
 """
 """
-function is_one_to_one(x::Associative)::Bool
+function is_one_to_one(x::AbstractDict)::Bool
     if (length(keys(x)) == length(unique(keys(x)))) &&
             (length(values(x)) == length(unique(values(x))))
         return true
@@ -13,7 +13,7 @@ end
 
 """
 """
-function inverse(x::Associative)::Dict
+function inverse(x::AbstractDict)::Dict
     if !is_one_to_one(x)
         error(
             string(
@@ -26,8 +26,8 @@ function inverse(x::Associative)::Dict
     values_array = fix_type(collect(values(x)))
 
 
-    key_type = eltype(keys_array)
-    value_type = eltype(values_array)
+    key_type=eltype(keys_array)
+    value_type=eltype(values_array)
 
     result = Dict{value_type, key_type}()
 

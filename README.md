@@ -19,6 +19,8 @@
 
 ## Installation
 
+PredictMD requires Julia version 0.6.
+
 To install PredictMD, open Julia
 (e.g. open a terminal, type `julia`, and press enter)
 and run the following command:

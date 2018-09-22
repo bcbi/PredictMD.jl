@@ -4,14 +4,6 @@ import DataFrames
 
 """
 """
-struct ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer <:
-        AbstractEstimator
-    label::T1 where T1 <: Symbol
-    positive_class::T2 where T2 <: AbstractString
-end
-
-"""
-"""
 function set_feature_contrasts!(
         x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         feature_contrasts::AbstractFeatureContrasts,
