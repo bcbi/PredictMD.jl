@@ -441,44 +441,28 @@ git checkout develop
 git pull
 ```
 
-Fourth, open the `src/base/version.jl` file and edit the version
-number accordingly. For example, to set the version number
-to `v3.7.0-DEV`, edit `src/base/version.jl` to look like
-this. **Remember to include "-DEV" at the end of the version number.**
+Fourth, open the `Project.toml` file and edit line 4
+accordingly. For example, to set the version number
+to `v3.7.0-DEV`, edit line 4 to be the following:
 ```julia
-##### Beginning of file
-
-const PREDICTMD_VERSION = try
-    convert(VersionNumber, "v3.7.0-DEV")
-catch e
-    warn("While creating PredictMD.PREDICTMD_VERSION, ignoring error $(e)")
-    VersionNumber(0)
-end
-
-##### End of file
+version = "3.7.0-DEV"
 ```
 
 On the other hand, to set the version number to `v4.0.0-DEV`,
-edit `src/base/version.jl` to look like this. **Remember to
-include "-DEV" at the end of the version number.**
+edit line 4 of `Project.toml` to be the following:
 ```julia
-##### Beginning of file
-
-const PREDICTMD_VERSION = try
-    convert(VersionNumber, "v4.0.0-DEV")
-catch e
-    warn("While creating PredictMD.PREDICTMD_VERSION, ignoring error $(e)")
-    VersionNumber(0)
-end
-
-##### End of file
+version = "4.0.0-DEV"
 ```
+
+**As before, only change line 4 of `Project.toml`
+(the line that begins with `version =`.
+Do not change any of the other lines.**
 
 #### Step 19:
 Commit your changes:
 
 ```bash
-git add src/base/version.jl
+git add Project.toml
 
 git commit
 ```

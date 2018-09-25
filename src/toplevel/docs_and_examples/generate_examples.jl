@@ -40,7 +40,7 @@ function _preprocess_example_do_not_include_test_statements(
         content::AbstractString;
         )::String
     content = _preprocess_example_shared(content)
-    pattern = r"# BEGIN TEST STATEMENTS[\S\s]*# END TEST STATEMENTS\n{0,5}"
+    pattern = r"# BEGIN TEST STATEMENTS[\S\s]*?# END TEST STATEMENTS\n{0,5}"
     replacement = ""
     content = replace(content, pattern => replacement)
     return content
