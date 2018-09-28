@@ -223,6 +223,7 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
 import Pkg
 
 try Pkg.add(&quot;CSV&quot;) catch end
+try Pkg.add(&quot;CSVFiles&quot;) catch end
 try Pkg.add(&quot;DataFrames&quot;) catch end
 try Pkg.add(&quot;FileIO&quot;) catch end
 try Pkg.add(&quot;GZip&quot;) catch end
@@ -231,6 +232,7 @@ try Pkg.add(&quot;RDatasets&quot;) catch end
 try Pkg.add(&quot;StatsBase&quot;) catch end
 
 import CSV
+import CSVFiles
 import DataFrames
 import FileIO
 import GZip
@@ -240,15 +242,24 @@ import Random
 import StatsBase
 
 Random.seed!(999)
+</code></pre>
 
-df = CSV.read(
-    GZip.gzopen(
-        joinpath(
-            dirname(pathof(RDatasets)), &quot;..&quot;, &quot;data&quot;, &quot;MASS&quot;, &quot;Boston.csv.gz&quot;,
-            )
+<p>df = CSV.read(     ,     DataFrames.DataFrame;     rows<em>for</em>type_detect = 100,     )</p>
+<pre><code class="julia">df = DataFrames.DataFrame(
+    CSVFiles.load(
+        CSVFiles.Stream(
+            CSVFiles.format&quot;CSV&quot;,
+            GZip.gzopen(
+                joinpath(
+                    dirname(pathof(RDatasets)),
+                    &quot;..&quot;,
+                    &quot;data&quot;,
+                    &quot;MASS&quot;,
+                    &quot;Boston.csv.gz&quot;,
+                    )
+                ),
+            ),
         ),
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
     )
 
 categorical_feature_names = Symbol[]
