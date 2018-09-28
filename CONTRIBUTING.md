@@ -180,15 +180,23 @@ Make sure that you have followed all of the instructions
 in [Section 1 (Prerequisites)](#1-prerequisites).
 
 #### Step 2:
-Follow the installation instructions in
-[README.md](README.md) to install PredictMD.
+Open Julia and run the following lines:
+```julia
+import Pkg;
+p = Pkg.PackageSpec(
+	name="PredictMD",
+	url="https://github.com/bcbi/PredictMD.jl",
+	uuid="3e7d7328-36f8-4388-bd01-4613c92c7370",
+	);
+Pkg.develop(p);
+```
 
 #### Step 3:
 Open a terminal window and `cd` to the directory
 containing the PredictMD source code:
 
 ```bash
-cd ~/.julia/v0.6/PredictMD
+cd ~/.julia/dev/PredictMD
 ```
 
 #### Step 4:

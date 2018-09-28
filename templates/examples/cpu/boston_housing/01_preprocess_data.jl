@@ -31,6 +31,7 @@ import Test
 import Pkg
 
 try Pkg.add("CSV") catch end
+try Pkg.add("CSVFiles") catch end
 try Pkg.add("DataFrames") catch end
 try Pkg.add("FileIO") catch end
 try Pkg.add("GZip") catch end
@@ -39,6 +40,7 @@ try Pkg.add("RDatasets") catch end
 try Pkg.add("StatsBase") catch end
 
 import CSV
+import CSVFiles
 import DataFrames
 import FileIO
 import GZip
@@ -49,14 +51,27 @@ import StatsBase
 
 Random.seed!(999)
 
-df = CSV.read(
-    GZip.gzopen(
-        joinpath(
-            dirname(pathof(RDatasets)), "..", "data", "MASS", "Boston.csv.gz",
-            )
+# df = CSV.read(
+#     ,
+#     DataFrames.DataFrame;
+#     rows_for_type_detect = 100,
+#     )
+
+df = DataFrames.DataFrame(
+    CSVFiles.load(
+        CSVFiles.Stream(
+            CSVFiles.format"CSV",
+            GZip.gzopen(
+                joinpath(
+                    dirname(pathof(RDatasets)),
+                    "..",
+                    "data",
+                    "MASS",
+                    "Boston.csv.gz",
+                    )
+                ),
+            ),
         ),
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
     )
 
 categorical_feature_names = Symbol[]
