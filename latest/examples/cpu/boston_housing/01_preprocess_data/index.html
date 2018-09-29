@@ -242,10 +242,8 @@ import Random
 import StatsBase
 
 Random.seed!(999)
-</code></pre>
 
-<p>df = CSV.read(     ,     DataFrames.DataFrame;     rows<em>for</em>type_detect = 100,     )</p>
-<pre><code class="julia">df = DataFrames.DataFrame(
+df = DataFrames.DataFrame(
     CSVFiles.load(
         CSVFiles.Stream(
             CSVFiles.format&quot;CSV&quot;,
