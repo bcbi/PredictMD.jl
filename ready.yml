@@ -1,0 +1,29 @@
+authors:
+    - name: Dilum Aluthge
+      github_user: DilumAluthge
+    - name: Ishan Sinha
+      github_user: sinhaishan
+    - name: Paul Stey
+      github_user: paulstey
+    - name: Isabel Restrepo
+      github_user: mirestrepo
+    - name: Elizabeth Chen
+      github_user: eschen
+    - name: Neil Sarkar
+      github_user: insarkar
+    - name: Brown Center for Biomedical Informatics
+      github_user: bcbi
+
+docs_url:         https://www.predictmd.net/stable
+
+doi:              "10.5281/zenodo.1291209"
+
+repo:             PredictMD.jl
+
+repo_url:         https://github.com/bcbi/PredictMD.jl
+
+site_description: Uniform interface for machine learning in Julia
+
+site_name:        PredictMD.jl
+
+type:             software
