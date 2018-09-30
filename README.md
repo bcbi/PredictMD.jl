@@ -12,6 +12,7 @@
 - [Installation](#installation)
 - [Documentation](#documentation)
 - [Citing](#citing)
+- [Related Repositories](#related-repositories)
 - [Contributing](#contributing)
 - [Stronghold](#stronghold)
 - [Repository Status](#repository-status)
@@ -19,7 +20,7 @@
 
 ## Installation
 
-PredictMD requires Julia version 0.6.
+PredictMD requires Julia version 0.7.
 
 To install PredictMD, open Julia
 (e.g. open a terminal, type `julia`, and press enter)
@@ -45,6 +46,12 @@ PredictMD's internals.
 ## Citing
 
 If you use PredictMD in research, please cite the software using the following DOI: <a href="https://zenodo.org/badge/latestdoi/109460252"> <img src="https://zenodo.org/badge/109460252.svg"/></a>
+
+## Related Repositories
+
+- [bcbi/PredictMDFull.jl](https://github.com/bcbi/PredictMDFull.jl) - Install PredictMD and all of its Julia dependencies
+- [bcbi/PredictMDExtra.jl](https://github.com/bcbi/PredictMDExtra.jl) - Install all of the Julia dependencies of PredictMD (but does not install PredictMD)
+- [bcbi/predictmd-conda-recipes](https://github.com/bcbi/predictmd-conda-recipes) - Conda recipes for building the binary dependencies that are required for plotting in PredictMD
 
 ## Contributing
 
