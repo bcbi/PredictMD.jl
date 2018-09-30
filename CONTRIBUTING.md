@@ -222,10 +222,11 @@ your GPG set-up is working.
 Release tags MUST be signed with your GPG key.**
 
 #### Step 1:
-Open a terminal window and `cd` to the directory containing the PredictMD source code:
+Open a terminal window and `cd` to the directory
+containing the PredictMD source code:
 
 ```bash
-cd ~/.julia/v0.6/PredictMD
+cd ~/.julia/dev/PredictMD
 ```
 
 #### Step 2:
