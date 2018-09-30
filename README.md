@@ -8,6 +8,15 @@
 
 [PredictMD](https://www.predictmd.net) is a free and open-source Julia package that provides a uniform interface for machine learning.
 
+To install PredictMD, open Julia
+(e.g. open a terminal, type `julia`, and press enter)
+and run the following command:
+```julia
+Pkg.clone("https://github.com/bcbi/PredictMD.jl")
+```
+
+Please submit any issues related to PredictMD to the issue tracker: [https://github.com/bcbi/PredictMD.jl/issues](https://github.com/bcbi/PredictMD.jl/issues)
+
 ### Table of Contents
 - [Installation](#installation)
 - [Documentation](#documentation)
