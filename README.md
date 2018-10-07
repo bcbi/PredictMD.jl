@@ -17,15 +17,16 @@ Pkg.clone("https://github.com/bcbi/PredictMD.jl")
 
 Please submit any issues related to PredictMD to the issue tracker: [https://github.com/bcbi/PredictMD.jl/issues](https://github.com/bcbi/PredictMD.jl/issues)
 
-### Table of Contents
-- [Installation](#installation)
-- [Documentation](#documentation)
-- [Citing](#citing)
-- [Related Repositories](#related-repositories)
-- [Contributing](#contributing)
-- [Stronghold](#stronghold)
-- [Repository Status](#repository-status)
-- [CI/CD](#cicd)
+| Table of Contents |
+| ----------------- |
+| [1. Installation](#installation) |
+| [2. Documentation](#documentation) |
+| [3. Citing](#citing) |
+| [4. Related Repositories](#related-repositories) |
+| [5. Contributing](#contributing) |
+| [6. Stronghold](#stronghold) |
+| [7. Repository Status](#repository-status) |
+| [8. CI/CD](#cicd) |
 
 ## Installation
 
