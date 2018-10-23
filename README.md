@@ -8,18 +8,29 @@
 
 [PredictMD](https://www.predictmd.net) is a free and open-source Julia package that provides a uniform interface for machine learning.
 
-### Table of Contents
-- [Installation](#installation)
-- [Documentation](#documentation)
-- [Citing](#citing)
-- [Contributing](#contributing)
-- [Stronghold](#stronghold)
-- [Repository Status](#repository-status)
-- [CI/CD](#cicd)
+To install PredictMD, open Julia
+(e.g. open a terminal, type `julia`, and press enter)
+and run the following command:
+```julia
+Pkg.clone("https://github.com/bcbi/PredictMD.jl")
+```
+
+Please submit any issues related to PredictMD to the issue tracker: [https://github.com/bcbi/PredictMD.jl/issues](https://github.com/bcbi/PredictMD.jl/issues)
+
+| Table of Contents |
+| ----------------- |
+| [1. Installation](#installation) |
+| [2. Documentation](#documentation) |
+| [3. Citing](#citing) |
+| [4. Related Repositories](#related-repositories) |
+| [5. Contributing](#contributing) |
+| [6. Stronghold](#stronghold) |
+| [7. Repository Status](#repository-status) |
+| [8. CI/CD](#cicd) |
 
 ## Installation
 
-PredictMD requires Julia version 0.6.
+PredictMD requires Julia version 0.7.
 
 To install PredictMD, open Julia
 (e.g. open a terminal, type `julia`, and press enter)
@@ -45,6 +56,12 @@ PredictMD's internals.
 ## Citing
 
 If you use PredictMD in research, please cite the software using the following DOI: <a href="https://zenodo.org/badge/latestdoi/109460252"> <img src="https://zenodo.org/badge/109460252.svg"/></a>
+
+## Related Repositories
+
+- [bcbi/PredictMDFull.jl](https://github.com/bcbi/PredictMDFull.jl) - Install PredictMD and all of its Julia dependencies
+- [bcbi/PredictMDExtra.jl](https://github.com/bcbi/PredictMDExtra.jl) - Install all of the Julia dependencies of PredictMD (but does not install PredictMD)
+- [bcbi/predictmd-conda-recipes](https://github.com/bcbi/predictmd-conda-recipes) - Conda recipes for building the binary dependencies that are required for plotting in PredictMD
 
 ## Contributing
 

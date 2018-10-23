@@ -1,0 +1,17 @@
+maintainers:
+    - name: Dilum Aluthge
+      github_user: DilumAluthge
+
+docs_url:         https://www.predictmd.net/stable
+
+doi:              "10.5281/zenodo.1291209"
+
+repo:             PredictMD.jl
+
+repo_url:         https://github.com/bcbi/PredictMD.jl
+
+site_description: Uniform interface for machine learning in Julia
+
+site_name:        PredictMD.jl
+
+type:             software

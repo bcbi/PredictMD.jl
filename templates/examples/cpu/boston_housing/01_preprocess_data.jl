@@ -51,12 +51,6 @@ import StatsBase
 
 Random.seed!(999)
 
-# df = CSV.read(
-#     ,
-#     DataFrames.DataFrame;
-#     rows_for_type_detect = 100,
-#     )
-
 df = DataFrames.DataFrame(
     CSVFiles.load(
         CSVFiles.Stream(
