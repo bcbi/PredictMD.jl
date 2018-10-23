@@ -65,6 +65,7 @@ Zygote = "e88e6eb3-aa80-5325-afca-941959d7151f"
 
 [compat]
 julia = "^0.7.0"
+Documenter = "~0.19"
 
 [extras]
 Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
