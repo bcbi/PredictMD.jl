@@ -237,13 +237,13 @@ import StatsBase
 
 Random.seed!(999)
 
-trainingandvalidation_features_df_filename = joinpath(
+trainingandtuning_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    &quot;trainingandvalidation_features_df.csv&quot;,
+    &quot;trainingandtuning_features_df.csv&quot;,
     )
-trainingandvalidation_labels_df_filename = joinpath(
+trainingandtuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    &quot;trainingandvalidation_labels_df.csv&quot;,
+    &quot;trainingandtuning_labels_df.csv&quot;,
     )
 testing_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
@@ -261,21 +261,21 @@ training_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     &quot;training_labels_df.csv&quot;,
     )
-validation_features_df_filename = joinpath(
+tuning_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    &quot;validation_features_df.csv&quot;,
+    &quot;tuning_features_df.csv&quot;,
     )
-validation_labels_df_filename = joinpath(
+tuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    &quot;validation_labels_df.csv&quot;,
+    &quot;tuning_labels_df.csv&quot;,
     )
-trainingandvalidation_features_df = CSV.read(
-    trainingandvalidation_features_df_filename,
+trainingandtuning_features_df = CSV.read(
+    trainingandtuning_features_df_filename,
     DataFrames.DataFrame;
     rows_for_type_detect = 100,
     )
-trainingandvalidation_labels_df = CSV.read(
-    trainingandvalidation_labels_df_filename,
+trainingandtuning_labels_df = CSV.read(
+    trainingandtuning_labels_df_filename,
     DataFrames.DataFrame;
     rows_for_type_detect = 100,
     )
@@ -299,13 +299,13 @@ training_labels_df = CSV.read(
     DataFrames.DataFrame;
     rows_for_type_detect = 100,
     )
-validation_features_df = CSV.read(
-    validation_features_df_filename,
+tuning_features_df = CSV.read(
+    tuning_features_df_filename,
     DataFrames.DataFrame;
     rows_for_type_detect = 100,
     )
-validation_labels_df = CSV.read(
-    validation_labels_df_filename,
+tuning_labels_df = CSV.read(
+    tuning_labels_df_filename,
     DataFrames.DataFrame;
     rows_for_type_detect = 100,
     )
