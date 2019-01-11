@@ -31,14 +31,14 @@ function plotlearningcurves(
         sampleevery::Integer = 1,
         startat::Union{Integer, Symbol} = :start,
         endat::Union{Integer, Symbol} = :end,
-        include_validation::Bool = true,
+        include_tuning::Bool = true,
         show_raw::Bool = true,
         show_smoothed::Bool = true,
         )
     legend_pos::String = convert(String, legend_pos)
     if curvetype==:loss_vs_iteration
-        has_validation = include_validation &&
-                haskey(history, :validation_loss_at_iteration)
+        has_tuning = include_tuning &&
+                haskey(history, :tuning_loss_at_iteration)
         xlabel = "Iteration"
         ylabel = "Loss"
         legendentry = "Loss function"
@@ -46,15 +46,15 @@ function plotlearningcurves(
             history,
             :training_loss_at_iteration,
             )
-        if has_validation
-            validation_xvalues, validation_yvalues = ValueHistories.get(
+        if has_tuning
+            tuning_xvalues, tuning_yvalues = ValueHistories.get(
                 history,
-                :validation_loss_at_iteration,
+                :tuning_loss_at_iteration,
                 )
         end
     elseif curvetype==:loss_vs_epoch
-        has_validation = include_validation &&
-           haskey(history, :validation_loss_at_epoch)
+        has_tuning = include_tuning &&
+           haskey(history, :tuning_loss_at_epoch)
         xlabel = "Epoch"
         ylabel = "Loss"
         legendentry = "Loss function"
@@ -62,10 +62,10 @@ function plotlearningcurves(
             history,
             :training_loss_at_epoch,
             )
-        if has_validation
-            validation_xvalues, validation_yvalues = ValueHistories.get(
+        if has_tuning
+            tuning_xvalues, tuning_yvalues = ValueHistories.get(
                 history,
-                :validation_loss_at_epoch,
+                :tuning_loss_at_epoch,
                 )
         end
     else
@@ -74,15 +74,15 @@ function plotlearningcurves(
     if length(training_xvalues) != length(training_yvalues)
         error("length(training_xvalues) != length(training_yvalues)")
     end
-    if has_validation
-        if length(training_xvalues) != length(validation_yvalues)
-            error("length(training_xvalues) != length(validation_yvalues)")
+    if has_tuning
+        if length(training_xvalues) != length(tuning_yvalues)
+            error("length(training_xvalues) != length(tuning_yvalues)")
         end
-        if length(training_xvalues) != length(validation_xvalues)
-            error("length(training_xvalues) != length(validation_xvalues)")
+        if length(training_xvalues) != length(tuning_xvalues)
+            error("length(training_xvalues) != length(tuning_xvalues)")
         end
-        if !all(training_xvalues .== validation_xvalues)
-            error("!all(training_xvalues .== validation_xvalues)")
+        if !all(training_xvalues .== tuning_xvalues)
+            error("!all(training_xvalues .== tuning_xvalues)")
         end
     end
     if startat == :start
@@ -100,22 +100,22 @@ function plotlearningcurves(
     end
     training_xvalues = training_xvalues[startat:endat]
     training_yvalues = training_yvalues[startat:endat]
-    if has_validation
-        validation_xvalues = validation_xvalues[startat:endat]
-        validation_yvalues = validation_yvalues[startat:endat]
+    if has_tuning
+        tuning_xvalues = tuning_xvalues[startat:endat]
+        tuning_yvalues = tuning_yvalues[startat:endat]
     end
     if length(training_xvalues) != length(training_yvalues)
         error("length(training_xvalues) != length(training_yvalues)")
     end
-    if has_validation
-        if length(validation_xvalues) != length(validation_yvalues)
-            error("length(validation_xvalues) != length(validation_yvalues)")
+    if has_tuning
+        if length(tuning_xvalues) != length(tuning_yvalues)
+            error("length(tuning_xvalues) != length(tuning_yvalues)")
         end
-        if length(training_xvalues) != length(validation_xvalues)
-            error("length(training_xvalues) != length(validation_xvalues)")
+        if length(training_xvalues) != length(tuning_xvalues)
+            error("length(training_xvalues) != length(tuning_xvalues)")
         end
-        if !all(training_xvalues .== validation_xvalues)
-            error("!all(training_xvalues .== validation_xvalues)")
+        if !all(training_xvalues .== tuning_xvalues)
+            error("!all(training_xvalues .== tuning_xvalues)")
         end
         result = plotlearningcurve(
             training_xvalues,
@@ -126,7 +126,7 @@ function plotlearningcurves(
             window = window,
             legend_pos = legend_pos,
             sampleevery = sampleevery,
-            validation_yvalues = validation_yvalues,
+            tuning_yvalues = tuning_yvalues,
             show_raw = show_raw,
             show_smoothed = show_smoothed,
             )
@@ -158,7 +158,7 @@ function plotlearningcurves(
         window::Integer = 0,
         legend_pos::AbstractString = "outer north east",
         sampleevery::Integer = 1,
-        validation_yvalues::Union{Nothing, AbstractVector{<:Real}} = nothing,
+        tuning_yvalues::Union{Nothing, AbstractVector{<:Real}} = nothing,
         show_raw::Bool = true,
         show_smoothed::Bool = true,
         )
@@ -166,16 +166,16 @@ function plotlearningcurves(
     if !show_raw && !show_smoothed
         error("At least one of show_raw, show_smoothed must be true.")
     end
-    if is_nothing(validation_yvalues)
-        has_validation = false
+    if is_nothing(tuning_yvalues)
+        has_tuning = false
     else
-        has_validation = true
+        has_tuning = true
     end
-    if has_validation
+    if has_tuning
         training_legendentry = string(strip(legendentry),
                 ", training set")
-        validation_legendentry = string(strip(legendentry),
-                ", validation set")
+        tuning_legendentry = string(strip(legendentry),
+                ", tuning set")
     else
         training_legendentry = string(strip(legendentry),
                 ", training set")
@@ -191,8 +191,8 @@ function plotlearningcurves(
     end
     xvalues = xvalues[1:sampleevery:end]
     training_yvalues = training_yvalues[1:sampleevery:end]
-    if has_validation
-        validation_yvalues = validation_yvalues[1:sampleevery:end]
+    if has_tuning
+        tuning_yvalues = tuning_yvalues[1:sampleevery:end]
     end
     all_plots_and_legends = []
     if show_raw
@@ -211,22 +211,22 @@ function plotlearningcurves(
             )
         push!(all_plots_and_legends, training_linearplotobject_yraw)
         push!(all_plots_and_legends, training_legendentry_yraw)
-        if has_validation
-            validation_linearplotobject_yraw = PGFPlotsX.@pgf(
+        if has_tuning
+            tuning_linearplotobject_yraw = PGFPlotsX.@pgf(
                 PGFPlotsX.Plot(
                     PGFPlotsX.Coordinates(
                         xvalues,
-                        validation_yvalues,
+                        tuning_yvalues,
                         )
                     )
                )
-            validation_legendentry_yraw = PGFPlotsX.@pgf(
+            tuning_legendentry_yraw = PGFPlotsX.@pgf(
                 PGFPlotsX.LegendEntry(
-                    LaTeXStrings.LaTeXString(validation_legendentry)
+                    LaTeXStrings.LaTeXString(tuning_legendentry)
                     )
                 )
-            push!(all_plots_and_legends, validation_linearplotobject_yraw)
-            push!(all_plots_and_legends, validation_legendentry_yraw)
+            push!(all_plots_and_legends, tuning_linearplotobject_yraw)
+            push!(all_plots_and_legends, tuning_legendentry_yraw)
         end
     end
     if show_smoothed && window > 0
@@ -253,30 +253,30 @@ function plotlearningcurves(
             )
         push!(all_plots_and_legends, training_linearplotobject_ysmoothed)
         push!(all_plots_and_legends, training_legendentry_ysmoothed)
-        if has_validation
-            validation_yvaluessmoothed = simple_moving_average(
-                validation_yvalues,
+        if has_tuning
+            tuning_yvaluessmoothed = simple_moving_average(
+                tuning_yvalues,
                 window,
                 )
-            validation_legendentry_smoothed = string(
-                    strip(validation_legendentry),
+            tuning_legendentry_smoothed = string(
+                    strip(tuning_legendentry),
                     " (smoothed)",
                     )
-            validation_linearplotobject_ysmoothed = PGFPlotsX.@pgf(
+            tuning_linearplotobject_ysmoothed = PGFPlotsX.@pgf(
                 PGFPlotsX.Plot(
                     PGFPlotsX.Coordinates(
                         xvalues,
-                        validation_yvaluessmoothed,
+                        tuning_yvaluessmoothed,
                         )
                     )
                )
-            validation_legendentry_ysmoothed = PGFPlotsX.@pgf(
+            tuning_legendentry_ysmoothed = PGFPlotsX.@pgf(
                 PGFPlotsX.LegendEntry(
-                    LaTeXStrings.LaTeXString(validation_legendentry_smoothed)
+                    LaTeXStrings.LaTeXString(tuning_legendentry_smoothed)
                     )
                 )
-            push!(all_plots_and_legends, validation_linearplotobject_ysmoothed)
-            push!(all_plots_and_legends, validation_legendentry_ysmoothed)
+            push!(all_plots_and_legends, tuning_linearplotobject_ysmoothed)
+            push!(all_plots_and_legends, tuning_legendentry_ysmoothed)
         end
     end
     p = PGFPlotsX.@pgf(
