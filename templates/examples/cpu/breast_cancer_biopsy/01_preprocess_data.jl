@@ -113,8 +113,8 @@ PredictMD.check_no_constant_columns(df)
 features_df = df[feature_names]
 labels_df = df[label_names]
 
-(trainingandvalidation_features_df,
-    trainingandvalidation_labels_df,
+(trainingandtuning_features_df,
+    trainingandtuning_labels_df,
     testing_features_df,
     testing_labels_df,) = PredictMD.split_data(
         features_df,
@@ -123,20 +123,20 @@ labels_df = df[label_names]
         )
 (training_features_df,
     training_labels_df,
-    validation_features_df,
-    validation_labels_df,) = PredictMD.split_data(
-        trainingandvalidation_features_df,
-        trainingandvalidation_labels_df,
+    tuning_features_df,
+    tuning_labels_df,) = PredictMD.split_data(
+        trainingandtuning_features_df,
+        trainingandtuning_labels_df,
         2/3,
         )
 
-trainingandvalidation_features_df_filename = joinpath(
+trainingandtuning_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "trainingandvalidation_features_df.csv",
+    "trainingandtuning_features_df.csv",
     )
-trainingandvalidation_labels_df_filename = joinpath(
+trainingandtuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "trainingandvalidation_labels_df.csv",
+    "trainingandtuning_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
@@ -154,21 +154,21 @@ training_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "training_labels_df.csv",
     )
-validation_features_df_filename = joinpath(
+tuning_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "validation_features_df.csv",
+    "tuning_features_df.csv",
     )
-validation_labels_df_filename = joinpath(
+tuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "validation_labels_df.csv",
+    "tuning_labels_df.csv",
     )
 CSV.write(
-    trainingandvalidation_features_df_filename,
-    trainingandvalidation_features_df,
+    trainingandtuning_features_df_filename,
+    trainingandtuning_features_df,
     )
 CSV.write(
-    trainingandvalidation_labels_df_filename,
-    trainingandvalidation_labels_df,
+    trainingandtuning_labels_df_filename,
+    trainingandtuning_labels_df,
     )
 CSV.write(
     testing_features_df_filename,
@@ -187,12 +187,12 @@ CSV.write(
     training_labels_df,
     )
 CSV.write(
-    validation_features_df_filename,
-    validation_features_df,
+    tuning_features_df_filename,
+    tuning_features_df,
     )
 CSV.write(
-    validation_labels_df_filename,
-    validation_labels_df,
+    tuning_labels_df_filename,
+    tuning_labels_df,
     )
 
 ### End data preprocessing code

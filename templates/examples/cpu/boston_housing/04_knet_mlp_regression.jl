@@ -48,13 +48,13 @@ import Statistics
 
 Random.seed!(999)
 
-trainingandvalidation_features_df_filename = joinpath(
+trainingandtuning_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "trainingandvalidation_features_df.csv",
+    "trainingandtuning_features_df.csv",
     )
-trainingandvalidation_labels_df_filename = joinpath(
+trainingandtuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "trainingandvalidation_labels_df.csv",
+    "trainingandtuning_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
@@ -72,21 +72,21 @@ training_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "training_labels_df.csv",
     )
-validation_features_df_filename = joinpath(
+tuning_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "validation_features_df.csv",
+    "tuning_features_df.csv",
     )
-validation_labels_df_filename = joinpath(
+tuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "validation_labels_df.csv",
+    "tuning_labels_df.csv",
     )
-trainingandvalidation_features_df = CSV.read(
-    trainingandvalidation_features_df_filename,
+trainingandtuning_features_df = CSV.read(
+    trainingandtuning_features_df_filename,
     DataFrames.DataFrame;
     rows_for_type_detect = 100,
     )
-trainingandvalidation_labels_df = CSV.read(
-    trainingandvalidation_labels_df_filename,
+trainingandtuning_labels_df = CSV.read(
+    trainingandtuning_labels_df_filename,
     DataFrames.DataFrame;
     rows_for_type_detect = 100,
     )
@@ -110,13 +110,13 @@ training_labels_df = CSV.read(
     DataFrames.DataFrame;
     rows_for_type_detect = 100,
     )
-validation_features_df = CSV.read(
-    validation_features_df_filename,
+tuning_features_df = CSV.read(
+    tuning_features_df_filename,
     DataFrames.DataFrame;
     rows_for_type_detect = 100,
     )
-validation_labels_df = CSV.read(
-    validation_labels_df_filename,
+tuning_labels_df = CSV.read(
+    tuning_labels_df_filename,
     DataFrames.DataFrame;
     rows_for_type_detect = 100,
     )
@@ -230,8 +230,8 @@ PredictMD.fit!(
     knet_mlp_regression,
     training_features_df,
     training_labels_df,
-    validation_features_df,
-    validation_labels_df,
+    tuning_features_df,
+    tuning_labels_df,
     )
 
 PredictMD.set_max_epochs!(knet_mlp_regression, 1_000)
@@ -240,8 +240,8 @@ PredictMD.fit!(
     knet_mlp_regression,
     training_features_df,
     training_labels_df,
-    validation_features_df,
-    validation_labels_df,
+    tuning_features_df,
+    tuning_labels_df,
     )
 
 knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
