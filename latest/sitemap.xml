@@ -2,97 +2,97 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/requirements_for_plotting/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/generate_examples/generate_examples/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/examples/cpu/boston_housing/01_preprocess_data/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/examples/cpu/boston_housing/02_linear_regression/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/examples/cpu/boston_housing/03_random_forest_regression/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/examples/cpu/boston_housing/04_knet_mlp_regression/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/examples/cpu/boston_housing/05_compare_models/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/examples/cpu/boston_housing/06_get_model_output/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/examples/cpu/breast_cancer_biopsy/01_preprocess_data/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/examples/cpu/breast_cancer_biopsy/02_smote/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/examples/cpu/breast_cancer_biopsy/03_logistic_classifier/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/examples/cpu/breast_cancer_biopsy/04_random_forest_classifier/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/examples/cpu/breast_cancer_biopsy/05_c_svc_svm_classifier/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/examples/cpu/breast_cancer_biopsy/06_nu_svc_svm_classifier/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/examples/cpu/breast_cancer_biopsy/07_knet_mlp_classifier/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/examples/cpu/breast_cancer_biopsy/08_compare_models/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/examples/cpu/breast_cancer_biopsy/09_get_model_output/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>/library/internals/</loc>
-     <lastmod>2019-01-11</lastmod>
+     <lastmod>2019-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
