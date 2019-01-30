@@ -506,7 +506,7 @@ scroll down to find the release branch, and then click the
 trash can icon to delete the branch.
 
 #### Step 23:
-The final step is to go to the Zenodo entry for the newly created release and put in the correct information. First go to [https://www.predictmd.net/zenodo](https://www.predictmd.net/zenodo), and then click on the yellow "Edit" button to edit the most recent release. Then, fill out the following fields with the specified values:
+The final step is to go to the Zenodo entry for the newly created release and put in the correct information. First go to [https://predictmd.net/zenodo](https://predictmd.net/zenodo), and then click on the yellow "Edit" button to edit the most recent release. Then, fill out the following fields with the specified values:
 
 ##### Upload type:
 * Software
@@ -549,8 +549,8 @@ The final step is to go to the Zenodo entry for the newly created release and pu
 
 | Identifier | Relationship |
 | ---- | ---- |
-| `https://www.predictmd.net` | compiled/created this upload |
-| `https://www.predictmd.net/vMAJOR.MINOR.PATCH` | documents this upload |
+| `https://predictmd.net` | compiled/created this upload |
+| `https://predictmd.net/vMAJOR.MINOR.PATCH` | documents this upload |
 | `https://github.com/bcbi/PredictMD.jl/releases/tag/vMAJOR.MINOR.PATCH` | is an alternate identifier of this upload |
 | `https://github.com/bcbi/PredictMD.jl/tree/vMAJOR.MINOR.PATCH` | is an alternate identifier of this upload |
 
