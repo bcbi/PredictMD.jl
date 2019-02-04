@@ -42,9 +42,9 @@ Compiled with xpdf version 3.04
 ```
 If you receive an error (e.g. "command not found"), download and install a
 TeX distribution from the appropriate link below:
-* Windows: [https://www.tug.org/protext/](https://www.tug.org/protext/)
-* macOS: [https://www.tug.org/mactex/](https://www.tug.org/mactex/)
-* GNU/Linux: [https://www.tug.org/texlive/](https://www.tug.org/texlive/)
+* Windows: [https://tug.org/protext/](https://tug.org/protext/)
+* macOS: [https://tug.org/mactex/](https://tug.org/mactex/)
+* GNU/Linux: [https://tug.org/texlive/](https://tug.org/texlive/)
 
 ## Installing pdf2svg
 
