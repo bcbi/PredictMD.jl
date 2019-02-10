@@ -30,6 +30,7 @@ git:
 julia:
     - "0.7"
     - "1.0"
+    - "1.1"
     - "nightly"
 
 language: julia
