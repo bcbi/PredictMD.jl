@@ -81,7 +81,7 @@ function smote(
         error("size(features_df, 1) == 0")
     end
     labelsstringarray = labels_df[label_name]
-    labelsbinaryarray = zeros(Int, length(labelsstringarray))
+    labelsbinaryarray = fill(Int(0), length(labelsstringarray))
     for i = 1:length(labelsstringarray)
         # Paul's smote code assumes 1 = minority, 0 = majority
         if labelsstringarray[i] == minorityclass

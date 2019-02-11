@@ -224,19 +224,19 @@ knetmlp_modelweights = Any[
         0.1f0*randn(Cfloat,64,feature_contrasts.num_array_columns)
         ),
     Cfloat.(
-        zeros(Cfloat,64,1)
+        fill(Cfloat(0),64,1)
         ),
     Cfloat.(
         0.1f0*randn(Cfloat,32,64)
         ),
     Cfloat.(
-        zeros(Cfloat,32,1)
+        fill(Cfloat(0),32,1)
         ),
     Cfloat.(
         0.1f0*randn(Cfloat,2,32)
         ),
     Cfloat.(
-        zeros(Cfloat,2,1)
+        fill(Cfloat(0),2,1)
         ),
     ]
 

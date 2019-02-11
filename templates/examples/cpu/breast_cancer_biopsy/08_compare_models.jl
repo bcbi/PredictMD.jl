@@ -219,7 +219,7 @@ show(
         positive_class;
         sensitivity = 0.95,
         ),
-    true,
+    allcols=true,
     )
 println(
     string(
@@ -236,7 +236,7 @@ show(
         positive_class;
         specificity = 0.95,
         ),
-    true,
+    allcols=true,
     )
 println(
     string(
@@ -253,7 +253,7 @@ show(
         positive_class;
         maximize = :f1score,
         ),
-    true,
+    allcols=true,
     )
 println(
     string(
@@ -270,7 +270,7 @@ show(
         positive_class;
         maximize = :cohen_kappa,
         ),
-    true,
+    allcols=true,
     )
 
 println(
@@ -288,7 +288,7 @@ show(
         positive_class;
         sensitivity = 0.95,
         ),
-    true,
+    allcols=true,
     )
 println(
     string(
@@ -305,7 +305,7 @@ show(
         positive_class;
         specificity = 0.95,
         ),
-    true,
+    allcols=true,
     )
 println(
     string(
@@ -322,7 +322,7 @@ show(
         positive_class;
         maximize = :f1score,
         ),
-    true,
+    allcols=true,
     )
 println(
     string(
@@ -339,7 +339,7 @@ show(
         positive_class;
         maximize = :cohen_kappa,
         ),
-    true,
+    allcols=true,
     )
 
 rocplottesting = PredictMD.plotroccurves(

@@ -582,9 +582,12 @@ version = "0.3.1"
 
 [[LIBSVM]]
 deps = ["Compat", "DelimitedFiles", "LIBLINEAR", "Libdl", "ScikitLearnBase", "SparseArrays", "Test"]
-git-tree-sha1 = "8135a0fd32d166ff306721c0ffb87e72c264548d"
+git-tree-sha1 = "f17068e3f13a83da68c05f36c47a696b22129cff"
+pinned = true
+repo-rev = "da/unsafe_copyto"
+repo-url = "https://github.com/DilumAluthge/LIBSVM.jl"
 uuid = "b1bec4e5-fd48-53fe-b0cb-9723c09d164b"
-version = "0.3.0"
+version = "0.3.0+"
 
 [[LNR]]
 deps = ["Compat", "Lazy", "Test"]

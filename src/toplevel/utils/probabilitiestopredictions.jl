@@ -29,14 +29,18 @@ function single_labelprobabilitiestopredictions(
     classes = sort(unique(collect(keys(probabilitiesassoc))))
     numclasses = length(classes)
     numrows = size(probabilitiesassoc[classes[1]], 1)
-    probabilitiesmatrix = Matrix{float_type}(numrows, numclasses)
+    probabilitiesmatrix = Matrix{float_type}(
+        undef,
+        numrows,
+        numclasses,
+        )
     for j = 1:numclasses
         probabilitiesmatrix[:, j] = float_type.(probabilitiesassoc[classes[j]])
     end
-    predictionsvector = Vector{String}(numrows)
+    predictionsvector = Vector{String}(undef, numrows,)
     for i = 1:numrows
         predictionsvector[i] =
-            string(classes[indmax(probabilitiesmatrix[i, :])])
+            string(classes[argmax(probabilitiesmatrix[i, :])])
     end
     return predictionsvector
 end

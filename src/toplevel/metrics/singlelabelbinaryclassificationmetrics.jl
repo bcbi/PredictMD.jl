@@ -163,7 +163,7 @@ function _singlelabelbinaryclassificationmetrics(
         )
     if selectedtunableparam == :threshold
         selectedthreshold = kwargsdict[:threshold]
-        bestindex = argmin(abs.(allthresholds - selectedthreshold))
+        bestindex = argmin(abs.(allthresholds .- selectedthreshold))
     elseif selectedtunableparam == :sensitivity
         selectedsensitivity = kwargsdict[:sensitivity]
         allsensitivity = [sensitivity(x) for x in allrocnums]
