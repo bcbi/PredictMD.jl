@@ -99,7 +99,10 @@ function smote(
         pct_over = pct_over,
         pct_under = pct_under,
         )
-    smotedlabelsstringarray = Array{String}(length(smotedlabelsbinaryarray))
+    smotedlabelsstringarray = Array{String}(
+        undef,
+        length(smotedlabelsbinaryarray),
+        )
     for i = 1:length(smotedlabelsbinaryarray)
         if smotedlabelsbinaryarray[i] == 1
             smotedlabelsstringarray[i] = minorityclass

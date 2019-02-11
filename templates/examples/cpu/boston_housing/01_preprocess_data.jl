@@ -111,7 +111,7 @@ categorical_label_names = Symbol[]
 label_names = vcat(categorical_label_names, continuous_label_names)
 
 df = df[:, vcat(feature_names, label_names)]
-DataFrames.dropmissing!(df)
+DataFrames.dropmissing!(df; disallowmissing=true,)
 PredictMD.shuffle_rows!(df)
 
 PredictMD.fix_column_types!(

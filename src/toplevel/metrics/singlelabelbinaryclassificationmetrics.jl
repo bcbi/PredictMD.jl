@@ -163,23 +163,23 @@ function _singlelabelbinaryclassificationmetrics(
         )
     if selectedtunableparam == :threshold
         selectedthreshold = kwargsdict[:threshold]
-        bestindex = indmin(abs.(allthresholds - selectedthreshold))
+        bestindex = argmin(abs.(allthresholds - selectedthreshold))
     elseif selectedtunableparam == :sensitivity
         selectedsensitivity = kwargsdict[:sensitivity]
         allsensitivity = [sensitivity(x) for x in allrocnums]
-        bestindex = indmin(abs.(allsensitivity - selectedsensitivity))
+        bestindex = argmin(abs.(allsensitivity .- selectedsensitivity))
     elseif selectedtunableparam == :specificity
         selectedspecificity = kwargsdict[:specificity]
         allspecificity = [specificity(x) for x in allrocnums]
-        bestindex = indmin(abs.(allspecificity - selectedspecificity))
+        bestindex = argmin(abs.(allspecificity .- selectedspecificity))
     elseif selectedtunableparam == :maximize
         selectedparamtomax = kwargsdict[:maximize]
         if selectedparamtomax == :f1score
             allf1score = [fbetascore(x, 1) for x in allrocnums]
-            bestindex = indmax(allf1score)
+            bestindex = argmin(allf1score)
         elseif selectedparamtomax == :cohen_kappa
             allcohen_kappa = [cohen_kappa(x) for x in allrocnums]
-            bestindex = indmax(allcohen_kappa)
+            bestindex = argmin(allcohen_kappa)
         else
             error("this is an error that should never happen")
         end

@@ -225,9 +225,9 @@ version = "0.6.2"
 
 [[DataFrames]]
 deps = ["CategoricalArrays", "CodecZlib", "Compat", "DataStreams", "Dates", "InteractiveUtils", "IteratorInterfaceExtensions", "LinearAlgebra", "Missings", "Printf", "Random", "Reexport", "SortingAlgorithms", "Statistics", "StatsBase", "TableTraits", "Tables", "Test", "TranscodingStreams", "Unicode", "WeakRefStrings"]
-git-tree-sha1 = "ad34fefb72b18a8dd5c17fab9089d11111b61935"
+git-tree-sha1 = "9cfed75401d25d281076eb5d82de148ac2933f9e"
 uuid = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-version = "0.14.1"
+version = "0.17.1"
 
 [[DataStreams]]
 deps = ["Dates", "Missings", "Test", "WeakRefStrings"]
@@ -387,9 +387,9 @@ uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
 
 [[GLM]]
 deps = ["Distributions", "LinearAlgebra", "Printf", "Random", "Reexport", "SparseArrays", "SpecialFunctions", "Statistics", "StatsBase", "StatsFuns", "StatsModels"]
-git-tree-sha1 = "7b92209d7700137d4c1b9bd2a60f7f354b1341d7"
+git-tree-sha1 = "7c3f988031022a26b84c1a5106a5161c7a573960"
 uuid = "38e38edf-8417-5370-95a0-9cbb8c7f171a"
-version = "1.0.2"
+version = "1.1.0"
 
 [[GPUArrays]]
 deps = ["FFTW", "FillArrays", "LinearAlgebra", "Pkg", "Printf", "Random", "Serialization", "StaticArrays", "Test"]
@@ -683,10 +683,10 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 
 [[MbedTLS]]
 deps = ["BinaryProvider", "Dates", "Libdl", "Random", "Sockets", "Test"]
-git-tree-sha1 = "c93a87da4081a3de781f34e0540175795a2ce83d"
+git-tree-sha1 = "40b4a9149f0967714991328b8155c9ff5f91e755"
 pinned = true
 uuid = "739be429-bea8-5141-9913-cc70e7f3736d"
-version = "0.6.6"
+version = "0.6.7"
 
 [[Media]]
 deps = ["MacroTools", "Test"]
@@ -1016,9 +1016,9 @@ version = "0.8.0"
 
 [[StatsModels]]
 deps = ["Compat", "DataFrames", "StatsBase", "Test"]
-git-tree-sha1 = "8af0d8dbcdee59daa386167ee0cf0278e5c44263"
+git-tree-sha1 = "b5a735dcd2be05f0af86709750d4d5f62ca4a25d"
 uuid = "3eaba693-59b7-5ba5-a881-562e759f1c8d"
-version = "0.3.1"
+version = "0.5.0"
 
 [[StringDistances]]
 deps = ["Distances", "IterTools", "Test"]
@@ -1038,9 +1038,9 @@ version = "0.2.0"
 
 [[TableShowUtils]]
 deps = ["DataValues", "Dates", "JSON", "Markdown", "Test"]
-git-tree-sha1 = "ac8e70e18ee6a6d5740049fb0d0b6794808da9b9"
+git-tree-sha1 = "14c54e1e96431fb87f0d2f5983f090f1b9d06457"
 uuid = "5e66a065-1f0a-5976-b372-e0b8c017ca10"
-version = "0.2.4"
+version = "0.2.5"
 
 [[TableTraits]]
 deps = ["IteratorInterfaceExtensions", "Test"]

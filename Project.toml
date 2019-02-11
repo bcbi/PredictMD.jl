@@ -18,6 +18,7 @@ DataDeps = "124859b0-ceae-595e-8997-d05f6a7a8dfe"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 DecisionTree = "7806a523-6efd-50cb-b5f6-3fa6f1930dbb"
 DefaultApplication = "3f0dd361-4fe0-5fc6-8523-80b14ec94d85"
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
 Flux = "587475ba-b771-5e3f-ad9e-33799f191a9c"
@@ -64,7 +65,6 @@ WebSockets = "104b5d7c-a370-577a-8038-80a2059c5097"
 Zygote = "e88e6eb3-aa80-5325-afca-941959d7151f"
 
 [compat]
-DataFrames = "~0.14"
 Documenter = "~0.19"
 julia = "^0.7.0"
 

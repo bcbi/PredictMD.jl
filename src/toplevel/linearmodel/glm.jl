@@ -147,7 +147,7 @@ function predict_proba(
         end
         result = Dict()
         result[1] = glmpredictoutput
-        result[0] = 1 - glmpredictoutput
+        result[0] = 1 .- glmpredictoutput
         result = fix_type(result)
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
