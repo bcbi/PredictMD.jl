@@ -319,10 +319,10 @@ uuid = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 version = "0.19.7"
 
 [[DoubleFloats]]
-deps = ["LinearAlgebra", "Polynomials", "Random", "Test"]
-git-tree-sha1 = "2dbdfcdae3b70ea3ff8b522cb0f599060832d853"
+deps = ["GenericLinearAlgebra", "LinearAlgebra", "Polynomials", "Random", "Test"]
+git-tree-sha1 = "08249210eb399d080c877d0d16e9e03d235aa837"
 uuid = "497a8b3b-efae-58df-a0af-a86822472b78"
-version = "0.5.6"
+version = "0.6.1"
 
 [[EzXML]]
 deps = ["BinaryProvider", "Libdl", "Printf", "Test"]
@@ -364,10 +364,10 @@ uuid = "53c48c17-4a7d-5ca2-90c5-79b7896eea93"
 version = "0.5.3"
 
 [[Flux]]
-deps = ["AbstractTrees", "Adapt", "CodecZlib", "Colors", "DiffRules", "ForwardDiff", "Juno", "LinearAlgebra", "MacroTools", "NNlib", "NaNMath", "Printf", "Random", "Reexport", "Requires", "SpecialFunctions", "Statistics", "StatsBase", "Test", "ZipFile"]
-git-tree-sha1 = "595ff3ab4c23264451831c822f8e6ea46658ef82"
+deps = ["AbstractTrees", "Adapt", "CodecZlib", "Colors", "DiffRules", "ForwardDiff", "Juno", "LinearAlgebra", "MacroTools", "NNlib", "NaNMath", "Pkg", "Printf", "Random", "Reexport", "Requires", "SHA", "SpecialFunctions", "Statistics", "StatsBase", "Test", "ZipFile"]
+git-tree-sha1 = "28e6dbf663fed71ea607414bc5f2f099d2831c0c"
 uuid = "587475ba-b771-5e3f-ad9e-33799f191a9c"
-version = "0.6.10"
+version = "0.7.3"
 
 [[ForwardDiff]]
 deps = ["CommonSubexpressions", "DiffResults", "DiffRules", "InteractiveUtils", "LinearAlgebra", "NaNMath", "Random", "SparseArrays", "SpecialFunctions", "StaticArrays", "Test"]
@@ -392,16 +392,22 @@ uuid = "38e38edf-8417-5370-95a0-9cbb8c7f171a"
 version = "1.1.0"
 
 [[GPUArrays]]
-deps = ["FFTW", "FillArrays", "LinearAlgebra", "Pkg", "Printf", "Random", "Serialization", "StaticArrays", "Test"]
-git-tree-sha1 = "0b1a3469e776ae30d198e0e9d1ba8b1dedc352e6"
+deps = ["Adapt", "FFTW", "FillArrays", "LinearAlgebra", "Printf", "Random", "Serialization", "StaticArrays", "Test"]
+git-tree-sha1 = "2b96d7f25fbea82c08a736d78cbf14df8d2100a5"
 uuid = "0c68f7d7-f131-5f86-a1c3-88cf8149b2d7"
-version = "0.4.2"
+version = "0.6.1"
 
 [[GZip]]
 deps = ["Libdl", "Test"]
 git-tree-sha1 = "ee443ef166b29282301468d8af403e1ed8f5412e"
 uuid = "92fee26a-97fe-5a0c-ad85-20a5f3185b63"
 version = "0.5.0"
+
+[[GenericLinearAlgebra]]
+deps = ["LinearAlgebra", "Printf", "Random", "Test"]
+git-tree-sha1 = "ca235f9c4652b31525232a36d7832f5ee681d76a"
+uuid = "14197337-ba66-59df-a3e3-ca00e7dcff7a"
+version = "0.1.0"
 
 [[Graphics]]
 deps = ["Colors", "Compat", "NaNMath"]
@@ -426,24 +432,6 @@ deps = ["MacroTools", "Test"]
 git-tree-sha1 = "6187bb2d5fcbb2007c39e7ac53308b0d371124bd"
 uuid = "9fb69e20-1954-56bb-a84f-559cc56a8ff7"
 version = "0.2.2"
-
-[[HttpCommon]]
-deps = ["Dates", "Nullables", "Test", "URIParser"]
-git-tree-sha1 = "46313284237aa6ca67a6bce6d6fbd323d19cff59"
-uuid = "77172c1b-203f-54ac-aa54-3f1198fe9f90"
-version = "0.5.0"
-
-[[HttpParser]]
-deps = ["BinDeps", "Compat", "HttpCommon", "Libdl"]
-git-tree-sha1 = "1d66ee8c46bf0f459d15fcfa59d75de30ed7d114"
-uuid = "38bc9a14-d65a-5c5a-8a51-c6e7361b5ffc"
-version = "0.4.0"
-
-[[HttpServer]]
-deps = ["Compat", "HttpCommon", "HttpParser", "MbedTLS"]
-git-tree-sha1 = "0f7c8b3c2be0dceb7423dc4485817c8137423e89"
-uuid = "58cfbd8c-6b7d-5447-85c1-563540e28d27"
-version = "0.3.1"
 
 [[IdentityRanges]]
 deps = ["OffsetArrays", "Test"]
@@ -576,18 +564,16 @@ uuid = "1902f260-5fb4-5aff-8c31-6271790ab950"
 version = "1.2.0"
 
 [[LIBLINEAR]]
-git-tree-sha1 = "43162faca8ce803393cb123d362067db29eb7349"
+deps = ["DelimitedFiles", "Libdl", "SparseArrays", "Test"]
+git-tree-sha1 = "6ea3888bb7a65ce6363ad8a604b013d9fe2e8e6f"
 uuid = "2d691ee1-e668-5016-a719-b2531b85e0f5"
-version = "0.3.1"
+version = "0.4.1"
 
 [[LIBSVM]]
 deps = ["Compat", "DelimitedFiles", "LIBLINEAR", "Libdl", "ScikitLearnBase", "SparseArrays", "Test"]
-git-tree-sha1 = "f17068e3f13a83da68c05f36c47a696b22129cff"
-pinned = true
-repo-rev = "da/unsafe_copyto"
-repo-url = "https://github.com/DilumAluthge/LIBSVM.jl"
+git-tree-sha1 = "8135a0fd32d166ff306721c0ffb87e72c264548d"
 uuid = "b1bec4e5-fd48-53fe-b0cb-9723c09d164b"
-version = "0.3.0+"
+version = "0.3.0"
 
 [[LNR]]
 deps = ["Compat", "Lazy", "Test"]
@@ -662,12 +648,6 @@ git-tree-sha1 = "f63a8d37429568b8c4384d76c4a96fc2897d6ddf"
 uuid = "f0e99cf1-93fa-52ec-9ecc-5026115318e0"
 version = "0.8.0"
 
-[[MNIST]]
-deps = ["Compat"]
-git-tree-sha1 = "68376eb8aa93971f56d3e5ec11f03c3c9f0a4541"
-uuid = "d4533929-f99c-5db4-a653-da41d2ba215b"
-version = "0.0.2"
-
 [[MacroTools]]
 deps = ["Compat"]
 git-tree-sha1 = "c443e1c8d58a4e9f61b708ad0a88286c7042145b"
@@ -686,10 +666,10 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 
 [[MbedTLS]]
 deps = ["BinaryProvider", "Dates", "Libdl", "Random", "Sockets", "Test"]
-git-tree-sha1 = "40b4a9149f0967714991328b8155c9ff5f91e755"
+git-tree-sha1 = "c93a87da4081a3de781f34e0540175795a2ce83d"
 pinned = true
 uuid = "739be429-bea8-5141-9913-cc70e7f3736d"
-version = "0.6.7"
+version = "0.6.6"
 
 [[Media]]
 deps = ["MacroTools", "Test"]
@@ -914,9 +894,9 @@ version = "0.3.0"
 
 [[RecipesBase]]
 deps = ["Random", "Test"]
-git-tree-sha1 = "b18c3d875ad6805e3db59c4e81f206f04df71d66"
+git-tree-sha1 = "0b3cb370ee4dc00f47f1193101600949f3dcf884"
 uuid = "3cdcf5f2-1ef4-517c-9805-6587b60abb01"
-version = "0.5.0"
+version = "0.6.0"
 
 [[Reexport]]
 deps = ["Pkg"]
@@ -932,9 +912,9 @@ version = "0.5.2"
 
 [[Revise]]
 deps = ["Distributed", "FileWatching", "InteractiveUtils", "LibGit2", "OrderedCollections", "Pkg", "REPL", "Random", "Test", "UUIDs", "Unicode"]
-git-tree-sha1 = "aced27858d5b4e89134004420a2c5f72b2a6e1e4"
+git-tree-sha1 = "341be2df64de382559e2cc307e02ed4192f8a8b7"
 uuid = "295af30f-e4ad-537b-8983-00126c2a3abe"
-version = "0.7.15"
+version = "1.0.2"
 
 [[Rmath]]
 deps = ["BinaryProvider", "Libdl", "Random", "Statistics", "Test"]
@@ -1153,10 +1133,10 @@ uuid = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
 uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 
 [[UnicodePlots]]
-deps = ["Dates", "SparseArrays", "StatsBase", "Test"]
-git-tree-sha1 = "d26d1e85fb7e9d432a7bb0cd6e421e8a82928604"
+deps = ["Dates", "Random", "SparseArrays", "StatsBase", "Test"]
+git-tree-sha1 = "b8e58d4390ccebfa4f3bf502a45e08066eec3bf9"
 uuid = "b8865327-cd53-5732-bb35-84acbb429228"
-version = "0.3.1"
+version = "1.1.0"
 
 [[ValueHistories]]
 deps = ["DataStructures", "Random", "RecipesBase", "Test"]
