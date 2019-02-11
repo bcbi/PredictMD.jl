@@ -81,7 +81,7 @@ function generate_examples(
         scripts = false,
         include_test_statements::Bool = false,
         )::String
-    if Base.Sys.iswindows()
+    if Sys.iswindows()
         execute_notebooks = false
     end
     ENV["PREDICTMD_IS_MAKE_EXAMPLES"] = "true"

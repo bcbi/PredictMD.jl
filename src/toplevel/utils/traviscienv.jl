@@ -12,14 +12,14 @@ end
 """
 """
 function is_travis_ci_on_linux(a::AbstractDict = ENV)
-    result = is_travis_ci(a) && is_linux()
+    result = is_travis_ci(a) && Sys.islinux()
     return result
 end
 
 """
 """
 function is_travis_ci_on_apple(a::AbstractDict = ENV)
-    result = is_travis_ci(a) && is_apple()
+    result = is_travis_ci(a) && Sys.isapple()
     return result
 end
 
