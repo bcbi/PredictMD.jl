@@ -45,7 +45,18 @@
           PredictMD requires Julia version 0.6.
         </p>
         <p class="text-justify">
-          To install PredictMD, open Julia and run the following command:<br/><kbd>Pkg.clone("https://github.com/bcbi/PredictMD.jl")</kbd>
+          To install PredictMD, open Julia and run the following eight lines:
+          <br/>
+          <kbd>
+            import Pkg; <br/> 
+            Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMD.jl", rev="master")); <br/> 
+            Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMDExtra.jl", rev="master")); <br/> 
+            Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMDFull.jl", rev="master")); <br/> 
+            ENV["JULIA_DEBUG"] = "all"; <br/> 
+            import PredictMD; <br/> 
+            import PredictMDExtra; <br/> 
+            import PredictMDFull; 
+          </kbd>
         </p>
         <h4>Citing</h4>
         <p class="text-justify">
