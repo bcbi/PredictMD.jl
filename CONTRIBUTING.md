@@ -73,7 +73,6 @@ git version 2.16.1
 If you do, proceed to Step 2. If you instead receive an error message,
 download and install Git:
 
-- Windows: [https://git-scm.com/download/win](https://git-scm.com/download/win)
 - macOS: [https://git-scm.com/download/mac](https://git-scm.com/download/mac)
 - GNU/Linux: [https://git-scm.com/download/linux](https://git-scm.com/download/linux)
 
@@ -128,7 +127,6 @@ If you do, then you are good to go. If you instead receive the
 message ```git: 'flow' is not a git command```, download and
 install git-flow:
 
-- Windows: [https://github.com/nvie/gitflow/wiki/Windows](https://github.com/nvie/gitflow/wiki/Windows)
 - macOS: [https://github.com/nvie/gitflow/wiki/Mac-OS-X](https://github.com/nvie/gitflow/wiki/Mac-OS-X)
 - GNU/Linux: [https://github.com/nvie/gitflow/wiki/Linux](https://github.com/nvie/gitflow/wiki/Linux)
 
@@ -160,7 +158,6 @@ Compression: Uncompressed, ZIP, ZLIB, BZIP2
 ```
 If you do, then go to Step 2. If you instead see an error,
 download and install GPG:
-- Windows: [https://gpg4win.org/download.html](https://gpg4win.org/download.html)
 - macOS: [https://gpgtools.org/](https://gpgtools.org/)
 - GNU/Linux: [https://gnupg.org/download/#sec-1-2](https://gnupg.org/download/#sec-1-2)
 
