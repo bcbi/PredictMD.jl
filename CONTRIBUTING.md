@@ -332,21 +332,27 @@ git push origin release/v3.6.0
 ```
 
 #### Step 12:
-Wait for all of the tests to pass. You can check on
+
+Wait for the Travis and CodeCov tests to pass. You can check on
 the status of the tests by going to
 [https://github.com/bcbi/PredictMD.jl/branches/yours](https://github.com/bcbi/PredictMD.jl/branches/yours)
 and scrolling down to find your release branch.
 
 * A yellow dot indicates that the tests are still running. Click on the
 yellow dot to see which tests are still running.
+
 * A red "X" indicates that one or more of the tests failed. Click on the
 red "X" to see which tests failed.
+
 * A green check mark indicates that all of the tests passed.
 
-**You must wait for all of the tests to pass (green check mark) before
-you can continue.**
+**All of the Travis tests must pass before you can continue.**
 
-*Sometimes, one of the build jobs will fail because a download timed out.
+**All of the CodeCov tests must pass before you can continue.**
+
+It does not matter whether AppVeyor passes or fails.
+
+*Sometimes, one or more of the tests will fail because a download timed out.
 This is especially common with the Mac builds on Travis. You can usually
 resolve this error by restarting the failed build.*
 
