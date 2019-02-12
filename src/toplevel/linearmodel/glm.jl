@@ -112,7 +112,7 @@ function predict(
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         if isa(estimator.underlyingglm, AbstractNonExistentUnderlyingObject)
-            glmpredictoutput = zeros(size(features_df,1))
+            glmpredictoutput = fill(Cfloat(0), size(features_df,1))
         else
             glmpredictoutput = GLM.predict(
                 estimator.underlyingglm,
@@ -138,7 +138,7 @@ function predict_proba(
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
         if isa(estimator.underlyingglm, AbstractNonExistentUnderlyingObject)
-            glmpredictoutput = zeros(size(features_df, 1))
+            glmpredictoutput = fill(Cfloat(0), size(features_df, 1))
         else
             glmpredictoutput = GLM.predict(
                 estimator.underlyingglm,
@@ -147,7 +147,7 @@ function predict_proba(
         end
         result = Dict()
         result[1] = glmpredictoutput
-        result[0] = 1 - glmpredictoutput
+        result[0] = 1 .- glmpredictoutput
         result = fix_type(result)
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel

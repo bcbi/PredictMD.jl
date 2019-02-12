@@ -116,7 +116,7 @@ function predict(
         return predictionsvector
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         if is_nothing(estimator.underlyingrandomforest)
-            predicted_values = zeros(size(featuresarray,1))
+            predicted_values = fill(Cfloat(0), size(featuresarray,1))
         else
             predicted_values = DecisionTree.apply_forest(
                 estimator.underlyingrandomforest,
@@ -139,7 +139,8 @@ function predict_proba(
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
         if is_nothing(estimator.underlyingrandomforest)
-            predictedprobabilities = zeros(
+            predictedprobabilities = fill(
+                Cfloat(0),
                 size(featuresarray, 1),
                 length(estimator.levels),
                 )

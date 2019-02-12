@@ -417,6 +417,11 @@ include(
     )
 include(
     joinpath(
+        "toplevel", "utils", "find.jl",
+        )
+    )
+include(
+    joinpath(
         "toplevel", "utils", "fix_type.jl",
         )
     )

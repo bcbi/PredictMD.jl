@@ -98,21 +98,6 @@ If you are using PredictMD inside the Stronghold secure computing environment, p
             /></a></td>
         </tr>
         <tr>
-            <td>AppVeyor CI</td>
-            <td>
-            <a
-            href="https://ci.appveyor.com/project/mirestrepo/predictmd-jl/history">
-            <img
-            title="AppVeyor build status (master)" src="https://ci.appveyor.com/api/projects/status/github/bcbi/PredictMD.jl?branch=master&svg=true"
-            />
-            </a></td>
-            <td><a href="https://ci.appveyor.com/project/mirestrepo/predictmd-jl/history">
-            <img
-            src="https://ci.appveyor.com/api/projects/status/github/bcbi/PredictMD.jl?branch=develop&svg=true"
-            />
-            </a></td>
-        </tr>
-        <tr>
             <td>CodeCov</td>
             <td>
             <a

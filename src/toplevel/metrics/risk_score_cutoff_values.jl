@@ -12,7 +12,7 @@ function risk_score_cutoff_values(
         single_label_name::Symbol,
         positive_class::AbstractString;
         multiply_by::Real = 1.0,
-        average_function = Base.mean,
+        average_function = Statistics.mean,
         )
     #
     ytrue = Int.(
@@ -46,12 +46,12 @@ function risk_score_cutoff_values(
         ytrue::AbstractVector{<:Integer},
         yscore::AbstractVector{<:AbstractFloat};
         multiply_by::Real = 1.0,
-        average_function = Base.mean,
+        average_function = Statistics.mean,
         )
-    true_negative_rows = find(
+    true_negative_rows = findall(
         ytrue .== 0
         )
-    true_positive_rows = find(
+    true_positive_rows = findall(
         ytrue .== 1
         )
     #
@@ -67,15 +67,15 @@ function risk_score_cutoff_values(
     #
     cutoffs = (lower_cutoff, higher_cutoff,)
     #
-    low_risk_group_rows = find(
+    low_risk_group_rows = findall(
         yscore .<= average_score_true_negatives
         )
-    medium_risk_group_rows = find(
+    medium_risk_group_rows = findall(
         average_score_true_negatives .<=
             yscore .<=
             average_score_true_positives
         )
-    high_risk_group_rows = find(
+    high_risk_group_rows = findall(
         average_score_true_positives .<= yscore
         )
     #
@@ -100,8 +100,11 @@ function risk_score_cutoff_values(
         Statistics.median( ytrue[medium_risk_group_rows] ),
         Statistics.median( ytrue[high_risk_group_rows] ),
         ]
-    if average_function == Base.mean || average_function == Base.median
-        delete!(risk_group_prevalences, :User_supplied_average_function)
+    if average_function==Statistics.mean || average_function==Statistics.median
+        DataFrames.deletecols!(
+            risk_group_prevalences,
+            [:User_supplied_average_function],
+            )
     end
     return cutoffs, risk_group_prevalences
 end

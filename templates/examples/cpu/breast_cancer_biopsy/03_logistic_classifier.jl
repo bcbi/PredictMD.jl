@@ -42,6 +42,7 @@ import FileIO
 import JLD2
 import PGFPlotsX
 import Random
+import Statistics
 
 Random.seed!(999)
 
@@ -289,7 +290,7 @@ logistic_cutoffs, logistic_risk_group_prevalences =
         testing_labels_df,
         single_label_name,
         positive_class;
-        average_function = mean,
+        average_function = Statistics.mean,
         )
 @info(
     string(
@@ -306,7 +307,7 @@ logistic_cutoffs, logistic_risk_group_prevalences =
         testing_labels_df,
         single_label_name,
         positive_class;
-        average_function = median,
+        average_function = Statistics.median,
         )
 @info(
     string(
