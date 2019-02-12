@@ -47,16 +47,18 @@
         <p class="text-justify">
           To install PredictMD, open Julia and run the following eight lines:
           <br/>
-          <kbd>
-            import Pkg; <br/> 
-            Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMD.jl", rev="master")); <br/> 
-            Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMDExtra.jl", rev="master")); <br/> 
-            Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMDFull.jl", rev="master")); <br/> 
-            ENV["JULIA_DEBUG"] = "all"; <br/> 
-            import PredictMD; <br/> 
-            import PredictMDExtra; <br/> 
-            import PredictMDFull; 
-          </kbd>
+          <pre>
+            <code>
+              import Pkg; 
+              Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMD.jl", rev="master")); 
+              Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMDExtra.jl", rev="master")); 
+              Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMDFull.jl", rev="master")); 
+              ENV["JULIA_DEBUG"] = "all"; 
+              import PredictMD; 
+              import PredictMDExtra; 
+              import PredictMDFull; 
+            </code>
+          </pre>
         </p>
         <h4>Citing</h4>
         <p class="text-justify">
