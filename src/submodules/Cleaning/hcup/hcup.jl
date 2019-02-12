@@ -298,7 +298,7 @@ function clean_hcup_nis_csv_icd9(
             names(df_vector[i]),
             shared_column_names,
             )
-        DataFrames.delete!(df_vector[i], extra_column_names)
+        DataFrames.deletecols!(df_vector[i], extra_column_names,)
     end
 
     combined_df = vcat(df_vector...)
@@ -363,7 +363,7 @@ function clean_hcup_nis_csv_icd9(
     end
 
     matching_rows =
-        find(Bool.(vec(sum(row_i_has_kth_icd_code_matrix, 2).>0)))
+        findall(Bool.(vec(sum(row_i_has_kth_icd_code_matrix, 2).>0)))
     num_rows_before = size(combined_df, 1)
     combined_df = combined_df[matching_rows, :]
     num_rows_after = size(combined_df, 1)
@@ -397,7 +397,7 @@ function clean_hcup_nis_csv_icd9(
                 )
             )
         )
-    index_to_ccs = index_to_ccs[find(index_to_ccs .!= "")]
+    index_to_ccs = index_to_ccs[findall(index_to_ccs .!= "")]
     index_to_ccs = unique(index_to_ccs)
     index_to_ccs = parse.(Int, index_to_ccs)
     sort!(index_to_ccs)

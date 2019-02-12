@@ -65,7 +65,10 @@ function predict(
         transformer.levels,
         transformer.index,
         )
-    result = Vector{String}(length(single_labelpredictions))
+    result = Vector{String}(
+        undef,
+        length(single_labelpredictions),
+        )
     for i = 1:length(result)
         result[i] = labelint2stringmap[single_labelpredictions[i]]
     end

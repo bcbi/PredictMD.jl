@@ -10,7 +10,7 @@ function transform_columns!(
         column_name::Symbol,
         )::Nothing
     old_column = df[column_name]
-    DataFrames.delete!(df, column_name)
+    DataFrames.deletecols!(df, column_name,)
     new_column = fix_type(f(old_column))
     df[column_name] = new_column
     return nothing

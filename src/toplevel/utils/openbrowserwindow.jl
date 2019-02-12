@@ -50,19 +50,19 @@ import FileIO
 #             )
 #     else
 #         @debug(string("Opening file ",filename,))
-#         if Base.Sys.isapple()
+#         if Sys.isapple()
 #             try
 #                 run(`open $(filename)`)
 #             catch e
 #                 @warn(string("ignoring error: "), e)
 #             end
-#         elseif Base.Sys.islinux() || is_bsd()
+#         elseif Sys.islinux() || Sys.isbsd()
 #             try
 #                 run(`xdg-open $(filename)`)
 #             catch e
 #                 @warn(string("ignoring error: "), e)
 #             end
-#         elseif Base.Sys.iswindows()
+#         elseif Sys.iswindows()
 #             try
 #                 run(`$(ENV["COMSPEC"]) /c start "" "$(filename)"`)
 #             catch e

@@ -143,7 +143,7 @@ function predict(
         return predictionsvector
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         if is_nothing(estimator.underlyingsvm)
-            predicted_values = zeros(size(featuresarray, 2))
+            predicted_values = fill(Cfloat(0), size(featuresarray, 2))
         else
             predicted_values, decision_values = LIBSVM.svmpredict(
                 estimator.underlyingsvm,
@@ -169,7 +169,8 @@ function predict_proba(
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
         if is_nothing(estimator.underlyingsvm)
-            decision_values = zeros(
+            decision_values = fill(
+                Int(0),
                 size(featuresarray, 2),
                 length(estimator.underlyingsvm.labels),
                 )

@@ -170,7 +170,7 @@ show(
         training_labels_df,
         single_label_name,
         ),
-    true,
+    allcols=true,
     )
 
 println("Single label regression metrics, testing set: ")
@@ -181,7 +181,7 @@ show(
         testing_labels_df,
         single_label_name,
         ),
-    true,
+    allcols=true,
     )
 
 ### End model comparison code
