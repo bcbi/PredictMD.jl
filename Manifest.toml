@@ -274,9 +274,9 @@ uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 
 [[DiffResults]]
 deps = ["Compat", "StaticArrays"]
-git-tree-sha1 = "db8acf46717b13d6c48deb7a12007c7f85a70cf7"
+git-tree-sha1 = "34a4a1e8be7bc99bc9c611b895b5baf37a80584c"
 uuid = "163ba53b-c6d8-5494-b064-1a9d43ac40c5"
-version = "0.0.3"
+version = "0.0.4"
 
 [[DiffRules]]
 deps = ["Random", "Test"]
@@ -320,9 +320,9 @@ version = "0.19.7"
 
 [[DoubleFloats]]
 deps = ["GenericLinearAlgebra", "LinearAlgebra", "Polynomials", "Random", "Test"]
-git-tree-sha1 = "08249210eb399d080c877d0d16e9e03d235aa837"
+git-tree-sha1 = "08e0d6962a9e04d60b008bc0467706efb3f29617"
 uuid = "497a8b3b-efae-58df-a0af-a86822472b78"
-version = "0.6.1"
+version = "0.6.3"
 
 [[EzXML]]
 deps = ["BinaryProvider", "Libdl", "Printf", "Test"]
@@ -565,9 +565,9 @@ version = "1.2.0"
 
 [[LIBLINEAR]]
 deps = ["DelimitedFiles", "Libdl", "SparseArrays", "Test"]
-git-tree-sha1 = "6ea3888bb7a65ce6363ad8a604b013d9fe2e8e6f"
+git-tree-sha1 = "029ec3b08aff57c73062940968ab2dbe69fbb0f0"
 uuid = "2d691ee1-e668-5016-a719-b2531b85e0f5"
-version = "0.4.1"
+version = "0.5.0"
 
 [[LIBSVM]]
 deps = ["Compat", "DelimitedFiles", "LIBLINEAR", "Libdl", "ScikitLearnBase", "SparseArrays", "Test"]
@@ -1152,9 +1152,9 @@ version = "1.1.3"
 
 [[WeakRefStrings]]
 deps = ["Missings", "Random", "Test"]
-git-tree-sha1 = "bccf012a0e8815410ad8b6846944a33903992fc3"
+git-tree-sha1 = "cf70c71939e621a3fac4156a8bfb3c80d745794a"
 uuid = "ea10d353-3f73-51f8-a26c-33c1cb351aa5"
-version = "0.5.6"
+version = "0.5.7"
 
 [[WebIO]]
 deps = ["AssetRegistry", "Base64", "Compat", "FunctionalCollections", "JSON", "Logging", "Observables", "Random", "Requires", "Sockets", "Test", "UUIDs", "Widgets"]
