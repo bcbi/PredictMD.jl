@@ -17,7 +17,7 @@ end
 struct TestGroupTravis1 <: AbstractTestGroup
 end
 
-struct TestGroupAppVeyor1 <: AbstractTestGroup
+struct TestGroupTravis2 <: AbstractTestGroup
 end
 
 const TEST_GROUP_STRING_TO_INSTANCE = Dict{String, AbstractTestGroup}(
@@ -25,7 +25,7 @@ const TEST_GROUP_STRING_TO_INSTANCE = Dict{String, AbstractTestGroup}(
     "all" => TestGroupAll(),
     "test-plots" => TestGroupTestPlots(),
     "travis-1" => TestGroupTravis1(),
-    "appveyor-1" => TestGroupAppVeyor1(),
+    "travis-2" => TestGroupTravis2(),
     )
 
 const TEST_GROUP_INSTANCE_TO_STRING = PredictMD.inverse(

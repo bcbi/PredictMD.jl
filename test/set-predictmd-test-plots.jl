@@ -16,6 +16,10 @@ if isa(TEST_GROUP, TestGroupTravis1)
     ENV["PREDICTMD_TEST_PLOTS"] = "true"
 end
 
+if isa(TEST_GROUP, TestGroupTravis2)
+    ENV["PREDICTMD_TEST_PLOTS"] = "true"
+end
+
 @info(
     string(
         "PREDICTMD_TEST_PLOTS: \"",
