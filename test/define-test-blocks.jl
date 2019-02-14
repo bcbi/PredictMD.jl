@@ -3,13 +3,13 @@
 abstract type AbstractTestBlock
 end
 
-struct TestBlockUnitTests <: AbstractTestGroup
+struct TestBlockUnitTests <: AbstractTestBlock
 end
 
-struct TestBlockIntegration1 <: AbstractTestGroup
+struct TestBlockIntegration1 <: AbstractTestBlock
 end
 
-struct TestBlockIntegration2 <: AbstractTestGroup
+struct TestBlockIntegration2 <: AbstractTestBlock
 end
 
 group_includes_block(::AbstractTestGroup, ::AbstractTestBlock) = true
