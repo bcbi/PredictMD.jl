@@ -135,20 +135,20 @@ function fit!(
         estimator::KnetModel,
         training_features_array::AbstractArray,
         training_labels_array::AbstractArray,
-        validation_features_array::Union{Nothing, AbstractArray} = nothing,
-        validation_labels_array::Union{Nothing, AbstractArray} = nothing,
+        tuning_features_array::Union{Nothing, AbstractArray} = nothing,
+        tuning_labels_array::Union{Nothing, AbstractArray} = nothing,
         )
-    if is_nothing(validation_features_array) &&
-            is_nothing(validation_labels_array)
-        has_validation_data = false
-    elseif !is_nothing(validation_features_array) &&
-                !is_nothing(validation_labels_array)
-        has_validation_data = true
+    if is_nothing(tuning_features_array) &&
+            is_nothing(tuning_labels_array)
+        has_tuning_data = false
+    elseif !is_nothing(tuning_features_array) &&
+                !is_nothing(tuning_labels_array)
+        has_tuning_data = true
     else
         error(
             string(
-                "Either define both validation_features_array and ",
-                "validation_labels_array, or define neither.",)
+                "Either define both tuning_features_array and ",
+                "tuning_labels_array, or define neither.",)
             )
     end
     training_features_array = Cfloat.(training_features_array)
@@ -190,25 +190,25 @@ function fit!(
         training_labels_array;
         estimator.losshyperparameters...
         )
-    if has_validation_data
-        validation_lossbeforetrainingstarts = estimator.loss_function(
+    if has_tuning_data
+        tuning_lossbeforetrainingstarts = estimator.loss_function(
            estimator.predict_function,
            estimator.modelweights,
-           validation_features_array,
-           validation_labels_array;
+           tuning_features_array,
+           tuning_labels_array;
            estimator.losshyperparameters...
            )
     end
     if (estimator.printlosseverynepochs) > 0
-        if has_validation_data
+        if has_tuning_data
             @info(
                 string(
                     "Epoch: ",
                     last_epoch,
                     ". Loss (training set): ",
                     training_lossbeforetrainingstarts,
-                    ". Loss (validation set): ",
-                    validation_lossbeforetrainingstarts,
+                    ". Loss (tuning set): ",
+                    tuning_lossbeforetrainingstarts,
                     ".",
                     )
                 )
@@ -273,19 +273,19 @@ function fit!(
             last_epoch,
             training_currentepochloss,
             )
-        if has_validation_data
-            validation_currentepochloss = estimator.loss_function(
+        if has_tuning_data
+            tuning_currentepochloss = estimator.loss_function(
                 estimator.predict_function,
                 estimator.modelweights,
-                validation_features_array,
-                validation_labels_array;
+                tuning_features_array,
+                tuning_labels_array;
                 estimator.losshyperparameters...
                 )
             ValueHistories.push!(
                 estimator.history,
-                :validation_loss_at_epoch,
+                :tuning_loss_at_epoch,
                 last_epoch,
-                validation_currentepochloss,
+                tuning_currentepochloss,
                 )
         end
         printlossthisepoch = (estimator.printlosseverynepochs > 0) &&
@@ -293,15 +293,15 @@ function fit!(
                 ( (last_epoch %
                     estimator.printlosseverynepochs) == 0 ) )
         if printlossthisepoch
-            if has_validation_data
+            if has_tuning_data
                 @info(
                    string(
                        "Epoch: ",
                        last_epoch,
                        ". Loss (training set): ",
                        training_currentepochloss,
-                       ". Loss (validation set): ",
-                       validation_currentepochloss,
+                       ". Loss (tuning set): ",
+                       tuning_currentepochloss,
                        ".",
                        ),
                    )

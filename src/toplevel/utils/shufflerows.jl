@@ -22,7 +22,10 @@ function shuffle_rows!(
     numrows = size(dataframe,1)
     allrows = convert(Array,1:numrows)
     rowpermutation = shuffle!(rng, allrows)
-    dataframe[:, :] = dataframe[rowpermutation, :]
+    numcolumns = size(dataframe,2)
+    for j = 1:numcolumns
+        dataframe[:, j] = dataframe[rowpermutation, j]
+    end
     return dataframe
 end
 

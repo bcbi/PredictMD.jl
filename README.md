@@ -2,11 +2,11 @@
 
 # PredictMD - Uniform interface for machine learning in Julia
 
-# Website: [https://www.predictmd.net](https://www.predictmd.net)
+# Website: [https://predictmd.net](https://predictmd.net)
 
 <a href="https://github.com/bcbi/PredictMD.jl/releases/latest"><img src="https://img.shields.io/github/release/bcbi/PredictMD.svg" /> </a> <a href="https://zenodo.org/badge/latestdoi/109460252"> <img src="https://zenodo.org/badge/109460252.svg"/></a>
 
-[PredictMD](https://www.predictmd.net) is a free and open-source Julia package that provides a uniform interface for machine learning.
+[PredictMD](https://predictmd.net) is a free and open-source Julia package that provides a uniform interface for machine learning.
 
 To install PredictMD, open Julia
 (e.g. open a terminal, type `julia`, and press enter)
@@ -48,7 +48,7 @@ Pkg.test("PredictMD")
 
 ## Documentation
 
-The [PredictMD documentation](https://www.predictmd.net/stable) contains
+The [PredictMD documentation](https://predictmd.net/stable) contains
 useful information, including instructions for use, example code, and a
 description of
 PredictMD's internals.
@@ -98,21 +98,6 @@ If you are using PredictMD inside the Stronghold secure computing environment, p
             /></a></td>
         </tr>
         <tr>
-            <td>AppVeyor CI</td>
-            <td>
-            <a
-            href="https://ci.appveyor.com/project/mirestrepo/predictmd-jl/history">
-            <img
-            title="AppVeyor build status (master)" src="https://ci.appveyor.com/api/projects/status/github/bcbi/PredictMD.jl?branch=master&svg=true"
-            />
-            </a></td>
-            <td><a href="https://ci.appveyor.com/project/mirestrepo/predictmd-jl/history">
-            <img
-            src="https://ci.appveyor.com/api/projects/status/github/bcbi/PredictMD.jl?branch=develop&svg=true"
-            />
-            </a></td>
-        </tr>
-        <tr>
             <td>CodeCov</td>
             <td>
             <a
@@ -128,14 +113,14 @@ If you are using PredictMD inside the Stronghold secure computing environment, p
         </tr>
         <tr>
             <td>docs</td>
-            <td><a href="https://www.predictmd.net/stable">
+            <td><a href="https://predictmd.net/stable">
             <img
             src="https://img.shields.io/badge/docs-stable-blue.svg" />
             </a>
             </td>
             <td>
             <a
-            href="https://www.predictmd.net/latest">
+            href="https://predictmd.net/latest">
             <img
             src="https://img.shields.io/badge/docs-latest-blue.svg" />
             </a>

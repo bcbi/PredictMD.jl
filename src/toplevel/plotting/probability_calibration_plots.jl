@@ -51,10 +51,10 @@ function probability_calibration_scores_and_fractions(
                 )
             )
         )
-    fractions = zeros(scores)
-    num_rows = zeros(Int, length(scores))
+    fractions = fill(Cfloat(0), size(scores))
+    num_rows = fill(Int(0), length(scores))
     for k = 1:length(scores)
-        rows_that_have_approximately_the_kth_score = find(
+        rows_that_have_approximately_the_kth_score = findall(
             ( scores[k] - window ) .<= ( yscore ) .<= ( scores[k] + window )
             )
         num_rows[k] = length(rows_that_have_approximately_the_kth_score)
@@ -66,7 +66,7 @@ function probability_calibration_scores_and_fractions(
                 )
         end
     end
-    nonzero_indices = find(num_rows .!= 0)
+    nonzero_indices = findall(num_rows .!= 0)
     scores = scores[nonzero_indices]
     fractions = fractions[nonzero_indices]
     return scores, fractions

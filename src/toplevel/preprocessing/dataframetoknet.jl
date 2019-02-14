@@ -108,9 +108,9 @@ function fit!(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
         training_labels_df::DataFrames.AbstractDataFrame,
-        validation_features_df::Union{Nothing, DataFrames.AbstractDataFrame} =
+        tuning_features_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing,
-        validation_labels_df::Union{Nothing, DataFrames.AbstractDataFrame} =
+        tuning_labels_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing;
         kwargs...
         )
@@ -118,8 +118,8 @@ function fit!(
         transformer,
         training_features_df,
         training_labels_df,
-        validation_features_df,
-        validation_labels_df;
+        tuning_features_df,
+        tuning_labels_df;
         kwargs...
         )
     return result
@@ -131,9 +131,9 @@ function fit!(
         transformer::MutableDataFrame2RegressionKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
         training_labels_df::DataFrames.AbstractDataFrame,
-        validation_features_df::Union{Nothing, DataFrames.AbstractDataFrame} =
+        tuning_features_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing,
-        validation_labels_df::Union{Nothing, DataFrames.AbstractDataFrame} =
+        tuning_labels_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing;
         kwargs...
         )
@@ -141,8 +141,8 @@ function fit!(
         transformer,
         training_features_df,
         training_labels_df,
-        validation_features_df,
-        validation_labels_df;
+        tuning_features_df,
+        tuning_labels_df;
         kwargs...
         )
     return result
@@ -204,23 +204,23 @@ function transform(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
         training_labels_df::DataFrames.AbstractDataFrame,
-        validation_features_df::Union{Nothing, DataFrames.AbstractDataFrame} =
+        tuning_features_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing,
-        validation_labels_df::Union{Nothing, DataFrames.AbstractDataFrame} =
+        tuning_labels_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing;
         kwargs...
         )
-    if is_nothing(validation_features_df) &&
-            is_nothing(validation_labels_df)
-        has_validation_data = false
-    elseif !is_nothing(validation_features_df) &&
-            !is_nothing(validation_labels_df)
-        has_validation_data = true
+    if is_nothing(tuning_features_df) &&
+            is_nothing(tuning_labels_df)
+        has_tuning_data = false
+    elseif !is_nothing(tuning_features_df) &&
+            !is_nothing(tuning_labels_df)
+        has_tuning_data = true
     else
         error(
             string(
-                "Either both validation_features_df ",
-                "and validation_labels_df ",
+                "Either both tuning_features_df ",
+                "and tuning_labels_df ",
                 "must be defined, or neither can be defined."
                 )
             )
@@ -272,17 +272,17 @@ function transform(
     end
     training_features_array = convert(Array, training_features_array)
     training_labels_array = convert(Array, training_labels_array)
-    if has_validation_data
-        validation_features_array, validation_labels_array = transform(
+    if has_tuning_data
+        tuning_features_array, tuning_labels_array = transform(
             transformer,
-            validation_features_df,
-            validation_labels_df;
+            tuning_features_df,
+            tuning_labels_df;
             kwargs...
             )
         return training_features_array,
             training_labels_array,
-            validation_features_array,
-            validation_labels_array
+            tuning_features_array,
+            tuning_labels_array
     else
         return training_features_array,
             training_labels_array
@@ -320,23 +320,23 @@ function transform(
         transformer::MutableDataFrame2RegressionKnetTransformer,
         training_features_df::DataFrames.AbstractDataFrame,
         training_labels_df::DataFrames.AbstractDataFrame,
-        validation_features_df::Union{Nothing, DataFrames.AbstractDataFrame} =
+        tuning_features_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing,
-        validation_labels_df::Union{Nothing, DataFrames.AbstractDataFrame} =
+        tuning_labels_df::Union{Nothing, DataFrames.AbstractDataFrame} =
             nothing;
         kwargs...
         )
-    if is_nothing(validation_features_df) &&
-            is_nothing(validation_labels_df)
-        has_validation_data = false
-    elseif !is_nothing(validation_features_df) &&
-            !is_nothing(validation_labels_df)
-        has_validation_data = true
+    if is_nothing(tuning_features_df) &&
+            is_nothing(tuning_labels_df)
+        has_tuning_data = false
+    elseif !is_nothing(tuning_features_df) &&
+            !is_nothing(tuning_labels_df)
+        has_tuning_data = true
     else
         error(
             string(
-                "Either both validation_features_df ",
-                "and validation_labels_df ",
+                "Either both tuning_features_df ",
+                "and tuning_labels_df ",
                 "must be defined, or neither can be defined.",
                 )
             )
@@ -366,17 +366,17 @@ function transform(
     end
     training_features_array = convert(Array, training_features_array)
     training_labels_array = convert(Array, training_labels_array)
-    if has_validation_data
-        validation_features_array, validation_labels_array = transform(
+    if has_tuning_data
+        tuning_features_array, tuning_labels_array = transform(
             transformer,
-            validation_features_df,
-            validation_labels_df;
+            tuning_features_df,
+            tuning_labels_df;
             kwargs...
             )
         return training_features_array,
             training_labels_array,
-            validation_features_array,
-            validation_labels_array
+            tuning_features_array,
+            tuning_labels_array
     else
         return training_features_array,
             training_labels_array

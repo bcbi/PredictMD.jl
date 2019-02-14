@@ -73,7 +73,6 @@ git version 2.16.1
 If you do, proceed to Step 2. If you instead receive an error message,
 download and install Git:
 
-- Windows: [https://git-scm.com/download/win](https://git-scm.com/download/win)
 - macOS: [https://git-scm.com/download/mac](https://git-scm.com/download/mac)
 - GNU/Linux: [https://git-scm.com/download/linux](https://git-scm.com/download/linux)
 
@@ -128,7 +127,6 @@ If you do, then you are good to go. If you instead receive the
 message ```git: 'flow' is not a git command```, download and
 install git-flow:
 
-- Windows: [https://github.com/nvie/gitflow/wiki/Windows](https://github.com/nvie/gitflow/wiki/Windows)
 - macOS: [https://github.com/nvie/gitflow/wiki/Mac-OS-X](https://github.com/nvie/gitflow/wiki/Mac-OS-X)
 - GNU/Linux: [https://github.com/nvie/gitflow/wiki/Linux](https://github.com/nvie/gitflow/wiki/Linux)
 
@@ -160,7 +158,6 @@ Compression: Uncompressed, ZIP, ZLIB, BZIP2
 ```
 If you do, then go to Step 2. If you instead see an error,
 download and install GPG:
-- Windows: [https://gpg4win.org/download.html](https://gpg4win.org/download.html)
 - macOS: [https://gpgtools.org/](https://gpgtools.org/)
 - GNU/Linux: [https://gnupg.org/download/#sec-1-2](https://gnupg.org/download/#sec-1-2)
 
@@ -506,7 +503,7 @@ scroll down to find the release branch, and then click the
 trash can icon to delete the branch.
 
 #### Step 23:
-The final step is to go to the Zenodo entry for the newly created release and put in the correct information. First go to [https://www.predictmd.net/zenodo](https://www.predictmd.net/zenodo), and then click on the yellow "Edit" button to edit the most recent release. Then, fill out the following fields with the specified values:
+The final step is to go to the Zenodo entry for the newly created release and put in the correct information. First go to [https://predictmd.net/zenodo](https://predictmd.net/zenodo), and then click on the yellow "Edit" button to edit the most recent release. Then, fill out the following fields with the specified values:
 
 ##### Upload type:
 * Software
@@ -549,8 +546,8 @@ The final step is to go to the Zenodo entry for the newly created release and pu
 
 | Identifier | Relationship |
 | ---- | ---- |
-| `https://www.predictmd.net` | compiled/created this upload |
-| `https://www.predictmd.net/vMAJOR.MINOR.PATCH` | documents this upload |
+| `https://predictmd.net` | compiled/created this upload |
+| `https://predictmd.net/vMAJOR.MINOR.PATCH` | documents this upload |
 | `https://github.com/bcbi/PredictMD.jl/releases/tag/vMAJOR.MINOR.PATCH` | is an alternate identifier of this upload |
 | `https://github.com/bcbi/PredictMD.jl/tree/vMAJOR.MINOR.PATCH` | is an alternate identifier of this upload |
 

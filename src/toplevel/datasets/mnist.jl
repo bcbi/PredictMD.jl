@@ -1,5 +1,5 @@
 ##### Beginning of file
 
-import MNIST
+# import MNIST
 
 ##### End of file
