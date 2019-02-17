@@ -31,7 +31,11 @@ env:
 git:
     depth: 99999999
 
-language: bash
+julia:
+    "1.1"
+    "nightly"
+
+language: julia
 
 matrix:
     fast_finish: true
@@ -69,14 +73,22 @@ jobs:
         os: osx
       - stage: travis-4
       -
+        env:
+            - COMPILED_MODULES="yes"
+      -
         os: osx
+        env:
+      -
+        os: os
+        env:
+            - COMPILED_MODULES="yes"
 
 # jobs:
 #     include:
 #         - stage: test
 #           env:
 #             - JULIA_VERSION="1.1"
-#             - COMPILED_MODULES="yes"
+#
 #           install:
 #           - true
 #           script:
