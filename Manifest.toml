@@ -1171,10 +1171,10 @@ uuid = "104b5d7c-a370-577a-8038-80a2059c5097"
 version = "1.2.0"
 
 [[Widgets]]
-deps = ["Observables", "OrderedCollections", "Test"]
-git-tree-sha1 = "c928228be493bab724f5ae35a38fb1415ae5cee9"
+deps = ["Colors", "Dates", "Observables", "OrderedCollections", "Test"]
+git-tree-sha1 = "f48ee34d9495924aba50eeb328d83b0034b787f5"
 uuid = "cc8bc4a8-27d6-5769-a93b-9d913e69aa62"
-version = "0.4.4"
+version = "0.5.0"
 
 [[WinRPM]]
 deps = ["BinDeps", "Compat", "HTTPClient", "LibExpat", "Libdl", "Libz", "URIParser"]
