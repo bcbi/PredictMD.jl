@@ -68,6 +68,8 @@ jobs:
       -
         os: osx
       - stage: travis-4
+      -
+        os: osx
 
 # jobs:
 #     include:
