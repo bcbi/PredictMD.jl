@@ -67,19 +67,27 @@ jobs:
           - set -ev
           - ./ci/travis/first-stage-only.sh
           - ./ci/travis/all-stages.sh "travis-1"
+          script:
+          - true
         - stage: "travis-2"
           install:
           - set -ev
           - ./ci/travis/all-stages.sh "travis-2"
+          script:
+          - true
         - stage: "travis-3"
           install:
           - set -ev
           - ./ci/travis/all-stages.sh "travis-3"
+          script:
+          - true
         - stage: "travis-4"
           install:
           - set -ev
           - ./ci/travis/all-stages.sh "travis-4"
           - ./ci/travis/last-stage-only.sh
+          script:
+          - true
 
 ############################################################################
 
