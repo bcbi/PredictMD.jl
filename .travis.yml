@@ -28,21 +28,15 @@ env:
         - JULIA_DEBUG="all"
         - PREDICTMD_OPEN_PLOTS_DURING_TESTS="true"
     matrix:
-        - COMPILED_MODULES="no"
-        - COMPILED_MODULES="yes"
+        - COMPILED_MODULES="no" JULIA_VERSION="1.1"
+        - COMPILED_MODULES="yes" JULIA_VERSION="1.1"
 
 git:
     depth: 99999999
 
-julia:
-    - "1.1"
-    - "nightly"
-
-language: julia
+language: bash
 
 matrix:
-    allow_failures:
-        - julia: "nightly"
     fast_finish: true
 
 notifications:
@@ -57,6 +51,14 @@ os:
 ############################################################################
 
 before_install: ./ci/travis/before_install.sh
+
+############################################################################
+
+stages:
+    - travis-1
+    - travis-2
+    - travis-3
+    - travis-4
 
 ############################################################################
 
@@ -95,14 +97,6 @@ jobs:
         script:
         - true
         stage: travis-4
-
-############################################################################
-
-stages:
-    - travis-1
-    - travis-2
-    - travis-3
-    - travis-4
 
 ############################################################################
 
