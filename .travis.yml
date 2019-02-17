@@ -19,6 +19,7 @@ branches:
 
 cache:
     directories:
+        - $HOME/.julia
         - $HOME/predictmd_cache_travis
 
 env:

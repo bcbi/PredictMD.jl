@@ -56,7 +56,7 @@ julia $JULIA_FLAGS -e '
     Coverage.Codecov.submit(Coverage.Codecov.process_folder());
     '
 
-if [[ "$GROUP" == "travis-4" ]]; then
+if [[ "$GROUP" == "travis-6" ]]; then
     julia $JULIA_FLAGS -e '
         import Pkg;
         include(joinpath(Pkg.dir("PredictMD"), "docs", "make.jl",));
@@ -81,7 +81,7 @@ mkdir -p $HOME/predictmd_cache_travis
 ls -la $HOME/.julia
 ls -la $HOME/predictmd_cache_travis
 
-if [[ "$GROUP" == "travis-4" ]]; then
+if [[ "$GROUP" == "travis-6" ]]; then
     mv $HOME/.julia $HOME/.julia_discard_laststage
     mv $HOME/predictmd_cache_travis $HOME/predictmd_cache_travis_discard_laststage
 fi
