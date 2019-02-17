@@ -81,7 +81,7 @@ jobs:
         os: osx
         env:
       -
-        os: os
+        os: osx
         env:
             - COMPILED_MODULES="yes"
 
