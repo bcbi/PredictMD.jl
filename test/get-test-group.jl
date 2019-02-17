@@ -60,7 +60,4 @@ else
         )
 end
 
-@debug("ENV["GROUP"]: ", get(ENV, "GROUP", ""),)
-@debug("ENV["PREDICTMD_TEST_GROUP"]: ", get(ENV, "PREDICTMD_TEST_GROUP", ""),)
-
 ##### End of file
