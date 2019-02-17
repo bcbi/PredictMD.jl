@@ -2,9 +2,6 @@
 
 import PredictMD
 
-@debug("ENV["GROUP"]: ", get(ENV, "GROUP", ""),)
-@debug("ENV["PREDICTMD_TEST_GROUP"]: ", get(ENV, "PREDICTMD_TEST_GROUP", ""),)
-
 if PredictMD.is_travis_ci() && !haskey(ENV, "PREDICTMD_TEST_GROUP")
     ENV["PREDICTMD_TEST_GROUP"] = lowercase(
         strip(
