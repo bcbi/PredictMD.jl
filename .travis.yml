@@ -27,9 +27,6 @@ env:
         - DOCUMENTER_DEBUG="true"
         - JULIA_DEBUG="all"
         - PREDICTMD_OPEN_PLOTS_DURING_TESTS="true"
-    matrix:
-        - COMPILED_MODULES="no" JULIA_VERSION="1.1"
-        - COMPILED_MODULES="yes" JULIA_VERSION="1.1"
 
 git:
     depth: 99999999
@@ -65,12 +62,8 @@ stages:
 jobs:
     exclude:
         - stage: test
-        - stage: deploy
     include:
-        - stage: deploy-1
-          JULIA_VERSION: "1.1"
-          COMPILED_MODULES: "no"
-          COMPILED_MODULES: "yes"
+        - stage: travis-1
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
@@ -78,10 +71,15 @@ jobs:
           - true
           script:
           - true
-        - stage: deploy-2
-          JULIA_VERSION: "1.1"
-          COMPILED_MODULES: "no"
-          COMPILED_MODULES: "yes"
+        -
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="no"
+          install:
+          - true
+          script:
+          - true
+        - stage: travis-2
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
@@ -89,10 +87,15 @@ jobs:
           - true
           script:
           - true
-        - stage: deploy-3
-          JULIA_VERSION: "1.1"
-          COMPILED_MODULES: "no"
-          COMPILED_MODULES: "yes"
+        -
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="no"
+          install:
+          - true
+          script:
+          - true
+        - stage: travis-3
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
@@ -100,13 +103,26 @@ jobs:
           - true
           script:
           - true
-        - stage: deploy-4
-          JULIA_VERSION: "1.1"
-          COMPILED_MODULES: "no"
-          COMPILED_MODULES: "yes"
+        -
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="no"
+          install:
+          - true
+          script:
+          - true
+        - stage: travis-4
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
+          install:
+          - true
+          script:
+          - true
+        -
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="no"
           install:
           - true
           script:
