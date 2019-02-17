@@ -21,6 +21,7 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
     )
 
 # BEGIN TEST STATEMENTS
+@debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
     PredictMD.cache_to_homedir!("Desktop", "boston_housing_example",)
 end
