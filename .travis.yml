@@ -63,13 +63,16 @@ os:
 ############################################################################
 
 jobs:
-    include:
+    exclude:
         - stage: test
-          script:
-          - true
         - stage: deploy
+    include:
+        - stage: deploy1
           script:
           - true
+        - stage: deploy2
+           script:
+           - true
 
 # jobs:
 #       -
