@@ -19,6 +19,10 @@ struct TestGroupTravis3 <: AbstractTestGroup
 end
 struct TestGroupTravis4 <: AbstractTestGroup
 end
+struct TestGroupTravis5 <: AbstractTestGroup
+end
+struct TestGroupTravis6 <: AbstractTestGroup
+end
 
 const TEST_GROUP_STRING_TO_INSTANCE = Dict{String, AbstractTestGroup}(
     "default" => TestGroupDefault(),
@@ -28,6 +32,8 @@ const TEST_GROUP_STRING_TO_INSTANCE = Dict{String, AbstractTestGroup}(
     "travis-2" => TestGroupTravis2(),
     "travis-3" => TestGroupTravis3(),
     "travis-4" => TestGroupTravis4(),
+    "travis-5" => TestGroupTravis5(),
+    "travis-6" => TestGroupTravis6(),
     )
 
 const TEST_GROUP_INSTANCE_TO_STRING = PredictMD.inverse(

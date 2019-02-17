@@ -15,8 +15,19 @@ end
 if isa(TEST_GROUP, TestGroupTravis1)
     ENV["PREDICTMD_TEST_PLOTS"] = "true"
 end
-
 if isa(TEST_GROUP, TestGroupTravis2)
+    ENV["PREDICTMD_TEST_PLOTS"] = "true"
+end
+if isa(TEST_GROUP, TestGroupTravis3)
+    ENV["PREDICTMD_TEST_PLOTS"] = "true"
+end
+if isa(TEST_GROUP, TestGroupTravis4)
+    ENV["PREDICTMD_TEST_PLOTS"] = "true"
+end
+if isa(TEST_GROUP, TestGroupTravis5)
+    ENV["PREDICTMD_TEST_PLOTS"] = "true"
+end
+if isa(TEST_GROUP, TestGroupTravis6)
     ENV["PREDICTMD_TEST_PLOTS"] = "true"
 end
 

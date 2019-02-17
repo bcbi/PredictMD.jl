@@ -702,9 +702,9 @@ version = "0.5.7"
 
 [[Mux]]
 deps = ["AssetRegistry", "Base64", "HTTP", "Hiccup", "Lazy", "Pkg", "Sockets", "Test", "WebSockets"]
-git-tree-sha1 = "487feb060cdd5cc152ef4f75b3cb565c0dc4300a"
+git-tree-sha1 = "cd8de2fc09f8fcc2ee300db39fa0706794b1b2e7"
 uuid = "a975b10e-0019-58db-a62f-e48ff68538c9"
-version = "0.5.3"
+version = "0.6.0"
 
 [[NNlib]]
 deps = ["Libdl", "LinearAlgebra", "MacroTools", "Requires", "Test"]
@@ -1057,9 +1057,9 @@ version = "0.1.0"
 
 [[TextParse]]
 deps = ["CodecZlib", "DataStructures", "Dates", "DoubleFloats", "Mmap", "Nullables", "PooledArrays", "Random", "Test", "WeakRefStrings"]
-git-tree-sha1 = "4092d42c5a4db70faf7e73ca17410630c64ffb91"
+git-tree-sha1 = "989a9b371867e8b3f6546e3c2e62e618b351b45d"
 uuid = "e0df1984-e451-5cb5-8b61-797a481e67e3"
-version = "0.7.2"
+version = "0.7.4"
 
 [[TextWrap]]
 deps = ["Compat", "Test"]

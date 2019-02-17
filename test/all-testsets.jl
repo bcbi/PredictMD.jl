@@ -136,6 +136,8 @@ Test.@testset "Integration tests" begin
                     "02_linear_regression.jl",
                     )
                 )
+        end
+        if group_includes_block(TEST_GROUP, TestBlockIntegration2())
             include(
                 joinpath(
                     temp_generate_examples_dir, "cpu",
@@ -143,8 +145,6 @@ Test.@testset "Integration tests" begin
                     "03_random_forest_regression.jl",
                     )
                 )
-        end
-        if group_includes_block(TEST_GROUP, TestBlockIntegration2())
             include(
                 joinpath(
                     temp_generate_examples_dir, "cpu",
@@ -152,6 +152,8 @@ Test.@testset "Integration tests" begin
                     "04_knet_mlp_regression.jl",
                     )
                 )
+        end
+        if group_includes_block(TEST_GROUP, TestBlockIntegration3())
             include(
                 joinpath(
                     temp_generate_examples_dir, "cpu",
@@ -170,7 +172,7 @@ Test.@testset "Integration tests" begin
     end
     Test.@testset "Breast cancer biopsy classification (CPU)" begin
         @info("Testing breast cancer biopsy classification example (CPU)")
-        if group_includes_block(TEST_GROUP, TestBlockIntegration3())
+        if group_includes_block(TEST_GROUP, TestBlockIntegration4())
             include(
                 joinpath(
                     temp_generate_examples_dir, "cpu",
@@ -192,6 +194,8 @@ Test.@testset "Integration tests" begin
                     "03_logistic_classifier.jl",
                     )
                 )
+        end
+        if group_includes_block(TEST_GROUP, TestBlockIntegration5())
             include(
                 joinpath(
                     temp_generate_examples_dir, "cpu",
@@ -206,8 +210,6 @@ Test.@testset "Integration tests" begin
                     "05_c_svc_svm_classifier.jl",
                     )
                 )
-        end
-        if group_includes_block(TEST_GROUP, TestBlockIntegration4())
             include(
                 joinpath(
                     temp_generate_examples_dir, "cpu",
@@ -215,6 +217,8 @@ Test.@testset "Integration tests" begin
                     "06_nu_svc_svm_classifier.jl",
                     )
                 )
+        end
+        if group_includes_block(TEST_GROUP, TestBlockIntegration6())
             include(
                 joinpath(
                     temp_generate_examples_dir, "cpu",
