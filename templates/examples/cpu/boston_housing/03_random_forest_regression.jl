@@ -20,6 +20,12 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
     "boston_housing_example",
     )
 
+# BEGIN TEST STATEMENTS
+if PredictMD.is_travis_ci()
+    PredictMD.cache_to_homedir!("Desktop", "boston_housing_example",)
+end
+# END TEST STATEMENTS
+
 ### End project-specific settings
 
 ### Begin random forest regression code
@@ -239,5 +245,11 @@ PredictMD.save_model(
     )
 
 ### End random forest regression code
+
+# BEGIN TEST STATEMENTS
+if PredictMD.is_travis_ci()
+    PredictMD.homedir_to_cache!("Desktop", "boston_housing_example",)
+end
+# END TEST STATEMENTS
 
 ##### End of file

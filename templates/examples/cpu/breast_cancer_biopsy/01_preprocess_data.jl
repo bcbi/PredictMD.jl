@@ -20,6 +20,12 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
     "breast_cancer_biopsy_example",
     )
 
+# BEGIN TEST STATEMENTS
+if PredictMD.is_travis_ci()
+    PredictMD.cache_to_homedir!("Desktop", "breast_cancer_biopsy_example",)
+end
+# END TEST STATEMENTS
+
 ### End project-specific settings
 
 ### Begin data preprocessing code
@@ -196,5 +202,11 @@ CSV.write(
     )
 
 ### End data preprocessing code
+
+# BEGIN TEST STATEMENTS
+if PredictMD.is_travis_ci()
+    PredictMD.homedir_to_cache!("Desktop", "breast_cancer_biopsy_example",)
+end
+# END TEST STATEMENTS
 
 ##### End of file

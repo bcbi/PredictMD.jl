@@ -1,5 +1,7 @@
 ##### Beginning of file
 
+############################################################################
+
 addons:
     apt:
         packages:
@@ -15,16 +17,19 @@ branches:
     except:
         - gh-pages
 
+cache:
+    directories:
+        - $HOME/.julia
+        - $HOME/predictmd_cache_travis
+
 env:
     global:
         - DOCUMENTER_DEBUG="true"
         - JULIA_DEBUG="all"
         - PREDICTMD_OPEN_PLOTS_DURING_TESTS="true"
     matrix:
-        - GROUP="travis-1" COMPILED_MODULES="no"
-        - GROUP="travis-2" COMPILED_MODULES="no"
-        - GROUP="travis-1" COMPILED_MODULES="yes"
-        - GROUP="travis-2" COMPILED_MODULES="yes"
+        - COMPILED_MODULES="no"
+        - COMPILED_MODULES="yes"
 
 git:
     depth: 99999999
@@ -53,6 +58,29 @@ os:
 
 before_install: ./ci/travis/before_install.sh
 
-script: ./ci/travis/script.sh
+############################################################################
+
+jobs:
+    include:
+        - stage: "travis-1"
+          install:
+          - set -ev
+          - ./ci/travis/first-stage-only.sh
+          - ./ci/travis/all-stages.sh "travis-1"
+        - stage: "travis-2"
+          install:
+          - set -ev
+          - ./ci/travis/all-stages.sh "travis-2"
+        - stage: "travis-3"
+          install:
+          - set -ev
+          - ./ci/travis/all-stages.sh "travis-3"
+        - stage: "travis-4"
+          install:
+          - set -ev
+          - ./ci/travis/all-stages.sh "travis-4"
+          - ./ci/travis/last-stage-only.sh
+
+############################################################################
 
 ##### End of file

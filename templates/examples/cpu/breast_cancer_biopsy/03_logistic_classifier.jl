@@ -20,6 +20,12 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
     "breast_cancer_biopsy_example",
     )
 
+# BEGIN TEST STATEMENTS
+if PredictMD.is_travis_ci()
+    PredictMD.cache_to_homedir!("Desktop", "breast_cancer_biopsy_example",)
+end
+# END TEST STATEMENTS
+
 ### End project-specific settings
 
 ### Begin logistic classifier code
@@ -326,5 +332,11 @@ logistic_classifier_filename = joinpath(
 PredictMD.save_model(logistic_classifier_filename, logistic_classifier)
 
 ### End logistic classifier code
+
+# BEGIN TEST STATEMENTS
+if PredictMD.is_travis_ci()
+    PredictMD.homedir_to_cache!("Desktop", "breast_cancer_biopsy_example",)
+end
+# END TEST STATEMENTS
 
 ##### End of file

@@ -20,6 +20,12 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
     "boston_housing_example",
     )
 
+# BEGIN TEST STATEMENTS
+if PredictMD.is_travis_ci()
+    PredictMD.cache_to_homedir!("Desktop", "boston_housing_example",)
+end
+# END TEST STATEMENTS
+
 ### End project-specific settings
 
 ### Begin model output code
@@ -159,5 +165,11 @@ PredictMD.predict(random_forest_regression,testing_features_df,)
 PredictMD.predict(knet_mlp_regression,testing_features_df,)
 
 ### End model output code
+
+# BEGIN TEST STATEMENTS
+if PredictMD.is_travis_ci()
+    PredictMD.homedir_to_cache!("Desktop", "boston_housing_example",)
+end
+# END TEST STATEMENTS
 
 ##### End of file
