@@ -19,7 +19,6 @@ branches:
 
 cache:
     directories:
-        - $HOME/.julia
         - $HOME/predictmd_cache_travis
 
 env:
@@ -47,8 +46,6 @@ os:
 
 ############################################################################
 
-# before_install: ./ci/travis/before_install.sh
-
 before_install:
     - true
 
@@ -68,6 +65,8 @@ stages:
 
 ############################################################################
 
+# before_install:
+
 jobs:
     include:
 
@@ -75,89 +74,193 @@ jobs:
           os: linux
           env:
             - JULIA_VERSION="1.1"
+            - GROUP=""
             - COMPILED_MODULES="yes"
-        - stage: travis-1
-          os: linux
-          env:
-            - JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
+          before_install: ./ci/travis/before_install.sh
+          install:
+          - true
+          script:
+          - true
 
         - stage: travis-1
-          os: osx
+          os: linux
           env:
             - JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
+            - GROUP=""
+            - COMPILED_MODULES="no"
+          before_install: ./ci/travis/before_install.sh
+          install:
+          - true
+          script:
+          - true
+
         - stage: travis-1
           os: osx
           env:
             - JULIA_VERSION="1.1"
+            - GROUP=""
+            - COMPILED_MODULES="yes"
+          before_install: ./ci/travis/before_install.sh
+          install:
+          - true
+          script:
+          - true
+
+        - stage: travis-1
+          os: osx
+          env:
+            - JULIA_VERSION="1.1"
+            - GROUP=""
             - COMPILED_MODULES="no"
+          before_install: ./ci/travis/before_install.sh
+          install:
+          - true
+          script:
+          - true
 
         - stage: travis-2
           os: linux
           env:
             - JULIA_VERSION="1.1"
+            - GROUP=""
             - COMPILED_MODULES="yes"
-        - stage: travis-2
-          os: linux
-          env:
-            - JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
+          before_install: ./ci/travis/before_install.sh
+          install:
+          - true
+          script:
+          - true
 
         - stage: travis-2
-          os: osx
+          os: linux
           env:
             - JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
+            - GROUP=""
+            - COMPILED_MODULES="no"
+          before_install: ./ci/travis/before_install.sh
+          install:
+          - true
+          script:
+          - true
+
         - stage: travis-2
           os: osx
           env:
             - JULIA_VERSION="1.1"
+            - GROUP=""
+            - COMPILED_MODULES="yes"
+          before_install: ./ci/travis/before_install.sh
+          install:
+          - true
+          script:
+          - true
+
+        - stage: travis-2
+          os: osx
+          env:
+            - JULIA_VERSION="1.1"
+            - GROUP=""
             - COMPILED_MODULES="no"
+          before_install: ./ci/travis/before_install.sh
+          install:
+          - true
+          script:
+          - true
 
         - stage: travis-3
           os: linux
           env:
             - JULIA_VERSION="1.1"
+            - GROUP=""
             - COMPILED_MODULES="yes"
+          before_install: ./ci/travis/before_install.sh
+          install:
+          - true
+          script:
+          - true
+
         - stage: travis-3
           os: linux
           env:
             - JULIA_VERSION="1.1"
+            - GROUP=""
             - COMPILED_MODULES="no"
+          before_install: ./ci/travis/before_install.sh
+          install:
+          - true
+          script:
+          - true
 
         - stage: travis-3
           os: osx
           env:
             - JULIA_VERSION="1.1"
+            - GROUP=""
             - COMPILED_MODULES="yes"
+          before_install: ./ci/travis/before_install.sh
+          install:
+          - true
+          script:
+          - true
+
         - stage: travis-3
           os: osx
           env:
             - JULIA_VERSION="1.1"
+            - GROUP=""
             - COMPILED_MODULES="no"
+          before_install: ./ci/travis/before_install.sh
+          install:
+          - true
+          script:
+          - true
 
         - stage: travis-4
           os: linux
           env:
             - JULIA_VERSION="1.1"
+            - GROUP=""
             - COMPILED_MODULES="yes"
+          before_install: ./ci/travis/before_install.sh
+          install:
+          - true
+          script:
+          - true
+
         - stage: travis-4
           os: linux
           env:
             - JULIA_VERSION="1.1"
+            - GROUP=""
             - COMPILED_MODULES="no"
+          before_install: ./ci/travis/before_install.sh
+          install:
+          - true
+          script:
+          - true
 
         - stage: travis-4
           os: osx
           env:
             - JULIA_VERSION="1.1"
+            - GROUP=""
             - COMPILED_MODULES="yes"
+          before_install: ./ci/travis/before_install.sh
+          install:
+          - true
+          script:
+          - true
+
         - stage: travis-4
           os: osx
           env:
             - JULIA_VERSION="1.1"
+            - GROUP=""
             - COMPILED_MODULES="no"
+          before_install: ./ci/travis/before_install.sh
+          install:
+          - true
+          script:
+          - true
 
 # jobs:
 #       -
