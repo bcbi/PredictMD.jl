@@ -54,11 +54,11 @@ os:
 
 ############################################################################
 
-# stages:
-#     - travis-1
-#     - travis-2
-#     - travis-3
-#     - travis-4
+stages:
+    - travis-1
+    - travis-2
+    - travis-3
+    - travis-4
 
 ############################################################################
 
@@ -67,12 +67,38 @@ jobs:
         - stage: test
         - stage: deploy
     include:
-        - stage: deploy1
+        - stage: deploy-1
+          JULIA_VERSION: "1.1"
+          COMPILED_MODULES: "no"
+          COMPILED_MODULES: "yes"
+          install:
+          - true
           script:
           - true
-        - stage: deploy2
-           script:
-           - true
+        - stage: deploy-2
+          JULIA_VERSION: "1.1"
+          COMPILED_MODULES: "no"
+          COMPILED_MODULES: "yes"
+          install:
+          - true
+          script:
+          - true
+        - stage: deploy-3
+          JULIA_VERSION: "1.1"
+          COMPILED_MODULES: "no"
+          COMPILED_MODULES: "yes"
+          install:
+          - true
+          script:
+          - true
+        - stage: deploy-4
+          JULIA_VERSION: "1.1"
+          COMPILED_MODULES: "no"
+          COMPILED_MODULES: "yes"
+          install:
+          - true
+          script:
+          - true
 
 # jobs:
 #       -
