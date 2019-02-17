@@ -63,7 +63,11 @@ jobs:
     include:
       - stage: test
       - stage: travis-2
+      -
+        os: osx
       - stage: travis-3
+      -
+        os: osx
       - stage: travis-4
 
 # jobs:
