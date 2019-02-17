@@ -67,91 +67,9 @@ stages:
 
 jobs:
     include:
-      - stage: travis-2
-      -
-        os: osx
-      - stage: travis-3
-      -
-        os: osx
-      - stage: travis-4
-      -
-        env:
-            - COMPILED_MODULES="yes"
-      -
-        os: osx
-        env:
-            - COMPILED_MODULES="yes"
-      -
-        os: osx
-        env:
-            - COMPILED_MODULES="yes"
-
-# jobs:
-#     include:
-#         - stage: test
-#           env:
-#             - JULIA_VERSION="1.1"
-#
-#           install:
-#           - true
-#           script:
-#           - true
-#         -
-#           env:
-#             - JULIA_VERSION="1.1"
-#             - COMPILED_MODULES="no"
-#           install:
-#           - true
-#           script:
-#           - true
-#         - stage: travis-2
-#           env:
-#             - JULIA_VERSION="1.1"
-#             - COMPILED_MODULES="yes"
-#           install:
-#           - true
-#           script:
-#           - true
-#         -
-#           env:
-#             - JULIA_VERSION="1.1"
-#             - COMPILED_MODULES="no"
-#           install:
-#           - true
-#           script:
-#           - true
-#         - stage: travis-3
-#           env:
-#             - JULIA_VERSION="1.1"
-#             - COMPILED_MODULES="yes"
-#           install:
-#           - true
-#           script:
-#           - true
-#         -
-#           env:
-#             - JULIA_VERSION="1.1"
-#             - COMPILED_MODULES="no"
-#           install:
-#           - true
-#           script:
-#           - true
-#         - stage: travis-4
-#           env:
-#             - JULIA_VERSION="1.1"
-#             - COMPILED_MODULES="yes"
-#           install:
-#           - true
-#           script:
-#           - true
-#         -
-#           env:
-#             - JULIA_VERSION="1.1"
-#             - COMPILED_MODULES="no"
-#           install:
-#           - true
-#           script:
-#           - true
+        - stage: travis-2
+        - stage: travis-3
+        - stage: travis-4
 
 # jobs:
 #       -
