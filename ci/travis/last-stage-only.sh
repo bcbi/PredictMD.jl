@@ -58,8 +58,10 @@ mkdir -p $HOME/.julia
 mkdir -p $HOME/predictmd_cache_travis
 ls -la $HOME/.julia
 ls -la $HOME/predictmd_cache_travis
+
 mv $HOME/.julia $HOME/.julia_discard_laststage
 mv $HOME/predictmd_cache_travis $HOME/predictmd_cache_travis_discard_laststage
+
 mkdir -p $HOME/.julia
 mkdir -p $HOME/predictmd_cache_travis
 ls -la $HOME/.julia

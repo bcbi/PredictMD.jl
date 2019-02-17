@@ -104,6 +104,11 @@ include(
         "toplevel", "docs_and_examples", "generate_examples.jl",
         )
     )
+include(
+    joinpath(
+        "toplevel", "docs_and_examples", "cache.jl",
+        )
+    )
 
 # toplevel/decomposition/
 
