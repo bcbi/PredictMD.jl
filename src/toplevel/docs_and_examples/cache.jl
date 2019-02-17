@@ -6,9 +6,10 @@ function cache_to_homedir!(
         )::Nothing
     cache_path_src::String = joinpath(cache, parts...)
     homedir_path_dst::String = joinpath(homedir(), parts...)
+    mkpath(cache_path_src)
+    mkpath(homedir_path_dst)
     @debug("cache_path_src: ", cache_path_src,)
     @debug("homedir_path_dst: ", homedir_path_dst,)
-    mkpath(dirname(homedir_path_dst))
     cp(
         cache_path_src,
         homedir_path_dst;
@@ -23,9 +24,10 @@ function homedir_to_cache!(
         )::Nothing
     homedir_path_src::String = joinpath(homedir(), parts...)
     cache_path_dst::String = joinpath(cache, parts...)
+    mkpath(homedir_path_src)
+    mkpath(cache_path_dst)
     @debug("homedir_path_src: ", homedir_path_src,)
     @debug("cache_path_dst: ", cache_path_dst,)
-    mkpath(dirname(cache_path_dst))
     cp(
         homedir_path_src,
         cache_path_dst;
