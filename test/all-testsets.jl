@@ -226,6 +226,8 @@ Test.@testset "Integration tests" begin
                     "07_knet_mlp_classifier.jl",
                     )
                 )
+        end
+        if group_includes_block(TEST_GROUP, TestBlockIntegration7())
             include(
                 joinpath(
                     temp_generate_examples_dir, "cpu",

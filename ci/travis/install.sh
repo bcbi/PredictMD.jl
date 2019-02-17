@@ -25,7 +25,10 @@ ls -la $HOME/predictmd_cache_travis
 export GROUP="$1"
 echo "GROUP=$GROUP"
 
-if [[ "$GROUP" == "travis-1" ]]; then
+export FIRST_GROUP="travis-1"
+export LAST_GROUP="travis-7"
+
+if [[ "$GROUP" == "$FIRST_GROUP" ]]; then
     mv $HOME/.julia $HOME/.julia_discard_firststage
     mv $HOME/predictmd_cache_travis $HOME/predictmd_cache_travis_discard_firststage
 fi
@@ -57,7 +60,7 @@ julia $JULIA_FLAGS -e '
     Coverage.Codecov.submit(Coverage.Codecov.process_folder());
     '
 
-if [[ "$GROUP" == "travis-6" ]]; then
+if [[ "$GROUP" == "$LAST_GROUP" ]]; then
     julia $JULIA_FLAGS -e '
         import Pkg;
         include(joinpath(Pkg.dir("PredictMD"), "docs", "make.jl",));
@@ -82,7 +85,7 @@ mkdir -p $HOME/predictmd_cache_travis
 ls -la $HOME/.julia
 ls -la $HOME/predictmd_cache_travis
 
-if [[ "$GROUP" == "travis-6" ]]; then
+if [[ "$GROUP" == "$LAST_GROUP" ]]; then
     mv $HOME/.julia $HOME/.julia_discard_laststage
     mv $HOME/predictmd_cache_travis $HOME/predictmd_cache_travis_discard_laststage
 fi

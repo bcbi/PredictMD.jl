@@ -289,6 +289,42 @@ jobs:
           install: ./ci/travis/install.sh "travis-6"
           script: ./ci/travis/script.sh "travis-6"
 
+        - stage: travis-7
+          os: linux
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="yes"
+          before_install: ./ci/travis/before_install.sh "travis-7"
+          install: ./ci/travis/install.sh "travis-7"
+          script: ./ci/travis/script.sh "travis-7"
+
+        - stage: travis-7
+          os: linux
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="no"
+          before_install: ./ci/travis/before_install.sh "travis-7"
+          install: ./ci/travis/install.sh "travis-7"
+          script: ./ci/travis/script.sh "travis-7"
+
+        - stage: travis-7
+          os: osx
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="yes"
+          before_install: ./ci/travis/before_install.sh "travis-7"
+          install: ./ci/travis/install.sh "travis-7"
+          script: ./ci/travis/script.sh "travis-7"
+
+        - stage: travis-7
+          os: osx
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="no"
+          before_install: ./ci/travis/before_install.sh "travis-7"
+          install: ./ci/travis/install.sh "travis-7"
+          script: ./ci/travis/script.sh "travis-7"
+
 ############################################################################
 
 ##### End of file
