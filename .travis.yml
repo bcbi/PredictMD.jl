@@ -71,6 +71,9 @@ jobs:
           JULIA_VERSION: "1.1"
           COMPILED_MODULES: "no"
           COMPILED_MODULES: "yes"
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="yes"
           install:
           - true
           script:
@@ -79,6 +82,9 @@ jobs:
           JULIA_VERSION: "1.1"
           COMPILED_MODULES: "no"
           COMPILED_MODULES: "yes"
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="yes"
           install:
           - true
           script:
@@ -87,6 +93,9 @@ jobs:
           JULIA_VERSION: "1.1"
           COMPILED_MODULES: "no"
           COMPILED_MODULES: "yes"
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="yes"
           install:
           - true
           script:
@@ -95,6 +104,9 @@ jobs:
           JULIA_VERSION: "1.1"
           COMPILED_MODULES: "no"
           COMPILED_MODULES: "yes"
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="yes"
           install:
           - true
           script:
