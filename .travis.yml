@@ -70,23 +70,53 @@ stages:
 
 jobs:
     include:
+
         - stage: travis-1
           os: linux
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
         - stage: travis-1
+          os: linux
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="no"
+
+        - stage: travis-1
           os: osx
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
+        - stage: travis-1
+          os: osx
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="no"
+
         - stage: travis-2
           os: linux
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
         - stage: travis-2
+          os: linux
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="no"
+
+        - stage: travis-2
           os: osx
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="yes"
+        - stage: travis-2
+          os: osx
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="no"
+
+        - stage: travis-3
+          os: linux
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
@@ -94,9 +124,21 @@ jobs:
           os: linux
           env:
             - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="no"
+
+        - stage: travis-3
+          os: osx
+          env:
+            - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
         - stage: travis-3
           os: osx
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="no"
+
+        - stage: travis-4
+          os: linux
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
@@ -104,12 +146,18 @@ jobs:
           os: linux
           env:
             - JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
+            - COMPILED_MODULES="no"
+
         - stage: travis-4
           os: osx
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
+        - stage: travis-4
+          os: osx
+          env:
+            - JULIA_VERSION="1.1"
+            - COMPILED_MODULES="no"
 
 # jobs:
 #       -
