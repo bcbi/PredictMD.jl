@@ -36,7 +36,7 @@ git:
 
 julia:
     - "1.1"
-    # - "nightly"
+    - "nightly"
 
 language: julia
 
@@ -61,13 +61,6 @@ before_install: ./ci/travis/before_install.sh
 ############################################################################
 
 jobs:
-    include:
-      - name: test
-        install:
-        - true
-        script:
-        - true
-        stage: test
       -
         name: travis-1
         install:
