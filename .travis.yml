@@ -31,15 +31,9 @@ env:
 git:
     depth: 99999999
 
-# julia:
-#     "1.1"
-#     "nightly"
-
 language: bash
 
 matrix:
-    allow_failures:
-    - julia: "nightly"
     fast_finish: true
 
 notifications:
@@ -58,7 +52,7 @@ os:
 ############################################################################
 
 stages:
-    - test
+    - travis-1
     - travis-2
     - travis-3
     - travis-4
@@ -67,6 +61,9 @@ stages:
 
 jobs:
     include:
+        - stage: travis-1
+        -
+          os: osx
         - stage: travis-2
         -
           os: osx
