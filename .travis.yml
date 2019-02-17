@@ -62,6 +62,12 @@ before_install: ./ci/travis/before_install.sh
 
 jobs:
     include:
+      - name: "test"
+        install:
+        - true
+        script:
+        - true
+        stage: "test"
       -
         name: "travis-1"
         install:
