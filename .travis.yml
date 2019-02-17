@@ -49,6 +49,15 @@ os:
 
 # before_install: ./ci/travis/before_install.sh
 
+before_install:
+    - true
+
+install:
+    - true
+
+script:
+    - true
+
 ############################################################################
 
 stages:
