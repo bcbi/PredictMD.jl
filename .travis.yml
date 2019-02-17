@@ -50,53 +50,62 @@ os:
 
 ############################################################################
 
-before_install: ./ci/travis/before_install.sh
+# before_install: ./ci/travis/before_install.sh
 
 ############################################################################
 
-stages:
-    - travis-1
-    - travis-2
-    - travis-3
-    - travis-4
+# stages:
+#     - travis-1
+#     - travis-2
+#     - travis-3
+#     - travis-4
 
 ############################################################################
 
 jobs:
-      -
-        name: travis-1
-        install:
-        - set -ev
-        - ./ci/travis/first-stage-only.sh
-        - ./ci/travis/all-stages.sh "travis-1"
-        script:
-        - true
-        stage: travis-1
-      -
-        name: travis-2
-        install:
-        - set -ev
-        - ./ci/travis/all-stages.sh "travis-2"
-        script:
-        - true
-        stage: travis-2
-      -
-        name: travis-3
-        install:
-        - set -ev
-        - ./ci/travis/all-stages.sh "travis-3"
-        script:
-        - true
-        stage: travis-3
-      -
-        name: travis-4
-        install:
-        - set -ev
-        - ./ci/travis/all-stages.sh "travis-4"
-        - ./ci/travis/last-stage-only.sh
-        script:
-        - true
-        stage: travis-4
+    include:
+        - stage: test
+          script:
+          - true
+        - stage: deploy:
+          script:
+          - true
+
+# jobs:
+#       -
+#         name: travis-1
+#         install:
+#         - set -ev
+#         - ./ci/travis/first-stage-only.sh
+#         - ./ci/travis/all-stages.sh "travis-1"
+#         script:
+#         - true
+#         stage: travis-1
+#       -
+#         name: travis-2
+#         install:
+#         - set -ev
+#         - ./ci/travis/all-stages.sh "travis-2"
+#         script:
+#         - true
+#         stage: travis-2
+#       -
+#         name: travis-3
+#         install:
+#         - set -ev
+#         - ./ci/travis/all-stages.sh "travis-3"
+#         script:
+#         - true
+#         stage: travis-3
+#       -
+#         name: travis-4
+#         install:
+#         - set -ev
+#         - ./ci/travis/all-stages.sh "travis-4"
+#         - ./ci/travis/last-stage-only.sh
+#         script:
+#         - true
+#         stage: travis-4
 
 ############################################################################
 
