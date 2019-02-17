@@ -31,11 +31,11 @@ env:
 git:
     depth: 99999999
 
-julia:
-    "1.1"
-    "nightly"
+# julia:
+#     "1.1"
+#     "nightly"
 
-language: julia
+language: bash
 
 matrix:
     allow_failures:
@@ -66,33 +66,10 @@ stages:
 ############################################################################
 
 jobs:
-  include:
-    - stage: unit tests
-      script: echo one
-    - stage: unit tests
-      script: echo two
-    - stage: deploy to staging
-      script: skip
-      deploy: &heroku
-        provider: heroku
-        app: sf-stages-staging
-        api_key: $HEROKU_AUTH_TOKEN
-        on: sf-stages-demo
-    - stage: test staging
-      script: 'curl http://sf-stages-staging.herokuapp.com'
-    - stage: deploy to production
-      script: /bin/true
-      deploy:
-        <<: *heroku
-        app: sf-stages-production
-    - stage: test production
-script: 'curl http://sf-stages-production.herokuapp.com'
-
-# jobs:
-#     include:
-#         - stage: travis-2
-#         - stage: travis-3
-#         - stage: travis-4
+    include:
+        - stage: travis-2
+        - stage: travis-3
+        - stage: travis-4
 
 # jobs:
 #       -
