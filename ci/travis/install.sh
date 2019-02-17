@@ -22,7 +22,6 @@ mkdir -p $HOME/predictmd_cache_travis
 ls -la $HOME/.julia
 ls -la $HOME/predictmd_cache_travis
 
-export GROUP="$1"
 echo "GROUP=$GROUP"
 
 if [[ "$GROUP" == "travis-1" ]]; then
