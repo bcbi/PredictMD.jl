@@ -4,6 +4,8 @@
 
 set -ev
 
+export PATH="${PATH}:${TRAVIS_HOME}/julia/bin"
+
 export JULIA_PROJECT=@.
 
 echo "COMPILED_MODULES=$COMPILED_MODULES"
