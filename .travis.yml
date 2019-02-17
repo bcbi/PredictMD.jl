@@ -68,8 +68,14 @@ stages:
 jobs:
     include:
         - stage: travis-2
+        -
+          os: osx
         - stage: travis-3
+        -
+          os: osx
         - stage: travis-4
+        -
+          os: osx
 
 # jobs:
 #       -
