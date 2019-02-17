@@ -61,7 +61,6 @@ stages:
 
 jobs:
     include:
-      - stage: test
       - stage: travis-2
       -
         os: osx
