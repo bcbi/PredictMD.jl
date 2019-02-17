@@ -61,7 +61,8 @@ stages:
 
 jobs:
     exclude:
-        - stage: test
+        - stage: Test
+          name: Test
     include:
         - stage: travis-1
           env:
