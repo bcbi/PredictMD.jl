@@ -48,11 +48,13 @@ os:
 
 before_install:
     - true
-
 install:
     - true
-
+before_script:
+    - true
 script:
+    - true
+after_script:
     - true
 
 ############################################################################
@@ -65,8 +67,6 @@ stages:
 
 ############################################################################
 
-# before_install:
-
 jobs:
     include:
 
@@ -77,10 +77,8 @@ jobs:
             - GROUP="travis-1"
             - COMPILED_MODULES="yes"
           before_install: ./ci/travis/before_install.sh
-          install:
-          - true
-          script:
-          - true
+          install: ./ci/travis/install.sh
+          script: ./ci/travis/script.sh
 
         - stage: travis-1
           os: linux
@@ -89,10 +87,8 @@ jobs:
             - GROUP="travis-1"
             - COMPILED_MODULES="no"
           before_install: ./ci/travis/before_install.sh
-          install:
-          - true
-          script:
-          - true
+          install: ./ci/travis/install.sh
+          script: ./ci/travis/script.sh
 
         - stage: travis-1
           os: osx
@@ -101,10 +97,8 @@ jobs:
             - GROUP="travis-1"
             - COMPILED_MODULES="yes"
           before_install: ./ci/travis/before_install.sh
-          install:
-          - true
-          script:
-          - true
+          install: ./ci/travis/install.sh
+          script: ./ci/travis/script.sh
 
         - stage: travis-1
           os: osx
@@ -113,10 +107,8 @@ jobs:
             - GROUP="travis-1"
             - COMPILED_MODULES="no"
           before_install: ./ci/travis/before_install.sh
-          install:
-          - true
-          script:
-          - true
+          install: ./ci/travis/install.sh
+          script: ./ci/travis/script.sh
 
         - stage: travis-2
           os: linux
@@ -125,10 +117,8 @@ jobs:
             - GROUP="travis-2"
             - COMPILED_MODULES="yes"
           before_install: ./ci/travis/before_install.sh
-          install:
-          - true
-          script:
-          - true
+          install: ./ci/travis/install.sh
+          script: ./ci/travis/script.sh
 
         - stage: travis-2
           os: linux
@@ -137,10 +127,8 @@ jobs:
             - GROUP="travis-2"
             - COMPILED_MODULES="no"
           before_install: ./ci/travis/before_install.sh
-          install:
-          - true
-          script:
-          - true
+          install: ./ci/travis/install.sh
+          script: ./ci/travis/script.sh
 
         - stage: travis-2
           os: osx
@@ -149,10 +137,8 @@ jobs:
             - GROUP="travis-2"
             - COMPILED_MODULES="yes"
           before_install: ./ci/travis/before_install.sh
-          install:
-          - true
-          script:
-          - true
+          install: ./ci/travis/install.sh
+          script: ./ci/travis/script.sh
 
         - stage: travis-2
           os: osx
@@ -161,10 +147,8 @@ jobs:
             - GROUP="travis-2"
             - COMPILED_MODULES="no"
           before_install: ./ci/travis/before_install.sh
-          install:
-          - true
-          script:
-          - true
+          install: ./ci/travis/install.sh
+          script: ./ci/travis/script.sh
 
         - stage: travis-3
           os: linux
@@ -173,10 +157,8 @@ jobs:
             - GROUP="travis-3"
             - COMPILED_MODULES="yes"
           before_install: ./ci/travis/before_install.sh
-          install:
-          - true
-          script:
-          - true
+          install: ./ci/travis/install.sh
+          script: ./ci/travis/script.sh
 
         - stage: travis-3
           os: linux
@@ -185,10 +167,8 @@ jobs:
             - GROUP="travis-3"
             - COMPILED_MODULES="no"
           before_install: ./ci/travis/before_install.sh
-          install:
-          - true
-          script:
-          - true
+          install: ./ci/travis/install.sh
+          script: ./ci/travis/script.sh
 
         - stage: travis-3
           os: osx
@@ -197,10 +177,8 @@ jobs:
             - GROUP="travis-3"
             - COMPILED_MODULES="yes"
           before_install: ./ci/travis/before_install.sh
-          install:
-          - true
-          script:
-          - true
+          install: ./ci/travis/install.sh
+          script: ./ci/travis/script.sh
 
         - stage: travis-3
           os: osx
@@ -209,10 +187,8 @@ jobs:
             - GROUP="travis-3"
             - COMPILED_MODULES="no"
           before_install: ./ci/travis/before_install.sh
-          install:
-          - true
-          script:
-          - true
+          install: ./ci/travis/install.sh
+          script: ./ci/travis/script.sh
 
         - stage: travis-4
           os: linux
@@ -221,10 +197,8 @@ jobs:
             - GROUP="travis-4"
             - COMPILED_MODULES="yes"
           before_install: ./ci/travis/before_install.sh
-          install:
-          - true
-          script:
-          - true
+          install: ./ci/travis/install.sh
+          script: ./ci/travis/script.sh
 
         - stage: travis-4
           os: linux
@@ -233,10 +207,8 @@ jobs:
             - GROUP="travis-4"
             - COMPILED_MODULES="no"
           before_install: ./ci/travis/before_install.sh
-          install:
-          - true
-          script:
-          - true
+          install: ./ci/travis/install.sh
+          script: ./ci/travis/script.sh
 
         - stage: travis-4
           os: osx
@@ -245,10 +217,8 @@ jobs:
             - GROUP="travis-4"
             - COMPILED_MODULES="yes"
           before_install: ./ci/travis/before_install.sh
-          install:
-          - true
-          script:
-          - true
+          install: ./ci/travis/install.sh
+          script: ./ci/travis/script.sh
 
         - stage: travis-4
           os: osx
@@ -257,46 +227,8 @@ jobs:
             - GROUP="travis-4"
             - COMPILED_MODULES="no"
           before_install: ./ci/travis/before_install.sh
-          install:
-          - true
-          script:
-          - true
-
-# jobs:
-#       -
-#         name: travis-1
-#         install:
-#         - set -ev
-#         - ./ci/travis/first-stage-only.sh
-#         - ./ci/travis/all-stages.sh "travis-1"
-#         script:
-#         - true
-#         stage: travis-1
-#       -
-#         name: travis-2
-#         install:
-#         - set -ev
-#         - ./ci/travis/all-stages.sh "travis-2"
-#         script:
-#         - true
-#         stage: travis-2
-#       -
-#         name: travis-3
-#         install:
-#         - set -ev
-#         - ./ci/travis/all-stages.sh "travis-3"
-#         script:
-#         - true
-#         stage: travis-3
-#       -
-#         name: travis-4
-#         install:
-#         - set -ev
-#         - ./ci/travis/all-stages.sh "travis-4"
-#         - ./ci/travis/last-stage-only.sh
-#         script:
-#         - true
-#         stage: travis-4
+          install: ./ci/travis/install.sh
+          script: ./ci/travis/script.sh
 
 ############################################################################
 
