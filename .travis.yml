@@ -78,8 +78,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-1"
+          install: ./ci/travis/install.sh "travis-1"
           script: ./ci/travis/script.sh "travis-1"
 
         - stage: travis-1
@@ -87,8 +87,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-1"
+          install: ./ci/travis/install.sh "travis-1"
           script: ./ci/travis/script.sh "travis-1"
 
         - stage: travis-1
@@ -96,8 +96,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-1"
+          install: ./ci/travis/install.sh "travis-1"
           script: ./ci/travis/script.sh "travis-1"
 
         - stage: travis-1
@@ -105,8 +105,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-1"
+          install: ./ci/travis/install.sh "travis-1"
           script: ./ci/travis/script.sh "travis-1"
 
         - stage: travis-2
@@ -114,8 +114,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-2"
+          install: ./ci/travis/install.sh "travis-2"
           script: ./ci/travis/script.sh "travis-2"
 
         - stage: travis-2
@@ -123,8 +123,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-2"
+          install: ./ci/travis/install.sh "travis-2"
           script: ./ci/travis/script.sh "travis-2"
 
         - stage: travis-2
@@ -132,8 +132,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-2"
+          install: ./ci/travis/install.sh "travis-2"
           script: ./ci/travis/script.sh "travis-2"
 
         - stage: travis-2
@@ -141,8 +141,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-2"
+          install: ./ci/travis/install.sh "travis-2"
           script: ./ci/travis/script.sh "travis-2"
 
         - stage: travis-3
@@ -150,8 +150,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-3"
+          install: ./ci/travis/install.sh "travis-3"
           script: ./ci/travis/script.sh "travis-3"
 
         - stage: travis-3
@@ -159,8 +159,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-3"
+          install: ./ci/travis/install.sh "travis-3"
           script: ./ci/travis/script.sh "travis-3"
 
         - stage: travis-3
@@ -168,8 +168,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-3"
+          install: ./ci/travis/install.sh "travis-3"
           script: ./ci/travis/script.sh "travis-3"
 
         - stage: travis-3
@@ -177,8 +177,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-3"
+          install: ./ci/travis/install.sh "travis-3"
           script: ./ci/travis/script.sh "travis-3"
 
         - stage: travis-4
@@ -186,8 +186,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-4"
+          install: ./ci/travis/install.sh "travis-4"
           script: ./ci/travis/script.sh "travis-4"
 
         - stage: travis-4
@@ -195,8 +195,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-4"
+          install: ./ci/travis/install.sh "travis-4"
           script: ./ci/travis/script.sh "travis-4"
 
         - stage: travis-4
@@ -204,8 +204,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-4"
+          install: ./ci/travis/install.sh "travis-4"
           script: ./ci/travis/script.sh "travis-4"
 
         - stage: travis-4
@@ -213,8 +213,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-4"
+          install: ./ci/travis/install.sh "travis-4"
           script: ./ci/travis/script.sh "travis-4"
 
         - stage: travis-5
@@ -222,8 +222,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-5"
+          install: ./ci/travis/install.sh "travis-5"
           script: ./ci/travis/script.sh "travis-5"
 
         - stage: travis-5
@@ -231,8 +231,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-5"
+          install: ./ci/travis/install.sh "travis-5"
           script: ./ci/travis/script.sh "travis-5"
 
         - stage: travis-5
@@ -240,8 +240,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-5"
+          install: ./ci/travis/install.sh "travis-5"
           script: ./ci/travis/script.sh "travis-5"
 
         - stage: travis-5
@@ -249,8 +249,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-5"
+          install: ./ci/travis/install.sh "travis-5"
           script: ./ci/travis/script.sh "travis-5"
 
         - stage: travis-6
@@ -258,8 +258,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-6"
+          install: ./ci/travis/install.sh "travis-6"
           script: ./ci/travis/script.sh "travis-6"
 
         - stage: travis-6
@@ -267,8 +267,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-6"
+          install: ./ci/travis/install.sh "travis-6"
           script: ./ci/travis/script.sh "travis-6"
 
         - stage: travis-6
@@ -276,8 +276,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-6"
+          install: ./ci/travis/install.sh "travis-6"
           script: ./ci/travis/script.sh "travis-6"
 
         - stage: travis-6
@@ -285,8 +285,8 @@ jobs:
           env:
             - JULIA_VERSION="1.1"
             - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh
-          install: ./ci/travis/install.sh
+          before_install: ./ci/travis/before_install.sh "travis-6"
+          install: ./ci/travis/install.sh "travis-6"
           script: ./ci/travis/script.sh "travis-6"
 
 ############################################################################
