@@ -52,7 +52,7 @@ os:
 ############################################################################
 
 stages:
-    - travis-1
+    - test
     - travis-2
     - travis-3
     - travis-4
@@ -60,74 +60,78 @@ stages:
 ############################################################################
 
 jobs:
-    exclude:
-        - stage: Test
-          name: Test
     include:
-        - stage: travis-1
-          env:
-            - JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
-          install:
-          - true
-          script:
-          - true
-        -
-          env:
-            - JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
-          install:
-          - true
-          script:
-          - true
-        - stage: travis-2
-          env:
-            - JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
-          install:
-          - true
-          script:
-          - true
-        -
-          env:
-            - JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
-          install:
-          - true
-          script:
-          - true
-        - stage: travis-3
-          env:
-            - JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
-          install:
-          - true
-          script:
-          - true
-        -
-          env:
-            - JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
-          install:
-          - true
-          script:
-          - true
-        - stage: travis-4
-          env:
-            - JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
-          install:
-          - true
-          script:
-          - true
-        -
-          env:
-            - JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
-          install:
-          - true
-          script:
-          - true
+      - stage: test
+      - stage: travis-2
+      - stage: travis-3
+      - stage: travis-4
+
+# jobs:
+#     include:
+#         - stage: test
+#           env:
+#             - JULIA_VERSION="1.1"
+#             - COMPILED_MODULES="yes"
+#           install:
+#           - true
+#           script:
+#           - true
+#         -
+#           env:
+#             - JULIA_VERSION="1.1"
+#             - COMPILED_MODULES="no"
+#           install:
+#           - true
+#           script:
+#           - true
+#         - stage: travis-2
+#           env:
+#             - JULIA_VERSION="1.1"
+#             - COMPILED_MODULES="yes"
+#           install:
+#           - true
+#           script:
+#           - true
+#         -
+#           env:
+#             - JULIA_VERSION="1.1"
+#             - COMPILED_MODULES="no"
+#           install:
+#           - true
+#           script:
+#           - true
+#         - stage: travis-3
+#           env:
+#             - JULIA_VERSION="1.1"
+#             - COMPILED_MODULES="yes"
+#           install:
+#           - true
+#           script:
+#           - true
+#         -
+#           env:
+#             - JULIA_VERSION="1.1"
+#             - COMPILED_MODULES="no"
+#           install:
+#           - true
+#           script:
+#           - true
+#         - stage: travis-4
+#           env:
+#             - JULIA_VERSION="1.1"
+#             - COMPILED_MODULES="yes"
+#           install:
+#           - true
+#           script:
+#           - true
+#         -
+#           env:
+#             - JULIA_VERSION="1.1"
+#             - COMPILED_MODULES="no"
+#           install:
+#           - true
+#           script:
+#           - true
 
 # jobs:
 #       -
