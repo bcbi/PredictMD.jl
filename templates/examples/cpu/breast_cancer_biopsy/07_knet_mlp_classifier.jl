@@ -20,6 +20,13 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
     "breast_cancer_biopsy_example",
     )
 
+# BEGIN TEST STATEMENTS
+@debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
+if PredictMD.is_travis_ci()
+    PredictMD.cache_to_homedir!("Desktop", "breast_cancer_biopsy_example",)
+end
+# END TEST STATEMENTS
+
 ### End project-specific settings
 
 ### Begin Knet neural network classifier code
@@ -262,8 +269,8 @@ knet_mlp_classifier =
         optimizerhyperparameters = knetmlp_optimizerhyperparameters,
         minibatchsize = knetmlp_minibatchsize,
         modelweights = knetmlp_modelweights,
-        printlosseverynepochs = 100,
-        maxepochs = 200,
+        printlosseverynepochs = 1,
+        maxepochs = 50,
         feature_contrasts = feature_contrasts,
         )
 
@@ -277,7 +284,7 @@ PredictMD.fit!(
     tuning_labels_df,
     )
 
-PredictMD.set_max_epochs!(knet_mlp_classifier, 1_000)
+PredictMD.set_max_epochs!(knet_mlp_classifier, 100)
 
 PredictMD.fit!(
     knet_mlp_classifier,
@@ -462,5 +469,11 @@ knet_mlp_classifier_filename = joinpath(
 PredictMD.save_model(knet_mlp_classifier_filename, knet_mlp_classifier)
 
 ### End Knet neural network classifier code
+
+# BEGIN TEST STATEMENTS
+if PredictMD.is_travis_ci()
+    PredictMD.homedir_to_cache!("Desktop", "breast_cancer_biopsy_example",)
+end
+# END TEST STATEMENTS
 
 ##### End of file

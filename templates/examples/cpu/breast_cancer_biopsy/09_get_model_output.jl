@@ -20,6 +20,13 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
     "breast_cancer_biopsy_example",
     )
 
+# BEGIN TEST STATEMENTS
+@debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
+if PredictMD.is_travis_ci()
+    PredictMD.cache_to_homedir!("Desktop", "breast_cancer_biopsy_example",)
+end
+# END TEST STATEMENTS
+
 ### End project-specific settings
 
 ### Begin model output code
@@ -224,5 +231,11 @@ PredictMD.predict(nu_svc_svm_classifier,testing_features_df,)
 PredictMD.predict(knet_mlp_classifier,testing_features_df,)
 
 ### End model output code
+
+# BEGIN TEST STATEMENTS
+if PredictMD.is_travis_ci()
+    PredictMD.homedir_to_cache!("Desktop", "breast_cancer_biopsy_example",)
+end
+# END TEST STATEMENTS
 
 ##### End of file
