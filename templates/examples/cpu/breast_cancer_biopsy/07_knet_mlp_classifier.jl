@@ -269,8 +269,8 @@ knet_mlp_classifier =
         optimizerhyperparameters = knetmlp_optimizerhyperparameters,
         minibatchsize = knetmlp_minibatchsize,
         modelweights = knetmlp_modelweights,
-        printlosseverynepochs = 100,
-        maxepochs = 200,
+        printlosseverynepochs = 1,
+        maxepochs = 50,
         feature_contrasts = feature_contrasts,
         )
 
@@ -284,7 +284,7 @@ PredictMD.fit!(
     tuning_labels_df,
     )
 
-PredictMD.set_max_epochs!(knet_mlp_classifier, 1_000)
+PredictMD.set_max_epochs!(knet_mlp_classifier, 100)
 
 PredictMD.fit!(
     knet_mlp_classifier,
