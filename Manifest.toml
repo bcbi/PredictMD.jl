@@ -1,3 +1,5 @@
+# This file is machine-generated - editing it directly is not advised
+
 [[ASTInterpreter2]]
 deps = ["DebuggerFramework"]
 git-tree-sha1 = "8df3d36e0286777d226f4fd4956a432b73425186"
@@ -280,9 +282,9 @@ version = "0.0.4"
 
 [[DiffRules]]
 deps = ["Random", "Test"]
-git-tree-sha1 = "09d69da75967ec48a8b1ad0897ec9144ee052bf9"
+git-tree-sha1 = "26b96a1a506b06cb272ef60568d478adab039b96"
 uuid = "b552c78f-8df3-52c6-915a-8e097449b14b"
-version = "0.0.8"
+version = "0.0.9"
 
 [[Distances]]
 deps = ["LinearAlgebra", "Printf", "Random", "Statistics", "Test"]
@@ -291,7 +293,7 @@ uuid = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
 version = "0.7.4"
 
 [[Distributed]]
-deps = ["LinearAlgebra", "Random", "Serialization", "Sockets"]
+deps = ["Random", "Serialization", "Sockets"]
 uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
 [[Distributions]]
@@ -320,9 +322,9 @@ version = "0.19.7"
 
 [[DoubleFloats]]
 deps = ["GenericLinearAlgebra", "LinearAlgebra", "Polynomials", "Random", "Test"]
-git-tree-sha1 = "08e0d6962a9e04d60b008bc0467706efb3f29617"
+git-tree-sha1 = "100c03b834c6a24b0101c36d9e3d0b6c64ae3bb3"
 uuid = "497a8b3b-efae-58df-a0af-a86822472b78"
-version = "0.6.3"
+version = "0.7.0"
 
 [[EzXML]]
 deps = ["BinaryProvider", "Libdl", "Printf", "Test"]
@@ -506,7 +508,7 @@ uuid = "83e8ac13-25f8-5344-8a64-a9f2b223428f"
 version = "0.5.0"
 
 [[InteractiveUtils]]
-deps = ["LinearAlgebra", "Markdown"]
+deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 
 [[Interpolations]]
@@ -700,9 +702,9 @@ version = "0.5.7"
 
 [[Mux]]
 deps = ["AssetRegistry", "Base64", "HTTP", "Hiccup", "Lazy", "Pkg", "Sockets", "Test", "WebSockets"]
-git-tree-sha1 = "487feb060cdd5cc152ef4f75b3cb565c0dc4300a"
+git-tree-sha1 = "cd8de2fc09f8fcc2ee300db39fa0706794b1b2e7"
 uuid = "a975b10e-0019-58db-a62f-e48ff68538c9"
-version = "0.5.3"
+version = "0.6.0"
 
 [[NNlib]]
 deps = ["Libdl", "LinearAlgebra", "MacroTools", "Requires", "Test"]
@@ -1055,9 +1057,9 @@ version = "0.1.0"
 
 [[TextParse]]
 deps = ["CodecZlib", "DataStructures", "Dates", "DoubleFloats", "Mmap", "Nullables", "PooledArrays", "Random", "Test", "WeakRefStrings"]
-git-tree-sha1 = "4092d42c5a4db70faf7e73ca17410630c64ffb91"
+git-tree-sha1 = "989a9b371867e8b3f6546e3c2e62e618b351b45d"
 uuid = "e0df1984-e451-5cb5-8b61-797a481e67e3"
-version = "0.7.2"
+version = "0.7.4"
 
 [[TextWrap]]
 deps = ["Compat", "Test"]
@@ -1126,7 +1128,7 @@ uuid = "30578b45-9adc-5946-b283-645ec420af67"
 version = "0.4.0"
 
 [[UUIDs]]
-deps = ["Random"]
+deps = ["Random", "SHA"]
 uuid = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
 
 [[Unicode]]
@@ -1169,10 +1171,10 @@ uuid = "104b5d7c-a370-577a-8038-80a2059c5097"
 version = "1.2.0"
 
 [[Widgets]]
-deps = ["Observables", "OrderedCollections", "Test"]
-git-tree-sha1 = "c928228be493bab724f5ae35a38fb1415ae5cee9"
+deps = ["Colors", "Dates", "Observables", "OrderedCollections", "Test"]
+git-tree-sha1 = "f48ee34d9495924aba50eeb328d83b0034b787f5"
 uuid = "cc8bc4a8-27d6-5769-a93b-9d913e69aa62"
-version = "0.4.4"
+version = "0.5.0"
 
 [[WinRPM]]
 deps = ["BinDeps", "Compat", "HTTPClient", "LibExpat", "Libdl", "Libz", "URIParser"]

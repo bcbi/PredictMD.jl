@@ -329,25 +329,41 @@ git push origin release/v3.6.0
 ```
 
 #### Step 12:
-Wait for all of the tests to pass. You can check on
-the status of the tests by going to
+
+Run the PredictMD test suite on your local machine:
+
+```bash
+julia --project -e 'import Pkg; Pkg.instantiate(); Pkg.build("PredictMD"); Pkg.test("PredictMD");'
+```
+
+If you receive the message "Testing PredictMD tests passed", then the
+tests passed.
+
+If you do not receive that message, then one or more of the tests failed.
+
+**You may not proceed to the next step until all of the tests pass on your
+local machine.**
+
+#### Step 13:
+Wait for all of the continuous integration (CI) tests to pass. You can
+check on the status of the CI tests by going to
 [https://github.com/bcbi/PredictMD.jl/branches/yours](https://github.com/bcbi/PredictMD.jl/branches/yours)
 and scrolling down to find your release branch.
 
-* A yellow dot indicates that the tests are still running. Click on the
+* A yellow dot indicates that the CI tests are still running. Click on the
 yellow dot to see which tests are still running.
-* A red "X" indicates that one or more of the tests failed. Click on the
+* A red "X" indicates that one or more of the CI tests failed. Click on the
 red "X" to see which tests failed.
-* A green check mark indicates that all of the tests passed.
+* A green check mark indicates that all of the CI tests passed.
 
-**You must wait for all of the tests to pass (green check mark) before
+**You must wait for all of the CI tests to pass (green check mark) before
 you can continue.**
 
-*Sometimes, one of the build jobs will fail because a download timed out.
-This is especially common with the Mac builds on Travis. You can usually
+*Sometimes, one of the CI tests will fail because a download timed out.
+This is especially common with Travis CI on Mac. You can usually
 resolve this error by restarting the failed build.*
 
-#### Step 13:
+#### Step 14:
 Once all of the tests have passed, you can finish
 tagging your release using the git-flow tools:
 
@@ -370,7 +386,7 @@ the file, and close the editor.
 Once you have finished all of the commits and tags, you must verify
 that you have correctly signed the release tag:
 
-#### Step 14:
+#### Step 15:
 Verify that you have correctly signed the release tag:
 ```bash
 git tag -v v3.6.0
@@ -391,7 +407,7 @@ point, you should
 and mention [@DilumAluthge](https://github.com/DilumAluthge) in the
 issue body.
 
-#### Step 15:
+#### Step 16:
 Temporarily modify the branch protections for
 the `master` and `develop` branches:
 
@@ -405,7 +421,7 @@ Now do the same thing for the `develop` branch: go to
 to the bottom of the page, and click the green "Save changes" button.
 You may be asked to enter your GitHub password.
 
-#### Step 16:
+#### Step 17:
 Push the new release to GitHub:
 
 ```bash
@@ -414,7 +430,7 @@ git push origin develop # push the updated "develop" branch
 git push origin --tags # push the new "v3.6.0" tag
 ```
 
-#### Step 17:
+#### Step 18:
 Create a release on GitHub using the tag you just
 created, signed, and pushed. First, go to
 [https://github.com/bcbi/PredictMD.jl/releases/new](https://github.com/bcbi/PredictMD.jl/releases/new).
@@ -424,7 +440,7 @@ text box that reads "Release title", type an appropriate title, such
 as "PredictMD version 3.6.0". Finally, click the green
 "Publish release" button.
 
-#### Step 18:
+#### Step 19:
 Update the version number in the `develop` branch:
 
 First, use Semantic Versioning ([https://semver.org](https://semver.org))
@@ -464,7 +480,7 @@ version = "4.0.0-DEV"
 (the line that begins with `version =`.
 Do not change any of the other lines.**
 
-#### Step 19:
+#### Step 20:
 Commit your changes:
 
 ```bash
@@ -476,13 +492,13 @@ An commit message editor will open. Type an appropriate commit
 message (e.g. "Bump version number"), save the file, and quit
 the editor.
 
-#### Step 20:
+#### Step 21:
 Push the updated develop branch:
 ```bash
 git push origin develop
 ```
 
-#### Step 21:
+#### Step 22:
 Re-enable the branch protection settings:
 
 `master` branch: go to
@@ -495,14 +511,14 @@ You may be asked to enter your GitHub password.
 to the bottom of the page, and click the green "Save changes" button.
 You may be asked to enter your GitHub password.
 
-#### Step 22:
+#### Step 23:
 Delete the release branch, which is no longer needed. To do
 this, go to
 [https://github.com/bcbi/PredictMD.jl/branches/yours](https://github.com/bcbi/PredictMD.jl/branches/yours),
 scroll down to find the release branch, and then click the
 trash can icon to delete the branch.
 
-#### Step 23:
+#### Step 24:
 The final step is to go to the Zenodo entry for the newly created release and put in the correct information. First go to [https://predictmd.net/zenodo](https://predictmd.net/zenodo), and then click on the yellow "Edit" button to edit the most recent release. Then, fill out the following fields with the specified values:
 
 ##### Upload type:

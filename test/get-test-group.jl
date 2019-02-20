@@ -14,18 +14,6 @@ if PredictMD.is_travis_ci() && !haskey(ENV, "PREDICTMD_TEST_GROUP")
         )
 end
 
-if PredictMD.is_appveyor_ci() && !haskey(ENV, "PREDICTMD_TEST_GROUP")
-    ENV["PREDICTMD_TEST_GROUP"] = lowercase(
-        strip(
-            get(
-                ENV,
-                "GROUP",
-                "",
-                )
-            )
-        )
-end
-
 const _test_group_environment_variable = lowercase(
     strip(
         get(

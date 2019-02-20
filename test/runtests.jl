@@ -6,6 +6,8 @@ include(joinpath(".", "import-predictmd.jl"))
 
 include(joinpath(".", "define-test-groups.jl"))
 
+include(joinpath(".", "define-test-blocks.jl"))
+
 include(joinpath(".", "get-test-group.jl"))
 
 include(joinpath(".", "set-predictmd-test-plots.jl"))

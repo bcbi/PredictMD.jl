@@ -20,6 +20,13 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
     "boston_housing_example",
     )
 
+# BEGIN TEST STATEMENTS
+@debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
+if PredictMD.is_travis_ci()
+    PredictMD.cache_to_homedir!("Desktop", "boston_housing_example",)
+end
+# END TEST STATEMENTS
+
 ### End project-specific settings
 
 ### Begin Knet neural network regression code
@@ -413,5 +420,11 @@ knet_mlp_regression_filename = joinpath(
 PredictMD.save_model(knet_mlp_regression_filename, knet_mlp_regression)
 
 ### End Knet neural network regression code
+
+# BEGIN TEST STATEMENTS
+if PredictMD.is_travis_ci()
+    PredictMD.homedir_to_cache!("Desktop", "boston_housing_example",)
+end
+# END TEST STATEMENTS
 
 ##### End of file
