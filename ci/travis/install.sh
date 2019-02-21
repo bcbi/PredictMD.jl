@@ -4,9 +4,6 @@
 
 set -ev
 
-export FIRST_GROUP="travis-1"
-export LAST_GROUP="travis-7"
-
 export PATH="${PATH}:${TRAVIS_HOME}/julia/bin"
 
 export JULIA_PROJECT=@.
@@ -23,26 +20,22 @@ else
     :
 fi
 
-mkdir -p $HOME/.julia
 mkdir -p $HOME/predictmd_cache_travis
-ls -la $HOME/.julia
-ls -la $HOME/predictmd_cache_travis
+find $HOME/predictmd_cache_travis
 
 export GROUP="$1"
 echo "GROUP=$GROUP"
 
 if [[ "$GROUP" == "$FIRST_GROUP" ]];
 then
-    mv $HOME/.julia $HOME/.julia_discard_firststage
-    mv $HOME/predictmd_cache_travis $HOME/predictmd_cache_travis_discard_firststage
+    # mv $HOME/predictmd_cache_travis $HOME/predictmd_cache_travis_discard_firststage
+    :
 else
     :
 fi
 
-mkdir -p $HOME/.julia
 mkdir -p $HOME/predictmd_cache_travis
-ls -la $HOME/.julia
-ls -la $HOME/predictmd_cache_travis
+find $HOME/predictmd_cache_travis
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]];
 then
@@ -105,19 +98,15 @@ else
     :
 fi
 
-mkdir -p $HOME/.julia
 mkdir -p $HOME/predictmd_cache_travis
-ls -la $HOME/.julia
-ls -la $HOME/predictmd_cache_travis
+find $HOME/predictmd_cache_travis
 
 if [[ "$GROUP" == "$LAST_GROUP" ]]; then
-    mv $HOME/.julia $HOME/.julia_discard_laststage
-    mv $HOME/predictmd_cache_travis $HOME/predictmd_cache_travis_discard_laststage
+    # mv $HOME/predictmd_cache_travis $HOME/predictmd_cache_travis_discard_laststage
+    :
 fi
 
-mkdir -p $HOME/.julia
 mkdir -p $HOME/predictmd_cache_travis
-ls -la $HOME/.julia
-ls -la $HOME/predictmd_cache_travis
+find $HOME/predictmd_cache_travis
 
 ##### End of file
