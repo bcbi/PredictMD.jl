@@ -39,6 +39,10 @@ import Test
 import PredictMDFull
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
+import Pkg
+try Pkg.add("GZip") catch end
+import GZip
+
 Random.seed!(999)
 
 df = DataFrames.DataFrame(
