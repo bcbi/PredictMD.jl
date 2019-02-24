@@ -36,29 +36,35 @@ function _preprocess_example_shared(
     return content
 end
 
+function _get_if_include_test_statements_regex()::Regex
+    test_statements_regex::Regex = r"# PREDICTMD IF INCLUDE TEST STATEMENTS\n([\S\s]*?)# PREDICTMD ELSE\n([\S\s]*?)# PREDICTMD ENDIF INCLUDE TEST STATEMENTS\n{0,5}"
+    return pattern
+end
+
 function _preprocess_example_do_not_include_test_statements(
         content::AbstractString;
         )::String
-    # content = _preprocess_example_shared(content)
-    # pattern = r"# PREDICTMD IF INCLUDE TEST STATEMENTS[\S\s]*?# PREDICTMD ENDIF INCLUDE TEST STATEMENTS\n{0,5}"
-    # replacement = ""
-    # content = replace(content, pattern => replacement)
-    # return content
+    content::String = _preprocess_example_shared(content)
+    test_statements_regex::Regex = _get_if_include_test_statements_regex()
+    for m in eachmatch(test_statements_regex, content)
+        original_text::String = String(m.match)
+        replacement_text = String(m[2])
+        global content = replace(content, original_text => replacement_text)
+    end
+    return content
 end
 
 function _preprocess_example_include_test_statements(
         content::AbstractString;
         )::String
-    # content = _preprocess_example_shared(content)
-    #
-    # pattern = r"# PREDICTMD IF INCLUDE TEST STATEMENTS\n{0,2}"
-    # replacement = ""
-    # content = replace(content, pattern => replacement)
-    #
-    # pattern = r"# PREDICTMD ENDIF INCLUDE TEST STATEMENTS\n{0,2}"
-    # replacement = ""
-    # content = replace(content, pattern => replacement)
-    # return content
+    content::String = _preprocess_example_shared(content)
+    test_statements_regex::Regex = _get_if_include_test_statements_regex()
+    for m in eachmatch(test_statements_regex, content)
+        original_text::String = String(m.match)
+        replacement_text = String(m[1])
+        global content = replace(content, original_text => replacement_text)
+    end
+    return content
 end
 
 function _fix_example_blocks(filename::AbstractString)::Nothing
