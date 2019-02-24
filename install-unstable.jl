@@ -14,6 +14,6 @@ ENV["JULIA_DEBUG"] = "all";
 import PredictMD; 
 import PredictMDExtra; 
 import PredictMDFull; 
-println("PredictMD was installed successfully.");
+println("PredictMD (unstable develop branch) was installed successfully.");
 println("You are now ready to use PredictMD.");
 println("For help, visit https://predictmd.net");
