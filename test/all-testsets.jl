@@ -28,6 +28,9 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
                     "test_pkg_dir.jl",
                     )
                 )
+            include(joinpath("test_package_directory.jl"))
+            include(joinpath("test_registry_url_list.jl"))
+            include(joinpath("test_version.jl"))
         end
 
         Test.@testset "code_loading              " begin
