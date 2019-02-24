@@ -11,7 +11,7 @@ function _preprocess_example_shared(
     content = replace(content, pattern => replacement)
 
     pattern = "%PREDICTMD_MINIMUM_REQUIRED_JULIA_VERSION%"
-    replacement = string("v0.7.0")
+    replacement = string("v1.1.0")
     content = replace(content, pattern => replacement)
 
     pattern = "%PREDICTMD_GENERATED_BY%\n"
