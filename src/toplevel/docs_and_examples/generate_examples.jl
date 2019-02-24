@@ -38,7 +38,7 @@ end
 
 function _get_if_include_test_statements_regex()::Regex
     test_statements_regex::Regex = r"# PREDICTMD IF INCLUDE TEST STATEMENTS\n([\S\s]*?)# PREDICTMD ELSE\n([\S\s]*?)# PREDICTMD ENDIF INCLUDE TEST STATEMENTS\n{0,5}"
-    return pattern
+    return test_statements_regex
 end
 
 function _preprocess_example_do_not_include_test_statements(
@@ -48,8 +48,8 @@ function _preprocess_example_do_not_include_test_statements(
     test_statements_regex::Regex = _get_if_include_test_statements_regex()
     for m in eachmatch(test_statements_regex, content)
         original_text::String = String(m.match)
-        replacement_text = String(m[2])
-        global content = replace(content, original_text => replacement_text)
+        replacement_text = string(strip(String(m[2])), "\n\n",)
+        content = replace(content, original_text => replacement_text)
     end
     return content
 end
@@ -61,8 +61,8 @@ function _preprocess_example_include_test_statements(
     test_statements_regex::Regex = _get_if_include_test_statements_regex()
     for m in eachmatch(test_statements_regex, content)
         original_text::String = String(m.match)
-        replacement_text = String(m[1])
-        global content = replace(content, original_text => replacement_text)
+        replacement_text = string(strip(String(m[1])), "\n\n",)
+        content = replace(content, original_text => replacement_text)
     end
     return content
 end
