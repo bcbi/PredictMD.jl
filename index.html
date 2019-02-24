@@ -42,20 +42,19 @@
         <hr>
         <h4>Installation</h4>
         <p class="text-justify">
-          PredictMD requires Julia version 0.6.
+          PredictMD requires Julia version 1.1 or greater.
         </p>
+        <h5>macOS and GNU/Linux:</h5>
+          Open a new terminal and run the following line:
+          <kbd>curl https://predictmd.net/install.jl | julia</kbd>
+        <h5>Windows and all other platforms</h5>
+        <h6>Step 1:</h6>
+        Right-click on the following button, click "Save Link As...", and save the file as <kbd>install.jl<kbd>.
+        <a href="/install.jl"><img title="https://predictmd.net/install.jl" alt="https://predictmd.net/install.jl" src="https://img.shields.io/badge/PredictMD-install.jl-E4002B.svg"></a>
+        <h6>Step 2:</h6>
+        Navigate to the location of the file saved in step 1, and run the file with Julia, for example:
+        <kbd>julia install.jl</kbd>
         <p class="text-justify">
-          To install PredictMD, open Julia and run the following eight lines:
-          <ol style="text-align:left; list-style-position:inside;">
-            <li><kbd>import Pkg; </kbd></li>
-            <li><kbd>Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMD.jl", rev="master")); </kbd></li>
-            <li><kbd>Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMDExtra.jl", rev="master")); </kbd></li>
-            <li><kbd>Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMDFull.jl", rev="master")); </kbd></li>
-            <li><kbd>ENV["JULIA_DEBUG"] = "all"; </kbd></li>
-            <li><kbd>import PredictMD; </kbd></li>
-            <li><kbd>import PredictMDExtra; </kbd></li>
-            <li><kbd>import PredictMDFull; </kbd></li>
-          </ol>
         </p>
         <h4>Citing</h4>
         <p class="text-justify">
