@@ -20,36 +20,24 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
     "breast_cancer_biopsy_example",
     )
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
     PredictMD.cache_to_homedir!("Desktop", "breast_cancer_biopsy_example",)
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ### End project-specific settings
 
 ### Begin logistic classifier code
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+import PredictMDExtra
 import Test
-# END TEST STATEMENTS
-
-import Pkg
-
-try Pkg.add("CSV") catch end
-try Pkg.add("DataFrames") catch end
-try Pkg.add("FileIO") catch end
-try Pkg.add("JLD2") catch end
-try Pkg.add("PGFPlotsX") catch end
-
-import CSV
-import DataFrames
-import FileIO
-import JLD2
-import PGFPlotsX
-import Random
-import Statistics
+# PREDICTMD ELSE
+import PredictMDFull
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 Random.seed!(999)
 
@@ -205,7 +193,7 @@ logistic_hist_training =
         single_label_levels,
         );
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
@@ -218,7 +206,8 @@ PGFPlotsX.save(filename, logistic_hist_training)
 if PredictMD.is_force_test_plots()
     Test.@test(isfile(filename))
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(logistic_hist_training)
 
@@ -231,7 +220,7 @@ logistic_hist_testing =
         single_label_levels,
         );
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
@@ -244,7 +233,8 @@ PGFPlotsX.save(filename, logistic_hist_testing)
 if PredictMD.is_force_test_plots()
     Test.@test(isfile(filename))
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(logistic_hist_testing)
 
@@ -276,8 +266,9 @@ logistic_calibration_curve =
         window = 0.2,
         );
 
-# BEGIN TEST STATEMENTS
-# END TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(logistic_calibration_curve)
 
@@ -334,10 +325,11 @@ PredictMD.save_model(logistic_classifier_filename, logistic_classifier)
 
 ### End logistic classifier code
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
     PredictMD.homedir_to_cache!("Desktop", "breast_cancer_biopsy_example",)
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ##### End of file

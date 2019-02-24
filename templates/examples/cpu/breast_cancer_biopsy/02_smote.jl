@@ -20,35 +20,24 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
     "breast_cancer_biopsy_example",
     )
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
     PredictMD.cache_to_homedir!("Desktop", "breast_cancer_biopsy_example",)
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ### End project-specific settings
 
 ### Begin SMOTE class-balancing code
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+import PredictMDExtra
 import Test
-# END TEST STATEMENTS
-
-import Pkg
-
-try Pkg.add("CSV") catch end
-try Pkg.add("DataFrames") catch end
-try Pkg.add("FileIO") catch end
-try Pkg.add("JLD2") catch end
-try Pkg.add("StatsBase") catch end
-
-import CSV
-import DataFrames
-import FileIO
-import JLD2
-import Random
-import StatsBase
+# PREDICTMD ELSE
+import PredictMDFull
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 Random.seed!(999)
 
@@ -209,10 +198,11 @@ CSV.write(
 
 ### End SMOTE class-balancing code
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
     PredictMD.homedir_to_cache!("Desktop", "breast_cancer_biopsy_example",)
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ##### End of file

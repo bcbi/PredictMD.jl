@@ -20,51 +20,26 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
     "breast_cancer_biopsy_example",
     )
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
     PredictMD.cache_to_homedir!("Desktop", "breast_cancer_biopsy_example",)
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ### End project-specific settings
 
 ### Begin model comparison code
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+import PredictMDExtra
 import Test
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+import PredictMDFull
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-import Pkg
-
-try Pkg.add("CSV") catch end
-try Pkg.add("DataFrames") catch end
-try Pkg.add("DecisionTree") catch end
-try Pkg.add("Distributions") catch end
-try Pkg.add("FileIO") catch end
-try Pkg.add("GLM") catch end
-try Pkg.add("JLD2") catch end
-try Pkg.add("Knet") catch end
-try Pkg.add("LIBSVM") catch end
-try Pkg.add("PGFPlotsX") catch end
-try Pkg.add("StatsModels") catch end
-try Pkg.add("ValueHistories") catch end
-
-import CSV
-import DataFrames
-import DecisionTree
-import Distributions
-import FileIO
-import GLM
-import JLD2
-import Knet
-import LIBSVM
 Kernel = LIBSVM.Kernel
-import LinearAlgebra
-import PGFPlotsX
-import Random
-import StatsModels
-import ValueHistories
 
 Random.seed!(999)
 
@@ -357,7 +332,7 @@ rocplottesting = PredictMD.plotroccurves(
     positive_class,
     );
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
@@ -370,7 +345,8 @@ PGFPlotsX.save(filename, rocplottesting)
 if PredictMD.is_force_test_plots()
     Test.@test(isfile(filename))
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(rocplottesting)
 
@@ -382,7 +358,7 @@ prplottesting = PredictMD.plotprcurves(
     positive_class,
     );
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
@@ -395,16 +371,18 @@ PGFPlotsX.save(filename, prplottesting)
 if PredictMD.is_force_test_plots()
     Test.@test(isfile(filename))
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(prplottesting)
 
 ### End model comparison code
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
     PredictMD.homedir_to_cache!("Desktop", "breast_cancer_biopsy_example",)
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ##### End of file

@@ -64,6 +64,11 @@ then
         '
     julia $JULIA_FLAGS -e '
         import Pkg;
+        Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMDExtra.jl", rev="master"));
+        Pkg.build("PredictMDExtra"); 
+        '
+    julia $JULIA_FLAGS -e '
+        import Pkg;
         Pkg.test("PredictMD"; coverage=true);
         '
     julia $JULIA_FLAGS -e '

@@ -20,41 +20,24 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
     "boston_housing_example",
     )
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
     PredictMD.cache_to_homedir!("Desktop", "boston_housing_example",)
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ### End project-specific settings
 
 ### Begin data preprocessing code
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+import PredictMDExtra
 import Test
-# END TEST STATEMENTS
-
-import Pkg
-
-try Pkg.add("CSV") catch end
-try Pkg.add("CSVFiles") catch end
-try Pkg.add("DataFrames") catch end
-try Pkg.add("FileIO") catch end
-try Pkg.add("GZip") catch end
-try Pkg.add("JLD2") catch end
-try Pkg.add("RDatasets") catch end
-try Pkg.add("StatsBase") catch end
-
-import CSV
-import CSVFiles
-import DataFrames
-import FileIO
-import GZip
-import JLD2
-import RDatasets
-import Random
-import StatsBase
+# PREDICTMD ELSE
+import PredictMDFull
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 Random.seed!(999)
 
@@ -226,10 +209,11 @@ CSV.write(
 
 ### End data preprocessing code
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
     PredictMD.homedir_to_cache!("Desktop", "boston_housing_example",)
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ##### End of file

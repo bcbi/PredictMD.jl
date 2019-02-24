@@ -39,26 +39,26 @@ end
 function _preprocess_example_do_not_include_test_statements(
         content::AbstractString;
         )::String
-    content = _preprocess_example_shared(content)
-    pattern = r"# BEGIN TEST STATEMENTS[\S\s]*?# END TEST STATEMENTS\n{0,5}"
-    replacement = ""
-    content = replace(content, pattern => replacement)
-    return content
+    # content = _preprocess_example_shared(content)
+    # pattern = r"# PREDICTMD IF INCLUDE TEST STATEMENTS[\S\s]*?# PREDICTMD ENDIF INCLUDE TEST STATEMENTS\n{0,5}"
+    # replacement = ""
+    # content = replace(content, pattern => replacement)
+    # return content
 end
 
 function _preprocess_example_include_test_statements(
         content::AbstractString;
         )::String
-    content = _preprocess_example_shared(content)
-
-    pattern = r"# BEGIN TEST STATEMENTS\n{0,2}"
-    replacement = ""
-    content = replace(content, pattern => replacement)
-
-    pattern = r"# END TEST STATEMENTS\n{0,2}"
-    replacement = ""
-    content = replace(content, pattern => replacement)
-    return content
+    # content = _preprocess_example_shared(content)
+    #
+    # pattern = r"# PREDICTMD IF INCLUDE TEST STATEMENTS\n{0,2}"
+    # replacement = ""
+    # content = replace(content, pattern => replacement)
+    #
+    # pattern = r"# PREDICTMD ENDIF INCLUDE TEST STATEMENTS\n{0,2}"
+    # replacement = ""
+    # content = replace(content, pattern => replacement)
+    # return content
 end
 
 function _fix_example_blocks(filename::AbstractString)::Nothing
