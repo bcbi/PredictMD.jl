@@ -23,7 +23,7 @@ cache:
 
 env:
     global:
-        - COMPILED_MODULES_VALUE_FOR_DOCS="yes"
+        - COMP_MODS_VALUE_FOR_DOCS="yes"
         - DOCUMENTER_DEBUG="true"
         - FIRST_GROUP="travis-1"
         - JULIA_DEBUG="all"
@@ -80,254 +80,254 @@ jobs:
         - stage: travis-1
           os: linux
           env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
+            - JULIA_VER="1.1"
+            - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-1"
           install: ./ci/travis/install.sh "travis-1"
           script: ./ci/travis/script.sh "travis-1"
 
-        - stage: travis-1
-          os: linux
-          env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh "travis-1"
-          install: ./ci/travis/install.sh "travis-1"
-          script: ./ci/travis/script.sh "travis-1"
-
-        - stage: travis-1
-          os: osx
-          env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh "travis-1"
-          install: ./ci/travis/install.sh "travis-1"
-          script: ./ci/travis/script.sh "travis-1"
+        # - stage: travis-1
+        #   os: linux
+        #   env:
+        #     - JULIA_VER="1.1"
+        #     - COMP_MODS="no"
+        #   before_install: ./ci/travis/before_install.sh "travis-1"
+        #   install: ./ci/travis/install.sh "travis-1"
+        #   script: ./ci/travis/script.sh "travis-1"
 
         - stage: travis-1
           os: osx
           env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
+            - JULIA_VER="1.1"
+            - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-1"
           install: ./ci/travis/install.sh "travis-1"
           script: ./ci/travis/script.sh "travis-1"
 
-        - stage: travis-2
-          os: linux
-          env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh "travis-2"
-          install: ./ci/travis/install.sh "travis-2"
-          script: ./ci/travis/script.sh "travis-2"
+        # - stage: travis-1
+        #   os: osx
+        #   env:
+        #     - JULIA_VER="1.1"
+        #     - COMP_MODS="no"
+        #   before_install: ./ci/travis/before_install.sh "travis-1"
+        #   install: ./ci/travis/install.sh "travis-1"
+        #   script: ./ci/travis/script.sh "travis-1"
 
         - stage: travis-2
           os: linux
           env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
+            - JULIA_VER="1.1"
+            - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-2"
           install: ./ci/travis/install.sh "travis-2"
           script: ./ci/travis/script.sh "travis-2"
+
+        # - stage: travis-2
+        #   os: linux
+        #   env:
+        #     - JULIA_VER="1.1"
+        #     - COMP_MODS="no"
+        #   before_install: ./ci/travis/before_install.sh "travis-2"
+        #   install: ./ci/travis/install.sh "travis-2"
+        #   script: ./ci/travis/script.sh "travis-2"
 
         - stage: travis-2
           os: osx
           env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
+            - JULIA_VER="1.1"
+            - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-2"
           install: ./ci/travis/install.sh "travis-2"
           script: ./ci/travis/script.sh "travis-2"
 
-        - stage: travis-2
-          os: osx
-          env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh "travis-2"
-          install: ./ci/travis/install.sh "travis-2"
-          script: ./ci/travis/script.sh "travis-2"
+        # - stage: travis-2
+        #   os: osx
+        #   env:
+        #     - JULIA_VER="1.1"
+        #     - COMP_MODS="no"
+        #   before_install: ./ci/travis/before_install.sh "travis-2"
+        #   install: ./ci/travis/install.sh "travis-2"
+        #   script: ./ci/travis/script.sh "travis-2"
 
         - stage: travis-3
           os: linux
           env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
+            - JULIA_VER="1.1"
+            - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-3"
           install: ./ci/travis/install.sh "travis-3"
           script: ./ci/travis/script.sh "travis-3"
 
-        - stage: travis-3
-          os: linux
-          env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh "travis-3"
-          install: ./ci/travis/install.sh "travis-3"
-          script: ./ci/travis/script.sh "travis-3"
-
-        - stage: travis-3
-          os: osx
-          env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh "travis-3"
-          install: ./ci/travis/install.sh "travis-3"
-          script: ./ci/travis/script.sh "travis-3"
+        # - stage: travis-3
+        #   os: linux
+        #   env:
+        #     - JULIA_VER="1.1"
+        #     - COMP_MODS="no"
+        #   before_install: ./ci/travis/before_install.sh "travis-3"
+        #   install: ./ci/travis/install.sh "travis-3"
+        #   script: ./ci/travis/script.sh "travis-3"
 
         - stage: travis-3
           os: osx
           env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
+            - JULIA_VER="1.1"
+            - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-3"
           install: ./ci/travis/install.sh "travis-3"
           script: ./ci/travis/script.sh "travis-3"
 
-        - stage: travis-4
-          os: linux
-          env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh "travis-4"
-          install: ./ci/travis/install.sh "travis-4"
-          script: ./ci/travis/script.sh "travis-4"
+        # - stage: travis-3
+        #   os: osx
+        #   env:
+        #     - JULIA_VER="1.1"
+        #     - COMP_MODS="no"
+        #   before_install: ./ci/travis/before_install.sh "travis-3"
+        #   install: ./ci/travis/install.sh "travis-3"
+        #   script: ./ci/travis/script.sh "travis-3"
 
         - stage: travis-4
           os: linux
           env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
+            - JULIA_VER="1.1"
+            - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-4"
           install: ./ci/travis/install.sh "travis-4"
           script: ./ci/travis/script.sh "travis-4"
+
+        # - stage: travis-4
+        #   os: linux
+        #   env:
+        #     - JULIA_VER="1.1"
+        #     - COMP_MODS="no"
+        #   before_install: ./ci/travis/before_install.sh "travis-4"
+        #   install: ./ci/travis/install.sh "travis-4"
+        #   script: ./ci/travis/script.sh "travis-4"
 
         - stage: travis-4
           os: osx
           env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
+            - JULIA_VER="1.1"
+            - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-4"
           install: ./ci/travis/install.sh "travis-4"
           script: ./ci/travis/script.sh "travis-4"
 
-        - stage: travis-4
-          os: osx
-          env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh "travis-4"
-          install: ./ci/travis/install.sh "travis-4"
-          script: ./ci/travis/script.sh "travis-4"
+        # - stage: travis-4
+        #   os: osx
+        #   env:
+        #     - JULIA_VER="1.1"
+        #     - COMP_MODS="no"
+        #   before_install: ./ci/travis/before_install.sh "travis-4"
+        #   install: ./ci/travis/install.sh "travis-4"
+        #   script: ./ci/travis/script.sh "travis-4"
 
         - stage: travis-5
           os: linux
           env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
+            - JULIA_VER="1.1"
+            - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-5"
           install: ./ci/travis/install.sh "travis-5"
           script: ./ci/travis/script.sh "travis-5"
 
-        - stage: travis-5
-          os: linux
-          env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh "travis-5"
-          install: ./ci/travis/install.sh "travis-5"
-          script: ./ci/travis/script.sh "travis-5"
-
-        - stage: travis-5
-          os: osx
-          env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh "travis-5"
-          install: ./ci/travis/install.sh "travis-5"
-          script: ./ci/travis/script.sh "travis-5"
+        # - stage: travis-5
+        #   os: linux
+        #   env:
+        #     - JULIA_VER="1.1"
+        #     - COMP_MODS="no"
+        #   before_install: ./ci/travis/before_install.sh "travis-5"
+        #   install: ./ci/travis/install.sh "travis-5"
+        #   script: ./ci/travis/script.sh "travis-5"
 
         - stage: travis-5
           os: osx
           env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
+            - JULIA_VER="1.1"
+            - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-5"
           install: ./ci/travis/install.sh "travis-5"
           script: ./ci/travis/script.sh "travis-5"
 
-        - stage: travis-6
-          os: linux
-          env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh "travis-6"
-          install: ./ci/travis/install.sh "travis-6"
-          script: ./ci/travis/script.sh "travis-6"
+        # - stage: travis-5
+        #   os: osx
+        #   env:
+        #     - JULIA_VER="1.1"
+        #     - COMP_MODS="no"
+        #   before_install: ./ci/travis/before_install.sh "travis-5"
+        #   install: ./ci/travis/install.sh "travis-5"
+        #   script: ./ci/travis/script.sh "travis-5"
 
         - stage: travis-6
           os: linux
           env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
+            - JULIA_VER="1.1"
+            - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-6"
           install: ./ci/travis/install.sh "travis-6"
           script: ./ci/travis/script.sh "travis-6"
+
+        # - stage: travis-6
+        #   os: linux
+        #   env:
+        #     - JULIA_VER="1.1"
+        #     - COMP_MODS="no"
+        #   before_install: ./ci/travis/before_install.sh "travis-6"
+        #   install: ./ci/travis/install.sh "travis-6"
+        #   script: ./ci/travis/script.sh "travis-6"
 
         - stage: travis-6
           os: osx
           env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
+            - JULIA_VER="1.1"
+            - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-6"
           install: ./ci/travis/install.sh "travis-6"
           script: ./ci/travis/script.sh "travis-6"
 
-        - stage: travis-6
-          os: osx
-          env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh "travis-6"
-          install: ./ci/travis/install.sh "travis-6"
-          script: ./ci/travis/script.sh "travis-6"
+        # - stage: travis-6
+        #   os: osx
+        #   env:
+        #     - JULIA_VER="1.1"
+        #     - COMP_MODS="no"
+        #   before_install: ./ci/travis/before_install.sh "travis-6"
+        #   install: ./ci/travis/install.sh "travis-6"
+        #   script: ./ci/travis/script.sh "travis-6"
 
         - stage: travis-7
           os: linux
           env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
+            - JULIA_VER="1.1"
+            - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-7"
           install: ./ci/travis/install.sh "travis-7"
           script: ./ci/travis/script.sh "travis-7"
 
-        - stage: travis-7
-          os: linux
-          env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
-          before_install: ./ci/travis/before_install.sh "travis-7"
-          install: ./ci/travis/install.sh "travis-7"
-          script: ./ci/travis/script.sh "travis-7"
-
-        - stage: travis-7
-          os: osx
-          env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="yes"
-          before_install: ./ci/travis/before_install.sh "travis-7"
-          install: ./ci/travis/install.sh "travis-7"
-          script: ./ci/travis/script.sh "travis-7"
+        # - stage: travis-7
+        #   os: linux
+        #   env:
+        #     - JULIA_VER="1.1"
+        #     - COMP_MODS="no"
+        #   before_install: ./ci/travis/before_install.sh "travis-7"
+        #   install: ./ci/travis/install.sh "travis-7"
+        #   script: ./ci/travis/script.sh "travis-7"
 
         - stage: travis-7
           os: osx
           env:
-            - TRAVIS_JULIA_VERSION="1.1"
-            - COMPILED_MODULES="no"
+            - JULIA_VER="1.1"
+            - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-7"
           install: ./ci/travis/install.sh "travis-7"
           script: ./ci/travis/script.sh "travis-7"
+
+        # - stage: travis-7
+        #   os: osx
+        #   env:
+        #     - JULIA_VER="1.1"
+        #     - COMP_MODS="no"
+        #   before_install: ./ci/travis/before_install.sh "travis-7"
+        #   install: ./ci/travis/install.sh "travis-7"
+        #   script: ./ci/travis/script.sh "travis-7"
 
 ############################################################################
 
