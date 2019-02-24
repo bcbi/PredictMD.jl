@@ -39,6 +39,16 @@ import Test
 import PredictMDFull
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
+import LinearAlgebra
+import Random
+import Statistics
+try Pkg.add("GLM") catch end
+try Pkg.add("Distributions") catch end
+try Pkg.add("StatsModels") catch end
+import GLM
+import Distributions
+import StatsModels
+
 Random.seed!(999)
 
 trainingandtuning_features_df_filename = joinpath(
