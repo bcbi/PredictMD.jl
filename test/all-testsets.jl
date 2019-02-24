@@ -1,9 +1,38 @@
 ##### Beginning of file
 
-import Test
+import InteractiveUtils # stdlib
+import Pkg # stdlib
+import Test # stdlib
 
 import Random
 Random.seed!(999)
+
+@info(string("Julia depot paths: "), Base.DEPOT_PATH)
+@info(string("Julia load paths: "), Base.LOAD_PATH)
+
+@info(string("Julia version info: ",))
+InteractiveUtils.versioninfo(verbose=true)
+
+@info(string("Output of Pkg.status():",),)
+Pkg.status()
+
+@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_PROJECT):",),)
+Pkg.status(Pkg.Types.PKGMODE_PROJECT)
+
+@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_MANIFEST):",),)
+Pkg.status(Pkg.Types.PKGMODE_MANIFEST)
+
+@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_COMBINED):",),)
+Pkg.status(Pkg.Types.PKGMODE_COMBINED)
+
+@info(string("Attempting to import PredictMD...",))
+import PredictMD
+@info(string("Successfully imported PredictMD.",))
+@info(string("PredictMD version: "),PredictMD.version(),)
+@info(string("PredictMD package directory: "),PredictMD.package_directory(),)
+
+@info(string("Julia depot paths: "), Base.DEPOT_PATH)
+@info(string("Julia load paths: "), Base.LOAD_PATH)
 
 if group_includes_block(TEST_GROUP, TestBlockUnitTests())
     Test.@testset "Unit tests       " begin
@@ -28,6 +57,19 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
                     "test_pkg_dir.jl",
                     )
                 )
+            testmodulea_filename::String = joinpath("TestModuleA", "TestModuleA.jl")
+            testmoduleb_filename::String  = joinpath(
+                "TestModuleB", "directory1", "directory2", "directory3",
+                "directory4", "directory5", "TestModuleB.jl",
+                )
+            testmodulec_filename::String  = joinpath(mktempdir(), "TestModuleC.jl")
+            rm(testmodulec_filename; force = true, recursive = true)
+            open(testmodulec_filename, "w") do io
+                write(io, "module TestModuleC end")
+            end
+            include(testmodulea_filename)
+            include(testmoduleb_filename)
+            include(testmodulec_filename)
             include(joinpath("test_package_directory.jl"))
             include(joinpath("test_registry_url_list.jl"))
             include(joinpath("test_version.jl"))
