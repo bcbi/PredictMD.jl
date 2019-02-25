@@ -43,6 +43,10 @@ import Pkg
 try Pkg.add("GZip") catch end
 import GZip
 
+import Pkg
+try Pkg.add("StatsBase") catch end
+import StatsBase
+
 Random.seed!(999)
 
 df = DataFrames.DataFrame(

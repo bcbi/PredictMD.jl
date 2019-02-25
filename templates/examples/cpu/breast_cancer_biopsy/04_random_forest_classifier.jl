@@ -39,6 +39,10 @@ import Test
 import PredictMDFull
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
+import Pkg
+try Pkg.add("StatsBase") catch end
+import StatsBase
+
 Random.seed!(999)
 
 trainingandtuning_features_df_filename = joinpath(

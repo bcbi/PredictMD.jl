@@ -49,6 +49,10 @@ import GLM
 import Distributions
 import StatsModels
 
+import Pkg
+try Pkg.add("StatsBase") catch end
+import StatsBase
+
 Random.seed!(999)
 
 trainingandtuning_features_df_filename = joinpath(
