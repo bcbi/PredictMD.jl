@@ -43,6 +43,8 @@ import Pkg
 try Pkg.add("StatsBase") catch end
 import StatsBase
 
+import Statistics
+
 Random.seed!(999)
 
 df = RDatasets.dataset("MASS", "biopsy")

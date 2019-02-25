@@ -43,6 +43,8 @@ import Pkg
 try Pkg.add("StatsBase") catch end
 import StatsBase
 
+import Statistics
+
 Kernel = LIBSVM.Kernel
 
 Random.seed!(999)

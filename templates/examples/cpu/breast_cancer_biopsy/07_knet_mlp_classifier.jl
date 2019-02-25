@@ -43,6 +43,8 @@ import Pkg
 try Pkg.add("StatsBase") catch end
 import StatsBase
 
+import Statistics
+
 Random.seed!(999)
 
 trainingandtuning_features_df_filename = joinpath(
