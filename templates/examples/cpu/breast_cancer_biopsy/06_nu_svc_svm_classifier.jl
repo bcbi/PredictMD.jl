@@ -20,37 +20,32 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
     "breast_cancer_biopsy_example",
     )
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
     PredictMD.cache_to_homedir!("Desktop", "breast_cancer_biopsy_example",)
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ### End project-specific settings
 
 ### Begin nu-SVC code
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+import PredictMDExtra
 import Test
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+import PredictMDFull
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 import Pkg
+try Pkg.add("StatsBase") catch end
+import StatsBase
 
-try Pkg.add("CSV") catch end
-try Pkg.add("DataFrames") catch end
-try Pkg.add("FileIO") catch end
-try Pkg.add("JLD2") catch end
-try Pkg.add("LIBSVM") catch end
-try Pkg.add("PGFPlotsX") catch end
+import Statistics
 
-import CSV
-import DataFrames
-import FileIO
-import JLD2
-import LIBSVM
-import PGFPlotsX
-import Random
+Kernel = LIBSVM.Kernel
 
 Random.seed!(999)
 
@@ -205,7 +200,7 @@ nu_svc_svm_classifier_hist_training =
         single_label_levels,
         );
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
@@ -218,7 +213,8 @@ PGFPlotsX.save(filename, nu_svc_svm_classifier_hist_training)
 if PredictMD.is_force_test_plots()
     Test.@test(isfile(filename))
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(nu_svc_svm_classifier_hist_training)
 
@@ -231,7 +227,7 @@ nu_svc_svm_classifier_hist_testing =
         single_label_levels,
         );
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
@@ -244,7 +240,8 @@ PGFPlotsX.save(filename, nu_svc_svm_classifier_hist_testing)
 if PredictMD.is_force_test_plots()
     Test.@test(isfile(filename))
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(nu_svc_svm_classifier_hist_testing)
 
@@ -278,10 +275,11 @@ PredictMD.save_model(
 
 ### End nu-SVC code
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
     PredictMD.homedir_to_cache!("Desktop", "breast_cancer_biopsy_example",)
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ##### End of file

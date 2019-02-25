@@ -4,6 +4,9 @@
 
 set -ev
 
+export COMPILED_MODULES=$COMP_MODS
+export TRAVIS_JULIA_VERSION=$JULIA_VER
+
 export PATH="${PATH}:${TRAVIS_HOME}/julia/bin"
 
 export JULIA_PROJECT=@.
@@ -61,6 +64,11 @@ then
         '
     julia $JULIA_FLAGS -e '
         import PredictMD;
+        '
+    julia $JULIA_FLAGS -e '
+        import Pkg;
+        Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMDExtra.jl", rev="master"));
+        Pkg.build("PredictMDExtra");
         '
     julia $JULIA_FLAGS -e '
         import Pkg;
