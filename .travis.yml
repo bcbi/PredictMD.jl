@@ -28,7 +28,7 @@ cache:
 
 env:
     global:
-        - COMP_MODS_VALUE_FOR_DOCS="yes"
+        - COMPILED_MODULES_VALUE_FOR_DOCS="yes"
         - DOCUMENTER_DEBUG="true"
         - FIRST_GROUP="travis-1"
         - JULIA_DEBUG="all"
