@@ -1,7 +1,7 @@
 import Pkg; 
 Pkg.Registry.update(); 
 Pkg.update(); 
-Pkg.Registry.add(Pkg.Registry.RegistrySpec(url="https://github.com/JuliaRegistries/General")); 
+Pkg.Registry.add(Pkg.RegistrySpec(url="https://github.com/JuliaRegistries/General")); 
 Pkg.Registry.update(); 
 Pkg.update(); 
 Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMD.jl", rev="develop")); 
