@@ -69,4 +69,3 @@ PredictMDExtra = "d14d998a-9e6b-11e8-16d3-6f2879ea456d"
 
 [targets]
 test = ["PredictMDExtra"]
-
