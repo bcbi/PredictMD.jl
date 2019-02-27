@@ -218,8 +218,8 @@ knet_mlp_regression = PredictMD.single_labeldataframeknetregression(
     optimizerhyperparameters = knetmlp_optimizerhyperparameters,
     minibatchsize = knetmlp_minibatchsize,
     modelweights = knetmlp_modelweights,
-    maxepochs = 200,
-    printlosseverynepochs = 100,
+    maxepochs = 100,
+    printlosseverynepochs = 10,
     feature_contrasts = feature_contrasts,
     )
 
@@ -233,7 +233,7 @@ PredictMD.fit!(
     tuning_labels_df,
     )
 
-PredictMD.set_max_epochs!(knet_mlp_regression, 1_000)
+PredictMD.set_max_epochs!(knet_mlp_regression, 200)
 
 PredictMD.fit!(
     knet_mlp_regression,
