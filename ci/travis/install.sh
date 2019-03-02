@@ -4,6 +4,23 @@
 
 set -ev
 
+function myretry_10_30 ()
+{
+    n=1
+    until [ $n -gt 10 ]
+    do
+        echo "Attempt $n of 10"
+        "$@" && break
+        n=$[$n+1]
+        sleep 30
+    done
+}
+
+function myretry ()
+{
+    myretry_10_30 "$@"
+}
+
 export COMPILED_MODULES=$COMP_MODS
 export TRAVIS_JULIA_VERSION=$JULIA_VER
 
@@ -58,47 +75,16 @@ echo "DO_TESTS=$DO_TESTS"
 
 if [[ "$DO_TESTS" == "true" ]];
 then
-    julia $JULIA_FLAGS -e '
-        import Pkg;
-        Pkg.build("PredictMD");
-        '
-    julia $JULIA_FLAGS -e '
-        import PredictMD;
-        '
-    julia $JULIA_FLAGS -e '
-        import Pkg;
-        Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMDExtra.jl", rev="master"));
-        Pkg.build("PredictMDExtra");
-        '
-    julia $JULIA_FLAGS -e '
-        import Pkg;
-        Pkg.test("PredictMD"; coverage=true);
-        '
-    julia $JULIA_FLAGS -e '
-        import Pkg;
-        Pkg.add("Coverage");
-        '
-    julia $JULIA_FLAGS -e '
-        import Pkg;
-        cd(Pkg.dir("PredictMD"));
-        import Coverage;
-        Coverage.Codecov.submit(Coverage.Codecov.process_folder());
-        '
+    myretry julia $JULIA_FLAGS -e 'import Pkg;Pkg.build("PredictMD");'
+    myretry julia $JULIA_FLAGS -e 'import PredictMD;'
+    myretry julia $JULIA_FLAGS -e 'import Pkg;Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMDExtra.jl", rev="master"));Pkg.build("PredictMDExtra");'
+    myretry julia $JULIA_FLAGS -e 'import Pkg;Pkg.test("PredictMD"; coverage=true);'
+    myretry julia $JULIA_FLAGS -e 'import Pkg;Pkg.add("Coverage");'
+    myretry julia $JULIA_FLAGS -e 'import Pkg;cd(Pkg.dir("PredictMD"));import Coverage;Coverage.Codecov.submit(Coverage.Codecov.process_folder());'
     if [[ "$GROUP" == "$LAST_GROUP" ]]; then
-        julia $JULIA_FLAGS -e '
-            import Pkg;
-            include(joinpath(Pkg.dir("PredictMD"), "docs", "make.jl",));
-            '
-        julia $JULIA_FLAGS -e '
-            import Pkg;
-            Pkg.add("Coverage");
-            '
-        julia $JULIA_FLAGS -e '
-            import Pkg;
-            cd(Pkg.dir("PredictMD"));
-            import Coverage;
-            Coverage.Codecov.submit(Coverage.Codecov.process_folder());
-            '
+        myretry julia $JULIA_FLAGS -e 'import Pkg;include(joinpath(Pkg.dir("PredictMD"), "docs", "make.jl",));'
+        myretry julia $JULIA_FLAGS -e 'import Pkg;Pkg.add("Coverage");'
+        myretry julia $JULIA_FLAGS -e 'import Pkg;cd(Pkg.dir("PredictMD"));import Coverage;Coverage.Codecov.submit(Coverage.Codecov.process_folder());'
     fi
     cat Project.toml
     cat Manifest.toml
