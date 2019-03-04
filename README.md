@@ -30,14 +30,25 @@ Please submit any issues related to PredictMD to the issue tracker: [https://git
 
 ## Installation
 
-PredictMD requires Julia version 0.7.
+PredictMD requires Julia version 1.1 or greater.
 
-To install PredictMD, open Julia
-(e.g. open a terminal, type `julia`, and press enter)
-and run the following command:
-```julia
-Pkg.clone("https://github.com/bcbi/PredictMD.jl")
+### macOS and GNU/Linux
+
+Open a new terminal and run the following line:
+```bash
+ curl https://predictmd.net/install.jl | julia 
 ```
+
+### Windows and all other platforms
+
+Step 1: Download the following file and save it to your computer: [https://predictmd.net/install.jl](https://predictmd.net/install.jl)
+
+Step 2: Navigate to the location of the file saved in step 1, and run the file with Julia, for example:
+```bash
+julia install.jl
+```
+
+### Run the test suite after installing
 
 After you install PredictMD, you should run the test suite to make sure that
 everything is working. You can run the test suite with the following

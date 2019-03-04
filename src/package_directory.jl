@@ -87,16 +87,16 @@ function package_directory(m::Method)::String
     return m_package_directory
 end
 
-"""
-    package_directory(m::Method, parts...)::String
-
-Equivalent to
-`result = abspath(joinpath(abspath(package_directory(m)), parts...))`.
-"""
-function package_directory(m::Method, parts...)::String
-    result::String = abspath(joinpath(abspath(package_directory(m)), parts...))
-    return result
-end
+# """
+#     package_directory(m::Method, parts...)::String
+#
+# Equivalent to
+# `result = abspath(joinpath(abspath(package_directory(m)), parts...))`.
+# """
+# function package_directory(m::Method, parts...)::String
+#     result::String = abspath(joinpath(abspath(package_directory(m)), parts...))
+#     return result
+# end
 
 """
     package_directory(f::Function)::String
@@ -115,16 +115,16 @@ function package_directory(f::Function)::String
     return m_package_directory
 end
 
-"""
-    package_directory(f::Function, parts...)::String
-
-Equivalent to
-`result = abspath(joinpath(abspath(package_directory(f)), parts...))`.
-"""
-function package_directory(f::Function, parts...)::String
-    result::String = abspath(joinpath(abspath(package_directory(f)), parts...))
-    return result
-end
+# """
+#     package_directory(f::Function, parts...)::String
+#
+# Equivalent to
+# `result = abspath(joinpath(abspath(package_directory(f)), parts...))`.
+# """
+# function package_directory(f::Function, parts...)::String
+#     result::String = abspath(joinpath(abspath(package_directory(f)), parts...))
+#     return result
+# end
 
 """
     package_directory(f::Function, types::Tuple)::String
@@ -143,16 +143,16 @@ function package_directory(f::Function, types::Tuple)::String
     return m_package_directory
 end
 
-"""
-    package_directory(f::Function, types::Tuple, parts...)::String
-
-Equivalent to
-`result = abspath(joinpath(abspath(package_directory(f, types)), parts...))`.
-"""
-function package_directory(f::Function, types::Tuple, parts...)::String
-    result::String = abspath(joinpath(abspath(package_directory(f, types)), parts...))
-    return result
-end
+# """
+#     package_directory(f::Function, types::Tuple, parts...)::String
+#
+# Equivalent to
+# `result = abspath(joinpath(abspath(package_directory(f, types)), parts...))`.
+# """
+# function package_directory(f::Function, types::Tuple, parts...)::String
+#     result::String = abspath(joinpath(abspath(package_directory(f, types)), parts...))
+#     return result
+# end
 
 """
     package_directory(m::Module)::String

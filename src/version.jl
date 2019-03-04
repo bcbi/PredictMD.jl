@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-import Pkg
+import Pkg # stdlib
 
 struct _TomlFile
     filename::String

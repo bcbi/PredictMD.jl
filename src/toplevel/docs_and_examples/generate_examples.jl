@@ -11,7 +11,7 @@ function _preprocess_example_shared(
     content = replace(content, pattern => replacement)
 
     pattern = "%PREDICTMD_MINIMUM_REQUIRED_JULIA_VERSION%"
-    replacement = string("v0.7.0")
+    replacement = string("v1.1.0")
     content = replace(content, pattern => replacement)
 
     pattern = "%PREDICTMD_GENERATED_BY%\n"
@@ -36,28 +36,34 @@ function _preprocess_example_shared(
     return content
 end
 
+function _get_if_include_test_statements_regex()::Regex
+    test_statements_regex::Regex = r"# PREDICTMD IF INCLUDE TEST STATEMENTS\n([\S\s]*?)# PREDICTMD ELSE\n([\S\s]*?)# PREDICTMD ENDIF INCLUDE TEST STATEMENTS\n{0,5}"
+    return test_statements_regex
+end
+
 function _preprocess_example_do_not_include_test_statements(
         content::AbstractString;
         )::String
-    content = _preprocess_example_shared(content)
-    pattern = r"# BEGIN TEST STATEMENTS[\S\s]*?# END TEST STATEMENTS\n{0,5}"
-    replacement = ""
-    content = replace(content, pattern => replacement)
+    content::String = _preprocess_example_shared(content)
+    test_statements_regex::Regex = _get_if_include_test_statements_regex()
+    for m in eachmatch(test_statements_regex, content)
+        original_text::String = String(m.match)
+        replacement_text = string(strip(String(m[2])), "\n\n",)
+        content = replace(content, original_text => replacement_text)
+    end
     return content
 end
 
 function _preprocess_example_include_test_statements(
         content::AbstractString;
         )::String
-    content = _preprocess_example_shared(content)
-
-    pattern = r"# BEGIN TEST STATEMENTS\n{0,2}"
-    replacement = ""
-    content = replace(content, pattern => replacement)
-
-    pattern = r"# END TEST STATEMENTS\n{0,2}"
-    replacement = ""
-    content = replace(content, pattern => replacement)
+    content::String = _preprocess_example_shared(content)
+    test_statements_regex::Regex = _get_if_include_test_statements_regex()
+    for m in eachmatch(test_statements_regex, content)
+        original_text::String = String(m.match)
+        replacement_text = string(strip(String(m[1])), "\n\n",)
+        content = replace(content, original_text => replacement_text)
+    end
     return content
 end
 

@@ -1,5 +1,5 @@
 ##### Beginning of file
 
-import WebSockets
+# import WebSockets
 
 ##### End of file

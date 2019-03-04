@@ -20,37 +20,29 @@ PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
     "boston_housing_example",
     )
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
     PredictMD.cache_to_homedir!("Desktop", "boston_housing_example",)
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ### End project-specific settings
 
 ### Begin Knet neural network regression code
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+import PredictMDExtra
 import Test
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+import PredictMDFull
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 import Pkg
+try Pkg.add("StatsBase") catch end
+import StatsBase
 
-try Pkg.add("CSV") catch end
-try Pkg.add("DataFrames") catch end
-try Pkg.add("FileIO") catch end
-try Pkg.add("JLD2") catch end
-try Pkg.add("Knet") catch end
-try Pkg.add("PGFPlotsX") catch end
-
-import CSV
-import DataFrames
-import FileIO
-import JLD2
-import Knet
-import PGFPlotsX
-import Random
 import Statistics
 
 Random.seed!(999)
@@ -226,8 +218,8 @@ knet_mlp_regression = PredictMD.single_labeldataframeknetregression(
     optimizerhyperparameters = knetmlp_optimizerhyperparameters,
     minibatchsize = knetmlp_minibatchsize,
     modelweights = knetmlp_modelweights,
-    maxepochs = 200,
-    printlosseverynepochs = 100,
+    maxepochs = 100,
+    printlosseverynepochs = 10,
     feature_contrasts = feature_contrasts,
     )
 
@@ -241,7 +233,7 @@ PredictMD.fit!(
     tuning_labels_df,
     )
 
-PredictMD.set_max_epochs!(knet_mlp_regression, 1_000)
+PredictMD.set_max_epochs!(knet_mlp_regression, 200)
 
 PredictMD.fit!(
     knet_mlp_regression,
@@ -256,7 +248,7 @@ knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
     :loss_vs_epoch;
     );
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
@@ -269,7 +261,8 @@ PGFPlotsX.save(filename, knet_learningcurve_lossvsepoch)
 if PredictMD.is_force_test_plots()
     Test.@test(isfile(filename))
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(knet_learningcurve_lossvsepoch)
 
@@ -280,7 +273,7 @@ knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
     endat = :end,
     );
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
@@ -293,7 +286,8 @@ PGFPlotsX.save(filename, knet_learningcurve_lossvsepoch_skip10epochs)
 if PredictMD.is_force_test_plots()
     Test.@test(isfile(filename))
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(knet_learningcurve_lossvsepoch_skip10epochs)
 
@@ -304,7 +298,7 @@ knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
     sampleevery = 10,
     );
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
@@ -317,7 +311,8 @@ PGFPlotsX.save(filename, knet_learningcurve_lossvsiteration)
 if PredictMD.is_force_test_plots()
     Test.@test(isfile(filename))
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(knet_learningcurve_lossvsiteration)
 
@@ -331,7 +326,7 @@ knet_learningcurve_lossvsiteration_skip100iterations =
         endat = :end,
         );
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
@@ -344,7 +339,8 @@ PGFPlotsX.save(filename, knet_learningcurve_lossvsiteration_skip100iterations)
 if PredictMD.is_force_test_plots()
     Test.@test(isfile(filename))
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(knet_learningcurve_lossvsiteration_skip100iterations)
 
@@ -356,7 +352,7 @@ knet_mlp_regression_plot_training =
         single_label_name,
         );
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
@@ -369,7 +365,8 @@ PGFPlotsX.save(filename, knet_mlp_regression_plot_training)
 if PredictMD.is_force_test_plots()
     Test.@test(isfile(filename))
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(knet_mlp_regression_plot_training)
 
@@ -381,7 +378,7 @@ knet_mlp_regression_plot_testing =
         single_label_name,
         );
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
@@ -394,7 +391,8 @@ PGFPlotsX.save(filename, knet_mlp_regression_plot_testing)
 if PredictMD.is_force_test_plots()
     Test.@test(isfile(filename))
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(knet_mlp_regression_plot_testing)
 
@@ -421,10 +419,11 @@ PredictMD.save_model(knet_mlp_regression_filename, knet_mlp_regression)
 
 ### End Knet neural network regression code
 
-# BEGIN TEST STATEMENTS
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
     PredictMD.homedir_to_cache!("Desktop", "boston_housing_example",)
 end
-# END TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ##### End of file

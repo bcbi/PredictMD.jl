@@ -19,7 +19,7 @@ include(joinpath("web", "httpclient.jl",))
 include(joinpath("web", "httpserver.jl",))
 include(joinpath("web", "juliawebapi.jl",))
 include(joinpath("web", "mux.jl",))
-include(joinpath("web", "websockets.jl",))
+# include(joinpath("web", "websockets.jl",))
 
 end # end submodule PredictMD.Server
 
