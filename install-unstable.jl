@@ -1,5 +1,9 @@
 import Pkg; 
 
+Pkg.Registry.add(Pkg.RegistrySpec(name="General",)); 
+
+Pkg.Registry.update(Pkg.RegistrySpec(name="General",)); 
+
 Pkg.add(Pkg.PackageSpec(name="PredictMD",rev="develop",url="https://github.com/bcbi/PredictMD.jl",uuid="3e7d7328-36f8-4388-bd01-4613c92c7370",)); 
 Pkg.build("PredictMD"); 
 
