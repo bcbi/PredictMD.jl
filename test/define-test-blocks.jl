@@ -21,9 +21,11 @@ struct TestBlockIntegration7 <: AbstractTestBlock
 end
 
 group_includes_block(::AbstractTestGroup, ::AbstractTestBlock) = true
+
 group_includes_block(::TestGroupDefault, ::AbstractTestBlock) = true
 group_includes_block(::TestGroupAll, ::AbstractTestBlock) = true
 group_includes_block(::TestGroupTestPlots, ::AbstractTestBlock) = true
+
 group_includes_block(::TestGroupImportOnly, ::AbstractTestBlock) = false
 
 group_includes_block(::TestGroupTravis1, ::TestBlockUnitTests) = true
