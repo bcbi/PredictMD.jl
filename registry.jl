@@ -13,3 +13,5 @@ try
 catch e
     @info("ignoring exception: ", e,)
 end
+
+println("The `PredictMDRegistry` registry was installed successfully."); 
