@@ -5,7 +5,6 @@ try
 catch e
     @info("ignoring exception: ", e,)
 end
-
 try
     Pkg.Registry.update("General"); 
 catch e
