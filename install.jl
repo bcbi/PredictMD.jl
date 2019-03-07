@@ -17,13 +17,8 @@ catch e
 end
 
 Pkg.add(Pkg.PackageSpec(name="PredictMD",uuid="3e7d7328-36f8-4388-bd01-4613c92c7370")); 
-Pkg.build("PredictMD"); 
-
 Pkg.add(Pkg.PackageSpec(name="PredictMDExtra",uuid="d14d998a-9e6b-11e8-16d3-6f2879ea456d")); 
-Pkg.build("PredictMDExtra"); 
-
 Pkg.add(Pkg.PackageSpec(name="PredictMDFull",uuid="5c0c5c38-9dd5-11e8-3ab7-453bd9ce6c97")); 
-Pkg.build("PredictMDFull"); 
 
 Pkg.build("PredictMD"); 
 Pkg.build("PredictMDExtra"); 
