@@ -11,10 +11,15 @@ Pkg.test("PredictMD")
 
 ## Available test groups
 
-| group| Unit tests | Integration tests (1/2) | Integration tests (2/2) | Plotting tests |
-| :--- | :---: | :---: | :---: |  :---: |
-| default| <a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"> </a>| <a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> |<a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"> </a>| <a href="#available-test-groups"><img alt="No" title="No" src="https://via.placeholder.com/25x25/ff0000/ffffff.png?text=+"></a> |
-| all | <a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> | <a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> | <a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"> </a> |<a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> |
-| test-plots | <a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> | <a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"> </a>| <a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> | <a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> |
-| travis-1 | <a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> | <a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> | <a href="#available-test-groups"><img alt="No" title="No" src="https://via.placeholder.com/25x25/ff0000/ffffff.png?text=+"></a>|<a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> |
-| travis-2 | <a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> | <a href="#available-test-groups"><img alt="No" title="No" src="https://via.placeholder.com/25x25/ff0000/ffffff.png?text=+"></a> | <a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a>|<a href="#available-test-groups"><img alt="Yes" title="Yes" src="https://via.placeholder.com/25x25/00ff00/000000.png?text=+"></a> |
+| group | default | all | test-plots | import-only | travis-1 | travis-2 | travis-3 | travis-4 | travis-5 | travis-6 | travis-7 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Import package | YES | YES | YES | YES | YES | YES | YES | YES | YES | YES | YES |
+| Unit tests | YES | YES | YES | NO | YES | NO | NO | NO | NO | NO | NO |
+| Integration tests (1/7) | YES | YES | YES | NO | YES | NO | NO | NO | NO | NO | NO |
+| Integration tests (2/7) | YES | YES | YES | NO | NO | YES | NO | NO | NO | NO | NO |
+| Integration tests (3/7) | YES | YES | YES | NO | NO | NO | YES | NO | NO | NO | NO |
+| Integration tests (4/7) | YES | YES | YES | NO | NO | NO | NO | YES | NO | NO | NO |
+| Integration tests (5/7) | YES | YES | YES | NO | NO | NO | NO | NO | YES | NO | NO |
+| Integration tests (6/7) | YES | YES | YES | NO | NO | NO | NO | NO | NO | YES | NO |
+| Integration tests (7/7) | YES | YES | YES | NO | NO | NO | NO | NO | NO | NO | YES |
+| Test plots | NO | YES | YES | NO | YES | YES | YES | YES | YES | YES | YES |
