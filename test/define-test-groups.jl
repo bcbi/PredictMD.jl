@@ -11,6 +11,8 @@ struct TestGroupAll <: AbstractTestGroup
 end
 struct TestGroupTestPlots <: AbstractTestGroup
 end
+struct TestGroupImportOnly <: AbstractTestGroup
+end
 struct TestGroupTravis1 <: AbstractTestGroup
 end
 struct TestGroupTravis2 <: AbstractTestGroup
@@ -30,6 +32,7 @@ const TEST_GROUP_STRING_TO_INSTANCE = Dict{String, AbstractTestGroup}(
     "default" => TestGroupDefault(),
     "all" => TestGroupAll(),
     "test-plots" => TestGroupTestPlots(),
+    "import-only" => TestGroupImportOnly(),
     "travis-1" => TestGroupTravis1(),
     "travis-2" => TestGroupTravis2(),
     "travis-3" => TestGroupTravis3(),
