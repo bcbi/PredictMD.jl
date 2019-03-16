@@ -34,6 +34,8 @@ import PredictMD
 @info(string("Julia depot paths: "), Base.DEPOT_PATH)
 @info(string("Julia load paths: "), Base.LOAD_PATH)
 
+import PredictMD
+
 if group_includes_block(TEST_GROUP, TestBlockUnitTests())
     Test.@testset "Unit tests       " begin
         @info(string("Running unit tests..."))
