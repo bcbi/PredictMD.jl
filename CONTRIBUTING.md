@@ -322,13 +322,6 @@ message (e.g. "Bump version number"), save the file, and quit the
 editor.
 
 #### Step 11:
-Push the release branch to GitHub.
-
-```bash
-git push origin release/v3.6.0
-```
-
-#### Step 12:
 
 Run the PredictMD test suite on your local machine:
 
@@ -343,6 +336,13 @@ If you do not receive that message, then one or more of the tests failed.
 
 **You may not proceed to the next step until all of the tests pass on your
 local machine.**
+
+#### Step 12:
+Push the release branch to GitHub.
+
+```bash
+git push origin release/v3.6.0
+```
 
 #### Step 13:
 Wait for all of the continuous integration (CI) tests to pass. You can
