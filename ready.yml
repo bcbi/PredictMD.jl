@@ -2,7 +2,7 @@ maintainers:
     - name: Dilum Aluthge
       github_user: DilumAluthge
 
-docs_url:         https://predictmd.net/stable
+docs_url:         https://predictmd.net
 
 doi:              "10.5281/zenodo.1291209"
 
