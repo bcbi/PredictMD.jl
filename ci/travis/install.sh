@@ -75,9 +75,11 @@ echo "DO_TESTS=$DO_TESTS"
 
 if [[ "$DO_TESTS" == "true" ]];
 then
+    myretry julia $JULIA_FLAGS -e 'import Pkg;Pkg.Registry.add(Pkg.RegistrySpec(name="PredictMDRegistry",url="https://github.com/bcbi/PredictMDRegistry.git",uuid="26a550a3-39fe-4af4-af6d-e8814c2b6dd9",));'
+    myretry julia $JULIA_FLAGS -e 'import Pkg;Pkg.Registry.update();'
+    myretry julia $JULIA_FLAGS -e 'import Pkg;Pkg.Registry.add("General");'
     myretry julia $JULIA_FLAGS -e 'import Pkg;Pkg.build("PredictMD");'
     myretry julia $JULIA_FLAGS -e 'import PredictMD;'
-    myretry julia $JULIA_FLAGS -e 'import Pkg;Pkg.add(Pkg.PackageSpec(url="https://github.com/bcbi/PredictMDExtra.jl", rev="master"));Pkg.build("PredictMDExtra");'
     myretry julia $JULIA_FLAGS -e 'import Pkg;Pkg.test("PredictMD"; coverage=true);'
     myretry julia $JULIA_FLAGS -e 'import Pkg;Pkg.add("Coverage");'
     myretry julia $JULIA_FLAGS -e 'import Pkg;cd(Pkg.dir("PredictMD"));import Coverage;Coverage.Codecov.submit(Coverage.Codecov.process_folder());'

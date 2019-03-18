@@ -519,6 +519,10 @@ scroll down to find the release branch, and then click the
 trash can icon to delete the branch.
 
 #### Step 24:
+
+Tag the new release with [PredictMDRegistry](https://github.com/bcbi/PredictMDRegistry). Instructions are available here: [https://github.com/bcbi/PredictMDRegistry/blob/master/CONTRIBUTING.md](https://github.com/bcbi/PredictMDRegistry/blob/master/CONTRIBUTING.md)
+
+#### Step 25:
 The final step is to go to the Zenodo entry for the newly created release and put in the correct information. First go to [https://doi.org/10.5281/zenodo.1291209](https://doi.org/10.5281/zenodo.1291209), and then click on the yellow "Edit" button to edit the most recent release. Then, fill out the following fields with the specified values:
 
 ##### Upload type:
