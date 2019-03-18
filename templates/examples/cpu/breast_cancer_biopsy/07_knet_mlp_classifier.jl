@@ -300,10 +300,14 @@ filename = string(
     ".pdf",
     )
 rm(filename; force = true, recursive = true,)
+@debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
+@debug("The file does not exist.", filename, isfile(filename),)
 PGFPlotsX.save(filename, knet_learningcurve_lossvsepoch)
 if PredictMD.is_force_test_plots()
+    @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
+    @debug("The file does exist.", filename, isfile(filename),)
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
@@ -325,10 +329,14 @@ filename = string(
     ".pdf",
     )
 rm(filename; force = true, recursive = true,)
+@debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
+@debug("The file does not exist.", filename, isfile(filename),)
 PGFPlotsX.save(filename, knet_learningcurve_lossvsepoch_skip10epochs)
 if PredictMD.is_force_test_plots()
+    @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
+    @debug("The file does exist.", filename, isfile(filename),)
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
@@ -350,10 +358,14 @@ filename = string(
     ".pdf",
     )
 rm(filename; force = true, recursive = true,)
+@debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
+@debug("The file does not exist.", filename, isfile(filename),)
 PGFPlotsX.save(filename, knet_learningcurve_lossvsiteration)
 if PredictMD.is_force_test_plots()
+    @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
+    @debug("The file does exist.", filename, isfile(filename),)
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
@@ -378,10 +390,14 @@ filename = string(
     ".pdf",
     )
 rm(filename; force = true, recursive = true,)
+@debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
+@debug("The file does not exist.", filename, isfile(filename),)
 PGFPlotsX.save(filename, knet_learningcurve_lossvsiteration_skip100iterations)
 if PredictMD.is_force_test_plots()
+    @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
+    @debug("The file does exist.", filename, isfile(filename),)
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
@@ -405,10 +421,14 @@ filename = string(
     ".pdf",
     )
 rm(filename; force = true, recursive = true,)
+@debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
+@debug("The file does not exist.", filename, isfile(filename),)
 PGFPlotsX.save(filename, knet_mlp_classifier_hist_training)
 if PredictMD.is_force_test_plots()
+    @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
+    @debug("The file does exist.", filename, isfile(filename),)
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
@@ -432,10 +452,14 @@ filename = string(
     ".pdf",
     )
 rm(filename; force = true, recursive = true,)
+@debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
+@debug("The file does not exist.", filename, isfile(filename),)
 PGFPlotsX.save(filename, knet_mlp_classifier_hist_testing)
 if PredictMD.is_force_test_plots()
+    @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
+    @debug("The file does exist.", filename, isfile(filename),)
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
