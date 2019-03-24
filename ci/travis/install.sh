@@ -30,7 +30,7 @@ export JULIA_PROJECT=@.
 
 echo "COMPILED_MODULES=$COMPILED_MODULES"
 
-export JULIA_FLAGS="--check-bounds=yes --code-coverage=all --color=yes --compiled-modules=$COMPILED_MODULES --inline=yes"
+export JULIA_FLAGS="--check-bounds=yes --code-coverage=all --color=yes --compiled-modules=$COMPILED_MODULES --inline=no"
 echo "JULIA_FLAGS=$JULIA_FLAGS"
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]];
