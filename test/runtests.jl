@@ -2,6 +2,8 @@
 
 ENV["PREDICTMD_IS_RUNTESTS"] = "true"
 
+import PredictMDExtra
+
 include(joinpath(".", "import-predictmd.jl"))
 
 include(joinpath(".", "define-test-groups.jl"))
