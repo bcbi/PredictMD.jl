@@ -536,7 +536,7 @@ The final step is to go to the Zenodo entry for the newly created release and pu
 | Name | Affiliation | ORCID |
 | --- | -------- | ---- |
 | Aluthge DP | Brown Center for Biomedical Informatics, Brown University | 0000-0002-9247-0530 |
-| Sinha I | Brown Center for Biomedical Informatics, Brown University |  |
+| Sinha I | Brown Center for Biomedical Informatics, Brown University | 0000-0001-7796-819X |
 | Stey P | Brown Center for Biomedical Informatics, Brown University |  |
 | Restrepo MI | Brown Center for Biomedical Informatics, Brown University | 0000-0002-2708-8984 |
 | Chen ES | Brown Center for Biomedical Informatics, Brown University | 0000-0002-6181-3369 |
