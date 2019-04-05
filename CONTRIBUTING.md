@@ -322,13 +322,6 @@ message (e.g. "Bump version number"), save the file, and quit the
 editor.
 
 #### Step 11:
-Push the release branch to GitHub.
-
-```bash
-git push origin release/v3.6.0
-```
-
-#### Step 12:
 
 Run the PredictMD test suite on your local machine:
 
@@ -343,6 +336,13 @@ If you do not receive that message, then one or more of the tests failed.
 
 **You may not proceed to the next step until all of the tests pass on your
 local machine.**
+
+#### Step 12:
+Push the release branch to GitHub.
+
+```bash
+git push origin release/v3.6.0
+```
 
 #### Step 13:
 Wait for all of the continuous integration (CI) tests to pass. You can
@@ -519,7 +519,11 @@ scroll down to find the release branch, and then click the
 trash can icon to delete the branch.
 
 #### Step 24:
-The final step is to go to the Zenodo entry for the newly created release and put in the correct information. First go to [https://predictmd.net/zenodo](https://predictmd.net/zenodo), and then click on the yellow "Edit" button to edit the most recent release. Then, fill out the following fields with the specified values:
+
+Tag the new release with [PredictMDRegistry](https://github.com/bcbi/PredictMDRegistry). Instructions are available here: [https://github.com/bcbi/PredictMDRegistry/blob/master/CONTRIBUTING.md](https://github.com/bcbi/PredictMDRegistry/blob/master/CONTRIBUTING.md)
+
+#### Step 25:
+The final step is to go to the Zenodo entry for the newly created release and put in the correct information. First go to [https://doi.org/10.5281/zenodo.1291209](https://doi.org/10.5281/zenodo.1291209), and then click on the yellow "Edit" button to edit the most recent release. Then, fill out the following fields with the specified values:
 
 ##### Upload type:
 * Software
@@ -532,7 +536,7 @@ The final step is to go to the Zenodo entry for the newly created release and pu
 | Name | Affiliation | ORCID |
 | --- | -------- | ---- |
 | Aluthge DP | Brown Center for Biomedical Informatics, Brown University | 0000-0002-9247-0530 |
-| Sinha I | Brown Center for Biomedical Informatics, Brown University |  |
+| Sinha I | Brown Center for Biomedical Informatics, Brown University | 0000-0001-7796-819X |
 | Stey P | Brown Center for Biomedical Informatics, Brown University |  |
 | Restrepo MI | Brown Center for Biomedical Informatics, Brown University | 0000-0002-2708-8984 |
 | Chen ES | Brown Center for Biomedical Informatics, Brown University | 0000-0002-6181-3369 |

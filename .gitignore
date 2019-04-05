@@ -31,6 +31,8 @@ deps/custom_preamble.tex
 deps/deps.jl
 deps/*.svg
 
+Manifest.toml
+
 scratch.jl
 
 ##### End of file
