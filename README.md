@@ -79,7 +79,7 @@ If you would like to contribute to the PredictMD source code, please read the in
         <tr>
             <th></th>
             <th>master (stable)</th>
-            <th>develop (latest)</th>
+            <th>develop (latest/unstable)</th>
         </tr>
     </thead>
     <tbody>
