@@ -7,6 +7,8 @@ For example, to run the `all` test group, you would run the following lines in J
 ENV["PREDICTMD_TEST_GROUP"] = "all"
 import Pkg
 Pkg.test("PredictMD")
+Pkg.test("PredictMDExtra")
+Pkg.test("PredictMDFull")
 ```
 
 ## Available test groups
