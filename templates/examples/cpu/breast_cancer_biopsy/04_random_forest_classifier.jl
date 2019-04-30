@@ -209,7 +209,7 @@ rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PGFPlotsX.save(filename, random_forest_classifier_hist_training)
+PredictMD.save_plot(filename, random_forest_classifier_hist_training)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -219,6 +219,14 @@ end
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(random_forest_classifier_hist_training)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "random_forest_classifier_hist_training.pdf",
+        ),
+    random_forest_classifier_hist_training,
+    )
 
 random_forest_classifier_hist_testing =
     PredictMD.plotsinglelabelbinaryclassifierhistogram(
@@ -240,7 +248,7 @@ rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PGFPlotsX.save(filename, random_forest_classifier_hist_testing)
+PredictMD.save_plot(filename, random_forest_classifier_hist_testing)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -250,23 +258,41 @@ end
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(random_forest_classifier_hist_testing)
-
-PredictMD.singlelabelbinaryclassificationmetrics(
-    random_forest_classifier,
-    smoted_training_features_df,
-    smoted_training_labels_df,
-    single_label_name,
-    positive_class;
-    sensitivity = 0.95,
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "random_forest_classifier_hist_testing.pdf",
+        ),
+    random_forest_classifier_hist_testing,
     )
 
-PredictMD.singlelabelbinaryclassificationmetrics(
-    random_forest_classifier,
-    testing_features_df,
-    testing_labels_df,
-    single_label_name,
-    positive_class;
-    sensitivity = 0.95,
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        random_forest_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
+        single_label_name,
+        positive_class;
+        sensitivity = 0.95,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
+    )
+
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        random_forest_classifier,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        positive_class;
+        sensitivity = 0.95,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 random_forest_classifier_filename = joinpath(
