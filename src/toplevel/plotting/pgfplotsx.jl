@@ -35,6 +35,7 @@ function PGFPlotsX.save(
     underlying_object = get_underlying(p)
     try
         @info(string("Attempting to save plot..."))
+        mkpath(dirname(filename))
         PGFPlotsX.save(
             filename,
             underlying_object;
