@@ -216,9 +216,12 @@ show(
         single_label_name,
         positive_class;
         sensitivity = 0.95,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
+
 println(
     string(
         "Single label binary classification metrics, training set, ",
@@ -233,9 +236,12 @@ show(
         single_label_name,
         positive_class;
         specificity = 0.95,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
+
 println(
     string(
         "Single label binary classification metrics, training set, ",
@@ -250,9 +256,12 @@ show(
         single_label_name,
         positive_class;
         maximize = :f1score,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
+
 println(
     string(
         "Single label binary classification metrics, training set, ",
@@ -267,8 +276,10 @@ show(
         single_label_name,
         positive_class;
         maximize = :cohen_kappa,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 println(
@@ -285,9 +296,12 @@ show(
         single_label_name,
         positive_class;
         sensitivity = 0.95,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
+
 println(
     string(
         "Single label binary classification metrics, testing set, ",
@@ -302,9 +316,12 @@ show(
         single_label_name,
         positive_class;
         specificity = 0.95,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
+
 println(
     string(
         "Single label binary classification metrics, testing set, ",
@@ -319,9 +336,12 @@ show(
         single_label_name,
         positive_class;
         maximize = :f1score,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
+
 println(
     string(
         "Single label binary classification metrics, testing set, ",
@@ -336,8 +356,10 @@ show(
         single_label_name,
         positive_class;
         maximize = :cohen_kappa,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 rocplottesting = PredictMD.plotroccurves(
@@ -359,7 +381,7 @@ rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PGFPlotsX.save(filename, rocplottesting)
+PredictMD.save_plot(filename, rocplottesting)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -369,6 +391,14 @@ end
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(rocplottesting)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "rocplottesting.pdf",
+        ),
+    rocplottesting,
+    )
 
 prplottesting = PredictMD.plotprcurves(
     all_models,
@@ -389,7 +419,7 @@ rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PGFPlotsX.save(filename, prplottesting)
+PredictMD.save_plot(filename, prplottesting)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -399,6 +429,14 @@ end
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(prplottesting)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "prplottesting.pdf",
+        ),
+    prplottesting,
+    )
 
 ### End model comparison code
 

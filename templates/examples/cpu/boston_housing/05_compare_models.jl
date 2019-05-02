@@ -168,8 +168,10 @@ show(
         training_features_df,
         training_labels_df,
         single_label_name,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 println("Single label regression metrics, testing set: ")
@@ -179,8 +181,10 @@ show(
         testing_features_df,
         testing_labels_df,
         single_label_name,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 ### End model comparison code

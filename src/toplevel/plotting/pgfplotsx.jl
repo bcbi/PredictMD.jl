@@ -35,11 +35,29 @@ function PGFPlotsX.save(
     underlying_object = get_underlying(p)
     try
         @info(string("Attempting to save plot..."))
-        PGFPlotsX.save(filename,underlying_object;kwargs...)
+        mkpath(dirname(filename))
+        PGFPlotsX.save(
+            filename,
+            underlying_object;
+            kwargs...,
+            )
         @info(string("Saved plot to file: \"", filename, "\"",))
     catch e
         handle_plotting_error(e)
     end
+    return nothing
+end
+
+function save_plot(
+        filename::String,
+        p::PGFPlotsXPlot;
+        kwargs...,
+        )::Nothing
+    PGFPlotsX.save(
+        filename,
+        p;
+        kwargs...,
+        )
     return nothing
 end
 

@@ -259,7 +259,7 @@ rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PGFPlotsX.save(filename, knet_learningcurve_lossvsepoch)
+PredictMD.save_plot(filename, knet_learningcurve_lossvsepoch)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -269,6 +269,14 @@ end
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(knet_learningcurve_lossvsepoch)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "knet_learningcurve_lossvsepoch.pdf",
+        ),
+    knet_learningcurve_lossvsepoch,
+    )
 
 knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
     knet_mlp_regression,
@@ -288,7 +296,7 @@ rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PGFPlotsX.save(filename, knet_learningcurve_lossvsepoch_skip10epochs)
+PredictMD.save_plot(filename, knet_learningcurve_lossvsepoch_skip10epochs)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -298,6 +306,14 @@ end
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(knet_learningcurve_lossvsepoch_skip10epochs)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "knet_learningcurve_lossvsepoch_skip10epochs.pdf",
+        ),
+    knet_learningcurve_lossvsepoch_skip10epochs,
+    )
 
 knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
     knet_mlp_regression,
@@ -317,7 +333,7 @@ rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PGFPlotsX.save(filename, knet_learningcurve_lossvsiteration)
+PredictMD.save_plot(filename, knet_learningcurve_lossvsiteration)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -327,6 +343,14 @@ end
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(knet_learningcurve_lossvsiteration)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "knet_learningcurve_lossvsiteration.pdf",
+        ),
+    knet_learningcurve_lossvsiteration,
+    )
 
 knet_learningcurve_lossvsiteration_skip100iterations =
     PredictMD.plotlearningcurve(
@@ -349,7 +373,7 @@ rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PGFPlotsX.save(filename, knet_learningcurve_lossvsiteration_skip100iterations)
+PredictMD.save_plot(filename, knet_learningcurve_lossvsiteration_skip100iterations)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -359,6 +383,14 @@ end
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(knet_learningcurve_lossvsiteration_skip100iterations)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "knet_learningcurve_lossvsiteration_skip100iterations.pdf",
+        ),
+    knet_learningcurve_lossvsiteration_skip100iterations,
+    )
 
 knet_mlp_regression_plot_training =
     PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -379,7 +411,7 @@ rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PGFPlotsX.save(filename, knet_mlp_regression_plot_training)
+PredictMD.save_plot(filename, knet_mlp_regression_plot_training)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -389,6 +421,14 @@ end
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(knet_mlp_regression_plot_training)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "knet_mlp_regression_plot_training.pdf",
+        ),
+    knet_mlp_regression_plot_training,
+    )
 
 knet_mlp_regression_plot_testing =
     PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -409,7 +449,7 @@ rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PGFPlotsX.save(filename, knet_mlp_regression_plot_testing)
+PredictMD.save_plot(filename, knet_mlp_regression_plot_testing)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -419,19 +459,37 @@ end
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(knet_mlp_regression_plot_testing)
-
-PredictMD.singlelabelregressionmetrics(
-    knet_mlp_regression,
-    training_features_df,
-    training_labels_df,
-    single_label_name,
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "knet_mlp_regression_plot_testing.pdf",
+        ),
+    knet_mlp_regression_plot_testing,
     )
 
-PredictMD.singlelabelregressionmetrics(
-    knet_mlp_regression,
-    testing_features_df,
-    testing_labels_df,
-    single_label_name,
+show(
+    PredictMD.singlelabelregressionmetrics(
+        knet_mlp_regression,
+        training_features_df,
+        training_labels_df,
+        single_label_name,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
+    )
+
+show(
+    PredictMD.singlelabelregressionmetrics(
+        knet_mlp_regression,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 knet_mlp_regression_filename = joinpath(
