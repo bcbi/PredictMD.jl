@@ -156,6 +156,14 @@ linear_regression_plot_training =
 
 
 display(linear_regression_plot_training)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "linear_regression_plot_training.pdf",
+        ),
+    linear_regression_plot_training,
+    )
 
 linear_regression_plot_testing =
     PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -168,19 +176,37 @@ linear_regression_plot_testing =
 
 
 display(linear_regression_plot_testing)
-
-PredictMD.singlelabelregressionmetrics(
-    linear_regression,
-    training_features_df,
-    training_labels_df,
-    single_label_name,
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "linear_regression_plot_testing.pdf",
+        ),
+    linear_regression_plot_testing,
     )
 
-PredictMD.singlelabelregressionmetrics(
-    linear_regression,
-    testing_features_df,
-    testing_labels_df,
-    single_label_name,
+show(
+    PredictMD.singlelabelregressionmetrics(
+        linear_regression,
+        training_features_df,
+        training_labels_df,
+        single_label_name,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
+    )
+
+show(
+    PredictMD.singlelabelregressionmetrics(
+        linear_regression,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 linear_regression_filename = joinpath(

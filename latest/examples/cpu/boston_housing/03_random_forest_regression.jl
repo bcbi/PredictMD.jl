@@ -165,6 +165,14 @@ random_forest_regression_plot_training =
 
 
 display(random_forest_regression_plot_training)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "random_forest_regression_plot_training.pdf",
+        ),
+    random_forest_regression_plot_training,
+    )
 
 random_forest_regression_plot_testing =
     PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -177,19 +185,37 @@ random_forest_regression_plot_testing =
 
 
 display(random_forest_regression_plot_testing)
-
-PredictMD.singlelabelregressionmetrics(
-    random_forest_regression,
-    training_features_df,
-    training_labels_df,
-    single_label_name,
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "random_forest_regression_plot_testing.pdf",
+        ),
+    random_forest_regression_plot_testing,
     )
 
-PredictMD.singlelabelregressionmetrics(
-    random_forest_regression,
-    testing_features_df,
-    testing_labels_df,
-    single_label_name,
+show(
+    PredictMD.singlelabelregressionmetrics(
+        random_forest_regression,
+        training_features_df,
+        training_labels_df,
+        single_label_name,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
+    )
+
+show(
+    PredictMD.singlelabelregressionmetrics(
+        random_forest_regression,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 random_forest_regression_filename = joinpath(

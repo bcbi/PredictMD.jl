@@ -204,9 +204,12 @@ show(
         single_label_name,
         positive_class;
         sensitivity = 0.95,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
+
 println(
     string(
         "Single label binary classification metrics, training set, ",
@@ -221,9 +224,12 @@ show(
         single_label_name,
         positive_class;
         specificity = 0.95,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
+
 println(
     string(
         "Single label binary classification metrics, training set, ",
@@ -238,9 +244,12 @@ show(
         single_label_name,
         positive_class;
         maximize = :f1score,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
+
 println(
     string(
         "Single label binary classification metrics, training set, ",
@@ -255,8 +264,10 @@ show(
         single_label_name,
         positive_class;
         maximize = :cohen_kappa,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 println(
@@ -273,9 +284,12 @@ show(
         single_label_name,
         positive_class;
         sensitivity = 0.95,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
+
 println(
     string(
         "Single label binary classification metrics, testing set, ",
@@ -290,9 +304,12 @@ show(
         single_label_name,
         positive_class;
         specificity = 0.95,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
+
 println(
     string(
         "Single label binary classification metrics, testing set, ",
@@ -307,9 +324,12 @@ show(
         single_label_name,
         positive_class;
         maximize = :f1score,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
+
 println(
     string(
         "Single label binary classification metrics, testing set, ",
@@ -324,8 +344,10 @@ show(
         single_label_name,
         positive_class;
         maximize = :cohen_kappa,
-        ),
-    allcols=true,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 rocplottesting = PredictMD.plotroccurves(
@@ -339,6 +361,14 @@ rocplottesting = PredictMD.plotroccurves(
 
 
 display(rocplottesting)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "rocplottesting.pdf",
+        ),
+    rocplottesting,
+    )
 
 prplottesting = PredictMD.plotprcurves(
     all_models,
@@ -351,6 +381,14 @@ prplottesting = PredictMD.plotprcurves(
 
 
 display(prplottesting)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "prplottesting.pdf",
+        ),
+    prplottesting,
+    )
 
 ### End model comparison code
 

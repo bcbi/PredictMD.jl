@@ -386,6 +386,14 @@ random_forest_classifier_hist_training =
 
 
 display(random_forest_classifier_hist_training)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        &quot;plots&quot;,
+        &quot;random_forest_classifier_hist_training.pdf&quot;,
+        ),
+    random_forest_classifier_hist_training,
+    )
 
 random_forest_classifier_hist_testing =
     PredictMD.plotsinglelabelbinaryclassifierhistogram(
@@ -399,23 +407,41 @@ random_forest_classifier_hist_testing =
 
 
 display(random_forest_classifier_hist_testing)
-
-PredictMD.singlelabelbinaryclassificationmetrics(
-    random_forest_classifier,
-    smoted_training_features_df,
-    smoted_training_labels_df,
-    single_label_name,
-    positive_class;
-    sensitivity = 0.95,
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        &quot;plots&quot;,
+        &quot;random_forest_classifier_hist_testing.pdf&quot;,
+        ),
+    random_forest_classifier_hist_testing,
     )
 
-PredictMD.singlelabelbinaryclassificationmetrics(
-    random_forest_classifier,
-    testing_features_df,
-    testing_labels_df,
-    single_label_name,
-    positive_class;
-    sensitivity = 0.95,
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        random_forest_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
+        single_label_name,
+        positive_class;
+        sensitivity = 0.95,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
+    )
+
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        random_forest_classifier,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        positive_class;
+        sensitivity = 0.95,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 random_forest_classifier_filename = joinpath(

@@ -239,6 +239,14 @@ knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
 
 
 display(knet_learningcurve_lossvsepoch)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "knet_learningcurve_lossvsepoch.pdf",
+        ),
+    knet_learningcurve_lossvsepoch,
+    )
 
 knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
     knet_mlp_regression,
@@ -250,6 +258,14 @@ knet_learningcurve_lossvsepoch_skip10epochs = PredictMD.plotlearningcurve(
 
 
 display(knet_learningcurve_lossvsepoch_skip10epochs)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "knet_learningcurve_lossvsepoch_skip10epochs.pdf",
+        ),
+    knet_learningcurve_lossvsepoch_skip10epochs,
+    )
 
 knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
     knet_mlp_regression,
@@ -261,6 +277,14 @@ knet_learningcurve_lossvsiteration = PredictMD.plotlearningcurve(
 
 
 display(knet_learningcurve_lossvsiteration)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "knet_learningcurve_lossvsiteration.pdf",
+        ),
+    knet_learningcurve_lossvsiteration,
+    )
 
 knet_learningcurve_lossvsiteration_skip100iterations =
     PredictMD.plotlearningcurve(
@@ -275,6 +299,14 @@ knet_learningcurve_lossvsiteration_skip100iterations =
 
 
 display(knet_learningcurve_lossvsiteration_skip100iterations)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "knet_learningcurve_lossvsiteration_skip100iterations.pdf",
+        ),
+    knet_learningcurve_lossvsiteration_skip100iterations,
+    )
 
 knet_mlp_regression_plot_training =
     PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -287,6 +319,14 @@ knet_mlp_regression_plot_training =
 
 
 display(knet_mlp_regression_plot_training)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "knet_mlp_regression_plot_training.pdf",
+        ),
+    knet_mlp_regression_plot_training,
+    )
 
 knet_mlp_regression_plot_testing =
     PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -299,19 +339,37 @@ knet_mlp_regression_plot_testing =
 
 
 display(knet_mlp_regression_plot_testing)
-
-PredictMD.singlelabelregressionmetrics(
-    knet_mlp_regression,
-    training_features_df,
-    training_labels_df,
-    single_label_name,
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "knet_mlp_regression_plot_testing.pdf",
+        ),
+    knet_mlp_regression_plot_testing,
     )
 
-PredictMD.singlelabelregressionmetrics(
-    knet_mlp_regression,
-    testing_features_df,
-    testing_labels_df,
-    single_label_name,
+show(
+    PredictMD.singlelabelregressionmetrics(
+        knet_mlp_regression,
+        training_features_df,
+        training_labels_df,
+        single_label_name,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
+    )
+
+show(
+    PredictMD.singlelabelregressionmetrics(
+        knet_mlp_regression,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 knet_mlp_regression_filename = joinpath(

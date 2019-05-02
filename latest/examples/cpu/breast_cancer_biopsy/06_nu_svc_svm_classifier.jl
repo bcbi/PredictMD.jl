@@ -191,6 +191,14 @@ nu_svc_svm_classifier_hist_training =
 
 
 display(nu_svc_svm_classifier_hist_training)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "nu_svc_svm_classifier_hist_training.pdf",
+        ),
+    nu_svc_svm_classifier_hist_training,
+    )
 
 nu_svc_svm_classifier_hist_testing =
     PredictMD.plotsinglelabelbinaryclassifierhistogram(
@@ -204,23 +212,41 @@ nu_svc_svm_classifier_hist_testing =
 
 
 display(nu_svc_svm_classifier_hist_testing)
-
-PredictMD.singlelabelbinaryclassificationmetrics(
-    nu_svc_svm_classifier,
-    smoted_training_features_df,
-    smoted_training_labels_df,
-    single_label_name,
-    positive_class;
-    sensitivity = 0.95,
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "nu_svc_svm_classifier_hist_testing.pdf",
+        ),
+    nu_svc_svm_classifier_hist_testing,
     )
 
-PredictMD.singlelabelbinaryclassificationmetrics(
-    nu_svc_svm_classifier,
-    testing_features_df,
-    testing_labels_df,
-    single_label_name,
-    positive_class;
-    sensitivity = 0.95,
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        nu_svc_svm_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
+        single_label_name,
+        positive_class;
+        sensitivity = 0.95,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
+    )
+
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        nu_svc_svm_classifier,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        positive_class;
+        sensitivity = 0.95,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 nu_svc_svm_classifier_filename = joinpath(

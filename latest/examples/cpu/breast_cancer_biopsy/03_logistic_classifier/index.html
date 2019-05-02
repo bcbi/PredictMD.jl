@@ -387,6 +387,14 @@ logistic_hist_training =
 
 
 display(logistic_hist_training)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        &quot;plots&quot;,
+        &quot;logistic_hist_training.pdf&quot;,
+        ),
+    logistic_hist_training,
+    )
 
 logistic_hist_testing =
     PredictMD.plotsinglelabelbinaryclassifierhistogram(
@@ -400,23 +408,41 @@ logistic_hist_testing =
 
 
 display(logistic_hist_testing)
-
-PredictMD.singlelabelbinaryclassificationmetrics(
-    logistic_classifier,
-    smoted_training_features_df,
-    smoted_training_labels_df,
-    single_label_name,
-    positive_class;
-    sensitivity = 0.95,
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        &quot;plots&quot;,
+        &quot;logistic_hist_testing.pdf&quot;,
+        ),
+    logistic_hist_testing,
     )
 
-PredictMD.singlelabelbinaryclassificationmetrics(
-    logistic_classifier,
-    testing_features_df,
-    testing_labels_df,
-    single_label_name,
-    positive_class;
-    sensitivity = 0.95,
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        logistic_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
+        single_label_name,
+        positive_class;
+        sensitivity = 0.95,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
+    )
+
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        logistic_classifier,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        positive_class;
+        sensitivity = 0.95,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 logistic_calibration_curve =
@@ -432,14 +458,27 @@ logistic_calibration_curve =
 
 
 display(logistic_calibration_curve)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        &quot;plots&quot;,
+        &quot;logistic_calibration_curve.pdf&quot;,
+        ),
+    logistic_calibration_curve,
+    )
 
-PredictMD.probability_calibration_metrics(
-    logistic_classifier,
-    testing_features_df,
-    testing_labels_df,
-    single_label_name,
-    positive_class;
-    window = 0.1,
+show(
+    PredictMD.probability_calibration_metrics(
+        logistic_classifier,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        positive_class;
+        window = 0.1,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 logistic_cutoffs, logistic_risk_group_prevalences =
