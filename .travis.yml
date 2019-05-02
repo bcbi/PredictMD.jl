@@ -51,7 +51,7 @@ notifications:
 
 os:
     - linux
-    - osx
+#     - osx
 
 ############################################################################
 
@@ -101,7 +101,7 @@ jobs:
         #   script: ./ci/travis/script.sh "travis-1"
 
         - stage: travis-1
-          os: osx
+#           os: osx
           env:
             - JULIA_VER="1.1"
             - COMP_MODS="yes"
@@ -137,7 +137,7 @@ jobs:
         #   script: ./ci/travis/script.sh "travis-2"
 
         - stage: travis-2
-          os: osx
+#           os: osx
           env:
             - JULIA_VER="1.1"
             - COMP_MODS="yes"
@@ -173,7 +173,7 @@ jobs:
         #   script: ./ci/travis/script.sh "travis-3"
 
         - stage: travis-3
-          os: osx
+#           os: osx
           env:
             - JULIA_VER="1.1"
             - COMP_MODS="yes"
@@ -209,7 +209,7 @@ jobs:
         #   script: ./ci/travis/script.sh "travis-4"
 
         - stage: travis-4
-          os: osx
+#           os: osx
           env:
             - JULIA_VER="1.1"
             - COMP_MODS="yes"
@@ -245,7 +245,7 @@ jobs:
         #   script: ./ci/travis/script.sh "travis-5"
 
         - stage: travis-5
-          os: osx
+#           os: osx
           env:
             - JULIA_VER="1.1"
             - COMP_MODS="yes"
@@ -281,7 +281,7 @@ jobs:
         #   script: ./ci/travis/script.sh "travis-6"
 
         - stage: travis-6
-          os: osx
+#           os: osx
           env:
             - JULIA_VER="1.1"
             - COMP_MODS="yes"
@@ -317,7 +317,7 @@ jobs:
         #   script: ./ci/travis/script.sh "travis-7"
 
         - stage: travis-7
-          os: osx
+#           os: osx
           env:
             - JULIA_VER="1.1"
             - COMP_MODS="yes"
