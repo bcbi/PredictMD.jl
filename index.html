@@ -63,10 +63,16 @@
         </p>
         <h5 style="text-align:left">Docker image:</h5>
         <p class="text-justify">
-          Alternatively, you can use the official Docker image for easy installation:
+          Alternatively, you can use the PredictMD Docker image for easy installation. Download and start the container by running the following line:
         </p>
         <p>
-          <kbd>docker run -it dilumaluthge/predictmd /bin/bash</kbd>
+          <kbd>docker run --name predictmd -it dilumaluthge/predictmd /bin/bash</kbd>
+        </p>
+        <p class="text-justify">
+          After you have exited the container, you can return to it by running the following line:
+        </p>
+        <p>
+          <kbd>docker start -ai predictmd</kbd>
         </p>
         <h4>Citing</h4>
         <p class="text-justify">
