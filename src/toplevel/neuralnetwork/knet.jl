@@ -1,6 +1,5 @@
 ##### Beginning of file
 
-import AutoGrad
 import CUDAapi
 import GPUArrays
 import Knet
