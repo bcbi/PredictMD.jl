@@ -34,20 +34,9 @@ end
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 import PredictMDExtra
-import Test
 # PREDICTMD ELSE
 import PredictMDFull
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
-
-import Pkg
-try Pkg.add("GZip") catch end
-import GZip
-
-import Pkg
-try Pkg.add("StatsBase") catch end
-import StatsBase
-
-import Statistics
 
 Random.seed!(999)
 

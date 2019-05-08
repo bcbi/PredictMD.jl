@@ -34,24 +34,9 @@ end
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 import PredictMDExtra
-import Test
 # PREDICTMD ELSE
 import PredictMDFull
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
-
-import LinearAlgebra
-import Random
-import Statistics
-try Pkg.add("GLM") catch end
-try Pkg.add("Distributions") catch end
-try Pkg.add("StatsModels") catch end
-import GLM
-import Distributions
-import StatsModels
-
-import Pkg
-try Pkg.add("StatsBase") catch end
-import StatsBase
 
 Random.seed!(999)
 
