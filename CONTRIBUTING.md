@@ -427,7 +427,7 @@ Push the new release to GitHub:
 ```bash
 git push origin master # push the updated "master" branch
 git push origin develop # push the updated "develop" branch
-git push origin --tags # push the new "v3.6.0" tag
+git push origin --tags # push the newly created tag
 ```
 
 #### Step 18:
