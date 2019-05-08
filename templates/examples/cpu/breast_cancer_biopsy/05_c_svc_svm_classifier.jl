@@ -34,16 +34,9 @@ end
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 import PredictMDExtra
-import Test
 # PREDICTMD ELSE
 import PredictMDFull
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
-
-import Pkg
-try Pkg.add("StatsBase") catch end
-import StatsBase
-
-import Statistics
 
 Kernel = LIBSVM.Kernel
 
@@ -81,45 +74,53 @@ tuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "tuning_labels_df.csv",
     )
-trainingandtuning_features_df = CSV.read(
-    trainingandtuning_features_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+trainingandtuning_features_df = DataFrames.DataFrame(
+    FileIO.load(
+        trainingandtuning_features_df_filename;
+        type_detect_rows = 100,
+        )
     )
-trainingandtuning_labels_df = CSV.read(
-    trainingandtuning_labels_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+trainingandtuning_labels_df = DataFrames.DataFrame(
+    FileIO.load(
+        trainingandtuning_labels_df_filename;
+        type_detect_rows = 100,
+        )
     )
-testing_features_df = CSV.read(
-    testing_features_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+testing_features_df = DataFrames.DataFrame(
+    FileIO.load(
+        testing_features_df_filename;
+        type_detect_rows = 100,
+        )
     )
-testing_labels_df = CSV.read(
-    testing_labels_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+testing_labels_df = DataFrames.DataFrame(
+    FileIO.load(
+        testing_labels_df_filename;
+        type_detect_rows = 100,
+        )
     )
-training_features_df = CSV.read(
-    training_features_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+training_features_df = DataFrames.DataFrame(
+    FileIO.load(
+        training_features_df_filename;
+        type_detect_rows = 100,
+        )
     )
-training_labels_df = CSV.read(
-    training_labels_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+training_labels_df = DataFrames.DataFrame(
+    FileIO.load(
+        training_labels_df_filename;
+        type_detect_rows = 100,
+        )
     )
-tuning_features_df = CSV.read(
-    tuning_features_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+tuning_features_df = DataFrames.DataFrame(
+    FileIO.load(
+        tuning_features_df_filename;
+        type_detect_rows = 100,
+        )
     )
-tuning_labels_df = CSV.read(
-    tuning_labels_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+tuning_labels_df = DataFrames.DataFrame(
+    FileIO.load(
+        tuning_labels_df_filename;
+        type_detect_rows = 100,
+        )
     )
 
 smoted_training_features_df_filename = joinpath(
@@ -130,15 +131,17 @@ smoted_training_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "smoted_training_labels_df.csv",
     )
-smoted_training_features_df = CSV.read(
-    smoted_training_features_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+smoted_training_features_df = DataFrames.DataFrame(
+    FileIO.load(
+        smoted_training_features_df_filename;
+        type_detect_rows = 100,
+        )
     )
-smoted_training_labels_df = CSV.read(
-    smoted_training_labels_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+smoted_training_labels_df = DataFrames.DataFrame(
+    FileIO.load(
+        smoted_training_labels_df_filename;
+        type_detect_rows = 100,
+        )
     )
 
 categorical_feature_names_filename = joinpath(
@@ -211,7 +214,7 @@ rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PGFPlotsX.save(filename, c_svc_svm_classifier_hist_training)
+PredictMD.save_plot(filename, c_svc_svm_classifier_hist_training)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -221,6 +224,14 @@ end
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(c_svc_svm_classifier_hist_training)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "c_svc_svm_classifier_hist_training.pdf",
+        ),
+    c_svc_svm_classifier_hist_training,
+    )
 
 c_svc_svm_classifier_hist_testing =
     PredictMD.plotsinglelabelbinaryclassifierhistogram(
@@ -242,7 +253,7 @@ rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PGFPlotsX.save(filename, c_svc_svm_classifier_hist_testing)
+PredictMD.save_plot(filename, c_svc_svm_classifier_hist_testing)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -252,23 +263,41 @@ end
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(c_svc_svm_classifier_hist_testing)
-
-PredictMD.singlelabelbinaryclassificationmetrics(
-    c_svc_svm_classifier,
-    smoted_training_features_df,
-    smoted_training_labels_df,
-    single_label_name,
-    positive_class;
-    sensitivity = 0.95,
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "c_svc_svm_classifier_hist_testing.pdf",
+        ),
+    c_svc_svm_classifier_hist_testing,
     )
 
-PredictMD.singlelabelbinaryclassificationmetrics(
-    c_svc_svm_classifier,
-    testing_features_df,
-    testing_labels_df,
-    single_label_name,
-    positive_class;
-    sensitivity = 0.95,
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        c_svc_svm_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
+        single_label_name,
+        positive_class;
+        sensitivity = 0.95,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
+    )
+
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        c_svc_svm_classifier,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        positive_class;
+        sensitivity = 0.95,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 c_svc_svm_classifier_filename = joinpath(

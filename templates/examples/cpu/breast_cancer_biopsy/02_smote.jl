@@ -34,16 +34,9 @@ end
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 import PredictMDExtra
-import Test
 # PREDICTMD ELSE
 import PredictMDFull
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
-
-import Pkg
-try Pkg.add("StatsBase") catch end
-import StatsBase
-
-import Statistics
 
 Random.seed!(999)
 
@@ -79,45 +72,53 @@ tuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "tuning_labels_df.csv",
     )
-trainingandtuning_features_df = CSV.read(
-    trainingandtuning_features_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+trainingandtuning_features_df = DataFrames.DataFrame(
+    FileIO.load(
+        trainingandtuning_features_df_filename;
+        type_detect_rows = 100,
+        )
     )
-trainingandtuning_labels_df = CSV.read(
-    trainingandtuning_labels_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+trainingandtuning_labels_df = DataFrames.DataFrame(
+    FileIO.load(
+        trainingandtuning_labels_df_filename;
+        type_detect_rows = 100,
+        )
     )
-testing_features_df = CSV.read(
-    testing_features_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+testing_features_df = DataFrames.DataFrame(
+    FileIO.load(
+        testing_features_df_filename;
+        type_detect_rows = 100,
+        )
     )
-testing_labels_df = CSV.read(
-    testing_labels_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+testing_labels_df = DataFrames.DataFrame(
+    FileIO.load(
+        testing_labels_df_filename;
+        type_detect_rows = 100,
+        )
     )
-training_features_df = CSV.read(
-    training_features_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+training_features_df = DataFrames.DataFrame(
+    FileIO.load(
+        training_features_df_filename;
+        type_detect_rows = 100,
+        )
     )
-training_labels_df = CSV.read(
-    training_labels_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+training_labels_df = DataFrames.DataFrame(
+    FileIO.load(
+        training_labels_df_filename;
+        type_detect_rows = 100,
+        )
     )
-tuning_features_df = CSV.read(
-    tuning_features_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+tuning_features_df = DataFrames.DataFrame(
+    FileIO.load(
+        tuning_features_df_filename;
+        type_detect_rows = 100,
+        )
     )
-tuning_labels_df = CSV.read(
-    tuning_labels_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+tuning_labels_df = DataFrames.DataFrame(
+    FileIO.load(
+        tuning_labels_df_filename;
+        type_detect_rows = 100,
+        )
     )
 
 categorical_feature_names_filename = joinpath(

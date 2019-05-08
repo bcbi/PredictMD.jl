@@ -34,16 +34,9 @@ end
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 import PredictMDExtra
-import Test
 # PREDICTMD ELSE
 import PredictMDFull
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
-
-import Pkg
-try Pkg.add("StatsBase") catch end
-import StatsBase
-
-import Statistics
 
 Random.seed!(999)
 
@@ -79,45 +72,53 @@ tuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "tuning_labels_df.csv",
     )
-trainingandtuning_features_df = CSV.read(
-    trainingandtuning_features_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+trainingandtuning_features_df = DataFrames.DataFrame(
+    FileIO.load(
+        trainingandtuning_features_df_filename;
+        type_detect_rows = 100,
+        )
     )
-trainingandtuning_labels_df = CSV.read(
-    trainingandtuning_labels_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+trainingandtuning_labels_df = DataFrames.DataFrame(
+    FileIO.load(
+        trainingandtuning_labels_df_filename;
+        type_detect_rows = 100,
+        )
     )
-testing_features_df = CSV.read(
-    testing_features_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+testing_features_df = DataFrames.DataFrame(
+    FileIO.load(
+        testing_features_df_filename;
+        type_detect_rows = 100,
+        )
     )
-testing_labels_df = CSV.read(
-    testing_labels_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+testing_labels_df = DataFrames.DataFrame(
+    FileIO.load(
+        testing_labels_df_filename;
+        type_detect_rows = 100,
+        )
     )
-training_features_df = CSV.read(
-    training_features_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+training_features_df = DataFrames.DataFrame(
+    FileIO.load(
+        training_features_df_filename;
+        type_detect_rows = 100,
+        )
     )
-training_labels_df = CSV.read(
-    training_labels_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+training_labels_df = DataFrames.DataFrame(
+    FileIO.load(
+        training_labels_df_filename;
+        type_detect_rows = 100,
+        )
     )
-tuning_features_df = CSV.read(
-    tuning_features_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+tuning_features_df = DataFrames.DataFrame(
+    FileIO.load(
+        tuning_features_df_filename;
+        type_detect_rows = 100,
+        )
     )
-tuning_labels_df = CSV.read(
-    tuning_labels_df_filename,
-    DataFrames.DataFrame;
-    rows_for_type_detect = 100,
+tuning_labels_df = DataFrames.DataFrame(
+    FileIO.load(
+        tuning_labels_df_filename;
+        type_detect_rows = 100,
+        )
     )
 
 categorical_feature_names_filename = joinpath(
@@ -185,7 +186,7 @@ rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PGFPlotsX.save(filename, random_forest_regression_plot_training)
+PredictMD.save_plot(filename, random_forest_regression_plot_training)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -195,6 +196,14 @@ end
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(random_forest_regression_plot_training)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "random_forest_regression_plot_training.pdf",
+        ),
+    random_forest_regression_plot_training,
+    )
 
 random_forest_regression_plot_testing =
     PredictMD.plotsinglelabelregressiontrueversuspredicted(
@@ -215,7 +224,7 @@ rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PGFPlotsX.save(filename, random_forest_regression_plot_testing)
+PredictMD.save_plot(filename, random_forest_regression_plot_testing)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -225,19 +234,37 @@ end
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 display(random_forest_regression_plot_testing)
-
-PredictMD.singlelabelregressionmetrics(
-    random_forest_regression,
-    training_features_df,
-    training_labels_df,
-    single_label_name,
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "random_forest_regression_plot_testing.pdf",
+        ),
+    random_forest_regression_plot_testing,
     )
 
-PredictMD.singlelabelregressionmetrics(
-    random_forest_regression,
-    testing_features_df,
-    testing_labels_df,
-    single_label_name,
+show(
+    PredictMD.singlelabelregressionmetrics(
+        random_forest_regression,
+        training_features_df,
+        training_labels_df,
+        single_label_name,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
+    )
+
+show(
+    PredictMD.singlelabelregressionmetrics(
+        random_forest_regression,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
 random_forest_regression_filename = joinpath(

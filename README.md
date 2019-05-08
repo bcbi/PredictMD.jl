@@ -62,7 +62,9 @@ If you use PredictMD in research, please cite the software using the following D
 
 - [bcbi/PredictMDFull.jl](https://github.com/bcbi/PredictMDFull.jl) - Install PredictMD and all of its Julia dependencies
 - [bcbi/PredictMDExtra.jl](https://github.com/bcbi/PredictMDExtra.jl) - Install all of the Julia dependencies of PredictMD (but does not install PredictMD)
-- [bcbi/predictmd-conda-recipes](https://github.com/bcbi/predictmd-conda-recipes) - Conda recipes for building the binary dependencies that are required for plotting in PredictMD
+- [DilumAluthge/PredictMD-docker](https://github.com/DilumAluthge/PredictMD-docker) - Generate a custom Julia package registry, mirror, and depot for use on workstations without internet access
+- [bcbi/PredictMDRegistry](https://github.com/bcbi/PredictMDRegistry) - Julia package registry for PredictMD.jl and related packages
+- [DilumAluthge/OfflineRegistry](https://github.com/DilumAluthge/OfflineRegistry) - Generate a custom Julia package registry, mirror, and depot for use on workstations without internet access
 
 ## Contributing
 
@@ -79,7 +81,7 @@ If you would like to contribute to the PredictMD source code, please read the in
         <tr>
             <th></th>
             <th>master (stable)</th>
-            <th>develop (latest)</th>
+            <th>develop (latest/unstable)</th>
         </tr>
     </thead>
     <tbody>
