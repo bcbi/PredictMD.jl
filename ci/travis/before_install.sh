@@ -31,6 +31,7 @@ fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]];
 then
+    exit 1
     if [[ "$TRAVIS_JULIA_VERSION" == "1.1" ]];
     then
         export JULIA_URL="https://julialang-s3.julialang.org/bin/mac/x64/1.1/julia-1.1-latest-mac64.dmg"
