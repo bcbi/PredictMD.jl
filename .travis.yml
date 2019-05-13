@@ -42,6 +42,8 @@ git:
 language: bash
 
 matrix:
+    allow_failures:
+        - os: osx
     fast_finish: true
 
 notifications:
