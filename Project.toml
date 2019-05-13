@@ -1,7 +1,7 @@
 name = "PredictMD"
 uuid = "3e7d7328-36f8-4388-bd01-4613c92c7370"
 authors = ["Dilum Aluthge <dilum@aluthge.com>", "Ishan Sinha <ishan_sinha@brown.edu>", "Paul Stey <paulstey@gmail.com>", "Isabel Restrepo <isabelrestre@gmail.com>", "Elizabeth Chen <liz_chen@brown.edu>", "Neil Sarkar <neil_sarkar@brown.edu>", "Brown Center for Biomedical Informatics <bcbi@brown.edu>"]
-version = "0.27.0"
+version = "0.28.0"
 
 [deps]
 Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
@@ -37,7 +37,6 @@ MbedTLS = "739be429-bea8-5141-9913-cc70e7f3736d"
 Metalhead = "dbeba491-748d-5e0e-a39e-b530a07fa0cc"
 NNlib = "872c559c-99b0-510c-b3b7-b6c96a88d5cd"
 NumericalIntegration = "e7bfaba1-d571-5449-8927-abc22e82249b"
-OnlineStats = "a15396b6-48d5-5d58-9928-6d29437db91e"
 PGFPlotsX = "8314cec4-20b6-5062-9cdb-752b83310925"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 ProgressMeter = "92933f4c-e287-5a05-a399-4b506db050ca"
