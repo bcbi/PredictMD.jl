@@ -1,7 +1,7 @@
 name = "PredictMD"
 uuid = "3e7d7328-36f8-4388-bd01-4613c92c7370"
 authors = ["Dilum Aluthge <dilum@aluthge.com>", "Ishan Sinha <ishan_sinha@brown.edu>", "Paul Stey <paulstey@gmail.com>", "Isabel Restrepo <isabelrestre@gmail.com>", "Elizabeth Chen <liz_chen@brown.edu>", "Neil Sarkar <neil_sarkar@brown.edu>", "Brown Center for Biomedical Informatics <bcbi@brown.edu>"]
-version = "0.28.0"
+version = "0.29.0-DEV"
 
 [deps]
 Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
