@@ -62,7 +62,6 @@ then
     julia $JULIA_FLAGS -e 'import Pkg;Pkg.Registry.update();'
     julia $JULIA_FLAGS -e 'import Pkg;Pkg.Registry.add("General");'
     julia $JULIA_FLAGS -e 'import Pkg;Pkg.build("PredictMD");'
-    julia $JULIA_FLAGS -e 'import PredictMD;'
     julia $JULIA_FLAGS -e 'import Pkg;Pkg.test("PredictMD"; coverage=true);'
     if [[ "$GROUP" == "$LAST_GROUP" ]]; then
         julia $JULIA_FLAGS -e 'import Pkg;include(joinpath(Pkg.dir("PredictMD"), "docs", "make.jl",));'
