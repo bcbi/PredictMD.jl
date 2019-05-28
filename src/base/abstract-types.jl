@@ -1,5 +1,7 @@
 ##### Beginning of file
 
+abstract type Fittable end
+
 """
     AbstractPlot{T}
 """
@@ -8,7 +10,7 @@ abstract type AbstractPlot{T} end
 """
     AbstractEstimator
 """
-abstract type AbstractEstimator end
+abstract type AbstractEstimator <: Fittable end
 
 """
     AbstractFeatureContrasts
@@ -21,19 +23,12 @@ end
 """
     AbstractPipeline
 """
-abstract type AbstractPipeline end
+abstract type AbstractPipeline <: Fittable end
 
 """
     AbstractTransformer
 """
-abstract type AbstractTransformer end
-
-const Fittable = Union{AbstractEstimator,AbstractPipeline,AbstractTransformer}
-
-"""
-    Fittable
-"""
-Fittable
+abstract type AbstractTransformer <: Fittable end
 
 abstract type AbstractNonExistentUnderlyingObject end
 
