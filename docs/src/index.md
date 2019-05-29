@@ -7,11 +7,10 @@ interface for machine learning.
 
 ## Installation
 
-To install PredictMD, open a Julia session
- (e.g. open a terminal, type `julia`, and press enter)
- and run the following command:
+PredictMD is registered in the Julia General registry. Therefore, to install PredictMD, simply open Julia and run the following two lines:
 ```julia
-Pkg.clone("https://github.com/bcbi/PredictMD.jl")
+import Pkg
+Pkg.add("PredictMDFull")
 ```
 
 ## Running the package tests
