@@ -570,6 +570,7 @@ The final step is to go to the Zenodo entry for the newly created release and pu
 | `https://predictmd.net/vMAJOR.MINOR.PATCH` | documents this upload |
 | `https://github.com/bcbi/PredictMD.jl/releases/tag/vMAJOR.MINOR.PATCH` | is an alternate identifier of this upload |
 | `https://github.com/bcbi/PredictMD.jl/tree/vMAJOR.MINOR.PATCH` | is an alternate identifier of this upload |
+| `https://github.com/bcbi/PredictMD.jl/tree/vMAJOR.MINOR.PATCH` | is supplemented by this upload |
 
 After you have entered the correct information in all of the above fields, click the white "Save" button, and then click the blue "Publish" button. Congratulations, you are finished!
 
