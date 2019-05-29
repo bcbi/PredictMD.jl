@@ -11,8 +11,8 @@
 | Table of Contents |
 | ----------------- |
 | [1. Installation](#installation) |
-| [2. Run the test suite after installing](#) |
-| [3. Docker image](#) |
+| [2. Run the test suite after installing](#run-the-test-suite-after-installing) |
+| [3. Docker image](#docker-image) |
 | [4. Documentation](#documentation) |
 | [5. Citing](#citing) |
 | [6. Related Repositories](#related-repositories) |
