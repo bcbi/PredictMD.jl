@@ -11,12 +11,14 @@
 | Table of Contents |
 | ----------------- |
 | [1. Installation](#installation) |
-| [2. Documentation](#documentation) |
-| [3. Citing](#citing) |
-| [4. Related Repositories](#related-repositories) |
-| [5. Contributing](#contributing) |
-| [6. Repository Status](#repository-status) |
-| [7. CI/CD](#cicd) |
+| [2. Run the test suite after installing](#) |
+| [3. Docker image](#) |
+| [4. Documentation](#documentation) |
+| [5. Citing](#citing) |
+| [6. Related Repositories](#related-repositories) |
+| [7. Contributing](#contributing) |
+| [8. Repository Status](#repository-status) |
+| [9. CI/CD](#cicd) |
 
 ## Installation
 
@@ -26,13 +28,24 @@ import Pkg
 Pkg.add("PredictMDFull")
 ```
 
-### Run the test suite after installing
+## Run the test suite after installing
 
 After you install PredictMD, you should run the test suite to make sure that
 everything is working. You can run the test suite with the following
 Julia command:
 ```julia
 Pkg.test("PredictMD")
+```
+
+## Docker image
+Alternatively, you can use the PredictMD Docker image for easy installation. Download and start the container by running the following line: 
+```bash
+docker run --name predictmd -it dilumaluthge/predictmd /bin/bash
+```
+
+After you have exited the container, you can return to it by running the following line:
+```bash
+docker start -ai predictmd 
 ```
 
 ## Documentation
