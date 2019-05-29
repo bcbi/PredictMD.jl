@@ -20,22 +20,10 @@
 
 ## Installation
 
-PredictMD requires Julia version 1.1 or greater.
-
-### macOS and GNU/Linux
-
-Open a new terminal and run the following line:
-```bash
- curl https://predictmd.net/install.jl | julia 
-```
-
-### Windows and all other platforms
-
-Step 1: Download the following file and save it to your computer: [https://predictmd.net/install.jl](https://predictmd.net/install.jl)
-
-Step 2: Navigate to the location of the file saved in step 1, and run the file with Julia, for example:
-```bash
-julia install.jl
+PredictMD is registered in the Julia General registry. Therefore, to install PredictMD, simply open Julia and run the following two lines:
+```julia
+import Pkg
+Pkg.add("PredictMDFull")
 ```
 
 ### Run the test suite after installing
