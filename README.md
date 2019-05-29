@@ -61,11 +61,14 @@ If you use PredictMD in research, please cite the software using the following D
 
 ## Related Repositories
 
-- [bcbi/PredictMDFull.jl](https://github.com/bcbi/PredictMDFull.jl) - Install PredictMD and all of its Julia dependencies
-- [bcbi/PredictMDExtra.jl](https://github.com/bcbi/PredictMDExtra.jl) - Install all of the Julia dependencies of PredictMD (but does not install PredictMD)
-- [DilumAluthge/PredictMD-docker](https://github.com/DilumAluthge/PredictMD-docker) - Generate a custom Julia package registry, mirror, and depot for use on workstations without internet access
-- [bcbi/BCBIRegistry](https://github.com/bcbi/BCBIRegistry) - Julia package registry for PredictMD.jl and related packages
-- [DilumAluthge/OfflineRegistry](https://github.com/DilumAluthge/OfflineRegistry) - Generate a custom Julia package registry, mirror, and depot for use on workstations without internet access
+- [BCBIRegistry](https://github.com/bcbi/BCBIRegistry) - Julia package registry for the Brown Center for Biomedical Informatics (BCBI)
+- [ClassImbalance.jl](https://github.com/bcbi/ClassImbalance.jl) - Sampling-based methods for correcting for class imbalance in two-category classification problems
+- [OfflineRegistry](https://github.com/DilumAluthge/OfflineRegistry) - Generate a custom Julia package registry, mirror, and depot for use on workstations without internet access
+- [PredictMD-docker](https://github.com/DilumAluthge/PredictMD-docker) - Docker and Singularity images for PredictMD
+- [PredictMD-roadmap](https://github.com/bcbi/PredictMD-roadmap) - Roadmap for the PredictMD machine learning pipeline
+- [PredictMD.jl](https://github.com/bcbi/PredictMD.jl) - Uniform interface for machine learning in Julia
+- [PredictMDExtra.jl](https://github.com/bcbi/PredictMDExtra.jl) - Install all of the dependencies of PredictMD (but not PredictMD itself)
+- [PredictMDFull.jl](https://github.com/bcbi/PredictMDFull.jl) - Install PredictMD and all of its dependencies
 
 ## Contributing
 
