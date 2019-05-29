@@ -4,7 +4,7 @@ __precompile__(true)
 
 """
 """
-module PredictMDGlueMLJ # begin module PredictMDGlueMLJ
+module PredictMD_Glue_MLJ # begin module PredictMD_Glue_MLJ
 
 import MLJ
 import MLJBase
@@ -21,6 +21,6 @@ function __init__()::Nothing
     return nothing
 end
 
-end # end module PredictMDGlueMLJ
+end # end module PredictMD_Glue_MLJ
 
 ##### End of file

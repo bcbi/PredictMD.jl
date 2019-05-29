@@ -12,7 +12,7 @@ function __init__()::Nothing
         "predictmd_glue_modules",
         )
     predictmd_glue_modules_list = String[
-        "PredictMDGlueMLJ",
+        "PredictMD_Glue_MLJ",
         ]
     for glue_module_name in predictmd_glue_modules_list
         pushfirst!(
@@ -31,7 +31,7 @@ function __init__()::Nothing
         if _predictmd_has_MLJ[] &&
                 _predictmd_has_MLJBase[] &&
                 _predictmd_has_MLJModels[]
-            import PredictMDGlueMLJ
+            import PredictMD_Glue_MLJ
         end
     end
 
@@ -41,7 +41,7 @@ function __init__()::Nothing
         if _predictmd_has_MLJ[] &&
                 _predictmd_has_MLJBase[] &&
                 _predictmd_has_MLJModels[]
-            import PredictMDGlueMLJ
+            import PredictMD_Glue_MLJ
         end
     end
 
@@ -51,7 +51,7 @@ function __init__()::Nothing
         if _predictmd_has_MLJ[] &&
                 _predictmd_has_MLJBase[] &&
                 _predictmd_has_MLJModels[]
-            import PredictMDGlueMLJ
+            import PredictMD_Glue_MLJ
         end
     end
 
