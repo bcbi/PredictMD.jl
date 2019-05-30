@@ -1,9 +1,3 @@
-##### Beginning of file
-
-# Lines starting with '#' are comments.
-# Each line is a file pattern followed by one or more owners.
-
-# These owners will be the default owners for everything in the repo.
-*        @DilumAluthge
-
-##### End of file
+# global owners:
+# Dilum Aluthge <dilum@aluthge.com> github.com/DilumAluthge
+*       @DilumAluthge

@@ -11,40 +11,41 @@
 | Table of Contents |
 | ----------------- |
 | [1. Installation](#installation) |
-| [2. Documentation](#documentation) |
-| [3. Citing](#citing) |
-| [4. Related Repositories](#related-repositories) |
-| [5. Contributing](#contributing) |
-| [6. Repository Status](#repository-status) |
-| [7. CI/CD](#cicd) |
+| [2. Run the test suite after installing](#run-the-test-suite-after-installing) |
+| [3. Docker image](#docker-image) |
+| [4. Documentation](#documentation) |
+| [5. Citing](#citing) |
+| [6. Related Repositories](#related-repositories) |
+| [7. Contributing](#contributing) |
+| [8. Repository Status](#repository-status) |
+| [9. CI/CD](#cicd) |
 
 ## Installation
 
-PredictMD requires Julia version 1.1 or greater.
-
-### macOS and GNU/Linux
-
-Open a new terminal and run the following line:
-```bash
- curl https://predictmd.net/install.jl | julia 
+PredictMD is registered in the Julia General registry. Therefore, to install PredictMD, simply open Julia and run the following two lines:
+```julia
+import Pkg
+Pkg.add("PredictMDFull")
 ```
 
-### Windows and all other platforms
-
-Step 1: Download the following file and save it to your computer: [https://predictmd.net/install.jl](https://predictmd.net/install.jl)
-
-Step 2: Navigate to the location of the file saved in step 1, and run the file with Julia, for example:
-```bash
-julia install.jl
-```
-
-### Run the test suite after installing
+## Run the test suite after installing
 
 After you install PredictMD, you should run the test suite to make sure that
 everything is working. You can run the test suite with the following
 Julia command:
 ```julia
 Pkg.test("PredictMD")
+```
+
+## Docker image
+Alternatively, you can use the PredictMD Docker image for easy installation. Download and start the container by running the following line: 
+```bash
+docker run --name predictmd -it dilumaluthge/predictmd /bin/bash
+```
+
+After you have exited the container, you can return to it by running the following line:
+```bash
+docker start -ai predictmd 
 ```
 
 ## Documentation
@@ -60,11 +61,14 @@ If you use PredictMD in research, please cite the software using the following D
 
 ## Related Repositories
 
-- [bcbi/PredictMDFull.jl](https://github.com/bcbi/PredictMDFull.jl) - Install PredictMD and all of its Julia dependencies
-- [bcbi/PredictMDExtra.jl](https://github.com/bcbi/PredictMDExtra.jl) - Install all of the Julia dependencies of PredictMD (but does not install PredictMD)
-- [DilumAluthge/PredictMD-docker](https://github.com/DilumAluthge/PredictMD-docker) - Generate a custom Julia package registry, mirror, and depot for use on workstations without internet access
-- [bcbi/PredictMDRegistry](https://github.com/bcbi/PredictMDRegistry) - Julia package registry for PredictMD.jl and related packages
-- [DilumAluthge/OfflineRegistry](https://github.com/DilumAluthge/OfflineRegistry) - Generate a custom Julia package registry, mirror, and depot for use on workstations without internet access
+- [BCBIRegistry](https://github.com/bcbi/BCBIRegistry) - Julia package registry for the Brown Center for Biomedical Informatics (BCBI)
+- [ClassImbalance.jl](https://github.com/bcbi/ClassImbalance.jl) - Sampling-based methods for correcting for class imbalance in two-category classification problems
+- [OfflineRegistry](https://github.com/DilumAluthge/OfflineRegistry) - Generate a custom Julia package registry, mirror, and depot for use on workstations without internet access
+- [PredictMD-docker](https://github.com/DilumAluthge/PredictMD-docker) - Docker and Singularity images for PredictMD
+- [PredictMD-roadmap](https://github.com/bcbi/PredictMD-roadmap) - Roadmap for the PredictMD machine learning pipeline
+- [PredictMD.jl](https://github.com/bcbi/PredictMD.jl) - Uniform interface for machine learning in Julia
+- [PredictMDExtra.jl](https://github.com/bcbi/PredictMDExtra.jl) - Install all of the dependencies of PredictMD (but not PredictMD itself)
+- [PredictMDFull.jl](https://github.com/bcbi/PredictMDFull.jl) - Install PredictMD and all of its dependencies
 
 ## Contributing
 

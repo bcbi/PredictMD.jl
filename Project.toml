@@ -1,7 +1,8 @@
 name = "PredictMD"
 uuid = "3e7d7328-36f8-4388-bd01-4613c92c7370"
 authors = ["Dilum Aluthge <dilum@aluthge.com>", "Ishan Sinha <ishan_sinha@brown.edu>", "Paul Stey <paulstey@gmail.com>", "Isabel Restrepo <isabelrestre@gmail.com>", "Elizabeth Chen <liz_chen@brown.edu>", "Neil Sarkar <neil_sarkar@brown.edu>", "Brown Center for Biomedical Informatics <bcbi@brown.edu>"]
-version = "0.28.0"
+version = "0.29.0"
+doi = "10.5281/zenodo.1291209"
 
 [deps]
 Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
@@ -17,6 +18,8 @@ DataDeps = "124859b0-ceae-595e-8997-d05f6a7a8dfe"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 DecisionTree = "7806a523-6efd-50cb-b5f6-3fa6f1930dbb"
 DefaultApplication = "3f0dd361-4fe0-5fc6-8523-80b14ec94d85"
+DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
+Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"

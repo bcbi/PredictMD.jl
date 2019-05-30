@@ -58,11 +58,10 @@ echo "DO_TESTS=$DO_TESTS"
 
 if [[ "$DO_TESTS" == "true" ]];
 then
-    julia $JULIA_FLAGS -e 'import Pkg;Pkg.Registry.add(Pkg.RegistrySpec(name="PredictMDRegistry",url="https://github.com/bcbi/PredictMDRegistry.git",uuid="26a550a3-39fe-4af4-af6d-e8814c2b6dd9",));'
+    julia $JULIA_FLAGS -e 'import Pkg;Pkg.Registry.add(Pkg.RegistrySpec(name="BCBIRegistry",url="https://github.com/bcbi/BCBIRegistry.git",uuid="26a550a3-39fe-4af4-af6d-e8814c2b6dd9",));'
     julia $JULIA_FLAGS -e 'import Pkg;Pkg.Registry.update();'
     julia $JULIA_FLAGS -e 'import Pkg;Pkg.Registry.add("General");'
     julia $JULIA_FLAGS -e 'import Pkg;Pkg.build("PredictMD");'
-    julia $JULIA_FLAGS -e 'import PredictMD;'
     julia $JULIA_FLAGS -e 'import Pkg;Pkg.test("PredictMD"; coverage=true);'
     if [[ "$GROUP" == "$LAST_GROUP" ]]; then
         julia $JULIA_FLAGS -e 'import Pkg;include(joinpath(Pkg.dir("PredictMD"), "docs", "make.jl",));'
