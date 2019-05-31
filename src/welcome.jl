@@ -6,7 +6,7 @@ function _print_welcome_message()::Nothing
     predictmd_pkgdir::String = package_directory()
     @info(
         string(
-            "This is PredictMD, version $(predictmd_version) ",
+            "This is PredictMD, version $(predictmd_version), ",
             "code name \"$(predictmd_version_codename)\"",
             )
         )
