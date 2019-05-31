@@ -32,8 +32,8 @@ function _version_string()::String
     predictmd_toml_file::_TomlFile = _TomlFile(
         package_directory("Project.toml")
         )
-    result_versionstring::String = _version_string(predictmd_toml_file)
-    return result_versionstring
+    result_version_string::String = _version_string(predictmd_toml_file)
+    return result_version_string
 end
 
 function _version_string(m::Method)::String
@@ -41,8 +41,8 @@ function _version_string(m::Method)::String
     m_toml_file::_TomlFile = _TomlFile(
         joinpath(m_package_directory, "Project.toml")
         )
-    result_versionstring::String = _version_string(m_toml_file)
-    return result_versionstring
+    result_version_string::String = _version_string(m_toml_file)
+    return result_version_string
 end
 
 function _version_string(f::Function)::String
@@ -50,8 +50,8 @@ function _version_string(f::Function)::String
     m_toml_file::_TomlFile = _TomlFile(
         joinpath(m_package_directory, "Project.toml")
         )
-    result_versionstring::String = _version_string(m_toml_file)
-    return result_versionstring
+    result_version_string::String = _version_string(m_toml_file)
+    return result_version_string
 end
 
 function _version_string(f::Function, types::Tuple)::String
@@ -59,8 +59,8 @@ function _version_string(f::Function, types::Tuple)::String
     m_toml_file::_TomlFile = _TomlFile(
         joinpath(m_package_directory, "Project.toml")
         )
-    result_versionstring::String = _version_string(m_toml_file)
-    return result_versionstring
+    result_version_string::String = _version_string(m_toml_file)
+    return result_version_string
 end
 
 function _version_string(m::Module)::String
@@ -68,8 +68,8 @@ function _version_string(m::Module)::String
     m_toml_file::_TomlFile = _TomlFile(
         joinpath(m_package_directory, "Project.toml")
         )
-    result_versionstring::String = _version_string(m_toml_file)
-    return result_versionstring
+    result_version_string::String = _version_string(m_toml_file)
+    return result_version_string
 end
 
 """
@@ -78,8 +78,8 @@ end
 Return the version number of PredictMD.
 """
 function version()::VersionNumber
-    result_versionstring::String = _version_string()
-    result_versionnumber::VersionNumber = VersionNumber(result_versionstring)
+    result_version_string::String = _version_string()
+    result_versionnumber::VersionNumber = VersionNumber(result_version_string)
     return result_versionnumber
 end
 
@@ -93,8 +93,8 @@ If method `m`
 is not part of a Julia package, throws an error.
 """
 function version(m::Method)::VersionNumber
-    result_versionstring::String = _version_string(m)
-    result_versionnumber::VersionNumber = VersionNumber(result_versionstring)
+    result_version_string::String = _version_string(m)
+    result_versionnumber::VersionNumber = VersionNumber(result_version_string)
     return result_versionnumber
 end
 
@@ -109,8 +109,8 @@ If function `f`
 is not part of a Julia package, throws an error.
 """
 function version(f::Function)::VersionNumber
-    result_versionstring::String = _version_string(f)
-    result_versionnumber::VersionNumber = VersionNumber(result_versionstring)
+    result_version_string::String = _version_string(f)
+    result_versionnumber::VersionNumber = VersionNumber(result_version_string)
     return result_versionnumber
 end
 
@@ -125,8 +125,8 @@ If function `f` with type signature `types`
 is not part of a Julia package, throws an error.
 """
 function version(f::Function, types::Tuple)::VersionNumber
-    result_versionstring::String = _version_string(f, types)
-    result_versionnumber::VersionNumber = VersionNumber(result_versionstring)
+    result_version_string::String = _version_string(f, types)
+    result_versionnumber::VersionNumber = VersionNumber(result_version_string)
     return result_versionnumber
 end
 
@@ -139,8 +139,8 @@ that package.
 If module `m` is not part of a Julia package, throws an error.
 """
 function version(m::Module)::VersionNumber
-    result_versionstring::String = _version_string(m)
-    result_versionnumber::VersionNumber = VersionNumber(result_versionstring)
+    result_version_string::String = _version_string(m)
+    result_versionnumber::VersionNumber = VersionNumber(result_version_string)
     return result_versionnumber
 end
 

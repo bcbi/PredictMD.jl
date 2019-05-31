@@ -59,12 +59,18 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
                     "test_pkg_dir.jl",
                     )
                 )
-            testmodulea_filename::String = joinpath("TestModuleA", "TestModuleA.jl")
-            testmoduleb_filename::String  = joinpath(
+            testmodulea_filename::String = joinpath(
+                "TestModuleA",
+                "TestModuleA.jl",
+                )
+            testmoduleb_filename::String = joinpath(
                 "TestModuleB", "directory1", "directory2", "directory3",
                 "directory4", "directory5", "TestModuleB.jl",
                 )
-            testmodulec_filename::String  = joinpath(mktempdir(), "TestModuleC.jl")
+            testmodulec_filename::String = joinpath(
+                mktempdir(),
+                "TestModuleC.jl",
+                )
             rm(testmodulec_filename; force = true, recursive = true)
             open(testmodulec_filename, "w") do io
                 write(io, "module TestModuleC end")
@@ -75,6 +81,7 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
             include(joinpath("test_package_directory.jl"))
             include(joinpath("test_registry_url_list.jl"))
             include(joinpath("test_version.jl"))
+            include(joinpath("test_version_codename.jl"))
         end
 
         Test.@testset "code_loading              " begin
