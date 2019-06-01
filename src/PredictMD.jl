@@ -12,6 +12,7 @@ using Random
 include(joinpath("package_directory.jl"))
 include(joinpath("registry_url_list.jl"))
 include(joinpath("version.jl"))
+include(joinpath("version_codename.jl"))
 include(joinpath("welcome.jl"))
 include(joinpath("init.jl"))
 
