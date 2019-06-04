@@ -8,6 +8,10 @@
 
 [PredictMD](https://predictmd.net) is a free and open-source Julia package that provides a uniform interface for machine learning.
 
+PredictMD makes it easy to automate machine learning workflows and create reproducible machine learning pipelines.
+
+It is the official machine learning package of the Brown Center for Biomedical Informatics (BCBI).
+
 | Table of Contents |
 | ----------------- |
 | [1. Installation](#installation) |
@@ -22,19 +26,22 @@
 
 ## Installation
 
-PredictMD is registered in the Julia General registry. Therefore, to install PredictMD, simply open Julia and run the following two lines:
+PredictMD is registered in the Julia General registry. Therefore, to install PredictMD, simply open Julia and run the following three lines:
 ```julia
 import Pkg
 Pkg.add("PredictMDFull")
+import PredictMDFull
 ```
 
 ## Run the test suite after installing
 
 After you install PredictMD, you should run the test suite to make sure that
-everything is working. You can run the test suite with the following
-Julia command:
+everything is working. You can run the test suite by running the following four lines in Julia:
 ```julia
+import Pkg
 Pkg.test("PredictMD")
+Pkg.test("PredictMDExtra")
+Pkg.test("PredictMDFull")
 ```
 
 ## Docker image
