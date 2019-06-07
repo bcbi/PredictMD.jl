@@ -227,7 +227,7 @@ function singlelabelbinaryclassdataframelogisticclassifier(
         name::AbstractString = "",
         )
     if package == :GLM
-        result =singlelabelbinaryclassdataframelogisticclassifier_GLM(
+        result = singlelabelbinaryclassdataframelogisticclassifier_GLM(
             feature_names,
             single_label_name,
             single_label_levels;
@@ -309,7 +309,7 @@ function singlelabelbinaryclassdataframeprobitclassifier(
         name::AbstractString = "",
         )
     if package == :GLM
-        result =singlelabelbinaryclassdataframeprobitclassifier_GLM(
+        result = singlelabelbinaryclassdataframeprobitclassifier_GLM(
             feature_names,
             single_label_name,
             single_label_levels;
@@ -365,7 +365,7 @@ function single_labeldataframelinearregression(
         name::AbstractString = "",
         )
     if package == :GLM
-        result =single_labeldataframelinearregression_GLM(
+        result = single_labeldataframelinearregression_GLM(
             feature_names,
             single_label_name;
             intercept = intercept,
