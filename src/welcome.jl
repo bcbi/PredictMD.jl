@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-function _print_welcome_message()::Nothing
+function print_welcome_message()::Nothing
     predictmd_version::VersionNumber = version()
     predictmd_version_codename::String = version_codename()
     predictmd_pkgdir::String = package_directory()

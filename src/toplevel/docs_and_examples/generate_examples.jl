@@ -3,7 +3,7 @@
 import Documenter
 import Literate
 
-function _preprocess_example_shared(
+function preprocess_example_shared(
         content::AbstractString;
         )::String
     pattern = r"error\(string\(\"This file is not meant to be run\. Use the `PredictMD\.generate_examples\(\)` function to generate examples that you can run\.\"\)\)\n{0,5}"
@@ -36,16 +36,16 @@ function _preprocess_example_shared(
     return content
 end
 
-function _get_if_include_test_statements_regex()::Regex
+function get_if_include_test_statements_regex()::Regex
     test_statements_regex::Regex = r"# PREDICTMD IF INCLUDE TEST STATEMENTS\n([\S\s]*?)# PREDICTMD ELSE\n([\S\s]*?)# PREDICTMD ENDIF INCLUDE TEST STATEMENTS\n{0,5}"
     return test_statements_regex
 end
 
-function _preprocess_example_do_not_include_test_statements(
+function preprocess_example_do_not_include_test_statements(
         content::AbstractString;
         )::String
-    content::String = _preprocess_example_shared(content)
-    test_statements_regex::Regex = _get_if_include_test_statements_regex()
+    content::String = preprocess_example_shared(content)
+    test_statements_regex::Regex = get_if_include_test_statements_regex()
     for m in eachmatch(test_statements_regex, content)
         original_text::String = String(m.match)
         replacement_text = string(strip(String(m[2])), "\n\n",)
@@ -54,11 +54,11 @@ function _preprocess_example_do_not_include_test_statements(
     return content
 end
 
-function _preprocess_example_include_test_statements(
+function preprocess_example_include_test_statements(
         content::AbstractString;
         )::String
-    content::String = _preprocess_example_shared(content)
-    test_statements_regex::Regex = _get_if_include_test_statements_regex()
+    content::String = preprocess_example_shared(content)
+    test_statements_regex::Regex = get_if_include_test_statements_regex()
     for m in eachmatch(test_statements_regex, content)
         original_text::String = String(m.match)
         replacement_text = string(strip(String(m[1])), "\n\n",)
@@ -67,7 +67,7 @@ function _preprocess_example_include_test_statements(
     return content
 end
 
-function _fix_example_blocks(filename::AbstractString)::Nothing
+function fix_example_blocks(filename::AbstractString)::Nothing
     if filename_extension(filename) == ".md"
         content = read(filename, String)
         rm(filename; force = true, recursive = true,)
@@ -109,9 +109,9 @@ function generate_examples(
     end
 
     if include_test_statements
-        preprocess_example = _preprocess_example_include_test_statements
+        preprocess_example = preprocess_example_include_test_statements
     else
-        preprocess_example = _preprocess_example_do_not_include_test_statements
+        preprocess_example = preprocess_example_do_not_include_test_statements
     end
 
     @info("Starting to generate examples...")
@@ -256,7 +256,7 @@ function generate_examples(
     for (root, dirs, files) in walkdir(temp_examples_dir)
         for f in files
             filename = joinpath(root, f)
-            _fix_example_blocks(filename)
+            fix_example_blocks(filename)
         end
     end
 

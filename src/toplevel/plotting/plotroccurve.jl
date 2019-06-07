@@ -42,7 +42,7 @@ function plotroccurves(
     all_plots_and_legends = []
     for i = 1:length(vectorofestimators)
         estimator_i = vectorofestimators[i]
-        metrics_i = _singlelabelbinaryclassificationmetrics(
+        metrics_i = singlelabelbinaryclassificationmetrics_resultdict(
             estimator_i,
             features_df,
             labels_df,

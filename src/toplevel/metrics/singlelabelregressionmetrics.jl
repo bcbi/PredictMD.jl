@@ -26,7 +26,7 @@ end
 
 """
 """
-function _singlelabelregressionmetrics(
+function singlelabelregressionmetrics_resultdict(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
@@ -84,7 +84,7 @@ function singlelabelregressionmetrics(
         kwargs...
         )
     metricsforeachestimator = [
-        _singlelabelregressionmetrics(
+        singlelabelregressionmetrics_resultdict(
             est,
             features_df,
             labels_df,

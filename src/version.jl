@@ -2,12 +2,12 @@
 
 import Pkg # stdlib
 
-struct _TomlFile
+struct TomlFile
     filename::String
-    function _TomlFile(path::String)::_TomlFile
+    function TomlFile(path::String)::TomlFile
         path::String = abspath(strip(path))
         if isfile(path)
-            result::_TomlFile = new(path)
+            result::TomlFile = new(path)
             return result
         else
             error("File does not exist")
@@ -15,61 +15,61 @@ struct _TomlFile
     end
 end
 
-function _parse_toml_file(x::_TomlFile)::Dict{String, Any}
+function parse_toml_file(x::TomlFile)::Dict{String, Any}
     toml_file_filename::String = x.filename
     toml_file_text::String = read(toml_file_filename, String)
     toml_file_parsed::Dict{String, Any} = Pkg.TOML.parse(toml_file_text)
     return toml_file_parsed
 end
 
-function _version_string(x::_TomlFile)::String
-    toml_file_parsed::Dict{String, Any} = _parse_toml_file(x)
+function version_string(x::TomlFile)::String
+    toml_file_parsed::Dict{String, Any} = parse_toml_file(x)
     version_string::String = toml_file_parsed["version"]
     return version_string
 end
 
-function _version_string()::String
-    predictmd_toml_file::_TomlFile = _TomlFile(
+function version_string()::String
+    predictmd_toml_file::TomlFile = TomlFile(
         package_directory("Project.toml")
         )
-    result_version_string::String = _version_string(predictmd_toml_file)
-    return result_version_string
+    resultversion_string::String = version_string(predictmd_toml_file)
+    return resultversion_string
 end
 
-function _version_string(m::Method)::String
+function version_string(m::Method)::String
     m_package_directory::String = package_directory(m)
-    m_toml_file::_TomlFile = _TomlFile(
+    m_toml_file::TomlFile = TomlFile(
         joinpath(m_package_directory, "Project.toml")
         )
-    result_version_string::String = _version_string(m_toml_file)
-    return result_version_string
+    resultversion_string::String = version_string(m_toml_file)
+    return resultversion_string
 end
 
-function _version_string(f::Function)::String
+function version_string(f::Function)::String
     m_package_directory::String = package_directory(f)
-    m_toml_file::_TomlFile = _TomlFile(
+    m_toml_file::TomlFile = TomlFile(
         joinpath(m_package_directory, "Project.toml")
         )
-    result_version_string::String = _version_string(m_toml_file)
-    return result_version_string
+    resultversion_string::String = version_string(m_toml_file)
+    return resultversion_string
 end
 
-function _version_string(f::Function, types::Tuple)::String
+function version_string(f::Function, types::Tuple)::String
     m_package_directory::String = package_directory(f, types)
-    m_toml_file::_TomlFile = _TomlFile(
+    m_toml_file::TomlFile = TomlFile(
         joinpath(m_package_directory, "Project.toml")
         )
-    result_version_string::String = _version_string(m_toml_file)
-    return result_version_string
+    resultversion_string::String = version_string(m_toml_file)
+    return resultversion_string
 end
 
-function _version_string(m::Module)::String
+function version_string(m::Module)::String
     m_package_directory::String = package_directory(m)
-    m_toml_file::_TomlFile = _TomlFile(
+    m_toml_file::TomlFile = TomlFile(
         joinpath(m_package_directory, "Project.toml")
         )
-    result_version_string::String = _version_string(m_toml_file)
-    return result_version_string
+    resultversion_string::String = version_string(m_toml_file)
+    return resultversion_string
 end
 
 """
@@ -78,8 +78,8 @@ end
 Return the version number of PredictMD.
 """
 function version()::VersionNumber
-    result_version_string::String = _version_string()
-    result_versionnumber::VersionNumber = VersionNumber(result_version_string)
+    resultversion_string::String = version_string()
+    result_versionnumber::VersionNumber = VersionNumber(resultversion_string)
     return result_versionnumber
 end
 
@@ -93,8 +93,8 @@ If method `m`
 is not part of a Julia package, throws an error.
 """
 function version(m::Method)::VersionNumber
-    result_version_string::String = _version_string(m)
-    result_versionnumber::VersionNumber = VersionNumber(result_version_string)
+    resultversion_string::String = version_string(m)
+    result_versionnumber::VersionNumber = VersionNumber(resultversion_string)
     return result_versionnumber
 end
 
@@ -109,8 +109,8 @@ If function `f`
 is not part of a Julia package, throws an error.
 """
 function version(f::Function)::VersionNumber
-    result_version_string::String = _version_string(f)
-    result_versionnumber::VersionNumber = VersionNumber(result_version_string)
+    resultversion_string::String = version_string(f)
+    result_versionnumber::VersionNumber = VersionNumber(resultversion_string)
     return result_versionnumber
 end
 
@@ -125,8 +125,8 @@ If function `f` with type signature `types`
 is not part of a Julia package, throws an error.
 """
 function version(f::Function, types::Tuple)::VersionNumber
-    result_version_string::String = _version_string(f, types)
-    result_versionnumber::VersionNumber = VersionNumber(result_version_string)
+    resultversion_string::String = version_string(f, types)
+    result_versionnumber::VersionNumber = VersionNumber(resultversion_string)
     return result_versionnumber
 end
 
@@ -139,8 +139,8 @@ that package.
 If module `m` is not part of a Julia package, throws an error.
 """
 function version(m::Module)::VersionNumber
-    result_version_string::String = _version_string(m)
-    result_versionnumber::VersionNumber = VersionNumber(result_version_string)
+    resultversion_string::String = version_string(m)
+    result_versionnumber::VersionNumber = VersionNumber(resultversion_string)
     return result_versionnumber
 end
 

@@ -31,7 +31,7 @@ end
 
 """
 """
-function _singlelabelbinaryclassificationmetrics_tunableparam(
+function singlelabelbinaryclassificationmetrics_tunableparam(
         kwargsassoc::AbstractDict,
         )
     tunableparams = [
@@ -118,7 +118,7 @@ end
 
 """
 """
-function _singlelabelbinaryclassificationmetrics(
+function singlelabelbinaryclassificationmetrics_resultdict(
         estimator::Fittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
@@ -130,7 +130,7 @@ function _singlelabelbinaryclassificationmetrics(
     kwargsdict = Dict(kwargs)
     kwargsdict = fix_type(kwargsdict)
     selectedtunableparam, selectedparamtomax, metricdisplaynames =
-        _singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
+        singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
     #
     predictedprobabilitiesalllabels = predict_proba(estimator, features_df)
     yscore = Cfloat.(
@@ -241,9 +241,9 @@ function singlelabelbinaryclassificationmetrics(
     kwargsdict = Dict(kwargs)
     kwargsdict = fix_type(kwargsdict)
     selectedtunableparam, selectedparamtomax, metricdisplaynames =
-        _singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
+        singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
     metricsforeachestimator = [
-        _singlelabelbinaryclassificationmetrics(
+        singlelabelbinaryclassificationmetrics_resultdict(
             est,
             features_df,
             labels_df,
