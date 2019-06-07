@@ -55,7 +55,7 @@ function __init__()::Nothing
         end
     end
 
-    _print_welcome_message()
+    print_welcome_message()
     return nothing
 end
 

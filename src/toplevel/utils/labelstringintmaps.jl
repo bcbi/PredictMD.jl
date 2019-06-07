@@ -2,7 +2,7 @@
 
 """
 """
-function _getlabelstring2intmap(
+function getlabelstring2intmap(
         levels::AbstractVector,
         index::Integer,
         )
@@ -19,7 +19,7 @@ end
 
 """
 """
-function _getlabelint2stringmap(
+function getlabelint2stringmap(
         levels::AbstractVector,
         index::Integer,
         )

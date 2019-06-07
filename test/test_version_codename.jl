@@ -43,7 +43,7 @@ Test.@test(
 
 Test.@test_throws(
     ErrorException,
-    PredictMD._TomlFile(joinpath(mktempdir(),"1","2","3","4")),
+    PredictMD.TomlFile(joinpath(mktempdir(),"1","2","3","4")),
     )
 
 ##### End of file
