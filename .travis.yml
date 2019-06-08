@@ -16,7 +16,6 @@ addons:
 
 branches:
     only:
-    - develop
     - master
     - staging
     - trying
