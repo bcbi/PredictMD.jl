@@ -74,6 +74,7 @@ If you use PredictMD in research, please cite the software using the following D
 - [PredictMD-docker](https://github.com/DilumAluthge/PredictMD-docker) - Docker and Singularity images for PredictMD
 - [PredictMD-roadmap](https://github.com/bcbi/PredictMD-roadmap) - Roadmap for the PredictMD machine learning pipeline
 - [PredictMD.jl](https://github.com/bcbi/PredictMD.jl) - Uniform interface for machine learning in Julia
+- [PredictMDAPI.jl](https://github.com/bcbi/PredictMDAPI.jl) - Provides the abstract types and generic functions that define the PredictMD application programming interface (API)
 - [PredictMDExtra.jl](https://github.com/bcbi/PredictMDExtra.jl) - Install all of the dependencies of PredictMD (but not PredictMD itself)
 - [PredictMDFull.jl](https://github.com/bcbi/PredictMDFull.jl) - Install PredictMD and all of its dependencies
 
