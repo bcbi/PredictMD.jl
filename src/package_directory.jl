@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-function _is_filesystem_root(path::AbstractString)::Bool
+function is_filesystem_root(path::AbstractString)::Bool
     path::String = abspath(strip(path))
     if path == dirname(path)
         return true
@@ -9,7 +9,7 @@ function _is_filesystem_root(path::AbstractString)::Bool
     end
 end
 
-function _is_package_directory(path::AbstractString)::Bool
+function is_package_directory(path::AbstractString)::Bool
     path::String = abspath(strip(path))
     if isfile(joinpath(path, "Project.toml"))
         return true
@@ -18,14 +18,14 @@ function _is_package_directory(path::AbstractString)::Bool
     end
 end
 
-function _find_package_directory(path::AbstractString)::String
+function find_package_directory(path::AbstractString)::String
     path::String = abspath(strip(path))
-    if _is_package_directory(path)
+    if is_package_directory(path)
         return path
-    elseif _is_filesystem_root(path)
+    elseif is_filesystem_root(path)
         error(string("Could not find the Project.toml file"))
     else
-        result = _find_package_directory(dirname(path))
+        result = find_package_directory(dirname(path))
         return result
     end
 end
@@ -36,27 +36,27 @@ end
 Return the PredictMD package directory.
 """
 function package_directory()::String
-    result::String = _find_package_directory(abspath(strip(@__FILE__)))
+    result::String = find_package_directory(abspath(strip(@__FILE__)))
     return result
 end
 
-function _location(m::Method)::String
+function functionlocation(m::Method)::String
     result::String = abspath(first(functionloc(m)))
     return result
 end
 
-function _location(f::Function)::String
+function functionlocation(f::Function)::String
     result::String = abspath(first(functionloc(f)))
     return result
 end
 
-function _location(f::Function, types::Tuple)::String
+function functionlocation(f::Function, types::Tuple)::String
     result::String = abspath(first(functionloc(f, types)))
     return result
 end
 
-function _location(m::Module)::String
-    result::String = abspath(_location(getfield(m, :eval)))
+function functionlocation(m::Module)::String
+    result::String = abspath(functionlocation(getfield(m, :eval)))
     return result
 end
 
@@ -80,9 +80,9 @@ If method `m`
 is not part of a Julia package, throws an error.
 """
 function package_directory(m::Method)::String
-    m_module_directory::String = abspath(_location(m))
+    m_module_directory::String = abspath(functionlocation(m))
     m_package_directory::String = abspath(
-        _find_package_directory(m_module_directory)
+        find_package_directory(m_module_directory)
         )
     return m_package_directory
 end
@@ -108,9 +108,9 @@ If function `f`
 is not part of a Julia package, throws an error.
 """
 function package_directory(f::Function)::String
-    m_module_directory::String = abspath(_location(f))
+    m_module_directory::String = abspath(functionlocation(f))
     m_package_directory::String = abspath(
-        _find_package_directory(m_module_directory)
+        find_package_directory(m_module_directory)
         )
     return m_package_directory
 end
@@ -136,9 +136,9 @@ If function `f` with type signature `types`
 is not part of a Julia package, throws an error.
 """
 function package_directory(f::Function, types::Tuple)::String
-    m_module_directory::String = abspath(_location(f, types))
+    m_module_directory::String = abspath(functionlocation(f, types))
     m_package_directory::String = abspath(
-        _find_package_directory(m_module_directory)
+        find_package_directory(m_module_directory)
         )
     return m_package_directory
 end
@@ -164,9 +164,9 @@ If module `m`
 is not part of a Julia package, throws an error.
 """
 function package_directory(m::Module)::String
-    m_module_directory::String = abspath(_location(m))
+    m_module_directory::String = abspath(functionlocation(m))
     m_package_directory::String = abspath(
-        _find_package_directory(m_module_directory)
+        find_package_directory(m_module_directory)
         )
     return m_package_directory
 end

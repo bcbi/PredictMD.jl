@@ -61,7 +61,7 @@ function predict(
         kwargs...
         )
     single_labelpredictions = parse.(Int, single_labelpredictions)
-    labelint2stringmap = _getlabelint2stringmap(
+    labelint2stringmap = getlabelint2stringmap(
         transformer.levels,
         transformer.index,
         )

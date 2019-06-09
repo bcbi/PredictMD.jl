@@ -72,7 +72,7 @@ function predict_proba(
         single_labelprobabilities::AbstractDict;
         kwargs...
         )
-    labelint2stringmap = _getlabelint2stringmap(
+    labelint2stringmap = getlabelint2stringmap(
         transformer.levels,
         transformer.index,
         )

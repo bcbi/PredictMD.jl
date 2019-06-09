@@ -377,7 +377,7 @@ end
 
 """
 """
-function _single_labelmulticlassdataframeknetclassifier_Knet(
+function single_labelmulticlassdataframeknetclassifier_Knet(
         feature_names::AbstractVector,
         single_label_name::Symbol,
         single_label_levels::AbstractVector;
@@ -478,7 +478,7 @@ function single_labelmulticlassdataframeknetclassifier(
             nothing,
         )
     if package == :Knet
-        result = _single_labelmulticlassdataframeknetclassifier_Knet(
+        result = single_labelmulticlassdataframeknetclassifier_Knet(
             feature_names,
             single_label_name,
             single_label_levels;
@@ -502,7 +502,7 @@ end
 
 """
 """
-function _single_labeldataframeknetregression_Knet(
+function single_labeldataframeknetregression_Knet(
         feature_names::AbstractVector,
         single_label_name::Symbol;
         name::AbstractString = "",
@@ -580,7 +580,7 @@ function single_labeldataframeknetregression(
             nothing,
         )
     if package == :Knet
-        result = _single_labeldataframeknetregression_Knet(
+        result = single_labeldataframeknetregression_Knet(
             feature_names,
             single_label_name;
             name = name,

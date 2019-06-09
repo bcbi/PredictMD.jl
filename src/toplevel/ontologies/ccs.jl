@@ -10,7 +10,7 @@ function remove_all_full_stops(x::AbstractString)::String
     return result
 end
 
-function _parse_icd_icd9_ccs_appendixasingledx_file!()::Nothing
+function parse_icd_icd9_ccs_appendixasingledx_file!()::Nothing
     if _ICD_ICD9_CCS_APPENDIXASINGLEDX_FILE_HAS_BEEN_PARSED
     else
         filename = package_directory(
@@ -53,7 +53,7 @@ end
 function single_level_dx_ccs_number_to_name(
         ccs_number::Int,
         )::String
-    _parse_icd_icd9_ccs_appendixasingledx_file!()
+    parse_icd_icd9_ccs_appendixasingledx_file!()
     result = _SINGLE_LEVEL_DX_CCS_NUMBER_TO_NAME[ccs_number]
     return result
 end
@@ -61,7 +61,7 @@ end
 function single_level_dx_ccs_to_list_of_icd9_codes(
         ccs_number::Int,
         )::Vector{String}
-    _parse_icd_icd9_ccs_appendixasingledx_file!()
+    parse_icd_icd9_ccs_appendixasingledx_file!()
     result = _SINGLE_LEVEL_DX_CCS_TO_LIST_OF_ICD9_CODES[ccs_number]
     return result
 end
@@ -71,7 +71,7 @@ end
 function icd9_code_to_single_level_dx_ccs(
         icd9_code::AbstractString,
         )::Int
-    _parse_icd_icd9_ccs_appendixasingledx_file!()
+    parse_icd_icd9_ccs_appendixasingledx_file!()
     result = _ICD9_CODE_TO_SINGLE_LEVEL_DX_CCS[
         remove_all_full_stops(string(icd9_code))
         ]
