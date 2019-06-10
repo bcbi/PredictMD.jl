@@ -68,7 +68,7 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
                 "directory4", "directory5", "TestModuleB.jl",
                 )
             testmodulec_filename::String = joinpath(
-                mktempdir(),
+                maketempdir(),
                 "TestModuleC.jl",
                 )
             rm(testmodulec_filename; force = true, recursive = true)

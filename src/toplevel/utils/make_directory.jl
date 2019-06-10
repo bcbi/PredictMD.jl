@@ -31,7 +31,7 @@ function get_temp_directory(
 end
 
 function create_new_temp_directory()
-    result = joinpath(mktempdir(), "PREDICTMDTEMPDIRECTORY")
+    result = joinpath(maketempdir(), "PREDICTMDTEMPDIRECTORY")
     try
         mkpath(result)
     catch
