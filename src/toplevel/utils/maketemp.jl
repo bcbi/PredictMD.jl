@@ -1,5 +1,5 @@
-function maketemp(parent=tempdir())::String
-    path::String = mktempdir(parent)
+function maketempdir()::String
+    path::String = mktempdir()
     atexit(() -> rm(path; force = true, recursive = true,))
     return path
 end
