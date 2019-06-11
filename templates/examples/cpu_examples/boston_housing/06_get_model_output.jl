@@ -22,7 +22,13 @@ mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "plots"))
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
-    PredictMD.cache_to_homedir!("Desktop", "boston_housing_example",)
+    PredictMD.cache_to_path!(
+        ;
+        from = ["cpu_examples", "boston_housing", "output",],
+        to = [
+            LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+            "cpu_examples", "boston_housing", "output",],
+        )
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
@@ -158,7 +164,13 @@ PredictMD.predict(knet_mlp_regression,testing_features_df,)
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
-    PredictMD.homedir_to_cache!("Desktop", "boston_housing_example",)
+    PredictMD.cache_to_path!(
+        ;
+        to = ["cpu_examples", "boston_housing", "output",],
+        from = [
+            LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+            "cpu_examples", "boston_housing", "output",],
+        )
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS

@@ -22,7 +22,13 @@ mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "plots"))
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
-    PredictMD.cache_to_homedir!("Desktop", "breast_cancer_biopsy_example",)
+    PredictMD.cache_to_path!(
+        ;
+        from = ["cpu_examples", "breast_cancer_biopsy", "output",],
+        to = [
+            LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+            "cpu_examples", "breast_cancer_biopsy", "output",],
+        )
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
@@ -317,7 +323,13 @@ PredictMD.save_model(c_svc_svm_classifier_filename, c_svc_svm_classifier)
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
-    PredictMD.homedir_to_cache!("Desktop", "breast_cancer_biopsy_example",)
+    PredictMD.cache_to_path!(
+        ;
+        to = ["cpu_examples", "breast_cancer_biopsy", "output",],
+        from = [
+            LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+            "cpu_examples", "breast_cancer_biopsy", "output",],
+        )
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS

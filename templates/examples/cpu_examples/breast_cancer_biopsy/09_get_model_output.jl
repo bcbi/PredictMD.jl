@@ -17,7 +17,13 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "data"))
 mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "models"))
-mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "plots"))
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "plots"))PredictMD.cache_to_path!(
+    ;
+    from = ["cpu_examples", "breast_cancer_biopsy", "output",],
+    to = [
+        LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+        "cpu_examples", "breast_cancer_biopsy", "output",],
+    )
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
@@ -228,7 +234,13 @@ PredictMD.predict(knet_mlp_classifier,testing_features_df,)
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
-    PredictMD.homedir_to_cache!("Desktop", "breast_cancer_biopsy_example",)
+    PredictMD.cache_to_path!(
+        ;
+        to = ["cpu_examples", "breast_cancer_biopsy", "output",],
+        from = [
+            LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+            "cpu_examples", "breast_cancer_biopsy", "output",],
+        )
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
