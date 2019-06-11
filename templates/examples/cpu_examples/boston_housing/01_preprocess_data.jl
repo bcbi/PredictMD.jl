@@ -82,6 +82,15 @@ continuous_feature_names_filename = joinpath(
     "data",
     "continuous_feature_names.jld2",
     )
+@info("", categorical_feature_names_filename)
+@info("", isfile(categorical_feature_names_filename))
+@info("", dirname(categorical_feature_names_filename))
+@info("", isdir(dirname(categorical_feature_names_filename)))
+@info("", joinpath(PROJECT_OUTPUT_DIRECTORY, "data"))
+@info("", isdir(joinpath(PROJECT_OUTPUT_DIRECTORY, "data")))
+@info("", PROJECT_OUTPUT_DIRECTORY)
+@info("", isdir(PROJECT_OUTPUT_DIRECTORY))
+
 FileIO.save(
     categorical_feature_names_filename,
     "categorical_feature_names",
