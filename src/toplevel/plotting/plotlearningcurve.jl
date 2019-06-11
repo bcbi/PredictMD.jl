@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import LaTeXStrings
 import PGFPlotsX
 import StatsBase
@@ -296,4 +294,3 @@ end
 
 const plotlearningcurve = plotlearningcurves
 
-##### End of file

@@ -1,5 +1,3 @@
-##### Beginning of file
-
 function require_julia_version(varargs...)::VersionNumber
     current_julia_version = convert(VersionNumber, Base.VERSION)
     version_meets_requirements = does_given_version_meet_requirements(
@@ -99,4 +97,3 @@ function does_given_version_meet_requirements(
     return answer
 end
 
-##### End of file

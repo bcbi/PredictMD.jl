@@ -1,5 +1,3 @@
-##### Beginning of file
-
 if length(lowercase(strip(get(ENV, "PREDICTMD_TEST_PLOTS", "")))) == 0
     ENV["PREDICTMD_TEST_PLOTS"] = "false"
 end
@@ -39,4 +37,3 @@ end
         )
     )
 
-##### End of file

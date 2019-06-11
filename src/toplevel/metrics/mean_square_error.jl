@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Statistics
 
 """
@@ -28,4 +26,3 @@ root_mean_squared_error(ytrue,ypred) = root_mean_square_error(ytrue,ypred)
 root_mean_square_deviation(ytrue,ypred) = root_mean_square_error(ytrue,ypred)
 root_mean_squared_deviation(ytrue,ypred) = root_mean_square_error(ytrue,ypred)
 
-##### End of file

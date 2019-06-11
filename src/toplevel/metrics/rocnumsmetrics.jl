@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import MLBase
 import StatsBase
 
@@ -100,4 +98,3 @@ end
 """
 f1score(x::MLBase.ROCNums) = fbetascore(x, 1)
 
-##### End of file

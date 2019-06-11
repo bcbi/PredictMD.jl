@@ -1,5 +1,3 @@
-##### Beginning of file
-
 ENV["PREDICTMD_IS_RUNTESTS"] = "true"
 
 import PredictMDExtra
@@ -20,4 +18,3 @@ include(joinpath(".", "all-testsets.jl"))
 
 ENV["PREDICTMD_IS_RUNTESTS"] = "false"
 
-##### End of file

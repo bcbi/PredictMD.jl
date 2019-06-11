@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Test
 import PredictMD
 
@@ -46,4 +44,3 @@ f = PredictMD.package_directory(
 Test.@test( dirname(f) == e )
 Test.@test( isfile(f) )
 
-##### End of file

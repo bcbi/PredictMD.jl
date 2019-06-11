@@ -1,5 +1,3 @@
-##### Beginning of file
-
 """
 """
 module Server # begin submodule PredictMD.Server
@@ -23,4 +21,3 @@ include(joinpath("web", "http.jl",))
 
 end # end submodule PredictMD.Server
 
-##### End of file

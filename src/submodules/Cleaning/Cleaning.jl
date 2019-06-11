@@ -1,5 +1,3 @@
-##### Beginning of file
-
 """
 """
 module Cleaning # begin submodule PredictMD.Cleaning
@@ -13,4 +11,3 @@ include(joinpath("hcup", "hcup.jl",))
 
 end # begin submodule PredictMD.Cleaning
 
-##### End of file

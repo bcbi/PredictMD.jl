@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import PredictMD
 import PredictMD.Cleaning
 
@@ -19,4 +17,3 @@ Test.@test(
     !PredictMD.Cleaning.symbol_begins_with(:abcdefg, "xyz")
     )
 
-##### End of file

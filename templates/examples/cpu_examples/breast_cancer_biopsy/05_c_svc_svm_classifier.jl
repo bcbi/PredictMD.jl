@@ -1,7 +1,3 @@
-##### Beginning of file
-
-error(string("This file is not meant to be run. Use the `PredictMD.generate_examples()` function to generate examples that you can run."))
-
 %PREDICTMD_GENERATED_BY%
 
 import PredictMD
@@ -14,29 +10,31 @@ PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
 
 ## PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%", "%PREDICTMD_NEXT_MINOR_VERSION%")
 
-PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
+PROJECT_OUTPUT_DIRECTORY = joinpath(
     homedir(),
     "Desktop",
-    "boston_housing_example",
+    "breast_cancer_biopsy_example",
     )
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
-    PredictMD.cache_to_homedir!("Desktop", "boston_housing_example",)
+    PredictMD.cache_to_homedir!("Desktop", "breast_cancer_biopsy_example",)
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ### End project-specific settings
 
-### Begin random forest regression code
+### Begin C-SVC code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 import PredictMDExtra
 # PREDICTMD ELSE
 import PredictMDFull
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+Kernel = LIBSVM.Kernel
 
 Random.seed!(999)
 
@@ -121,6 +119,27 @@ tuning_labels_df = DataFrames.DataFrame(
         )
     )
 
+smoted_training_features_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    "smoted_training_features_df.csv",
+    )
+smoted_training_labels_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    "smoted_training_labels_df.csv",
+    )
+smoted_training_features_df = DataFrames.DataFrame(
+    FileIO.load(
+        smoted_training_features_df_filename;
+        type_detect_rows = 100,
+        )
+    )
+smoted_training_labels_df = DataFrames.DataFrame(
+    FileIO.load(
+        smoted_training_labels_df_filename;
+        type_detect_rows = 100,
+        )
+    )
+
 categorical_feature_names_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "categorical_feature_names.jld2",
@@ -139,54 +158,59 @@ continuous_feature_names = FileIO.load(
     )
 feature_names = vcat(categorical_feature_names, continuous_feature_names)
 
-single_label_name = :MedV
+single_label_name = :Class
+negative_class = "benign"
+positive_class = "malignant"
+single_label_levels = [negative_class, positive_class]
 
-continuous_label_names = Symbol[single_label_name]
-categorical_label_names = Symbol[]
+categorical_label_names = Symbol[single_label_name]
+continuous_label_names = Symbol[]
 label_names = vcat(categorical_label_names, continuous_label_names)
 
 feature_contrasts = PredictMD.generate_feature_contrasts(
-    training_features_df,
+    smoted_training_features_df,
     feature_names,
     )
 
-random_forest_regression =
-    PredictMD.single_labeldataframerandomforestregression(
+c_svc_svm_classifier =
+    PredictMD.single_labelmulticlassdataframesvmclassifier(
         feature_names,
-        single_label_name;
-        nsubfeatures = 2,
-        ntrees = 20,
-        package = :DecisionTree,
-        name = "Random forest",
+        single_label_name,
+        single_label_levels;
+        package = :LIBSVM,
+        svmtype = LIBSVM.SVC,
+        name = "SVM (C-SVC)",
+        verbose = false,
         feature_contrasts = feature_contrasts,
         )
 
 PredictMD.fit!(
-    random_forest_regression,
-    training_features_df,
-    training_labels_df,
+    c_svc_svm_classifier,
+    smoted_training_features_df,
+    smoted_training_labels_df,
     )
 
-random_forest_regression_plot_training =
-    PredictMD.plotsinglelabelregressiontrueversuspredicted(
-        random_forest_regression,
-        training_features_df,
-        training_labels_df,
+c_svc_svm_classifier_hist_training =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        c_svc_svm_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
         single_label_name,
+        single_label_levels,
         );
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
-    "random_forest_regression_plot_training",
+    "c_svc_svm_classifier_hist_training",
     ".pdf",
     )
 rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PredictMD.save_plot(filename, random_forest_regression_plot_training)
+PredictMD.save_plot(filename, c_svc_svm_classifier_hist_training)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -195,36 +219,37 @@ end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-display(random_forest_regression_plot_training)
+display(c_svc_svm_classifier_hist_training)
 PredictMD.save_plot(
     joinpath(
         PROJECT_OUTPUT_DIRECTORY,
         "plots",
-        "random_forest_regression_plot_training.pdf",
+        "c_svc_svm_classifier_hist_training.pdf",
         ),
-    random_forest_regression_plot_training,
+    c_svc_svm_classifier_hist_training,
     )
 
-random_forest_regression_plot_testing =
-    PredictMD.plotsinglelabelregressiontrueversuspredicted(
-        random_forest_regression,
+c_svc_svm_classifier_hist_testing =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        c_svc_svm_classifier,
         testing_features_df,
         testing_labels_df,
         single_label_name,
+        single_label_levels,
         );
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
-    "random_forest_regression_plot_testing",
+    "c_svc_svm_classifier_hist_testing",
     ".pdf",
     )
 rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PredictMD.save_plot(filename, random_forest_regression_plot_testing)
+PredictMD.save_plot(filename, c_svc_svm_classifier_hist_testing)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -233,22 +258,24 @@ end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-display(random_forest_regression_plot_testing)
+display(c_svc_svm_classifier_hist_testing)
 PredictMD.save_plot(
     joinpath(
         PROJECT_OUTPUT_DIRECTORY,
         "plots",
-        "random_forest_regression_plot_testing.pdf",
+        "c_svc_svm_classifier_hist_testing.pdf",
         ),
-    random_forest_regression_plot_testing,
+    c_svc_svm_classifier_hist_testing,
     )
 
 show(
-    PredictMD.singlelabelregressionmetrics(
-        random_forest_regression,
-        training_features_df,
-        training_labels_df,
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        c_svc_svm_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
         single_label_name,
+        positive_class;
+        sensitivity = 0.95,
         );
     allrows = true,
     allcols = true,
@@ -256,34 +283,32 @@ show(
     )
 
 show(
-    PredictMD.singlelabelregressionmetrics(
-        random_forest_regression,
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        c_svc_svm_classifier,
         testing_features_df,
         testing_labels_df,
         single_label_name,
+        positive_class;
+        sensitivity = 0.95,
         );
     allrows = true,
     allcols = true,
     splitcols = false,
     )
 
-random_forest_regression_filename = joinpath(
+c_svc_svm_classifier_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "random_forest_regression.jld2",
+    "c_svc_svm_classifier.jld2",
     )
 
-PredictMD.save_model(
-    random_forest_regression_filename,
-    random_forest_regression
-    )
+PredictMD.save_model(c_svc_svm_classifier_filename, c_svc_svm_classifier)
 
-### End random forest regression code
+### End C-SVC code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
-    PredictMD.homedir_to_cache!("Desktop", "boston_housing_example",)
+    PredictMD.homedir_to_cache!("Desktop", "breast_cancer_biopsy_example",)
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-##### End of file

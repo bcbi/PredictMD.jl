@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Test
 import DataFrames
 import PredictMD
@@ -199,4 +197,3 @@ Test.@test(array_4[2,3,2] == 220)
 Test.@test(array_4[2,3,3] == 230)
 Test.@test(array_4[2,3,4] == 240)
 
-##### End of file

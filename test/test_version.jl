@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import PredictMD
 import Test
 
@@ -36,4 +34,3 @@ Test.@test_throws(
     PredictMD.TomlFile(joinpath(PredictMD.maketempdir(),"1","2","3","4")),
     )
 
-##### End of file

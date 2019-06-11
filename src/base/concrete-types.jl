@@ -1,5 +1,3 @@
-##### Beginning of file
-
 struct FeatureContrastsNotYetGenerated <: AbstractNonExistentFeatureContrasts
 end
 
@@ -200,4 +198,3 @@ mutable struct DecisionTreeModel <:
     underlyingrandomforest::T7 where T7 <: Any
 end
 
-##### End of file

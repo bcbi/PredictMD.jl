@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import LaTeXStrings
 import PGFPlotsX
 import StatsBase
@@ -200,4 +198,3 @@ end
 #     )
 
 
-##### End of file

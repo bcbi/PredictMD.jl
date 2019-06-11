@@ -1,5 +1,3 @@
-##### Beginning of file
-
 """
 """
 function set_feature_contrasts!(
@@ -84,4 +82,3 @@ function predict_proba(
     return result
 end
 
-##### End of file

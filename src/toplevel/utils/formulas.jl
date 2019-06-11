@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Combinatorics
 import StatsModels
 
@@ -111,4 +109,3 @@ function generate_interaction_terms(
     return interaction_terms
 end
 
-##### End of file

@@ -1,5 +1,3 @@
-##### Beginning of file
-
 """
 """
 module GPU # begin submodule PredictMD.GPU
@@ -10,4 +8,3 @@ module GPU # begin submodule PredictMD.GPU
 
 end # end submodule PredictMD.GPU
 
-##### End of file

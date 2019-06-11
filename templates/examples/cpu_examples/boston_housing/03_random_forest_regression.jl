@@ -1,7 +1,3 @@
-##### Beginning of file
-
-error(string("This file is not meant to be run. Use the `PredictMD.generate_examples()` function to generate examples that you can run."))
-
 %PREDICTMD_GENERATED_BY%
 
 import PredictMD
@@ -14,7 +10,7 @@ PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
 
 ## PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%", "%PREDICTMD_NEXT_MINOR_VERSION%")
 
-PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
+PROJECT_OUTPUT_DIRECTORY = joinpath(
     homedir(),
     "Desktop",
     "boston_housing_example",
@@ -30,7 +26,7 @@ end
 
 ### End project-specific settings
 
-### Begin model comparison code
+### Begin random forest regression code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 import PredictMDExtra
@@ -121,32 +117,23 @@ tuning_labels_df = DataFrames.DataFrame(
         )
     )
 
-linear_regression_filename = joinpath(
+categorical_feature_names_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "linear_regression.jld2",
+    "categorical_feature_names.jld2",
     )
-random_forest_regression_filename = joinpath(
+continuous_feature_names_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "random_forest_regression.jld2",
+    "continuous_feature_names.jld2",
     )
-knet_mlp_regression_filename = joinpath(
-    PROJECT_OUTPUT_DIRECTORY,
-    "knet_mlp_regression.jld2",
+categorical_feature_names = FileIO.load(
+    categorical_feature_names_filename,
+    "categorical_feature_names",
     )
-
-linear_regression =
-    PredictMD.load_model(linear_regression_filename)
-random_forest_regression =
-    PredictMD.load_model(random_forest_regression_filename)
-knet_mlp_regression =
-    PredictMD.load_model(knet_mlp_regression_filename)
-PredictMD.parse_functions!(knet_mlp_regression)
-
-all_models = PredictMD.Fittable[
-    linear_regression,
-    random_forest_regression,
-    knet_mlp_regression,
-    ]
+continuous_feature_names = FileIO.load(
+    continuous_feature_names_filename,
+    "continuous_feature_names",
+    )
+feature_names = vcat(categorical_feature_names, continuous_feature_names)
 
 single_label_name = :MedV
 
@@ -154,10 +141,107 @@ continuous_label_names = Symbol[single_label_name]
 categorical_label_names = Symbol[]
 label_names = vcat(categorical_label_names, continuous_label_names)
 
-println("Single label regression metrics, training set: ")
+feature_contrasts = PredictMD.generate_feature_contrasts(
+    training_features_df,
+    feature_names,
+    )
+
+random_forest_regression =
+    PredictMD.single_labeldataframerandomforestregression(
+        feature_names,
+        single_label_name;
+        nsubfeatures = 2,
+        ntrees = 20,
+        package = :DecisionTree,
+        name = "Random forest",
+        feature_contrasts = feature_contrasts,
+        )
+
+PredictMD.fit!(
+    random_forest_regression,
+    training_features_df,
+    training_labels_df,
+    )
+
+random_forest_regression_plot_training =
+    PredictMD.plotsinglelabelregressiontrueversuspredicted(
+        random_forest_regression,
+        training_features_df,
+        training_labels_df,
+        single_label_name,
+        );
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+filename = string(
+    tempname(),
+    "_",
+    "random_forest_regression_plot_training",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+@debug("Attempting to test that the file does not exist...", filename,)
+Test.@test(!isfile(filename))
+@debug("The file does not exist.", filename, isfile(filename),)
+PredictMD.save_plot(filename, random_forest_regression_plot_training)
+if PredictMD.is_force_test_plots()
+    @debug("Attempting to test that the file exists...", filename,)
+    Test.@test(isfile(filename))
+    @debug("The file does exist.", filename, isfile(filename),)
+end
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+display(random_forest_regression_plot_training)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "random_forest_regression_plot_training.pdf",
+        ),
+    random_forest_regression_plot_training,
+    )
+
+random_forest_regression_plot_testing =
+    PredictMD.plotsinglelabelregressiontrueversuspredicted(
+        random_forest_regression,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        );
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+filename = string(
+    tempname(),
+    "_",
+    "random_forest_regression_plot_testing",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+@debug("Attempting to test that the file does not exist...", filename,)
+Test.@test(!isfile(filename))
+@debug("The file does not exist.", filename, isfile(filename),)
+PredictMD.save_plot(filename, random_forest_regression_plot_testing)
+if PredictMD.is_force_test_plots()
+    @debug("Attempting to test that the file exists...", filename,)
+    Test.@test(isfile(filename))
+    @debug("The file does exist.", filename, isfile(filename),)
+end
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+display(random_forest_regression_plot_testing)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "random_forest_regression_plot_testing.pdf",
+        ),
+    random_forest_regression_plot_testing,
+    )
+
 show(
     PredictMD.singlelabelregressionmetrics(
-        all_models,
+        random_forest_regression,
         training_features_df,
         training_labels_df,
         single_label_name,
@@ -167,10 +251,9 @@ show(
     splitcols = false,
     )
 
-println("Single label regression metrics, testing set: ")
 show(
     PredictMD.singlelabelregressionmetrics(
-        all_models,
+        random_forest_regression,
         testing_features_df,
         testing_labels_df,
         single_label_name,
@@ -180,7 +263,17 @@ show(
     splitcols = false,
     )
 
-### End model comparison code
+random_forest_regression_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    "random_forest_regression.jld2",
+    )
+
+PredictMD.save_model(
+    random_forest_regression_filename,
+    random_forest_regression
+    )
+
+### End random forest regression code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
@@ -189,4 +282,3 @@ end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-##### End of file

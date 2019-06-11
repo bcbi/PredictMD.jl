@@ -1,4 +1,4 @@
-##### Beginning of file
+import PredictMDAPI
 
 """
 """
@@ -9,4 +9,3 @@ function set_max_epochs!(
     return nothing
 end
 
-##### End of file

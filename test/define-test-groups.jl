@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import PredictMD
 
 abstract type AbstractTestGroup
@@ -46,4 +44,3 @@ const TEST_GROUP_INSTANCE_TO_STRING = PredictMD.inverse(
     TEST_GROUP_STRING_TO_INSTANCE
     )
 
-##### End of file

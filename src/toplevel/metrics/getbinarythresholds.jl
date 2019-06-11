@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import StatsBase
 
 """
@@ -29,4 +27,3 @@ function get_binary_thresholds(
     return result
 end
 
-##### End of file

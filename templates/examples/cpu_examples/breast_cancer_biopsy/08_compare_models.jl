@@ -1,7 +1,3 @@
-##### Beginning of file
-
-error(string("This file is not meant to be run. Use the `PredictMD.generate_examples()` function to generate examples that you can run."))
-
 %PREDICTMD_GENERATED_BY%
 
 import PredictMD
@@ -14,7 +10,7 @@ PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
 
 ## PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%", "%PREDICTMD_NEXT_MINOR_VERSION%")
 
-PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
+PROJECT_OUTPUT_DIRECTORY = joinpath(
     homedir(),
     "Desktop",
     "breast_cancer_biopsy_example",
@@ -30,7 +26,7 @@ end
 
 ### End project-specific settings
 
-### Begin nu-SVC code
+### Begin model comparison code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 import PredictMDExtra
@@ -144,139 +140,68 @@ smoted_training_labels_df = DataFrames.DataFrame(
         )
     )
 
-categorical_feature_names_filename = joinpath(
+logistic_classifier_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "categorical_feature_names.jld2",
+    "logistic_classifier.jld2",
     )
-continuous_feature_names_filename = joinpath(
+random_forest_classifier_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "continuous_feature_names.jld2",
+    "random_forest_classifier.jld2",
     )
-categorical_feature_names = FileIO.load(
-    categorical_feature_names_filename,
-    "categorical_feature_names",
+c_svc_svm_classifier_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    "c_svc_svm_classifier.jld2",
     )
-continuous_feature_names = FileIO.load(
-    continuous_feature_names_filename,
-    "continuous_feature_names",
+nu_svc_svm_classifier_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    "nu_svc_svm_classifier.jld2",
     )
-feature_names = vcat(categorical_feature_names, continuous_feature_names)
+knet_mlp_classifier_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    "knet_mlp_classifier.jld2",
+    )
+
+logistic_classifier =
+    PredictMD.load_model(logistic_classifier_filename)
+random_forest_classifier =
+    PredictMD.load_model(random_forest_classifier_filename)
+c_svc_svm_classifier =
+    PredictMD.load_model(c_svc_svm_classifier_filename)
+nu_svc_svm_classifier =
+    PredictMD.load_model(nu_svc_svm_classifier_filename)
+knet_mlp_classifier =
+    PredictMD.load_model(knet_mlp_classifier_filename)
+PredictMD.parse_functions!(knet_mlp_classifier)
+
+all_models = PredictMD.Fittable[
+    logistic_classifier,
+    random_forest_classifier,
+    c_svc_svm_classifier,
+    nu_svc_svm_classifier,
+    knet_mlp_classifier,
+    ]
 
 single_label_name = :Class
 negative_class = "benign"
 positive_class = "malignant"
+
 single_label_levels = [negative_class, positive_class]
 
 categorical_label_names = Symbol[single_label_name]
 continuous_label_names = Symbol[]
 label_names = vcat(categorical_label_names, continuous_label_names)
 
-feature_contrasts = PredictMD.generate_feature_contrasts(
-    smoted_training_features_df,
-    feature_names,
-    )
-
-nu_svc_svm_classifier =
-    PredictMD.single_labelmulticlassdataframesvmclassifier(
-        feature_names,
-        single_label_name,
-        single_label_levels;
-        package = :LIBSVM,
-        svmtype = LIBSVM.NuSVC,
-        name = "SVM (nu-SVC)",
-        verbose = false,
-        feature_contrasts = feature_contrasts,
+println(
+    string(
+        "Single label binary classification metrics, training set, ",
+        "fix sensitivity",
         )
-
-PredictMD.fit!(
-    nu_svc_svm_classifier,
-    smoted_training_features_df,
-    smoted_training_labels_df,
     )
-
-nu_svc_svm_classifier_hist_training =
-    PredictMD.plotsinglelabelbinaryclassifierhistogram(
-        nu_svc_svm_classifier,
-        smoted_training_features_df,
-        smoted_training_labels_df,
-        single_label_name,
-        single_label_levels,
-        );
-
-# PREDICTMD IF INCLUDE TEST STATEMENTS
-filename = string(
-    tempname(),
-    "_",
-    "nu_svc_svm_classifier_hist_training",
-    ".pdf",
-    )
-rm(filename; force = true, recursive = true,)
-@debug("Attempting to test that the file does not exist...", filename,)
-Test.@test(!isfile(filename))
-@debug("The file does not exist.", filename, isfile(filename),)
-PredictMD.save_plot(filename, nu_svc_svm_classifier_hist_training)
-if PredictMD.is_force_test_plots()
-    @debug("Attempting to test that the file exists...", filename,)
-    Test.@test(isfile(filename))
-    @debug("The file does exist.", filename, isfile(filename),)
-end
-# PREDICTMD ELSE
-# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
-
-display(nu_svc_svm_classifier_hist_training)
-PredictMD.save_plot(
-    joinpath(
-        PROJECT_OUTPUT_DIRECTORY,
-        "plots",
-        "nu_svc_svm_classifier_hist_training.pdf",
-        ),
-    nu_svc_svm_classifier_hist_training,
-    )
-
-nu_svc_svm_classifier_hist_testing =
-    PredictMD.plotsinglelabelbinaryclassifierhistogram(
-        nu_svc_svm_classifier,
-        testing_features_df,
-        testing_labels_df,
-        single_label_name,
-        single_label_levels,
-        );
-
-# PREDICTMD IF INCLUDE TEST STATEMENTS
-filename = string(
-    tempname(),
-    "_",
-    "nu_svc_svm_classifier_hist_testing",
-    ".pdf",
-    )
-rm(filename; force = true, recursive = true,)
-@debug("Attempting to test that the file does not exist...", filename,)
-Test.@test(!isfile(filename))
-@debug("The file does not exist.", filename, isfile(filename),)
-PredictMD.save_plot(filename, nu_svc_svm_classifier_hist_testing)
-if PredictMD.is_force_test_plots()
-    @debug("Attempting to test that the file exists...", filename,)
-    Test.@test(isfile(filename))
-    @debug("The file does exist.", filename, isfile(filename),)
-end
-# PREDICTMD ELSE
-# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
-
-display(nu_svc_svm_classifier_hist_testing)
-PredictMD.save_plot(
-    joinpath(
-        PROJECT_OUTPUT_DIRECTORY,
-        "plots",
-        "nu_svc_svm_classifier_hist_testing.pdf",
-        ),
-    nu_svc_svm_classifier_hist_testing,
-    )
-
 show(
     PredictMD.singlelabelbinaryclassificationmetrics(
-        nu_svc_svm_classifier,
-        smoted_training_features_df,
-        smoted_training_labels_df,
+        all_models,
+        training_features_df,
+        training_labels_df,
         single_label_name,
         positive_class;
         sensitivity = 0.95,
@@ -286,9 +211,75 @@ show(
     splitcols = false,
     )
 
+println(
+    string(
+        "Single label binary classification metrics, training set, ",
+        "fix specificity",
+        )
+    )
 show(
     PredictMD.singlelabelbinaryclassificationmetrics(
-        nu_svc_svm_classifier,
+        all_models,
+        training_features_df,
+        training_labels_df,
+        single_label_name,
+        positive_class;
+        specificity = 0.95,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
+    )
+
+println(
+    string(
+        "Single label binary classification metrics, training set, ",
+        "maximize F1 score",
+        )
+    )
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        all_models,
+        training_features_df,
+        training_labels_df,
+        single_label_name,
+        positive_class;
+        maximize = :f1score,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
+    )
+
+println(
+    string(
+        "Single label binary classification metrics, training set, ",
+        "maximize Cohen's kappa",
+        )
+    )
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        all_models,
+        training_features_df,
+        training_labels_df,
+        single_label_name,
+        positive_class;
+        maximize = :cohen_kappa,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
+    )
+
+println(
+    string(
+        "Single label binary classification metrics, testing set, ",
+        "fix sensitivity",
+        )
+    )
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        all_models,
         testing_features_df,
         testing_labels_df,
         single_label_name,
@@ -300,17 +291,143 @@ show(
     splitcols = false,
     )
 
-nu_svc_svm_classifier_filename = joinpath(
-    PROJECT_OUTPUT_DIRECTORY,
-    "nu_svc_svm_classifier.jld2",
+println(
+    string(
+        "Single label binary classification metrics, testing set, ",
+        "fix specificity",
+        )
+    )
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        all_models,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        positive_class;
+        specificity = 0.95,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
-PredictMD.save_model(
-    nu_svc_svm_classifier_filename,
-    nu_svc_svm_classifier,
+println(
+    string(
+        "Single label binary classification metrics, testing set, ",
+        "maximize F1 score",
+        )
+    )
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        all_models,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        positive_class;
+        maximize = :f1score,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
     )
 
-### End nu-SVC code
+println(
+    string(
+        "Single label binary classification metrics, testing set, ",
+        "maximize Cohen's kappa",
+        )
+    )
+show(
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        all_models,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        positive_class;
+        maximize = :cohen_kappa,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
+    )
+
+rocplottesting = PredictMD.plotroccurves(
+    all_models,
+    testing_features_df,
+    testing_labels_df,
+    single_label_name,
+    positive_class,
+    );
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+filename = string(
+    tempname(),
+    "_",
+    "rocplottesting",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+@debug("Attempting to test that the file does not exist...", filename,)
+Test.@test(!isfile(filename))
+@debug("The file does not exist.", filename, isfile(filename),)
+PredictMD.save_plot(filename, rocplottesting)
+if PredictMD.is_force_test_plots()
+    @debug("Attempting to test that the file exists...", filename,)
+    Test.@test(isfile(filename))
+    @debug("The file does exist.", filename, isfile(filename),)
+end
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+display(rocplottesting)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "rocplottesting.pdf",
+        ),
+    rocplottesting,
+    )
+
+prplottesting = PredictMD.plotprcurves(
+    all_models,
+    testing_features_df,
+    testing_labels_df,
+    single_label_name,
+    positive_class,
+    );
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+filename = string(
+    tempname(),
+    "_",
+    "prplottesting",
+    ".pdf",
+    )
+rm(filename; force = true, recursive = true,)
+@debug("Attempting to test that the file does not exist...", filename,)
+Test.@test(!isfile(filename))
+@debug("The file does not exist.", filename, isfile(filename),)
+PredictMD.save_plot(filename, prplottesting)
+if PredictMD.is_force_test_plots()
+    @debug("Attempting to test that the file exists...", filename,)
+    Test.@test(isfile(filename))
+    @debug("The file does exist.", filename, isfile(filename),)
+end
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+display(prplottesting)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "prplottesting.pdf",
+        ),
+    prplottesting,
+    )
+
+### End model comparison code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
@@ -319,4 +436,3 @@ end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-##### End of file

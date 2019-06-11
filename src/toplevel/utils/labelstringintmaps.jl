@@ -1,5 +1,3 @@
-##### Beginning of file
-
 """
 """
 function getlabelstring2intmap(
@@ -34,4 +32,3 @@ function getlabelint2stringmap(
     return result
 end
 
-##### End of file

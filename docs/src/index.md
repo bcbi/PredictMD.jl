@@ -1,5 +1,3 @@
-<!-- Beginning of file -->
-
 # PredictMD
 
 [PredictMD](https://predictmd.net) is a free and open-source Julia package that provides a uniform
@@ -28,4 +26,3 @@ Pkg.test("PredictMDExtra")
 Pkg.test("PredictMDFull")
 ```
 
-<!-- End of file -->

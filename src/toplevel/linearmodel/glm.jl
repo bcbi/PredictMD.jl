@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import DataFrames
 import GLM
 import StatsModels
@@ -378,4 +376,3 @@ function single_labeldataframelinearregression(
     end
 end
 
-##### End of file

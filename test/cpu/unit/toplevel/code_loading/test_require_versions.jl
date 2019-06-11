@@ -1,5 +1,3 @@
-##### Beginning of file
-
 Test.@test(
     PredictMD.does_given_version_meet_requirements(
         VersionNumber("1.2.3"),
@@ -84,4 +82,3 @@ Test.@test(
         )
     )
 
-##### End of file

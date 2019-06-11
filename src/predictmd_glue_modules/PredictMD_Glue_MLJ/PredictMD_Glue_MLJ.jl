@@ -1,5 +1,3 @@
-##### Beginning of file
-
 __precompile__(true)
 
 """
@@ -23,4 +21,3 @@ end
 
 end # end module PredictMD_Glue_MLJ
 
-##### End of file

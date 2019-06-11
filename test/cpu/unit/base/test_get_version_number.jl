@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Test
 import PredictMD
 
@@ -11,4 +9,3 @@ Test.@test( a > VersionNumber(0) )
 Test.@test( a > VersionNumber("0.1.0") )
 Test.@test( a < VersionNumber("123456789.0.0") )
 
-##### End of file

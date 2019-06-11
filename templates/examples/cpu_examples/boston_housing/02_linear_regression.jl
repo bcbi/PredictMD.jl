@@ -1,7 +1,3 @@
-##### Beginning of file
-
-error(string("This file is not meant to be run. Use the `PredictMD.generate_examples()` function to generate examples that you can run."))
-
 %PREDICTMD_GENERATED_BY%
 
 import PredictMD
@@ -14,23 +10,23 @@ PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
 
 ## PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%", "%PREDICTMD_NEXT_MINOR_VERSION%")
 
-PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
+PROJECT_OUTPUT_DIRECTORY = joinpath(
     homedir(),
     "Desktop",
-    "breast_cancer_biopsy_example",
+    "boston_housing_example",
     )
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
-    PredictMD.cache_to_homedir!("Desktop", "breast_cancer_biopsy_example",)
+    PredictMD.cache_to_homedir!("Desktop", "boston_housing_example",)
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ### End project-specific settings
 
-### Begin random forest classifier code
+### Begin linear regression code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 import PredictMDExtra
@@ -121,27 +117,6 @@ tuning_labels_df = DataFrames.DataFrame(
         )
     )
 
-smoted_training_features_df_filename = joinpath(
-    PROJECT_OUTPUT_DIRECTORY,
-    "smoted_training_features_df.csv",
-    )
-smoted_training_labels_df_filename = joinpath(
-    PROJECT_OUTPUT_DIRECTORY,
-    "smoted_training_labels_df.csv",
-    )
-smoted_training_features_df = DataFrames.DataFrame(
-    FileIO.load(
-        smoted_training_features_df_filename;
-        type_detect_rows = 100,
-        )
-    )
-smoted_training_labels_df = DataFrames.DataFrame(
-    FileIO.load(
-        smoted_training_labels_df_filename;
-        type_detect_rows = 100,
-        )
-    )
-
 categorical_feature_names_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "categorical_feature_names.jld2",
@@ -160,59 +135,45 @@ continuous_feature_names = FileIO.load(
     )
 feature_names = vcat(categorical_feature_names, continuous_feature_names)
 
-single_label_name = :Class
-negative_class = "benign"
-positive_class = "malignant"
-single_label_levels = [negative_class, positive_class]
+single_label_name = :MedV
 
-categorical_label_names = Symbol[single_label_name]
-continuous_label_names = Symbol[]
+continuous_label_names = Symbol[single_label_name]
+categorical_label_names = Symbol[]
 label_names = vcat(categorical_label_names, continuous_label_names)
 
-feature_contrasts = PredictMD.generate_feature_contrasts(
-    smoted_training_features_df,
+linear_regression = PredictMD.single_labeldataframelinearregression(
     feature_names,
+    single_label_name;
+    package = :GLM,
+    intercept = true,
+    interactions = 1,
+    name = "Linear regression",
     )
 
-random_forest_classifier =
-    PredictMD.single_labelmulticlassdataframerandomforestclassifier(
-        feature_names,
-        single_label_name,
-        single_label_levels;
-        nsubfeatures = 4,
-        ntrees = 200,
-        package = :DecisionTree,
-        name = "Random forest",
-        feature_contrasts = feature_contrasts,
-        )
+PredictMD.fit!(linear_regression,training_features_df,training_labels_df,)
 
-PredictMD.fit!(
-    random_forest_classifier,
-    smoted_training_features_df,
-    smoted_training_labels_df,
-    )
+PredictMD.get_underlying(linear_regression)
 
-random_forest_classifier_hist_training =
-    PredictMD.plotsinglelabelbinaryclassifierhistogram(
-        random_forest_classifier,
-        smoted_training_features_df,
-        smoted_training_labels_df,
+linear_regression_plot_training =
+    PredictMD.plotsinglelabelregressiontrueversuspredicted(
+        linear_regression,
+        training_features_df,
+        training_labels_df,
         single_label_name,
-        single_label_levels,
         );
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
-    "random_forest_classifier_hist_training",
+    "linear_regression_plot_training",
     ".pdf",
     )
 rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PredictMD.save_plot(filename, random_forest_classifier_hist_training)
+PredictMD.save_plot(filename, linear_regression_plot_training)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -221,37 +182,36 @@ end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-display(random_forest_classifier_hist_training)
+display(linear_regression_plot_training)
 PredictMD.save_plot(
     joinpath(
         PROJECT_OUTPUT_DIRECTORY,
         "plots",
-        "random_forest_classifier_hist_training.pdf",
+        "linear_regression_plot_training.pdf",
         ),
-    random_forest_classifier_hist_training,
+    linear_regression_plot_training,
     )
 
-random_forest_classifier_hist_testing =
-    PredictMD.plotsinglelabelbinaryclassifierhistogram(
-        random_forest_classifier,
+linear_regression_plot_testing =
+    PredictMD.plotsinglelabelregressiontrueversuspredicted(
+        linear_regression,
         testing_features_df,
         testing_labels_df,
-        single_label_name,
-        single_label_levels,
+        single_label_name
         );
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
-    "random_forest_classifier_hist_testing",
+    "linear_regression_plot_testing",
     ".pdf",
     )
 rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PredictMD.save_plot(filename, random_forest_classifier_hist_testing)
+PredictMD.save_plot(filename, linear_regression_plot_testing)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -260,24 +220,22 @@ end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-display(random_forest_classifier_hist_testing)
+display(linear_regression_plot_testing)
 PredictMD.save_plot(
     joinpath(
         PROJECT_OUTPUT_DIRECTORY,
         "plots",
-        "random_forest_classifier_hist_testing.pdf",
+        "linear_regression_plot_testing.pdf",
         ),
-    random_forest_classifier_hist_testing,
+    linear_regression_plot_testing,
     )
 
 show(
-    PredictMD.singlelabelbinaryclassificationmetrics(
-        random_forest_classifier,
-        smoted_training_features_df,
-        smoted_training_labels_df,
+    PredictMD.singlelabelregressionmetrics(
+        linear_regression,
+        training_features_df,
+        training_labels_df,
         single_label_name,
-        positive_class;
-        sensitivity = 0.95,
         );
     allrows = true,
     allcols = true,
@@ -285,36 +243,30 @@ show(
     )
 
 show(
-    PredictMD.singlelabelbinaryclassificationmetrics(
-        random_forest_classifier,
+    PredictMD.singlelabelregressionmetrics(
+        linear_regression,
         testing_features_df,
         testing_labels_df,
         single_label_name,
-        positive_class;
-        sensitivity = 0.95,
         );
     allrows = true,
     allcols = true,
     splitcols = false,
     )
 
-random_forest_classifier_filename = joinpath(
+linear_regression_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "random_forest_classifier.jld2",
+    "linear_regression.jld2",
     )
 
-PredictMD.save_model(
-    random_forest_classifier_filename,
-    random_forest_classifier,
-    )
+PredictMD.save_model(linear_regression_filename, linear_regression)
 
-### End random forest classifier code
+### End linear regression code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
-    PredictMD.homedir_to_cache!("Desktop", "breast_cancer_biopsy_example",)
+    PredictMD.homedir_to_cache!("Desktop", "boston_housing_example",)
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-##### End of file

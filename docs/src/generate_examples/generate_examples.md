@@ -1,5 +1,3 @@
-<!-- Beginning of file -->
-
 # Generating example files locally
 
 You can generate the example files using the `generate_examples`
@@ -31,4 +29,3 @@ running the `generate_examples` function.
 PredictMD.generate_examples(output_directory; notebooks = true)
 ```
 
-<!-- End of file -->

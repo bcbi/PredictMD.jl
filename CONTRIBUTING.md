@@ -1,5 +1,3 @@
-<!-- Beginning of file -->
-
 # Contributing to PredictMD
 
 This document provides information on contributing to the
@@ -574,4 +572,3 @@ The final step is to go to the Zenodo entry for the newly created release and pu
 
 After you have entered the correct information in all of the above fields, click the white "Save" button, and then click the blue "Publish" button. Congratulations, you are finished!
 
-<!-- End of file -->

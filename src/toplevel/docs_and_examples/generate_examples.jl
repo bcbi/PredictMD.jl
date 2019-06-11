@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Documenter
 import Literate
 
@@ -134,11 +132,11 @@ function generate_examples(
 
     cpu_examples_input_parent_directory = joinpath(
         examples_input_parent_directory,
-        "cpu",
+        "cpu_examples",
         )
     cpu_examples_output_parent_directory = joinpath(
         temp_examples_dir,
-        "cpu",
+        "cpu_examples",
         )
     try
         mkpath(cpu_examples_output_parent_directory)
@@ -283,4 +281,3 @@ function generate_examples(
     return output_directory
 end
 
-##### End of file

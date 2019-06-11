@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import DataFrames
 
 """
@@ -108,4 +106,3 @@ function predict_proba(
     end
 end
 
-##### End of file

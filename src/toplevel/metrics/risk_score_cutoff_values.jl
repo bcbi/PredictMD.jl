@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import DataFrames
 import Statistics
 
@@ -109,4 +107,3 @@ function risk_score_cutoff_values(
     return cutoffs, risk_group_prevalences
 end
 
-##### End of file

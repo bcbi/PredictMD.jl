@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Requires
 
 const _predictmd_has_MLJ = Ref(false)
@@ -59,4 +57,3 @@ function __init__()::Nothing
     return nothing
 end
 
-##### End of file

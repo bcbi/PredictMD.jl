@@ -1,5 +1,3 @@
-##### Beginning of file
-
 function cache_to_homedir!(
         parts...;
         cache = joinpath(homedir(), "predictmd_cache_travis"),
@@ -36,4 +34,3 @@ function homedir_to_cache!(
     return nothing
 end
 
-##### End of file

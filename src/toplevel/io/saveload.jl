@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import BSON
 import CSV
 import CSVFiles
@@ -126,4 +124,3 @@ function load_model_bson(filename::AbstractString)
     return loaded_fittable_object
 end
 
-##### End of file

@@ -1,7 +1,3 @@
-##### Beginning of file
-
-error(string("This file is not meant to be run. Use the `PredictMD.generate_examples()` function to generate examples that you can run."))
-
 %PREDICTMD_GENERATED_BY%
 
 import PredictMD
@@ -14,29 +10,31 @@ PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
 
 ## PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%", "%PREDICTMD_NEXT_MINOR_VERSION%")
 
-PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
+PROJECT_OUTPUT_DIRECTORY = joinpath(
     homedir(),
     "Desktop",
-    "boston_housing_example",
+    "breast_cancer_biopsy_example",
     )
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
-    PredictMD.cache_to_homedir!("Desktop", "boston_housing_example",)
+    PredictMD.cache_to_homedir!("Desktop", "breast_cancer_biopsy_example",)
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ### End project-specific settings
 
-### Begin linear regression code
+### Begin nu-SVC code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 import PredictMDExtra
 # PREDICTMD ELSE
 import PredictMDFull
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+Kernel = LIBSVM.Kernel
 
 Random.seed!(999)
 
@@ -121,6 +119,27 @@ tuning_labels_df = DataFrames.DataFrame(
         )
     )
 
+smoted_training_features_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    "smoted_training_features_df.csv",
+    )
+smoted_training_labels_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    "smoted_training_labels_df.csv",
+    )
+smoted_training_features_df = DataFrames.DataFrame(
+    FileIO.load(
+        smoted_training_features_df_filename;
+        type_detect_rows = 100,
+        )
+    )
+smoted_training_labels_df = DataFrames.DataFrame(
+    FileIO.load(
+        smoted_training_labels_df_filename;
+        type_detect_rows = 100,
+        )
+    )
+
 categorical_feature_names_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "categorical_feature_names.jld2",
@@ -139,45 +158,59 @@ continuous_feature_names = FileIO.load(
     )
 feature_names = vcat(categorical_feature_names, continuous_feature_names)
 
-single_label_name = :MedV
+single_label_name = :Class
+negative_class = "benign"
+positive_class = "malignant"
+single_label_levels = [negative_class, positive_class]
 
-continuous_label_names = Symbol[single_label_name]
-categorical_label_names = Symbol[]
+categorical_label_names = Symbol[single_label_name]
+continuous_label_names = Symbol[]
 label_names = vcat(categorical_label_names, continuous_label_names)
 
-linear_regression = PredictMD.single_labeldataframelinearregression(
+feature_contrasts = PredictMD.generate_feature_contrasts(
+    smoted_training_features_df,
     feature_names,
-    single_label_name;
-    package = :GLM,
-    intercept = true,
-    interactions = 1,
-    name = "Linear regression",
     )
 
-PredictMD.fit!(linear_regression,training_features_df,training_labels_df,)
-
-PredictMD.get_underlying(linear_regression)
-
-linear_regression_plot_training =
-    PredictMD.plotsinglelabelregressiontrueversuspredicted(
-        linear_regression,
-        training_features_df,
-        training_labels_df,
+nu_svc_svm_classifier =
+    PredictMD.single_labelmulticlassdataframesvmclassifier(
+        feature_names,
         single_label_name,
+        single_label_levels;
+        package = :LIBSVM,
+        svmtype = LIBSVM.NuSVC,
+        name = "SVM (nu-SVC)",
+        verbose = false,
+        feature_contrasts = feature_contrasts,
+        )
+
+PredictMD.fit!(
+    nu_svc_svm_classifier,
+    smoted_training_features_df,
+    smoted_training_labels_df,
+    )
+
+nu_svc_svm_classifier_hist_training =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        nu_svc_svm_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
+        single_label_name,
+        single_label_levels,
         );
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
-    "linear_regression_plot_training",
+    "nu_svc_svm_classifier_hist_training",
     ".pdf",
     )
 rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PredictMD.save_plot(filename, linear_regression_plot_training)
+PredictMD.save_plot(filename, nu_svc_svm_classifier_hist_training)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -186,36 +219,37 @@ end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-display(linear_regression_plot_training)
+display(nu_svc_svm_classifier_hist_training)
 PredictMD.save_plot(
     joinpath(
         PROJECT_OUTPUT_DIRECTORY,
         "plots",
-        "linear_regression_plot_training.pdf",
+        "nu_svc_svm_classifier_hist_training.pdf",
         ),
-    linear_regression_plot_training,
+    nu_svc_svm_classifier_hist_training,
     )
 
-linear_regression_plot_testing =
-    PredictMD.plotsinglelabelregressiontrueversuspredicted(
-        linear_regression,
+nu_svc_svm_classifier_hist_testing =
+    PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        nu_svc_svm_classifier,
         testing_features_df,
         testing_labels_df,
-        single_label_name
+        single_label_name,
+        single_label_levels,
         );
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
-    "linear_regression_plot_testing",
+    "nu_svc_svm_classifier_hist_testing",
     ".pdf",
     )
 rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PredictMD.save_plot(filename, linear_regression_plot_testing)
+PredictMD.save_plot(filename, nu_svc_svm_classifier_hist_testing)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -224,22 +258,24 @@ end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-display(linear_regression_plot_testing)
+display(nu_svc_svm_classifier_hist_testing)
 PredictMD.save_plot(
     joinpath(
         PROJECT_OUTPUT_DIRECTORY,
         "plots",
-        "linear_regression_plot_testing.pdf",
+        "nu_svc_svm_classifier_hist_testing.pdf",
         ),
-    linear_regression_plot_testing,
+    nu_svc_svm_classifier_hist_testing,
     )
 
 show(
-    PredictMD.singlelabelregressionmetrics(
-        linear_regression,
-        training_features_df,
-        training_labels_df,
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        nu_svc_svm_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
         single_label_name,
+        positive_class;
+        sensitivity = 0.95,
         );
     allrows = true,
     allcols = true,
@@ -247,31 +283,35 @@ show(
     )
 
 show(
-    PredictMD.singlelabelregressionmetrics(
-        linear_regression,
+    PredictMD.singlelabelbinaryclassificationmetrics(
+        nu_svc_svm_classifier,
         testing_features_df,
         testing_labels_df,
         single_label_name,
+        positive_class;
+        sensitivity = 0.95,
         );
     allrows = true,
     allcols = true,
     splitcols = false,
     )
 
-linear_regression_filename = joinpath(
+nu_svc_svm_classifier_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "linear_regression.jld2",
+    "nu_svc_svm_classifier.jld2",
     )
 
-PredictMD.save_model(linear_regression_filename, linear_regression)
+PredictMD.save_model(
+    nu_svc_svm_classifier_filename,
+    nu_svc_svm_classifier,
+    )
 
-### End linear regression code
+### End nu-SVC code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
-    PredictMD.homedir_to_cache!("Desktop", "boston_housing_example",)
+    PredictMD.homedir_to_cache!("Desktop", "breast_cancer_biopsy_example",)
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-##### End of file

@@ -1,7 +1,3 @@
-##### Beginning of file
-
-error(string("This file is not meant to be run. Use the `PredictMD.generate_examples()` function to generate examples that you can run."))
-
 %PREDICTMD_GENERATED_BY%
 
 import PredictMD
@@ -14,16 +10,16 @@ PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
 
 ## PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%", "%PREDICTMD_NEXT_MINOR_VERSION%")
 
-PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
+PROJECT_OUTPUT_DIRECTORY = joinpath(
     homedir(),
     "Desktop",
-    "breast_cancer_biopsy_example",
+    "boston_housing_example",
     )
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
-    PredictMD.cache_to_homedir!("Desktop", "breast_cancer_biopsy_example",)
+    PredictMD.cache_to_homedir!("Desktop", "boston_housing_example",)
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
@@ -40,19 +36,38 @@ import PredictMDFull
 
 Random.seed!(999)
 
-df = RDatasets.dataset("MASS", "biopsy")
+df = DataFrames.DataFrame(
+    CSVFiles.load(
+        CSVFiles.Stream(
+            CSVFiles.format"CSV",
+            GZip.gzopen(
+                joinpath(
+                    dirname(pathof(RDatasets)),
+                    "..",
+                    "data",
+                    "MASS",
+                    "Boston.csv.gz",
+                    )
+                ),
+            ),
+        ),
+    )
 
 categorical_feature_names = Symbol[]
 continuous_feature_names = Symbol[
-    :V1,
-    :V2,
-    :V3,
-    :V4,
-    :V5,
-    :V6,
-    :V7,
-    :V8,
-    :V9,
+    :Crim,
+    :Zn,
+    :Indus,
+    :Chas,
+    :NOx,
+    :Rm,
+    :Age,
+    :Dis,
+    :Rad,
+    :Tax,
+    :PTRatio,
+    :Black,
+    :LStat,
     ]
 categorical_feature_names_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
@@ -74,13 +89,10 @@ FileIO.save(
     )
 feature_names = vcat(categorical_feature_names, continuous_feature_names)
 
-single_label_name = :Class
-negative_class = "benign"
-positive_class = "malignant"
-single_label_levels = [negative_class, positive_class]
+single_label_name = :MedV
 
-categorical_label_names = Symbol[single_label_name]
-continuous_label_names = Symbol[]
+continuous_label_names = Symbol[single_label_name]
+categorical_label_names = Symbol[]
 label_names = vcat(categorical_label_names, continuous_label_names)
 
 df = df[:, vcat(feature_names, label_names)]
@@ -105,6 +117,8 @@ PredictMD.check_no_constant_columns(df)
 
 features_df = df[feature_names]
 labels_df = df[label_names]
+
+DataFrames.describe(labels_df[single_label_name])
 
 (trainingandtuning_features_df,
     trainingandtuning_labels_df,
@@ -192,9 +206,8 @@ CSV.write(
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
-    PredictMD.homedir_to_cache!("Desktop", "breast_cancer_biopsy_example",)
+    PredictMD.homedir_to_cache!("Desktop", "boston_housing_example",)
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-##### End of file

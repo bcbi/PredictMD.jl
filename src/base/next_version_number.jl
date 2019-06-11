@@ -1,5 +1,3 @@
-##### Beginning of file
-
 function next_major_version(
         current_version::VersionNumber;
         add_trailing_minus::Bool = false,
@@ -66,4 +64,3 @@ function next_patch_version(
     return result
 end
 
-##### End of file

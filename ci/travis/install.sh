@@ -1,7 +1,5 @@
 #!/bin/bash
 
-##### Beginning of file
-
 set -ev
 
 export COMPILED_MODULES=$COMP_MODS
@@ -85,4 +83,3 @@ fi
 mkdir -p $HOME/predictmd_cache_travis
 find $HOME/predictmd_cache_travis
 
-##### End of file

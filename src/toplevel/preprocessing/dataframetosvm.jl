@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import DataFrames
 import StatsModels
 
@@ -117,4 +115,3 @@ function DataFrame2LIBSVMTransformer(
     return result
 end
 
-##### End of file

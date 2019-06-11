@@ -1,5 +1,3 @@
-##### Beginning of file
-
 function print_welcome_message()::Nothing
     predictmd_version::VersionNumber = version()
     predictmd_version_codename::String = version_codename()
@@ -15,4 +13,3 @@ function print_welcome_message()::Nothing
     return nothing
 end
 
-##### End of file
