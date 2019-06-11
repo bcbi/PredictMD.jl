@@ -45,14 +45,14 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
         Test.@testset "base                      " begin
             include(
                 joinpath(
-                    "cpu_examples", "unit",
+                    "cpu", "unit",
                     "base",
                     "test_get_version_number.jl",
                     )
                 )
             include(
                 joinpath(
-                    "cpu_examples", "unit",
+                    "cpu", "unit",
                     "base",
                     "test_pkg_dir.jl",
                     )
@@ -85,7 +85,7 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
         Test.@testset "code_loading              " begin
             include(
                 joinpath(
-                    "cpu_examples", "unit",
+                    "cpu", "unit",
                     "toplevel", "code_loading",
                     "test_require_versions.jl",
                     )
@@ -95,14 +95,14 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
         Test.@testset "metrics                   " begin
             include(
                 joinpath(
-                    "cpu_examples", "unit",
+                    "cpu", "unit",
                     "toplevel", "metrics",
                     "test_coefficientofdetermination.jl",
                     )
                 )
             include(
                 joinpath(
-                    "cpu_examples", "unit",
+                    "cpu", "unit",
                     "toplevel", "metrics",
                     "test_cohenkappa.jl",
                     )
@@ -112,21 +112,28 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
         Test.@testset "utils                     " begin
             include(
                 joinpath(
-                    "cpu_examples", "unit",
+                    "cpu", "unit",
                     "toplevel", "utils",
                     "test_fix_type.jl",
                     )
                 )
             include(
                 joinpath(
-                    "cpu_examples", "unit",
+                    "cpu", "unit",
                     "toplevel", "utils",
                     "test-inverse-dictionary.jl",
                     )
                 )
             include(
                 joinpath(
-                    "cpu_examples", "unit",
+                    "cpu", "unit",
+                    "toplevel", "utils",
+                    "test_linearly_dependent_columns.jl",
+                    )
+                )
+            include(
+                joinpath(
+                    "cpu", "unit",
                     "toplevel", "utils",
                     "test-open-browser-window.jl",
                     )
@@ -136,7 +143,7 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
         Test.@testset "hcup                      " begin
             include(
                 joinpath(
-                    "cpu_examples", "unit",
+                    "cpu", "unit",
                     "submodules", "clean",
                     "hcup",
                     "test_hcup_utility_functions.jl",
@@ -297,4 +304,3 @@ Test.@testset "Integration tests" begin
         end
     end
 end
-

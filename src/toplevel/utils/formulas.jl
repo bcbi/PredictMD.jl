@@ -108,4 +108,3 @@ function generate_interaction_terms(
     end
     return interaction_terms
 end
-
