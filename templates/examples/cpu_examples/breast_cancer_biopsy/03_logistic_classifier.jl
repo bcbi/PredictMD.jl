@@ -1,19 +1,16 @@
-%PREDICTMD_GENERATED_BY%
+## %PREDICTMD_GENERATED_BY%
 
 import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version("%PREDICTMD_MINIMUM_REQUIRED_JULIA_VERSION%")
-
-PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
-
-## PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%", "%PREDICTMD_NEXT_MINOR_VERSION%")
+LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES = homedir()
 
 PROJECT_OUTPUT_DIRECTORY = joinpath(
-    homedir(),
-    "Desktop",
-    "breast_cancer_biopsy_example",
+    LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+    "cpu_examples",
+    "breast_cancer_biopsy",
+    "output",
     )
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
@@ -36,36 +33,44 @@ import PredictMDFull
 
 Random.seed!(999)
 
-trainingandtuning_features_df_filename = joinpath(
+trainingandtuning_features_df_filename = joinpath\(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "trainingandtuning_features_df.csv",
     )
-trainingandtuning_labels_df_filename = joinpath(
+trainingandtuning_labels_df_filename = joinpath\(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "trainingandtuning_labels_df.csv",
     )
-testing_features_df_filename = joinpath(
+testing_features_df_filename = joinpath\(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "testing_features_df.csv",
     )
-testing_labels_df_filename = joinpath(
+testing_labels_df_filename = joinpath\(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "testing_labels_df.csv",
     )
-training_features_df_filename = joinpath(
+training_features_df_filename = joinpath\(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "training_features_df.csv",
     )
-training_labels_df_filename = joinpath(
+training_labels_df_filename = joinpath\(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "training_labels_df.csv",
     )
-tuning_features_df_filename = joinpath(
+tuning_features_df_filename = joinpath\(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "tuning_features_df.csv",
     )
-tuning_labels_df_filename = joinpath(
+tuning_labels_df_filename = joinpath\(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "tuning_labels_df.csv",
     )
 trainingandtuning_features_df = DataFrames.DataFrame(
@@ -117,12 +122,14 @@ tuning_labels_df = DataFrames.DataFrame(
         )
     )
 
-smoted_training_features_df_filename = joinpath(
+smoted_training_features_df_filename = joinpath\(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "smoted_training_features_df.csv",
     )
-smoted_training_labels_df_filename = joinpath(
+smoted_training_labels_df_filename = joinpath\(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "smoted_training_labels_df.csv",
     )
 smoted_training_features_df = DataFrames.DataFrame(
@@ -383,4 +390,3 @@ if PredictMD.is_travis_ci()
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
-

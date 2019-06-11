@@ -12,4 +12,3 @@ function print_welcome_message()::Nothing
     @debug("PredictMD package directory: $(predictmd_pkgdir)")
     return nothing
 end
-

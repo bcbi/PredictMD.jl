@@ -21,7 +21,7 @@ df = DataFrames.DataFrame(
     :z1 => z1,
     :z11 => z11,
     )
-result::Vector{Symbol} = PredictMD.linearly_dependent_columns(df)
+result = PredictMD.linearly_dependent_columns(df)
 Test.@test(length(result) == 0)
 
 num_rows = 1_000
@@ -45,6 +45,6 @@ df = DataFrames.DataFrame(
     :z1 => z1,
     :z11 => z11,
     )
-result::Vector{Symbol} = PredictMD.linearly_dependent_columns(df)
+result = PredictMD.linearly_dependent_columns(df)
 Test.@test(length(result) == 1)
 Test.@test(all(result.==[:x]) || all (result.==[:y]) || all(result.==[:z]))
