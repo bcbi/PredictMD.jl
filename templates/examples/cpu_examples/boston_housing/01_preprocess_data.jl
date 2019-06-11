@@ -1,5 +1,6 @@
 ## %PREDICTMD_GENERATED_BY%
 
+import PredictMDExtra
 import PredictMD
 
 ### Begin project-specific settings
@@ -13,6 +14,11 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(
     "output",
     )
 
+mkpath(PROJECT_OUTPUT_DIRECTORY)
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "data"))
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "models"))
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "plots"))
+
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
@@ -24,12 +30,6 @@ end
 ### End project-specific settings
 
 ### Begin data preprocessing code
-
-# PREDICTMD IF INCLUDE TEST STATEMENTS
-import PredictMDExtra
-# PREDICTMD ELSE
-import PredictMDFull
-# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 Random.seed!(999)
 
@@ -136,42 +136,42 @@ DataFrames.describe(labels_df[single_label_name])
         2/3,
         )
 
-trainingandtuning_features_df_filename = joinpath\(
+trainingandtuning_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "data",
     "trainingandtuning_features_df.csv",
     )
-trainingandtuning_labels_df_filename = joinpath\(
+trainingandtuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "data",
     "trainingandtuning_labels_df.csv",
     )
-testing_features_df_filename = joinpath\(
+testing_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "data",
     "testing_features_df.csv",
     )
-testing_labels_df_filename = joinpath\(
+testing_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "data",
     "testing_labels_df.csv",
     )
-training_features_df_filename = joinpath\(
+training_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "data",
     "training_features_df.csv",
     )
-training_labels_df_filename = joinpath\(
+training_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "data",
     "training_labels_df.csv",
     )
-tuning_features_df_filename = joinpath\(
+tuning_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "data",
     "tuning_features_df.csv",
     )
-tuning_labels_df_filename = joinpath\(
+tuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
     "data",
     "tuning_labels_df.csv",
