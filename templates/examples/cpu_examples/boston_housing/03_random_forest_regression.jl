@@ -124,10 +124,12 @@ tuning_labels_df = DataFrames.DataFrame(
 
 categorical_feature_names_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "categorical_feature_names.jld2",
     )
 continuous_feature_names_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "continuous_feature_names.jld2",
     )
 categorical_feature_names = FileIO.load(

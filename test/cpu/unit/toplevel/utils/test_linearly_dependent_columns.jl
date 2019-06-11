@@ -21,8 +21,8 @@ df = DataFrames.DataFrame(
     :z1 => z1,
     :z11 => z11,
     )
-result = PredictMD.linearly_dependent_columns(df)
-Test.@test(length(result) == 0)
+Test.@test(PredictMD.columns_are_linearly_independent(df))
+Test.@test(length(PredictMD.linearly_dependent_columns(df)) == 0)
 
 num_rows = 1_000
 x = randn(num_rows)
@@ -45,6 +45,11 @@ df = DataFrames.DataFrame(
     :z1 => z1,
     :z11 => z11,
     )
+Test.@test(!PredictMD.columns_are_linearly_independent(df))
 result = PredictMD.linearly_dependent_columns(df)
 Test.@test(length(result) == 1)
-Test.@test(all(result.==[:x]) || all (result.==[:y]) || all(result.==[:z]))
+Test.@test(all(result.==[:x]) || all(result.==[:y]) || all(result.==[:z]))
+
+DataFrames.delete!(df, :z)
+Test.@test(PredictMD.columns_are_linearly_independent(df))
+Test.@test(length(PredictMD.linearly_dependent_columns(df)) == 0)

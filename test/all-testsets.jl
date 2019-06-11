@@ -154,7 +154,7 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
 end
 
 temp_generate_examples_dir = joinpath(
-    PredictMD.get_temp_directory(),
+    PredictMD.maketempdir(),
     "generate_examples",
     "PredictMDTEMP",
     "examples",

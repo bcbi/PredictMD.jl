@@ -49,10 +49,12 @@ continuous_feature_names = Symbol[
     ]
 categorical_feature_names_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "categorical_feature_names.jld2",
     )
 continuous_feature_names_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "continuous_feature_names.jld2",
     )
 FileIO.save(
