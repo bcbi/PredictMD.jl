@@ -117,7 +117,7 @@ function generate_examples(
     @info("Starting to generate examples...")
 
     temp_examples_dir = joinpath(
-        mktempdir(),
+        maketempdir(),
         "generate_examples",
         "PredictMDTemp",
         "docs",
