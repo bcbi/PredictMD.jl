@@ -17,7 +17,9 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "data"))
 mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "models"))
-mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "plots"))PredictMD.cache_to_path!(
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "plots"))
+
+PredictMD.cache_to_path!(
     ;
     from = ["cpu_examples", "breast_cancer_biopsy", "output",],
     to = [
@@ -234,7 +236,7 @@ PredictMD.predict(knet_mlp_classifier,testing_features_df,)
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
-    PredictMD.cache_to_path!(
+    PredictMD.path_to_cache!(
         ;
         to = ["cpu_examples", "breast_cancer_biopsy", "output",],
         from = [
