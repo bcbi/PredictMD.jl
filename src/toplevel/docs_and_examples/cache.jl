@@ -1,3 +1,29 @@
+function cp_files_and_directories(
+        src::AbstractString,
+        dst::AbstractString;
+        overwrite::Bool,
+        )::Nothing
+    if isdir(src)
+        mkpath(dst)
+        for item in readpath(src)
+            item_src_path = joinpath(src, item)
+            item_dst_path = joinpath(dst, item)
+            cp_files_and_directories(
+                item_src_path,
+                item_dst_path;
+                overwrite = overwrite,
+                )
+        end
+    elseif isfile(src)
+        if overwrite || !ispath(dst)
+            rm(dst; force = true, recursive = true,)
+            cp(src, dst; force = true,)
+        end
+    else
+    end
+    return nothing
+end
+
 function cache_to_path!(
         ;
         from::AbstractVector{<:AbstractString},
@@ -10,10 +36,10 @@ function cache_to_path!(
     mkpath(path_dst)
     @debug("cache_path_src: ", cache_path_src,)
     @debug("path_dst: ", path_dst,)
-    cp(
+    cp_files_and_directories(
         cache_path_src,
         path_dst;
-        force = true,
+        overwrite = false,
         )
     return nothing
 end
@@ -30,10 +56,10 @@ function path_to_cache!(
     mkpath(cache_path_dst)
     @debug("path_src: ", path_src,)
     @debug("cache_path_dst: ", cache_path_dst,)
-    cp(
+    cp_files_and_directories(
         path_src,
         cache_path_dst;
-        force = true,
+        overwrite = true,
         )
     return nothing
 end
