@@ -5,7 +5,7 @@ function cp_files_and_directories(
         )::Nothing
     if isdir(src)
         mkpath(dst)
-        for item in readpath(src)
+        for item in readdir(src)
             item_src_path = joinpath(src, item)
             item_dst_path = joinpath(dst, item)
             cp_files_and_directories(
