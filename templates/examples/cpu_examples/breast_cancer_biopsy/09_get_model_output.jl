@@ -17,7 +17,9 @@ PROJECT_OUTPUT_DIRECTORY = joinpath(
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "data"))
 mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "models"))
-mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "plots"))PredictMD.cache_to_path!(
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "plots"))
+
+PredictMD.cache_to_path!(
     ;
     from = ["cpu_examples", "breast_cancer_biopsy", "output",],
     to = [

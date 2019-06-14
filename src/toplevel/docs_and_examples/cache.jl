@@ -4,8 +4,10 @@ function cp_files_and_directories(
         overwrite::Bool,
         )::Nothing
     if isdir(src)
+        # @debug("src is dir", src, isdir(src))
         mkpath(dst)
         for item in readdir(src)
+            # @debug("item: ", item)
             item_src_path = joinpath(src, item)
             item_dst_path = joinpath(dst, item)
             cp_files_and_directories(
@@ -15,11 +17,15 @@ function cp_files_and_directories(
                 )
         end
     elseif isfile(src)
+        # @debug("src is file", src, isfile(src))
+        # @debug("dst: ", dst, isfile(dst), ispath(dst))
         if overwrite || !ispath(dst)
             rm(dst; force = true, recursive = true,)
-            cp(src, dst; force = true,)
+            cp(src, dst)
+            # @debug("copied file", src, dst)
         end
     else
+        # @error("weird src", src)
     end
     return nothing
 end
