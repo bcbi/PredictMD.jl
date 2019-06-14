@@ -568,7 +568,7 @@ PredictMD.save_model(knet_mlp_classifier_filename, knet_mlp_classifier)
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
-    PredictMD.cache_to_path!(
+    PredictMD.path_to_cache!(
         ;
         to = ["cpu_examples", "breast_cancer_biopsy", "output",],
         from = [

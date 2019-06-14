@@ -279,7 +279,7 @@ PredictMD.save_model(linear_regression_filename, linear_regression)
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
-    PredictMD.cache_to_path!(
+    PredictMD.path_to_cache!(
         ;
         to = ["cpu_examples", "boston_housing", "output",],
         from = [
