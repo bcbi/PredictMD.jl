@@ -37,113 +37,28 @@ import PredictMD
 import PredictMD
 
 if group_includes_block(TEST_GROUP, TestBlockUnitTests())
-    Test.@testset "Unit tests       " begin
-        @info(string("Running unit tests..."))
-
-        Test.@testset "Julia version requirements" begin
-            Test.@test(Base.VERSION >= VersionNumber("0.6"))
-        end
-
-        Test.@testset "base                      " begin
-            include(
-                joinpath(
-                    "cpu", "unit",
-                    "base",
-                    "test_get_version_number.jl",
-                    )
-                )
-            include(
-                joinpath(
-                    "cpu", "unit",
-                    "base",
-                    "test_pkg_dir.jl",
-                    )
-                )
-            testmodulea_filename::String = joinpath(
-                "TestModuleA",
-                "TestModuleA.jl",
-                )
-            testmoduleb_filename::String = joinpath(
-                "TestModuleB", "directory1", "directory2", "directory3",
-                "directory4", "directory5", "TestModuleB.jl",
-                )
-            testmodulec_filename::String = joinpath(
-                PredictMD.maketempdir(),
-                "TestModuleC.jl",
-                )
-            rm(testmodulec_filename; force = true, recursive = true)
-            open(testmodulec_filename, "w") do io
-                write(io, "module TestModuleC end")
+    @info(string("Running unit tests..."))
+    testmodulea_filename::String = joinpath("TestModuleA","TestModuleA.jl",)
+    testmoduleb_filename::String = joinpath("TestModuleB", "directory1", "directory2", "directory3","directory4", "directory5", "TestModuleB.jl",)
+    testmodulec_filename::String = joinpath(PredictMD.maketempdir(),"TestModuleC.jl",)
+    rm(testmodulec_filename; force = true, recursive = true)
+    open(testmodulec_filename, "w") do io
+        write(io, "module TestModuleC end")
+    end
+    include(testmodulea_filename)
+          include(testmoduleb_filename)
+          include(testmodulec_filename)
+    test_directory = dirname(@__FILE__)
+    unit_test_directory = joinpath(test_directory, "unit")
+    for (root, dirs, files) in walkdir(unit_test_directory)
+        Test.@testset "$(root)" begin
+            for file in files
+                if endswith(lowercase(strip(file)), ".jl")
+                    Test.@testset "$(file)" begin
+                        include(file)
+                    end
+                end
             end
-            include(testmodulea_filename)
-            include(testmoduleb_filename)
-            include(testmodulec_filename)
-            include(joinpath("test_package_directory.jl"))
-            include(joinpath("test_registry_url_list.jl"))
-            include(joinpath("test_version.jl"))
-            include(joinpath("test_version_codename.jl"))
-        end
-
-        Test.@testset "code_loading              " begin
-            include(
-                joinpath(
-                    "cpu", "unit",
-                    "toplevel", "code_loading",
-                    "test_require_versions.jl",
-                    )
-                )
-        end
-
-        Test.@testset "metrics                   " begin
-            include(
-                joinpath(
-                    "cpu", "unit",
-                    "toplevel", "metrics",
-                    "test_coefficientofdetermination.jl",
-                    )
-                )
-            include(
-                joinpath(
-                    "cpu", "unit",
-                    "toplevel", "metrics",
-                    "test_cohenkappa.jl",
-                    )
-                )
-        end
-
-        Test.@testset "utils                     " begin
-            include(
-                joinpath(
-                    "cpu", "unit",
-                    "toplevel", "utils",
-                    "test_fix_type.jl",
-                    )
-                )
-            include(
-                joinpath(
-                    "cpu", "unit",
-                    "toplevel", "utils",
-                    "test-inverse-dictionary.jl",
-                    )
-                )
-            include(
-                joinpath(
-                    "cpu", "unit",
-                    "toplevel", "utils",
-                    "test-open-browser-window.jl",
-                    )
-                )
-        end
-
-        Test.@testset "hcup                      " begin
-            include(
-                joinpath(
-                    "cpu", "unit",
-                    "submodules", "clean",
-                    "hcup",
-                    "test_hcup_utility_functions.jl",
-                    )
-                )
         end
     end
 end
