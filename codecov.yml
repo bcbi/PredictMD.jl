@@ -1,7 +1,7 @@
 ##### Beginning of file
 
 codecov:
-    branch: develop
+    branch: master
 
 comment: true
 
