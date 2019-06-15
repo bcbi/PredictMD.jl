@@ -16,9 +16,9 @@ include("version_codename.jl")
 include("welcome.jl")
 include("init.jl")
 
-include("base/interface.jl")
 include("base/abstract-types.jl")
 include("base/concrete-types.jl")
+include("base/interface.jl")
 include("base/backends.jl")
 include("base/next_version_number.jl")
 
