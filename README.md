@@ -32,7 +32,7 @@ src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master/graph/badge.svg"
             /></a></td>
         </tr>
         <tr>
-            <td>Current Stable Release</td>
+            <td>Current Release</td>
             <td>
             <a
             href="https://github.com/bcbi/PredictMD.jl/releases/latest">
@@ -46,18 +46,18 @@ src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master/graph/badge.svg"
             <img src="https://zenodo.org/badge/109460252.svg"/></a></td>
         </tr>
         <tr>
-            <td>Docs (Stable)</td>
+            <td>Documentation (Stable)</td>
             <td><a href="https://predictmd.net/stable">
             <img
             src="https://img.shields.io/badge/docs-stable-blue.svg" />
             </a></td>
         </tr>
         <tr>
-            <td>Docs (Unstable)</td>
+            <td>Documentation (Dev)</td>
             <td><a
             href="https://predictmd.net/latest">
             <img
-            src="https://img.shields.io/badge/docs-latest-blue.svg" />
+            src="https://img.shields.io/badge/docs-dev-blue.svg" />
             </a></td>
         </tr>
     </tbody>
