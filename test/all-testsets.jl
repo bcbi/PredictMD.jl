@@ -32,13 +32,11 @@ import PredictMD
 @info(string("Julia depot paths: "), Base.DEPOT_PATH)
 @info(string("Julia load paths: "), Base.LOAD_PATH)
 
-import PredictMD
-
 if group_includes_block(TEST_GROUP, TestBlockUnitTests())
     @info(string("Running unit tests..."))
-    testmodulea_filename::String = joinpath("TestModuleA","TestModuleA.jl",)
-    testmoduleb_filename::String = joinpath("TestModuleB", "directory1", "directory2", "directory3","directory4", "directory5", "TestModuleB.jl",)
-    testmodulec_filename::String = joinpath(PredictMD.maketempdir(),"TestModuleC.jl",)
+    testmodulea_filename = joinpath("TestModuleA","TestModuleA.jl",)
+    testmoduleb_filename = joinpath("TestModuleB", "directory1", "directory2", "directory3","directory4", "directory5", "TestModuleB.jl",)
+    testmodulec_filename = joinpath(PredictMD.maketempdir(),"TestModuleC.jl",)
     rm(testmodulec_filename; force = true, recursive = true)
     open(testmodulec_filename, "w") do io
         write(io, "module TestModuleC end")
