@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Statistics
 
 """
@@ -56,4 +54,3 @@ function simple_linear_regression(
     return intercept, coefficient
 end
 
-##### End of file

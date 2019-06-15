@@ -1,5 +1,3 @@
-##### Beginning of file
-
 """
 """
 function is_one_to_one(x::AbstractDict)::Bool
@@ -42,4 +40,3 @@ function inverse(x::AbstractDict)::Dict
     return result_typefixed
 end
 
-##### End of file

@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import PGFPlotsX
 
 function get_underlying(p::PGFPlotsXPlot{T})::T where T
@@ -61,4 +59,3 @@ function save_plot(
     return nothing
 end
 
-##### End of file

@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import MLBase
 import StatsBase
 
@@ -36,4 +34,3 @@ function roccurve(
     return allfpr, alltpr, allthresholds
 end
 
-##### End of file

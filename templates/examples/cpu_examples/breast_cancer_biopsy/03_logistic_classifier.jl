@@ -1,77 +1,82 @@
-##### Beginning of file
+## %PREDICTMD_GENERATED_BY%
 
-error(string("This file is not meant to be run. Use the `PredictMD.generate_examples()` function to generate examples that you can run."))
-
-%PREDICTMD_GENERATED_BY%
-
+import PredictMDExtra
 import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version("%PREDICTMD_MINIMUM_REQUIRED_JULIA_VERSION%")
+LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES = homedir()
 
-PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
-
-## PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%", "%PREDICTMD_NEXT_MINOR_VERSION%")
-
-PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
-    homedir(),
-    "Desktop",
-    "breast_cancer_biopsy_example",
+PROJECT_OUTPUT_DIRECTORY = joinpath(
+    LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+    "cpu_examples",
+    "breast_cancer_biopsy",
+    "output",
     )
+
+mkpath(PROJECT_OUTPUT_DIRECTORY)
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "data"))
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "models"))
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "plots"))
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
-    PredictMD.cache_to_homedir!("Desktop", "breast_cancer_biopsy_example",)
+    PredictMD.cache_to_path!(
+        ;
+        from = ["cpu_examples", "breast_cancer_biopsy", "output",],
+        to = [
+            LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+            "cpu_examples", "breast_cancer_biopsy", "output",],
+        )
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ### End project-specific settings
 
-### Begin C-SVC code
-
-# PREDICTMD IF INCLUDE TEST STATEMENTS
-import PredictMDExtra
-# PREDICTMD ELSE
-import PredictMDFull
-# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
-
-Kernel = LIBSVM.Kernel
+### Begin logistic classifier code
 
 Random.seed!(999)
 
 trainingandtuning_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "trainingandtuning_features_df.csv",
     )
 trainingandtuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "trainingandtuning_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "testing_features_df.csv",
     )
 testing_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "testing_labels_df.csv",
     )
 training_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "training_features_df.csv",
     )
 training_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "training_labels_df.csv",
     )
 tuning_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "tuning_features_df.csv",
     )
 tuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "tuning_labels_df.csv",
     )
 trainingandtuning_features_df = DataFrames.DataFrame(
@@ -125,10 +130,12 @@ tuning_labels_df = DataFrames.DataFrame(
 
 smoted_training_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "smoted_training_features_df.csv",
     )
 smoted_training_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "smoted_training_labels_df.csv",
     )
 smoted_training_features_df = DataFrames.DataFrame(
@@ -146,10 +153,12 @@ smoted_training_labels_df = DataFrames.DataFrame(
 
 categorical_feature_names_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "categorical_feature_names.jld2",
     )
 continuous_feature_names_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "continuous_feature_names.jld2",
     )
 categorical_feature_names = FileIO.load(
@@ -176,27 +185,28 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     feature_names,
     )
 
-c_svc_svm_classifier =
-    PredictMD.single_labelmulticlassdataframesvmclassifier(
+logistic_classifier =
+        PredictMD.singlelabelbinaryclassdataframelogisticclassifier(
         feature_names,
         single_label_name,
         single_label_levels;
-        package = :LIBSVM,
-        svmtype = LIBSVM.SVC,
-        name = "SVM (C-SVC)",
-        verbose = false,
-        feature_contrasts = feature_contrasts,
+        package = :GLM,
+        intercept = true,
+        interactions = 1,
+        name = "Logistic regression",
         )
 
 PredictMD.fit!(
-    c_svc_svm_classifier,
+    logistic_classifier,
     smoted_training_features_df,
     smoted_training_labels_df,
     )
 
-c_svc_svm_classifier_hist_training =
-    PredictMD.plotsinglelabelbinaryclassifierhistogram(
-        c_svc_svm_classifier,
+PredictMD.get_underlying(logistic_classifier)
+
+logistic_hist_training =
+        PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        logistic_classifier,
         smoted_training_features_df,
         smoted_training_labels_df,
         single_label_name,
@@ -207,14 +217,14 @@ c_svc_svm_classifier_hist_training =
 filename = string(
     tempname(),
     "_",
-    "c_svc_svm_classifier_hist_training",
+    "logistic_hist_training",
     ".pdf",
     )
 rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PredictMD.save_plot(filename, c_svc_svm_classifier_hist_training)
+PredictMD.save_plot(filename, logistic_hist_training)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -223,19 +233,19 @@ end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-display(c_svc_svm_classifier_hist_training)
+display(logistic_hist_training)
 PredictMD.save_plot(
     joinpath(
         PROJECT_OUTPUT_DIRECTORY,
         "plots",
-        "c_svc_svm_classifier_hist_training.pdf",
+        "logistic_hist_training.pdf",
         ),
-    c_svc_svm_classifier_hist_training,
+    logistic_hist_training,
     )
 
-c_svc_svm_classifier_hist_testing =
+logistic_hist_testing =
     PredictMD.plotsinglelabelbinaryclassifierhistogram(
-        c_svc_svm_classifier,
+        logistic_classifier,
         testing_features_df,
         testing_labels_df,
         single_label_name,
@@ -246,14 +256,14 @@ c_svc_svm_classifier_hist_testing =
 filename = string(
     tempname(),
     "_",
-    "c_svc_svm_classifier_hist_testing",
+    "logistic_hist_testing",
     ".pdf",
     )
 rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PredictMD.save_plot(filename, c_svc_svm_classifier_hist_testing)
+PredictMD.save_plot(filename, logistic_hist_testing)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -262,19 +272,19 @@ end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-display(c_svc_svm_classifier_hist_testing)
+display(logistic_hist_testing)
 PredictMD.save_plot(
     joinpath(
         PROJECT_OUTPUT_DIRECTORY,
         "plots",
-        "c_svc_svm_classifier_hist_testing.pdf",
+        "logistic_hist_testing.pdf",
         ),
-    c_svc_svm_classifier_hist_testing,
+    logistic_hist_testing,
     )
 
 show(
     PredictMD.singlelabelbinaryclassificationmetrics(
-        c_svc_svm_classifier,
+        logistic_classifier,
         smoted_training_features_df,
         smoted_training_labels_df,
         single_label_name,
@@ -288,7 +298,7 @@ show(
 
 show(
     PredictMD.singlelabelbinaryclassificationmetrics(
-        c_svc_svm_classifier,
+        logistic_classifier,
         testing_features_df,
         testing_labels_df,
         single_label_name,
@@ -300,20 +310,98 @@ show(
     splitcols = false,
     )
 
-c_svc_svm_classifier_filename = joinpath(
+logistic_calibration_curve =
+    PredictMD.plot_probability_calibration_curve(
+        logistic_classifier,
+        smoted_training_features_df,
+        smoted_training_labels_df,
+        single_label_name,
+        positive_class;
+        window = 0.2,
+        );
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+display(logistic_calibration_curve)
+PredictMD.save_plot(
+    joinpath(
+        PROJECT_OUTPUT_DIRECTORY,
+        "plots",
+        "logistic_calibration_curve.pdf",
+        ),
+    logistic_calibration_curve,
+    )
+
+show(
+    PredictMD.probability_calibration_metrics(
+        logistic_classifier,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        positive_class;
+        window = 0.1,
+        );
+    allrows = true,
+    allcols = true,
+    splitcols = false,
+    )
+
+logistic_cutoffs, logistic_risk_group_prevalences =
+    PredictMD.risk_score_cutoff_values(
+        logistic_classifier,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        positive_class;
+        average_function = Statistics.mean,
+        )
+@info(
+    string(
+        "Low risk: 0 to $(logistic_cutoffs[1]).",
+        " Medium risk: $(logistic_cutoffs[1]) to $(logistic_cutoffs[2]).",
+        " High risk: $(logistic_cutoffs[2]) to 1.",
+        )
+    )
+@info(logistic_risk_group_prevalences)
+logistic_cutoffs, logistic_risk_group_prevalences =
+    PredictMD.risk_score_cutoff_values(
+        logistic_classifier,
+        testing_features_df,
+        testing_labels_df,
+        single_label_name,
+        positive_class;
+        average_function = Statistics.median,
+        )
+@info(
+    string(
+        "Low risk: 0 to $(logistic_cutoffs[1]).",
+        " Medium risk: $(logistic_cutoffs[1]) to $(logistic_cutoffs[2]).",
+        " High risk: $(logistic_cutoffs[2]) to 1.",
+        )
+    )
+@info(logistic_risk_group_prevalences)
+
+logistic_classifier_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "c_svc_svm_classifier.jld2",
+    "models",
+    "logistic_classifier.jld2",
     )
 
-PredictMD.save_model(c_svc_svm_classifier_filename, c_svc_svm_classifier)
+PredictMD.save_model(logistic_classifier_filename, logistic_classifier)
 
-### End C-SVC code
+### End logistic classifier code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
-    PredictMD.homedir_to_cache!("Desktop", "breast_cancer_biopsy_example",)
+    PredictMD.path_to_cache!(
+        ;
+        to = ["cpu_examples", "breast_cancer_biopsy", "output",],
+        from = [
+            LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+            "cpu_examples", "breast_cancer_biopsy", "output",],
+        )
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
-
-##### End of file

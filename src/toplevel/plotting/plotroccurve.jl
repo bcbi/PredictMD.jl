@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import LaTeXStrings
 import PGFPlotsX
 
@@ -90,4 +88,3 @@ end
 
 const plotroccurve = plotroccurves
 
-##### End of file

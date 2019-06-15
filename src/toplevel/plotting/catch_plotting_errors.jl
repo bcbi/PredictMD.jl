@@ -1,5 +1,3 @@
-##### Beginning of file
-
 function is_force_test_plots(a::AbstractDict = ENV)
     result = lowercase(strip(get(a, "PREDICTMD_TEST_PLOTS", ""))) == "true"
     return result
@@ -20,4 +18,3 @@ function handle_plotting_error(e::Exception, a::AbstractDict = ENV)::Nothing
     end
 end
 
-##### End of file

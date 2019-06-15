@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Test
 import PredictMD
 
@@ -40,4 +38,3 @@ Test.@test(
         )
     )
 
-##### End of file

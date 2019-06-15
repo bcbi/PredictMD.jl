@@ -1,5 +1,3 @@
-##### Beginning of file
-
 # import TikzPictures
 
 # """
@@ -155,4 +153,3 @@
 #     return filename
 # end
 
-##### End of file

@@ -1,5 +1,3 @@
-##### Beginning of file
-
 abstract type Fittable end
 
 """
@@ -32,4 +30,3 @@ abstract type AbstractTransformer <: Fittable end
 
 abstract type AbstractNonExistentUnderlyingObject end
 
-##### End of file

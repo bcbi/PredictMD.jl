@@ -1,5 +1,3 @@
-##### Beginning of file
-
 """
 """
 module Compilation # begin submodule PredictMD.Compilation
@@ -16,4 +14,3 @@ include(joinpath("packagecompiler", "packagecompiler.jl",))
 
 end # end submodule PredictMD.Compilation
 
-##### End of file

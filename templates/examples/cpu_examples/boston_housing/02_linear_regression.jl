@@ -1,75 +1,82 @@
-##### Beginning of file
+## %PREDICTMD_GENERATED_BY%
 
-error(string("This file is not meant to be run. Use the `PredictMD.generate_examples()` function to generate examples that you can run."))
-
-%PREDICTMD_GENERATED_BY%
-
+import PredictMDExtra
 import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version("%PREDICTMD_MINIMUM_REQUIRED_JULIA_VERSION%")
+LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES = homedir()
 
-PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
-
-## PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%", "%PREDICTMD_NEXT_MINOR_VERSION%")
-
-PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
-    homedir(),
-    "Desktop",
-    "boston_housing_example",
+PROJECT_OUTPUT_DIRECTORY = joinpath(
+    LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+    "cpu_examples",
+    "boston_housing",
+    "output",
     )
+
+mkpath(PROJECT_OUTPUT_DIRECTORY)
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "data"))
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "models"))
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "plots"))
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
-    PredictMD.cache_to_homedir!("Desktop", "boston_housing_example",)
+    PredictMD.cache_to_path!(
+        ;
+        from = ["cpu_examples", "boston_housing", "output",],
+        to = [
+            LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+            "cpu_examples", "boston_housing", "output",],
+        )
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ### End project-specific settings
 
-### Begin random forest regression code
-
-# PREDICTMD IF INCLUDE TEST STATEMENTS
-import PredictMDExtra
-# PREDICTMD ELSE
-import PredictMDFull
-# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+### Begin linear regression code
 
 Random.seed!(999)
 
 trainingandtuning_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "trainingandtuning_features_df.csv",
     )
 trainingandtuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "trainingandtuning_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "testing_features_df.csv",
     )
 testing_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "testing_labels_df.csv",
     )
 training_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "training_features_df.csv",
     )
 training_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "training_labels_df.csv",
     )
 tuning_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "tuning_features_df.csv",
     )
 tuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "tuning_labels_df.csv",
     )
 trainingandtuning_features_df = DataFrames.DataFrame(
@@ -123,10 +130,12 @@ tuning_labels_df = DataFrames.DataFrame(
 
 categorical_feature_names_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "categorical_feature_names.jld2",
     )
 continuous_feature_names_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "continuous_feature_names.jld2",
     )
 categorical_feature_names = FileIO.load(
@@ -145,31 +154,22 @@ continuous_label_names = Symbol[single_label_name]
 categorical_label_names = Symbol[]
 label_names = vcat(categorical_label_names, continuous_label_names)
 
-feature_contrasts = PredictMD.generate_feature_contrasts(
-    training_features_df,
+linear_regression = PredictMD.single_labeldataframelinearregression(
     feature_names,
+    single_label_name;
+    package = :GLM,
+    intercept = true,
+    interactions = 1,
+    name = "Linear regression",
     )
 
-random_forest_regression =
-    PredictMD.single_labeldataframerandomforestregression(
-        feature_names,
-        single_label_name;
-        nsubfeatures = 2,
-        ntrees = 20,
-        package = :DecisionTree,
-        name = "Random forest",
-        feature_contrasts = feature_contrasts,
-        )
+PredictMD.fit!(linear_regression,training_features_df,training_labels_df,)
 
-PredictMD.fit!(
-    random_forest_regression,
-    training_features_df,
-    training_labels_df,
-    )
+PredictMD.get_underlying(linear_regression)
 
-random_forest_regression_plot_training =
+linear_regression_plot_training =
     PredictMD.plotsinglelabelregressiontrueversuspredicted(
-        random_forest_regression,
+        linear_regression,
         training_features_df,
         training_labels_df,
         single_label_name,
@@ -179,14 +179,14 @@ random_forest_regression_plot_training =
 filename = string(
     tempname(),
     "_",
-    "random_forest_regression_plot_training",
+    "linear_regression_plot_training",
     ".pdf",
     )
 rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PredictMD.save_plot(filename, random_forest_regression_plot_training)
+PredictMD.save_plot(filename, linear_regression_plot_training)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -195,36 +195,36 @@ end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-display(random_forest_regression_plot_training)
+display(linear_regression_plot_training)
 PredictMD.save_plot(
     joinpath(
         PROJECT_OUTPUT_DIRECTORY,
         "plots",
-        "random_forest_regression_plot_training.pdf",
+        "linear_regression_plot_training.pdf",
         ),
-    random_forest_regression_plot_training,
+    linear_regression_plot_training,
     )
 
-random_forest_regression_plot_testing =
+linear_regression_plot_testing =
     PredictMD.plotsinglelabelregressiontrueversuspredicted(
-        random_forest_regression,
+        linear_regression,
         testing_features_df,
         testing_labels_df,
-        single_label_name,
+        single_label_name
         );
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 filename = string(
     tempname(),
     "_",
-    "random_forest_regression_plot_testing",
+    "linear_regression_plot_testing",
     ".pdf",
     )
 rm(filename; force = true, recursive = true,)
 @debug("Attempting to test that the file does not exist...", filename,)
 Test.@test(!isfile(filename))
 @debug("The file does not exist.", filename, isfile(filename),)
-PredictMD.save_plot(filename, random_forest_regression_plot_testing)
+PredictMD.save_plot(filename, linear_regression_plot_testing)
 if PredictMD.is_force_test_plots()
     @debug("Attempting to test that the file exists...", filename,)
     Test.@test(isfile(filename))
@@ -233,19 +233,19 @@ end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-display(random_forest_regression_plot_testing)
+display(linear_regression_plot_testing)
 PredictMD.save_plot(
     joinpath(
         PROJECT_OUTPUT_DIRECTORY,
         "plots",
-        "random_forest_regression_plot_testing.pdf",
+        "linear_regression_plot_testing.pdf",
         ),
-    random_forest_regression_plot_testing,
+    linear_regression_plot_testing,
     )
 
 show(
     PredictMD.singlelabelregressionmetrics(
-        random_forest_regression,
+        linear_regression,
         training_features_df,
         training_labels_df,
         single_label_name,
@@ -257,7 +257,7 @@ show(
 
 show(
     PredictMD.singlelabelregressionmetrics(
-        random_forest_regression,
+        linear_regression,
         testing_features_df,
         testing_labels_df,
         single_label_name,
@@ -267,23 +267,25 @@ show(
     splitcols = false,
     )
 
-random_forest_regression_filename = joinpath(
+linear_regression_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
-    "random_forest_regression.jld2",
+    "models",
+    "linear_regression.jld2",
     )
 
-PredictMD.save_model(
-    random_forest_regression_filename,
-    random_forest_regression
-    )
+PredictMD.save_model(linear_regression_filename, linear_regression)
 
-### End random forest regression code
+### End linear regression code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
-    PredictMD.homedir_to_cache!("Desktop", "boston_housing_example",)
+    PredictMD.path_to_cache!(
+        ;
+        to = ["cpu_examples", "boston_housing", "output",],
+        from = [
+            LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+            "cpu_examples", "boston_housing", "output",],
+        )
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
-
-##### End of file

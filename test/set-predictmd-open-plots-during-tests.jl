@@ -1,5 +1,3 @@
-##### Beginning of file
-
 if length(
         lowercase(strip(get(ENV, "PREDICTMD_OPEN_PLOTS_DURING_TESTS", "")))
         ) == 0
@@ -14,4 +12,3 @@ end
         )
     )
 
-##### End of file

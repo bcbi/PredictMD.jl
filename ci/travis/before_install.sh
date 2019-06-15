@@ -1,7 +1,5 @@
 #!/bin/bash
 
-##### Beginning of file
-
 set -ev
 
 export COMPILED_MODULES=$COMP_MODS
@@ -71,4 +69,3 @@ else
     :
 fi
 
-##### End of file

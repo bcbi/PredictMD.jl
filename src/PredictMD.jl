@@ -1,5 +1,3 @@
-##### Beginning of file
-
 __precompile__(true)
 
 """
@@ -142,5 +140,3 @@ include("submodules/GPU/GPU.jl")
 include("submodules/Server/Server.jl")
 
 end # end module PredictMD
-
-##### End of file

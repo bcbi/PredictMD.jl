@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Adapt
 import CUDAapi
 import Flux
@@ -8,4 +6,3 @@ import NNlib
 import ProgressMeter
 import ValueHistories
 
-##### End of file

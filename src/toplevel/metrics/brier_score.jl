@@ -1,5 +1,3 @@
-##### Beginning of file
-
 """
     binary_brier_score(ytrue, yscore)
 
@@ -25,4 +23,3 @@ function binary_brier_score(
     return result
 end
 
-##### End of file

@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import LIBSVM
 
 function LIBSVMModel(
@@ -426,4 +424,3 @@ function single_labeldataframesvmregression(
     end
 end
 
-##### End of file

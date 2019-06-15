@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Statistics
 
 """
@@ -21,4 +19,3 @@ function simple_moving_average(
     return result
 end
 
-##### End of file

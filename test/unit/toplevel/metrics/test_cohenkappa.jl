@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Test
 import PredictMD
 
@@ -23,4 +21,3 @@ Test.@test(
     isapprox(PredictMD.cohen_kappa(table4), 0.45; atol = 0.001)
     )
 
-##### End of file

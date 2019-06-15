@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import DataFrames
 
 """
@@ -41,4 +39,3 @@ function generate_feature_contrasts(
     return result
 end
 
-##### End of file

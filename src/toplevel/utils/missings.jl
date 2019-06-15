@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import DataFrames
 
 """
@@ -38,4 +36,3 @@ function convert_value_to_missing!(
     return nothing
 end
 
-##### End of file

@@ -1,12 +1,67 @@
 # PredictMD - Uniform interface for machine learning in Julia
 
-<a href="https://github.com/bcbi/PredictMD.jl/releases/latest"><img src="https://img.shields.io/github/release/bcbi/PredictMD.svg" /> </a> <a href="https://zenodo.org/badge/latestdoi/109460252"> <img src="https://zenodo.org/badge/109460252.svg"/></a>
-
 [PredictMD](https://predictmd.net) is a free and open-source Julia package that provides a uniform interface for machine learning.
 
 PredictMD makes it easy to automate machine learning workflows and create reproducible machine learning pipelines.
 
 It is the official machine learning package of the Brown Center for Biomedical Informatics (BCBI).
+
+<table>
+    <tbody>
+        <tr>
+            <td>Repo Status</td>
+            <td>
+            <a href="https://www.repostatus.org/#active">
+            <img src="https://www.repostatus.org/badges/latest/active.svg"
+            alt="Project Status: Active – The project has reached a stable,
+            usable state and is being actively developed." /></a></td>
+        </tr>
+        <tr>
+            <td>Travis CI</td>
+            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches">
+            <img
+            src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master"
+            /></a></td>
+        </tr>
+        <tr>
+            <td>CodeCov</td>
+            <td><a
+            href="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master">
+            <img
+src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master/graph/badge.svg"
+            /></a></td>
+        </tr>
+        <tr>
+            <td>Current Stable Release</td>
+            <td>
+            <a
+            href="https://github.com/bcbi/PredictMD.jl/releases/latest">
+        <img src="https://img.shields.io/github/release/bcbi/PredictMD.svg"
+            /> </a></td>
+        </tr>
+        <tr>
+            <td>DOI</td>
+            <td>
+            <a href="https://zenodo.org/badge/latestdoi/109460252">
+            <img src="https://zenodo.org/badge/109460252.svg"/></a></td>
+        </tr>
+        <tr>
+            <td>Docs (Stable)</td>
+            <td><a href="https://predictmd.net/stable">
+            <img
+            src="https://img.shields.io/badge/docs-stable-blue.svg" />
+            </a></td>
+        </tr>
+        <tr>
+            <td>Docs (Unstable)</td>
+            <td><a
+            href="https://predictmd.net/latest">
+            <img
+            src="https://img.shields.io/badge/docs-latest-blue.svg" />
+            </a></td>
+        </tr>
+    </tbody>
+</table>
 
 | Table of Contents |
 | ----------------- |
@@ -17,8 +72,6 @@ It is the official machine learning package of the Brown Center for Biomedical I
 | [5. Citing](#citing) |
 | [6. Related Repositories](#related-repositories) |
 | [7. Contributing](#contributing) |
-| [8. Repository Status](#repository-status) |
-| [9. CI/CD](#cicd) |
 
 ## Installation
 
@@ -41,14 +94,14 @@ Pkg.test("PredictMDFull")
 ```
 
 ## Docker image
-Alternatively, you can use the PredictMD Docker image for easy installation. Download and start the container by running the following line: 
+Alternatively, you can use the PredictMD Docker image for easy installation. Download and start the container by running the following line:
 ```bash
 docker run --name predictmd -it dilumaluthge/predictmd /bin/bash
 ```
 
 After you have exited the container, you can return to it by running the following line:
 ```bash
-docker start -ai predictmd 
+docker start -ai predictmd
 ```
 
 ## Documentation
@@ -77,61 +130,3 @@ If you use PredictMD in research, please cite the software using the following D
 ## Contributing
 
 If you would like to contribute to the PredictMD source code, please read the instructions in [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## Repository Status
-
-<a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." /></a>
-
-## CI/CD
-
-<table>
-    <thead>
-        <tr>
-            <th></th>
-            <th>master (stable)</th>
-            <th>develop (latest/unstable)</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Travis CI</td>
-            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches">
-            <img
-            src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master"
-            /></a></td>
-            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches">
-            <img
-            src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=develop"
-            /></a></td>
-        </tr>
-        <tr>
-            <td>CodeCov</td>
-            <td>
-            <a
-            href="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master">
-            <img
-            src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master/graph/badge.svg"
-            /></a></td>
-            <td>
-            <a
-            href="https://codecov.io/gh/bcbi/PredictMD.jl/branch/develop">
-            <img src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/develop/graph/badge.svg"
-            /></a></td>
-        </tr>
-        <tr>
-            <td>docs</td>
-            <td><a href="https://predictmd.net/stable">
-            <img
-            src="https://img.shields.io/badge/docs-stable-blue.svg" />
-            </a>
-            </td>
-            <td>
-            <a
-            href="https://predictmd.net/latest">
-            <img
-            src="https://img.shields.io/badge/docs-latest-blue.svg" />
-            </a>
-            </td>
-        </tr>
-    </tbody>
-</table>

@@ -1,5 +1,3 @@
-##### Beginning of file
-
 """
 """
 function open_plots_during_tests(a::AbstractDict = ENV)
@@ -11,4 +9,3 @@ function open_plots_during_tests(a::AbstractDict = ENV)
     return result
 end
 
-##### End of file

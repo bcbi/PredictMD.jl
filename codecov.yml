@@ -1,7 +1,5 @@
-##### Beginning of file
-
 codecov:
-    branch: develop
+    branch: master
 
 comment: true
 
@@ -25,4 +23,3 @@ ignore:
     # ignore src/toplevel/utils/openbrowserwindow.jl
     # - "src/toplevel/utils/openbrowserwindow.jl"
 
-##### End of file

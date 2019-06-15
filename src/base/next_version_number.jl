@@ -65,5 +65,3 @@
 #         )
 #     return result
 # end
-
-##### End of file

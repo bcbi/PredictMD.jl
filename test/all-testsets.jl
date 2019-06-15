@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import InteractiveUtils # stdlib
 import Pkg # stdlib
 import Test # stdlib
@@ -64,7 +62,7 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
 end
 
 temp_generate_examples_dir = joinpath(
-    PredictMD.get_temp_directory(),
+    PredictMD.maketempdir(),
     "generate_examples",
     "PredictMDTEMP",
     "examples",
@@ -93,14 +91,14 @@ Test.@testset "Integration tests" begin
         if group_includes_block(TEST_GROUP, TestBlockIntegration1())
             include(
                 joinpath(
-                    temp_generate_examples_dir, "cpu",
+                    temp_generate_examples_dir, "cpu_examples",
                     "boston_housing",
                     "01_preprocess_data.jl",
                     )
                 )
             include(
                 joinpath(
-                    temp_generate_examples_dir, "cpu",
+                    temp_generate_examples_dir, "cpu_examples",
                     "boston_housing",
                     "02_linear_regression.jl",
                     )
@@ -109,14 +107,14 @@ Test.@testset "Integration tests" begin
         if group_includes_block(TEST_GROUP, TestBlockIntegration2())
             include(
                 joinpath(
-                    temp_generate_examples_dir, "cpu",
+                    temp_generate_examples_dir, "cpu_examples",
                     "boston_housing",
                     "03_random_forest_regression.jl",
                     )
                 )
             include(
                 joinpath(
-                    temp_generate_examples_dir, "cpu",
+                    temp_generate_examples_dir, "cpu_examples",
                     "boston_housing",
                     "04_knet_mlp_regression.jl",
                     )
@@ -125,14 +123,14 @@ Test.@testset "Integration tests" begin
         if group_includes_block(TEST_GROUP, TestBlockIntegration3())
             include(
                 joinpath(
-                    temp_generate_examples_dir, "cpu",
+                    temp_generate_examples_dir, "cpu_examples",
                     "boston_housing",
                     "05_compare_models.jl",
                     )
                 )
             include(
                 joinpath(
-                    temp_generate_examples_dir, "cpu",
+                    temp_generate_examples_dir, "cpu_examples",
                     "boston_housing",
                     "06_get_model_output.jl",
                     )
@@ -144,21 +142,21 @@ Test.@testset "Integration tests" begin
         if group_includes_block(TEST_GROUP, TestBlockIntegration4())
             include(
                 joinpath(
-                    temp_generate_examples_dir, "cpu",
+                    temp_generate_examples_dir, "cpu_examples",
                     "breast_cancer_biopsy",
                     "01_preprocess_data.jl",
                     )
                 )
             include(
                 joinpath(
-                    temp_generate_examples_dir, "cpu",
+                    temp_generate_examples_dir, "cpu_examples",
                     "breast_cancer_biopsy",
                     "02_smote.jl",
                     )
                 )
             include(
                 joinpath(
-                    temp_generate_examples_dir, "cpu",
+                    temp_generate_examples_dir, "cpu_examples",
                     "breast_cancer_biopsy",
                     "03_logistic_classifier.jl",
                     )
@@ -167,21 +165,21 @@ Test.@testset "Integration tests" begin
         if group_includes_block(TEST_GROUP, TestBlockIntegration5())
             include(
                 joinpath(
-                    temp_generate_examples_dir, "cpu",
+                    temp_generate_examples_dir, "cpu_examples",
                     "breast_cancer_biopsy",
                     "04_random_forest_classifier.jl",
                     )
                 )
             include(
                 joinpath(
-                    temp_generate_examples_dir, "cpu",
+                    temp_generate_examples_dir, "cpu_examples",
                     "breast_cancer_biopsy",
                     "05_c_svc_svm_classifier.jl",
                     )
                 )
             include(
                 joinpath(
-                    temp_generate_examples_dir, "cpu",
+                    temp_generate_examples_dir, "cpu_examples",
                     "breast_cancer_biopsy",
                     "06_nu_svc_svm_classifier.jl",
                     )
@@ -190,7 +188,7 @@ Test.@testset "Integration tests" begin
         if group_includes_block(TEST_GROUP, TestBlockIntegration6())
             include(
                 joinpath(
-                    temp_generate_examples_dir, "cpu",
+                    temp_generate_examples_dir, "cpu_examples",
                     "breast_cancer_biopsy",
                     "07_knet_mlp_classifier.jl",
                     )
@@ -199,14 +197,14 @@ Test.@testset "Integration tests" begin
         if group_includes_block(TEST_GROUP, TestBlockIntegration7())
             include(
                 joinpath(
-                    temp_generate_examples_dir, "cpu",
+                    temp_generate_examples_dir, "cpu_examples",
                     "breast_cancer_biopsy",
                     "08_compare_models.jl",
                     )
                 )
             include(
                 joinpath(
-                    temp_generate_examples_dir, "cpu",
+                    temp_generate_examples_dir, "cpu_examples",
                     "breast_cancer_biopsy",
                     "09_get_model_output.jl",
                     )
@@ -214,5 +212,3 @@ Test.@testset "Integration tests" begin
         end
     end
 end
-
-##### End of file

@@ -1,5 +1,3 @@
-##### Beginning of file
-
 """
 """
 function filename_extension(filename::AbstractString)
@@ -7,4 +5,3 @@ function filename_extension(filename::AbstractString)
     return result
 end
 
-##### End of file

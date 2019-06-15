@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import DataFrames
 import Random
 import StatsBase
@@ -29,4 +27,3 @@ function shuffle_rows!(
     return dataframe
 end
 
-##### End of file
