@@ -2,19 +2,18 @@ ENV["PREDICTMD_IS_RUNTESTS"] = "true"
 
 import PredictMDExtra
 
-include(joinpath(".", "import-predictmd.jl"))
+include("import-predictmd.jl")
 
-include(joinpath(".", "define-test-groups.jl"))
+include("define-test-groups.jl")
 
-include(joinpath(".", "define-test-blocks.jl"))
+include("define-test-blocks.jl")
 
-include(joinpath(".", "get-test-group.jl"))
+include("get-test-group.jl")
 
-include(joinpath(".", "set-predictmd-test-plots.jl"))
+include("set-predictmd-test-plots.jl")
 
-include(joinpath(".", "set-predictmd-open-plots-during-tests.jl"))
+include("set-predictmd-open-plots-during-tests.jl")
 
-include(joinpath(".", "all-testsets.jl"))
+include("all-testset.jl")
 
 ENV["PREDICTMD_IS_RUNTESTS"] = "false"
-
