@@ -42,7 +42,7 @@ include("toplevel/docs_and_examples/generate_examples.jl")
 
 include("toplevel/ide/atom.jl")
 include("toplevel/ide/revise.jl")
-include("toplevel/ide/saveload.jl")
+include("toplevel/io/saveload.jl")
 
 include("toplevel/linearmodel/glm.jl")
 include("toplevel/linearmodel/ordinary_least_squares_regression.jl")
