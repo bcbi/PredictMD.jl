@@ -141,4 +141,3 @@ function version(m::Module)::VersionNumber
     result_versionnumber::VersionNumber = VersionNumber(resultversion_string)
     return result_versionnumber
 end
-

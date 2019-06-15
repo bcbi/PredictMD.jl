@@ -7,10 +7,9 @@ module Compilation # begin submodule PredictMD.Compilation
 ############################################################################
 
 # submodules/Server/buildexecutable/
-include(joinpath("buildexecutable", "buildexecutable.jl",))
+include("buildexecutable/buildexecutable.jl")
 
 # submodules/Server/packagecompiler/
-include(joinpath("packagecompiler", "packagecompiler.jl",))
+include("packagecompiler/packagecompiler.jl")
 
 end # end submodule PredictMD.Compilation
-
