@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import LaTeXStrings
 import PGFPlotsX
 
@@ -99,4 +97,3 @@ function plotsinglelabelregressiontrueversuspredicted(
     return wrapper
 end
 
-##### End of file

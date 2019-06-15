@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import InteractiveUtils
 import Pkg
 import Test
@@ -31,4 +29,3 @@ import PredictMD
 @info(string("Julia depot paths: "), Base.DEPOT_PATH)
 @info(string("Julia load paths: "), Base.LOAD_PATH)
 
-##### End of file

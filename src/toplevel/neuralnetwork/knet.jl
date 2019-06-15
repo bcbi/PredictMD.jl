@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import CUDAapi
 import GPUArrays
 import Knet
@@ -601,4 +599,3 @@ function single_labeldataframeknetregression(
     end
 end
 
-##### End of file

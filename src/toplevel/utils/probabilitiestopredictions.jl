@@ -1,5 +1,3 @@
-##### Beginning of file
-
 """
 """
 function multilabelprobabilitiestopredictions(
@@ -45,4 +43,3 @@ function single_labelprobabilitiestopredictions(
     return predictionsvector
 end
 
-##### End of file

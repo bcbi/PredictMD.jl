@@ -1,5 +1,3 @@
-##### Beginning of file
-
 """
 """
 function fix_type
@@ -36,4 +34,3 @@ function fix_type(
 end
 
 
-##### End of file

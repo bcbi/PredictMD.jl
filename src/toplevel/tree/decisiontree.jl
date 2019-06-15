@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import DecisionTree
 
 function DecisionTreeModel(
@@ -307,4 +305,3 @@ function single_labeldataframerandomforestregression(
     end
 end
 
-##### End of file

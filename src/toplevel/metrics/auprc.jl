@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import MLBase
 import NumericalIntegration
 import StatsBase
@@ -26,4 +24,3 @@ function auprc(
     return areaunderprcurve
 end
 
-##### End of file

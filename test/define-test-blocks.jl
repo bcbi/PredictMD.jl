@@ -1,5 +1,3 @@
-##### Beginning of file
-
 abstract type AbstractTestBlock
 end
 
@@ -91,4 +89,3 @@ group_includes_block(::TestGroupTravis7, ::TestBlockIntegration5) = false
 group_includes_block(::TestGroupTravis7, ::TestBlockIntegration6) = false
 group_includes_block(::TestGroupTravis7, ::TestBlockIntegration7) = true
 
-##### End of file

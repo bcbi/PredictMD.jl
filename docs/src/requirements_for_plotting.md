@@ -1,5 +1,3 @@
-<!-- Beginning of file -->
-
 # Requirements for plotting
 
 There are no requirements in order to run PredictMD--you can train, run,
@@ -67,4 +65,3 @@ pdf2svg from the appropriate link below:
 * GNU/Linux: [http://www.cityinthesky.co.uk/opensource/pdf2svg/](
     http://www.cityinthesky.co.uk/opensource/pdf2svg/)
 
-<!-- End of file -->

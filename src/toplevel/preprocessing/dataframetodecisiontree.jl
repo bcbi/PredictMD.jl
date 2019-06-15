@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import DataFrames
 import StatsModels
 
@@ -135,4 +133,3 @@ function predict_proba(
     return transform(transformer, features_df)
 end
 
-##### End of file

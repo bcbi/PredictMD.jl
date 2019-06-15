@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Pkg
 
 Pkg.add("Documenter")
@@ -92,4 +90,3 @@ end
 
 ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "false"
 
-##### End of file

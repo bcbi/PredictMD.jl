@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import DataFrames
 import Random
 import StatsBase
@@ -61,4 +59,3 @@ function split_data(
         partition_2_labels_df
 end
 
-##### End of file

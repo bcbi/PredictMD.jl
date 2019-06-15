@@ -1,5 +1,3 @@
-##### Beginning of file
-
 function print_welcome_message()::Nothing
     predictmd_version::VersionNumber = version()
     predictmd_version_codename::String = version_codename()
@@ -14,5 +12,3 @@ function print_welcome_message()::Nothing
     @debug("PredictMD package directory: $(predictmd_pkgdir)")
     return nothing
 end
-
-##### End of file

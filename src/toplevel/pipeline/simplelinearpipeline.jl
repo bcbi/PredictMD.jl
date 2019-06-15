@@ -1,5 +1,3 @@
-##### Beginning of file
-
 """
 """
 function SimplePipeline(
@@ -173,4 +171,3 @@ function predict_proba(
     return output
 end
 
-##### End of file

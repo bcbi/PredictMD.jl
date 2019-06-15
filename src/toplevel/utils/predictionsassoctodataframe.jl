@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import DataFrames
 
 """
@@ -18,4 +16,3 @@ function predictionsassoctodataframe(
     return result
 end
 
-##### End of file

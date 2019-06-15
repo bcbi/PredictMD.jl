@@ -1,5 +1,3 @@
-##### Beginning of file
-
 __precompile__(true)
 
 """
@@ -452,6 +450,11 @@ include(
     )
 include(
     joinpath(
+        "toplevel", "utils", "linearly_dependent_columns.jl",
+        )
+    )
+include(
+    joinpath(
         "toplevel", "utils", "make_directory.jl",
         )
     )
@@ -570,4 +573,3 @@ include(
 
 end # end module PredictMD
 
-##### End of file

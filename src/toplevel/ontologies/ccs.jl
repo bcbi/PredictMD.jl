@@ -1,5 +1,3 @@
-##### Beginning of file
-
 _ICD_ICD9_CCS_APPENDIXASINGLEDX_FILE_HAS_BEEN_PARSED = false
 _ICD9_CODE_TO_SINGLE_LEVEL_DX_CCS = Dict{String, Int}()
 _SINGLE_LEVEL_DX_CCS_NUMBER_TO_NAME = Dict{Int, String}()
@@ -78,4 +76,3 @@ function icd9_code_to_single_level_dx_ccs(
     return result
 end
 
-##### End of file

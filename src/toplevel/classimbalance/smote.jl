@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import ClassImbalance
 import DataFrames
 import Random
@@ -117,4 +115,3 @@ function smote(
     return smotedfeatures_df, smotedlabels_df
 end
 
-##### End of file

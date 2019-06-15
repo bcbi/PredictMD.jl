@@ -1,5 +1,3 @@
-##### Beginning of file
-
 module Backends # begin submodule PredictMD.Backends
 
 abstract type AbstractBackend end
@@ -33,4 +31,3 @@ end
 
 end # end submodule PredictMD.Backends
 
-##### End of file

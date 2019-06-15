@@ -1,29 +1,34 @@
-##### Beginning of file
+## %PREDICTMD_GENERATED_BY%
 
-error(string("This file is not meant to be run. Use the `PredictMD.generate_examples()` function to generate examples that you can run."))
-
-%PREDICTMD_GENERATED_BY%
-
+import PredictMDExtra
 import PredictMD
 
 ### Begin project-specific settings
 
-PredictMD.require_julia_version("%PREDICTMD_MINIMUM_REQUIRED_JULIA_VERSION%")
+LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES = homedir()
 
-PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%")
-
-## PredictMD.require_predictmd_version("%PREDICTMD_CURRENT_VERSION%", "%PREDICTMD_NEXT_MINOR_VERSION%")
-
-PROJECT_OUTPUT_DIRECTORY = PredictMD.project_directory(
-    homedir(),
-    "Desktop",
-    "boston_housing_example",
+PROJECT_OUTPUT_DIRECTORY = joinpath(
+    LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+    "cpu_examples",
+    "boston_housing",
+    "output",
     )
+
+mkpath(PROJECT_OUTPUT_DIRECTORY)
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "data"))
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "models"))
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "plots"))
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 @debug("PROJECT_OUTPUT_DIRECTORY: ", PROJECT_OUTPUT_DIRECTORY,)
 if PredictMD.is_travis_ci()
-    PredictMD.cache_to_homedir!("Desktop", "boston_housing_example",)
+    PredictMD.cache_to_path!(
+        ;
+        from = ["cpu_examples", "boston_housing", "output",],
+        to = [
+            LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+            "cpu_examples", "boston_housing", "output",],
+        )
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
@@ -31,12 +36,6 @@ end
 ### End project-specific settings
 
 ### Begin data preprocessing code
-
-# PREDICTMD IF INCLUDE TEST STATEMENTS
-import PredictMDExtra
-# PREDICTMD ELSE
-import PredictMDFull
-# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 Random.seed!(999)
 
@@ -75,12 +74,23 @@ continuous_feature_names = Symbol[
     ]
 categorical_feature_names_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "categorical_feature_names.jld2",
     )
 continuous_feature_names_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "continuous_feature_names.jld2",
     )
+@info("", categorical_feature_names_filename)
+@info("", isfile(categorical_feature_names_filename))
+@info("", dirname(categorical_feature_names_filename))
+@info("", isdir(dirname(categorical_feature_names_filename)))
+@info("", joinpath(PROJECT_OUTPUT_DIRECTORY, "data"))
+@info("", isdir(joinpath(PROJECT_OUTPUT_DIRECTORY, "data")))
+@info("", PROJECT_OUTPUT_DIRECTORY)
+@info("", isdir(PROJECT_OUTPUT_DIRECTORY))
+
 FileIO.save(
     categorical_feature_names_filename,
     "categorical_feature_names",
@@ -143,34 +153,42 @@ DataFrames.describe(labels_df[single_label_name])
 
 trainingandtuning_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "trainingandtuning_features_df.csv",
     )
 trainingandtuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "trainingandtuning_labels_df.csv",
     )
 testing_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "testing_features_df.csv",
     )
 testing_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "testing_labels_df.csv",
     )
 training_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "training_features_df.csv",
     )
 training_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "training_labels_df.csv",
     )
 tuning_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "tuning_features_df.csv",
     )
 tuning_labels_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,
+    "data",
     "tuning_labels_df.csv",
     )
 CSV.write(
@@ -210,9 +228,13 @@ CSV.write(
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
-    PredictMD.homedir_to_cache!("Desktop", "boston_housing_example",)
+    PredictMD.path_to_cache!(
+        ;
+        to = ["cpu_examples", "boston_housing", "output",],
+        from = [
+            LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+            "cpu_examples", "boston_housing", "output",],
+        )
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
-
-##### End of file

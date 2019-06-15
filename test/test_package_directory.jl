@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import PredictMD
 import Test
 
@@ -26,4 +24,3 @@ Test.@test_throws(
     PredictMD.package_directory(TestModuleC),
     )
 
-##### End of file

@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Pkg # stdlib
 
 struct TomlFile
@@ -144,4 +142,3 @@ function version(m::Module)::VersionNumber
     return result_versionnumber
 end
 
-##### End of file

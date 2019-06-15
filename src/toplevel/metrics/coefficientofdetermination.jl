@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Statistics
 import StatsBase
 
@@ -30,4 +28,3 @@ function r2_score(
     return R2
 end
 
-##### End of file

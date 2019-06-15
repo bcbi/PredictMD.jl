@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Test
 import PredictMD
 
@@ -23,4 +21,3 @@ dict_3[3] = "odd"
 Test.@test( !PredictMD.is_one_to_one(dict_3) )
 Test.@test_throws(ErrorException, PredictMD.inverse(dict_3))
 
-##### End of file

@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import Pkg # stdlib
 
 function version_codename_string(x::TomlFile)::String
@@ -132,4 +130,3 @@ function version_codename(m::Module)::String
     return resultversion_codename_string
 end
 
-##### End of file

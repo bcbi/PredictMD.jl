@@ -1,7 +1,5 @@
 #!/bin/bash
 
-##### Beginning of file
-
 set -ev
 
 export COMPILED_MODULES=$COMP_MODS
@@ -68,8 +66,6 @@ then
     fi
     julia $JULIA_FLAGS -e 'import Pkg;Pkg.add("Coverage");'
     julia $JULIA_FLAGS -e 'import Pkg;cd(Pkg.dir("PredictMD"));import Coverage;Coverage.Codecov.submit(Coverage.Codecov.process_folder());'
-    cat Project.toml
-    cat Manifest.toml
 else
     :
 fi
@@ -85,4 +81,3 @@ fi
 mkdir -p $HOME/predictmd_cache_travis
 find $HOME/predictmd_cache_travis
 
-##### End of file

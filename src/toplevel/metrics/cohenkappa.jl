@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import LinearAlgebra
 import MLBase
 
@@ -67,4 +65,3 @@ function cohen_kappa(rocnums::MLBase.ROCNums)
     return result
 end
 
-##### End of file

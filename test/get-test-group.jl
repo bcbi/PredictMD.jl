@@ -1,5 +1,3 @@
-##### Beginning of file
-
 import PredictMD
 
 if PredictMD.is_travis_ci() && !haskey(ENV, "PREDICTMD_TEST_GROUP")
@@ -60,4 +58,3 @@ else
         )
 end
 
-##### End of file

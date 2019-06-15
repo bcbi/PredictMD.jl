@@ -1,5 +1,3 @@
-##### Beginning of file
-
 function is_filesystem_root(path::AbstractString)::Bool
     path::String = abspath(strip(path))
     if path == dirname(path)
@@ -182,4 +180,3 @@ function package_directory(m::Module, parts...)::String
     return result
 end
 
-##### End of file
