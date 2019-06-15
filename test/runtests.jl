@@ -14,6 +14,6 @@ include("set-predictmd-test-plots.jl")
 
 include("set-predictmd-open-plots-during-tests.jl")
 
-include("all-testset.jl")
+include("all-testsets.jl")
 
 ENV["PREDICTMD_IS_RUNTESTS"] = "false"
