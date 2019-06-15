@@ -27,32 +27,47 @@ Pkg.status(Pkg.Types.PKGMODE_COMBINED)
 import PredictMD
 @info(string("Successfully imported PredictMD.",))
 @info(string("PredictMD version: "),PredictMD.version(),)
-@info(string("PredictMD package directory: "),PredictMD.package_directory(),)
+@info(
+    string("PredictMD package directory: "),
+    PredictMD.package_directory(),
+    )
 
 @info(string("Julia depot paths: "), Base.DEPOT_PATH)
 @info(string("Julia load paths: "), Base.LOAD_PATH)
 
 if group_includes_block(TEST_GROUP, TestBlockUnitTests())
-    @info(string("Running unit tests..."))
-    testmodulea_filename = joinpath("TestModuleA","TestModuleA.jl",)
-    testmoduleb_filename = joinpath("TestModuleB", "directory1", "directory2", "directory3","directory4", "directory5", "TestModuleB.jl",)
-    testmodulec_filename = joinpath(PredictMD.maketempdir(),"TestModuleC.jl",)
-    rm(testmodulec_filename; force = true, recursive = true)
-    open(testmodulec_filename, "w") do io
-        write(io, "module TestModuleC end")
-    end
-    include(testmodulea_filename)
-          include(testmoduleb_filename)
-          include(testmodulec_filename)
-    test_directory = dirname(@__FILE__)
-    unit_test_directory = joinpath(test_directory, "unit")
-    for (root, dirs, files) in walkdir(unit_test_directory)
-        Test.@testset "$(root)" begin
-            for file in files
-                if endswith(lowercase(strip(file)), ".jl")
-                    file_path = joinpath(root, file)
-                    Test.@testset "$(file_path)" begin
-                        include(file_path)
+    Test.@testset "Unit tests" begin
+        testmodulea_filename = joinpath("TestModuleA","TestModuleA.jl",)
+        testmoduleb_filename = joinpath(
+            "TestModuleB",
+            "directory1",
+            "directory2",
+            "directory3",
+            "directory4",
+            "directory5",
+            "TestModuleB.jl",
+            )
+        testmodulec_filename = joinpath(
+            PredictMD.maketempdir(),
+            "TestModuleC.jl",
+            )
+        rm(testmodulec_filename; force = true, recursive = true)
+        open(testmodulec_filename, "w") do io
+            write(io, "module TestModuleC end")
+        end
+        include(testmodulea_filename)
+        include(testmoduleb_filename)
+        include(testmodulec_filename)
+        test_directory = dirname(@__FILE__)
+        unit_test_directory = joinpath(test_directory, "unit")
+        for (root, dirs, files) in walkdir(unit_test_directory)
+            Test.@testset "$(root)" begin
+                for file in files
+                    if endswith(lowercase(strip(file)), ".jl")
+                        file_path = joinpath(root, file)
+                        Test.@testset "$(file_path)" begin
+                            include(file_path)
+                        end
                     end
                 end
             end
@@ -74,15 +89,16 @@ rm(
     )
 
 Test.@testset "Integration tests" begin
-    @info(string("Running integration tests..."))
     Test.@testset "Generate examples      " begin
-        PredictMD.generate_examples(
-            temp_generate_examples_dir;
-            scripts = true,
-            include_test_statements = true,
-            markdown = false,
-            notebooks = false,
-            execute_notebooks = false,
+        Test.@test(
+            temp_generate_examples_dir == PredictMD.generate_examples(
+                temp_generate_examples_dir;
+                scripts = true,
+                include_test_statements = true,
+                markdown = false,
+                notebooks = false,
+                execute_notebooks = false,
+                )
             )
     end
     Test.@testset "Boston housing regression example (CPU)  " begin
@@ -99,14 +115,16 @@ Test.@testset "Integration tests" begin
             test_file = test_pair[1]
             test_block = test_pair[2]
             if group_includes_block(TEST_GROUP, test_block)
-                include(
-                    joinpath(
-                        temp_generate_examples_dir,
-                        "cpu_examples",
-                        "boston_housing",
-                        test_file,
+                Test.@testset "cpu_examples/bostonhousing/$(test_file)" begin
+                    include(
+                        joinpath(
+                            temp_generate_examples_dir,
+                            "cpu_examples",
+                            "boston_housing",
+                            test_file,
+                            )
                         )
-                    )
+                end
             end
         end
     end
@@ -127,14 +145,16 @@ Test.@testset "Integration tests" begin
             test_file = test_pair[1]
             test_block = test_pair[2]
             if group_includes_block(TEST_GROUP, test_block)
-                include(
-                    joinpath(
-                        temp_generate_examples_dir,
-                        "cpu_examples",
-                        "breast_cancer_biopsy",
-                        test_file,
+                Test.@testset "cpu_examples/breastcancer/$(test_file)" begin
+                    include(
+                        joinpath(
+                            temp_generate_examples_dir,
+                            "cpu_examples",
+                            "breast_cancer_biopsy",
+                            test_file,
+                            )
                         )
-                    )
+                end
             end
         end
     end
