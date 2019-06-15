@@ -66,8 +66,6 @@ then
     fi
     julia $JULIA_FLAGS -e 'import Pkg;Pkg.add("Coverage");'
     julia $JULIA_FLAGS -e 'import Pkg;cd(Pkg.dir("PredictMD"));import Coverage;Coverage.Codecov.submit(Coverage.Codecov.process_folder());'
-    cat Project.toml
-    cat Manifest.toml
 else
     :
 fi
