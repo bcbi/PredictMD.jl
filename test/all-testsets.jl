@@ -50,8 +50,9 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
         Test.@testset "$(root)" begin
             for file in files
                 if endswith(lowercase(strip(file)), ".jl")
-                    Test.@testset "$(file)" begin
-                        include(file)
+                    file_path = joinpath(root, file)
+                    Test.@testset "$(file_path)" begin
+                        include(file_path)
                     end
                 end
             end
