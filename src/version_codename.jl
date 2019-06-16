@@ -129,4 +129,3 @@ function version_codename(m::Module)::String
     resultversion_codename_string::String = version_codename_string(m)
     return resultversion_codename_string
 end
-

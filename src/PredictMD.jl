@@ -7,569 +7,137 @@ module PredictMD # begin module PredictMD
 using Distributed
 using Random
 
-include(joinpath("package_directory.jl"))
-include(joinpath("registry_url_list.jl"))
-include(joinpath("version.jl"))
-include(joinpath("version_codename.jl"))
-include(joinpath("welcome.jl"))
-include(joinpath("init.jl"))
+include("package_directory.jl")
+include("registry_url_list.jl")
+include("version.jl")
+include("version_codename.jl")
+include("welcome.jl")
+include("init.jl")
 
-############################################################################
-# PredictMD base files (names here go in the top level namespace) ##########
-############################################################################
+include("base/abstract-types.jl")
+include("base/concrete-types.jl")
+include("base/interface.jl")
+include("base/backends.jl")
+include("base/next_version_number.jl")
 
-# base/
+include("toplevel/code_loading/requires.jl")
+include("toplevel/code_loading/require_versions.jl")
 
-include(joinpath("base", "abstract-types.jl",))
-include(joinpath("base", "concrete-types.jl",))
-include(joinpath("base", "backends.jl",))
+include("toplevel/classimbalance/smote.jl")
 
-include(joinpath("base", "next_version_number.jl",))
-include(joinpath("base", "interface.jl",))
 
-############################################################################
-# PredictMD source files (names here also go in the top level namespace) ###
-############################################################################
+include("toplevel/datasets/csv.jl")
+include("toplevel/datasets/datadeps.jl")
+include("toplevel/datasets/gzip.jl")
+include("toplevel/datasets/juliadb.jl")
+include("toplevel/datasets/mldatasets.jl")
+include("toplevel/datasets/mnist.jl")
+include("toplevel/datasets/queryverse.jl")
+include("toplevel/datasets/rdatasets.jl")
 
-# toplevel/calibration/
 
-# toplevel/code_loading/
-include(
-    joinpath(
-        "toplevel", "code_loading", "requires.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "code_loading", "require_versions.jl",
-        )
-    )
+include("toplevel/docs_and_examples/cache.jl")
+include("toplevel/docs_and_examples/generate_examples.jl")
 
-# toplevel/classimbalance/
-include(
-    joinpath(
-        "toplevel", "classimbalance", "smote.jl",
-        )
-    )
 
-# toplevel/cluster/
+include("toplevel/ide/atom.jl")
+include("toplevel/ide/revise.jl")
+include("toplevel/io/saveload.jl")
 
-# toplevel/datasets/
-include(
-    joinpath(
-        "toplevel", "datasets", "csv.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "datasets", "datadeps.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "datasets", "gzip.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "datasets", "juliadb.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "datasets", "mldatasets.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "datasets", "mnist.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "datasets", "queryverse.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "datasets", "rdatasets.jl",
-        )
-    )
+include("toplevel/linearmodel/glm.jl")
+include("toplevel/linearmodel/ordinary_least_squares_regression.jl")
 
-# toplevel/docs_and_examples/
-include(
-    joinpath(
-        "toplevel", "docs_and_examples", "generate_examples.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "docs_and_examples", "cache.jl",
-        )
-    )
+include("toplevel/metrics/auprc.jl")
+include("toplevel/metrics/aurocc.jl")
+include("toplevel/metrics/averageprecisionscore.jl")
+include("toplevel/metrics/brier_score.jl")
+include("toplevel/metrics/coefficientofdetermination.jl")
+include("toplevel/metrics/cohenkappa.jl")
+include("toplevel/metrics/getbinarythresholds.jl")
+include("toplevel/metrics/mean_square_error.jl")
+include("toplevel/metrics/prcurve.jl")
+include("toplevel/metrics/risk_score_cutoff_values.jl")
+include("toplevel/metrics/roccurve.jl")
+include("toplevel/metrics/rocnumsmetrics.jl")
+include("toplevel/metrics/singlelabelbinaryclassificationmetrics.jl")
+include("toplevel/metrics/singlelabelregressionmetrics.jl")
 
-# toplevel/decomposition/
+include("toplevel/modelselection/split_data.jl")
 
-# toplevel/ensemble/
 
-# toplevel/ide/
-include(
-    joinpath(
-        "toplevel", "ide", "atom.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "ide", "revise.jl",
-        )
-    )
+include("toplevel/neuralnetwork/flux.jl")
+include("toplevel/neuralnetwork/knet.jl")
+include("toplevel/neuralnetwork/merlin.jl")
 
-# toplevel/io/
-include(
-    joinpath(
-        "toplevel", "io", "saveload.jl",
-        )
-    )
 
-# linearmodel/
-include(
-    joinpath(
-        "toplevel", "linearmodel", "glm.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "linearmodel",
-        "ordinary_least_squares_regression.jl",
-        )
-    )
+include("toplevel/online/onlinestats.jl")
 
-# toplevel/metrics/
-include(
-    joinpath(
-        "toplevel", "metrics", "auprc.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "metrics", "aurocc.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "metrics", "averageprecisionscore.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "metrics", "brier_score.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "metrics", "coefficientofdetermination.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "metrics", "cohenkappa.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "metrics", "getbinarythresholds.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "metrics", "mean_square_error.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "metrics", "prcurve.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "metrics", "risk_score_cutoff_values.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "metrics", "roccurve.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "metrics", "rocnumsmetrics.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "metrics",
-        "singlelabelbinaryclassificationmetrics.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "metrics", "singlelabelregressionmetrics.jl",
-        )
-    )
+include("toplevel/ontologies/ccs.jl")
 
-# toplevel/modelselection/
-include(
-    joinpath(
-        "toplevel", "modelselection", "split_data.jl",
-        )
-    )
+include("toplevel/pipeline/simplelinearpipeline.jl")
 
-# toplevel/multiclass/
 
-# toplevel/multioutput/
 
-# toplevel/neuralnetwork/
-include(
-    joinpath(
-        "toplevel", "neuralnetwork", "flux.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "neuralnetwork", "knet.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "neuralnetwork", "merlin.jl",
-        )
-    )
+include("toplevel/plotting/catch_plotting_errors.jl")
+include("toplevel/plotting/defaultapplication.jl")
+include("toplevel/plotting/pgfplots.jl")
+include("toplevel/plotting/pgfplotsx.jl")
+include("toplevel/plotting/plotlearningcurve.jl")
+include("toplevel/plotting/plotprcurve.jl")
+include("toplevel/plotting/plotroccurve.jl")
+include("toplevel/plotting/plotsinglelabelregressiontruevspredicted.jl")
+include("toplevel/plotting/plotsinglelabelbinaryclassifierhistograms.jl")
+include("toplevel/plotting/probability_calibration_plots.jl")
+include("toplevel/plotting/unicodeplots.jl")
 
-# toplevel/online/
-include(
-    joinpath(
-        "toplevel", "online", "onlinestats.jl",
-        )
-    )
+include("toplevel/postprocessing/packagemultilabelpred.jl")
+include("toplevel/postprocessing/packagesinglelabelpred.jl")
+include("toplevel/postprocessing/packagesinglelabelproba.jl")
+include("toplevel/postprocessing/predictoutput.jl")
+include("toplevel/postprocessing/predictprobaoutput.jl")
 
-# toplevel/ontologies/
-include(
-    joinpath(
-        "toplevel", "ontologies", "ccs.jl",
-        )
-    )
+include("toplevel/preprocessing/dataframecontrasts.jl")
+include("toplevel/preprocessing/dataframetodecisiontree.jl")
+include("toplevel/preprocessing/dataframetoglm.jl")
+include("toplevel/preprocessing/dataframetoknet.jl")
+include("toplevel/preprocessing/dataframetosvm.jl")
 
-# toplevel/pipeline/
-include(
-    joinpath(
-        "toplevel", "pipeline", "simplelinearpipeline.jl",
-        )
-    )
+include("toplevel/svm/libsvm.jl")
 
-# toplevel/plotting/
-include(
-    joinpath(
-        "toplevel", "plotting", "catch_plotting_errors.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "plotting", "defaultapplication.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "plotting", "pgfplots.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "plotting", "pgfplotsx.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "plotting", "plotlearningcurve.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "plotting", "plotprcurve.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "plotting", "plotroccurve.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "plotting",
-        "plotsinglelabelregressiontruevspredicted.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "plotting",
-        "plotsinglelabelbinaryclassifierhistograms.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "plotting",
-        "probability_calibration_plots.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "plotting",
-        "unicodeplots.jl",
-        )
-    )
+include("toplevel/time_series/timeseries.jl")
 
-# toplevel/postprocessing/
-include(
-    joinpath(
-        "toplevel", "postprocessing", "packagemultilabelpred.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "postprocessing", "packagesinglelabelpred.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "postprocessing", "packagesinglelabelproba.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "postprocessing", "predictoutput.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "postprocessing", "predictprobaoutput.jl",
-        )
-    )
+include("toplevel/tree/decisiontree.jl")
 
-# toplevel/preprocessing/
-include(
-    joinpath(
-        "toplevel", "preprocessing", "dataframecontrasts.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "preprocessing", "dataframetodecisiontree.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "preprocessing", "dataframetoglm.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "preprocessing", "dataframetoknet.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "preprocessing", "dataframetosvm.jl",
-        )
-    )
+include("toplevel/utils/constant_columns.jl")
+include("toplevel/utils/dataframe_column_types.jl")
+include("toplevel/utils/filename_extension.jl")
+include("toplevel/utils/find.jl")
+include("toplevel/utils/fix_type.jl")
+include("toplevel/utils/formulas.jl")
+include("toplevel/utils/inverse-dictionary.jl")
+include("toplevel/utils/is_debug.jl")
+include("toplevel/utils/labelstringintmaps.jl")
+include("toplevel/utils/linearly_dependent_columns.jl")
+include("toplevel/utils/make_directory.jl")
+include("toplevel/utils/maketemp.jl")
+include("toplevel/utils/missings.jl")
+include("toplevel/utils/nothings.jl")
+include("toplevel/utils/openbrowserwindow.jl")
+include("toplevel/utils/openplotsduringtestsenv.jl")
+include("toplevel/utils/predictionsassoctodataframe.jl")
+include("toplevel/utils/probabilitiestopredictions.jl")
+include("toplevel/utils/runtestsenv.jl")
+include("toplevel/utils/shufflerows.jl")
+include("toplevel/utils/simplemovingaverage.jl")
+include("toplevel/utils/tikzpictures.jl")
+include("toplevel/utils/transform_columns.jl")
+include("toplevel/utils/trapz.jl")
+include("toplevel/utils/traviscienv.jl")
+include("toplevel/utils/tuplify.jl")
 
-# toplevel/svm/
-include(
-    joinpath(
-        "toplevel", "svm", "libsvm.jl",
-        )
-    )
-
-# toplevel/time_series/
-include(
-    joinpath(
-        "toplevel", "time_series", "timeseries.jl",
-        )
-    )
-
-# toplevel/tree/
-include(
-    joinpath(
-        "toplevel", "tree", "decisiontree.jl",
-        )
-    )
-
-# toplevel/utils/
-include(
-    joinpath(
-        "toplevel", "utils", "constant_columns.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "dataframe_column_types.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "filename_extension.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "find.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "fix_type.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "formulas.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "inverse-dictionary.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "is_debug.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "labelstringintmaps.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "linearly_dependent_columns.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "make_directory.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "maketemp.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "missings.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "nothings.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "openbrowserwindow.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "openplotsduringtestsenv.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "predictionsassoctodataframe.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "probabilitiestopredictions.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "runtestsenv.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "shufflerows.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "simplemovingaverage.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "tikzpictures.jl",
-        )
-    )
-
-include(
-    joinpath(
-        "toplevel", "utils", "transform_columns.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "trapz.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "traviscienv.jl",
-        )
-    )
-include(
-    joinpath(
-        "toplevel", "utils", "tuplify.jl",
-        )
-    )
-
-############################################################################
-# PredictMD submodules (names here go in submodule namespaces) #############
-############################################################################
-
-# PredictMD.Cleaning submodule
-# submodules/Cleaning/
-include(
-    joinpath(
-        "submodules", "Cleaning", "Cleaning.jl",
-        )
-    )
-
-# PredictMD.Compilation submodule
-# submodules/Compilation/
-include(
-    joinpath(
-        "submodules", "Compilation", "Compilation.jl",
-        )
-    )
-
-# PredictMD.GPU submodule
-# submodules/GPU/
-include(
-    joinpath(
-        "submodules", "GPU", "GPU.jl",
-        )
-    )
-
-# PredictMD.Server submodule
-# submodules/Server/
-include(
-    joinpath(
-        "submodules", "Server", "Server.jl",
-        )
-    )
+include("submodules/Cleaning/Cleaning.jl")
+include("submodules/Compilation/Compilation.jl")
+include("submodules/GPU/GPU.jl")
+include("submodules/Server/Server.jl")
 
 end # end module PredictMD
-
