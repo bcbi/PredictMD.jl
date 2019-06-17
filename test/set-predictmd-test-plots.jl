@@ -29,6 +29,19 @@ if isa(TEST_GROUP, TestGroupTravis6)
     ENV["PREDICTMD_TEST_PLOTS"] = "true"
 end
 
+if isa(TEST_GROUP, TestGroupDocker1)
+    ENV["PREDICTMD_TEST_PLOTS"] = "true"
+end
+if isa(TEST_GROUP, TestGroupDocker2)
+    ENV["PREDICTMD_TEST_PLOTS"] = "true"
+end
+if isa(TEST_GROUP, TestGroupDocker3)
+    ENV["PREDICTMD_TEST_PLOTS"] = "true"
+end
+if isa(TEST_GROUP, TestGroupDocker4)
+    ENV["PREDICTMD_TEST_PLOTS"] = "true"
+end
+
 @info(
     string(
         "PREDICTMD_TEST_PLOTS: \"",
@@ -36,4 +49,3 @@ end
         "\"",
         )
     )
-

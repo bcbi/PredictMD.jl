@@ -89,3 +89,38 @@ group_includes_block(::TestGroupTravis7, ::TestBlockIntegration5) = false
 group_includes_block(::TestGroupTravis7, ::TestBlockIntegration6) = false
 group_includes_block(::TestGroupTravis7, ::TestBlockIntegration7) = true
 
+group_includes_block(::TestGroupDocker1, ::TestBlockUnitTests) = true
+group_includes_block(::TestGroupDocker1, ::TestBlockIntegration1) = false
+group_includes_block(::TestGroupDocker1, ::TestBlockIntegration2) = false
+group_includes_block(::TestGroupDocker1, ::TestBlockIntegration3) = false
+group_includes_block(::TestGroupDocker1, ::TestBlockIntegration4) = false
+group_includes_block(::TestGroupDocker1, ::TestBlockIntegration5) = false
+group_includes_block(::TestGroupDocker1, ::TestBlockIntegration6) = false
+group_includes_block(::TestGroupDocker1, ::TestBlockIntegration7) = false
+
+group_includes_block(::TestGroupDocker2, ::TestBlockUnitTests) = false
+group_includes_block(::TestGroupDocker2, ::TestBlockIntegration1) = true
+group_includes_block(::TestGroupDocker2, ::TestBlockIntegration2) = true
+group_includes_block(::TestGroupDocker2, ::TestBlockIntegration3) = true
+group_includes_block(::TestGroupDocker2, ::TestBlockIntegration4) = false
+group_includes_block(::TestGroupDocker2, ::TestBlockIntegration5) = false
+group_includes_block(::TestGroupDocker2, ::TestBlockIntegration6) = false
+group_includes_block(::TestGroupDocker2, ::TestBlockIntegration7) = false
+
+group_includes_block(::TestGroupDocker3, ::TestBlockUnitTests) = false
+group_includes_block(::TestGroupDocker3, ::TestBlockIntegration1) = false
+group_includes_block(::TestGroupDocker3, ::TestBlockIntegration2) = false
+group_includes_block(::TestGroupDocker3, ::TestBlockIntegration3) = false
+group_includes_block(::TestGroupDocker3, ::TestBlockIntegration4) = true
+group_includes_block(::TestGroupDocker3, ::TestBlockIntegration5) = true
+group_includes_block(::TestGroupDocker3, ::TestBlockIntegration6) = true
+group_includes_block(::TestGroupDocker3, ::TestBlockIntegration7) = true
+
+group_includes_block(::TestGroupDocker4, ::TestBlockUnitTests) = false
+group_includes_block(::TestGroupDocker4, ::TestBlockIntegration1) = false
+group_includes_block(::TestGroupDocker4, ::TestBlockIntegration2) = false
+group_includes_block(::TestGroupDocker4, ::TestBlockIntegration3) = false
+group_includes_block(::TestGroupDocker4, ::TestBlockIntegration4) = false
+group_includes_block(::TestGroupDocker4, ::TestBlockIntegration5) = false
+group_includes_block(::TestGroupDocker4, ::TestBlockIntegration6) = false
+group_includes_block(::TestGroupDocker4, ::TestBlockIntegration7) = false
