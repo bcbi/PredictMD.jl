@@ -36,10 +36,11 @@ end
 """
 """
 function probability_calibration_scores_and_fractions(
-        ytrue::AbstractVector{<:Integer},
-        yscore::AbstractVector{<:AbstractFloat};
+        ytrue::AbstractVector{<: Integer},
+        yscore::AbstractVector{F};
         window::Real = 0.1,
-        )
+        )::Tuple{Vector{F}, Vector{F}} where
+        F <: AbstractFloat
     scores = sort(
         unique(
             vcat(
@@ -49,7 +50,7 @@ function probability_calibration_scores_and_fractions(
                 )
             )
         )
-    fractions = fill(Cfloat(0), size(scores))
+    fractions = fill(F(0), size(scores))
     num_rows = fill(Int(0), length(scores))
     for k = 1:length(scores)
         rows_that_have_approximately_the_kth_score = findall(
@@ -57,7 +58,7 @@ function probability_calibration_scores_and_fractions(
             )
         num_rows[k] = length(rows_that_have_approximately_the_kth_score)
         if length(rows_that_have_approximately_the_kth_score) == 0
-            fractions[k] = -999
+            fractions[k] = NaN
         else
             fractions[k] = Statistics.mean(
                 ytrue[rows_that_have_approximately_the_kth_score]
@@ -65,9 +66,9 @@ function probability_calibration_scores_and_fractions(
         end
     end
     nonzero_indices = findall(num_rows .!= 0)
-    scores = scores[nonzero_indices]
-    fractions = fractions[nonzero_indices]
-    return scores, fractions
+    scores_nonzero_indices::Vector{F} = scores[nonzero_indices]
+    fractions_nonzero_indices::Vector{F} = fractions[nonzero_indices]
+    return scores_nonzero_indices, fractions_nonzero_indices
 end
 
 """
@@ -265,4 +266,3 @@ function probability_calibration_metrics(
     end
     return result
 end
-
