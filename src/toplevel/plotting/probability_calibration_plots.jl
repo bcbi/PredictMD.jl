@@ -67,8 +67,8 @@ function probability_calibration_scores_and_fractions(
     end
     nonzero_indices = findall(num_rows .!= 0)
     scores_nonzero_indices::Vector{F} = scores[nonzero_indices]
-    fraction_nonzero_indicess::Vector{F} = fractions[nonzero_indices]
-    return scores_nonzero_indices, fraction_nonzero_indices
+    fractions_nonzero_indices::Vector{F} = fractions[nonzero_indices]
+    return scores_nonzero_indices, fractions_nonzero_indices
 end
 
 """
