@@ -32,6 +32,15 @@ import PredictMD
     PredictMD.package_directory(),
     )
 
+@info(string("Attempting to import PredictMDExtra...",))
+import PredictMDExtra
+@info(string("Successfully imported PredictMDExtra.",))
+@info(string("PredictMDExtra version: "),PredictMDExtra.version(),)
+@info(
+    string("PredictMDExtra package directory: "),
+    PredictMDExtra.package_directory(),
+    )
+
 @info(string("Julia depot paths: "), Base.DEPOT_PATH)
 @info(string("Julia load paths: "), Base.LOAD_PATH)
 
