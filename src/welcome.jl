@@ -4,7 +4,7 @@ function print_welcome_message()::Nothing
     predictmd_version::VersionNumber = version()
     predictmd_version_codename::String = version_codename()
     predictmd_pkgdir::String = package_directory()
-    predictmdapi_version::String = api_version()
+    predictmdapi_version::VersionNumber = api_version()
     predictmdapi_pkgdir::String = api_package_directory()
     @info(
         string(
