@@ -67,9 +67,10 @@ src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master/graph/badge.svg"
 
 ## Installation
 
-PredictMD is registered in the Julia General registry. Therefore, to install PredictMD, simply open Julia and run the following three lines:
+PredictMD is registered in the Julia General registry. Therefore, to install PredictMD, simply open Julia and run the following four lines:
 ```julia
 import Pkg
+Pkg.activate("PredictMDEnvironment"; shared = true)
 Pkg.add("PredictMDFull")
 import PredictMDFull
 ```
@@ -77,9 +78,10 @@ import PredictMDFull
 ## Run the test suite after installing
 
 After you install PredictMD, you should run the test suite to make sure that
-everything is working. You can run the test suite by running the following four lines in Julia:
+everything is working. You can run the test suite by running the following five lines in Julia:
 ```julia
 import Pkg
+Pkg.activate("PredictMDEnvironment"; shared = true)
 Pkg.test("PredictMD")
 Pkg.test("PredictMDExtra")
 Pkg.test("PredictMDFull")
