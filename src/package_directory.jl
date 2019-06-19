@@ -1,3 +1,5 @@
+import PredictMDAPI
+
 function is_filesystem_root(path::AbstractString)::Bool
     path::String = abspath(strip(path))
     if path == dirname(path)
@@ -38,6 +40,11 @@ function package_directory()::String
     return result
 end
 
+function api_package_directory()::String
+    result::String = find_package_directory(abspath(pathof(PredictMDAPI)))
+    return result
+end
+
 function functionlocation(m::Method)::String
     result::String = abspath(first(functionloc(m)))
     return result
@@ -65,6 +72,11 @@ Equivalent to `abspath(joinpath(abspath(package_directory()), parts...))`.
 """
 function package_directory(parts...)::String
     result::String = abspath(joinpath(abspath(package_directory()), parts...))
+    return result
+end
+
+function api_package_directory(p...)::String
+    result::String = abspath(joinpath(abspath(api_package_directory()), p...))
     return result
 end
 
@@ -179,4 +191,3 @@ function package_directory(m::Module, parts...)::String
     result::String = abspath(joinpath(abspath(package_directory(m)), parts...))
     return result
 end
-

@@ -8,4 +8,3 @@ function set_max_epochs!(
         )
     return nothing
 end
-

@@ -34,6 +34,14 @@ function version_string()::String
     return resultversion_string
 end
 
+function api_version_string()::String
+    predictmdapi_toml_file::TomlFile = TomlFile(
+        api_package_directory("Project.toml")
+        )
+    resultversion_string::String = version_string(predictmdapi_toml_file)
+    return resultversion_string
+end
+
 function version_string(m::Method)::String
     m_package_directory::String = package_directory(m)
     m_toml_file::TomlFile = TomlFile(
@@ -77,6 +85,12 @@ Return the version number of PredictMD.
 """
 function version()::VersionNumber
     resultversion_string::String = version_string()
+    result_versionnumber::VersionNumber = VersionNumber(resultversion_string)
+    return result_versionnumber
+end
+
+function api_version()::VersionNumber
+    resultversion_string::String = api_version_string()
     result_versionnumber::VersionNumber = VersionNumber(resultversion_string)
     return result_versionnumber
 end
