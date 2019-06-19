@@ -9,14 +9,6 @@ It is the official machine learning package of the Brown Center for Biomedical I
 <table>
     <tbody>
         <tr>
-            <td>Repo Status</td>
-            <td>
-            <a href="https://www.repostatus.org/#active">
-            <img src="https://www.repostatus.org/badges/latest/active.svg"
-            alt="Project Status: Active – The project has reached a stable,
-            usable state and is being actively developed." /></a></td>
-        </tr>
-        <tr>
             <td>Travis CI</td>
             <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches">
             <img
