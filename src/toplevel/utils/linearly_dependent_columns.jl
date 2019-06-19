@@ -23,12 +23,17 @@ function columns_are_linearly_independent(
         )::Bool
     df_copy = deepcopy(df)
     if length(columns) == 0
-        columns = DataFrames.names(df_copy)
+        columns_copy = deepcopy(DataFrames.names(df_copy))
+    else
+        columns_copy = deepcopy(columns)
     end
-    temporary_dependent_variable::Symbol = get_unique_symbol_name(columns, :y)
+    temporary_dependent_variable::Symbol = get_unique_symbol_name(
+        columns_copy,
+        :y,
+        )
     formula = generate_formula(
         temporary_dependent_variable,
-        columns;
+        columns_copy;
         intercept = false,
         interactions = 1,
         )
@@ -49,12 +54,17 @@ function linearly_dependent_columns(
         )::Vector{Symbol}
     df_copy = deepcopy(df)
     if length(columns) == 0
-        columns = DataFrames.names(df_copy)
+        columns_copy = deepcopy(DataFrames.names(df_copy))
+    else
+        columns_copy = deepcopy(columns)
     end
-    temporary_dependent_variable::Symbol = get_unique_symbol_name(columns, :y)
+    temporary_dependent_variable::Symbol = get_unique_symbol_name(
+        columns_copy,
+        :y,
+        )
     formula = generate_formula(
         temporary_dependent_variable,
-        columns;
+        columns_copy;
         intercept = false,
         interactions = 1,
         )
