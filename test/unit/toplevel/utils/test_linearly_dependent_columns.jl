@@ -94,7 +94,7 @@ Test.@test(PredictMD.columns_are_linearly_independent(df))
 Test.@test(
     PredictMD.columns_are_linearly_independent(
         df,
-        [:x, :x1, :x11, :y, :y1, :y11, :z, :z1, :z11],
+        [:x, :x1, :x11, :y, :y1, :y11, :z1, :z11],
         )
     )
 Test.@test(length(PredictMD.linearly_dependent_columns(df)) == 0)
@@ -102,7 +102,7 @@ Test.@test(
     length(
         PredictMD.linearly_dependent_columns(
             df,
-            [:x, :x1, :x11, :y, :y1, :y11, :z, :z1, :z11],
+            [:x, :x1, :x11, :y, :y1, :y11, :z1, :z11],
             )
         ) == 0
     )
