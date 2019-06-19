@@ -9,6 +9,13 @@ It is the official machine learning package of the Brown Center for Biomedical I
 <table>
     <tbody>
         <tr>
+            <td>Bors</td>
+            <td><a href="https://bors.tech">
+            <img
+            src="https://bors.tech/images/badge_small.svg"
+            /></a></td>
+        </tr>
+        <tr>
             <td>Travis CI</td>
             <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches">
             <img
