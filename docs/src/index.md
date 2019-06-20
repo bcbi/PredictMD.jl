@@ -8,9 +8,10 @@ create reproducible machine learning pipelines.
 
 ## Installation
 
-PredictMD is registered in the Julia General registry. Therefore, to install PredictMD, simply open Julia and run the following three lines:
+PredictMD is registered in the Julia General registry. Therefore, to install PredictMD, simply open Julia and run the following four lines:
 ```julia
 import Pkg
+Pkg.activate("PredictMDEnvironment"; shared = true)
 Pkg.add("PredictMDFull")
 import PredictMDFull
 ```
@@ -18,9 +19,10 @@ import PredictMDFull
 ## Running the package tests
 
 You can run the PredictMD test suite by running the
-following four lines in Julia:
+following five lines in Julia:
 ```julia
 import Pkg
+Pkg.activate("PredictMDEnvironment"; shared = true)
 Pkg.test("PredictMD")
 Pkg.test("PredictMDExtra")
 Pkg.test("PredictMDFull")
