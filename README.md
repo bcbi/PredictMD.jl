@@ -11,61 +11,34 @@ PredictMD makes it easy to automate machine learning workflows and create reprod
 
 It is the official machine learning package of the Brown Center for Biomedical Informatics (BCBI).
 
-<table>
-    <tbody>
-        <tr>
-            <td>Bors</td>
-            <td><a href="https://bors.tech">
+<a href="https://bors.tech">
             <img
             src="https://bors.tech/images/badge_small.svg"
-            /></a></td>
-        </tr>
-        <tr>
-            <td>Travis CI</td>
-            <td><a href="https://travis-ci.org/bcbi/PredictMD.jl/branches">
+            /></a>
+<a href="https://travis-ci.org/bcbi/PredictMD.jl/branches">
             <img
             src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master"
-            /></a></td>
-        </tr>
-        <tr>
-            <td>CodeCov</td>
-            <td><a
+            /></a>
+<a
             href="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master">
             <img
 src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master/graph/badge.svg"
-            /></a></td>
-        </tr>
-        <tr>
-            <td>Current Release</td>
-            <td>
-            <a
-            href="https://github.com/bcbi/PredictMD.jl/releases/latest">
-        <img src="https://img.shields.io/github/release/bcbi/PredictMD.svg"
-            /> </a></td>
-        </tr>
-        <tr>
-            <td>Zenodo</td>
-            <td>
-            <a href="https://doi.org/10.5281/zenodo.1291209">
-            <img src="https://zenodo.org/badge/109460252.svg"/></a></td>
-        </tr>
-        <tr>
-            <td>Documentation (Stable)</td>
-            <td><a href="https://predictmd.net/stable">
+            /></a>
+<a href="https://predictmd.net/stable">
             <img
             src="https://img.shields.io/badge/docs-stable-blue.svg" />
-            </a></td>
-        </tr>
-        <tr>
-            <td>Documentation (Dev)</td>
-            <td><a
+            </a>
+<a
             href="https://predictmd.net/latest">
             <img
             src="https://img.shields.io/badge/docs-dev-blue.svg" />
-            </a></td>
-        </tr>
-    </tbody>
-</table>
+            </a>
+<a
+            href="https://github.com/bcbi/PredictMD.jl/releases/latest">
+        <img src="https://img.shields.io/github/release/bcbi/PredictMD.svg"
+            /> </a
+<a href="https://doi.org/10.5281/zenodo.1291209">
+            <img src="https://zenodo.org/badge/109460252.svg"/></a>
 
 | Table of Contents |
 | ----------------- |
