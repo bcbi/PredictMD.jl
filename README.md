@@ -105,7 +105,7 @@ Once you are inside the container, you can start Julia by running the following 
 julia
 ```
 
-PredictMD is already installed in the Docker container. You can load it by running the following line in Julia:
+In Julia, run the following line to load PredictMD:
 ```julia
 import PredictMDFull
 ```
