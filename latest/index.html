@@ -205,16 +205,18 @@
 <p>PredictMD makes it easy to automate machine learning workflows and create reproducible machine learning pipelines.</p>
 <p><a id='Installation-1'></a></p>
 <h2 id="installation">Installation</h2>
-<p>PredictMD is registered in the Julia General registry. Therefore, to install PredictMD, simply open Julia and run the following three lines:</p>
+<p>PredictMD is registered in the Julia General registry. Therefore, to install PredictMD, simply open Julia and run the following four lines:</p>
 <pre><code class="julia">import Pkg
+Pkg.activate(&quot;PredictMDEnvironment&quot;; shared = true)
 Pkg.add(&quot;PredictMDFull&quot;)
 import PredictMDFull
 </code></pre>
 
 <p><a id='Running-the-package-tests-1'></a></p>
 <h2 id="running-the-package-tests">Running the package tests</h2>
-<p>You can run the PredictMD test suite by running the following four lines in Julia:</p>
+<p>You can run the PredictMD test suite by running the following five lines in Julia:</p>
 <pre><code class="julia">import Pkg
+Pkg.activate(&quot;PredictMDEnvironment&quot;; shared = true)
 Pkg.test(&quot;PredictMD&quot;)
 Pkg.test(&quot;PredictMDExtra&quot;)
 Pkg.test(&quot;PredictMDFull&quot;)
@@ -269,5 +271,5 @@ Pkg.test(&quot;PredictMDFull&quot;)
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-06-20 04:15:04
+Build Date UTC : 2019-06-21 02:40:15
 -->
