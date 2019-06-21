@@ -1,5 +1,10 @@
 # PredictMD - Uniform interface for machine learning in Julia
 
+<a href="https://doi.org/10.5281/zenodo.1291209">
+<img
+src="https://zenodo.org/badge/109460252.svg"/>
+</a>
+
 [PredictMD](https://predictmd.net) is a free and open-source Julia package that provides a uniform interface for machine learning.
 
 PredictMD makes it easy to automate machine learning workflows and create reproducible machine learning pipelines.
@@ -39,9 +44,9 @@ src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master/graph/badge.svg"
             /> </a></td>
         </tr>
         <tr>
-            <td>DOI</td>
+            <td>Zenodo</td>
             <td>
-            <a href="https://zenodo.org/badge/latestdoi/109460252">
+            <a href="https://doi.org/10.5281/zenodo.1291209">
             <img src="https://zenodo.org/badge/109460252.svg"/></a></td>
         </tr>
         <tr>
@@ -66,9 +71,9 @@ src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master/graph/badge.svg"
 | ----------------- |
 | [1. Installation](#installation) |
 | [2. Run the test suite after installing](#run-the-test-suite-after-installing) |
-| [3. Docker image](#docker-image) |
-| [4. Documentation](#documentation) |
-| [5. Citing](#citing) |
+| [3. Citing](#citing) |
+| [4. Docker image](#docker-image) |
+| [5. Documentation](#documentation) |
 | [6. Related Repositories](#related-repositories) |
 | [7. Contributing](#contributing) |
 
@@ -93,6 +98,15 @@ Pkg.test("PredictMD")
 Pkg.test("PredictMDExtra")
 Pkg.test("PredictMDFull")
 ```
+
+## Citing
+
+If you use PredictMD in research, please cite the software using the following DOI:
+<a href="https://doi.org/10.5281/zenodo.1291209">
+<img
+src="https://zenodo.org/badge/109460252.svg"/>
+</a>
+
 
 ## Docker image
 Alternatively, you can use the PredictMD Docker image for easy installation. Download and start the container by running the following line:
@@ -129,10 +143,6 @@ The [PredictMD documentation](https://predictmd.net/stable) contains
 useful information, including instructions for use, example code, and a
 description of
 PredictMD's internals.
-
-## Citing
-
-If you use PredictMD in research, please cite the software using the following DOI: <a href="https://zenodo.org/badge/latestdoi/109460252"> <img src="https://zenodo.org/badge/109460252.svg"/></a>
 
 ## Related Repositories
 
