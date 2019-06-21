@@ -56,25 +56,15 @@
         </p>
         <h4>Docker image:</h4>
         <p class="text-justify">
-          Alternatively, you can use the PredictMD Docker image for easy installation. Download and start the container by running the following line:
+          Alternatively, you can use the PredictMD Docker image for easy installation:
         </p>
-        <p>
-          <kbd>docker run --name predictmd -it dilumaluthge/predictmd /bin/bash</kbd>
-        </p>
+        <ol style="text-align: left">
+          <li><kbd>docker run --name predictmd -it dilumaluthge/predictmd /bin/bash</kbd></li>
+          <li><kbd>julia</kbd></li>
+          <li><kbd>import PredictMDFull</kbd></li>
+        </ol>
         <p class="text-justify">
-          Inside the container, start Julia:
-        </p>
-        <p>
-          <kbd>julia</kbd>
-        </p>
-        <p class="text-justify">
-          Now you can load PredictMD by running the following line in Julia:
-        </p>
-        <p>
-          <kbd>import PredictMDFull</kbd>
-        </p>
-        <p class="text-justify">
-          After you have exited the container, you can return to it by running the following line:
+          If you exit the container, you can reopen it by running the following line:
         </p>
         <p>
           <kbd>docker start -ai predictmd</kbd>
