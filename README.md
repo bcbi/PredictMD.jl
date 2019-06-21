@@ -1,9 +1,12 @@
 # PredictMD - Uniform interface for machine learning in Julia
 
-<a href="https://doi.org/10.5281/zenodo.1291209">
-<img
-src="https://zenodo.org/badge/109460252.svg"/>
-</a>
+<table>
+    <tbody>
+        <tr>
+            <td><a href="https://doi.org/10.5281/zenodo.1291209"><img src="https://zenodo.org/badge/109460252.svg"/></a></td>
+        </tr>
+    </tbody>
+</table>
 
 [PredictMD](https://predictmd.net) is a free and open-source Julia package that provides a uniform interface for machine learning.
 
