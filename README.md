@@ -100,6 +100,24 @@ Alternatively, you can use the PredictMD Docker image for easy installation. Dow
 docker run --name predictmd -it dilumaluthge/predictmd /bin/bash
 ```
 
+Once you are inside the container, you can start Julia by running the following line:
+```bash
+julia
+```
+
+PredictMD is already installed in the Docker container. You can load it by running the following line in Julia:
+```julia
+import PredictMDFull
+```
+
+You can run the test suite by running the following four lines in Julia:
+```julia
+import Pkg
+Pkg.test("PredictMD")
+Pkg.test("PredictMDExtra")
+Pkg.test("PredictMDFull")
+```
+
 After you have exited the container, you can return to it by running the following line:
 ```bash
 docker start -ai predictmd
