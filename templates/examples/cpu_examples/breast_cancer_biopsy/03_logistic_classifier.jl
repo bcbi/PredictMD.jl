@@ -185,6 +185,41 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     feature_names,
     )
 
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+Test.@test(
+    PredictMD.columns_are_linearly_independent(training_features_df)
+    )
+Test.@test(
+    PredictMD.columns_are_linearly_independent(
+        training_features_df,
+        feature_names,
+        )
+    )
+Test.@test(
+    length(PredictMD.linearly_dependent_columns(df)) == 0
+    )
+Test.@test(
+    length(
+        PredictMD.linearly_dependent_columns(
+            training_features_df,
+            feature_names,
+            ),
+        ) == 0
+    )
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+show(
+    PredictMD.linearly_dependent_columns(df)
+    )
+
+show(
+    PredictMD.linearly_dependent_columns(
+        training_features_df,
+        feature_names,
+        )
+    )
+
 logistic_classifier =
         PredictMD.singlelabelbinaryclassdataframelogisticclassifier(
         feature_names,
