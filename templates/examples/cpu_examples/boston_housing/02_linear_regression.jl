@@ -182,7 +182,10 @@ show(
     )
 
 show(
-    PredictMD.linearly_dependent_columns(training_features_df,feature_names,)
+    PredictMD.linearly_dependent_columns(
+        training_features_df,
+        feature_names,
+        )
     )
 
 linear_regression = PredictMD.single_labeldataframelinearregression(
