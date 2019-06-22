@@ -214,7 +214,10 @@ show(
     )
 
 show(
-    PredictMD.linearly_dependent_columns(training_features_df,feature_names,)
+    PredictMD.linearly_dependent_columns(
+        training_features_df,
+        feature_names,
+        )
     )
 
 logistic_classifier =
