@@ -138,10 +138,22 @@ continuous_feature_names = FileIO.load(
 feature_names = vcat(categorical_feature_names, continuous_feature_names)
 
 single_label_name = :MedV
-
 continuous_label_names = Symbol[single_label_name]
 categorical_label_names = Symbol[]
 label_names = vcat(categorical_label_names, continuous_label_names)
+
+
+
+show(
+    PredictMD.linearly_dependent_columns(df)
+    )
+
+show(
+    PredictMD.linearly_dependent_columns(
+        training_features_df,
+        feature_names,
+        )
+    )
 
 linear_regression = PredictMD.single_labeldataframelinearregression(
     feature_names,

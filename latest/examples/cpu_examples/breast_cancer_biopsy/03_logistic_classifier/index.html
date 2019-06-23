@@ -372,6 +372,19 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     feature_names,
     )
 
+
+
+show(
+    PredictMD.linearly_dependent_columns(df)
+    )
+
+show(
+    PredictMD.linearly_dependent_columns(
+        training_features_df,
+        feature_names,
+        )
+    )
+
 logistic_classifier =
         PredictMD.singlelabelbinaryclassdataframelogisticclassifier(
         feature_names,
