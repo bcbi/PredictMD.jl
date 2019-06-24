@@ -62,8 +62,8 @@ include("toplevel/metrics/rocnumsmetrics.jl")
 include("toplevel/metrics/singlelabelbinaryclassificationmetrics.jl")
 include("toplevel/metrics/singlelabelregressionmetrics.jl")
 
+include("toplevel/modelselection/crossvalidation.jl")
 include("toplevel/modelselection/split_data.jl")
-
 
 include("toplevel/neuralnetwork/flux.jl")
 include("toplevel/neuralnetwork/knet.jl")

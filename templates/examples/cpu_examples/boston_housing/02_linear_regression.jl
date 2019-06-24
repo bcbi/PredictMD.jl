@@ -309,6 +309,40 @@ linear_regression_filename = joinpath(
 
 PredictMD.save_model(linear_regression_filename, linear_regression)
 
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+linear_regression_filename_bson = joinpath(
+    PredictMD.maketempdir(),
+    "linear_regression.bson",
+    )
+PredictMD.save_model(linear_regression_filename, linear_regression)
+test_load_bson = PredictMD.load_model(linear_regression_filename_bson)
+Test.test_throws(
+    ErrorException,
+    PredictMD.save_model("test.nonexistentextension", linear_regression)
+    )
+Test.test_throws(
+    ErrorException,
+    PredictMD.save_model_jld2("test.nonexistentextension", linear_regression)
+    )
+Test.test_throws(
+    ErrorException,
+    PredictMD.save_model_bson("test.nonexistentextension", linear_regression)
+    )
+Test.test_throws(
+    ErrorException,
+    PredictMD.load_model("test.nonexistentextension")
+    )
+Test.test_throws(
+    ErrorException,
+    PredictMD.load_model_jld2("test.nonexistentextension")
+    )
+Test.test_throws(
+    ErrorException,
+    PredictMD.load_model_bson("test.nonexistentextension")
+    )
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
 ### End linear regression code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
