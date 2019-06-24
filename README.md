@@ -21,7 +21,7 @@ src="https://img.shields.io/badge/docs-unstable-blue.svg" />
 </p>
 
 <p>
-<a href="https://bors.tech">
+<a href="https://app.bors.tech/repositories/12304">
 <img
 src="https://bors.tech/images/badge_small.svg"
 /></a>
