@@ -44,6 +44,8 @@ import PredictMDExtra
 @info(string("Julia depot paths: "), Base.DEPOT_PATH)
 @info(string("Julia load paths: "), Base.LOAD_PATH)
 
+import DataFrames
+
 if group_includes_block(TEST_GROUP, TestBlockUnitTests())
     Test.@testset "Unit tests" begin
         testmodulea_filename = joinpath("TestModuleA","TestModuleA.jl",)

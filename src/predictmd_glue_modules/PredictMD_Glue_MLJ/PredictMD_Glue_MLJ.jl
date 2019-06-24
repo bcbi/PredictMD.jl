@@ -4,6 +4,8 @@ __precompile__(true)
 """
 module PredictMD_Glue_MLJ # begin module PredictMD_Glue_MLJ
 
+import PredictMDAPI
+
 import MLJ
 import MLJBase
 import MLJModels
@@ -20,4 +22,3 @@ function __init__()::Nothing
 end
 
 end # end module PredictMD_Glue_MLJ
-
