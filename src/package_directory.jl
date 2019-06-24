@@ -1,13 +1,7 @@
 import PredictMDAPI
 
-function is_filesystem_root(path::AbstractString)::Bool
-    path::String = abspath(strip(path))
-    if path == dirname(path)
-        return true
-    else
-        return false
-    end
-end
+is_filesystem_root(path::AbstractString)::Bool =
+    abspath(strip(path)) == dirname(abspath(strip(path)))
 
 function is_package_directory(path::AbstractString)::Bool
     path::String = abspath(strip(path))
@@ -45,25 +39,25 @@ function api_package_directory()::String
     return result
 end
 
-function functionlocation(m::Method)::String
-    result::String = abspath(first(functionloc(m)))
-    return result
-end
+# function functionlocation(m::Method)::String
+#     result::String = abspath(first(functionloc(m)))
+#     return result
+# end
 
-function functionlocation(f::Function)::String
-    result::String = abspath(first(functionloc(f)))
-    return result
-end
+# function functionlocation(f::Function)::String
+#     result::String = abspath(first(functionloc(f)))
+#     return result
+# end
 
-function functionlocation(f::Function, types::Tuple)::String
-    result::String = abspath(first(functionloc(f, types)))
-    return result
-end
+# function functionlocation(f::Function, types::Tuple)::String
+#     result::String = abspath(first(functionloc(f, types)))
+#     return result
+# end
 
-function functionlocation(m::Module)::String
-    result::String = abspath(functionlocation(getfield(m, :eval)))
-    return result
-end
+# function functionlocation(m::Module)::String
+#     result::String = abspath(functionlocation(getfield(m, :eval)))
+#     return result
+# end
 
 """
     package_directory(parts...)::String
@@ -89,13 +83,13 @@ is part of a Julia package, returns the package root directory.
 If method `m`
 is not part of a Julia package, throws an error.
 """
-function package_directory(m::Method)::String
-    m_module_directory::String = abspath(functionlocation(m))
-    m_package_directory::String = abspath(
-        find_package_directory(m_module_directory)
-        )
-    return m_package_directory
-end
+# function package_directory(m::Method)::String
+#     m_module_directory::String = abspath(functionlocation(m))
+#     m_package_directory::String = abspath(
+#         find_package_directory(m_module_directory)
+#         )
+#     return m_package_directory
+# end
 
 # """
 #     package_directory(m::Method, parts...)::String
@@ -117,13 +111,13 @@ is part of a Julia package, returns the package root directory.
 If function `f`
 is not part of a Julia package, throws an error.
 """
-function package_directory(f::Function)::String
-    m_module_directory::String = abspath(functionlocation(f))
-    m_package_directory::String = abspath(
-        find_package_directory(m_module_directory)
-        )
-    return m_package_directory
-end
+# function package_directory(f::Function)::String
+#     m_module_directory::String = abspath(functionlocation(f))
+#     m_package_directory::String = abspath(
+#         find_package_directory(m_module_directory)
+#         )
+#     return m_package_directory
+# end
 
 # """
 #     package_directory(f::Function, parts...)::String
@@ -145,13 +139,13 @@ is part of a Julia package, returns the package root directory.
 If function `f` with type signature `types`
 is not part of a Julia package, throws an error.
 """
-function package_directory(f::Function, types::Tuple)::String
-    m_module_directory::String = abspath(functionlocation(f, types))
-    m_package_directory::String = abspath(
-        find_package_directory(m_module_directory)
-        )
-    return m_package_directory
-end
+# function package_directory(f::Function, types::Tuple)::String
+#     m_module_directory::String = abspath(functionlocation(f, types))
+#     m_package_directory::String = abspath(
+#         find_package_directory(m_module_directory)
+#         )
+#     return m_package_directory
+# end
 
 # """
 #     package_directory(f::Function, types::Tuple, parts...)::String
@@ -173,13 +167,13 @@ is part of a Julia package, returns the package root directory.
 If module `m`
 is not part of a Julia package, throws an error.
 """
-function package_directory(m::Module)::String
-    m_module_directory::String = abspath(functionlocation(m))
-    m_package_directory::String = abspath(
-        find_package_directory(m_module_directory)
-        )
-    return m_package_directory
-end
+# function package_directory(m::Module)::String
+#     m_module_directory::String = abspath(functionlocation(m))
+#     m_package_directory::String = abspath(
+#         find_package_directory(m_module_directory)
+#         )
+#     return m_package_directory
+# end
 
 """
     package_directory(m::Module, parts...)::String
@@ -187,7 +181,7 @@ end
 Equivalent to
 `result = abspath(joinpath(abspath(package_directory(m)), parts...))`.
 """
-function package_directory(m::Module, parts...)::String
-    result::String = abspath(joinpath(abspath(package_directory(m)), parts...))
-    return result
-end
+# function package_directory(m::Module, parts...)::String
+#     result::String = abspath(joinpath(abspath(package_directory(m)), parts...))
+#     return result
+# end
