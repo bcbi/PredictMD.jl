@@ -11,12 +11,12 @@ function get_countmap(itr; skip_missings::Bool = true)
 end
 
 function get_countmap_skip_missings(itr)
-    result = StatsBase.countmap(skipmissing(itr))
+    result = StatsBase.countmap(collect(skipmissing(itr)))
     return result
 end
 
 function get_countmap_include_missings(itr)
-    result = StatsBase.countmap(itr)
+    result = StatsBase.countmap(collect(itr))
     return result
 end
 
