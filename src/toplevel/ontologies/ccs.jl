@@ -29,21 +29,38 @@ function parse_icd_icd9_ccs_appendixasingledx_file!()::Nothing
             if startswith(section, "Appendix")
             elseif startswith(section, "Revised")
             else
-                section_pieces = split(section)
-                ccs_number = parse(Int, section_pieces[1])
-                ccs_name = section_pieces[2]
-                _SINGLE_LEVEL_DX_CCS_NUMBER_TO_NAME[][ccs_number] =
-                    ccs_name
-                icd9_code_list = section_pieces[3:end]
-                icd9_code_list = [
-                    convert(String, strip(x)) for x in icd9_code_list
-                    ]
-                icd9_code_list = convert(Vector{String}, icd9_code_list)
-                _SINGLE_LEVEL_DX_CCS_TO_LIST_OF_ICD9_CODES[][ccs_number] =
-                    icd9_code_list
+                ccs_number::Int = parse(
+                    Int,
+                    strip.(
+                        split(strip(section))
+                        )[1],
+                    )
+                ccs_name::String = strip(
+                    join(
+                        strip.(
+                            split(
+                                strip(
+                                    split(strip(section), "\n")[1]
+                                    )
+                                )[2:end]
+                            ), " "
+                        )
+                    )
+                _SINGLE_LEVEL_DX_CCS_NUMBER_TO_NAME[][ccs_number] = ccs_name  
+                icd9_code_list::Vector{String} = strip.(
+                    remove_all_full_stops.(
+                        split(
+                            strip(
+                                split(strip(section), "\n")[2]
+                            )
+                        )
+                        )
+                    )
+                _SINGLE_LEVEL_DX_CCS_TO_LIST_OF_ICD9_CODES[][
+                    ccs_number
+                    ] = icd9_code_list
                 for icd9_code in icd9_code_list
-                    _ICD9_CODE_TO_SINGLE_LEVEL_DX_CCS[][icd9_code] =
-                        ccs_number
+                    _ICD9_CODE_TO_SINGLE_LEVEL_DX_CCS[][icd9_code] = ccs_number
                 end
             end
         end
