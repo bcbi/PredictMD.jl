@@ -22,7 +22,7 @@ function parse_icd_icd9_ccs_appendixasingledx_file!()::Nothing
             "ccs",
             "AppendixASingleDX.txt"
             )
-        file_contents = readstring(filename)
+        file_contents = read(filename, String)
         file_contents = strip(file_contents)
         file_sections = split(file_contents, "\n\n")
         for section in file_sections
