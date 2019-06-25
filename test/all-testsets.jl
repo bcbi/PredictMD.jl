@@ -77,6 +77,7 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
                     if endswith(lowercase(strip(file)), ".jl")
                         file_path = joinpath(root, file)
                         Test.@testset "$(file_path)" begin
+                            @debug("Running test file: ", file_path)
                             include(file_path)
                         end
                     end
