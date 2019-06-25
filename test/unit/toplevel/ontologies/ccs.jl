@@ -7,6 +7,8 @@ PredictMD.parse_icd_icd9_ccs_appendixasingledx_file!()
 
 Test.@test(PredictMD.single_level_dx_ccs_number_to_name(1) == "Tuberculosis")
 
+@warn(string(), PredictMD.single_level_dx_ccs_to_list_of_icd9_codes(107))
+
 Test.@test(
     all(sort(unique(
         PredictMD.single_level_dx_ccs_to_list_of_icd9_codes(107))) .==
