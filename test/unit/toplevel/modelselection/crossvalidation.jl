@@ -271,13 +271,13 @@ Test.@testset "CrossValidation" begin
 
     Test.@testset "nested cross validation, integer indices, large" begin
         @debug("nested cross validation, integer indices, large")
-        num_samples = 10_000
-        master_cv = PredictMD.CrossValidation{Int}(; all_indices = collect(1:num_samples), num_folds_per_level = (11,5,7))
+        num_samples = 1_000
+        master_cv = PredictMD.CrossValidation{Int}(; all_indices = collect(1:num_samples), num_folds_per_level = (3,5,7))
         Test.@test( isa(master_cv, PredictMD.CrossValidation{Int}) )
         Test.@test( PredictMD.get_all_indices(master_cv) == 1:num_samples)
         Test.@test( !PredictMD.isleaf(master_cv) )
-        Test.@test( PredictMD.get_top_level_num_folds(master_cv) == 11 )
-        for i = 1:11
+        Test.@test( PredictMD.get_top_level_num_folds(master_cv) == 3 )
+        for i = 1:3
             @debug("i = $(i)")
             testing_indices = PredictMD.get_leaveout_indices(master_cv, i)
             supertuning_tuning_training_cv = PredictMD.get_leavein_cv(master_cv, i)
@@ -311,14 +311,14 @@ Test.@testset "CrossValidation" begin
 
     Test.@testset "nested cross validation, range indices, large" begin
         @debug("nested cross validation, range indices, large")
-        num_samples = 10_000
-        master_cv_integers = PredictMD.CrossValidation{Int}(; all_indices = collect(1:num_samples), num_folds_per_level = (11,5,7))
+        num_samples = 1_000
+        master_cv_integers = PredictMD.CrossValidation{Int}(; all_indices = collect(1:num_samples), num_folds_per_level = (3,5,7))
         Test.@test( isa(master_cv_integers, PredictMD.CrossValidation{Int}) )
         master_cv_ranges = PredictMD.CrossValidation{UnitRange{Int}}(master_cv_integers)
         Test.@test( isa(master_cv_ranges, PredictMD.CrossValidation{UnitRange{Int}}) )
         Test.@test( !PredictMD.isleaf(master_cv_ranges) )
-        Test.@test( PredictMD.get_top_level_num_folds(master_cv_ranges) == 11 )
-        for i = 1:11
+        Test.@test( PredictMD.get_top_level_num_folds(master_cv_ranges) == 3 )
+        for i = 1:3
             @debug("i = $(i)")
             testing_indices = PredictMD.get_leaveout_indices(master_cv_ranges, i)
             supertuning_tuning_training_cv = PredictMD.get_leavein_cv(master_cv_ranges, i)
@@ -350,8 +350,8 @@ Test.@testset "CrossValidation" begin
 
     Test.@testset "roundtrip CV integer indices <-> CV range indices" begin
         @debug("roundtrip CV integer indices <-> CV range indices")
-        num_samples = 10_000
-        cv_integer_1 = PredictMD.CrossValidation{Int}(; all_indices = collect(1:num_samples), num_folds_per_level = (11,5,7))
+        num_samples = 1_000
+        cv_integer_1 = PredictMD.CrossValidation{Int}(; all_indices = collect(1:num_samples), num_folds_per_level = (3,5,7))
         cv_ranges_2 = PredictMD.CrossValidation{UnitRange{Int}}(cv_integer_1)
         cv_integer_3 = PredictMD.CrossValidation{Int}(cv_ranges_2)
         cv_ranges_4 = PredictMD.CrossValidation{UnitRange{Int}}(cv_integer_3)
