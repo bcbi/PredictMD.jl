@@ -1,4 +1,4 @@
-Test.@test( remove_all_full_stops(".1.2.3.4.") == "1234" )
+Test.@test( PredictMD.remove_all_full_stops(".1.2.3.4.") == "1234" )
 
 PredictMD.parse_icd_icd9_ccs_appendixasingledx_file!()
 PredictMD.parse_icd_icd9_ccs_appendixasingledx_file!()
