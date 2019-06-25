@@ -1,7 +1,7 @@
 const _ICD_ICD9_CCS_APPENDIXASINGLEDX_FILE_HAS_BEEN_PARSED = Ref(false)
 const _ICD9_CODE_TO_SINGLE_LEVEL_DX_CCS = Ref(Dict{String, Int}())
 const _SINGLE_LEVEL_DX_CCS_NUMBER_TO_NAME = Ref(Dict{Int, String}())
-const _SINGLE_LEVEL_DX_CCS_TO_LIST_OF_ICD9_CODES = Ref(Dict{Int, String}())
+const _SINGLE_LEVEL_DX_CCS_TO_LIST_OF_ICD9_CODES = Ref(Dict{Int, Vector{String}}())
 
 function remove_all_full_stops(x::AbstractString)::String
     result = replace(x, "." => "")
