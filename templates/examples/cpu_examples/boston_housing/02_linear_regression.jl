@@ -321,27 +321,27 @@ PredictMD.save_model(
 test_load_bson = PredictMD.load_model(
     linear_regression_filename_bson,
     )
-Test.test_throws(
+Test.@test_throws(
     ErrorException,
     PredictMD.save_model("test.nonexistentextension", linear_regression)
     )
-Test.test_throws(
+Test.@test_throws(
     ErrorException,
     PredictMD.save_model_jld2("test.nonexistentextension", linear_regression)
     )
-Test.test_throws(
+Test.@test_throws(
     ErrorException,
     PredictMD.save_model_bson("test.nonexistentextension", linear_regression)
     )
-Test.test_throws(
+Test.@test_throws(
     ErrorException,
     PredictMD.load_model("test.nonexistentextension")
     )
-Test.test_throws(
+Test.@test_throws(
     ErrorException,
     PredictMD.load_model_jld2("test.nonexistentextension")
     )
-Test.test_throws(
+Test.@test_throws(
     ErrorException,
     PredictMD.load_model_bson("test.nonexistentextension")
     )
