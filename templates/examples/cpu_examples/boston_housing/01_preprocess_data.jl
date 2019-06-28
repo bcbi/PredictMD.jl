@@ -39,22 +39,7 @@ end
 
 Random.seed!(999)
 
-df = DataFrames.DataFrame(
-    CSVFiles.load(
-        CSVFiles.Stream(
-            CSVFiles.format"CSV",
-            GZip.gzopen(
-                joinpath(
-                    dirname(pathof(RDatasets)),
-                    "..",
-                    "data",
-                    "MASS",
-                    "Boston.csv.gz",
-                    )
-                ),
-            ),
-        ),
-    )
+df = RDatasets.dataset("MASS", "Boston")
 
 categorical_feature_names = Symbol[]
 continuous_feature_names = Symbol[
