@@ -46,17 +46,12 @@ import PredictMDExtra
 
 import DataFrames
 
-# if false
-# else
-#     unit_test_interval = ("")
-# end
-
 if group_includes_block(TEST_GROUP, TestBlockUnitTests())
     Test.@testset "Unit tests" begin
-        if
+        if false
         else
+            unit_test_interval_string = "[,)"
         end
-        unit_test_interval_string = "[,)"
         @debug(
             "unit_test_interval_string: ",
             unit_test_interval_string,
