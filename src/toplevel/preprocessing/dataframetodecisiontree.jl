@@ -61,7 +61,7 @@ function transform(
     my_schema = transformer.dffeaturecontrasts.schema_without_intercept
     my_formula = StatsModels.apply_schema(my_formula, my_schema)
     response, featuresarray = StatsModels.modelcols(my_formula,
-                                                 training_features_df)
+                                                    features_df)
     return featuresarray, labelsarray
 end
 
@@ -76,7 +76,7 @@ function transform(
     my_schema = transformer.dffeaturecontrasts.schema_without_intercept
     my_formula = StatsModels.apply_schema(my_formula, my_schema)
     response, featuresarray = StatsModels.modelcols(my_formula,
-                                                 training_features_df)
+                                                    features_df)
     return featuresarray
 end
 
