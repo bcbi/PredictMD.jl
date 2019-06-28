@@ -19,7 +19,7 @@ function probability_calibration_scores_and_fractions(
             )
         )
     predictedprobabilitiesalllabels = predict_proba(estimator, features_df)
-    yscore = Cfloat.(
+    yscore = Float64.(
         singlelabelbinaryyscore(
             predictedprobabilitiesalllabels[single_label_name],
             positive_class,
@@ -239,7 +239,7 @@ function probability_calibration_metrics(
                 vectorofestimators[i],
                 features_df,
                 )
-        yscore = Cfloat.(
+        yscore = Float64.(
             singlelabelbinaryyscore(
                 predictedprobabilitiesalllabels[single_label_name],
                 positive_class,

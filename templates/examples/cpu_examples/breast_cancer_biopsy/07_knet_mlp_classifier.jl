@@ -206,8 +206,8 @@ function knetmlp_loss(
         modelweights,
         x::AbstractArray,
         ytrue::AbstractArray;
-        L1::Real = Cfloat(0),
-        L2::Real = Cfloat(0),
+        L1::Real = Float64(0),
+        L2::Real = Float64(0),
         )
     loss = Knet.nll(
         predict(
@@ -234,29 +234,29 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     )
 
 knetmlp_modelweights = Any[
-    Cfloat.(
-        0.1f0*randn(Cfloat,64,feature_contrasts.num_array_columns_without_intercept)
+    Float64.(
+        0.1f0*randn(Float64,64,feature_contrasts.num_array_columns_without_intercept)
         ),
-    Cfloat.(
-        fill(Cfloat(0),64,1)
+    Float64.(
+        fill(Float64(0),64,1)
         ),
-    Cfloat.(
-        0.1f0*randn(Cfloat,32,64)
+    Float64.(
+        0.1f0*randn(Float64,32,64)
         ),
-    Cfloat.(
-        fill(Cfloat(0),32,1)
+    Float64.(
+        fill(Float64(0),32,1)
         ),
-    Cfloat.(
-        0.1f0*randn(Cfloat,2,32)
+    Float64.(
+        0.1f0*randn(Float64,2,32)
         ),
-    Cfloat.(
-        fill(Cfloat(0),2,1)
+    Float64.(
+        fill(Float64(0),2,1)
         ),
     ]
 
 knetmlp_losshyperparameters = Dict()
-knetmlp_losshyperparameters[:L1] = Cfloat(0.0)
-knetmlp_losshyperparameters[:L2] = Cfloat(0.0)
+knetmlp_losshyperparameters[:L1] = Float64(0.0)
+knetmlp_losshyperparameters[:L2] = Float64(0.0)
 
 knetmlp_optimizationalgorithm = :Momentum
 knetmlp_optimizerhyperparameters = Dict()

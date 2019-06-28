@@ -3,14 +3,14 @@ import DataFrames
 import PredictMD
 
 my_vector = Vector{Any}(undef, 5)
-my_vector[1] = Cfloat(1.1)
-my_vector[2] = Cfloat(2.2)
+my_vector[1] = Float64(1.1)
+my_vector[2] = Float64(2.2)
 my_vector[3] = DataFrames.missing
-my_vector[4] = Cfloat(4.4)
+my_vector[4] = Float64(4.4)
 my_vector[5] = DataFrames.missing
 Test.@test(eltype(my_vector) == Any)
 my_vector_fixed = PredictMD.fix_type(my_vector)
-Test.@test(eltype(my_vector_fixed) == Union{Cfloat, DataFrames.Missing})
+Test.@test(eltype(my_vector_fixed) == Union{Float64, DataFrames.Missing})
 
 Test.@test( PredictMD.fix_type(nothing) == nothing )
 
