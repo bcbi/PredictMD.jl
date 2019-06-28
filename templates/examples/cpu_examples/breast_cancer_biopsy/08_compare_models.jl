@@ -309,6 +309,85 @@ show(
     splitcols = false,
     )
 
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+PredictMD.singlelabelbinaryclassificationmetrics(all_models,
+                                                 testing_features_df,
+                                                 testing_labels_df,
+                                                 single_label_name,
+                                                 positive_class;
+                                                 sensitivity = 0.95)
+auprc_row = first(
+    findall(
+        strip.(metrics[:metric]) .== "AUPRC"
+        )
+    )
+Test.@test(
+    strip(metrics[auprc_row, :metric]) == "AUPRC"
+    )
+Test.@test(
+    strip(metrics[auprc_row, Symbol("Logistic regression")]) > 0.910
+    )
+Test.@test(
+    strip(metrics[auprc_row, Symbol("Random forest")]) > 0.910
+    )
+Test.@test(
+    strip(metrics[auprc_row, Symbol("SVM (C-SVC)")]) > 0.910
+    )
+Test.@test(
+    strip(metrics[auprc_row, Symbol("SVM (nu-SVC)")]) > 0.910
+    )
+Test.@test(
+    strip(metrics[auprc_row, Symbol("Knet MLP")]) > 0.910
+    )
+aurocc_row = first(
+    findall(
+        strip.(metrics[:metric]) .== "AUROCC"
+        )
+    )
+Test.@test(
+    strip(metrics[aurocc_row, :metric]) == "AUROCC"
+    )
+Test.@test(
+    strip(metrics[aurocc_row, Symbol("Logistic regression")]) > 0.910
+    )
+Test.@test(
+    strip(metrics[aurocc_row, Symbol("Random forest")]) > 0.910
+    )
+Test.@test(
+    strip(metrics[aurocc_row, Symbol("SVM (C-SVC)")]) > 0.910
+    )
+Test.@test(
+    strip(metrics[aurocc_row, Symbol("SVM (nu-SVC)")]) > 0.910
+    )
+Test.@test(
+    strip(metrics[aurocc_row, Symbol("Knet MLP")]) > 0.910
+    )
+avg_precision_row = first(
+    findall(
+        strip.(metrics[:metric]) .== "Average precision"
+        )
+    )
+Test.@test(
+    strip(metrics[avg_precision_row, :metric]) == "Average precision"
+    )
+Test.@test(
+    strip(metrics[avg_precision_row, Symbol("Logistic regression")]) > 0.910
+    )
+Test.@test(
+    strip(metrics[avg_precision_row, Symbol("Random forest")]) > 0.910
+    )
+Test.@test(
+    strip(metrics[avg_precision_row, Symbol("SVM (C-SVC)")]) > 0.910
+    )
+Test.@test(
+    strip(metrics[avg_precision_row, Symbol("SVM (nu-SVC)")]) > 0.910
+    )
+Test.@test(
+    strip(metrics[avg_precision_row, Symbol("Knet MLP")]) > 0.910
+    )
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
 println(
     string(
         "Single label binary classification metrics, testing set, ",
