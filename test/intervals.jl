@@ -159,7 +159,7 @@ function construct_interval(x::String)::AbstractInterval
 end
 
 function interval_contains_x(
-        interval::Types.NoBoundsInterval,
+        interval::NoBoundsInterval,
         x::AbstractString,
         )::Bool
     result::Bool = true
@@ -167,7 +167,7 @@ function interval_contains_x(
 end
 
 function interval_contains_x(
-        interval::Types.LowerAndUpperBoundInterval,
+        interval::LowerAndUpperBoundInterval,
         x::AbstractString,
         )::Bool
     x_stripped::String = strip(convert(String, x))
@@ -178,7 +178,7 @@ function interval_contains_x(
 end
 
 function interval_contains_x(
-        interval::Types.LowerBoundOnlyInterval,
+        interval::LowerBoundOnlyInterval,
         x::AbstractString,
         )::Bool
     x_stripped::String = strip(convert(String, x))
@@ -188,7 +188,7 @@ function interval_contains_x(
 end
 
 function interval_contains_x(
-        interval::Types.UpperBoundOnlyInterval,
+        interval::UpperBoundOnlyInterval,
         x::AbstractString,
         )
     x_stripped::String = strip(convert(String, x))
