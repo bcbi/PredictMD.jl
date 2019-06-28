@@ -235,7 +235,7 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
 
 knetmlp_modelweights = Any[
     Cfloat.(
-        0.1f0*randn(Cfloat,64,feature_contrasts.num_array_columns)
+        0.1f0*randn(Cfloat,64,feature_contrasts.num_array_columns_without_intercept)
         ),
     Cfloat.(
         fill(Cfloat(0),64,1)

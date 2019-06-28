@@ -31,17 +31,17 @@ function DataFrameFeatureContrasts(
         StatsModels.modelcols(formula_wo_intercept, df)
     response_with_intercept, predictors_with_intercept =
         StatsModels.modelcols(formula_with_intercept, df)
-    num_array_columns_deepcopy_wo_intercept = size(predictors_wo_intercept, 2)
-    num_array_columns_deepcopy_with_intercept = size(predictors_with_intercept, 2)
+    num_array_columns_wo_intercept = size(predictors_wo_intercept, 2)
+    num_array_columns_with_intercept = size(predictors_with_intercept, 2)
     result = DataFrameFeatureContrasts(
         columns_deepcopy,
         num_df_columns_deepcopy,
         schema_wo_intercept,
         formula_wo_intercept,
-        num_array_columns_deepcopy_wo_intercept,
+        num_array_columns_wo_intercept,
         schema_with_intercept,
         formula_with_intercept,
-        num_array_columns_deepcopy_with_intercept,
+        num_array_columns_with_intercept,
         )
     return result
 end
