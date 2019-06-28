@@ -3,7 +3,7 @@ import GLM
 import StatsModels
 
 function GLMModel(
-        formula::StatsModels.Formula,
+        formula::StatsModels.AbstractTerm,
         family::GLM.Distribution,
         link::GLM.Link;
         name::AbstractString = "",
@@ -375,4 +375,3 @@ function single_labeldataframelinearregression(
         error("$(package) is not a valid value for package")
     end
 end
-
