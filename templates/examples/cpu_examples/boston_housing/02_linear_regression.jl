@@ -314,8 +314,13 @@ linear_regression_filename_bson = joinpath(
     PredictMD.maketempdir(),
     "linear_regression.bson",
     )
-PredictMD.save_model(linear_regression_filename, linear_regression)
-test_load_bson = PredictMD.load_model(linear_regression_filename_bson)
+PredictMD.save_model(
+    linear_regression_filename_bson,
+    linear_regression,
+    )
+test_load_bson = PredictMD.load_model(
+    linear_regression_filename_bson,
+    )
 Test.test_throws(
     ErrorException,
     PredictMD.save_model("test.nonexistentextension", linear_regression)

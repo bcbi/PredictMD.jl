@@ -46,8 +46,38 @@ import PredictMDExtra
 
 import DataFrames
 
+# if false
+# else
+#     unit_test_interval = ("")
+# end
+
 if group_includes_block(TEST_GROUP, TestBlockUnitTests())
     Test.@testset "Unit tests" begin
+        if
+        else
+        end
+        unit_test_interval_string = "[,)"
+        @debug(
+            "unit_test_interval_string: ",
+            unit_test_interval_string,
+            )
+        if !is_interval(unit_test_interval_string)
+            throw(
+                ArgumentError(
+                    string(
+                        "$(unit_test_interval_string) ",
+                        "is not a valid interval",
+                        )
+                    )
+                )
+        end
+        unit_test_interval = construct_interval(
+            unit_test_interval_string
+            )
+        @debug(
+            "unit_test_interval: ",
+            unit_test_interval,
+            )
         testmodulea_filename = joinpath("TestModuleA","TestModuleA.jl",)
         testmoduleb_filename = joinpath(
             "TestModuleB",
@@ -76,9 +106,12 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
                 for file in files
                     if endswith(lowercase(strip(file)), ".jl")
                         file_path = joinpath(root, file)
-                        Test.@testset "$(file_path)" begin
-                            @debug("Running test file: ", file_path)
-                            include(file_path)
+                        if interval_contains_x(unit_test_interval,
+                                               strip(file))
+                            Test.@testset "$(file_path)" begin
+                                @debug("Running $(file_path)")
+                                include(file_path)
+                            end
                         end
                     end
                 end
