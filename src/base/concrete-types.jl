@@ -1,3 +1,5 @@
+import StatsModels
+
 struct FeatureContrastsNotYetGenerated <: AbstractNonExistentFeatureContrasts
 end
 
@@ -100,7 +102,7 @@ end
 struct DataFrameFeatureContrasts <: AbstractFeatureContrasts
     columns::T1 where T1 <: AbstractVector{Symbol}
     num_df_columns::T2 where T2 <: Integer
-    contrasts::T3 where T3 <: AbstractDict
+    schema::T3 where T3 <: StatsModels.Schema
     num_array_columns::T4 where T4 <: Integer
 end
 
@@ -197,4 +199,3 @@ mutable struct DecisionTreeModel <:
     # parameters (learned from data):
     underlyingrandomforest::T7 where T7 <: Any
 end
-

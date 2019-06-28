@@ -29,4 +29,3 @@ abstract type AbstractPipeline <: Fittable end
 abstract type AbstractTransformer <: Fittable end
 
 abstract type AbstractNonExistentUnderlyingObject end
-

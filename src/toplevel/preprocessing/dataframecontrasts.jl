@@ -16,14 +16,14 @@ function DataFrameFeatureContrasts(
         modelformula,
         df,
         )
-    contrasts = modelframe.contrasts
+    modelschema = modelframe.schema
     modelmatrix = StatsModels.ModelMatrix(modelframe)
     columnsarray = modelmatrix.m
     num_array_columns = size(columnsarray, 2)
     result = DataFrameFeatureContrasts(
         columns,
         num_df_columns,
-        contrasts,
+        modelschema,
         num_array_columns,
         )
     return result
@@ -35,6 +35,6 @@ function generate_feature_contrasts(
         df::DataFrames.AbstractDataFrame,
         columns::AbstractVector{Symbol},
         )
-    result = DataFrameFeatureContrasts(df,columns)
+    result = DataFrameFeatureContrasts(df, columns)
     return result
 end
