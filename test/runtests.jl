@@ -2,6 +2,8 @@ ENV["PREDICTMD_IS_RUNTESTS"] = "true"
 
 import PredictMDExtra
 
+include("intervals.jl")
+
 include("import-predictmd.jl")
 
 include("define-test-groups.jl")

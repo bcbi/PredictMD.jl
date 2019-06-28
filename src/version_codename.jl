@@ -16,49 +16,49 @@ function version_codename_string()::String
     return resultversion_codename_string
 end
 
-function version_codename_string(m::Method)::String
-    m_package_directory::String = package_directory(m)
-    m_toml_file::TomlFile = TomlFile(
-        joinpath(m_package_directory, "Project.toml")
-        )
-    resultversion_codename_string::String = version_codename_string(
-        m_toml_file
-        )
-    return resultversion_codename_string
-end
+# function version_codename_string(m::Method)::String
+#     m_package_directory::String = package_directory(m)
+#     m_toml_file::TomlFile = TomlFile(
+#         joinpath(m_package_directory, "Project.toml")
+#         )
+#     resultversion_codename_string::String = version_codename_string(
+#         m_toml_file
+#         )
+#     return resultversion_codename_string
+# end
 
-function version_codename_string(f::Function)::String
-    m_package_directory::String = package_directory(f)
-    m_toml_file::TomlFile = TomlFile(
-        joinpath(m_package_directory, "Project.toml")
-        )
-    resultversion_codename_string::String = version_codename_string(
-        m_toml_file
-        )
-    return resultversion_codename_string
-end
+# function version_codename_string(f::Function)::String
+#     m_package_directory::String = package_directory(f)
+#     m_toml_file::TomlFile = TomlFile(
+#         joinpath(m_package_directory, "Project.toml")
+#         )
+#     resultversion_codename_string::String = version_codename_string(
+#         m_toml_file
+#         )
+#     return resultversion_codename_string
+# end
 
-function version_codename_string(f::Function, types::Tuple)::String
-    m_package_directory::String = package_directory(f, types)
-    m_toml_file::TomlFile = TomlFile(
-        joinpath(m_package_directory, "Project.toml")
-        )
-    resultversion_codename_string::String = version_codename_string(
-        m_toml_file
-        )
-    return resultversion_codename_string
-end
+# function version_codename_string(f::Function, types::Tuple)::String
+#     m_package_directory::String = package_directory(f, types)
+#     m_toml_file::TomlFile = TomlFile(
+#         joinpath(m_package_directory, "Project.toml")
+#         )
+#     resultversion_codename_string::String = version_codename_string(
+#         m_toml_file
+#         )
+#     return resultversion_codename_string
+# end
 
-function version_codename_string(m::Module)::String
-    m_package_directory::String = package_directory(m)
-    m_toml_file::TomlFile = TomlFile(
-        joinpath(m_package_directory, "Project.toml")
-        )
-    resultversion_codename_string::String = version_codename_string(
-        m_toml_file
-        )
-    return resultversion_codename_string
-end
+# function version_codename_string(m::Module)::String
+#     m_package_directory::String = package_directory(m)
+#     m_toml_file::TomlFile = TomlFile(
+#         joinpath(m_package_directory, "Project.toml")
+#         )
+#     resultversion_codename_string::String = version_codename_string(
+#         m_toml_file
+#         )
+#     return resultversion_codename_string
+# end
 
 """
     version_codename()::String
@@ -79,10 +79,10 @@ is part of a Julia package, returns the version code name of that package.
 If method `m`
 is not part of a Julia package, throws an error.
 """
-function version_codename(m::Method)::String
-    resultversion_codename_string::String = version_codename_string(m)
-    return resultversion_codename_string
-end
+# function version_codename(m::Method)::String
+#     resultversion_codename_string::String = version_codename_string(m)
+#     return resultversion_codename_string
+# end
 
 """
     version_codename(f::Function)::String
@@ -94,10 +94,10 @@ that package.
 If function `f`
 is not part of a Julia package, throws an error.
 """
-function version_codename(f::Function)::String
-    resultversion_codename_string::String = version_codename_string(f)
-    return resultversion_codename_string
-end
+# function version_codename(f::Function)::String
+#     resultversion_codename_string::String = version_codename_string(f)
+#     return resultversion_codename_string
+# end
 
 """
     version_codename(f::Function, types::Tuple)::String
@@ -109,13 +109,13 @@ that package.
 If function `f` with type signature `types`
 is not part of a Julia package, throws an error.
 """
-function version_codename(f::Function, types::Tuple)::String
-    resultversion_codename_string::String = version_codename_string(
-        f,
-        types,
-        )
-    return resultversion_codename_string
-end
+# function version_codename(f::Function, types::Tuple)::String
+#     resultversion_codename_string::String = version_codename_string(
+#         f,
+#         types,
+#         )
+#     return resultversion_codename_string
+# end
 
 """
     version_codename(m::Module)::String
@@ -125,7 +125,7 @@ that package.
 
 If module `m` is not part of a Julia package, throws an error.
 """
-function version_codename(m::Module)::String
-    resultversion_codename_string::String = version_codename_string(m)
-    return resultversion_codename_string
-end
+# function version_codename(m::Module)::String
+#     resultversion_codename_string::String = version_codename_string(m)
+#     return resultversion_codename_string
+# end
