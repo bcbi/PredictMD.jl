@@ -270,13 +270,13 @@ test_knet_mlp_regression = PredictMD.single_labeldataframeknetregression(
     printlosseverynepochs = 1,
     feature_contrasts = feature_contrasts,
     )
-PredictMD.fit!(
-    knet_mlp_regression,
-    training_features_df,
-    training_labels_df,
-    nothing,
-    nothing,
-    )
+# PredictMD.fit!(
+#     knet_mlp_regression,
+#     training_features_df,
+#     training_labels_df,
+#     nothing,
+#     nothing,
+#     )
 
 test_knet_mlp_regression = PredictMD.single_labeldataframeknetregression(
     feature_names,
@@ -294,13 +294,13 @@ test_knet_mlp_regression = PredictMD.single_labeldataframeknetregression(
     printlosseverynepochs = 1,
     feature_contrasts = feature_contrasts,
     )
-PredictMD.fit!(
-    knet_mlp_regression,
-    training_features_df,
-    training_labels_df,
-    nothing,
-    tuning_labels_df,
-    )
+# PredictMD.fit!(
+#     knet_mlp_regression,
+#     training_features_df,
+#     training_labels_df,
+#     nothing,
+#     tuning_labels_df,
+#     )
 
 test_knet_mlp_regression = PredictMD.single_labeldataframeknetregression(
     feature_names,
@@ -318,13 +318,13 @@ test_knet_mlp_regression = PredictMD.single_labeldataframeknetregression(
     printlosseverynepochs = 1,
     feature_contrasts = feature_contrasts,
     )
-PredictMD.fit!(
-    knet_mlp_regression,
-    training_features_df,
-    training_labels_df,
-    tuning_features_df,
-    nothing,
-    )
+# PredictMD.fit!(
+#     knet_mlp_regression,
+#     training_features_df,
+#     training_labels_df,
+#     tuning_features_df,
+#     nothing,
+#     )
 
 PredictMD.get_underlying(test_knet_mlp_regression)
 
