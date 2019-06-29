@@ -41,6 +41,34 @@ Random.seed!(999)
 
 df = RDatasets.dataset("MASS", "biopsy")
 
+## If your data are in a CSV file, load them with:
+## import CSVFiles
+## import DataFrames
+## df = DataFrames.DataFrame(CSVFiles.load("data.csv"; type_detect_rows = 10_000))
+
+## If your data are in a gzipped CSV file, load them with:
+## import CSVFiles
+## import DataFrames
+## df = DataFrames.DataFrame(CSVFiles.load(CSVFiles.File(CSVFiles.format"CSV", "data.csv.gz"); type_detect_rows = 10_000))
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+import CSVFiles
+import DataFrames
+df1 = DataFrames.DataFrame()
+df1[:x] = randn(5)
+df1_filename = joinpath(PredictMD.maketempdir(), "df1.csv")
+CSVFiles.save(df1_filename, df1)
+df2 = DataFrames.DataFrame(CSVFiles.load(df1_filename; type_detect_rows = 10_000))
+Test.@test( all(df1[:x] .== df2[:x]) )
+df3 = DataFrames.DataFrame()
+df3[:y] = randn(5)
+df3_filename = joinpath(PredictMD.maketempdir(), "df3.csv.gz")
+CSVFiles.save(CSVFiles.File(CSVFiles.format"CSV", df3_filename), df3)
+df4 = DataFrames.DataFrame(CSVFiles.load(CSVFiles.File(CSVFiles.format"CSV", df3_filename); type_detect_rows = 10_000))
+Test.@test( all(df3[:y] .== df4[:y]) )
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
 categorical_feature_names = Symbol[]
 continuous_feature_names = Symbol[
     :V1,
@@ -211,3 +239,5 @@ if PredictMD.is_travis_ci()
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+## %PREDICTMD_GENERATED_BY%
