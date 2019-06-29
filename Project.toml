@@ -62,6 +62,7 @@ ValueHistories = "98cad3c8-aec3-5f06-8e41-884608649ab7"
 
 [compat]
 Documenter = "~0.19"
+StatsModels = "< 0.6.0"
 julia = "^1.1.0"
 
 [extras]
