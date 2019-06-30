@@ -12,7 +12,7 @@ src="https://zenodo.org/badge/109460252.svg"/>
 <a href="https://predictmd.net/stable">
 <img
 src="https://img.shields.io/badge/docs-stable-blue.svg" />
-</a> 
+</a>
 <a
 href="https://predictmd.net/latest">
 <img
@@ -80,7 +80,8 @@ Pkg.test("PredictMDFull")
 
 ## Citing
 
-If you use PredictMD in research, please cite the software using the following DOI:
+If you use PredictMD in research, please
+cite the software using the following DOI:
 <a href="https://doi.org/10.5281/zenodo.1291209">
 <img
 src="https://zenodo.org/badge/109460252.svg"/>
