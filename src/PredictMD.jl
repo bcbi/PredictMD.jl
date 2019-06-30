@@ -4,8 +4,8 @@ __precompile__(true)
 """
 module PredictMD # begin module PredictMD
 
-using Distributed
-using Random
+import Distributed
+import Random
 
 include("package_directory.jl")
 include("registry_url_list.jl")
@@ -41,7 +41,7 @@ include("toplevel/docs_and_examples/generate_examples.jl")
 
 
 include("toplevel/ide/atom.jl")
-include("toplevel/ide/revise.jl")
+
 include("toplevel/io/saveload.jl")
 
 include("toplevel/linearmodel/glm.jl")
