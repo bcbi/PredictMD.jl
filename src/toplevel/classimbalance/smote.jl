@@ -50,7 +50,7 @@ end
 """
 """
 function smote(
-        rng::AbstractRNG,
+        rng::Random.AbstractRNG,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         feature_names::AbstractVector{Symbol},

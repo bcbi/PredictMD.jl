@@ -21,7 +21,7 @@ end
 """
 """
 function split_data(
-        rng::AbstractRNG,
+        rng::Random.AbstractRNG,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         split::Real,

@@ -1,8 +1,8 @@
 import_all() = import_all(Main)
 
 function import_all(m::Module)::Nothing
-    package_list::Vector{String} = sort(unique(strip.(package_list())))
-    for p in package_list
+    pkg_list::Vector{String} = sort(unique(strip.(package_list())))
+    for p in pkg_list
         Base.eval(
             m,
             Base.Meta.parse(
