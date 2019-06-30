@@ -53,7 +53,7 @@ else
     :
 fi
 
-julia --color=yes -e "VERSION >= v\"0.7.0-DEV.3630\" && using InteractiveUtils; versioninfo()"
+julia --color=yes -e "VERSION >= v\"0.7.0-DEV.3630\" && import InteractiveUtils; InteractiveUtils.versioninfo()"
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]];
 then
@@ -68,4 +68,3 @@ then
 else
     :
 fi
-
