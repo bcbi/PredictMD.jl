@@ -1,7 +1,10 @@
 ## %PREDICTMD_GENERATED_BY%
 
 import PredictMDExtra
+PredictMDExtra.import_all()
+
 import PredictMD
+PredictMD.import_all()
 
 ### Begin project-specific settings
 
@@ -42,18 +45,12 @@ Random.seed!(999)
 df = RDatasets.dataset("MASS", "biopsy")
 
 ## If your data are in a CSV file, load them with:
-## import CSVFiles
-## import DataFrames
 ## df = DataFrames.DataFrame(CSVFiles.load("data.csv"; type_detect_rows = 10_000))
 
 ## If your data are in a gzipped CSV file, load them with:
-## import CSVFiles
-## import DataFrames
 ## df = DataFrames.DataFrame(CSVFiles.load(CSVFiles.File(CSVFiles.format"CSV", "data.csv.gz"); type_detect_rows = 10_000))
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
-import CSVFiles
-import DataFrames
 df1 = DataFrames.DataFrame()
 df1[:x] = randn(5)
 df1_filename = joinpath(PredictMD.maketempdir(), "df1.csv")
@@ -130,7 +127,11 @@ PredictMD.check_column_types(
     categorical_label_names = categorical_label_names,
     continuous_label_names = continuous_label_names,
     )
-PredictMD.check_no_constant_columns(df)
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+Test.@test PredictMD.check_no_constant_columns(df)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 features_df = df[feature_names]
 labels_df = df[label_names]
