@@ -1,3 +1,5 @@
+import StatsModels
+
 struct FeatureContrastsNotYetGenerated <: AbstractNonExistentFeatureContrasts
 end
 
@@ -100,8 +102,12 @@ end
 struct DataFrameFeatureContrasts <: AbstractFeatureContrasts
     columns::T1 where T1 <: AbstractVector{Symbol}
     num_df_columns::T2 where T2 <: Integer
-    contrasts::T3 where T3 <: AbstractDict
-    num_array_columns::T4 where T4 <: Integer
+    schema_without_intercept::T3 where T3 <: StatsModels.Schema
+    formula_without_intercept::T4 where T4 <: StatsModels.AbstractTerm
+    num_array_columns_without_intercept::T5 where T5 <: Integer
+    schema_with_intercept::T6 where T6 <: StatsModels.Schema
+    formula_with_intercept::T7 where T7 <: StatsModels.AbstractTerm
+    num_array_columns_with_intercept::T8 where T8 <: Integer
 end
 
 """
@@ -197,4 +203,3 @@ mutable struct DecisionTreeModel <:
     # parameters (learned from data):
     underlyingrandomforest::T7 where T7 <: Any
 end
-

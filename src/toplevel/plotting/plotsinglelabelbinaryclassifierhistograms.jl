@@ -58,7 +58,7 @@ function plotsinglelabelbinaryclassifierhistogram(
     negative_class = single_label_levels[1]
     positive_class = single_label_levels[2]
     predictedprobabilitiesalllabels = predict_proba(estimator, features_df)
-    yscore = Cfloat.(
+    yscore = Float64.(
         singlelabelbinaryyscore(
             predictedprobabilitiesalllabels[single_label_name],
             positive_class,

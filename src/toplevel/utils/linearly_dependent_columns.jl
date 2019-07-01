@@ -38,20 +38,21 @@ function columns_are_linearly_independent(
         interactions = 1,
         )
     df_copy[temporary_dependent_variable] = randn(size(df_copy, 1))
-    result::Bool = try
+    try_lm_result::Bool = try
         lm = GLM.lm(formula, df_copy, false)
         true
     catch ex
         @debug("caught exception: ", exception=ex,)
         false
     end
-    return result
+    cols_result = length(linearly_dependent_columns(df, columns)) == 0
+    final_result::Bool = try_lm_result && cols_result
+    return final_result
 end
 
 function linearly_dependent_columns(
         df::DataFrames.DataFrame,
-        columns::AbstractVector{<:Symbol} = Symbol[],
-        )::Vector{Symbol}
+        columns::AbstractVector{<:Symbol} = Symbol[])::Vector{Symbol}
     df_copy = deepcopy(df)
     if length(columns) == 0
         columns_copy = deepcopy(DataFrames.names(df_copy))

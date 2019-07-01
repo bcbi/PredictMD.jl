@@ -137,11 +137,11 @@ function fit!(
         )
     has_tuning_data::Bool =
         !is_nothing(tuning_labels_array) && !is_nothing(tuning_features_array)
-    training_features_array = Cfloat.(training_features_array)
+    training_features_array = Float64.(training_features_array)
     if estimator.isclassificationmodel && !estimator.isregressionmodel
         training_labels_array = Int.(training_labels_array)
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
-        training_labels_array = Cfloat.(training_labels_array)
+        training_labels_array = Float64.(training_labels_array)
     else
         error(
             "Could not figure out if model is classification or regression"

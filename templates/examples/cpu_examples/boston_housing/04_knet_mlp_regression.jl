@@ -174,8 +174,8 @@ function knetmlp_loss(
         modelweights,
         x::AbstractArray,
         ytrue::AbstractArray;
-        L1::Real = Cfloat(0),
-        L2::Real = Cfloat(0),
+        L1::Real = Float64(0),
+        L2::Real = Float64(0),
         )
     loss = Statistics.mean(
         abs2,
@@ -198,23 +198,23 @@ feature_contrasts =
     PredictMD.generate_feature_contrasts(training_features_df, feature_names)
 
 knetmlp_modelweights = Any[
-    Cfloat.(
-        0.1f0*randn(Cfloat,10,feature_contrasts.num_array_columns)
+    Float64.(
+        0.1f0*randn(Float64,10,feature_contrasts.num_array_columns_without_intercept)
         ),
-    Cfloat.(
-        fill(Cfloat(0),10,1)
+    Float64.(
+        fill(Float64(0),10,1)
         ),
-    Cfloat.(
-        0.1f0*randn(Cfloat,1,10)
+    Float64.(
+        0.1f0*randn(Float64,1,10)
         ),
-    Cfloat.(
-        fill(Cfloat(0),1,1),
+    Float64.(
+        fill(Float64(0),1,1),
         ),
     ]
 
 knetmlp_losshyperparameters = Dict()
-knetmlp_losshyperparameters[:L1] = Cfloat(0.0)
-knetmlp_losshyperparameters[:L2] = Cfloat(0.0)
+knetmlp_losshyperparameters[:L1] = Float64(0.0)
+knetmlp_losshyperparameters[:L2] = Float64(0.0)
 knetmlp_optimizationalgorithm = :Adam
 knetmlp_optimizerhyperparameters = Dict()
 knetmlp_minibatchsize = 48

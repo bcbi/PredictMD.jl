@@ -196,6 +196,65 @@ show(
 ### End model comparison code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
+metrics = PredictMD.singlelabelregressionmetrics(all_models,
+                                                 testing_features_df,
+                                                 testing_labels_df,
+                                                 single_label_name)
+r2_row = first(
+    findall(
+        strip.(metrics[:metric]) .== "R^2 (coefficient of determination)"
+        )
+    )
+Test.@test(
+    strip(metrics[r2_row, :metric]) == "R^2 (coefficient of determination)"
+    )
+Test.@test(
+    metrics[r2_row, Symbol("Linear regression")] > 0.550
+    )
+Test.@test(
+    metrics[r2_row, Symbol("Random forest")] > 0.550
+    )
+Test.@test(
+    metrics[r2_row, Symbol("Knet MLP")] > 0.300
+    )
+mse_row = first(
+    findall(
+        strip.(metrics[:metric]) .== "Mean squared error (MSE)"
+        )
+    )
+Test.@test(
+    strip(metrics[mse_row, :metric]) == "Mean squared error (MSE)"
+    )
+Test.@test(
+    metrics[mse_row, Symbol("Linear regression")] < 40.000
+    )
+Test.@test(
+    metrics[mse_row, Symbol("Random forest")] < 40.000
+    )
+Test.@test(
+    metrics[mse_row, Symbol("Knet MLP")] < 65.000
+    )
+rmse_row = first(
+    findall(
+        strip.(metrics[:metric]) .== "Root mean square error (RMSE)"
+        )
+    )
+Test.@test(
+    strip(metrics[rmse_row, :metric]) == "Root mean square error (RMSE)"
+    )
+Test.@test(
+    metrics[rmse_row, Symbol("Linear regression")] < 6.500
+    )
+Test.@test(
+    metrics[rmse_row, Symbol("Random forest")] < 6.500
+    )
+Test.@test(
+    metrics[rmse_row, Symbol("Knet MLP")] < 8.000
+    )
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
     PredictMD.path_to_cache!(
         ;

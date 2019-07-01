@@ -114,4 +114,3 @@ function DataFrame2LIBSVMTransformer(
         )
     return result
 end
-
