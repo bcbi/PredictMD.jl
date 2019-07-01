@@ -21,7 +21,7 @@ end
 function singlelabelbinaryyscore(
         single_labelprobabilities::AbstractDict,
         positive_class::AbstractString;
-        float_type::Type{<:AbstractFloat} = Cfloat,
+        float_type::Type{<:AbstractFloat} = Float64,
         )
     result = float_type.(single_labelprobabilities[positive_class])
     return result
@@ -131,7 +131,7 @@ function singlelabelbinaryclassificationmetrics_resultdict(
         singlelabelbinaryclassificationmetrics_tunableparam(kwargsdict)
     #
     predictedprobabilitiesalllabels = predict_proba(estimator, features_df)
-    yscore = Cfloat.(
+    yscore = Float64.(
         singlelabelbinaryyscore(
             predictedprobabilitiesalllabels[single_label_name],
             positive_class,

@@ -141,7 +141,7 @@ function predict(
         return predictionsvector
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         if is_nothing(estimator.underlyingsvm)
-            predicted_values = fill(Cfloat(0), size(featuresarray, 2))
+            predicted_values = fill(Float64(0), size(featuresarray, 2))
         else
             predicted_values, decision_values = LIBSVM.svmpredict(
                 estimator.underlyingsvm,

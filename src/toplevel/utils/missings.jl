@@ -1,5 +1,10 @@
 import DataFrames
 
+function disallowmissing(x::AbstractArray{Union{Missing, T}, N})::Array{T, N} where T where N
+    result::Array{T, N} = convert(Array{T, N}, x)
+    return result
+end
+
 """
 """
 function convert_value_to_missing! end
@@ -35,4 +40,3 @@ function convert_value_to_missing!(
     convert_value_to_missing!(df, value, Symbol[column_name])
     return nothing
 end
-

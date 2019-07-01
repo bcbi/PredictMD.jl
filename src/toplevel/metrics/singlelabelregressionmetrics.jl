@@ -6,7 +6,7 @@ import StatsBase
 """
 function singlelabelregressionytrue(
         labels::AbstractVector;
-        float_type::Type{<:AbstractFloat} = Cfloat,
+        float_type::Type{<:AbstractFloat} = Float64,
         )
     result = float_type.(labels)
     return result
@@ -16,7 +16,7 @@ end
 """
 function singlelabelregressionypred(
         labels::AbstractVector;
-        float_type::Type{<:AbstractFloat} = Cfloat,
+        float_type::Type{<:AbstractFloat} = Float64,
         )
     result = float_type.(labels)
     return result

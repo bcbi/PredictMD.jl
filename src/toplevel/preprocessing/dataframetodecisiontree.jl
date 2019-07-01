@@ -57,18 +57,11 @@ function transform(
         )
     single_label_name = transformer.single_label_name
     labelsarray = convert(Array, labels_df[single_label_name])
-    modelformula = generate_formula(
-        transformer.feature_names[1],
-        transformer.feature_names;
-        intercept = false
-        )
-    modelframe = StatsModels.ModelFrame(
-        modelformula,
-        features_df;
-        contrasts = transformer.dffeaturecontrasts.contrasts,
-        )
-    modelmatrix = StatsModels.ModelMatrix(modelframe)
-    featuresarray = modelmatrix.m
+    my_formula = transformer.dffeaturecontrasts.formula_without_intercept
+    my_schema = transformer.dffeaturecontrasts.schema_without_intercept
+    my_formula = StatsModels.apply_schema(my_formula, my_schema)
+    response, featuresarray = StatsModels.modelcols(my_formula,
+                                                    features_df)
     return featuresarray, labelsarray
 end
 
@@ -79,18 +72,11 @@ function transform(
         features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    modelformula = generate_formula(
-        transformer.feature_names[1],
-        transformer.feature_names;
-        intercept = false
-        )
-    modelframe = StatsModels.ModelFrame(
-        modelformula,
-        features_df;
-        contrasts = transformer.dffeaturecontrasts.contrasts,
-        )
-    modelmatrix = StatsModels.ModelMatrix(modelframe)
-    featuresarray = modelmatrix.m
+    my_formula = transformer.dffeaturecontrasts.formula_without_intercept
+    my_schema = transformer.dffeaturecontrasts.schema_without_intercept
+    my_formula = StatsModels.apply_schema(my_formula, my_schema)
+    response, featuresarray = StatsModels.modelcols(my_formula,
+                                                    features_df)
     return featuresarray
 end
 
@@ -132,4 +118,3 @@ function predict_proba(
         )
     return transform(transformer, features_df)
 end
-

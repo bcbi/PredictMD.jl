@@ -234,16 +234,14 @@ logistic_classifier =
         name = "Logistic regression",
         )
 
-PredictMD.fit!(
-    logistic_classifier,
-    smoted_training_features_df,
-    smoted_training_labels_df,
-    )
+PredictMD.fit!(logistic_classifier,
+               smoted_training_features_df,
+               smoted_training_labels_df) # TODO: fix this error
 
-PredictMD.get_underlying(logistic_classifier)
+PredictMD.get_underlying(logistic_classifier) # TODO: fix this error
 
 logistic_hist_training =
-        PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        PredictMD.plotsinglelabelbinaryclassifierhistogram( # TODO: fix this error
         logistic_classifier,
         smoted_training_features_df,
         smoted_training_labels_df,

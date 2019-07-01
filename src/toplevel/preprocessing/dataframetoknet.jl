@@ -250,18 +250,11 @@ function transform(
                 [labelstring2intmap_j[y] for y in labels_df[label_j]]
         end
     end
-    modelformula = generate_formula(
-        transformer.feature_names[1],
-        transformer.feature_names;
-        intercept = false
-        )
-    training_modelframe = StatsModels.ModelFrame(
-        modelformula,
-        training_features_df;
-        contrasts = transformer.dffeaturecontrasts.contrasts,
-        )
-    training_modelmatrix = StatsModels.ModelMatrix(training_modelframe)
-    training_features_array = training_modelmatrix.m
+    my_formula = transformer.dffeaturecontrasts.formula_without_intercept
+    my_schema = transformer.dffeaturecontrasts.schema_without_intercept
+    my_formula = StatsModels.apply_schema(my_formula, my_schema)
+    response, training_features_array = StatsModels.modelcols(my_formula,
+                                                 training_features_df)
     if transformer.transposefeatures
         training_features_array = transpose(training_features_array)
     end
@@ -294,18 +287,11 @@ function transform(
         features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
-    modelformula = generate_formula(
-        transformer.feature_names[1],
-        transformer.feature_names;
-        intercept = false
-        )
-    modelframe = StatsModels.ModelFrame(
-        modelformula,
-        features_df;
-        contrasts = transformer.dffeaturecontrasts.contrasts,
-        )
-    modelmatrix = StatsModels.ModelMatrix(modelframe)
-    featuresarray = modelmatrix.m
+    my_formula = transformer.dffeaturecontrasts.formula_without_intercept
+    my_schema = transformer.dffeaturecontrasts.schema_without_intercept
+    my_formula = StatsModels.apply_schema(my_formula, my_schema)
+    response, featuresarray = StatsModels.modelcols(my_formula,
+                                                    features_df)
     if transformer.transposefeatures
         featuresarray = transpose(featuresarray)
     end
@@ -344,18 +330,11 @@ function transform(
             training_labels_df[label] for label in transformer.label_names
             ]...
         )
-    modelformula = generate_formula(
-        transformer.feature_names[1],
-        transformer.feature_names;
-        intercept = false
-        )
-    training_modelframe = StatsModels.ModelFrame(
-        modelformula,
-        training_features_df;
-        contrasts = transformer.dffeaturecontrasts.contrasts,
-        )
-    training_modelmatrix = StatsModels.ModelMatrix(training_modelframe)
-    training_features_array = training_modelmatrix.m
+    my_formula = transformer.dffeaturecontrasts.formula_without_intercept
+    my_schema = transformer.dffeaturecontrasts.schema_without_intercept
+    my_formula = StatsModels.apply_schema(my_formula, my_schema)
+    response, training_features_array = StatsModels.modelcols(my_formula,
+                                                 training_features_df)
     if transformer.transposefeatures
         training_features_array = transpose(training_features_array)
     end
@@ -388,21 +367,13 @@ function transform(
         features_df::DataFrames.AbstractDataFrame,
         kwargs...
         )
-    modelformula = generate_formula(
-        transformer.feature_names[1],
-        transformer.feature_names;
-        intercept = false
-        )
-    modelframe = StatsModels.ModelFrame(
-        modelformula,
-        features_df;
-        contrasts = transformer.dffeaturecontrasts.contrasts,
-        )
-    modelmatrix = StatsModels.ModelMatrix(modelframe)
-    featuresarray = modelmatrix.m
+    my_formula = transformer.dffeaturecontrasts.formula_without_intercept
+    my_schema = transformer.dffeaturecontrasts.schema_without_intercept
+    my_formula = StatsModels.apply_schema(my_formula, my_schema)
+    response, featuresarray = StatsModels.modelcols(my_formula,
+                                                    features_df)
     if transformer.transposefeatures
         featuresarray = transpose(featuresarray)
     end
     return featuresarray
 end
-
