@@ -105,7 +105,7 @@ function predict(
             probabilitiesassoc
             )
         result = DataFrames.DataFrame()
-        label_name = estimator.formula.lhs
+        label_name = estimator.formula.lhs.sym
         result[label_name] = predictionsvector
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
@@ -118,7 +118,7 @@ function predict(
                 )
         end
         result = DataFrames.DataFrame()
-        label_name = estimator.formula.lhs
+        label_name = estimator.formula.lhs.sym
         result[label_name] = glmpredictoutput
         return result
     else
