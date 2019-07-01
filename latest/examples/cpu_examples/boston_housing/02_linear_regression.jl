@@ -167,12 +167,12 @@ linear_regression = PredictMD.single_labeldataframelinearregression(
     name = "Linear regression",
     )
 
-PredictMD.fit!(linear_regression,training_features_df,training_labels_df,)
+PredictMD.fit!(linear_regression,training_features_df,training_labels_df) # TODO: fix this error
 
-PredictMD.get_underlying(linear_regression)
+PredictMD.get_underlying(linear_regression) # TODO: fix this error
 
 linear_regression_plot_training =
-    PredictMD.plotsinglelabelregressiontrueversuspredicted(
+    PredictMD.plotsinglelabelregressiontrueversuspredicted( # TODO: fix this error
         linear_regression,
         training_features_df,
         training_labels_df,

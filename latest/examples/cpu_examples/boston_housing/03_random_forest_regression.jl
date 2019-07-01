@@ -162,11 +162,9 @@ random_forest_regression =
         feature_contrasts = feature_contrasts,
         )
 
-PredictMD.fit!(
-    random_forest_regression,
-    training_features_df,
-    training_labels_df,
-    )
+PredictMD.fit!(random_forest_regression,
+               training_features_df,
+               training_labels_df)
 
 random_forest_regression_plot_training =
     PredictMD.plotsinglelabelregressiontrueversuspredicted(
