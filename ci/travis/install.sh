@@ -62,7 +62,12 @@ then
     julia $JULIA_FLAGS -e 'import Pkg;Pkg.build("PredictMD");'
     julia $JULIA_FLAGS -e 'import Pkg;Pkg.test("PredictMD"; coverage=true);'
     if [[ "$GROUP" == "$LAST_GROUP" ]]; then
-        julia $JULIA_FLAGS -e 'import Pkg;include(joinpath(Pkg.dir("PredictMD"), "docs", "make.jl",));'
+        if [[ "$TRAVIS_JULIA_VERSION" == "$JULIA_VERSION_FOR_DOCS" ]]; then
+            if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+                julia $JULIA_FLAGS --project=docs/ -e 'import Pkg; Pkg.develop(Pkg.PackageSpec(path=pwd())); Pkg.instantiate()'
+                julia $JULIA_FLAGS --project=docs/ docs/make.jl
+            fi
+        fi
     fi
     julia $JULIA_FLAGS -e 'import Pkg;Pkg.add("Coverage");'
     julia $JULIA_FLAGS -e 'import Pkg;cd(Pkg.dir("PredictMD"));import Coverage;Coverage.Codecov.submit(Coverage.Codecov.process_folder());'
@@ -80,4 +85,3 @@ fi
 
 mkdir -p $HOME/predictmd_cache_travis
 find $HOME/predictmd_cache_travis
-

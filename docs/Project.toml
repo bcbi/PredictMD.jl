@@ -1,13 +1,8 @@
 [deps]
-Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 DocumenterMarkdown = "997ab1e6-3595-5248-9280-8efb232c3433"
 DocumenterLaTeX = "cd674d7a-5f81-5cf3-af33-235ef1834b99"
-InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
-Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-PredictMDExtra = "d14d998a-9e6b-11e8-16d3-6f2879ea456d"
-Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 Documenter = "^0.22.0"

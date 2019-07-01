@@ -22,7 +22,6 @@ DefaultApplication = "3f0dd361-4fe0-5fc6-8523-80b14ec94d85"
 DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
-Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
 Flux = "587475ba-b771-5e3f-ad9e-33799f191a9c"
 GLM = "38e38edf-8417-5370-95a0-9cbb8c7f171a"
@@ -60,16 +59,20 @@ UnicodePlots = "b8865327-cd53-5732-bb35-84acbb429228"
 ValueHistories = "98cad3c8-aec3-5f06-8e41-884608649ab7"
 
 [compat]
-Documenter = "~0.19"
+Documenter = "^0.22.0"
 StatsModels = "< 0.6.0"
 julia = "^1.1.0"
 
 [extras]
 Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+DocumenterMarkdown = "997ab1e6-3595-5248-9280-8efb232c3433"
+DocumenterLaTeX = "cd674d7a-5f81-5cf3-af33-235ef1834b99"
 InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 PredictMDExtra = "d14d998a-9e6b-11e8-16d3-6f2879ea456d"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["Distributed", "InteractiveUtils", "Pkg", "PredictMDExtra", "Test"]
+test = ["Distributed", "Documenter", "DocumenterMarkdown", "DocumenterLaTeX", "InteractiveUtils", "Literate", "Pkg", "PredictMDExtra", "Test"]

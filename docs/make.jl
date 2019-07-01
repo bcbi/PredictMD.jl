@@ -1,9 +1,6 @@
-import Pkg
-
-Pkg.add("Documenter")
-Pkg.add("Literate")
-
 import Documenter
+import DocumenterMarkdown
+import DocumenterLaTeX
 import Literate
 import PredictMD
 
@@ -68,7 +65,6 @@ JULIA_VERSION_FOR_DOCS = strip(
 
 @debug("COMPILED_MODULES_CURRENT_VALUE: ", COMPILED_MODULES_CURRENT_VALUE,)
 @debug("COMPILED_MODULES_VALUE_FOR_DOCS: ", COMPILED_MODULES_VALUE_FOR_DOCS,)
-@debug("JULIA_VERSION_FOR_DOCS: ", JULIA_VERSION_FOR_DOCS,)
 
 if COMPILED_MODULES_CURRENT_VALUE == COMPILED_MODULES_VALUE_FOR_DOCS
     Documenter.deploydocs(
@@ -78,9 +74,7 @@ if COMPILED_MODULES_CURRENT_VALUE == COMPILED_MODULES_VALUE_FOR_DOCS
             "pygments",
             "python-markdown-math",
             ),
-        julia = JULIA_VERSION_FOR_DOCS,
-        latest = "master",
-        osname = "linux",
+        devbranch = "master",
         repo = "github.com/bcbi/PredictMD.jl.git",
         target = "site",
         )
@@ -89,4 +83,3 @@ end
 
 
 ENV["PREDICTMD_IS_DEPLOY_DOCS"] = "false"
-

@@ -14,9 +14,9 @@ src="https://zenodo.org/badge/109460252.svg"/>
 src="https://img.shields.io/badge/docs-stable-blue.svg" />
 </a>
 <a
-href="https://predictmd.net/latest">
+href="https://predictmd.net/dev">
 <img
-src="https://img.shields.io/badge/docs-unstable-blue.svg" />
+src="https://img.shields.io/badge/docs-development-blue.svg" />
 </a>
 </p>
 
