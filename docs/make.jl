@@ -69,11 +69,11 @@ JULIA_VERSION_FOR_DOCS = strip(
 if COMPILED_MODULES_CURRENT_VALUE == COMPILED_MODULES_VALUE_FOR_DOCS
     Documenter.deploydocs(
         branch = "gh-pages",
-        deps = Documenter.Deps.pip(
-            "mkdocs",
-            "pygments",
-            "python-markdown-math",
-            ),
+        # deps = Documenter.Deps.pip(
+        #     "mkdocs",
+        #     "pygments",
+        #     "python-markdown-math",
+        #     ),
         devbranch = "master",
         repo = "github.com/bcbi/PredictMD.jl.git",
         target = "site",
