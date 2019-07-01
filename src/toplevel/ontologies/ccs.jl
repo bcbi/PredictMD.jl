@@ -22,11 +22,10 @@ function parse_icd_icd9_ccs_appendixasingledx_file!()::Nothing
             "ccs",
             "AppendixASingleDX.txt"
             )
-        file_contents = read(filename, String)
-        file_contents = strip(file_contents)
-        file_sections = split(file_contents, "\n\n")
+        file_sections = strip.(split(strip(read(filename, String)), "\n\n"))
         for section in file_sections
-            if startswith(section, "Appendix")
+            if isempty(section)
+            elseif startswith(section, "Appendix")
             elseif startswith(section, "Revised")
             else
                 ccs_number::Int = parse(
@@ -46,7 +45,7 @@ function parse_icd_icd9_ccs_appendixasingledx_file!()::Nothing
                             ), " "
                         )
                     )
-                _SINGLE_LEVEL_DX_CCS_NUMBER_TO_NAME[][ccs_number] = ccs_name  
+                _SINGLE_LEVEL_DX_CCS_NUMBER_TO_NAME[][ccs_number] = ccs_name
                 icd9_code_list::Vector{String} = strip.(
                     remove_all_full_stops.(
                         split(

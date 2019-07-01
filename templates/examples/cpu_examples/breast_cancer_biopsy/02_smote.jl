@@ -1,7 +1,10 @@
 ## %PREDICTMD_GENERATED_BY%
 
 import PredictMDExtra
+PredictMDExtra.import_all()
+
 import PredictMD
+PredictMD.import_all()
 
 ### Begin project-specific settings
 
@@ -189,8 +192,12 @@ PredictMD.check_column_types(
     categorical_label_names = categorical_label_names,
     continuous_label_names = continuous_label_names,
     )
-PredictMD.check_no_constant_columns(smoted_training_features_df)
-PredictMD.check_no_constant_columns(smoted_training_labels_df)
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+Test.@test PredictMD.check_no_constant_columns(smoted_training_features_df)
+Test.@test PredictMD.check_no_constant_columns(smoted_training_labels_df)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 DataFrames.describe(smoted_training_labels_df[single_label_name])
 StatsBase.countmap(smoted_training_labels_df[single_label_name])

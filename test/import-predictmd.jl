@@ -29,3 +29,4 @@ import PredictMD
 @info(string("Julia depot paths: "), Base.DEPOT_PATH)
 @info(string("Julia load paths: "), Base.LOAD_PATH)
 
+PredictMD.import_all()

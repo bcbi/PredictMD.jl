@@ -28,4 +28,3 @@ running the `generate_examples` function.
 ```julia
 PredictMD.generate_examples(output_directory; notebooks = true)
 ```
-
