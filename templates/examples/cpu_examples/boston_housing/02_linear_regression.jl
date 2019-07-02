@@ -1,7 +1,10 @@
 ## %PREDICTMD_GENERATED_BY%
 
 import PredictMDExtra
+PredictMDExtra.import_all()
+
 import PredictMD
+PredictMD.import_all()
 
 ### Begin project-specific settings
 
@@ -149,10 +152,44 @@ continuous_feature_names = FileIO.load(
 feature_names = vcat(categorical_feature_names, continuous_feature_names)
 
 single_label_name = :MedV
-
 continuous_label_names = Symbol[single_label_name]
 categorical_label_names = Symbol[]
 label_names = vcat(categorical_label_names, continuous_label_names)
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+Test.@test(
+    PredictMD.columns_are_linearly_independent(training_features_df)
+    )
+Test.@test(
+    PredictMD.columns_are_linearly_independent(
+        training_features_df,
+        feature_names,
+        )
+    )
+Test.@test(
+    length(PredictMD.linearly_dependent_columns(df)) == 0
+    )
+Test.@test(
+    length(
+        PredictMD.linearly_dependent_columns(
+            training_features_df,
+            feature_names,
+            ),
+        ) == 0
+    )
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+show(
+    PredictMD.linearly_dependent_columns(df)
+    )
+
+show(
+    PredictMD.linearly_dependent_columns(
+        training_features_df,
+        feature_names,
+        )
+    )
 
 linear_regression = PredictMD.single_labeldataframelinearregression(
     feature_names,
@@ -163,12 +200,12 @@ linear_regression = PredictMD.single_labeldataframelinearregression(
     name = "Linear regression",
     )
 
-PredictMD.fit!(linear_regression,training_features_df,training_labels_df,)
+PredictMD.fit!(linear_regression,training_features_df,training_labels_df) # TODO: fix this error
 
-PredictMD.get_underlying(linear_regression)
+PredictMD.get_underlying(linear_regression) # TODO: fix this error
 
 linear_regression_plot_training =
-    PredictMD.plotsinglelabelregressiontrueversuspredicted(
+    PredictMD.plotsinglelabelregressiontrueversuspredicted( # TODO: fix this error
         linear_regression,
         training_features_df,
         training_labels_df,
@@ -275,6 +312,45 @@ linear_regression_filename = joinpath(
 
 PredictMD.save_model(linear_regression_filename, linear_regression)
 
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+linear_regression_filename_bson = joinpath(
+    PredictMD.maketempdir(),
+    "linear_regression.bson",
+    )
+PredictMD.save_model(
+    linear_regression_filename_bson,
+    linear_regression,
+    )
+test_load_bson = PredictMD.load_model(
+    linear_regression_filename_bson,
+    )
+Test.@test_throws(
+    ErrorException,
+    PredictMD.save_model("test.nonexistentextension", linear_regression)
+    )
+Test.@test_throws(
+    ErrorException,
+    PredictMD.save_model_jld2("test.nonexistentextension", linear_regression)
+    )
+Test.@test_throws(
+    ErrorException,
+    PredictMD.save_model_bson("test.nonexistentextension", linear_regression)
+    )
+Test.@test_throws(
+    ErrorException,
+    PredictMD.load_model("test.nonexistentextension")
+    )
+Test.@test_throws(
+    ErrorException,
+    PredictMD.load_model_jld2("test.nonexistentextension")
+    )
+Test.@test_throws(
+    ErrorException,
+    PredictMD.load_model_bson("test.nonexistentextension")
+    )
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
 ### End linear regression code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
@@ -289,3 +365,5 @@ if PredictMD.is_travis_ci()
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+## %PREDICTMD_GENERATED_BY%

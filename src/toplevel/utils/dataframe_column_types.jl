@@ -8,7 +8,7 @@ function fix_column_types!(
         continuous_feature_names::AbstractVector{Symbol} = Symbol[],
         categorical_label_names::AbstractVector{Symbol} = Symbol[],
         continuous_label_names::AbstractVector{Symbol} = Symbol[],
-        float_type::Type{<:AbstractFloat} = Cfloat,
+        float_type::Type{<:AbstractFloat} = Float64,
         )::Nothing
     function make_categorical_column(
             old_vector::AbstractVector,

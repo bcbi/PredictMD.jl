@@ -22,7 +22,7 @@ function risk_score_cutoff_values(
     #
     predictedprobabilitiesalllabels =
         predict_proba(estimator, features_df)
-    yscore = Cfloat.(
+    yscore = Float64.(
         singlelabelbinaryyscore(
             predictedprobabilitiesalllabels[single_label_name],
             positive_class,

@@ -35,8 +35,8 @@ function KnetModel(
         optimizersymbol2type[optimizationalgorithm];
         optimizerhyperparameters...
         )
-    lastepoch = 0
-    lastiteration = 0
+    # lastepoch = 0
+    # lastiteration = 0
     history = ValueHistories.MVHistory()
     ValueHistories.push!(
         history,
@@ -135,24 +135,13 @@ function fit!(
         tuning_features_array::Union{Nothing, AbstractArray} = nothing,
         tuning_labels_array::Union{Nothing, AbstractArray} = nothing,
         )
-    if is_nothing(tuning_features_array) &&
-            is_nothing(tuning_labels_array)
-        has_tuning_data = false
-    elseif !is_nothing(tuning_features_array) &&
-                !is_nothing(tuning_labels_array)
-        has_tuning_data = true
-    else
-        error(
-            string(
-                "Either define both tuning_features_array and ",
-                "tuning_labels_array, or define neither.",)
-            )
-    end
-    training_features_array = Cfloat.(training_features_array)
+    has_tuning_data::Bool =
+        !is_nothing(tuning_labels_array) && !is_nothing(tuning_features_array)
+    training_features_array = Float64.(training_features_array)
     if estimator.isclassificationmodel && !estimator.isregressionmodel
         training_labels_array = Int.(training_labels_array)
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
-        training_labels_array = Cfloat.(training_labels_array)
+        training_labels_array = Float64.(training_labels_array)
     else
         error(
             "Could not figure out if model is classification or regression"
@@ -598,4 +587,3 @@ function single_labeldataframeknetregression(
         error("$(package) is not a valid value for package")
     end
 end
-

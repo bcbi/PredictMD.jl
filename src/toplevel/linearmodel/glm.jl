@@ -3,7 +3,7 @@ import GLM
 import StatsModels
 
 function GLMModel(
-        formula::StatsModels.Formula,
+        formula::StatsModels.AbstractTerm,
         family::GLM.Distribution,
         link::GLM.Link;
         name::AbstractString = "",
@@ -105,12 +105,12 @@ function predict(
             probabilitiesassoc
             )
         result = DataFrames.DataFrame()
-        label_name = estimator.formula.lhs
+        label_name = estimator.formula.lhs.sym
         result[label_name] = predictionsvector
         return result
     elseif !estimator.isclassificationmodel && estimator.isregressionmodel
         if isa(estimator.underlyingglm, AbstractNonExistentUnderlyingObject)
-            glmpredictoutput = fill(Cfloat(0), size(features_df,1))
+            glmpredictoutput = fill(Float64(0), size(features_df,1))
         else
             glmpredictoutput = GLM.predict(
                 estimator.underlyingglm,
@@ -118,7 +118,7 @@ function predict(
                 )
         end
         result = DataFrames.DataFrame()
-        label_name = estimator.formula.lhs
+        label_name = estimator.formula.lhs.sym
         result[label_name] = glmpredictoutput
         return result
     else
@@ -136,7 +136,7 @@ function predict_proba(
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
         if isa(estimator.underlyingglm, AbstractNonExistentUnderlyingObject)
-            glmpredictoutput = fill(Cfloat(0), size(features_df, 1))
+            glmpredictoutput = fill(Float64(0), size(features_df, 1))
         else
             glmpredictoutput = GLM.predict(
                 estimator.underlyingglm,
@@ -375,4 +375,3 @@ function single_labeldataframelinearregression(
         error("$(package) is not a valid value for package")
     end
 end
-

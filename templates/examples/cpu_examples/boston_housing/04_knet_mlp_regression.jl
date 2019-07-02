@@ -1,7 +1,10 @@
 ## %PREDICTMD_GENERATED_BY%
 
 import PredictMDExtra
+PredictMDExtra.import_all()
+
 import PredictMD
+PredictMD.import_all()
 
 ### Begin project-specific settings
 
@@ -171,8 +174,8 @@ function knetmlp_loss(
         modelweights,
         x::AbstractArray,
         ytrue::AbstractArray;
-        L1::Real = Cfloat(0),
-        L2::Real = Cfloat(0),
+        L1::Real = Float64(0),
+        L2::Real = Float64(0),
         )
     loss = Statistics.mean(
         abs2,
@@ -195,23 +198,23 @@ feature_contrasts =
     PredictMD.generate_feature_contrasts(training_features_df, feature_names)
 
 knetmlp_modelweights = Any[
-    Cfloat.(
-        0.1f0*randn(Cfloat,10,feature_contrasts.num_array_columns)
+    Float64.(
+        0.1f0*randn(Float64,10,feature_contrasts.num_array_columns_without_intercept)
         ),
-    Cfloat.(
-        fill(Cfloat(0),10,1)
+    Float64.(
+        fill(Float64(0),10,1)
         ),
-    Cfloat.(
-        0.1f0*randn(Cfloat,1,10)
+    Float64.(
+        0.1f0*randn(Float64,1,10)
         ),
-    Cfloat.(
-        fill(Cfloat(0),1,1),
+    Float64.(
+        fill(Float64(0),1,1),
         ),
     ]
 
 knetmlp_losshyperparameters = Dict()
-knetmlp_losshyperparameters[:L1] = Cfloat(0.0)
-knetmlp_losshyperparameters[:L2] = Cfloat(0.0)
+knetmlp_losshyperparameters[:L1] = Float64(0.0)
+knetmlp_losshyperparameters[:L2] = Float64(0.0)
 knetmlp_optimizationalgorithm = :Adam
 knetmlp_optimizerhyperparameters = Dict()
 knetmlp_minibatchsize = 48
@@ -252,6 +255,84 @@ PredictMD.fit!(
     tuning_features_df,
     tuning_labels_df,
     )
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+test_knet_mlp_regression = PredictMD.single_labeldataframeknetregression(
+    feature_names,
+    single_label_name;
+    package = :Knet,
+    name = "Knet MLP",
+    predict_function_source = knet_mlp_predict_function_source,
+    loss_function_source = knet_mlp_loss_function_source,
+    losshyperparameters = knetmlp_losshyperparameters,
+    optimizationalgorithm = knetmlp_optimizationalgorithm,
+    optimizerhyperparameters = knetmlp_optimizerhyperparameters,
+    minibatchsize = knetmlp_minibatchsize,
+    modelweights = knetmlp_modelweights,
+    maxepochs = 5,
+    printlosseverynepochs = 1,
+    feature_contrasts = feature_contrasts,
+    )
+# PredictMD.fit!(
+#     knet_mlp_regression,
+#     training_features_df,
+#     training_labels_df,
+#     nothing,
+#     nothing,
+#     )
+
+test_knet_mlp_regression = PredictMD.single_labeldataframeknetregression(
+    feature_names,
+    single_label_name;
+    package = :Knet,
+    name = "Knet MLP",
+    predict_function_source = knet_mlp_predict_function_source,
+    loss_function_source = knet_mlp_loss_function_source,
+    losshyperparameters = knetmlp_losshyperparameters,
+    optimizationalgorithm = knetmlp_optimizationalgorithm,
+    optimizerhyperparameters = knetmlp_optimizerhyperparameters,
+    minibatchsize = knetmlp_minibatchsize,
+    modelweights = knetmlp_modelweights,
+    maxepochs = 5,
+    printlosseverynepochs = 1,
+    feature_contrasts = feature_contrasts,
+    )
+# PredictMD.fit!(
+#     knet_mlp_regression,
+#     training_features_df,
+#     training_labels_df,
+#     nothing,
+#     tuning_labels_df,
+#     )
+
+test_knet_mlp_regression = PredictMD.single_labeldataframeknetregression(
+    feature_names,
+    single_label_name;
+    package = :Knet,
+    name = "Knet MLP",
+    predict_function_source = knet_mlp_predict_function_source,
+    loss_function_source = knet_mlp_loss_function_source,
+    losshyperparameters = knetmlp_losshyperparameters,
+    optimizationalgorithm = knetmlp_optimizationalgorithm,
+    optimizerhyperparameters = knetmlp_optimizerhyperparameters,
+    minibatchsize = knetmlp_minibatchsize,
+    modelweights = knetmlp_modelweights,
+    maxepochs = 5,
+    printlosseverynepochs = 1,
+    feature_contrasts = feature_contrasts,
+    )
+# PredictMD.fit!(
+#     knet_mlp_regression,
+#     training_features_df,
+#     training_labels_df,
+#     tuning_features_df,
+#     nothing,
+#     )
+
+PredictMD.get_underlying(test_knet_mlp_regression)
+
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 knet_learningcurve_lossvsepoch = PredictMD.plotlearningcurve(
     knet_mlp_regression,
@@ -524,3 +605,5 @@ if PredictMD.is_travis_ci()
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+## %PREDICTMD_GENERATED_BY%

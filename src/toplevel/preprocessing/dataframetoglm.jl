@@ -94,4 +94,3 @@ function predict_proba(
         )
     return transform(transformer, features_df)
 end
-

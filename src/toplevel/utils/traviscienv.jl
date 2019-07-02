@@ -41,4 +41,3 @@ is_ci_or_runtests(a::AbstractDict = ENV) = is_ci(a) || is_runtests(a)
 """
 is_ci_or_runtests_or_docs_or_examples(a::AbstractDict = ENV) =
     is_ci_or_runtests(a) || is_docs_or_examples(a)
-

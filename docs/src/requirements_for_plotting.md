@@ -64,4 +64,3 @@ pdf2svg from the appropriate link below:
     http://brewinstall.org/Install-pdf2svg-on-Mac-with-Brew/)
 * GNU/Linux: [http://www.cityinthesky.co.uk/opensource/pdf2svg/](
     http://www.cityinthesky.co.uk/opensource/pdf2svg/)
-

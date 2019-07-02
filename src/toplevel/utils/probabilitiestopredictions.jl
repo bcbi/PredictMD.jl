@@ -2,7 +2,7 @@
 """
 function multilabelprobabilitiestopredictions(
         probabilitiesassoc::AbstractDict;
-        float_type::Type{<:AbstractFloat} = Cfloat,
+        float_type::Type{<:AbstractFloat} = Float64,
         )
     result = Dict()
     label_names = sort(unique(collect(keys(probabilitiesassoc))))
@@ -22,7 +22,7 @@ const probabilitiestopredictions = multilabelprobabilitiestopredictions
 """
 function single_labelprobabilitiestopredictions(
         probabilitiesassoc::AbstractDict;
-        float_type::Type{<:AbstractFloat} = Cfloat,
+        float_type::Type{<:AbstractFloat} = Float64,
         )
     classes = sort(unique(collect(keys(probabilitiesassoc))))
     numclasses = length(classes)

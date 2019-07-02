@@ -4,13 +4,15 @@ __precompile__(true)
 """
 module PredictMD # begin module PredictMD
 
-using Distributed
-using Random
+import Distributed
+import Random
 
-include("package_directory.jl")
 include("registry_url_list.jl")
+include("package_directory.jl")
 include("version.jl")
 include("version_codename.jl")
+include("package_list.jl")
+include("import_all.jl")
 include("welcome.jl")
 include("init.jl")
 
@@ -25,7 +27,6 @@ include("toplevel/code_loading/require_versions.jl")
 
 include("toplevel/classimbalance/smote.jl")
 
-
 include("toplevel/datasets/csv.jl")
 include("toplevel/datasets/datadeps.jl")
 include("toplevel/datasets/gzip.jl")
@@ -35,13 +36,11 @@ include("toplevel/datasets/mnist.jl")
 include("toplevel/datasets/queryverse.jl")
 include("toplevel/datasets/rdatasets.jl")
 
-
 include("toplevel/docs_and_examples/cache.jl")
 include("toplevel/docs_and_examples/generate_examples.jl")
 
-
 include("toplevel/ide/atom.jl")
-include("toplevel/ide/revise.jl")
+
 include("toplevel/io/saveload.jl")
 
 include("toplevel/linearmodel/glm.jl")
@@ -62,21 +61,18 @@ include("toplevel/metrics/rocnumsmetrics.jl")
 include("toplevel/metrics/singlelabelbinaryclassificationmetrics.jl")
 include("toplevel/metrics/singlelabelregressionmetrics.jl")
 
+include("toplevel/modelselection/crossvalidation.jl")
 include("toplevel/modelselection/split_data.jl")
-
 
 include("toplevel/neuralnetwork/flux.jl")
 include("toplevel/neuralnetwork/knet.jl")
 include("toplevel/neuralnetwork/merlin.jl")
-
 
 include("toplevel/online/onlinestats.jl")
 
 include("toplevel/ontologies/ccs.jl")
 
 include("toplevel/pipeline/simplelinearpipeline.jl")
-
-
 
 include("toplevel/plotting/catch_plotting_errors.jl")
 include("toplevel/plotting/defaultapplication.jl")

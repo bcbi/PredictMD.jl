@@ -1,7 +1,10 @@
 ## %PREDICTMD_GENERATED_BY%
 
 import PredictMDExtra
+PredictMDExtra.import_all()
+
 import PredictMD
+PredictMD.import_all()
 
 ### Begin project-specific settings
 
@@ -333,3 +336,5 @@ if PredictMD.is_travis_ci()
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+## %PREDICTMD_GENERATED_BY%

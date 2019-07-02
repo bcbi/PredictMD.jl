@@ -1,7 +1,10 @@
 ## %PREDICTMD_GENERATED_BY%
 
 import PredictMDExtra
+PredictMDExtra.import_all()
+
 import PredictMD
+PredictMD.import_all()
 
 ### Begin project-specific settings
 
@@ -185,6 +188,41 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     feature_names,
     )
 
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+Test.@test(
+    PredictMD.columns_are_linearly_independent(training_features_df)
+    )
+Test.@test(
+    PredictMD.columns_are_linearly_independent(
+        training_features_df,
+        feature_names,
+        )
+    )
+Test.@test(
+    length(PredictMD.linearly_dependent_columns(df)) == 0
+    )
+Test.@test(
+    length(
+        PredictMD.linearly_dependent_columns(
+            training_features_df,
+            feature_names,
+            ),
+        ) == 0
+    )
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+show(
+    PredictMD.linearly_dependent_columns(df)
+    )
+
+show(
+    PredictMD.linearly_dependent_columns(
+        training_features_df,
+        feature_names,
+        )
+    )
+
 logistic_classifier =
         PredictMD.singlelabelbinaryclassdataframelogisticclassifier(
         feature_names,
@@ -196,16 +234,14 @@ logistic_classifier =
         name = "Logistic regression",
         )
 
-PredictMD.fit!(
-    logistic_classifier,
-    smoted_training_features_df,
-    smoted_training_labels_df,
-    )
+PredictMD.fit!(logistic_classifier,
+               smoted_training_features_df,
+               smoted_training_labels_df) # TODO: fix this error
 
-PredictMD.get_underlying(logistic_classifier)
+PredictMD.get_underlying(logistic_classifier) # TODO: fix this error
 
 logistic_hist_training =
-        PredictMD.plotsinglelabelbinaryclassifierhistogram(
+        PredictMD.plotsinglelabelbinaryclassifierhistogram( # TODO: fix this error
         logistic_classifier,
         smoted_training_features_df,
         smoted_training_labels_df,
@@ -405,3 +441,5 @@ if PredictMD.is_travis_ci()
 end
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+## %PREDICTMD_GENERATED_BY%
