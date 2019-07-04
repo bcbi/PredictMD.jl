@@ -36,15 +36,11 @@ src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master/graph/badge.svg"
 /></a>
 </p>
 
-
-
-
-
 [PredictMD](https://predictmd.net) is a free and open-source Julia package that provides a uniform interface for machine learning.
 
 PredictMD makes it easy to automate machine learning workflows and create reproducible machine learning pipelines.
 
-It is the official machine learning package of the Brown Center for Biomedical Informatics (BCBI).
+It is the official machine learning framework of the [Brown Center for Biomedical Informatics](https://github.com/bcbi).
 
 | Table of Contents |
 | ----------------- |
