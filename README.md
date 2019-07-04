@@ -9,7 +9,8 @@ src="https://zenodo.org/badge/109460252.svg"/>
 </p>
 
 <p>
-<a href="https://predictmd.net/stable">
+<a
+href="https://predictmd.net/stable">
 <img
 src="https://img.shields.io/badge/docs-stable-blue.svg" />
 </a>
@@ -21,11 +22,14 @@ src="https://img.shields.io/badge/docs-unstable-blue.svg" />
 </p>
 
 <p>
-<a href="https://app.bors.tech/repositories/12304">
+<a
+href="https://app.bors.tech/repositories/12304">
 <img
 src="https://bors.tech/images/badge_small.svg"
-/></a>
-<a href="https://travis-ci.org/bcbi/PredictMD.jl/branches">
+alt="Bors enabled">
+</a>
+<a
+href="https://travis-ci.org/bcbi/PredictMD.jl/branches">
 <img
 src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master"
 /></a>
