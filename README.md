@@ -9,7 +9,8 @@ src="https://zenodo.org/badge/109460252.svg"/>
 </p>
 
 <p>
-<a href="https://predictmd.net/stable">
+<a
+href="https://predictmd.net/stable">
 <img
 src="https://img.shields.io/badge/docs-stable-blue.svg" />
 </a>
@@ -21,11 +22,14 @@ src="https://img.shields.io/badge/docs-unstable-blue.svg" />
 </p>
 
 <p>
-<a href="https://app.bors.tech/repositories/12304">
+<a
+href="https://app.bors.tech/repositories/12304">
 <img
 src="https://bors.tech/images/badge_small.svg"
-/></a>
-<a href="https://travis-ci.org/bcbi/PredictMD.jl/branches">
+alt="Bors enabled">
+</a>
+<a
+href="https://travis-ci.org/bcbi/PredictMD.jl/branches">
 <img
 src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master"
 /></a>
@@ -36,15 +40,11 @@ src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master/graph/badge.svg"
 /></a>
 </p>
 
-
-
-
-
 [PredictMD](https://predictmd.net) is a free and open-source Julia package that provides a uniform interface for machine learning.
 
 PredictMD makes it easy to automate machine learning workflows and create reproducible machine learning pipelines.
 
-It is the official machine learning package of the Brown Center for Biomedical Informatics (BCBI).
+It is the official machine learning framework of the [Brown Center for Biomedical Informatics](https://github.com/bcbi).
 
 | Table of Contents |
 | ----------------- |
