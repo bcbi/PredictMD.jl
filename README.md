@@ -15,9 +15,9 @@ href="https://predictmd.net/stable">
 src="https://img.shields.io/badge/docs-stable-blue.svg" />
 </a>
 <a
-href="https://predictmd.net/latest">
+href="https://predictmd.net/development">
 <img
-src="https://img.shields.io/badge/docs-unstable-blue.svg" />
+src="https://img.shields.io/badge/docs-development-blue.svg" />
 </a>
 </p>
 

@@ -1,4 +1,3 @@
-import Documenter
 import Literate
 
 function preprocess_example_shared(
