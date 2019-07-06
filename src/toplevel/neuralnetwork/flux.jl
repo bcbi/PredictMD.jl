@@ -5,4 +5,5 @@ import GPUArrays
 import NNlib
 import ProgressMeter
 import ValueHistories
+import Zygote
 
