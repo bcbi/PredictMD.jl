@@ -10,5 +10,8 @@ PredictMDExtra = "d14d998a-9e6b-11e8-16d3-6f2879ea456d"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
-Documenter = "^0.22.0"
+Documenter = "^0.22.5"
+DocumenterMarkdown = "^0.2.0"
+DocumenterLaTeX = "^0.2.0"
+Literate = "^1.1.0"
 PredictMDExtra = "^0.10.0"
