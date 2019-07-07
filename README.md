@@ -117,6 +117,16 @@ After you have exited the container, you can return to it by running the followi
 docker start -ai predictmd
 ```
 
+To delete your container, run the following line:
+```bash
+docker container rm -f predictmd
+```
+
+To also delete the downloaded image, run the following line:
+```bash
+docker image rm -f dilumaluthge/predictmd
+```
+
 ## Documentation
 
 The [PredictMD documentation](https://predictmd.net/stable) contains

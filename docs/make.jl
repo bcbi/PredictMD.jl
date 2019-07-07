@@ -41,6 +41,7 @@ Documenter.makedocs(
     pages = [
         "Home" => "index.md",
         "Requirements for plotting (optional)" => "requirements_for_plotting.md",
+        "Docker image" => "docker_image.md",
         "Examples" => [
             "Generating these example files on your computer" => "generate_examples/generate_examples.md",
             "Boston housing (single label regression)" => [
