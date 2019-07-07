@@ -248,6 +248,27 @@ PredictMD.predict(knet_mlp_classifier,testing_features_df,)
 ### End model output code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
+PredictMD.get_underlying(logistic_classifier)
+PredictMD.get_underlying(random_forest_classifier)
+PredictMD.get_underlying(c_svc_svm_classifier)
+PredictMD.get_underlying(nu_svc_svm_classifier)
+PredictMD.get_underlying(knet_mlp_classifier)
+
+PredictMD.get_history(logistic_classifier)
+PredictMD.get_history(random_forest_classifier)
+PredictMD.get_history(c_svc_svm_classifier)
+PredictMD.get_history(nu_svc_svm_classifier)
+PredictMD.get_history(knet_mlp_classifier)
+
+PredictMD.parse_functions!(logistic_classifier)
+PredictMD.parse_functions!(random_forest_classifier)
+PredictMD.parse_functions!(c_svc_svm_classifier)
+PredictMD.parse_functions!(nu_svc_svm_classifier)
+PredictMD.parse_functions!(knet_mlp_classifier)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 if PredictMD.is_travis_ci()
     PredictMD.path_to_cache!(
         ;

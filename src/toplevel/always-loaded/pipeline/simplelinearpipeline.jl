@@ -59,7 +59,6 @@ function get_underlying(
             underlying = nothing
         elseif length(underlying) == 1
             underlying = underlying[1]
-        else
         end
     end
     return underlying
@@ -86,7 +85,6 @@ function get_history(
             history = nothing
         elseif length(history) == 1
             history = history[1]
-        else
         end
     end
     return history
@@ -137,8 +135,7 @@ function predict(
         kwargs...
         )
     for i = 2:length(simplelinearpipeline.objectsvector)
-        input = output
-        input = tuplify(input)
+        input = tuplify(output)
         output = predict(
             simplelinearpipeline.objectsvector[i],
             input...;
@@ -160,8 +157,7 @@ function predict_proba(
         varargs...
         )
     for i = 2:length(simplelinearpipeline.objectsvector)
-        input = output
-        input = tuplify(input)
+        input = tuplify(output)
         output = predict_proba(
             simplelinearpipeline.objectsvector[i],
             input...;
@@ -170,4 +166,3 @@ function predict_proba(
     end
     return output
 end
-
