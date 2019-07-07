@@ -96,14 +96,14 @@ jobs:
         #   install: ./ci/travis/install.sh "travis-1"
         #   script: ./ci/travis/script.sh "travis-1"
 
-        - stage: travis-1
-          os: osx
-          env:
-            - JULIA_VER="1.1"
-            - COMP_MODS="yes"
-          before_install: ./ci/travis/before_install.sh "travis-1"
-          install: ./ci/travis/install.sh "travis-1"
-          script: ./ci/travis/script.sh "travis-1"
+        # - stage: travis-1
+        #   os: osx
+        #   env:
+        #     - JULIA_VER="1.1"
+        #     - COMP_MODS="yes"
+        #   before_install: ./ci/travis/before_install.sh "travis-1"
+        #   install: ./ci/travis/install.sh "travis-1"
+        #   script: ./ci/travis/script.sh "travis-1"
 
         # - stage: travis-1
         #   os: osx
