@@ -13,14 +13,6 @@ function preprocess_example_shared(
         "\n",
         )
     content = replace(content, pattern => replacement)
-    #
-    pattern = "DIRECTORY_CONTAINING_THIS_FILE = homedir()\n"
-    replacement = string(
-        "DIRECTORY_CONTAINING_THIS_FILE = ",
-        "\"$(strip.(output_directory))\"\n",
-        )
-    content = replace(content, pattern => replacement)
-    #
     return content
 end
 
@@ -106,14 +98,12 @@ function generate_examples(
     end
 
     if include_test_statements
-        # preprocess_example = preprocess_example_include_test_statements
         preprocess_example = (x) ->
             preprocess_example_include_test_statements(
                 x;
                 output_directory = _abspath_output_directory,
                 )
     else
-        # preprocess_example = preprocess_example_do_not_include_test_statements
         preprocess_example = (x) ->
             preprocess_example_do_not_include_test_statements(
                 x;
@@ -160,12 +150,27 @@ function generate_examples(
         cpu_examples_output_parent_directory,
         "boston_housing",
         )
+
+    boston_housing_input_src_directory = joinpath(
+        boston_housing_input_directory,
+        "src",
+        )
+    boston_housing_output_src_directory = joinpath(
+        boston_housing_output_directory,
+        "src",
+        )
     try
         mkpath(boston_housing_output_directory)
+        mkpath(boston_housing_output_src_directory)
     catch
     end
+    for x in [".gitignore", "Project.toml", "README.md"]
+        cp(joinpath(boston_housing_input_directory, x),
+           joinpath(boston_housing_output_directory, x);
+           force=true)
+    end
     boston_housing_input_file_list =
-        readdir(boston_housing_input_directory)
+        readdir(boston_housing_input_src_directory)
     boston_housing_input_file_list =
         boston_housing_input_file_list[
             [endswith(x, ".jl") for x in
@@ -174,13 +179,13 @@ function generate_examples(
     sort!(boston_housing_input_file_list)
     for input_file in boston_housing_input_file_list
         input_file_full_path = joinpath(
-            boston_housing_input_directory,
+            boston_housing_input_src_directory,
             input_file,
             )
         if markdown
             Literate.markdown(
                 input_file_full_path,
-                boston_housing_output_directory;
+                boston_housing_output_src_directory;
                 codefence = "```@example boston_housing" => "```",
                 documenter = true,
                 preprocess = preprocess_example,
@@ -189,7 +194,7 @@ function generate_examples(
         if notebooks
             Literate.notebook(
                 input_file_full_path,
-                boston_housing_output_directory;
+                boston_housing_output_src_directory;
                 documenter = true,
                 execute = execute_notebooks,
                 preprocess = preprocess_example,
@@ -198,7 +203,7 @@ function generate_examples(
         if scripts
             Literate.script(
                 input_file_full_path,
-                boston_housing_output_directory;
+                boston_housing_output_src_directory;
                 documenter = true,
                 keep_comments = true,
                 preprocess = preprocess_example,
@@ -214,12 +219,27 @@ function generate_examples(
         cpu_examples_output_parent_directory,
         "breast_cancer_biopsy",
         )
+
+    breast_cancer_biopsy_input_src_directory = joinpath(
+        breast_cancer_biopsy_input_directory,
+        "src",
+        )
+    breast_cancer_biopsy_output_src_directory = joinpath(
+        breast_cancer_biopsy_output_directory,
+        "src",
+        )
     try
         mkpath(breast_cancer_biopsy_output_directory)
+        mkpath(breast_cancer_biopsy_output_src_directory)
     catch
     end
+    for x in [".gitignore", "Project.toml", "README.md"]
+        cp(joinpath(breast_cancer_biopsy_input_directory, x),
+           joinpath(breast_cancer_biopsy_output_directory, x);
+           force=true)
+    end
     breast_cancer_biopsy_input_file_list =
-        readdir(breast_cancer_biopsy_input_directory)
+        readdir(breast_cancer_biopsy_input_src_directory)
     breast_cancer_biopsy_input_file_list =
         breast_cancer_biopsy_input_file_list[
             [endswith(x, ".jl") for x in
@@ -228,13 +248,13 @@ function generate_examples(
     sort!(breast_cancer_biopsy_input_file_list)
     for input_file in breast_cancer_biopsy_input_file_list
         input_file_full_path = joinpath(
-            breast_cancer_biopsy_input_directory,
+            breast_cancer_biopsy_input_src_directory,
             input_file,
             )
         if markdown
             Literate.markdown(
                 input_file_full_path,
-                breast_cancer_biopsy_output_directory;
+                breast_cancer_biopsy_output_src_directory;
                 codefence = "```@example breast_cancer_biopsy" => "```",
                 documenter = true,
                 preprocess = preprocess_example,
@@ -243,7 +263,7 @@ function generate_examples(
         if notebooks
             Literate.notebook(
                 input_file_full_path,
-                breast_cancer_biopsy_output_directory;
+                breast_cancer_biopsy_output_src_directory;
                 documenter = true,
                 execute = execute_notebooks,
                 preprocess = preprocess_example,
@@ -252,7 +272,7 @@ function generate_examples(
         if scripts
             Literate.script(
                 input_file_full_path,
-                breast_cancer_biopsy_output_directory;
+                breast_cancer_biopsy_output_src_directory;
                 documenter = true,
                 keep_comments = true,
                 preprocess = preprocess_example,

@@ -8,15 +8,14 @@ PredictMD.import_all()
 
 ### Begin project-specific settings
 
-DIRECTORY_CONTAINING_THIS_FILE = homedir()
-
+DIRECTORY_CONTAINING_THIS_FILE = @__DIR__
+PROJECT_DIRECTORY = dirname(
+    joinpath(splitpath(DIRECTORY_CONTAINING_THIS_FILE)...)
+    )
 PROJECT_OUTPUT_DIRECTORY = joinpath(
-    DIRECTORY_CONTAINING_THIS_FILE,
-    "cpu_examples",
-    "boston_housing",
+    PROJECT_DIRECTORY,
     "output",
     )
-
 mkpath(PROJECT_OUTPUT_DIRECTORY)
 mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "data"))
 mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, "models"))

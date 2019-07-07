@@ -155,12 +155,13 @@ Test.@testset "Integration tests" begin
             test_file = test_pair[1]
             test_block = test_pair[2]
             if group_includes_block(TEST_GROUP, test_block)
-                Test.@testset "cpu_examples/bostonhousing/$(test_file)" begin
+                Test.@testset "cpu_examples/bostonhousing/src/$(test_file)" begin
                     include(
                         joinpath(
                             temp_generate_examples_dir,
                             "cpu_examples",
                             "boston_housing",
+                            "src",
                             test_file,
                             )
                         )
@@ -185,12 +186,13 @@ Test.@testset "Integration tests" begin
             test_file = test_pair[1]
             test_block = test_pair[2]
             if group_includes_block(TEST_GROUP, test_block)
-                Test.@testset "cpu_examples/breastcancer/$(test_file)" begin
+                Test.@testset "cpu_examples/breastcancer/src/$(test_file)" begin
                     include(
                         joinpath(
                             temp_generate_examples_dir,
                             "cpu_examples",
                             "breast_cancer_biopsy",
+                            "src",
                             test_file,
                             )
                         )
