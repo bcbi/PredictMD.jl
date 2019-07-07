@@ -8,10 +8,10 @@ PredictMD.import_all()
 
 ### Begin project-specific settings
 
-LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES = homedir()
+DIRECTORY_CONTAINING_THIS_FILE = homedir()
 
 PROJECT_OUTPUT_DIRECTORY = joinpath(
-    LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+    DIRECTORY_CONTAINING_THIS_FILE,
     "cpu_examples",
     "breast_cancer_biopsy",
     "output",
@@ -28,7 +28,7 @@ if PredictMD.is_travis_ci()
         ;
         from = ["cpu_examples", "breast_cancer_biopsy", "output",],
         to = [
-            LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+            DIRECTORY_CONTAINING_THIS_FILE,
             "cpu_examples", "breast_cancer_biopsy", "output",],
         )
 end
@@ -42,7 +42,7 @@ if PredictMD.is_travis_ci()
         ;
         from = ["cpu_examples", "breast_cancer_biopsy", "output",],
         to = [
-            LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+            DIRECTORY_CONTAINING_THIS_FILE,
             "cpu_examples", "breast_cancer_biopsy", "output",],
         )
 end
@@ -254,7 +254,7 @@ if PredictMD.is_travis_ci()
         ;
         to = ["cpu_examples", "breast_cancer_biopsy", "output",],
         from = [
-            LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+            DIRECTORY_CONTAINING_THIS_FILE,
             "cpu_examples", "breast_cancer_biopsy", "output",],
         )
 end

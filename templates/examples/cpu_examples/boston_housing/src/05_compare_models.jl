@@ -8,10 +8,10 @@ PredictMD.import_all()
 
 ### Begin project-specific settings
 
-LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES = homedir()
+DIRECTORY_CONTAINING_THIS_FILE = homedir()
 
 PROJECT_OUTPUT_DIRECTORY = joinpath(
-    LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+    DIRECTORY_CONTAINING_THIS_FILE,
     "cpu_examples",
     "boston_housing",
     "output",
@@ -29,7 +29,7 @@ if PredictMD.is_travis_ci()
         ;
         from = ["cpu_examples", "boston_housing", "output",],
         to = [
-            LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+            DIRECTORY_CONTAINING_THIS_FILE,
             "cpu_examples", "boston_housing", "output",],
         )
 end
@@ -260,7 +260,7 @@ if PredictMD.is_travis_ci()
         ;
         to = ["cpu_examples", "boston_housing", "output",],
         from = [
-            LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES,
+            DIRECTORY_CONTAINING_THIS_FILE,
             "cpu_examples", "boston_housing", "output",],
         )
 end

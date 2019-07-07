@@ -14,9 +14,9 @@ function preprocess_example_shared(
         )
     content = replace(content, pattern => replacement)
     #
-    pattern = "LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES = homedir()\n"
+    pattern = "DIRECTORY_CONTAINING_THIS_FILE = homedir()\n"
     replacement = string(
-        "LOCATION_OF_PREDICTMD_GENERATED_EXAMPLE_FILES = ",
+        "DIRECTORY_CONTAINING_THIS_FILE = ",
         "\"$(strip.(output_directory))\"\n",
         )
     content = replace(content, pattern => replacement)
