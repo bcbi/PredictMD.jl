@@ -1,3 +1,3 @@
 x = PredictMD.SimplePipeline("name", PredictMD.Fittable[])
-get_underlying(x)
-get_history(x)
+PredictMD.get_underlying(x)
+PredictMD.get_history(x)
