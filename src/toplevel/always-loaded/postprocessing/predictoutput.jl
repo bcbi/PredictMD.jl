@@ -2,43 +2,6 @@ import DataFrames
 
 """
 """
-function set_feature_contrasts!(
-        x::ImmutablePredictionsSingleLabelInt2StringTransformer,
-        feature_contrasts::AbstractFeatureContrasts,
-        )
-    return nothing
-end
-
-"""
-"""
-function get_underlying(
-        x::ImmutablePredictionsSingleLabelInt2StringTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-"""
-"""
-function get_history(
-        x::ImmutablePredictionsSingleLabelInt2StringTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-"""
-"""
-function parse_functions!(
-        transformer::ImmutablePredictionsSingleLabelInt2StringTransformer,
-        )
-    return nothing
-end
-
-"""
-"""
 function fit!(
         transformer::ImmutablePredictionsSingleLabelInt2StringTransformer,
         varargs...;
@@ -105,4 +68,3 @@ function predict_proba(
         return varargs
     end
 end
-

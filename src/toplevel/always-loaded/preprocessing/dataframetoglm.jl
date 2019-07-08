@@ -2,35 +2,6 @@ import DataFrames
 
 """
 """
-function set_feature_contrasts!(
-        x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
-        feature_contrasts::AbstractFeatureContrasts,
-        )
-    return nothing
-end
-
-"""
-"""
-function get_underlying(
-        x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-"""
-"""
-function get_history(
-        x::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-"""
-"""
 function transform(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
         features_df::DataFrames.AbstractDataFrame,
@@ -54,14 +25,6 @@ function transform(
         kwargs...
         )
     return features_df
-end
-
-"""
-"""
-function parse_functions!(
-        transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
-        )
-    return nothing
 end
 
 """

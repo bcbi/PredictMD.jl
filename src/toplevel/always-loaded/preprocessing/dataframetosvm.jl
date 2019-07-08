@@ -3,35 +3,6 @@ import StatsModels
 
 """
 """
-function set_feature_contrasts!(
-        x::ImmutableFeatureArrayTransposerTransformer,
-        feature_contrasts::AbstractFeatureContrasts,
-        )
-    return nothing
-end
-
-"""
-"""
-function get_underlying(
-        x::ImmutableFeatureArrayTransposerTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-"""
-"""
-function get_history(
-        x::ImmutableFeatureArrayTransposerTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-"""
-"""
 function transform(
         transformer::ImmutableFeatureArrayTransposerTransformer,
         featuresarray::AbstractMatrix,
@@ -51,14 +22,6 @@ function transform(
         )
     featuresarraytransposed = transpose(featuresarray)
     return featuresarraytransposed
-end
-
-"""
-"""
-function parse_functions!(
-        transformer::ImmutableFeatureArrayTransposerTransformer,
-        )
-    return nothing
 end
 
 """

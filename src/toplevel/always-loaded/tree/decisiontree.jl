@@ -28,21 +28,6 @@ end
 
 """
 """
-function set_feature_contrasts!(
-        x::DecisionTreeModel,
-        feature_contrasts::AbstractFeatureContrasts,
-        )
-    return nothing
-end
-
-"""
-"""
-function underlying(x::DecisionTreeModel)
-    return nothing
-end
-
-"""
-"""
 function get_underlying(
         x::DecisionTreeModel;
         saving::Bool = false,
@@ -50,22 +35,6 @@ function get_underlying(
         )
     result = x.underlyingrandomforest
     return result
-end
-
-"""
-"""
-function get_history(
-        x::DecisionTreeModel;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-"""
-"""
-function parse_functions!(estimator::DecisionTreeModel)
-    return nothing
 end
 
 """
@@ -304,4 +273,3 @@ function single_labeldataframerandomforestregression(
         error("$(package) is not a valid value for package")
     end
 end
-

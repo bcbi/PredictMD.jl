@@ -39,16 +39,6 @@ end
 
 """
 """
-function get_history(
-        x::MutableDataFrame2DecisionTreeTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-"""
-"""
 function transform(
         transformer::MutableDataFrame2DecisionTreeTransformer,
         features_df::DataFrames.AbstractDataFrame,
@@ -78,14 +68,6 @@ function transform(
     response, featuresarray = StatsModels.modelcols(my_formula,
                                                     features_df)
     return featuresarray
-end
-
-"""
-"""
-function parse_functions!(
-    transformer::MutableDataFrame2DecisionTreeTransformer,
-    )
-    return nothing
 end
 
 """

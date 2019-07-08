@@ -50,15 +50,6 @@ end
 
 """
 """
-function set_feature_contrasts!(
-        x::LIBSVMModel,
-        feature_contrasts::AbstractFeatureContrasts,
-        )
-    return nothing
-end
-
-"""
-"""
 function get_underlying(
         x::LIBSVMModel;
         saving::Bool = false,
@@ -66,22 +57,6 @@ function get_underlying(
         )
     result = x.underlyingsvm
     return result
-end
-
-"""
-"""
-function get_history(
-        x::LIBSVMModel;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-"""
-"""
-function parse_functions!(estimator::LIBSVMModel)
-    return nothing
 end
 
 """
@@ -423,4 +398,3 @@ function single_labeldataframesvmregression(
         error("$(package) is not a valid value for package")
     end
 end
-

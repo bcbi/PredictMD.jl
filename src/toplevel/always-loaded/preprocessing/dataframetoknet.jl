@@ -24,26 +24,6 @@ end
 
 """
 """
-function get_history(
-        x::MutableDataFrame2ClassificationKnetTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-"""
-"""
-function get_history(
-        x::MutableDataFrame2RegressionKnetTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-"""
-"""
 function get_underlying(
         x::MutableDataFrame2ClassificationKnetTransformer;
         saving::Bool = false,
@@ -81,22 +61,6 @@ function set_feature_contrasts!(
         contrasts::AbstractFeatureContrasts,
         )
     x.dffeaturecontrasts = contrasts
-    return nothing
-end
-
-"""
-"""
-function parse_functions!(
-        transformer::MutableDataFrame2ClassificationKnetTransformer,
-        )
-    return nothing
-end
-
-"""
-"""
-function parse_functions!(
-        transformer::MutableDataFrame2RegressionKnetTransformer,
-        )
     return nothing
 end
 

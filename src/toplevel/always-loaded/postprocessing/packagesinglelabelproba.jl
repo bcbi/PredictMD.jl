@@ -1,42 +1,5 @@
 """
 """
-function set_feature_contrasts!(
-        x::ImmutablePackageSingleLabelPredictProbaTransformer,
-        feature_contrasts::AbstractFeatureContrasts,
-        )
-    return nothing
-end
-
-"""
-"""
-function get_underlying(
-        x::ImmutablePackageSingleLabelPredictProbaTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-"""
-"""
-function get_history(
-        x::ImmutablePackageSingleLabelPredictProbaTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-"""
-"""
-function parse_functions!(
-        transformer::ImmutablePackageSingleLabelPredictProbaTransformer,
-        )
-    return nothing
-end
-
-"""
-"""
 function fit!(
         transformer::ImmutablePackageSingleLabelPredictProbaTransformer,
         varargs...;
@@ -75,4 +38,3 @@ function predict_proba(
     result = fix_type(result)
     return result
 end
-

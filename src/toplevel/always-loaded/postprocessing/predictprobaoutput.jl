@@ -1,42 +1,5 @@
 """
 """
-function set_feature_contrasts!(
-        x::ImmutablePredictProbaSingleLabelInt2StringTransformer,
-        feature_contrasts::AbstractFeatureContrasts,
-        )
-    return nothing
-end
-
-"""
-"""
-function get_underlying(
-        x::ImmutablePredictProbaSingleLabelInt2StringTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-"""
-"""
-function get_history(
-        x::ImmutablePredictProbaSingleLabelInt2StringTransformer;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    return nothing
-end
-
-"""
-"""
-function parse_functions!(
-        transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer,
-        )
-    return nothing
-end
-
-"""
-"""
 function fit!(
         transformer::ImmutablePredictProbaSingleLabelInt2StringTransformer,
         varargs...;
@@ -81,4 +44,3 @@ function predict_proba(
     result = fix_type(result)
     return result
 end
-

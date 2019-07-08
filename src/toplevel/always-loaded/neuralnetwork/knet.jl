@@ -69,15 +69,6 @@ end
 
 """
 """
-function set_feature_contrasts!(
-        x::KnetModel,
-        feature_contrasts::AbstractFeatureContrasts,
-        )
-    return nothing
-end
-
-"""
-"""
 function set_max_epochs!(
         x::KnetModel,
         new_max_epochs::Integer,

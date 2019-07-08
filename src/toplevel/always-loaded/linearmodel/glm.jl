@@ -25,25 +25,6 @@ end
 
 """
 """
-function get_history(
-        x::GLMModel;
-        saving::Bool = false,
-	loading::Bool = false,
-        )
-    return nothing
-end
-
-"""
-"""
-function set_feature_contrasts!(
-        x::GLMModel,
-        feature_contrasts::AbstractFeatureContrasts,
-        )
-    return nothing
-end
-
-"""
-"""
 function get_underlying(
         x::GLMModel;
         saving::Bool = false,
@@ -51,12 +32,6 @@ function get_underlying(
         )
     result = x.underlyingglm
     return result
-end
-
-"""
-"""
-function parse_functions!(estimator::GLMModel)
-    return nothing
 end
 
 """
