@@ -7,6 +7,8 @@ module PredictMD # begin module PredictMD
 import Distributed
 import Random
 
+include("base/api.jl")
+
 include("registry_url_list.jl")
 include("package_directory.jl")
 include("version.jl")
@@ -16,7 +18,6 @@ include("import_all.jl")
 include("welcome.jl")
 include("init.jl")
 
-include("base/api.jl")
 include("base/fallback.jl")
 include("base/backends.jl")
 include("base/concrete-types.jl")
