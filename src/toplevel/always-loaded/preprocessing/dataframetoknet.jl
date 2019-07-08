@@ -114,7 +114,8 @@ end
 """
 function predict(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
-        features_df::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame,
+        varargs...;
         kwargs...
         )
     return transform(transformer, features_df)
@@ -134,7 +135,8 @@ end
 """
 function predict(
         transformer::MutableDataFrame2RegressionKnetTransformer,
-        features_df::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame,
+        varargs...;
         kwargs...
         )
     result = transform(

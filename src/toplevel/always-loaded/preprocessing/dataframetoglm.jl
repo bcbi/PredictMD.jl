@@ -42,7 +42,8 @@ end
 """
 function predict(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
-        features_df::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame,
+        varargs...;
         kwargs...
         )
     return transform(transformer, features_df)

@@ -21,8 +21,9 @@ const AbstractPlot = PredictMDAPI.AbstractPlot
 # const TargetStyle = PredictMDAPI.TargetStyle
 # const UnknownTargetStyle = PredictMDAPI.UnknownTargetStyle
 # const MixedTargetStyle = PredictMDAPI.MixedTargetStyle
-# const Classification = PredictMDAPI.Classification
 # const Regression = PredictMDAPI.Regression
+# const Classification{N} = PredictMDAPI.Classification{N}
+# const BinaryClassification = PredictMDAPI.BinaryClassification
 
 # functions
 

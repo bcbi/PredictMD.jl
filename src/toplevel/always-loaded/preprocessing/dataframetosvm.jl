@@ -39,7 +39,8 @@ end
 """
 function predict(
         transformer::ImmutableFeatureArrayTransposerTransformer,
-        featuresarray::AbstractMatrix;
+        featuresarray::AbstractMatrix,
+        varargs...;
         kwargs...
         )
     return transform(transformer, featuresarray)

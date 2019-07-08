@@ -85,7 +85,8 @@ end
 """
 function predict(
         transformer::MutableDataFrame2DecisionTreeTransformer,
-        features_df::DataFrames.AbstractDataFrame;
+        features_df::DataFrames.AbstractDataFrame,
+        varargs...;
         kwargs...
         )
     return transform(transformer, features_df)

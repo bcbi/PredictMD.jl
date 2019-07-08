@@ -17,6 +17,7 @@ end
 function predict(
         transformer::ImmutablePackageSingleLabelPredictionTransformer,
         single_labelpredictions::AbstractVector,
+        varargs...
         )
     result = DataFrames.DataFrame()
     label_name = transformer.single_label_name

@@ -17,6 +17,7 @@ end
 function predict(
         transformer::ImmutablePackageMultiLabelPredictionTransformer,
         single_labelpredictions::AbstractMatrix,
+        varargs...
         )
     result = DataFrames.DataFrame()
     for i = 1:length(transformer.label_names)

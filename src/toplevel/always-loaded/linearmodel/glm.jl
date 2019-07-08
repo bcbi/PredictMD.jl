@@ -105,6 +105,35 @@ end
 
 """
 """
+function predict(
+        estimator::GLMModel,
+        features_df::DataFrames.AbstractDataFrame,
+        positive_class::AbstractString,
+        threshold::Real,
+        )
+    if estimator.isclassificationmodel && !estimator.isregressionmodel
+        probabilitiesassoc = predict_proba(
+            estimator,
+            features_df,
+            )
+        predictionsvector = single_labelprobabilitiestopredictions(
+            probabilitiesassoc,
+            positive_class,
+            threshold,
+            )
+        result = DataFrames.DataFrame()
+        label_name = estimator.formula.lhs.sym
+        result[label_name] = predictionsvector
+        return result
+    else
+        error(
+            "Can only use the `threshold` argument with classification models"
+            )
+    end
+end
+
+"""
+"""
 function predict_proba(
         estimator::GLMModel,
         features_df::DataFrames.AbstractDataFrame,
@@ -175,16 +204,12 @@ function singlelabelbinaryclassdataframelogisticclassifier_GLM(
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         single_label_name,
         )
-    finalpipeline = SimplePipeline(
-        AbstractFittable[
-            dftransformer,
-            glmestimator,
-            predictlabelfixer,
-            predprobalabelfixer,
-            probapackager,
-            ];
-        name = name,
-        )
+    finalpipeline = dftransformer |>
+                    glmestimator |>
+                    predictlabelfixer |>
+                    predprobalabelfixer |>
+                    probapackager
+    finalpipeline.name = name
     return finalpipeline
 end
 
@@ -257,16 +282,12 @@ function singlelabelbinaryclassdataframeprobitclassifier_GLM(
     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
         single_label_name,
         )
-    finalpipeline = SimplePipeline(
-        AbstractFittable[
-            dftransformer,
-            glmestimator,
-            predictlabelfixer,
-            predprobalabelfixer,
-            probapackager,
-            ];
-        name = name,
-        )
+    finalpipeline = dftransformer |>
+                    glmestimator |>
+                    predictlabelfixer |>
+                    predprobalabelfixer |>
+                    probapackager
+    finalpipeline.name = name
     return finalpipeline
 end
 

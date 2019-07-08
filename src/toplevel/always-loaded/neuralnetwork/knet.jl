@@ -329,6 +329,30 @@ end
 
 """
 """
+function predict(
+        estimator::KnetModel,
+        featuresarray::AbstractArray,
+        positive_class::AbstractString,
+        threshold::Real,
+        )
+    if estimator.isclassificationmodel
+        probabilitiesassoc = predict_proba(
+            estimator,
+            featuresarray,
+            )
+        predictionsvector = single_labelprobabilitiestopredictions(
+            probabilitiesassoc,
+            positive_class,
+            threshold,
+            )
+        return predictionsvector
+    else
+        error("can only use the `threshold` argument with classification models")
+    end
+end
+
+"""
+"""
 function predict_proba(
         estimator::KnetModel,
         featuresarray::AbstractArray,

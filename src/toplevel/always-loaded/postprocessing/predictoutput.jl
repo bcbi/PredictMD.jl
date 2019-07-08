@@ -18,7 +18,8 @@ end
 """
 function predict(
         transformer::ImmutablePredictionsSingleLabelInt2StringTransformer,
-        single_labelpredictions::AbstractVector;
+        single_labelpredictions::AbstractVector,
+        varargs...;
         kwargs...
         )
     single_labelpredictions = parse.(Int, single_labelpredictions)
@@ -40,7 +41,8 @@ end
 """
 function predict(
         transformer::ImmutablePredictionsSingleLabelInt2StringTransformer,
-        single_labelpredictions::DataFrames.AbstractDataFrame;
+        single_labelpredictions::DataFrames.AbstractDataFrame,
+        varargs...;
         kwargs...
         )
     label_names = DataFrames.names(single_labelpredictions)

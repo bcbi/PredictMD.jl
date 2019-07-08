@@ -11,6 +11,30 @@ function SimplePipeline(
     return result
 end
 
+function Base.:|>(left::AbstractFittable, right::AbstractFittable)
+    result = SimplePipeline(AbstractFittable[left]) |>
+        SimplePipeline(AbstractFittable[right])
+    return result
+end
+
+function Base.:|>(left::SimplePipeline, right::AbstractFittable)
+    result = left |> SimplePipeline(AbstractFittable[right])
+    return result
+end
+
+function Base.:|>(left::AbstractFittable, right::SimplePipeline)
+    result = SimplePipeline(AbstractFittable[left]) |> right
+    return result
+end
+
+function Base.:|>(left::SimplePipeline, right::SimplePipeline)
+    result = SimplePipeline(
+        string(left.name, right.name),
+        vcat(left.objectsvector, right.objectsvector),
+        )
+    return result
+end
+
 """
 """
 function set_max_epochs!(

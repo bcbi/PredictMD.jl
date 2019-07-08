@@ -206,44 +206,45 @@ knet_mlp_classifier =
     PredictMD.load_model(knet_mlp_classifier_filename)
 PredictMD.parse_functions!(knet_mlp_classifier)
 
-PredictMD.predict_proba(
-    logistic_classifier,
-    smoted_training_features_df,
-    )
-PredictMD.predict_proba(
-    random_forest_classifier,
-    smoted_training_features_df,
-    )
-PredictMD.predict_proba(
-    c_svc_svm_classifier,
-    smoted_training_features_df,
-    )
-PredictMD.predict_proba(
-    nu_svc_svm_classifier,
-    smoted_training_features_df,
-    )
-PredictMD.predict_proba(
-    knet_mlp_classifier,
-    smoted_training_features_df,
-    )
+PredictMD.predict_proba(logistic_classifier, smoted_training_features_df)
+PredictMD.predict_proba(random_forest_classifier, smoted_training_features_df)
+PredictMD.predict_proba(c_svc_svm_classifier, smoted_training_features_df)
+PredictMD.predict_proba(nu_svc_svm_classifier, smoted_training_features_df)
+PredictMD.predict_proba(knet_mlp_classifier, smoted_training_features_df)
 
-PredictMD.predict_proba(logistic_classifier,testing_features_df,)
-PredictMD.predict_proba(random_forest_classifier,testing_features_df,)
-PredictMD.predict_proba(c_svc_svm_classifier,testing_features_df,)
-PredictMD.predict_proba(nu_svc_svm_classifier,testing_features_df,)
-PredictMD.predict_proba(knet_mlp_classifier,testing_features_df,)
+PredictMD.predict_proba(logistic_classifier,testing_features_df)
+PredictMD.predict_proba(random_forest_classifier,testing_features_df)
+PredictMD.predict_proba(c_svc_svm_classifier,testing_features_df)
+PredictMD.predict_proba(nu_svc_svm_classifier,testing_features_df)
+PredictMD.predict_proba(knet_mlp_classifier,testing_features_df)
 
-PredictMD.predict(logistic_classifier,smoted_training_features_df,)
-PredictMD.predict(random_forest_classifier,smoted_training_features_df,)
-PredictMD.predict(c_svc_svm_classifier,smoted_training_features_df,)
-PredictMD.predict(nu_svc_svm_classifier,smoted_training_features_df,)
-PredictMD.predict(knet_mlp_classifier,smoted_training_features_df,)
+PredictMD.predict(logistic_classifier,smoted_training_features_df)
+PredictMD.predict(random_forest_classifier,smoted_training_features_df)
+PredictMD.predict(c_svc_svm_classifier,smoted_training_features_df)
+PredictMD.predict(nu_svc_svm_classifier,smoted_training_features_df)
+PredictMD.predict(knet_mlp_classifier,smoted_training_features_df)
 
-PredictMD.predict(logistic_classifier,testing_features_df,)
-PredictMD.predict(random_forest_classifier,testing_features_df,)
-PredictMD.predict(c_svc_svm_classifier,testing_features_df,)
-PredictMD.predict(nu_svc_svm_classifier,testing_features_df,)
-PredictMD.predict(knet_mlp_classifier,testing_features_df,)
+PredictMD.predict(logistic_classifier,testing_features_df)
+PredictMD.predict(random_forest_classifier,testing_features_df)
+PredictMD.predict(c_svc_svm_classifier,testing_features_df)
+PredictMD.predict(nu_svc_svm_classifier,testing_features_df)
+PredictMD.predict(knet_mlp_classifier,testing_features_df)
+
+single_label_name = :Class
+negative_class = "benign"
+positive_class = "malignant"
+
+PredictMD.predict(logistic_classifier,smoted_training_features_df, positive_class, 0.3)
+PredictMD.predict(random_forest_classifier,smoted_training_features_df, positive_class, 0.3)
+PredictMD.predict(c_svc_svm_classifier,smoted_training_features_df, positive_class, 0.3)
+PredictMD.predict(nu_svc_svm_classifier,smoted_training_features_df, positive_class, 0.3)
+PredictMD.predict(knet_mlp_classifier,smoted_training_features_df, positive_class, 0.3)
+
+PredictMD.predict(logistic_classifier,testing_features_df, positive_class, 0.3)
+PredictMD.predict(random_forest_classifier,testing_features_df, positive_class, 0.3)
+PredictMD.predict(c_svc_svm_classifier,testing_features_df, positive_class, 0.3)
+PredictMD.predict(nu_svc_svm_classifier,testing_features_df, positive_class, 0.3)
+PredictMD.predict(knet_mlp_classifier,testing_features_df, positive_class, 0.3)
 
 ### End model output code
 
