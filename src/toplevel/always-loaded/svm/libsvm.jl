@@ -224,7 +224,7 @@ function single_labelmulticlassdataframesvmclassifier_LIBSVM(
         single_label_name,
         )
     finalpipeline = SimplePipeline(
-        Fittable[
+        AbstractFittable[
             dftransformer,
             svmestimator,
             probapackager,
@@ -337,7 +337,7 @@ function single_labeldataframesvmregression_LIBSVM(
         single_label_name,
         )
     finalpipeline = SimplePipeline(
-        Fittable[
+        AbstractFittable[
             dftransformer,
             svmestimator,
             predpackager,

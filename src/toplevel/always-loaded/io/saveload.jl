@@ -10,7 +10,7 @@ import ProgressMeter
 """
 function save_model(
         filename::AbstractString,
-        fittable_object_to_save::Fittable,
+        fittable_object_to_save::AbstractFittable,
         )
     if filename_extension(filename) == ".jld2"
         save_result = save_model_jld2(filename,fittable_object_to_save)
@@ -24,7 +24,7 @@ end
 
 function save_model_jld2(
         filename::AbstractString,
-        fittable_object_to_save::Fittable,
+        fittable_object_to_save::AbstractFittable,
         )
     if filename_extension(filename) != ".jld2"
         error(
@@ -52,7 +52,7 @@ end
 
 function save_model_bson(
         filename::AbstractString,
-        fittable_object_to_save::Fittable,
+        fittable_object_to_save::AbstractFittable,
         )
     if filename_extension(filename) != ".bson"
         error(

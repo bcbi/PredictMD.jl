@@ -3,8 +3,8 @@ import PGFPlotsX
 
 """
 """
-function plotroccurves(
-        estimator::Fittable,
+function plotroccurve(
+        estimator::AbstractFittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol,
@@ -25,8 +25,8 @@ end
 
 """
 """
-function plotroccurves(
-        vectorofestimators::AbstractVector{Fittable},
+function plotroccurve(
+        vectorofestimators::AbstractVector{AbstractFittable},
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol,
@@ -85,6 +85,4 @@ function plotroccurves(
     wrapper = PGFPlotsXPlot(p)
     return wrapper
 end
-
-const plotroccurve = plotroccurves
 

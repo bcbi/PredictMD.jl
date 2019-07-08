@@ -5,7 +5,7 @@ import Statistics
 """
 """
 function probability_calibration_scores_and_fractions(
-        estimator::Fittable,
+        estimator::AbstractFittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol,
@@ -74,7 +74,7 @@ end
 """
 """
 function plot_probability_calibration_curve(
-        estimator::Fittable,
+        estimator::AbstractFittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol,
@@ -193,14 +193,14 @@ end
 """
 """
 function probability_calibration_metrics(
-        estimator::Fittable,
+        estimator::AbstractFittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol,
         positive_class::AbstractString;
         window::Real = 0.1,
         )
-    vectorofestimators = Fittable[estimator]
+    vectorofestimators = AbstractFittable[estimator]
     result = probability_calibration_metrics(
         vectorofestimators,
         features_df,
@@ -214,7 +214,7 @@ end
 """
 """
 function probability_calibration_metrics(
-        vectorofestimators::AbstractVector{Fittable},
+        vectorofestimators::AbstractVector{AbstractFittable},
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol,

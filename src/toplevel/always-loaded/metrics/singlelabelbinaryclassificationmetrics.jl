@@ -117,7 +117,7 @@ end
 """
 """
 function singlelabelbinaryclassificationmetrics_resultdict(
-        estimator::Fittable,
+        estimator::AbstractFittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol,
@@ -207,14 +207,14 @@ end
 """
 """
 function singlelabelbinaryclassificationmetrics(
-        estimator::Fittable,
+        estimator::AbstractFittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol,
         positive_class::AbstractString;
         kwargs...
         )
-    vectorofestimators = Fittable[estimator]
+    vectorofestimators = AbstractFittable[estimator]
     result = singlelabelbinaryclassificationmetrics(
         vectorofestimators,
         features_df,
@@ -229,7 +229,7 @@ end
 """
 """
 function singlelabelbinaryclassificationmetrics(
-        vectorofestimators::AbstractVector{Fittable},
+        vectorofestimators::AbstractVector{AbstractFittable},
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol,

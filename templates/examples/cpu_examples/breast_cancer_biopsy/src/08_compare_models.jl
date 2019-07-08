@@ -193,7 +193,7 @@ knet_mlp_classifier =
     PredictMD.load_model(knet_mlp_classifier_filename)
 PredictMD.parse_functions!(knet_mlp_classifier)
 
-all_models = PredictMD.Fittable[
+all_models = PredictMD.AbstractFittable[
     logistic_classifier,
     random_forest_classifier,
     c_svc_svm_classifier,
@@ -450,7 +450,7 @@ show(
     splitcols = false,
     )
 
-rocplottesting = PredictMD.plotroccurves(
+rocplottesting = PredictMD.plotroccurve(
     all_models,
     testing_features_df,
     testing_labels_df,
@@ -488,7 +488,7 @@ PredictMD.save_plot(
     rocplottesting,
     )
 
-prplottesting = PredictMD.plotprcurves(
+prplottesting = PredictMD.plotprcurve(
     all_models,
     testing_features_df,
     testing_labels_df,

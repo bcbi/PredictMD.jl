@@ -4,7 +4,7 @@ import Statistics
 """
 """
 function risk_score_cutoff_values(
-        estimator::Fittable,
+        estimator::AbstractFittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol,

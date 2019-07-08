@@ -176,7 +176,7 @@ function singlelabelbinaryclassdataframelogisticclassifier_GLM(
         single_label_name,
         )
     finalpipeline = SimplePipeline(
-        Fittable[
+        AbstractFittable[
             dftransformer,
             glmestimator,
             predictlabelfixer,
@@ -258,7 +258,7 @@ function singlelabelbinaryclassdataframeprobitclassifier_GLM(
         single_label_name,
         )
     finalpipeline = SimplePipeline(
-        Fittable[
+        AbstractFittable[
             dftransformer,
             glmestimator,
             predictlabelfixer,
@@ -319,7 +319,7 @@ function single_labeldataframelinearregression_GLM(
         isregressionmodel = true,
         )
     finalpipeline = SimplePipeline(
-        Fittable[
+        AbstractFittable[
             glmestimator,
             ];
         name = name,

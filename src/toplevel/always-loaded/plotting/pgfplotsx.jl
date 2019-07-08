@@ -1,6 +1,6 @@
 import PGFPlotsX
 
-function get_underlying(p::PGFPlotsXPlot{T})::T where T
+function get_underlying(p::PGFPlotsXPlot)
     result = p.underlying_object
     return result
 end

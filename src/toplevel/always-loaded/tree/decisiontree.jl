@@ -166,7 +166,7 @@ function single_labelmulticlassdfrandomforestclassifier_DecisionTree(
         single_label_name,
         )
     finalpipeline = SimplePipeline(
-        Fittable[
+        AbstractFittable[
             dftransformer,
             randomforestestimator,
             probapackager,
@@ -235,7 +235,7 @@ function single_labeldataframerandomforestregression_DecisionTree(
         single_label_name,
         )
     finalpipeline = SimplePipeline(
-        Fittable[
+        AbstractFittable[
             dftransformer,
             randomforestestimator,
             predpackager,

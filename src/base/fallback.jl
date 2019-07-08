@@ -1,12 +1,12 @@
 import PredictMDAPI
 
-PredictMDAPI.get_history(::Fittable; kwargs...)::Nothing = nothing
+PredictMDAPI.get_history(::AbstractFittable; kwargs...)::Nothing = nothing
 
-PredictMDAPI.get_underlying(::Fittable; kwargs...)::Nothing = nothing
+PredictMDAPI.get_underlying(::AbstractFittable; kwargs...)::Nothing = nothing
 
-PredictMDAPI.parse_functions!(::Fittable)::Nothing = nothing
+PredictMDAPI.parse_functions!(::AbstractFittable)::Nothing = nothing
 
-PredictMDAPI.set_feature_contrasts!(::Fittable,
+PredictMDAPI.set_feature_contrasts!(::AbstractFittable,
                                     ::AbstractFeatureContrasts)::Nothing = nothing
 
-PredictMDAPI.set_max_epochs!(::Fittable,::Integer)::Nothing = nothing
+PredictMDAPI.set_max_epochs!(::AbstractFittable,::Integer)::Nothing = nothing

@@ -1,7 +1,7 @@
 """
 """
 function SimplePipeline(
-        objectsvector::AbstractVector{Fittable};
+        objectsvector::AbstractVector{AbstractFittable};
         name::AbstractString = "",
         )
     result = SimplePipeline(

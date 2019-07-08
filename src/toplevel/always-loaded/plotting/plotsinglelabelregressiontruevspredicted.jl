@@ -4,7 +4,7 @@ import PGFPlotsX
 """
 """
 function plotsinglelabelregressiontrueversuspredicted(
-        estimator::Fittable,
+        estimator::AbstractFittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol;

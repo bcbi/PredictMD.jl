@@ -5,8 +5,8 @@ import ValueHistories
 
 """
 """
-function plotlearningcurves(
-        inputobject::Fittable,
+function plotlearningcurve(
+        inputobject::AbstractFittable,
         curvetype::Symbol = :loss_vs_iteration;
         kwargs...,
         )
@@ -21,7 +21,7 @@ end
 
 """
 """
-function plotlearningcurves(
+function plotlearningcurve(
         history::ValueHistories.MultivalueHistory,
         curvetype::Symbol = :loss_vs_iteration;
         window::Integer = 0,
@@ -147,7 +147,7 @@ end
 
 """
 """
-function plotlearningcurves(
+function plotlearningcurve(
         xvalues::AbstractVector{<:Real},
         training_yvalues::AbstractVector{<:Real},
         xlabel::AbstractString,
@@ -291,6 +291,4 @@ function plotlearningcurves(
     wrapper = PGFPlotsXPlot(p)
     return wrapper
 end
-
-const plotlearningcurve = plotlearningcurves
 

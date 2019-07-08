@@ -419,7 +419,7 @@ function single_labelmulticlassdataframeknetclassifier_Knet(
         single_label_name,
         )
     finalpipeline = SimplePipeline(
-        Fittable[
+        AbstractFittable[
             dftransformer,
             knetestimator,
             predprobalabelfixer,
@@ -525,7 +525,7 @@ function single_labeldataframeknetregression_Knet(
         [single_label_name,],
         )
     finalpipeline = SimplePipeline(
-        Fittable[
+        AbstractFittable[
             dftransformer,
             knetestimator,
             predpackager,

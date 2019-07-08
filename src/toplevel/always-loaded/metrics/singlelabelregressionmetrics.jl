@@ -25,7 +25,7 @@ end
 """
 """
 function singlelabelregressionmetrics_resultdict(
-        estimator::Fittable,
+        estimator::AbstractFittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol,
@@ -57,12 +57,12 @@ end
 """
 """
 function singlelabelregressionmetrics(
-        estimator::Fittable,
+        estimator::AbstractFittable,
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol,
         )
-    vectorofestimators = Fittable[estimator]
+    vectorofestimators = AbstractFittable[estimator]
     result = singlelabelregressionmetrics(
         vectorofestimators,
         features_df,
@@ -75,7 +75,7 @@ end
 """
 """
 function singlelabelregressionmetrics(
-        vectorofestimators::AbstractVector{Fittable},
+        vectorofestimators::AbstractVector{AbstractFittable},
         features_df::DataFrames.AbstractDataFrame,
         labels_df::DataFrames.AbstractDataFrame,
         single_label_name::Symbol;

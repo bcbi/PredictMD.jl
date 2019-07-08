@@ -18,11 +18,11 @@ const AbstractPlot = PredictMDAPI.AbstractPlot
 
 # traits
 
-const TargetStyle = PredictMDAPI.TargetStyle
-const UnknownTargetStyle = PredictMDAPI.UnknownTargetStyle
-const MixedTargetStyle = PredictMDAPI.MixedTargetStyle
-const Classification = PredictMDAPI.Classification
-const Regression = PredictMDAPI.Regression
+# const TargetStyle = PredictMDAPI.TargetStyle
+# const UnknownTargetStyle = PredictMDAPI.UnknownTargetStyle
+# const MixedTargetStyle = PredictMDAPI.MixedTargetStyle
+# const Classification = PredictMDAPI.Classification
+# const Regression = PredictMDAPI.Regression
 
 # functions
 

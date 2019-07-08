@@ -154,7 +154,7 @@ knet_mlp_regression =
     PredictMD.load_model(knet_mlp_regression_filename)
 PredictMD.parse_functions!(knet_mlp_regression)
 
-all_models = PredictMD.Fittable[
+all_models = PredictMD.AbstractFittable[
     linear_regression,
     random_forest_regression,
     knet_mlp_regression,
