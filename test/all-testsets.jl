@@ -5,44 +5,47 @@ import Test # stdlib
 import Random
 Random.seed!(999)
 
-@info(string("Julia depot paths: "), Base.DEPOT_PATH)
-@info(string("Julia load paths: "), Base.LOAD_PATH)
+@debug(string("Julia depot paths: "), Base.DEPOT_PATH)
+@debug(string("Julia load paths: "), Base.LOAD_PATH)
 
-@info(string("Julia version info: ",))
-InteractiveUtils.versioninfo(verbose=true)
+@debug(string("Julia version info: ",))
+logger = Base.CoreLogging.current_logger_for_env(Base.CoreLogging.Debug, Symbol(splitext(basename(something(@__FILE__, "nothing")))[1]), something(@__MODULE__, "nothing"))
+if !isnothing(logger)
+    InteractiveUtils.versioninfo(logger.stream; verbose=true)
+end
 
-@info(string("Output of Pkg.status():",),)
+@debug(string("Output of Pkg.status():",),)
 Pkg.status()
 
-@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_PROJECT):",),)
+@debug(string("Output of Pkg.status(Pkg.Types.PKGMODE_PROJECT):",),)
 Pkg.status(Pkg.Types.PKGMODE_PROJECT)
 
-@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_MANIFEST):",),)
+@debug(string("Output of Pkg.status(Pkg.Types.PKGMODE_MANIFEST):",),)
 Pkg.status(Pkg.Types.PKGMODE_MANIFEST)
 
-@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_COMBINED):",),)
+@debug(string("Output of Pkg.status(Pkg.Types.PKGMODE_COMBINED):",),)
 Pkg.status(Pkg.Types.PKGMODE_COMBINED)
 
-@info(string("Attempting to import PredictMD...",))
+@debug(string("Attempting to import PredictMD...",))
 import PredictMD
-@info(string("Successfully imported PredictMD.",))
-@info(string("PredictMD version: "),PredictMD.version(),)
-@info(
+@debug(string("Successfully imported PredictMD.",))
+@debug(string("PredictMD version: "),PredictMD.version(),)
+@debug(
     string("PredictMD package directory: "),
     PredictMD.package_directory(),
     )
 
-@info(string("Attempting to import PredictMDExtra...",))
+@debug(string("Attempting to import PredictMDExtra...",))
 import PredictMDExtra
-@info(string("Successfully imported PredictMDExtra.",))
-@info(string("PredictMDExtra version: "),PredictMDExtra.version(),)
-@info(
+@debug(string("Successfully imported PredictMDExtra.",))
+@debug(string("PredictMDExtra version: "),PredictMDExtra.version(),)
+@debug(
     string("PredictMDExtra package directory: "),
     PredictMDExtra.package_directory(),
     )
 
-@info(string("Julia depot paths: "), Base.DEPOT_PATH)
-@info(string("Julia load paths: "), Base.LOAD_PATH)
+@debug(string("Julia depot paths: "), Base.DEPOT_PATH)
+@debug(string("Julia load paths: "), Base.LOAD_PATH)
 
 import DataFrames
 
@@ -142,7 +145,7 @@ Test.@testset "Integration tests" begin
             )
     end
     Test.@testset "Boston housing regression example (CPU)  " begin
-        @info("Testing Boston housing regression example (CPU)")
+        @debug("Testing Boston housing regression example (CPU)")
         boston_housing_tests = [
             "01_preprocess_data.jl" => TestBlockIntegration1(),
             "02_linear_regression.jl" => TestBlockIntegration1(),
@@ -170,7 +173,7 @@ Test.@testset "Integration tests" begin
         end
     end
     Test.@testset "Breast cancer biopsy classification (CPU)" begin
-        @info("Testing breast cancer biopsy classification example (CPU)")
+        @debug("Testing breast cancer biopsy classification example (CPU)")
         breast_cancer_tests = [
             "01_preprocess_data.jl" => TestBlockIntegration4(),
             "02_smote.jl" => TestBlockIntegration4(),

@@ -42,7 +42,7 @@ if isa(TEST_GROUP, TestGroupDocker4)
     ENV["PREDICTMD_TEST_PLOTS"] = "true"
 end
 
-@info(
+@debug(
     string(
         "PREDICTMD_TEST_PLOTS: \"",
         ENV["PREDICTMD_TEST_PLOTS"],
