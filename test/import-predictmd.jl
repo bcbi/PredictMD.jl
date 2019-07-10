@@ -11,18 +11,6 @@ if !isnothing(logger)
     InteractiveUtils.versioninfo(logger.stream; verbose=true)
 end
 
-@debug(string("Output of Pkg.status():",),)
-Pkg.status()
-
-@debug(string("Output of Pkg.status(Pkg.Types.PKGMODE_PROJECT):",),)
-Pkg.status(Pkg.Types.PKGMODE_PROJECT)
-
-@debug(string("Output of Pkg.status(Pkg.Types.PKGMODE_MANIFEST):",),)
-Pkg.status(Pkg.Types.PKGMODE_MANIFEST)
-
-@debug(string("Output of Pkg.status(Pkg.Types.PKGMODE_COMBINED):",),)
-Pkg.status(Pkg.Types.PKGMODE_COMBINED)
-
 @debug(string("Attempting to import PredictMD...",))
 import PredictMD
 @debug(string("Successfully imported PredictMD.",))
