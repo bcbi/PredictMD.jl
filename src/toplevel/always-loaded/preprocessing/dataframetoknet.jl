@@ -114,11 +114,62 @@ end
 """
 function predict(
         transformer::MutableDataFrame2ClassificationKnetTransformer,
-        features_df::DataFrames.AbstractDataFrame,
-        varargs...;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
     return transform(transformer, features_df)
+end
+
+"""
+"""
+function transform(
+        transformer::MutableDataFrame2ClassificationKnetTransformer,
+        positive_class::AbstractString;
+        kwargs...
+        )
+    if length(transformer.label_names) == 0
+        error("length(transformer.label_names) == 0")
+    elseif length(transformer.label_names) == 1
+        label_1 = transformer.label_names[1]
+        levels_1 = transformer.label_levels[label_1]
+        labelstring2intmap_1 = getlabelstring2intmap(
+            levels_1,
+            transformer.index,
+            )
+        transformed_positive_class = labelstring2intmap_1[positive_class]
+    else
+        error("unsupported behavior")
+        # training_labels_array = Array{Int}(
+        #     size(training_labels_df, 1),
+        #     length(transformer.label_names),
+        #     )
+        # for j = 1:length(transformer.label_names)
+        #     label_j = transformer.label_names[j]
+        #     levels_j = transformer.label_levels[label_j]
+        #     labelstring2intmap_j = getlabelstring2intmap(
+        #         levels_j,
+        #         transformer.index,
+        #         )
+        #     training_labels_array[:, j] =
+        #         [labelstring2intmap_j[y] for y in labels_df[label_j]]
+        # end
+    end
+    return transformed_positive_class
+end
+
+"""
+"""
+function predict(
+        transformer::MutableDataFrame2ClassificationKnetTransformer,
+        features_df::DataFrames.AbstractDataFrame,
+        positive_class::AbstractString,
+        varargs...;
+        kwargs...
+        )
+    result = (transform(transformer, features_df),
+              transform(transformer, positive_class),
+              varargs...)
+    return result
 end
 
 """
@@ -135,8 +186,7 @@ end
 """
 function predict(
         transformer::MutableDataFrame2RegressionKnetTransformer,
-        features_df::DataFrames.AbstractDataFrame,
-        varargs...;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
     result = transform(

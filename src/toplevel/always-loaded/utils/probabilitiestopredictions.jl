@@ -74,8 +74,8 @@ end
 
 function single_labelprobabilitiestopredictions(
         probabilitiesassoc::AbstractDict,
-        positive_class::AbstractString,
-        threshold::Real;
+        positive_class,
+        threshold::AbstractFloat;
         float_type::Type{<:AbstractFloat} = Float64,
         )
     classes = sort(unique(collect(keys(probabilitiesassoc))))
@@ -94,21 +94,22 @@ function single_labelprobabilitiestopredictions(
         if positive_class in classes
             use_threshold = true
         else
-            @warn("positive_class is not in the list of classes, so ignoring threshold")
+            @error("", positive_class, classes)
+            error("positive_class is not in the list of classes, so ignoring threshold")
             use_threshold = false
         end
     else
-        @warn("numclasses is not 2, so ignoring threshold")
+        error("numclasses is not 2, so ignoring threshold")
         use_threshold = false
     end
     if use_threshold
         positive_class_column::Int = findfirst(classes .== positive_class)
-        negative_class::String = first(setdiff(classes, [positive_class]))
+        negative_class = first(setdiff(classes, [positive_class]))
         for i = 1:numrows
             if probabilitiesmatrix[i, positive_class_column] > threshold
-                predictionsvector[i] = positive_class
+                predictionsvector[i] = string(positive_class)
             else
-                predictionsvector[i] = negative_class
+                predictionsvector[i] = string(negative_class)
             end
         end
     else

@@ -104,7 +104,7 @@ function predict(
         estimator::DecisionTreeModel,
         featuresarray::AbstractArray,
         positive_class::AbstractString,
-        threshold::Real,
+        threshold::AbstractFloat,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
         probabilitiesassoc = predict_proba(
@@ -191,15 +191,11 @@ function single_labelmulticlassdfrandomforestclassifier_DecisionTree(
     predpackager = ImmutablePackageSingleLabelPredictionTransformer(
         single_label_name,
         )
-    finalpipeline = SimplePipeline(
-        AbstractFittable[
-            dftransformer,
-            randomforestestimator,
-            probapackager,
-            predpackager,
-            ];
-        name = name,
-        )
+    finalpipeline = dftransformer |>
+                    randomforestestimator |>
+                    probapackager |>
+                    predpackager
+    finalpipeline.name = name
     if !is_nothing(feature_contrasts)
         set_feature_contrasts!(finalpipeline, feature_contrasts)
     end
@@ -260,14 +256,10 @@ function single_labeldataframerandomforestregression_DecisionTree(
     predpackager = ImmutablePackageSingleLabelPredictionTransformer(
         single_label_name,
         )
-    finalpipeline = SimplePipeline(
-        AbstractFittable[
-            dftransformer,
-            randomforestestimator,
-            predpackager,
-            ];
-        name = name,
-        )
+    finalpipeline = dftransformer |>
+                    randomforestestimator |>
+                    predpackager
+    finalpipeline.name = name
     if !is_nothing(feature_contrasts)
         set_feature_contrasts!(finalpipeline, feature_contrasts)
     end

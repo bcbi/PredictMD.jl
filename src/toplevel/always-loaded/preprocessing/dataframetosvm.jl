@@ -43,7 +43,7 @@ function predict(
         varargs...;
         kwargs...
         )
-    return transform(transformer, featuresarray)
+    return (transform(transformer, featuresarray), varargs...)
 end
 
 """
@@ -70,11 +70,6 @@ function DataFrame2LIBSVMTransformer(
         )
     featuretransposetransformer =
         ImmutableFeatureArrayTransposerTransformer()
-    result = SimplePipeline(
-        AbstractFittable[
-            df2decisiontreetransformer,
-            featuretransposetransformer,
-            ],
-        )
+    result = df2decisiontreetransformer |> featuretransposetransformer
     return result
 end

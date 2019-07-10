@@ -6,7 +6,7 @@ import StatsBase
 function getallrocnums(
         ytrue::AbstractVector{<:Integer},
         yscore::AbstractVector{<:Real};
-        additionalthreshold::Real = 0.5,
+        additionalthreshold::AbstractFloat = 0.5,
         )
     allthresholds = get_binary_thresholds(
         yscore;

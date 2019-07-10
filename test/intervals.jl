@@ -153,7 +153,7 @@ function construct_interval(x::String)::AbstractInterval
             lowerandupper_right,
             )
     else
-        delayederror("argument is not a valid interval")
+        error("argument is not a valid interval")
     end
     return result
 end

@@ -89,7 +89,7 @@ function predict(
         varargs...;
         kwargs...
         )
-    return transform(transformer, features_df)
+    return (transform(transformer, features_df), varargs...)
 end
 
 """

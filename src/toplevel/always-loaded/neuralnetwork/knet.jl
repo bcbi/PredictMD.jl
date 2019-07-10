@@ -333,7 +333,7 @@ function predict(
         estimator::KnetModel,
         featuresarray::AbstractArray,
         positive_class::AbstractString,
-        threshold::Real,
+        threshold::AbstractFloat,
         )
     if estimator.isclassificationmodel
         probabilitiesassoc = predict_proba(
@@ -442,17 +442,13 @@ function single_labelmulticlassdataframeknetclassifier_Knet(
     predpackager = ImmutablePackageSingleLabelPredictionTransformer(
         single_label_name,
         )
-    finalpipeline = SimplePipeline(
-        AbstractFittable[
-            dftransformer,
-            knetestimator,
-            predprobalabelfixer,
-            predictlabelfixer,
-            probapackager,
-            predpackager
-            ];
-        name = name,
-        )
+    finalpipeline = dftransformer |>
+                    knetestimator |>
+                    predprobalabelfixer |>
+                    predictlabelfixer |>
+                    probapackager |>
+                    predpackager
+    finalpipeline.name = name
     if !is_nothing(feature_contrasts)
         set_feature_contrasts!(finalpipeline, feature_contrasts)
     end
@@ -548,14 +544,10 @@ function single_labeldataframeknetregression_Knet(
     predpackager = ImmutablePackageMultiLabelPredictionTransformer(
         [single_label_name,],
         )
-    finalpipeline = SimplePipeline(
-        AbstractFittable[
-            dftransformer,
-            knetestimator,
-            predpackager,
-            ];
-        name = name,
-        )
+    finalpipeline = dftransformer |>
+                    knetestimator |>
+                    predpackager
+    finalpipeline.name = name
     if !is_nothing(feature_contrasts)
         set_feature_contrasts!(finalpipeline, feature_contrasts)
     end

@@ -108,8 +108,8 @@ end
 function predict(
         estimator::GLMModel,
         features_df::DataFrames.AbstractDataFrame,
-        positive_class::AbstractString,
-        threshold::Real,
+        positive_class::Integer,
+        threshold::AbstractFloat,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
         probabilitiesassoc = predict_proba(

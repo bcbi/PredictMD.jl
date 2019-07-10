@@ -4,7 +4,7 @@ import StatsBase
 """
 function get_binary_thresholds(
         yscore::AbstractVector{<:Real};
-        additionalthreshold::Real = 0.5,
+        additionalthreshold::AbstractFloat = 0.5,
         )
     if !all(0 .<= yscore .<= 1)
         error("not all scores are in [0,1]")

@@ -140,7 +140,7 @@ function predict(
         estimator::LIBSVMModel,
         featuresarray::AbstractArray,
         positive_class::AbstractString,
-        threshold::Real,
+        threshold::AbstractFloat,
         )
     if estimator.isclassificationmodel && !estimator.isregressionmodel
         probabilitiesassoc = predict_proba(
@@ -249,15 +249,11 @@ function single_labelmulticlassdataframesvmclassifier_LIBSVM(
     predpackager = ImmutablePackageSingleLabelPredictionTransformer(
         single_label_name,
         )
-    finalpipeline = SimplePipeline(
-        AbstractFittable[
-            dftransformer,
-            svmestimator,
-            probapackager,
-            predpackager,
-            ];
-        name = name,
-        )
+    finalpipeline = dftransformer |>
+                    svmestimator |>
+                    probapackager |>
+                    predpackager
+    finalpipeline.name = name
     if !is_nothing(feature_contrasts)
         set_feature_contrasts!(finalpipeline, feature_contrasts)
     end
@@ -362,14 +358,10 @@ function single_labeldataframesvmregression_LIBSVM(
     predpackager = ImmutablePackageSingleLabelPredictionTransformer(
         single_label_name,
         )
-    finalpipeline = SimplePipeline(
-        AbstractFittable[
-            dftransformer,
-            svmestimator,
-            predpackager,
-            ];
-        name = name,
-        )
+    finalpipeline = dftransformer |>
+                    svmestimator |>
+                    predpackager
+    finalpipeline.name = name
     if !is_nothing(feature_contrasts)
         set_feature_contrasts!(finalpipeline, feature_contrasts)
     end

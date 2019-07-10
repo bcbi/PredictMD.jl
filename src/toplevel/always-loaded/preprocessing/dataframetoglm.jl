@@ -42,11 +42,36 @@ end
 """
 function predict(
         transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
-        features_df::DataFrames.AbstractDataFrame,
-        varargs...;
+        features_df::DataFrames.AbstractDataFrame;
         kwargs...
         )
     return transform(transformer, features_df)
+end
+
+"""
+"""
+function predict(
+        transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
+        features_df::DataFrames.AbstractDataFrame,
+        my_class::AbstractString,
+        varargs...;
+        kwargs...
+        )
+    result = (transform(transformer, features_df),
+              transform(transformer, my_class),
+              varargs...)
+    return result
+end
+
+"""
+"""
+function transform(
+        transformer::ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer,
+        my_class::AbstractString;
+        kwargs...
+        )
+    transformed_my_class = Int(my_class == transformer.positive_class)
+    return transformed_my_class
 end
 
 """
