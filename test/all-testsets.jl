@@ -54,7 +54,7 @@ if !isnothing(logger)
         println(logger.stream, "# End of test environment Manifest.toml")
     else
         println(logger.stream, "# File \"$(joinpath(dirname(Base.active_project()), "Manifest.toml"))\" does not exist")
-    end 
+    end
 end
 
 logger = Base.CoreLogging.current_logger_for_env(Base.CoreLogging.Debug, Symbol(splitext(basename(something(@__FILE__, "nothing")))[1]), something(@__MODULE__, "nothing"))

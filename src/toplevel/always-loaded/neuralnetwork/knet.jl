@@ -332,7 +332,7 @@ end
 function predict(
         estimator::KnetModel,
         featuresarray::AbstractArray,
-        positive_class::AbstractString,
+        positive_class::Integer,
         threshold::AbstractFloat,
         )
     if estimator.isclassificationmodel
