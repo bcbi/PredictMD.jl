@@ -18,9 +18,7 @@ include("import_all.jl")
 include("welcome.jl")
 include("init.jl")
 
-include("base/fallback.jl")
-include("base/backends.jl")
-include("base/concrete-types.jl")
+
 
 include("toplevel/always-loaded/code_loading/requires.jl")
 include("toplevel/always-loaded/code_loading/require_versions.jl")

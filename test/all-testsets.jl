@@ -79,21 +79,21 @@ end
 
 logger = Base.CoreLogging.current_logger_for_env(Base.CoreLogging.Debug, Symbol(splitext(basename(something(@__FILE__, "nothing")))[1]), something(@__MODULE__, "nothing"))
 if !isnothing(logger)
-    if ispath(PredictMDAPI.package_directory("Project.toml"))
-        println(logger.stream, "# Location of PredictMDAPI package Project.toml: \"$(PredictMDAPI.package_directory("Project.toml"))\"")
+    if ispath(joinpath(dirname(pathof(PredictMDAPI)), "..", "Project.toml"))
+        println(logger.stream, "# Location of PredictMDAPI package Project.toml: \"$(joinpath(dirname(pathof(PredictMDAPI)), "..", "Project.toml"))\"")
         println(logger.stream, "# Beginning of PredictMDAPI package Project.toml")
-        println(logger.stream, read(PredictMDAPI.package_directory("Project.toml"), String))
+        println(logger.stream, read(joinpath(dirname(pathof(PredictMDAPI)), "..", "Project.toml"), String))
         println(logger.stream, "# End of PredictMDAPI package Project.toml")
     else
-        println(logger.stream, "# File \"$(PredictMDAPI.package_directory("Project.toml"))\" does not exist")
+        println(logger.stream, "# File \"$(joinpath(dirname(pathof(PredictMDAPI)), "..", "Project.toml"))\" does not exist")
     end
-    if ispath(PredictMDAPI.package_directory("Manifest.toml"))
-        println(logger.stream, "# Location of PredictMDAPI package Manifest.toml: \"$(PredictMDAPI.package_directory("Manifest.toml"))\"")
+    if ispath(joinpath(dirname(pathof(PredictMDAPI)), "..", "Manifest.toml"))
+        println(logger.stream, "# Location of PredictMDAPI package Manifest.toml: \"$(joinpath(dirname(pathof(PredictMDAPI)), "..", "Manifest.toml"))\"")
         println(logger.stream, "# Beginning of PredictMDAPI package Manifest.toml")
-        println(logger.stream, read(PredictMDAPI.package_directory("Manifest.toml"),String))
+        println(logger.stream, read(joinpath(dirname(pathof(PredictMDAPI)), "..", "Manifest.toml"),String))
         println(logger.stream, "# End of PredictMDAPI package Manifest.toml")
     else
-        println(logger.stream, "# File \"$(PredictMDAPI.package_directory("Manifest.toml"))\" does not exist")
+        println(logger.stream, "# File \"$(joinpath(dirname(pathof(PredictMDAPI)), "..", "Manifest.toml"))\" does not exist")
     end
 end
 
