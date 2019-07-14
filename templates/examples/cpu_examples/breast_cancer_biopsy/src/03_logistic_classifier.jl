@@ -400,6 +400,16 @@ logistic_cutoffs, logistic_risk_group_prevalences =
         positive_class;
         average_function = Statistics.mean,
         )
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+@debug(
+    string(
+        "Low risk: 0 to $(logistic_cutoffs[1]).",
+        " Medium risk: $(logistic_cutoffs[1]) to $(logistic_cutoffs[2]).",
+        " High risk: $(logistic_cutoffs[2]) to 1.",
+        )
+    )
+@debug(logistic_risk_group_prevalences)
+# PREDICTMD ELSE
 @info(
     string(
         "Low risk: 0 to $(logistic_cutoffs[1]).",
@@ -408,6 +418,8 @@ logistic_cutoffs, logistic_risk_group_prevalences =
         )
     )
 @info(logistic_risk_group_prevalences)
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
 logistic_cutoffs, logistic_risk_group_prevalences =
     PredictMD.risk_score_cutoff_values(
         logistic_classifier,
@@ -417,6 +429,16 @@ logistic_cutoffs, logistic_risk_group_prevalences =
         positive_class;
         average_function = Statistics.median,
         )
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+@debug(
+    string(
+        "Low risk: 0 to $(logistic_cutoffs[1]).",
+        " Medium risk: $(logistic_cutoffs[1]) to $(logistic_cutoffs[2]).",
+        " High risk: $(logistic_cutoffs[2]) to 1.",
+        )
+    )
+@debug(logistic_risk_group_prevalences)
+# PREDICTMD ELSE
 @info(
     string(
         "Low risk: 0 to $(logistic_cutoffs[1]).",
@@ -425,6 +447,7 @@ logistic_cutoffs, logistic_risk_group_prevalences =
         )
     )
 @info(logistic_risk_group_prevalences)
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 logistic_classifier_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,

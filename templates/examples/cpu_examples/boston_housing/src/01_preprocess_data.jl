@@ -99,6 +99,17 @@ continuous_feature_names_filename = joinpath(
     "data",
     "continuous_feature_names.jld2",
     )
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+@debug("", categorical_feature_names_filename)
+@debug("", isfile(categorical_feature_names_filename))
+@debug("", dirname(categorical_feature_names_filename))
+@debug("", isdir(dirname(categorical_feature_names_filename)))
+@debug("", joinpath(PROJECT_OUTPUT_DIRECTORY, "data"))
+@debug("", isdir(joinpath(PROJECT_OUTPUT_DIRECTORY, "data")))
+@debug("", PROJECT_OUTPUT_DIRECTORY)
+@debug("", isdir(PROJECT_OUTPUT_DIRECTORY))
+# PREDICTMD ELSE
 @info("", categorical_feature_names_filename)
 @info("", isfile(categorical_feature_names_filename))
 @info("", dirname(categorical_feature_names_filename))
@@ -107,6 +118,8 @@ continuous_feature_names_filename = joinpath(
 @info("", isdir(joinpath(PROJECT_OUTPUT_DIRECTORY, "data")))
 @info("", PROJECT_OUTPUT_DIRECTORY)
 @info("", isdir(PROJECT_OUTPUT_DIRECTORY))
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
 
 FileIO.save(
     categorical_feature_names_filename,
