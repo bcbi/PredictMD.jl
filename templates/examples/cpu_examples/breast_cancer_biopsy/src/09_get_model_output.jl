@@ -246,11 +246,11 @@ PredictMD.predict(c_svc_svm_classifier,smoted_training_features_df, positive_cla
 PredictMD.predict(nu_svc_svm_classifier,smoted_training_features_df, positive_class, 0.3)
 PredictMD.predict(knet_mlp_classifier,smoted_training_features_df, positive_class, 0.3)
 
-@show PredictMD.predict(logistic_classifier,testing_features_df, positive_class, 0.3)
-@show PredictMD.predict(random_forest_classifier,testing_features_df, positive_class, 0.3)
-@show PredictMD.predict(c_svc_svm_classifier,testing_features_df, positive_class, 0.3)
-@show PredictMD.predict(nu_svc_svm_classifier,testing_features_df, positive_class, 0.3)
-@show PredictMD.predict(knet_mlp_classifier,testing_features_df, positive_class, 0.3)
+PredictMD.predict(logistic_classifier,testing_features_df, positive_class, 0.3)
+PredictMD.predict(random_forest_classifier,testing_features_df, positive_class, 0.3)
+PredictMD.predict(c_svc_svm_classifier,testing_features_df, positive_class, 0.3)
+PredictMD.predict(nu_svc_svm_classifier,testing_features_df, positive_class, 0.3)
+PredictMD.predict(knet_mlp_classifier,testing_features_df, positive_class, 0.3)
 
 ### End model output code
 

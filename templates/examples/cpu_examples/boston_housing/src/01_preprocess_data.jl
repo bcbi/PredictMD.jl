@@ -153,7 +153,7 @@ Test.@test PredictMD.check_no_constant_columns(df)
 features_df = df[feature_names]
 labels_df = df[label_names]
 
-DataFrames.describe(labels_df[single_label_name])
+DataFrames.describe(logger_stream, labels_df[single_label_name])
 
 (trainingandtuning_features_df,
     trainingandtuning_labels_df,

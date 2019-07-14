@@ -35,6 +35,9 @@ function preprocess_example_do_not_include_test_statements(
         replacement_text = string(strip(String(m[2])), "\n\n",)
         content = replace(content, original_text => replacement_text)
     end
+    pattern = r"logger_stream, "
+    replacement = ""
+    content = replace(content, pattern => replacement)
     return content
 end
 
@@ -111,7 +114,7 @@ function generate_examples(
                 )
     end
 
-    @info("Starting to generate examples...")
+    @debug("Starting to generate examples...")
 
     temp_examples_dir = joinpath(
         maketempdir(),
@@ -298,7 +301,7 @@ function generate_examples(
         force = true,
         )
 
-    @info(
+    @debug(
         string(
             "Finished generating examples. ",
             "Files were written to: \"",

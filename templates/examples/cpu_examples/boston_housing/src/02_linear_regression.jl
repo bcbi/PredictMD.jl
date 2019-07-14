@@ -188,11 +188,11 @@ Test.@test(
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 show(
-    PredictMD.linearly_dependent_columns(df)
+    logger_stream, PredictMD.linearly_dependent_columns(df)
     )
 
 show(
-    PredictMD.linearly_dependent_columns(
+    logger_stream, PredictMD.linearly_dependent_columns(
         training_features_df,
         feature_names,
         )
@@ -288,7 +288,7 @@ PredictMD.save_plot(
     )
 
 show(
-    PredictMD.singlelabelregressionmetrics(
+    logger_stream, PredictMD.singlelabelregressionmetrics(
         linear_regression,
         training_features_df,
         training_labels_df,
@@ -300,7 +300,7 @@ show(
     )
 
 show(
-    PredictMD.singlelabelregressionmetrics(
+    logger_stream, PredictMD.singlelabelregressionmetrics(
         linear_regression,
         testing_features_df,
         testing_labels_df,

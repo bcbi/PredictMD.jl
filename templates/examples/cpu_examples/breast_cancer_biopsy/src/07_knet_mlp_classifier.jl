@@ -539,7 +539,7 @@ PredictMD.save_plot(
     )
 
 show(
-    PredictMD.singlelabelbinaryclassificationmetrics(
+    logger_stream, PredictMD.singlelabelbinaryclassificationmetrics(
         knet_mlp_classifier,
         smoted_training_features_df,
         smoted_training_labels_df,
@@ -553,7 +553,7 @@ show(
     )
 
 show(
-    PredictMD.singlelabelbinaryclassificationmetrics(
+    logger_stream, PredictMD.singlelabelbinaryclassificationmetrics(
         knet_mlp_classifier,
         testing_features_df,
         testing_labels_df,

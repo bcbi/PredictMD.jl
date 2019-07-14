@@ -261,7 +261,7 @@ PredictMD.save_plot(
     )
 
 show(
-    PredictMD.singlelabelregressionmetrics(
+    logger_stream, PredictMD.singlelabelregressionmetrics(
         random_forest_regression,
         training_features_df,
         training_labels_df,
@@ -273,7 +273,7 @@ show(
     )
 
 show(
-    PredictMD.singlelabelregressionmetrics(
+    logger_stream, PredictMD.singlelabelregressionmetrics(
         random_forest_regression,
         testing_features_df,
         testing_labels_df,

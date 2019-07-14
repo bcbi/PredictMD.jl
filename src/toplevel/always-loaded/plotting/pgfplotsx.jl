@@ -14,10 +14,10 @@ function Base.display(p::PGFPlotsXPlot)::Nothing
                 )
             )
     else
-        @info(string("Attempting to display plot..."))
+        @debug(string("Attempting to display plot..."))
         try
             Base.display(get_underlying(p))
-            @info(string("Displayed plot."))
+            @debug(string("Displayed plot."))
         catch e
             handle_plotting_error(e)
         end
@@ -32,14 +32,14 @@ function PGFPlotsX.save(
         )::Nothing
     underlying_object = get_underlying(p)
     try
-        @info(string("Attempting to save plot..."))
+        @debug(string("Attempting to save plot..."))
         mkpath(dirname(filename))
         PGFPlotsX.save(
             filename,
             underlying_object;
             kwargs...,
             )
-        @info(string("Saved plot to file: \"", filename, "\"",))
+        @debug(string("Saved plot to file: \"", filename, "\"",))
     catch e
         handle_plotting_error(e)
     end

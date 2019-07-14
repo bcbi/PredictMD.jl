@@ -220,11 +220,11 @@ Test.@test(
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 show(
-    PredictMD.linearly_dependent_columns(df)
+    logger_stream, PredictMD.linearly_dependent_columns(df)
     )
 
 show(
-    PredictMD.linearly_dependent_columns(
+    logger_stream, PredictMD.linearly_dependent_columns(
         training_features_df,
         feature_names,
         )
@@ -326,7 +326,7 @@ PredictMD.save_plot(
     )
 
 show(
-    PredictMD.singlelabelbinaryclassificationmetrics(
+    logger_stream, PredictMD.singlelabelbinaryclassificationmetrics(
         logistic_classifier,
         smoted_training_features_df,
         smoted_training_labels_df,
@@ -340,7 +340,7 @@ show(
     )
 
 show(
-    PredictMD.singlelabelbinaryclassificationmetrics(
+    logger_stream, PredictMD.singlelabelbinaryclassificationmetrics(
         logistic_classifier,
         testing_features_df,
         testing_labels_df,
@@ -378,7 +378,7 @@ PredictMD.save_plot(
     )
 
 show(
-    PredictMD.probability_calibration_metrics(
+    logger_stream, PredictMD.probability_calibration_metrics(
         logistic_classifier,
         testing_features_df,
         testing_labels_df,

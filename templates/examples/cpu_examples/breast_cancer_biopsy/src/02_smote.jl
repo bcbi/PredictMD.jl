@@ -167,8 +167,8 @@ categorical_label_names = Symbol[single_label_name]
 continuous_label_names = Symbol[]
 label_names = vcat(categorical_label_names, continuous_label_names)
 
-DataFrames.describe(training_labels_df[single_label_name])
-StatsBase.countmap(training_labels_df[single_label_name])
+DataFrames.describe(logger_stream, training_labels_df[single_label_name])
+show(logger_stream, StatsBase.countmap(training_labels_df[single_label_name]))
 
 majorityclass = "benign"
 minorityclass = "malignant"
@@ -206,8 +206,8 @@ Test.@test PredictMD.check_no_constant_columns(smoted_training_labels_df)
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
-DataFrames.describe(smoted_training_labels_df[single_label_name])
-StatsBase.countmap(smoted_training_labels_df[single_label_name])
+DataFrames.describe(logger_stream, smoted_training_labels_df[single_label_name])
+show(logger_stream, StatsBase.countmap(smoted_training_labels_df[single_label_name]))
 
 smoted_training_features_df_filename = joinpath(
     PROJECT_OUTPUT_DIRECTORY,

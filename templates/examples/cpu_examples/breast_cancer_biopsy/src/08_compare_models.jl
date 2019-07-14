@@ -220,13 +220,13 @@ continuous_label_names = Symbol[]
 label_names = vcat(categorical_label_names, continuous_label_names)
 
 println(
-    string(
+    logger_stream, string(
         "Single label binary classification metrics, training set, ",
         "fix sensitivity",
         )
     )
 show(
-    PredictMD.singlelabelbinaryclassificationmetrics(
+    logger_stream, PredictMD.singlelabelbinaryclassificationmetrics(
         all_models,
         training_features_df,
         training_labels_df,
@@ -240,13 +240,13 @@ show(
     )
 
 println(
-    string(
+    logger_stream, string(
         "Single label binary classification metrics, training set, ",
         "fix specificity",
         )
     )
 show(
-    PredictMD.singlelabelbinaryclassificationmetrics(
+    logger_stream, PredictMD.singlelabelbinaryclassificationmetrics(
         all_models,
         training_features_df,
         training_labels_df,
@@ -260,13 +260,13 @@ show(
     )
 
 println(
-    string(
+    logger_stream, string(
         "Single label binary classification metrics, training set, ",
         "maximize F1 score",
         )
     )
 show(
-    PredictMD.singlelabelbinaryclassificationmetrics(
+    logger_stream, PredictMD.singlelabelbinaryclassificationmetrics(
         all_models,
         training_features_df,
         training_labels_df,
@@ -280,13 +280,13 @@ show(
     )
 
 println(
-    string(
+    logger_stream, string(
         "Single label binary classification metrics, training set, ",
         "maximize Cohen's kappa",
         )
     )
 show(
-    PredictMD.singlelabelbinaryclassificationmetrics(
+    logger_stream, PredictMD.singlelabelbinaryclassificationmetrics(
         all_models,
         training_features_df,
         training_labels_df,
@@ -300,13 +300,13 @@ show(
     )
 
 println(
-    string(
+    logger_stream, string(
         "Single label binary classification metrics, testing set, ",
         "fix sensitivity",
         )
     )
 show(
-    PredictMD.singlelabelbinaryclassificationmetrics(
+    logger_stream, PredictMD.singlelabelbinaryclassificationmetrics(
         all_models,
         testing_features_df,
         testing_labels_df,
@@ -399,13 +399,13 @@ Test.@test(
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 println(
-    string(
+    logger_stream, string(
         "Single label binary classification metrics, testing set, ",
         "fix specificity",
         )
     )
 show(
-    PredictMD.singlelabelbinaryclassificationmetrics(
+    logger_stream, PredictMD.singlelabelbinaryclassificationmetrics(
         all_models,
         testing_features_df,
         testing_labels_df,
@@ -419,13 +419,13 @@ show(
     )
 
 println(
-    string(
+    logger_stream, string(
         "Single label binary classification metrics, testing set, ",
         "maximize F1 score",
         )
     )
 show(
-    PredictMD.singlelabelbinaryclassificationmetrics(
+    logger_stream, PredictMD.singlelabelbinaryclassificationmetrics(
         all_models,
         testing_features_df,
         testing_labels_df,
@@ -439,13 +439,13 @@ show(
     )
 
 println(
-    string(
+    logger_stream, string(
         "Single label binary classification metrics, testing set, ",
         "maximize Cohen's kappa",
         )
     )
 show(
-    PredictMD.singlelabelbinaryclassificationmetrics(
+    logger_stream, PredictMD.singlelabelbinaryclassificationmetrics(
         all_models,
         testing_features_df,
         testing_labels_df,
