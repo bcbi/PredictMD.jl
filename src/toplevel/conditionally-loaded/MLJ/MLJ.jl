@@ -1,8 +1,8 @@
 module PredictMD_MLJ
 
-import MLJ
-import MLJBase
-import MLJModels
+import .MLJ
+import .MLJBase
+import .MLJModels
 
 function __init__()
     @info("PredictMD: the following backends are now available: MLJ, MLJBase, MLJModels")

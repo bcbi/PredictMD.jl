@@ -25,13 +25,10 @@ end
 
 """
 """
-function get_underlying(
-        x::GLMModel;
-        saving::Bool = false,
-        loading::Bool = false,
-        )
-    result = x.underlyingglm
-    return result
+function get_underlying(x::GLMModel;
+                        saving::Bool = false,
+                        loading::Bool = false)
+    return x.underlyingglm
 end
 
 """

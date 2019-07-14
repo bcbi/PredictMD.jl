@@ -6,6 +6,16 @@ PredictMDExtra.import_all()
 import PredictMD
 PredictMD.import_all()
 
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+logger = Base.CoreLogging.current_logger_for_env(Base.CoreLogging.Debug, Symbol(splitext(basename(something(@__FILE__, "nothing")))[1]), something(@__MODULE__, "nothing"))
+if isnothing(logger)
+    logger_stream = devnull
+else
+    logger_stream = logger.stream
+end
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
 ### Begin project-specific settings
 
 DIRECTORY_CONTAINING_THIS_FILE = @__DIR__
@@ -27,9 +37,7 @@ if PredictMD.is_travis_ci()
     PredictMD.cache_to_path!(
         ;
         from = ["cpu_examples", "breast_cancer_biopsy", "output",],
-        to = [
-            DIRECTORY_CONTAINING_THIS_FILE,
-            "cpu_examples", "breast_cancer_biopsy", "output",],
+        to = [PROJECT_OUTPUT_DIRECTORY],
         )
 end
 # PREDICTMD ELSE
@@ -331,9 +339,7 @@ if PredictMD.is_travis_ci()
     PredictMD.path_to_cache!(
         ;
         to = ["cpu_examples", "breast_cancer_biopsy", "output",],
-        from = [
-            DIRECTORY_CONTAINING_THIS_FILE,
-            "cpu_examples", "breast_cancer_biopsy", "output",],
+        from = [PROJECT_OUTPUT_DIRECTORY],
         )
 end
 # PREDICTMD ELSE

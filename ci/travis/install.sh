@@ -82,7 +82,6 @@ then
                 println(logger.stream, "# File \"$(joinpath(dirname(Base.active_project()), "Manifest.toml"))\" does not exist")
             end
         end
-
         '
     julia $JULIA_FLAGS -e 'import Pkg;Pkg.test("PredictMD"; coverage=true);'
     if [[ "$GROUP" == "$LAST_GROUP" ]]; then

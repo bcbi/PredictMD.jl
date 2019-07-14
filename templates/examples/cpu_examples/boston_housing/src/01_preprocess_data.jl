@@ -37,9 +37,7 @@ if PredictMD.is_travis_ci()
     PredictMD.cache_to_path!(
         ;
         from = ["cpu_examples", "boston_housing", "output",],
-        to = [
-            DIRECTORY_CONTAINING_THIS_FILE,
-            "cpu_examples", "boston_housing", "output",],
+        to = [PROJECT_OUTPUT_DIRECTORY],
         )
 end
 # PREDICTMD ELSE
@@ -254,9 +252,7 @@ if PredictMD.is_travis_ci()
     PredictMD.path_to_cache!(
         ;
         to = ["cpu_examples", "boston_housing", "output",],
-        from = [
-            DIRECTORY_CONTAINING_THIS_FILE,
-            "cpu_examples", "boston_housing", "output",],
+        from = [PROJECT_OUTPUT_DIRECTORY],
         )
 end
 # PREDICTMD ELSE

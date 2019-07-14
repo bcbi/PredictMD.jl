@@ -9,6 +9,10 @@ import Random
 
 include("base/api.jl")
 
+include("base/backends.jl")
+include("base/concrete-types.jl")
+include("base/fallback.jl")
+
 include("registry_url_list.jl")
 include("package_directory.jl")
 include("version.jl")
@@ -17,8 +21,6 @@ include("package_list.jl")
 include("import_all.jl")
 include("welcome.jl")
 include("init.jl")
-
-
 
 include("toplevel/always-loaded/code_loading/requires.jl")
 include("toplevel/always-loaded/code_loading/require_versions.jl")
