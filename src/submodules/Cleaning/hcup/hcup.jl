@@ -515,4 +515,3 @@ function clean_hcup_nis_csv_icd9(
 
     return output_file_name
 end
-
