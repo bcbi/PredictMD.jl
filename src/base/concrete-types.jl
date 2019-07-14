@@ -53,13 +53,13 @@ end
 
 """
 """
-struct SimplePipeline <: AbstractPipeline
+mutable struct SimplePipeline <: AbstractPipeline
     name::T1 where T1 <: AbstractString
-    objectsvector::T2 where T2 <: AbstractVector{Fittable}
+    objectsvector::T2 where T2 <: AbstractVector{AbstractFittable}
 end
 
-struct PGFPlotsXPlot{T} <: AbstractPlot{T}
-    underlying_object::T
+struct PGFPlotsXPlot <: AbstractPlot
+    underlying_object::T where T <: Any
 end
 
 """

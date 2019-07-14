@@ -1,6 +1,6 @@
 module Backends # begin submodule PredictMD.Backends
 
-abstract type AbstractBackend end
+import ..AbstractBackend
 
 struct ClassImbalance <: AbstractBackend
 end
@@ -30,4 +30,3 @@ struct PGFPlotsX <: AbstractBackend
 end
 
 end # end submodule PredictMD.Backends
-

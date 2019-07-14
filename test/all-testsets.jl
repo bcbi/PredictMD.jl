@@ -5,46 +5,115 @@ import Test # stdlib
 import Random
 Random.seed!(999)
 
-@info(string("Julia depot paths: "), Base.DEPOT_PATH)
-@info(string("Julia load paths: "), Base.LOAD_PATH)
+@debug(string("Julia depot paths: "), Base.DEPOT_PATH)
+@debug(string("Julia load paths: "), Base.LOAD_PATH)
 
-@info(string("Julia version info: ",))
-InteractiveUtils.versioninfo(verbose=true)
+logger = Base.CoreLogging.current_logger_for_env(Base.CoreLogging.Debug, Symbol(splitext(basename(something(@__FILE__, "nothing")))[1]), something(@__MODULE__, "nothing"))
+if !isnothing(logger)
+    @debug(string("Julia version info: ",))
+    InteractiveUtils.versioninfo(logger.stream; verbose=true)
+end
 
-@info(string("Output of Pkg.status():",),)
-Pkg.status()
-
-@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_PROJECT):",),)
-Pkg.status(Pkg.Types.PKGMODE_PROJECT)
-
-@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_MANIFEST):",),)
-Pkg.status(Pkg.Types.PKGMODE_MANIFEST)
-
-@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_COMBINED):",),)
-Pkg.status(Pkg.Types.PKGMODE_COMBINED)
-
-@info(string("Attempting to import PredictMD...",))
+@debug(string("Attempting to import PredictMD...",))
 import PredictMD
-@info(string("Successfully imported PredictMD.",))
-@info(string("PredictMD version: "),PredictMD.version(),)
-@info(
+@debug(string("Successfully imported PredictMD.",))
+@debug(string("PredictMD version: "),PredictMD.version(),)
+@debug(
     string("PredictMD package directory: "),
     PredictMD.package_directory(),
     )
 
-@info(string("Attempting to import PredictMDExtra...",))
+@debug(string("Attempting to import PredictMDExtra...",))
 import PredictMDExtra
-@info(string("Successfully imported PredictMDExtra.",))
-@info(string("PredictMDExtra version: "),PredictMDExtra.version(),)
-@info(
+@debug(string("Successfully imported PredictMDExtra.",))
+@debug(string("PredictMDExtra version: "),PredictMDExtra.version(),)
+@debug(
     string("PredictMDExtra package directory: "),
     PredictMDExtra.package_directory(),
     )
 
-@info(string("Julia depot paths: "), Base.DEPOT_PATH)
-@info(string("Julia load paths: "), Base.LOAD_PATH)
+@debug(string("Julia depot paths: "), Base.DEPOT_PATH)
+@debug(string("Julia load paths: "), Base.LOAD_PATH)
 
-import DataFrames
+logger = Base.CoreLogging.current_logger_for_env(Base.CoreLogging.Debug, Symbol(splitext(basename(something(@__FILE__, "nothing")))[1]), something(@__MODULE__, "nothing"))
+if !isnothing(logger)
+    if ispath(Base.active_project())
+        println(logger.stream, "# Location of test environment Project.toml: \"$(Base.active_project())\"")
+        println(logger.stream, "# Beginning of test environment Project.toml")
+        println(logger.stream, read(Base.active_project(), String))
+        println(logger.stream, "# End of test environment Project.toml")
+    else
+        println(logger.stream, "# File \"$(Base.active_project())\" does not exist")
+    end
+    if ispath(joinpath(dirname(Base.active_project()), "Manifest.toml"))
+        println(logger.stream, "# Location of test environment Manifest.toml: \"$(joinpath(dirname(Base.active_project()), "Manifest.toml"))\"")
+        println(logger.stream, "# Beginning of test environment Manifest.toml")
+        println(logger.stream, read(joinpath(dirname(Base.active_project()), "Manifest.toml"),String))
+        println(logger.stream, "# End of test environment Manifest.toml")
+    else
+        println(logger.stream, "# File \"$(joinpath(dirname(Base.active_project()), "Manifest.toml"))\" does not exist")
+    end
+end
+
+logger = Base.CoreLogging.current_logger_for_env(Base.CoreLogging.Debug, Symbol(splitext(basename(something(@__FILE__, "nothing")))[1]), something(@__MODULE__, "nothing"))
+if !isnothing(logger)
+    if ispath(PredictMD.package_directory("Project.toml"))
+        println(logger.stream, "# Location of PredictMD package Project.toml: \"$(PredictMD.package_directory("Project.toml"))\"")
+        println(logger.stream, "# Beginning of PredictMD package Project.toml")
+        println(logger.stream, read(PredictMD.package_directory("Project.toml"), String))
+        println(logger.stream, "# End of PredictMD package Project.toml")
+    else
+        println(logger.stream, "# File \"$(PredictMD.package_directory("Project.toml"))\" does not exist")
+    end
+    if ispath(PredictMD.package_directory("Manifest.toml"))
+        println(logger.stream, "# Location of PredictMD package Manifest.toml: \"$(PredictMD.package_directory("Manifest.toml"))\"")
+        println(logger.stream, "# Beginning of PredictMD package Manifest.toml")
+        println(logger.stream, read(PredictMD.package_directory("Manifest.toml"),String))
+        println(logger.stream, "# End of PredictMD package Manifest.toml")
+    else
+        println(logger.stream, "# File \"$(PredictMD.package_directory("Manifest.toml"))\" does not exist")
+    end
+end
+
+logger = Base.CoreLogging.current_logger_for_env(Base.CoreLogging.Debug, Symbol(splitext(basename(something(@__FILE__, "nothing")))[1]), something(@__MODULE__, "nothing"))
+if !isnothing(logger)
+    if ispath(joinpath(dirname(pathof(PredictMDAPI)), "..", "Project.toml"))
+        println(logger.stream, "# Location of PredictMDAPI package Project.toml: \"$(joinpath(dirname(pathof(PredictMDAPI)), "..", "Project.toml"))\"")
+        println(logger.stream, "# Beginning of PredictMDAPI package Project.toml")
+        println(logger.stream, read(joinpath(dirname(pathof(PredictMDAPI)), "..", "Project.toml"), String))
+        println(logger.stream, "# End of PredictMDAPI package Project.toml")
+    else
+        println(logger.stream, "# File \"$(joinpath(dirname(pathof(PredictMDAPI)), "..", "Project.toml"))\" does not exist")
+    end
+    if ispath(joinpath(dirname(pathof(PredictMDAPI)), "..", "Manifest.toml"))
+        println(logger.stream, "# Location of PredictMDAPI package Manifest.toml: \"$(joinpath(dirname(pathof(PredictMDAPI)), "..", "Manifest.toml"))\"")
+        println(logger.stream, "# Beginning of PredictMDAPI package Manifest.toml")
+        println(logger.stream, read(joinpath(dirname(pathof(PredictMDAPI)), "..", "Manifest.toml"),String))
+        println(logger.stream, "# End of PredictMDAPI package Manifest.toml")
+    else
+        println(logger.stream, "# File \"$(joinpath(dirname(pathof(PredictMDAPI)), "..", "Manifest.toml"))\" does not exist")
+    end
+end
+
+logger = Base.CoreLogging.current_logger_for_env(Base.CoreLogging.Debug, Symbol(splitext(basename(something(@__FILE__, "nothing")))[1]), something(@__MODULE__, "nothing"))
+if !isnothing(logger)
+    if ispath(PredictMDExtra.package_directory("Project.toml"))
+        println(logger.stream, "# Location of PredictMDExtra package Project.toml: \"$(PredictMDExtra.package_directory("Project.toml"))\"")
+        println(logger.stream, "# Beginning of PredictMDExtra package Project.toml")
+        println(logger.stream, read(PredictMDExtra.package_directory("Project.toml"), String))
+        println(logger.stream, "# End of PredictMDExtra package Project.toml")
+    else
+        println(logger.stream, "# File \"$(PredictMDExtra.package_directory("Project.toml"))\" does not exist")
+    end
+    if ispath(PredictMDExtra.package_directory("Manifest.toml"))
+        println(logger.stream, "# Location of PredictMDExtra package Manifest.toml: \"$(PredictMDExtra.package_directory("Manifest.toml"))\"")
+        println(logger.stream, "# Beginning of PredictMDExtra package Manifest.toml")
+        println(logger.stream, read(PredictMDExtra.package_directory("Manifest.toml"),String))
+        println(logger.stream, "# End of PredictMDExtra package Manifest.toml")
+    else
+        println(logger.stream, "# File \"$(PredictMDExtra.package_directory("Manifest.toml"))\" does not exist")
+    end
+end
 
 if group_includes_block(TEST_GROUP, TestBlockUnitTests())
     Test.@testset "Unit tests" begin
@@ -142,7 +211,7 @@ Test.@testset "Integration tests" begin
             )
     end
     Test.@testset "Boston housing regression example (CPU)  " begin
-        @info("Testing Boston housing regression example (CPU)")
+        @debug("Testing Boston housing regression example (CPU)")
         boston_housing_tests = [
             "01_preprocess_data.jl" => TestBlockIntegration1(),
             "02_linear_regression.jl" => TestBlockIntegration1(),
@@ -155,12 +224,13 @@ Test.@testset "Integration tests" begin
             test_file = test_pair[1]
             test_block = test_pair[2]
             if group_includes_block(TEST_GROUP, test_block)
-                Test.@testset "cpu_examples/bostonhousing/$(test_file)" begin
+                Test.@testset "cpu_examples/bostonhousing/src/$(test_file)" begin
                     include(
                         joinpath(
                             temp_generate_examples_dir,
                             "cpu_examples",
                             "boston_housing",
+                            "src",
                             test_file,
                             )
                         )
@@ -169,7 +239,7 @@ Test.@testset "Integration tests" begin
         end
     end
     Test.@testset "Breast cancer biopsy classification (CPU)" begin
-        @info("Testing breast cancer biopsy classification example (CPU)")
+        @debug("Testing breast cancer biopsy classification example (CPU)")
         breast_cancer_tests = [
             "01_preprocess_data.jl" => TestBlockIntegration4(),
             "02_smote.jl" => TestBlockIntegration4(),
@@ -185,12 +255,13 @@ Test.@testset "Integration tests" begin
             test_file = test_pair[1]
             test_block = test_pair[2]
             if group_includes_block(TEST_GROUP, test_block)
-                Test.@testset "cpu_examples/breastcancer/$(test_file)" begin
+                Test.@testset "cpu_examples/breastcancer/src/$(test_file)" begin
                     include(
                         joinpath(
                             temp_generate_examples_dir,
                             "cpu_examples",
                             "breast_cancer_biopsy",
+                            "src",
                             test_file,
                             )
                         )

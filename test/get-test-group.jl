@@ -30,7 +30,7 @@ end
 
 if haskey(TEST_GROUP_STRING_TO_INSTANCE, _test_group_value)
     const TEST_GROUP = TEST_GROUP_STRING_TO_INSTANCE[_test_group_value]
-    @info(
+    @debug(
         string(
             "PREDICTMD_TEST_GROUP: \"",
             TEST_GROUP_INSTANCE_TO_STRING[TEST_GROUP],

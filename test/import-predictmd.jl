@@ -2,31 +2,22 @@ import InteractiveUtils
 import Pkg
 import Test
 
-@info(string("Julia depot paths: "), Base.DEPOT_PATH)
-@info(string("Julia load paths: "), Base.LOAD_PATH)
+@debug(string("Julia depot paths: "), Base.DEPOT_PATH)
+@debug(string("Julia load paths: "), Base.LOAD_PATH)
 
-@info(string("Julia version info: ",))
-InteractiveUtils.versioninfo(verbose=true)
+logger = Base.CoreLogging.current_logger_for_env(Base.CoreLogging.Debug, Symbol(splitext(basename(something(@__FILE__, "nothing")))[1]), something(@__MODULE__, "nothing"))
+@debug(string("Julia version info: ",))
+if !isnothing(logger)
+    InteractiveUtils.versioninfo(logger.stream; verbose=true)
+end
 
-@info(string("Output of Pkg.status():",),)
-Pkg.status()
-
-@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_PROJECT):",),)
-Pkg.status(Pkg.Types.PKGMODE_PROJECT)
-
-@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_MANIFEST):",),)
-Pkg.status(Pkg.Types.PKGMODE_MANIFEST)
-
-@info(string("Output of Pkg.status(Pkg.Types.PKGMODE_COMBINED):",),)
-Pkg.status(Pkg.Types.PKGMODE_COMBINED)
-
-@info(string("Attempting to import PredictMD...",))
+@debug(string("Attempting to import PredictMD...",))
 import PredictMD
-@info(string("Successfully imported PredictMD.",))
-@info(string("PredictMD version: "),PredictMD.version(),)
-@info(string("PredictMD package directory: "),PredictMD.package_directory(),)
+@debug(string("Successfully imported PredictMD.",))
+@debug(string("PredictMD version: "),PredictMD.version(),)
+@debug(string("PredictMD package directory: "),PredictMD.package_directory(),)
 
-@info(string("Julia depot paths: "), Base.DEPOT_PATH)
-@info(string("Julia load paths: "), Base.LOAD_PATH)
+@debug(string("Julia depot paths: "), Base.DEPOT_PATH)
+@debug(string("Julia load paths: "), Base.LOAD_PATH)
 
 PredictMD.import_all()

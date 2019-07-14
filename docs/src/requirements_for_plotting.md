@@ -11,6 +11,8 @@ plotting functionality by running the following command in Julia:
 ENV["PREDICTMD_TEST_GROUP"] = "test-plots"; Pkg.test("PredictMD");
 ```
 
+If you do not want to install LaTeX on your computer, you can use the [Docker image](@ref docker_image).
+
 ## Installing LaTeX
 
 To confirm that LaTeX is installed on your system, open a terminal window and

@@ -4,7 +4,7 @@ if length(
     ENV["PREDICTMD_OPEN_PLOTS_DURING_TESTS"] = "false"
 end
 
-@info(
+@debug(
     string(
         "PREDICTMD_OPEN_PLOTS_DURING_TESTS: \"",
         ENV["PREDICTMD_OPEN_PLOTS_DURING_TESTS"],
