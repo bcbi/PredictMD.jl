@@ -36,8 +36,6 @@ import PredictMDExtra
 @debug(string("Julia load paths: "), Base.LOAD_PATH)
 
 logger = Base.CoreLogging.current_logger_for_env(Base.CoreLogging.Debug, Symbol(splitext(basename(something(@__FILE__, "nothing")))[1]), something(@__MODULE__, "nothing"))
-
-logger = Base.CoreLogging.current_logger_for_env(Base.CoreLogging.Debug, Symbol(splitext(basename(something(@__FILE__, "nothing")))[1]), something(@__MODULE__, "nothing"))
 if !isnothing(logger)
     if ispath(Base.active_project())
         println(logger.stream, "# Location of test environment Project.toml: \"$(Base.active_project())\"")
