@@ -9,6 +9,10 @@ addons:
         - texlive-latex-extra
         - texlive-luatex
         - texlive-pictures
+        - tree
+    homebrew:
+        packages:
+        - tree
 
 branches:
     only:
