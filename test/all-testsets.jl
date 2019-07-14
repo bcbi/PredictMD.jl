@@ -8,9 +8,9 @@ Random.seed!(999)
 @debug(string("Julia depot paths: "), Base.DEPOT_PATH)
 @debug(string("Julia load paths: "), Base.LOAD_PATH)
 
-@debug(string("Julia version info: ",))
 logger = Base.CoreLogging.current_logger_for_env(Base.CoreLogging.Debug, Symbol(splitext(basename(something(@__FILE__, "nothing")))[1]), something(@__MODULE__, "nothing"))
 if !isnothing(logger)
+    @debug(string("Julia version info: ",))
     InteractiveUtils.versioninfo(logger.stream; verbose=true)
 end
 
