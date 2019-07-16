@@ -203,3 +203,10 @@ mutable struct DecisionTreeModel <:
     # parameters (learned from data):
     underlyingrandomforest::T7 where T7 <: Any
 end
+
+"""
+"""
+struct CrossValidation{T}
+    leavein::Vector{CrossValidation{T}}
+    leaveout::Vector{Vector{T}}
+end
