@@ -1,3 +1,5 @@
+import MacroTools
+
 """
 """
 function SimplePipeline(
@@ -10,6 +12,34 @@ function SimplePipeline(
         )
     return result
 end
+
+# Base.IndexStyle(itertype::Type{SimplePipeline}) = Base.IndexCartesian()
+# Base.IndexStyle(itertype::Type{SimplePipeline}) = Base.IndexLinear()
+
+MacroTools.@forward SimplePipeline.objectsvector Base.IteratorEltype
+MacroTools.@forward SimplePipeline.objectsvector Base.IteratorSize
+
+MacroTools.@forward SimplePipeline.objectsvector Base.axes
+MacroTools.@forward SimplePipeline.objectsvector Base.eachindex
+MacroTools.@forward SimplePipeline.objectsvector Base.eltype
+MacroTools.@forward SimplePipeline.objectsvector Base.empty!
+MacroTools.@forward SimplePipeline.objectsvector Base.findall
+MacroTools.@forward SimplePipeline.objectsvector Base.findfirst
+MacroTools.@forward SimplePipeline.objectsvector Base.findlast
+MacroTools.@forward SimplePipeline.objectsvector Base.findnext
+MacroTools.@forward SimplePipeline.objectsvector Base.findprev
+MacroTools.@forward SimplePipeline.objectsvector Base.firstindex
+MacroTools.@forward SimplePipeline.objectsvector Base.getindex
+MacroTools.@forward SimplePipeline.objectsvector Base.isassigned
+MacroTools.@forward SimplePipeline.objectsvector Base.isempty
+MacroTools.@forward SimplePipeline.objectsvector Base.iterate
+MacroTools.@forward SimplePipeline.objectsvector Base.lastindex
+MacroTools.@forward SimplePipeline.objectsvector Base.length
+MacroTools.@forward SimplePipeline.objectsvector Base.ndims
+MacroTools.@forward SimplePipeline.objectsvector Base.setindex!
+MacroTools.@forward SimplePipeline.objectsvector Base.size
+MacroTools.@forward SimplePipeline.objectsvector Base.vec
+MacroTools.@forward SimplePipeline.objectsvector Base.view
 
 function Base.:|>(left::AbstractFittable, right::AbstractFittable)
     result = SimplePipeline(AbstractFittable[left]) |>
@@ -41,9 +71,9 @@ function set_max_epochs!(
         x::SimplePipeline,
         new_max_epochs::Integer,
         )
-    for i = 1:length(x.objectsvector)
+    for i = 1:length(x)
         set_max_epochs!(
-            x.objectsvector[i],
+            x[i],
             new_max_epochs,
             )
     end
@@ -56,8 +86,8 @@ function set_feature_contrasts!(
         x::SimplePipeline,
         feature_contrasts::AbstractFeatureContrasts,
         )
-    for i = 1:length(x.objectsvector)
-        set_feature_contrasts!(x.objectsvector[i], feature_contrasts)
+    for i = 1:length(x)
+        set_feature_contrasts!(x[i], feature_contrasts)
     end
     return nothing
 end
@@ -117,8 +147,8 @@ end
 """
 """
 function parse_functions!(simplelinearpipeline::SimplePipeline)
-    for i = 1:length(simplelinearpipeline.objectsvector)
-        parse_functions!(simplelinearpipeline.objectsvector[i])
+    for i = 1:length(simplelinearpipeline)
+        parse_functions!(simplelinearpipeline[i])
     end
     return nothing
 end
@@ -131,14 +161,14 @@ function fit!(
         kwargs...
         )
     output = fit!(
-        simplelinearpipeline.objectsvector[1],
+        simplelinearpipeline[1],
         varargs...;
         kwargs...
         )
-    for i = 2:length(simplelinearpipeline.objectsvector)
+    for i = 2:length(simplelinearpipeline)
         input = tuplify(output)
         output = fit!(
-            simplelinearpipeline.objectsvector[i],
+            simplelinearpipeline[i],
             input...;
             kwargs...
             )
@@ -154,14 +184,14 @@ function predict(
         kwargs...
         )
     output = predict(
-        simplelinearpipeline.objectsvector[1],
+        simplelinearpipeline[1],
         varargs...;
         kwargs...
         )
-    for i = 2:length(simplelinearpipeline.objectsvector)
+    for i = 2:length(simplelinearpipeline)
         input = tuplify(output)
         output = predict(
-            simplelinearpipeline.objectsvector[i],
+            simplelinearpipeline[i],
             input...;
             kwargs...
             )
@@ -177,13 +207,13 @@ function predict_proba(
         kwargs...
         )
     output = predict_proba(
-        simplelinearpipeline.objectsvector[1],
+        simplelinearpipeline[1],
         varargs...
         )
-    for i = 2:length(simplelinearpipeline.objectsvector)
+    for i = 2:length(simplelinearpipeline)
         input = tuplify(output)
         output = predict_proba(
-            simplelinearpipeline.objectsvector[i],
+            simplelinearpipeline[i],
             input...;
             kwargs...
             )

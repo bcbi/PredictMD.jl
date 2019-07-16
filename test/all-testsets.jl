@@ -165,6 +165,7 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
         include(testmodulec_filename)
         test_directory = dirname(@__FILE__)
         unit_test_directory = joinpath(test_directory, "unit")
+        include("unit-tests-type-definitions.jl")
         for (root, dirs, files) in walkdir(unit_test_directory)
             Test.@testset "$(root)" begin
                 for file in files
