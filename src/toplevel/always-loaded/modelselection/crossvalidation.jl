@@ -92,11 +92,6 @@ function ranges_to_vector(ranges::T1)::Vector{Int} where
     return result
 end
 
-struct CrossValidation{T}
-    leavein::Vector{CrossValidation{T}}
-    leaveout::Vector{Vector{T}}
-end
-
 function Base.:(==)(x::CrossValidation{T}, y::CrossValidation{T})::Bool where T
    result::Bool = (x.leaveout == y.leaveout) && (x.leavein == y.leavein)
    return result

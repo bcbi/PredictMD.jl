@@ -2,6 +2,12 @@ import PredictMD
 import StatsBase
 import Test
 
+Test.@test_throws(ArgumentError, PredictMD.get_number_in_each_fold(1, 2))
+
+Test.@test_throws(DimensionMismatch, PredictMD.get_top_level_num_folds(PredictMD.CrossValidation{Int}(PredictMD.CrossValidation{Int}[PredictMD.CrossValidation{Int}(; all_indices = [1,2,3,4,5,6,7,8,9,10], num_folds_per_level = (2,2,2))], Vector{Int}[])))
+
+Test.@test(PredictMD.get_top_level_num_folds(PredictMD.CrossValidation{Int}(PredictMD.CrossValidation{Int}[], Vector{Int}[])) == 0)
+
 Test.@testset "CrossValidation" begin
     Test.@testset "get_number_in_each_fold" begin
         @debug("get_number_in_each_fold")

@@ -12,14 +12,14 @@ Test.@test_throws(
     PredictMD.calculate_smote_pct_under(;pct_over=100,minority_to_majority_ratio=-1.5),
     )
 
-features_df = DataFrames.DataFrame()
-labels_df1 = DataFrames.DataFrame()
-labels_df2 = DataFrames.DataFrame()
-labels_df2[:y] = [1,2,3]
+features_df_0rows = DataFrames.DataFrame()
+labels_df_0rows = DataFrames.DataFrame()
+labels_df_3rows = DataFrames.DataFrame()
+labels_df_3rows[:y] = [1,2,3]
 Test.@test_throws(
     ErrorException,
-    PredictMD.smote(features_df,
-                    labels_df1,
+    PredictMD.smote(features_df_0rows,
+                    labels_df_0rows,
                     Symbol[],
                     :y;
                     majorityclass = "",
@@ -28,8 +28,8 @@ Test.@test_throws(
     )
 Test.@test_throws(
     ErrorException,
-    PredictMD.smote(features_df,
-                    labels_df1,
+    PredictMD.smote(features_df_0rows,
+                    labels_df_0rows,
                     Symbol[],
                     :y;
                     majorityclass = "majorityclass",
@@ -38,8 +38,8 @@ Test.@test_throws(
     )
 Test.@test_throws(
     ErrorException,
-    PredictMD.smote(features_df,
-                    labels_df1,
+    PredictMD.smote(features_df_0rows,
+                    labels_df_0rows,
                     Symbol[],
                     :y;
                     majorityclass = "majorityclass",
@@ -48,8 +48,8 @@ Test.@test_throws(
     )
 Test.@test_throws(
     ErrorException,
-    PredictMD.smote(features_df,
-                    labels_df1,
+    PredictMD.smote(features_df_0rows,
+                    labels_df_0rows,
                     Symbol[],
                     :y;
                     majorityclass = "majorityclass",
@@ -58,8 +58,8 @@ Test.@test_throws(
     )
 Test.@test_throws(
     ErrorException,
-    PredictMD.smote(features_df,
-                    labels_df1,
+    PredictMD.smote(features_df_0rows,
+                    labels_df_0rows,
                     Symbol[],
                     :y;
                     majorityclass = "majorityclass",
@@ -68,8 +68,8 @@ Test.@test_throws(
     )
 Test.@test_throws(
     ErrorException,
-    PredictMD.smote(features_df,
-                    labels_df2,
+    PredictMD.smote(features_df_0rows,
+                    labels_df_3rows,
                     Symbol[],
                     :y;
                     majorityclass = "majorityclass",
