@@ -72,11 +72,8 @@ function smote(
         pct_over = pct_over,
         minority_to_majority_ratio = minority_to_majority_ratio,
         )
-    if size(features_df, 1) != size(labels_df, 1)
-        error("size(features_df, 1) != size(labels_df, 1)")
-    end
-    if size(features_df, 1) == 0
-        error("size(features_df, 1) == 0")
+    if !(size(features_df, 1) == size(labels_df, 1) && size(features_df, 1) > 0)
+        error("!(size(features_df, 1) == size(labels_df, 1) && size(features_df, 1) > 0)")
     end
     labelsstringarray = labels_df[label_name]
     labelsbinaryarray = fill(Int(0), length(labelsstringarray))
@@ -114,4 +111,3 @@ function smote(
     smotedlabels_df[label_name] = smotedlabelsstringarray
     return smotedfeatures_df, smotedlabels_df
 end
-

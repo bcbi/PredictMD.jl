@@ -1,9 +1,9 @@
 import PredictMD
 import Test
 
-Test.@test Base.IteratorSize(PredictMD.SimplePipeline) == Base.HasLength()
 Test.@test Base.IteratorEltype(PredictMD.SimplePipeline) == Base.HasEltype()
-# Test.@test Base.IndexStyle(PredictMD.SimplePipeline) == Base.IndexCartesian()
+Test.@test Base.IteratorSize(PredictMD.SimplePipeline) == Base.HasShape{1}()
+Test.@test Base.IndexStyle(PredictMD.SimplePipeline) == Base.IndexCartesian()
 # Test.@test Base.IndexStyle(PredictMD.SimplePipeline) == Base.IndexLinear()
 
 a = PredictMD.SimplePipeline("name", PredictMD.AbstractFittable[])

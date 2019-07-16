@@ -13,11 +13,10 @@ function SimplePipeline(
     return result
 end
 
-# Base.IndexStyle(itertype::Type{SimplePipeline}) = Base.IndexCartesian()
+Base.IteratorEltype(itertype::Type{SimplePipeline}) = Base.HasEltype()
+Base.IteratorSize(itertype::Type{SimplePipeline}) = Base.HasShape{1}()
+Base.IndexStyle(itertype::Type{SimplePipeline}) = Base.IndexCartesian()
 # Base.IndexStyle(itertype::Type{SimplePipeline}) = Base.IndexLinear()
-
-MacroTools.@forward SimplePipeline.objectsvector Base.IteratorEltype
-MacroTools.@forward SimplePipeline.objectsvector Base.IteratorSize
 
 MacroTools.@forward SimplePipeline.objectsvector Base.axes
 MacroTools.@forward SimplePipeline.objectsvector Base.eachindex
