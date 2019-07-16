@@ -59,7 +59,7 @@ for x in e
 end
 Test.@test isassigned(e, 1)
 
-Test.@test isa(Foo_Fittable() |> Bar_Fittable(), SimplePipeline)
-Test.@test isa(SimplePipeline("", [Foo_Fittable()]) |> Bar_Fittable(), SimplePipeline)
-Test.@test isa(Foo_Fittable() |> SimplePipeline("", [Bar_Fittable()]), SimplePipeline)
-Test.@test isa(SimplePipeline("", [Foo_Fittable()]) |> SimplePipeline("", [Bar_Fittable()]), SimplePipeline)
+Test.@test isa(Foo_Fittable() |> Bar_Fittable(), PredictMD.SimplePipeline)
+Test.@test isa(PredictMD.SimplePipeline("", [Foo_Fittable()]) |> Bar_Fittable(), PredictMD.SimplePipeline)
+Test.@test isa(Foo_Fittable() |> PredictMD.SimplePipeline("", [Bar_Fittable()]), PredictMD.SimplePipeline)
+Test.@test isa(PredictMD.SimplePipeline("", [Foo_Fittable()]) |> PredictMD.SimplePipeline("", [Bar_Fittable()]), PredictMD.SimplePipeline)
