@@ -3,20 +3,26 @@ import MacroTools
 """
 """
 function SimplePipeline(
-        objectsvector::AbstractVector{AbstractFittable};
-        name::AbstractString = "",
-        )
-    result = SimplePipeline(
-        name,
-        objectsvector,
-        )
+        objectsvector::T;
+        name::S = "",
+        ) where
+        S <: AbstractString where
+        T <: AbstractVector{F} where
+        F <: AbstractFittable
+    result = SimplePipeline{S,T}(name,
+                                 objectsvector)
     return result
 end
 
-Base.IteratorEltype(itertype::Type{SimplePipeline}) = Base.HasEltype()
-Base.IteratorSize(itertype::Type{SimplePipeline}) = Base.HasShape{1}()
-Base.IndexStyle(itertype::Type{SimplePipeline}) = Base.IndexCartesian()
-# Base.IndexStyle(itertype::Type{SimplePipeline}) = Base.IndexLinear()
+SimplePipeline(x::T) where T = SimplePipeline(T[x])
+SimplePipeline(p::SimplePipeline) = p
+
+Base.IteratorEltype(itertype::Type{SimplePipeline{S, T}}) where S where T =
+    Base.IteratorEltype(T)
+Base.IteratorSize(itertype::Type{SimplePipeline{S, T}}) where S where T =
+    Base.IteratorSize(T)
+Base.IndexStyle(itertype::Type{SimplePipeline{S, T}}) where S where T =
+    Base.IndexStyle(T)
 
 MacroTools.@forward SimplePipeline.objectsvector Base.axes
 MacroTools.@forward SimplePipeline.objectsvector Base.eachindex
@@ -40,39 +46,93 @@ MacroTools.@forward SimplePipeline.objectsvector Base.size
 MacroTools.@forward SimplePipeline.objectsvector Base.vec
 MacroTools.@forward SimplePipeline.objectsvector Base.view
 
-function Base.:|>(left::AbstractFittable, right::AbstractFittable)
-    result = SimplePipeline(AbstractFittable[left]) |>
-        SimplePipeline(AbstractFittable[right])
+Base.:|>(x::AbstractFittable, y::AbstractFittable) = SimplePipeline(x) |>
+                                                     SimplePipeline(y)
+
+# alternatively, we could replace `Union{F1, F2} with `typejoin(F1, F2)`
+# function Base.:|>(left::F1, right::F2) where
+#         F1 <:AbstractFittable where
+#         F2 <:AbstractFittable
+#     result = SimplePipeline{String, Vector{Union{F1, F2}}}("", [left]) |>
+#              SimplePipeline{String, Vector{Union{F1, F2}}}("", [right])
+#     return result
+# end
+
+# function Base.:|>(left::SimplePipeline, right::F) where F <: AbstractFittable
+#     result = left |> SimplePipeline{String, Vector{F}}("", [right])
+#     return result
+# end
+
+# function Base.:|>(left::F, right::SimplePipeline) where F <: AbstractFittable
+#     result = SimplePipeline{String, Vector{F}}("", [left]) |> right
+#     return result
+# end
+
+# alternatively, we could replace `Union{F1, F2}` with `typejoin(F1, F2)`
+function Base.:|>(p1::SimplePipeline{S1, T1},
+                  p2::SimplePipeline{S2, T2}) where
+                  S1 where T1 <:AbstractVector{F1} where F1 where
+                  S2 where T2 <:AbstractVector{F2} where F2
+    length_1 = length(p1)
+    length_2 = length(p2)
+    new_objectsvector = Vector{Union{F1, F2}}(undef, length_1 + length_2)
+    for i = 1:length_1
+        new_objectsvector[i] = p1[i]
+    end
+    for i = 1:length_2
+        new_objectsvector[length_1 + i] = p2[i]
+    end
+    result = SimplePipeline(new_objectsvector;
+                            name = string(p1.name, p2.name))
     return result
 end
 
-function Base.:|>(left::SimplePipeline, right::AbstractFittable)
-    result = left |> SimplePipeline(AbstractFittable[right])
+"""
+"""
+function flatten(::Type{SimplePipeline}, p::SimplePipeline)
+    result = _flatten(SimplePipeline, p)
     return result
 end
 
-function Base.:|>(left::AbstractFittable, right::SimplePipeline)
-    result = SimplePipeline(AbstractFittable[left]) |> right
-    return result
+flatten(p::SimplePipeline) = _flatten(SimplePipeline, p::SimplePipeline)
+
+# alternatively, we could replace `Union{typeof.(temp_objects)...}` with
+# `typejoin(typeof.(temp_objects)...)`
+function _flatten(::Type{SimplePipeline}, p::SimplePipeline)
+    temp_names = Vector{Any}(undef, 0)
+    temp_objects = Vector{Any}(undef, 0)
+    for i = 1:length(p)
+        object = p[i]
+        push!(temp_names, _flatten_name(SimplePipeline, object))
+        append!(temp_objects, _flatten_objects(SimplePipeline, object))
+    end
+    new_F = Union{typeof.(temp_objects)...}
+    new_objects::Vector{new_F} = Vector{new_F}(undef,length(temp_objects))
+    for j = 1:length(temp_objects)
+        new_objects[j] = temp_objects[j]
+    end
+    new_name::String = string(p.name, join(temp_names, ""))
+    new_pipeline = SimplePipeline(new_objects; name = new_name)
+    return new_pipeline
 end
 
-function Base.:|>(left::SimplePipeline, right::SimplePipeline)
-    result = SimplePipeline(
-        string(left.name, right.name),
-        vcat(left.objectsvector, right.objectsvector),
-        )
-    return result
-end
+_flatten_name(::Type{SimplePipeline}, x) = ""
+_flatten_name(::Type{SimplePipeline}, p::SimplePipeline) =
+    _flatten(SimplePipeline, p).name
+
+_flatten_objects(::Type{SimplePipeline}, x) = [x]
+_flatten_objects(::Type{SimplePipeline}, p::SimplePipeline) =
+    _flatten(SimplePipeline, p).objectsvector
 
 """
 """
 function set_max_epochs!(
-        x::SimplePipeline,
+        p::SimplePipeline,
         new_max_epochs::Integer,
         )
-    for i = 1:length(x)
+    for i = 1:length(p)
         set_max_epochs!(
-            x[i],
+            p[i],
             new_max_epochs,
             )
     end
@@ -82,11 +142,11 @@ end
 """
 """
 function set_feature_contrasts!(
-        x::SimplePipeline,
+        p::SimplePipeline,
         feature_contrasts::AbstractFeatureContrasts,
         )
-    for i = 1:length(x)
-        set_feature_contrasts!(x[i], feature_contrasts)
+    for i = 1:length(p)
+        set_feature_contrasts!(p[i], feature_contrasts)
     end
     return nothing
 end
@@ -94,7 +154,7 @@ end
 """
 """
 function get_underlying(
-        x::SimplePipeline;
+        p::SimplePipeline;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -103,7 +163,7 @@ function get_underlying(
             o;
             saving=saving,
             loading=loading,
-            ) for o in x.objectsvector
+            ) for o in p.objectsvector
         ]
     if saving || loading
     else
@@ -120,7 +180,7 @@ end
 """
 """
 function get_history(
-        x::SimplePipeline;
+        p::SimplePipeline;
         saving::Bool = false,
         loading::Bool = false,
         )
@@ -129,7 +189,7 @@ function get_history(
             o;
             saving = saving,
             loading = loading,
-            ) for o in x.objectsvector
+            ) for o in p.objectsvector
         ]
     if saving || loading
     else
