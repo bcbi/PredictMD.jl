@@ -53,9 +53,9 @@ end
 
 """
 """
-mutable struct SimplePipeline <: AbstractPipeline
-    name::T1 where T1 <: AbstractString
-    objectsvector::T2 where T2 <: AbstractVector{AbstractFittable}
+mutable struct SimplePipeline{S<:AbstractString, T<:AbstractVector} <: AbstractPipeline
+    name::S
+    objectsvector::T
 end
 
 struct PGFPlotsXPlot <: AbstractPlot
