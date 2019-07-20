@@ -17,3 +17,6 @@ Test.@test length(PredictMD.transform(transformer, b)) == 2
 c = DataFrames.DataFrame()
 c[:x] = ["foo", "bar", "baz"]
 Test.@test_throws KeyError PredictMD.transform(transformer, c)
+
+d = DataFrames.DataFrame()
+Test.@test_throws ErrorException PredictMD.DataFrameFeatureContrasts(d, [:x, :x])

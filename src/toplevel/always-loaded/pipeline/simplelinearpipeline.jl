@@ -49,25 +49,6 @@ MacroTools.@forward SimplePipeline.objectsvector Base.view
 Base.:|>(x::AbstractFittable, y::AbstractFittable) = SimplePipeline(x) |>
                                                      SimplePipeline(y)
 
-# alternatively, we could replace `Union{F1, F2} with `typejoin(F1, F2)`
-# function Base.:|>(left::F1, right::F2) where
-#         F1 <:AbstractFittable where
-#         F2 <:AbstractFittable
-#     result = SimplePipeline{String, Vector{Union{F1, F2}}}("", [left]) |>
-#              SimplePipeline{String, Vector{Union{F1, F2}}}("", [right])
-#     return result
-# end
-
-# function Base.:|>(left::SimplePipeline, right::F) where F <: AbstractFittable
-#     result = left |> SimplePipeline{String, Vector{F}}("", [right])
-#     return result
-# end
-
-# function Base.:|>(left::F, right::SimplePipeline) where F <: AbstractFittable
-#     result = SimplePipeline{String, Vector{F}}("", [left]) |> right
-#     return result
-# end
-
 # alternatively, we could replace `Union{F1, F2}` with `typejoin(F1, F2)`
 function Base.:|>(p1::SimplePipeline{S1, T1},
                   p2::SimplePipeline{S2, T2}) where
@@ -89,12 +70,25 @@ end
 
 """
 """
+function ispipeline end
+
+ispipeline(::Any) = false
+ispipeline(::AbstractPipeline) = true
+
+"""
+"""
+function isflat end
+
+isflat(x::SimplePipeline) = !any(ispipeline.(x.objectsvector))
+
+"""
+"""
 function flatten(::Type{SimplePipeline}, p::SimplePipeline)
     result = _flatten(SimplePipeline, p)
     return result
 end
 
-flatten(p::SimplePipeline) = _flatten(SimplePipeline, p::SimplePipeline)
+flatten(p::SimplePipeline) = flatten(SimplePipeline, p::SimplePipeline)
 
 # alternatively, we could replace `Union{typeof.(temp_objects)...}` with
 # `typejoin(typeof.(temp_objects)...)`
