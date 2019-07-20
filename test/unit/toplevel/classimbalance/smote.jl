@@ -76,3 +76,47 @@ Test.@test_throws(
                     minorityclass = "minorityclass",
                     ),
     )
+Test.@test_throws(
+    ErrorException,
+    PredictMD.smote(features_df_0rows,
+                    labels_df_0rows,
+                    Symbol[],
+                    :y;
+                    majorityclass = "majorityclass",
+                    minorityclass = "minorityclass",
+                    minority_to_majority_ratio = 1,
+                    ),
+    )
+Test.@test_throws(
+    ErrorException,
+    PredictMD.smote(features_df_0rows,
+                    labels_df_0rows,
+                    Symbol[],
+                    :y;
+                    majorityclass = "majorityclass",
+                    minorityclass = "minorityclass",
+                    minority_to_majority_ratio = 1,
+                    ),
+    )
+Test.@test_throws(
+    ErrorException,
+    PredictMD.smote(features_df_0rows,
+                    labels_df_0rows,
+                    Symbol[],
+                    :y;
+                    majorityclass = "majorityclass",
+                    minorityclass = "minorityclass",
+                    minority_to_majority_ratio = 1,
+                    ),
+    )
+Test.@test_throws(
+    ErrorException,
+    PredictMD.smote(features_df_0rows,
+                    labels_df_3rows,
+                    Symbol[],
+                    :y;
+                    majorityclass = "majorityclass",
+                    minorityclass = "minorityclass",
+                    minority_to_majority_ratio = 1,
+                    ),
+    )
