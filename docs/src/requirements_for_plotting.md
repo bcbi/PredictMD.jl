@@ -9,7 +9,7 @@ Once you have installed LaTeX, you can test PredictMD's
 plotting functionality by running two lines in Julia:
 ```julia
 ENV["PREDICTMD_TEST_GROUP"] = "test-plots"
-Pkg.test("PredictMD");
+Pkg.test("PredictMD")
 ```
 
 If you do not want to install LaTeX on your computer, you can use the [Docker image](@ref docker_image).
