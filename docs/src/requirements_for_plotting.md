@@ -6,9 +6,12 @@ order to generate plots (e.g. ROC curves), you need to install LaTeX on
 your system. See below for instructions on installing LaTeX.
 
 Once you have installed LaTeX, you can test PredictMD's
-plotting functionality by running the following command in Julia:
+plotting functionality by running two lines in Julia:
 ```julia
-ENV["PREDICTMD_TEST_GROUP"] = "test-plots"; Pkg.test("PredictMD");
+import Pkg
+Pkg.activate("PredictMDEnvironment"; shared = true)
+ENV["PREDICTMD_TEST_GROUP"] = "test-plots"
+Pkg.test("PredictMD")
 ```
 
 If you do not want to install LaTeX on your computer, you can use the [Docker image](@ref docker_image).

@@ -73,9 +73,9 @@ everything is working. You can run the test suite by running the following five 
 ```julia
 import Pkg
 Pkg.activate("PredictMDEnvironment"; shared = true)
-Pkg.test("PredictMD")
 Pkg.test("PredictMDExtra")
 Pkg.test("PredictMDFull")
+Pkg.test("PredictMD")
 ```
 
 ## Citing
@@ -107,9 +107,9 @@ import PredictMDFull
 You can run the test suite by running the following four lines in Julia:
 ```julia
 import Pkg
-Pkg.test("PredictMD")
 Pkg.test("PredictMDExtra")
 Pkg.test("PredictMDFull")
+Pkg.test("PredictMD")
 ```
 
 After you have exited the container, you can return to it by running the following line:

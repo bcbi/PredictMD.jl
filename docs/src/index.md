@@ -18,13 +18,24 @@ import PredictMDFull
 
 ## Running the package tests
 
-You can run the PredictMD test suite by running the
+You can run the default PredictMD test suite by running the
 following five lines in Julia:
 ```julia
 import Pkg
 Pkg.activate("PredictMDEnvironment"; shared = true)
-Pkg.test("PredictMD")
 Pkg.test("PredictMDExtra")
 Pkg.test("PredictMDFull")
+Pkg.test("PredictMD")
 ```
 
+To run the full test suite, which includes
+tests of the plotting functionality, run the following six
+lines in Julia:
+```julia
+import Pkg
+Pkg.activate("PredictMDEnvironment"; shared = true)
+ENV["PREDICTMD_TEST_GROUP"] = "all"
+Pkg.test("PredictMDExtra")
+Pkg.test("PredictMDFull")
+Pkg.test("PredictMD")
+```

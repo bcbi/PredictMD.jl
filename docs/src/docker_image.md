@@ -18,9 +18,10 @@ import PredictMDFull
 You can run the test suite by running the following four lines in Julia:
 ```julia
 import Pkg
-Pkg.test("PredictMD")
+ENV["PREDICTMD_TEST_GROUP"] = "all"
 Pkg.test("PredictMDExtra")
 Pkg.test("PredictMDFull")
+Pkg.test("PredictMD")
 ```
 
 After you have exited the container, you can return to it by running the following line:
