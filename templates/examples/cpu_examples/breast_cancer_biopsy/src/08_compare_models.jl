@@ -189,6 +189,24 @@ knet_mlp_classifier_filename = joinpath(
     "knet_mlp_classifier.jld2",
     )
 
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+logistic_classifier = nothing
+Test.@test isnothing(logistic_classifier)
+
+random_forest_classifier = nothing
+Test.@test isnothing(random_forest_classifier)
+
+c_svc_svm_classifier = nothing
+Test.@test isnothing(c_svc_svm_classifier)
+
+nu_svc_svm_classifier = nothing
+Test.@test isnothing(nu_svc_svm_classifier)
+
+knet_mlp_classifier = nothing
+Test.@test isnothing(knet_mlp_classifier)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
 logistic_classifier =
     PredictMD.load_model(logistic_classifier_filename)
 random_forest_classifier =
@@ -199,7 +217,33 @@ nu_svc_svm_classifier =
     PredictMD.load_model(nu_svc_svm_classifier_filename)
 knet_mlp_classifier =
     PredictMD.load_model(knet_mlp_classifier_filename)
+
+PredictMD.parse_functions!(logistic_classifier)
+PredictMD.parse_functions!(random_forest_classifier)
+PredictMD.parse_functions!(c_svc_svm_classifier)
+PredictMD.parse_functions!(nu_svc_svm_classifier)
 PredictMD.parse_functions!(knet_mlp_classifier)
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+PredictMD.parse_functions!(logistic_classifier)
+PredictMD.parse_functions!(random_forest_classifier)
+PredictMD.parse_functions!(c_svc_svm_classifier)
+PredictMD.parse_functions!(nu_svc_svm_classifier)
+PredictMD.parse_functions!(knet_mlp_classifier)
+
+PredictMD.parse_functions!(logistic_classifier)
+PredictMD.parse_functions!(random_forest_classifier)
+PredictMD.parse_functions!(c_svc_svm_classifier)
+PredictMD.parse_functions!(nu_svc_svm_classifier)
+PredictMD.parse_functions!(knet_mlp_classifier)
+
+PredictMD.parse_functions!(logistic_classifier)
+PredictMD.parse_functions!(random_forest_classifier)
+PredictMD.parse_functions!(c_svc_svm_classifier)
+PredictMD.parse_functions!(nu_svc_svm_classifier)
+PredictMD.parse_functions!(knet_mlp_classifier)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 all_models = PredictMD.AbstractFittable[
     logistic_classifier,

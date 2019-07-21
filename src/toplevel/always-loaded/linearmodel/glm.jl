@@ -238,81 +238,81 @@ end
 
 """
 """
-function singlelabelbinaryclassdataframeprobitclassifier_GLM(
-        feature_names::AbstractVector,
-        single_label_name::Symbol,
-        single_label_levels::AbstractVector;
-        intercept::Bool = true,
-        interactions::Integer = 1,
-        name::AbstractString = "",
-        )
-    negative_class = single_label_levels[1]
-    positive_class = single_label_levels[2]
-    formula = generate_formula(
-        [single_label_name],
-        feature_names;
-        intercept = intercept,
-        interactions = interactions,
-        )
-    dftransformer =
-        ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer(
-            single_label_name,
-            positive_class,
-            )
-    glmestimator = GLMModel(
-        formula,
-        GLM.Binomial(),
-        GLM.ProbitLink();
-        isclassificationmodel = true,
-        isregressionmodel = false,
-        )
-    predictlabelfixer =
-        ImmutablePredictionsSingleLabelInt2StringTransformer(
-            0,
-            single_label_levels,
-            )
-    predprobalabelfixer =
-        ImmutablePredictProbaSingleLabelInt2StringTransformer(
-            0,
-            single_label_levels,
-            )
-    probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
-        single_label_name,
-        )
-    finalpipeline = dftransformer |>
-                    glmestimator |>
-                    predictlabelfixer |>
-                    predprobalabelfixer |>
-                    probapackager
-    finalpipeline.name = name
-    return finalpipeline
-end
+# function singlelabelbinaryclassdataframeprobitclassifier_GLM(
+#         feature_names::AbstractVector,
+#         single_label_name::Symbol,
+#         single_label_levels::AbstractVector;
+#         intercept::Bool = true,
+#         interactions::Integer = 1,
+#         name::AbstractString = "",
+#         )
+#     negative_class = single_label_levels[1]
+#     positive_class = single_label_levels[2]
+#     formula = generate_formula(
+#         [single_label_name],
+#         feature_names;
+#         intercept = intercept,
+#         interactions = interactions,
+#         )
+#     dftransformer =
+#         ImmutableDataFrame2GLMSingleLabelBinaryClassTransformer(
+#             single_label_name,
+#             positive_class,
+#             )
+#     glmestimator = GLMModel(
+#         formula,
+#         GLM.Binomial(),
+#         GLM.ProbitLink();
+#         isclassificationmodel = true,
+#         isregressionmodel = false,
+#         )
+#     predictlabelfixer =
+#         ImmutablePredictionsSingleLabelInt2StringTransformer(
+#             0,
+#             single_label_levels,
+#             )
+#     predprobalabelfixer =
+#         ImmutablePredictProbaSingleLabelInt2StringTransformer(
+#             0,
+#             single_label_levels,
+#             )
+#     probapackager = ImmutablePackageSingleLabelPredictProbaTransformer(
+#         single_label_name,
+#         )
+#     finalpipeline = dftransformer |>
+#                     glmestimator |>
+#                     predictlabelfixer |>
+#                     predprobalabelfixer |>
+#                     probapackager
+#     finalpipeline.name = name
+#     return finalpipeline
+# end
 
 """
 """
-function singlelabelbinaryclassdataframeprobitclassifier(
-        feature_names::AbstractVector,
-        single_label_name::Symbol,
-        single_label_levels::AbstractVector;
-        package::Symbol = :none,
-        intercept::Bool = true,
-        interactions::Integer = 1,
-        name::AbstractString = "",
-        )
-    if package == :GLM
-        result = singlelabelbinaryclassdataframeprobitclassifier_GLM(
-            feature_names,
-            single_label_name,
-            single_label_levels;
-            intercept = intercept,
-            interactions = interactions,
-            name = name,
-            )
-        return result
-    else
-        error("$(package) is not a valid value for package")
-    end
-end
+# function singlelabelbinaryclassdataframeprobitclassifier(
+#         feature_names::AbstractVector,
+#         single_label_name::Symbol,
+#         single_label_levels::AbstractVector;
+#         package::Symbol = :none,
+#         intercept::Bool = true,
+#         interactions::Integer = 1,
+#         name::AbstractString = "",
+#         )
+#     if package == :GLM
+#         result = singlelabelbinaryclassdataframeprobitclassifier_GLM(
+#             feature_names,
+#             single_label_name,
+#             single_label_levels;
+#             intercept = intercept,
+#             interactions = interactions,
+#             name = name,
+#             )
+#         return result
+#     else
+#         error("$(package) is not a valid value for package")
+#     end
+# end
 
 """
 """

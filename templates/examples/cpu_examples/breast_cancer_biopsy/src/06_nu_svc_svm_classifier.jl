@@ -332,6 +332,12 @@ PredictMD.save_model(
     nu_svc_svm_classifier,
     )
 
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+nu_svc_svm_classifier = nothing
+Test.@test isnothing(nu_svc_svm_classifier)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
 ### End nu-SVC code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS

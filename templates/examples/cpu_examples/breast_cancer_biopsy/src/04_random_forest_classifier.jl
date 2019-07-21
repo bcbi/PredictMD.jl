@@ -330,6 +330,12 @@ PredictMD.save_model(
     random_forest_classifier,
     )
 
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+random_forest_classifier = nothing
+Test.@test isnothing(random_forest_classifier)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
 ### End random forest classifier code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS

@@ -6,10 +6,14 @@ import NumericalIntegration
 Compute the area under the curve of 2-dimensional points (x, y) using
 the trapezoidal method.
 """
+function trapz end
+
+trapz(x, y) = trapz(promote(x, y)...)
+
 function trapz(
-        x::AbstractVector,
-        y::AbstractVector,
-        )
+        x::AbstractVector{T},
+        y::AbstractVector{T},
+        )::T where T
     if length(x) != length(y)
         error("length(x) != length(y)")
     end
@@ -19,18 +23,15 @@ function trapz(
     if !all(x .== sort(x; rev = false))
         error("x needs to be sorted in ascending order")
     end
-    twoI = 0
+    twoI::T = zero(T)
     for k = 2:length(x)
         twoI += ( y[k] + y[k-1] ) * ( x[k] - x[k-1] )
     end
-    I = twoI/2
-    I_verify = NumericalIntegration.integrate(
+    I_verify::T = NumericalIntegration.integrate(
         x,
         y,
         NumericalIntegration.Trapezoidal(),
         )
-    if !isapprox(I, I_verify; atol=0.00000001)
-        error("Was not able to accurately compute trapezoidal integration.")
-    end
-    return I
+    @assert isapprox(twoI/2, I_verify; atol=0.00000001)
+    return I_verify
 end

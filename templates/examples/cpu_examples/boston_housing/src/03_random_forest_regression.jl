@@ -295,6 +295,12 @@ PredictMD.save_model(
     random_forest_regression
     )
 
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+random_forest_regression = nothing
+Test.@test isnothing(random_forest_regression)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
 ### End random forest regression code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
