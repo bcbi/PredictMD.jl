@@ -197,6 +197,17 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     feature_names,
     )
 
+Test.@test_throws ErrorException PredictMD.single_labelmulticlassdataframesvmclassifier(
+    feature_names,
+    single_label_name,
+    single_label_levels;
+    package = :packagethatdoesnotexist,
+    svmtype = LIBSVM.SVC,
+    name = "SVM (C-SVC)",
+    verbose = false,
+    feature_contrasts = feature_contrasts,
+    )
+
 c_svc_svm_classifier =
     PredictMD.single_labelmulticlassdataframesvmclassifier(
         feature_names,

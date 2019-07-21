@@ -198,6 +198,19 @@ show(
         )
     )
 
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+Test.@test_throws ErrorException PredictMD.single_labeldataframelinearregression(
+    feature_names,
+    single_label_name;
+    package = :thispackagedoesnotexist,
+    intercept = true,
+    interactions = 1,
+    name = "Linear regression",
+    )
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+
 linear_regression = PredictMD.single_labeldataframelinearregression(
     feature_names,
     single_label_name;
@@ -207,12 +220,26 @@ linear_regression = PredictMD.single_labeldataframelinearregression(
     name = "Linear regression",
     )
 
-PredictMD.fit!(linear_regression,training_features_df,training_labels_df) # TODO: fix this error
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+DEEPCOPY_training_features_df = deepcopy(training_features_df)
+DEEPCOPY_linear_regression = deepcopy(linear_regression)
+DEEPCOPY_training_labels_df = deepcopy(training_labels_df)
+double_DEEPCOPY_training_features_df = hcat(DEEPCOPY_training_features_df, DEEPCOPY_training_features_df; makeunique=true)
+PredictMD.fit!(DEEPCOPY_linear_regression,double_DEEPCOPY_training_features_df,training_labels_df)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+PredictMD.predict(linear_regression, training_features_df)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+PredictMD.fit!(linear_regression,training_features_df,training_labels_df)
 
 PredictMD.get_underlying(linear_regression) # TODO: fix this error
 
 linear_regression_plot_training =
-    PredictMD.plotsinglelabelregressiontrueversuspredicted( # TODO: fix this error
+    PredictMD.plotsinglelabelregressiontrueversuspredicted(
         linear_regression,
         training_features_df,
         training_labels_df,
@@ -320,6 +347,12 @@ linear_regression_filename = joinpath(
 PredictMD.save_model(linear_regression_filename, linear_regression)
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
+PredictMD.predict(linear_regression, training_features_df)
+Test.@test_throws ErrorException PredictMD.predict_proba(linear_regression, training_features_df)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 linear_regression_filename_bson = joinpath(
     PredictMD.maketempdir(),
     "linear_regression.bson",
@@ -355,6 +388,8 @@ Test.@test_throws(
     ErrorException,
     PredictMD.load_model_bson("test.nonexistentextension")
     )
+linear_regression = nothing
+Test.@test isnothing(linear_regression)
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 

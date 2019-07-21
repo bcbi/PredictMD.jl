@@ -574,6 +574,12 @@ knet_mlp_classifier_filename = joinpath(
 
 PredictMD.save_model(knet_mlp_classifier_filename, knet_mlp_classifier)
 
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+knet_mlp_classifier = nothing
+Test.@test isnothing(knet_mlp_classifier)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
 ### End Knet neural network classifier code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS

@@ -154,13 +154,43 @@ knet_mlp_regression_filename = joinpath(
     "knet_mlp_regression.jld2",
     )
 
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+linear_regression = nothing
+Test.@test isnothing(linear_regression)
+
+random_forest_regression = nothing
+Test.@test isnothing(random_forest_regression)
+
+knet_mlp_regression = nothing
+Test.@test isnothing(knet_mlp_regression)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
 linear_regression =
     PredictMD.load_model(linear_regression_filename)
 random_forest_regression =
     PredictMD.load_model(random_forest_regression_filename)
 knet_mlp_regression =
     PredictMD.load_model(knet_mlp_regression_filename)
+
+PredictMD.parse_functions!(linear_regression)
+PredictMD.parse_functions!(random_forest_regression)
 PredictMD.parse_functions!(knet_mlp_regression)
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+PredictMD.parse_functions!(linear_regression)
+PredictMD.parse_functions!(random_forest_regression)
+PredictMD.parse_functions!(knet_mlp_regression)
+
+PredictMD.parse_functions!(linear_regression)
+PredictMD.parse_functions!(random_forest_regression)
+PredictMD.parse_functions!(knet_mlp_regression)
+
+PredictMD.parse_functions!(linear_regression)
+PredictMD.parse_functions!(random_forest_regression)
+PredictMD.parse_functions!(knet_mlp_regression)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 all_models = PredictMD.AbstractFittable[
     linear_regression,

@@ -16,22 +16,23 @@ end
 
 """
 """
-function is_travis_ci_on_apple(a::AbstractDict = ENV)
-    result = is_travis_ci(a) && Sys.isapple()
-    return result
-end
+# function is_travis_ci_on_apple(a::AbstractDict = ENV)
+#     result = is_travis_ci(a) && Sys.isapple()
+#     return result
+# end
 
 """
 """
-function is_appveyor_ci(a::AbstractDict = ENV)
-    result = ( lowercase(strip(get(a, "CI", ""))) == "true" ) &&
-        ( lowercase(strip(get(a, "APPVEYOR", ""))) == "true" )
-    return result
-end
+# function is_appveyor_ci(a::AbstractDict = ENV)
+#     result = ( lowercase(strip(get(a, "CI", ""))) == "true" ) &&
+#         ( lowercase(strip(get(a, "APPVEYOR", ""))) == "true" )
+#     return result
+# end
 
 """
 """
-is_ci(a::AbstractDict = ENV) = is_travis_ci(a) || is_appveyor_ci(a)
+is_ci(a::AbstractDict = ENV) = is_travis_ci(a)
+# is_ci(a::AbstractDict = ENV) = is_travis_ci(a) || is_appveyor_ci(a)
 
 """
 """

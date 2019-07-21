@@ -230,6 +230,19 @@ show(
         )
     )
 
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+Test.@test_throws ErrorException PredictMD.singlelabelbinaryclassdataframelogisticclassifier(
+    feature_names,
+    single_label_name,
+    single_label_levels;
+    package = :thispackagedoesnotexist,
+    intercept = true,
+    interactions = 1,
+    name = "Logistic regression",
+    )
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
 logistic_classifier =
         PredictMD.singlelabelbinaryclassdataframelogisticclassifier(
         feature_names,
@@ -240,6 +253,12 @@ logistic_classifier =
         interactions = 1,
         name = "Logistic regression",
         )
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+PredictMD.predict(logistic_classifier, training_features_df)
+PredictMD.predict_proba(logistic_classifier, training_features_df)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 PredictMD.fit!(logistic_classifier,
                smoted_training_features_df,
@@ -456,6 +475,12 @@ logistic_classifier_filename = joinpath(
     )
 
 PredictMD.save_model(logistic_classifier_filename, logistic_classifier)
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+logistic_classifier = nothing
+Test.@test isnothing(logistic_classifier)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ### End logistic classifier code
 

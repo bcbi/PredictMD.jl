@@ -28,12 +28,10 @@ function simple_linear_regression(
     @assert(isfinite(var_x))
     @assert(isfinite(cov_x_y))
 
-    beta_hat = cov_x_y/var_x
+    coefficient = cov_x_y/var_x
 
-    if isfinite(beta_hat)
-        alpha_hat = y_bar - beta_hat*x_bar
-        intercept = alpha_hat
-        coefficient = beta_hat
+    if isfinite(coefficient)
+        intercept = y_bar - coefficient*x_bar
         @debug(
             string("Found best fit line: "),
             intercept,
@@ -53,4 +51,3 @@ function simple_linear_regression(
 
     return intercept, coefficient
 end
-

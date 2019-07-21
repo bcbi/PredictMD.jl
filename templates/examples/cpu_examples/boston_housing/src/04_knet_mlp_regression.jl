@@ -598,6 +598,12 @@ knet_mlp_regression_filename = joinpath(
 
 PredictMD.save_model(knet_mlp_regression_filename, knet_mlp_regression)
 
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+knet_mlp_regression = nothing
+Test.@test isnothing(knet_mlp_regression)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+
 ### End Knet neural network regression code
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
