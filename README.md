@@ -145,6 +145,7 @@ PredictMD's internals.
 - [PredictMDAPI.jl](https://github.com/bcbi/PredictMDAPI.jl) - Provides the abstract types and generic functions that define the PredictMD application programming interface (API)
 - [PredictMDExtra.jl](https://github.com/bcbi/PredictMDExtra.jl) - Install all of the dependencies of PredictMD (but not PredictMD itself)
 - [PredictMDFull.jl](https://github.com/bcbi/PredictMDFull.jl) - Install PredictMD and all of its dependencies
+- [PredictMDSanitizer.jl](https://github.com/bcbi/PredictMDSanitizer.jl) - Remove potentially sensitive data from trained machine learning models
 
 ## Contributing
 
