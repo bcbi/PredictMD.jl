@@ -37,3 +37,4 @@ docker container rm -f predictmd
 To also delete the downloaded image, run the following line:
 ```bash
 docker image rm -f dilumaluthge/predictmd
+```
