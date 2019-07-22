@@ -191,6 +191,8 @@ show(
         )
     )
 
+
+
 logistic_classifier =
         PredictMD.singlelabelbinaryclassdataframelogisticclassifier(
         feature_names,
@@ -201,6 +203,8 @@ logistic_classifier =
         interactions = 1,
         name = "Logistic regression",
         )
+
+
 
 PredictMD.fit!(logistic_classifier,
                smoted_training_features_df,
@@ -357,6 +361,8 @@ logistic_classifier_filename = joinpath(
     )
 
 PredictMD.save_model(logistic_classifier_filename, logistic_classifier)
+
+
 
 ### End logistic classifier code
 

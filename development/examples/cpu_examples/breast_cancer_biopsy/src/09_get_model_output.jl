@@ -174,6 +174,8 @@ knet_mlp_classifier_filename = joinpath(
     "knet_mlp_classifier.jld2",
     )
 
+
+
 logistic_classifier =
     PredictMD.load_model(logistic_classifier_filename)
 random_forest_classifier =
@@ -184,7 +186,14 @@ nu_svc_svm_classifier =
     PredictMD.load_model(nu_svc_svm_classifier_filename)
 knet_mlp_classifier =
     PredictMD.load_model(knet_mlp_classifier_filename)
+
+PredictMD.parse_functions!(logistic_classifier)
+PredictMD.parse_functions!(random_forest_classifier)
+PredictMD.parse_functions!(c_svc_svm_classifier)
+PredictMD.parse_functions!(nu_svc_svm_classifier)
 PredictMD.parse_functions!(knet_mlp_classifier)
+
+
 
 PredictMD.predict_proba(logistic_classifier, smoted_training_features_df)
 PredictMD.predict_proba(random_forest_classifier, smoted_training_features_df)
