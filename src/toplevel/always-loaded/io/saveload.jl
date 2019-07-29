@@ -1,5 +1,5 @@
 import BSON
-import CSV
+# import CSV
 import CSVFiles
 import DataFrames
 import FileIO
@@ -123,4 +123,3 @@ function load_model_bson(filename::AbstractString)
     @debug(string("Loaded model from file \"", filename, "\""))
     return loaded_fittable_object
 end
-

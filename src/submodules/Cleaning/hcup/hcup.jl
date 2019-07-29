@@ -1,4 +1,4 @@
-import CSV
+# import CSV
 import CSVFiles
 import DataFrames
 import FileIO
@@ -498,10 +498,7 @@ function clean_hcup_nis_csv_icd9(
 
     @info(string("Attempting to write output file..."))
 
-    CSV.write(
-        output_file_name,
-        combined_df,
-        )
+    FileIO.save(output_file_name, combined_df)
 
     @info(
         string(
