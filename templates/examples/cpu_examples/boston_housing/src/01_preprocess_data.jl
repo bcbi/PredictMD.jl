@@ -217,38 +217,14 @@ tuning_labels_df_filename = joinpath(
     "data",
     "tuning_labels_df.csv",
     )
-CSV.write(
-    trainingandtuning_features_df_filename,
-    trainingandtuning_features_df,
-    )
-CSV.write(
-    trainingandtuning_labels_df_filename,
-    trainingandtuning_labels_df,
-    )
-CSV.write(
-    testing_features_df_filename,
-    testing_features_df,
-    )
-CSV.write(
-    testing_labels_df_filename,
-    testing_labels_df,
-    )
-CSV.write(
-    training_features_df_filename,
-    training_features_df,
-    )
-CSV.write(
-    training_labels_df_filename,
-    training_labels_df,
-    )
-CSV.write(
-    tuning_features_df_filename,
-    tuning_features_df,
-    )
-CSV.write(
-    tuning_labels_df_filename,
-    tuning_labels_df,
-    )
+FileIO.save(trainingandtuning_features_df_filename, trainingandtuning_features_df)
+FileIO.save(trainingandtuning_labels_df_filename, trainingandtuning_labels_df)
+FileIO.save(testing_features_df_filename, testing_features_df)
+FileIO.save(testing_labels_df_filename, testing_labels_df)
+FileIO.save(training_features_df_filename, training_features_df)
+FileIO.save(training_labels_df_filename, training_labels_df)
+FileIO.save(tuning_features_df_filename, tuning_features_df)
+FileIO.save(tuning_labels_df_filename, tuning_labels_df)
 
 ### End data preprocessing code
 

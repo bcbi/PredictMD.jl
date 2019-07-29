@@ -219,14 +219,8 @@ smoted_training_labels_df_filename = joinpath(
     "data",
     "smoted_training_labels_df.csv",
     )
-CSV.write(
-    smoted_training_features_df_filename,
-    smoted_training_features_df,
-    )
-CSV.write(
-    smoted_training_labels_df_filename,
-    smoted_training_labels_df,
-    )
+FileIO.save(smoted_training_features_df_filename, smoted_training_features_df)
+FileIO.save(smoted_training_labels_df_filename, smoted_training_labels_df)
 
 ### End SMOTE class-balancing code
 
