@@ -239,7 +239,7 @@ FileIO.save(tuning_labels_df_filename, tuning_labels_df)
 temp_dir = mktempdir()
 atexit((temp_dir) -> rm(XXX; force = true, recursive = true))
 temp_filename_testing_features_df = joinpath(temp_dir, "temp_filename_testing_features_df.csv.gz")
-temp_filename_testing_labels_df = = joinpath(temp_dir, "temp_filename_testing_labels_df.csv.gz")
+temp_filename_testing_labels_df = joinpath(temp_dir, "temp_filename_testing_labels_df.csv.gz")
 
 original_testing_features_df = deepcopy()
 original_testing_labels_df = deepcopy()
