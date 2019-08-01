@@ -234,21 +234,19 @@ FileIO.save(tuning_features_df_filename, tuning_features_df)
 FileIO.save(tuning_labels_df_filename, tuning_labels_df)
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
-# testing_features_df_filename
-# testing_labels_df_filename
 temp_dir = mktempdir()
-atexit((temp_dir) -> rm(XXX; force = true, recursive = true))
-temp_filename_testing_features_df = joinpath(temp_dir, "temp_filename_testing_features_df.csv.gz")
-temp_filename_testing_labels_df = joinpath(temp_dir, "temp_filename_testing_labels_df.csv.gz")
+atexit(() -> rm(temp_dir; force = true, recursive = true))
+temp_gz_filename_testing_features_df = joinpath(temp_dir, "temp_filename_testing_features_df.csv.gz")
+temp_gz_filename_testing_labels_df = joinpath(temp_dir, "temp_filename_testing_labels_df.csv.gz")
 
-original_testing_features_df = deepcopy()
-original_testing_labels_df = deepcopy()
+original_testing_features_df = deepcopy(testing_features_df)
+original_testing_labels_df = deepcopy(testing_labels_df)
 
-CSVFiles.save(CSVFiles.File(CSVFiles.format"CSV", temp_filename_testing_features_df), original_testing_features_df)
-CSVFiles.save(CSVFiles.File(CSVFiles.format"CSV", temp_filename_testing_labels_df), original_testing_labels_df)
+CSVFiles.save(CSVFiles.File(CSVFiles.format"CSV", temp_gz_filename_testing_features_df), original_testing_features_df)
+CSVFiles.save(CSVFiles.File(CSVFiles.format"CSV", temp_gz_filename_testing_labels_df), original_testing_labels_df)
 
-roundtrip_testing_features_df = DataFrames.DataFrame(CSVFiles.load(CSVFiles.File(CSVFiles.format"CSV", temp_filename_testing_features_df); type_detect_rows = 10_000))
-roundtrip_testing_labels_df = DataFrames.DataFrame(CSVFiles.load(CSVFiles.File(CSVFiles.format"CSV", temp_filename_testing_labels_df); type_detect_rows = 10_000))
+roundtrip_testing_features_df = DataFrames.DataFrame(CSVFiles.load(CSVFiles.File(CSVFiles.format"CSV", temp_gz_filename_testing_features_df); type_detect_rows = 10_000))
+roundtrip_testing_labels_df = DataFrames.DataFrame(CSVFiles.load(CSVFiles.File(CSVFiles.format"CSV", temp_gz_filename_testing_labels_df); type_detect_rows = 10_000))
 
 for column in names(roundtrip_testing_features_df)
     for i = 1:size(roundtrip_testing_features_df, 1)
