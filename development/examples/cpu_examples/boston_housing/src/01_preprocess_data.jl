@@ -34,11 +34,18 @@ Random.seed!(999)
 
 df = RDatasets.dataset("MASS", "Boston")
 
-# If your data are in a CSV file, load them with:
+# PredictMD requires that you provide your data in a DataFrame.
+
+# If your data are in a CSV file (e.g. "data.csv"), load them into
+# a DataFrame named `df` with:
 # df = DataFrames.DataFrame(CSVFiles.load("data.csv"; type_detect_rows = 10_000))
 
-# If your data are in a gzipped CSV file, load them with:
+# If your data are in a gzipped CSV file (e.g. "data.csv.gz"), load them into
+# a DataFrame named `df` with:
 # df = DataFrames.DataFrame(CSVFiles.load(CSVFiles.File(CSVFiles.format"CSV", "data.csv.gz"); type_detect_rows = 10_000))
+
+# If your data are in some other format, use the appropriate Julia package to
+# load your data into a DataFrame named `df`.
 
 
 
@@ -180,6 +187,8 @@ FileIO.save(training_features_df_filename, training_features_df)
 FileIO.save(training_labels_df_filename, training_labels_df)
 FileIO.save(tuning_features_df_filename, tuning_features_df)
 FileIO.save(tuning_labels_df_filename, tuning_labels_df)
+
+
 
 ### End data preprocessing code
 
