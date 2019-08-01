@@ -51,11 +51,18 @@ Random.seed!(999)
 
 df = RDatasets.dataset("MASS", "biopsy")
 
-## If your data are in a CSV file, load them with:
+## PredictMD requires that you provide your data in a DataFrame.
+
+## If your data are in a CSV file (e.g. "data.csv"), load them into
+## a DataFrame named `df` with:
 ## df = DataFrames.DataFrame(CSVFiles.load("data.csv"; type_detect_rows = 10_000))
 
-## If your data are in a gzipped CSV file, load them with:
+## If your data are in a gzipped CSV file (e.g. "data.csv.gz"), load them into
+## a DataFrame named `df` with:
 ## df = DataFrames.DataFrame(CSVFiles.load(CSVFiles.File(CSVFiles.format"CSV", "data.csv.gz"); type_detect_rows = 10_000))
+
+## If your data are in some other format, use the appropriate Julia package to
+## load your data into a DataFrame named `df`.
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 df1 = DataFrames.DataFrame()

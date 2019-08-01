@@ -51,11 +51,18 @@ Random.seed!(999)
 
 df = RDatasets.dataset("MASS", "Boston")
 
-## If your data are in a CSV file, load them with:
+## PredictMD requires that you provide your data in a DataFrame.
+
+## If your data are in a CSV file (e.g. "data.csv"), load them into
+## a DataFrame named `df` with:
 ## df = DataFrames.DataFrame(CSVFiles.load("data.csv"; type_detect_rows = 10_000))
 
-## If your data are in a gzipped CSV file, load them with:
+## If your data are in a gzipped CSV file (e.g. "data.csv.gz"), load them into
+## a DataFrame named `df` with:
 ## df = DataFrames.DataFrame(CSVFiles.load(CSVFiles.File(CSVFiles.format"CSV", "data.csv.gz"); type_detect_rows = 10_000))
+
+## If your data are in some other format, use the appropriate Julia package to
+## load your data into a DataFrame named `df`.
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 df1 = DataFrames.DataFrame()
@@ -225,6 +232,45 @@ FileIO.save(training_features_df_filename, training_features_df)
 FileIO.save(training_labels_df_filename, training_labels_df)
 FileIO.save(tuning_features_df_filename, tuning_features_df)
 FileIO.save(tuning_labels_df_filename, tuning_labels_df)
+
+# PREDICTMD IF INCLUDE TEST STATEMENTS
+temp_dir = mktempdir()
+atexit(() -> rm(temp_dir; force = true, recursive = true))
+temp_gz_filename_testing_features_df = joinpath(temp_dir, "temp_filename_testing_features_df.csv.gz")
+temp_gz_filename_testing_labels_df = joinpath(temp_dir, "temp_filename_testing_labels_df.csv.gz")
+
+original_testing_features_df = deepcopy(testing_features_df)
+original_testing_labels_df = deepcopy(testing_labels_df)
+
+CSVFiles.save(CSVFiles.File(CSVFiles.format"CSV", temp_gz_filename_testing_features_df), original_testing_features_df)
+CSVFiles.save(CSVFiles.File(CSVFiles.format"CSV", temp_gz_filename_testing_labels_df), original_testing_labels_df)
+
+roundtrip_testing_features_df = DataFrames.DataFrame(CSVFiles.load(CSVFiles.File(CSVFiles.format"CSV", temp_gz_filename_testing_features_df); type_detect_rows = 10_000))
+roundtrip_testing_labels_df = DataFrames.DataFrame(CSVFiles.load(CSVFiles.File(CSVFiles.format"CSV", temp_gz_filename_testing_labels_df); type_detect_rows = 10_000))
+
+for column in names(roundtrip_testing_features_df)
+    for i = 1:size(roundtrip_testing_features_df, 1)
+        if ismissing(roundtrip_testing_features_df[i, column])
+            Test.@test ismissing(original_testing_features_df[i, column])
+        else
+            Test.@test roundtrip_testing_features_df[i, column] == original_testing_features_df[i, column]
+        end
+    end
+end
+
+for column in names(roundtrip_testing_labels_df)
+    for i = 1:size(roundtrip_testing_labels_df, 1)
+        if ismissing(roundtrip_testing_labels_df[i, column])
+            Test.@test ismissing(original_testing_labels_df[i, column])
+        else
+            Test.@test roundtrip_testing_labels_df[i, column] == original_testing_labels_df[i, column]
+        end
+    end
+end
+
+rm(temp_dir; force = true, recursive = true)
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 ### End data preprocessing code
 
