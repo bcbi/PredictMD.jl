@@ -18,7 +18,7 @@ PredictMD - Uniform interface for machine learning in Julia
 | --- | -------- | ---- |
 | Aluthge DP | Brown Center for Biomedical Informatics, Brown University | 0000-0002-9247-0530 |
 | Sinha I | Brown Center for Biomedical Informatics, Brown University | 0000-0001-7796-819X |
-| Stey P | Brown Center for Biomedical Informatics, Brown University |  |
+| Stey P | Brown Center for Biomedical Informatics, Brown University | 0000-0003-2112-6756 |
 | Restrepo MI | Brown Center for Biomedical Informatics, Brown University | 0000-0002-2708-8984 |
 | Chen ES | Brown Center for Biomedical Informatics, Brown University | 0000-0002-6181-3369 |
 | Sarkar IN | Brown Center for Biomedical Informatics, Brown University | 0000-0003-2054-7356 |
