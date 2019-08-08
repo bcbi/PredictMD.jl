@@ -58,33 +58,13 @@ function get_number_of_unique_values_include_missings(itr)::Int
     return result
 end
 
-# function find_constant_rows(m::AbstractMatrix)::Vector{Int}
-#     list_of_constant_row_indices = Int[]
-#     for i = 1:size(m, 1)
-#         if get_number_of_unique_values(m[i, :]) < 2
-#             push!(list_of_constant_row_indices, i)
-#         end
-#     end
-#     return list_of_constant_row_indices
-# end
-
-# function find_constant_columns(m::AbstractMatrix)::Vector{Int}
-#     list_of_constant_column_indices = Int[]
-#     for j = 1:size(m, 2)
-#         if get_number_of_unique_values(m[:, j]) < 2
-#             push!(list_of_constant_column_indices, j)
-#         end
-#     end
-#     return list_of_constant_column_indices
-# end
-
 function find_constant_columns(
         df::DataFrames.AbstractDataFrame,
         )::Vector{Symbol}
     list_of_constant_column_names = Symbol[]
     for x in DataFrames.names(df)
         if get_number_of_unique_values(df[x]) < 2
-            push!(list_of_constant_column_names)
+            push!(list_of_constant_column_names, x)
         end
     end
     return list_of_constant_column_names
