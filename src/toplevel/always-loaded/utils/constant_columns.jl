@@ -64,7 +64,7 @@ function find_constant_columns(
     list_of_constant_column_names = Symbol[]
     for x in DataFrames.names(df)
         if get_number_of_unique_values(df[x]) < 2
-            push!(list_of_constant_column_names)
+            push!(list_of_constant_column_names, x)
         end
     end
     return list_of_constant_column_names
