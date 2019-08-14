@@ -2,7 +2,7 @@ name = "PredictMD"
 uuid = "3e7d7328-36f8-4388-bd01-4613c92c7370"
 authors = ["Dilum Aluthge <dilum@aluthge.com>", "Ishan Sinha <ishan_sinha@brown.edu>", "Paul Stey <paulstey@gmail.com>", "Isabel Restrepo <isabelrestre@gmail.com>", "Elizabeth Chen <liz_chen@brown.edu>", "Neil Sarkar <neil_sarkar@brown.edu>", "Brown Center for Biomedical Informatics <bcbi@brown.edu>"]
 doi = "10.5281/zenodo.1291209"
-version = "0.32.1-DEV"
+version = "0.33.0-DEV"
 version_codename = "Unstable Angina"
 
 [deps]
