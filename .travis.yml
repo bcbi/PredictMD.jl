@@ -70,6 +70,7 @@ after_script:
 
 stages:
     - "Compatibility"
+    - "Test"
     - "travis-1"
     - "travis-2"
     - "travis-3"
@@ -82,6 +83,13 @@ stages:
 
 jobs:
     include:
+        - stage: "Compatibility"
+          os: linux
+          env:
+            - JULIA_VER="1.1"
+          before_install: ./ci/travis/before_install.sh "Compatibility"
+          install: ./ci/travis/compatibility.sh
+          script: true
 
         - stage: travis-1
           os: linux

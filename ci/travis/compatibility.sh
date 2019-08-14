@@ -2,8 +2,6 @@
 
 set -ev
 
-julia --check-bounds=yes --color=yes ./ci/travis/package-overlap.jl
-
 cd ~
 rm -rf ~/.julia
 rm -rf ~/environments
