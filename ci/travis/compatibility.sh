@@ -2,6 +2,8 @@
 
 set -ev
 
+export PATH="${PATH}:${TRAVIS_HOME}/julia/bin"
+
 cd ~
 rm -rf ~/.julia
 rm -rf ~/environments
