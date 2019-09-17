@@ -47,7 +47,9 @@ end
 
 ### Begin model comparison code
 
-Kernel = LIBSVM.Kernel
+using LIBSVM
+const Kernel = LIBSVM.Kernel
+const KERNEL = LIBSVM.Kernel.KERNEL
 
 Random.seed!(999)
 
