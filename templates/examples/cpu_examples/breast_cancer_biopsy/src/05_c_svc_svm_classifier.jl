@@ -47,9 +47,7 @@ end
 
 ### Begin C-SVC code
 
-using LIBSVM
-const Kernel = LIBSVM.Kernel
-const KERNEL = LIBSVM.Kernel.KERNEL
+Kernel = LIBSVM.Kernel
 
 Random.seed!(999)
 
