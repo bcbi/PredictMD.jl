@@ -32,7 +32,7 @@ env:
         - DOCUMENTER_DEBUG="true"
         - FIRST_GROUP="travis-1"
         - JULIA_DEBUG="all"
-        - JULIA_VERSION_FOR_DOCS="1.1"
+        - JULIA_VERSION_FOR_DOCS="1.2"
         - LAST_GROUP="travis-7"
         - PREDICTMD_OPEN_PLOTS_DURING_TESTS="true"
 
@@ -86,7 +86,7 @@ jobs:
         - stage: "Compatibility"
           os: linux
           env:
-            - JULIA_VER="1.1"
+            - JULIA_VER="1.2"
           before_install: ./ci/travis/before_install.sh "Compatibility"
           install: ./ci/travis/compatibility.sh
           script: true
@@ -94,7 +94,7 @@ jobs:
         - stage: travis-1
           os: linux
           env:
-            - JULIA_VER="1.1"
+            - JULIA_VER="1.2"
             - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-1"
           install: ./ci/travis/install.sh "travis-1"
@@ -103,7 +103,7 @@ jobs:
         # - stage: travis-1
         #   os: linux
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="no"
         #   before_install: ./ci/travis/before_install.sh "travis-1"
         #   install: ./ci/travis/install.sh "travis-1"
@@ -112,7 +112,7 @@ jobs:
         # - stage: travis-1
         #   os: osx
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="yes"
         #   before_install: ./ci/travis/before_install.sh "travis-1"
         #   install: ./ci/travis/install.sh "travis-1"
@@ -121,7 +121,7 @@ jobs:
         # - stage: travis-1
         #   os: osx
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="no"
         #   before_install: ./ci/travis/before_install.sh "travis-1"
         #   install: ./ci/travis/install.sh "travis-1"
@@ -130,7 +130,7 @@ jobs:
         - stage: travis-2
           os: linux
           env:
-            - JULIA_VER="1.1"
+            - JULIA_VER="1.2"
             - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-2"
           install: ./ci/travis/install.sh "travis-2"
@@ -139,7 +139,7 @@ jobs:
         # - stage: travis-2
         #   os: linux
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="no"
         #   before_install: ./ci/travis/before_install.sh "travis-2"
         #   install: ./ci/travis/install.sh "travis-2"
@@ -148,7 +148,7 @@ jobs:
         # - stage: travis-2
         #   os: osx
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="yes"
         #   before_install: ./ci/travis/before_install.sh "travis-2"
         #   install: ./ci/travis/install.sh "travis-2"
@@ -157,7 +157,7 @@ jobs:
         # - stage: travis-2
         #   os: osx
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="no"
         #   before_install: ./ci/travis/before_install.sh "travis-2"
         #   install: ./ci/travis/install.sh "travis-2"
@@ -166,7 +166,7 @@ jobs:
         - stage: travis-3
           os: linux
           env:
-            - JULIA_VER="1.1"
+            - JULIA_VER="1.2"
             - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-3"
           install: ./ci/travis/install.sh "travis-3"
@@ -175,7 +175,7 @@ jobs:
         # - stage: travis-3
         #   os: linux
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="no"
         #   before_install: ./ci/travis/before_install.sh "travis-3"
         #   install: ./ci/travis/install.sh "travis-3"
@@ -184,7 +184,7 @@ jobs:
         # - stage: travis-3
         #   os: osx
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="yes"
         #   before_install: ./ci/travis/before_install.sh "travis-3"
         #   install: ./ci/travis/install.sh "travis-3"
@@ -193,7 +193,7 @@ jobs:
         # - stage: travis-3
         #   os: osx
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="no"
         #   before_install: ./ci/travis/before_install.sh "travis-3"
         #   install: ./ci/travis/install.sh "travis-3"
@@ -202,7 +202,7 @@ jobs:
         - stage: travis-4
           os: linux
           env:
-            - JULIA_VER="1.1"
+            - JULIA_VER="1.2"
             - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-4"
           install: ./ci/travis/install.sh "travis-4"
@@ -211,7 +211,7 @@ jobs:
         # - stage: travis-4
         #   os: linux
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="no"
         #   before_install: ./ci/travis/before_install.sh "travis-4"
         #   install: ./ci/travis/install.sh "travis-4"
@@ -220,7 +220,7 @@ jobs:
         # - stage: travis-4
         #   os: osx
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="yes"
         #   before_install: ./ci/travis/before_install.sh "travis-4"
         #   install: ./ci/travis/install.sh "travis-4"
@@ -229,7 +229,7 @@ jobs:
         # - stage: travis-4
         #   os: osx
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="no"
         #   before_install: ./ci/travis/before_install.sh "travis-4"
         #   install: ./ci/travis/install.sh "travis-4"
@@ -238,7 +238,7 @@ jobs:
         - stage: travis-5
           os: linux
           env:
-            - JULIA_VER="1.1"
+            - JULIA_VER="1.2"
             - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-5"
           install: ./ci/travis/install.sh "travis-5"
@@ -247,7 +247,7 @@ jobs:
         # - stage: travis-5
         #   os: linux
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="no"
         #   before_install: ./ci/travis/before_install.sh "travis-5"
         #   install: ./ci/travis/install.sh "travis-5"
@@ -256,7 +256,7 @@ jobs:
         # - stage: travis-5
         #   os: osx
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="yes"
         #   before_install: ./ci/travis/before_install.sh "travis-5"
         #   install: ./ci/travis/install.sh "travis-5"
@@ -265,7 +265,7 @@ jobs:
         # - stage: travis-5
         #   os: osx
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="no"
         #   before_install: ./ci/travis/before_install.sh "travis-5"
         #   install: ./ci/travis/install.sh "travis-5"
@@ -274,7 +274,7 @@ jobs:
         - stage: travis-6
           os: linux
           env:
-            - JULIA_VER="1.1"
+            - JULIA_VER="1.2"
             - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-6"
           install: ./ci/travis/install.sh "travis-6"
@@ -283,7 +283,7 @@ jobs:
         # - stage: travis-6
         #   os: linux
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="no"
         #   before_install: ./ci/travis/before_install.sh "travis-6"
         #   install: ./ci/travis/install.sh "travis-6"
@@ -292,7 +292,7 @@ jobs:
         # - stage: travis-6
         #   os: osx
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="yes"
         #   before_install: ./ci/travis/before_install.sh "travis-6"
         #   install: ./ci/travis/install.sh "travis-6"
@@ -301,7 +301,7 @@ jobs:
         # - stage: travis-6
         #   os: osx
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="no"
         #   before_install: ./ci/travis/before_install.sh "travis-6"
         #   install: ./ci/travis/install.sh "travis-6"
@@ -310,7 +310,7 @@ jobs:
         - stage: travis-7
           os: linux
           env:
-            - JULIA_VER="1.1"
+            - JULIA_VER="1.2"
             - COMP_MODS="yes"
           before_install: ./ci/travis/before_install.sh "travis-7"
           install: ./ci/travis/install.sh "travis-7"
@@ -319,7 +319,7 @@ jobs:
         # - stage: travis-7
         #   os: linux
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="no"
         #   before_install: ./ci/travis/before_install.sh "travis-7"
         #   install: ./ci/travis/install.sh "travis-7"
@@ -328,7 +328,7 @@ jobs:
         # - stage: travis-7
         #   os: osx
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="yes"
         #   before_install: ./ci/travis/before_install.sh "travis-7"
         #   install: ./ci/travis/install.sh "travis-7"
@@ -337,7 +337,7 @@ jobs:
         # - stage: travis-7
         #   os: osx
         #   env:
-        #     - JULIA_VER="1.1"
+        #     - JULIA_VER="1.2"
         #     - COMP_MODS="no"
         #   before_install: ./ci/travis/before_install.sh "travis-7"
         #   install: ./ci/travis/install.sh "travis-7"
