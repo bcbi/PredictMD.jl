@@ -1,5 +1,5 @@
 import CUDAapi
-import GPUArrays
+# import GPUArrays
 import Knet
 import ProgressMeter
 import ValueHistories

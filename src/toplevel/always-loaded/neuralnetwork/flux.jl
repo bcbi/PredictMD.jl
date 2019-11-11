@@ -1,7 +1,7 @@
 import Adapt
 import CUDAapi
 import Flux
-import GPUArrays
+# import GPUArrays
 import NNlib
 import ProgressMeter
 import ValueHistories
