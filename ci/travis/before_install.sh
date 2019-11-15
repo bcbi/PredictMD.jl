@@ -9,9 +9,9 @@ export JULIA_PROJECT=@.
 
 if [[ "$TRAVIS_OS_NAME" == "linux" ]];
 then
-    if [[ "$TRAVIS_JULIA_VERSION" == "1.1" ]];
+    if [[ "$TRAVIS_JULIA_VERSION" == "1.2" ]];
     then
-        export JULIA_URL="https://julialang-s3.julialang.org/bin/linux/x64/1.1/julia-1.1-latest-linux-x86_64.tar.gz"
+        export JULIA_URL="https://julialang-s3.julialang.org/bin/linux/x64/1.2/julia-1.2-latest-linux-x86_64.tar.gz"
     fi
     if [[ "$TRAVIS_JULIA_VERSION" == "nightly" ]];
     then
@@ -29,9 +29,9 @@ fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]];
 then
-    if [[ "$TRAVIS_JULIA_VERSION" == "1.1" ]];
+    if [[ "$TRAVIS_JULIA_VERSION" == "1.2" ]];
     then
-        export JULIA_URL="https://julialang-s3.julialang.org/bin/mac/x64/1.1/julia-1.1-latest-mac64.dmg"
+        export JULIA_URL="https://julialang-s3.julialang.org/bin/mac/x64/1.2/julia-1.2-latest-mac64.dmg"
     else
         :
     fi
