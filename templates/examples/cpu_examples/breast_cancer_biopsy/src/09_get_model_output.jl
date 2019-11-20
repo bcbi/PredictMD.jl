@@ -1,20 +1,32 @@
 ## %PREDICTMD_GENERATED_BY%
 
-import PredictMDExtra
+using PredictMDExtra
 PredictMDExtra.import_all()
 
-import PredictMD
+using PredictMD
 PredictMD.import_all()
 
-# PREDICTMD IF INCLUDE TEST STATEMENTS
-import CSVFiles
-import DataFrames
-import FileIO
-import RDatasets
-import Random
-import Test
-# PREDICTMD ELSE
-# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
+using CSVFiles
+using CategoricalArrays
+using DataFrames
+using DecisionTree
+using Distributions
+using FileIO
+using GLM
+using IterTools
+using Knet
+using LIBSVM
+using LinearAlgebra
+using PredictMD
+using PredictMDAPI
+using PredictMDExtra
+using RDatasets
+using Random
+using StatsModels
+using Test
+using Unitful
+
+const Schema = StatsModels.Schema
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 logger = Base.CoreLogging.current_logger_for_env(Base.CoreLogging.Debug, Symbol(splitext(basename(something(@__FILE__, "nothing")))[1]), something(@__MODULE__, "nothing"))

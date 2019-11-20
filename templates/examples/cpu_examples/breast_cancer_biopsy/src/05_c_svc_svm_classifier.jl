@@ -1,20 +1,10 @@
 ## %PREDICTMD_GENERATED_BY%
 
-import PredictMDExtra
+using PredictMDExtra
 PredictMDExtra.import_all()
 
-import PredictMD
+using PredictMD
 PredictMD.import_all()
-
-# PREDICTMD IF INCLUDE TEST STATEMENTS
-import CSVFiles
-import DataFrames
-import FileIO
-import RDatasets
-import Random
-import Test
-# PREDICTMD ELSE
-# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 logger = Base.CoreLogging.current_logger_for_env(Base.CoreLogging.Debug, Symbol(splitext(basename(something(@__FILE__, "nothing")))[1]), something(@__MODULE__, "nothing"))
@@ -207,6 +197,7 @@ feature_contrasts = PredictMD.generate_feature_contrasts(
     feature_names,
     )
 
+# PREDICTMD IF INCLUDE TEST STATEMENTS
 Test.@test_throws ErrorException PredictMD.single_labelmulticlassdataframesvmclassifier(
     feature_names,
     single_label_name,
@@ -217,6 +208,8 @@ Test.@test_throws ErrorException PredictMD.single_labelmulticlassdataframesvmcla
     verbose = false,
     feature_contrasts = feature_contrasts,
     )
+# PREDICTMD ELSE
+# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 c_svc_svm_classifier =
     PredictMD.single_labelmulticlassdataframesvmclassifier(

@@ -1,20 +1,10 @@
 ## %PREDICTMD_GENERATED_BY%
 
-import PredictMDExtra
+using PredictMDExtra
 PredictMDExtra.import_all()
 
-import PredictMD
+using PredictMD
 PredictMD.import_all()
-
-# PREDICTMD IF INCLUDE TEST STATEMENTS
-import CSVFiles
-import DataFrames
-import FileIO
-import RDatasets
-import Random
-import Test
-# PREDICTMD ELSE
-# PREDICTMD ENDIF INCLUDE TEST STATEMENTS
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
 logger = Base.CoreLogging.current_logger_for_env(Base.CoreLogging.Debug, Symbol(splitext(basename(something(@__FILE__, "nothing")))[1]), something(@__MODULE__, "nothing"))
@@ -184,9 +174,6 @@ Test.@test(
         )
     )
 Test.@test(
-    length(PredictMD.linearly_dependent_columns(df)) == 0
-    )
-Test.@test(
     length(
         PredictMD.linearly_dependent_columns(
             training_features_df,
@@ -196,10 +183,6 @@ Test.@test(
     )
 # PREDICTMD ELSE
 # PREDICTMD ENDIF INCLUDE TEST STATEMENTS
-
-show(
-    logger_stream, PredictMD.linearly_dependent_columns(df)
-    )
 
 show(
     logger_stream, PredictMD.linearly_dependent_columns(
