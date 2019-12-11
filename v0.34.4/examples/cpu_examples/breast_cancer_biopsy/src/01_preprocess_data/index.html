@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>1.  Preprocess data · PredictMD documentation</title><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../../../../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../../../../assets/documenter.js"></script><script src="../../../../../siteinfo.js"></script><script src="../../../../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../../../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit">PredictMD documentation</span></div><form class="docs-search" action="../../../../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../../../../">Home</a></li><li><a class="tocitem" href="../../../../../requirements_for_plotting/">Requirements for plotting (optional)</a></li><li><a class="tocitem" href="../../../../../docker_image/">Docker image</a></li><li><span class="tocitem">Examples</span><ul><li><a class="tocitem" href="../../../../../generate_examples/generate_examples/">Generating these example files on your computer</a></li><li><input class="collapse-toggle" id="menuitem-4-2" type="checkbox"/><label class="tocitem" for="menuitem-4-2"><span class="docs-label">Boston housing (single label regression)</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../../boston_housing/src/01_preprocess_data/">1.  Preprocess data</a></li><li><a class="tocitem" href="../../../boston_housing/src/02_linear_regression/">2.  Linear regressions</a></li><li><a class="tocitem" href="../../../boston_housing/src/03_random_forest_regression/">3.  Random forest regression</a></li><li><a class="tocitem" href="../../../boston_housing/src/04_knet_mlp_regression/">4.  Knet neural network regression</a></li><li><a class="tocitem" href="../../../boston_housing/src/05_compare_models/">5.  Compare models</a></li><li><a class="tocitem" href="../../../boston_housing/src/06_get_model_output/">6.  Directly access model output</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-4-3" type="checkbox" checked/><label class="tocitem" for="menuitem-4-3"><span class="docs-label">Breast cancer biopsy (single label binary classification)</span><i class="docs-chevron"></i></label><ul class="collapsed"><li class="is-active"><a class="tocitem" href>1.  Preprocess data</a></li><li><a class="tocitem" href="../02_smote/">2.  Apply SMOTE algorithm</a></li><li><a class="tocitem" href="../03_logistic_classifier/">3.  Logistic classifier</a></li><li><a class="tocitem" href="../04_random_forest_classifier/">4.  Random forest classifier</a></li><li><a class="tocitem" href="../05_c_svc_svm_classifier/">5.  C-SVC support vector machine classifier</a></li><li><a class="tocitem" href="../06_nu_svc_svm_classifier/">6.  nu-SVC support vector machine classifier</a></li><li><a class="tocitem" href="../07_knet_mlp_classifier/">7.  Knet neural network classifier</a></li><li><a class="tocitem" href="../08_compare_models/">8.  Compare models</a></li><li><a class="tocitem" href="../09_get_model_output/">9.  Directly access model output</a></li></ul></li></ul></li><li><span class="tocitem">Library</span><ul><li><a class="tocitem" href="../../../../../library/internals/">Internals</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Examples</a></li><li><a class="is-disabled">Breast cancer biopsy (single label binary classification)</a></li><li class="is-active"><a href>1.  Preprocess data</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>1.  Preprocess data</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/bcbi/PredictMD.jl/blob/master/templates/examples/cpu_examples/breast_cancer_biopsy/src/01_preprocess_data.jl" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><pre><code class="language-julia"># This file was generated by PredictMD version 0.34.4
+# For help, please visit https://predictmd.net
+
+using PredictMDExtra
+PredictMDExtra.import_all()
+
+using PredictMD
+PredictMD.import_all()
+
+
+
+### Begin project-specific settings
+
+DIRECTORY_CONTAINING_THIS_FILE = @__DIR__
+PROJECT_DIRECTORY = dirname(
+    joinpath(splitpath(DIRECTORY_CONTAINING_THIS_FILE)...)
+    )
+PROJECT_OUTPUT_DIRECTORY = joinpath(
+    PROJECT_DIRECTORY,
+    &quot;output&quot;,
+    )
+mkpath(PROJECT_OUTPUT_DIRECTORY)
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, &quot;data&quot;))
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, &quot;models&quot;))
+mkpath(joinpath(PROJECT_OUTPUT_DIRECTORY, &quot;plots&quot;))
+
+
+
+### End project-specific settings
+
+### Begin data preprocessing code
+
+Random.seed!(999)
+
+df = RDatasets.dataset(&quot;MASS&quot;, &quot;biopsy&quot;)
+
+# PredictMD requires that you provide your data in a DataFrame.
+
+# If your data are in a CSV file (e.g. &quot;data.csv&quot;), load them into
+# a DataFrame named `df` with:
+# df = DataFrames.DataFrame(CSVFiles.load(&quot;data.csv&quot;; type_detect_rows = 10_000))
+
+# If your data are in a gzipped CSV file (e.g. &quot;data.csv.gz&quot;), load them into
+# a DataFrame named `df` with:
+# df = DataFrames.DataFrame(CSVFiles.load(CSVFiles.File(CSVFiles.format&quot;CSV&quot;, &quot;data.csv.gz&quot;); type_detect_rows = 10_000))
+
+# If your data are in some other format, use the appropriate Julia package to
+# load your data into a DataFrame named `df`.
+
+
+
+categorical_feature_names = Symbol[]
+continuous_feature_names = Symbol[
+    :V1,
+    :V2,
+    :V3,
+    :V4,
+    :V5,
+    :V6,
+    :V7,
+    :V8,
+    :V9,
+    ]
+categorical_feature_names_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;data&quot;,
+    &quot;categorical_feature_names.jld2&quot;,
+    )
+continuous_feature_names_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;data&quot;,
+    &quot;continuous_feature_names.jld2&quot;,
+    )
+FileIO.save(
+    categorical_feature_names_filename,
+    &quot;categorical_feature_names&quot;,
+    categorical_feature_names,
+    )
+FileIO.save(
+    continuous_feature_names_filename,
+    &quot;continuous_feature_names&quot;,
+    continuous_feature_names,
+    )
+feature_names = vcat(categorical_feature_names, continuous_feature_names)
+
+single_label_name = :Class
+negative_class = &quot;benign&quot;
+positive_class = &quot;malignant&quot;
+single_label_levels = [negative_class, positive_class]
+
+categorical_label_names = Symbol[single_label_name]
+continuous_label_names = Symbol[]
+label_names = vcat(categorical_label_names, continuous_label_names)
+
+df = df[:, vcat(feature_names, label_names)]
+DataFrames.dropmissing!(df; disallowmissing=true,)
+PredictMD.shuffle_rows!(df)
+
+PredictMD.fix_column_types!(
+    df;
+    categorical_feature_names = categorical_feature_names,
+    continuous_feature_names = continuous_feature_names,
+    categorical_label_names = categorical_label_names,
+    continuous_label_names = continuous_label_names,
+    )
+PredictMD.check_column_types(
+    df;
+    categorical_feature_names = categorical_feature_names,
+    continuous_feature_names = continuous_feature_names,
+    categorical_label_names = categorical_label_names,
+    continuous_label_names = continuous_label_names,
+    )
+
+
+
+features_df = df[feature_names]
+labels_df = df[label_names]
+
+(trainingandtuning_features_df,
+    trainingandtuning_labels_df,
+    testing_features_df,
+    testing_labels_df,) = PredictMD.split_data(
+        features_df,
+        labels_df,
+        0.75,
+        )
+(training_features_df,
+    training_labels_df,
+    tuning_features_df,
+    tuning_labels_df,) = PredictMD.split_data(
+        trainingandtuning_features_df,
+        trainingandtuning_labels_df,
+        2/3,
+        )
+
+trainingandtuning_features_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;data&quot;,
+    &quot;trainingandtuning_features_df.csv&quot;,
+    )
+trainingandtuning_labels_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;data&quot;,
+    &quot;trainingandtuning_labels_df.csv&quot;,
+    )
+testing_features_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;data&quot;,
+    &quot;testing_features_df.csv&quot;,
+    )
+testing_labels_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;data&quot;,
+    &quot;testing_labels_df.csv&quot;,
+    )
+training_features_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;data&quot;,
+    &quot;training_features_df.csv&quot;,
+    )
+training_labels_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;data&quot;,
+    &quot;training_labels_df.csv&quot;,
+    )
+tuning_features_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;data&quot;,
+    &quot;tuning_features_df.csv&quot;,
+    )
+tuning_labels_df_filename = joinpath(
+    PROJECT_OUTPUT_DIRECTORY,
+    &quot;data&quot;,
+    &quot;tuning_labels_df.csv&quot;,
+    )
+FileIO.save(trainingandtuning_features_df_filename, trainingandtuning_features_df)
+FileIO.save(trainingandtuning_labels_df_filename, trainingandtuning_labels_df)
+FileIO.save(testing_features_df_filename, testing_features_df)
+FileIO.save(testing_labels_df_filename, testing_labels_df)
+FileIO.save(training_features_df_filename, training_features_df)
+FileIO.save(training_labels_df_filename, training_labels_df)
+FileIO.save(tuning_features_df_filename, tuning_features_df)
+FileIO.save(tuning_labels_df_filename, tuning_labels_df)
+
+### End data preprocessing code
+
+
+
+# This file was generated by PredictMD version 0.34.4
+# For help, please visit https://predictmd.net</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../../boston_housing/src/06_get_model_output/">« 6.  Directly access model output</a><a class="docs-footer-nextpage" href="../02_smote/">2.  Apply SMOTE algorithm »</a></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Wednesday 11 December 2019 17:59">Wednesday 11 December 2019</span>. Using Julia version 1.2.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
