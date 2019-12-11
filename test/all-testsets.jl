@@ -58,23 +58,23 @@ if group_includes_block(TEST_GROUP, TestBlockUnitTests())
             "unit_test_interval: ",
             unit_test_interval,
             )
-        testmodulea_filename = joinpath("TestModuleA","TestModuleA.jl",)
+        testmodulea_filename = joinpath("PredictMDTestModuleA","PredictMDTestModuleA.jl",)
         testmoduleb_filename = joinpath(
-            "TestModuleB",
+            "PredictMDTestModuleB",
             "directory1",
             "directory2",
             "directory3",
             "directory4",
             "directory5",
-            "TestModuleB.jl",
+            "PredictMDTestModuleB.jl",
             )
         testmodulec_filename = joinpath(
             PredictMD.maketempdir(),
-            "TestModuleC.jl",
+            "PredictMDTestModuleC.jl",
             )
         rm(testmodulec_filename; force = true, recursive = true)
         open(testmodulec_filename, "w") do io
-            write(io, "module TestModuleC end")
+            write(io, "module PredictMDTestModuleC end")
         end
         include(testmodulea_filename)
         include(testmoduleb_filename)
