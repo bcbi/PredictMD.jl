@@ -6,26 +6,27 @@ PredictMDExtra.import_all()
 using PredictMD
 PredictMD.import_all()
 
-using CSVFiles
-using CategoricalArrays
-using DataFrames
-using DecisionTree
-using Distributions
-using FileIO
-using GLM
-using IterTools
-using Knet
-using LIBSVM
-using LinearAlgebra
-using PredictMD
-using PredictMDAPI
-using PredictMDExtra
-using RDatasets
-using Random
-using StatsModels
-using Test
-using Unitful
+import CSVFiles
+import CategoricalArrays
+import DataFrames
+import DecisionTree
+import Distributions
+import FileIO
+import GLM
+import IterTools
+import Knet
+import LIBSVM
+import LinearAlgebra
+import PredictMD
+import PredictMDAPI
+import PredictMDExtra
+import RDatasets
+import Random
+import StatsModels
+import Test
+import Unitful
 
+const Binomial = GLM.Binomial
 const Schema = StatsModels.Schema
 
 # PREDICTMD IF INCLUDE TEST STATEMENTS
