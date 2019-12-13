@@ -60,7 +60,7 @@ Zygote = "e88e6eb3-aa80-5325-afca-941959d7151f"
 [compat]
 Adapt = "1"
 BSON = "0.2"
-CSVFiles = "0.16"
+CSVFiles = "0.16, 1.0"
 CUDAapi = "2"
 Cassette = "0.2"
 CategoricalArrays = "0.7"
