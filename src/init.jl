@@ -13,6 +13,5 @@ function __init__()::Nothing
         end
     end
 
-    print_welcome_message()
     return nothing
 end
