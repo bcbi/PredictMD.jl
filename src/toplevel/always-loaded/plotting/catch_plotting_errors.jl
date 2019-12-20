@@ -3,7 +3,7 @@ function is_force_test_plots(a::AbstractDict = ENV)
     return result
 end
 
-function handle_plotting_error(e::Exception, a::AbstractDict = ENV)::Nothing
+function handle_plotting_error(e::Union{Exception, Any}, a::AbstractDict = ENV)::Nothing
     if is_force_test_plots(a)
         @warn(
             string(
