@@ -1,5 +1,9 @@
 import PredictMD
 
+if get(ENV, "PKGEVAL", "") == "true"
+    ENV["PREDICTMD_TEST_GROUP"] = "all"
+end
+
 if PredictMD.is_travis_ci() && !haskey(ENV, "PREDICTMD_TEST_GROUP")
     ENV["PREDICTMD_TEST_GROUP"] = lowercase(
         strip(
@@ -30,7 +34,7 @@ end
 
 if haskey(TEST_GROUP_STRING_TO_INSTANCE, _test_group_value)
     const TEST_GROUP = TEST_GROUP_STRING_TO_INSTANCE[_test_group_value]
-    @debug(
+    @info(
         string(
             "PREDICTMD_TEST_GROUP: \"",
             TEST_GROUP_INSTANCE_TO_STRING[TEST_GROUP],
