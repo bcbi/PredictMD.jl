@@ -2,7 +2,7 @@ name = "PredictMD"
 uuid = "3e7d7328-36f8-4388-bd01-4613c92c7370"
 authors = ["Dilum Aluthge <dilum@aluthge.com>", "Ishan Sinha <ishan_sinha@brown.edu>", "Paul Stey <paulstey@gmail.com>", "Isabel Restrepo <isabelrestre@gmail.com>", "Elizabeth Chen <liz_chen@brown.edu>", "Neil Sarkar <neil_sarkar@brown.edu>", "Brown Center for Biomedical Informatics <bcbi@brown.edu>"]
 doi = "10.5281/zenodo.1291209"
-version = "0.34.11"
+version = "0.34.12"
 
 [deps]
 Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
@@ -21,6 +21,8 @@ DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+DocumenterLaTeX = "cd674d7a-5f81-5cf3-af33-235ef1834b99"
+DocumenterMarkdown = "997ab1e6-3595-5248-9280-8efb232c3433"
 FFTW = "7a1cc6ca-52ef-59f5-83cd-3a7055c09341"
 FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
 FixedPointNumbers = "53c48c17-4a7d-5ca2-90c5-79b7896eea93"
