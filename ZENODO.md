@@ -47,13 +47,12 @@ MIT License
 
 (Replace `vMAJOR.MINOR.PATCH` with the appropriate version number. In our example, you would replace `vMAJOR.MINOR.PATCH` with `v3.6.0`.)
 
-| Identifier | Relationship |
-| ---- | ---- |
-| `https://github.com/bcbi/PredictMD.jl/tree/vMAJOR.MINOR.PATCH` | is supplemented by this upload |
-| `https://github.com/bcbi/PredictMD.jl/tree/vMAJOR.MINOR.PATCH` | is an alternate identifier of this upload |
-| `https://github.com/bcbi/PredictMD.jl/releases/tag/vMAJOR.MINOR.PATCH` | is an alternate identifier of this upload |
-| `https://predictmd.net/vMAJOR.MINOR.PATCH` | documents this upload |
-| `https://predictmd.net` | compiled/created this upload |
+| Identifier | Relationship | Optional. Resource type of the related identifier. | 
+| ---- | ---- | ---- |
+| `https://github.com/bcbi/PredictMD.jl/tree/vMAJOR.MINOR.PATCH` | is supplemented by this upload | Software |
+| `https://github.com/bcbi/PredictMD.jl/tree/vMAJOR.MINOR.PATCH` | is an alternate identifier of this upload | Software |
+| `https://github.com/bcbi/PredictMD.jl/releases/tag/vMAJOR.MINOR.PATCH` | is an alternate identifier of this upload | Software |
+| `https://predictmd.net/vMAJOR.MINOR.PATCH` | documents this upload | Software documentation |
+| `https://predictmd.net` | compiled/created this upload | Software documentation |
 
 After you have entered the correct information in all of the above fields, click the white "Save" button, and then click the blue "Publish" button. Congratulations, you are finished!
-
