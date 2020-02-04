@@ -2,7 +2,7 @@ name = "PredictMD"
 uuid = "3e7d7328-36f8-4388-bd01-4613c92c7370"
 authors = ["Dilum Aluthge <dilum@aluthge.com>", "Ishan Sinha <ishan_sinha@brown.edu>", "Paul Stey <paulstey@gmail.com>", "Isabel Restrepo <isabelrestre@gmail.com>", "Elizabeth Chen <liz_chen@brown.edu>", "Neil Sarkar <neil_sarkar@brown.edu>", "Brown Center for Biomedical Informatics <bcbi@brown.edu>"]
 doi = "10.5281/zenodo.1291209"
-version = "0.34.13"
+version = "0.34.14"
 
 [deps]
 Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
@@ -95,7 +95,7 @@ ProgressMeter = "1"
 RData = "0.6, 0.7"
 RDatasets = "0.6.4"
 ROCAnalysis = "0.3"
-Requires = "0.5, 1.0"
+Requires = "1.0.1"
 StatsBase = "0.32"
 StatsModels = "0.6"
 Tables = "0.2"
