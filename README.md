@@ -40,6 +40,11 @@ src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master/graph/badge.svg"
 /></a>
 </p>
 
+[![PkgEval][pkgeval-img]][pkgeval-url]
+
+[pkgeval-img]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/P/PredictMD.svg
+[pkgeval-url]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/P/PredictMD.html
+
 [PredictMD](https://predictmd.net) is a free and open-source Julia package that provides a uniform interface for machine learning.
 
 PredictMD makes it easy to automate machine learning workflows and create reproducible machine learning pipelines.
