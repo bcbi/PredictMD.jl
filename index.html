@@ -47,8 +47,8 @@
         <ol style="text-align: left">
           <li><kbd>import Pkg</kbd></li>
           <li><kbd>Pkg.activate("PredictMDEnvironment"; shared = true)</kbd></li>
-          <li><kbd>Pkg.add("PredictMDFull")</kbd></li>
-          <li><kbd>import PredictMDFull</kbd></li>
+          <li><kbd>Pkg.add(["PredictMD", "PredictMDExtra", "PredictMDFull"])</kbd></li>
+          <li><kbd>import PredictMD, PredictMDExtra, PredictMDFull</kbd></li>
         </ol>
         <h4>Citing</h4>
         <p class="text-justify">
@@ -59,9 +59,9 @@
           Alternatively, you can use the PredictMD Docker image for easy installation:
         </p>
         <ol style="text-align: left">
-          <li><kbd>docker run --name predictmd -it dilumaluthge/predictmd /bin/bash</kbd></li>
-          <li><kbd>julia</kbd></li>
-          <li><kbd>import PredictMDFull</kbd></li>
+          <li><kbd>docker run --name predictmd -it dilumaluthge/stopgap_predictmd /bin/bash</kbd></li>
+          <li><kbd>stopgap_julia</kbd></li>
+          <li><kbd>import PredictMD, PredictMDExtra, PredictMDFull</kbd></li>
         </ol>
         <p class="text-justify">
           If you exit the container, you can reopen it by running the following line:
