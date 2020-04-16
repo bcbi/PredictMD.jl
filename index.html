@@ -59,7 +59,7 @@
           Alternatively, you can use the PredictMD Docker image for easy installation:
         </p>
         <ol style="text-align: left">
-          <li><kbd>docker run --name predictmd -it dilumaluthge/stopgap_predictmd /bin/bash</kbd></li>
+          <li><kbd>docker run --name my_predictmd_container -it dilumaluthge/stopgap_predictmd /bin/bash</kbd></li>
           <li><kbd>stopgap_julia</kbd></li>
           <li><kbd>import PredictMD, PredictMDExtra, PredictMDFull</kbd></li>
         </ol>
@@ -67,7 +67,7 @@
           If you exit the container, you can reopen it by running the following line:
         </p>
         <p>
-          <kbd>docker start -ai predictmd</kbd>
+          <kbd>docker start -ai my_predictmd_container</kbd>
         </p>
       </main>
 
