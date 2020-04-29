@@ -42,11 +42,12 @@
         <hr>
         <h4>Installation</h4>
         <p class="text-justify">
-          To install PredictMD, simply open Julia and run the following four lines:
+          To install PredictMD, simply open Julia and run the following five lines:
         </p>
         <ol style="text-align: left">
           <li><kbd>import Pkg</kbd></li>
           <li><kbd>Pkg.activate("PredictMDEnvironment"; shared = true)</kbd></li>
+          <li><kbd>Pkg.Registry.add("General")</kbd></li>
           <li><kbd>Pkg.add(["PredictMD", "PredictMDExtra", "PredictMDFull"])</kbd></li>
           <li><kbd>import PredictMD, PredictMDExtra, PredictMDFull</kbd></li>
         </ol>
