@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+      - staging
+      - trying
+    tags: '*'
+
+jobs:
+  CI:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        julia-version: ["1"]
+        julia-arch: [x64]
+        os: [macos-latest, ubuntu-latest]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - uses: julia-actions/setup-julia@v1
+        with:
+          version: ${{ matrix.julia-version }}
+      - if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          sudo apt-get update
+          # sudo apt-get install pgf
+          sudo apt-get install pdf2svg poppler-utils texlive-binaries texlive-latex-base texlive-latex-extra texlive-luatex texlive-pictures tree
+      - if: startsWith(matrix.os, 'macOS')
+        run: |
+          brew update
+          brew install pdf2svg tree
+          brew cask install basictex
+          echo "::add-path::/Library/TeX/texbin"
+      - if: startsWith(matrix.os, 'macOS')
+        run: |
+          sudo tlmgr update --self
+          sudo tlmgr install luatex85
+          sudo tlmgr install pgfplots
+          sudo tlmgr install standalone
+      - uses: julia-actions/julia-buildpkg@latest
+      - uses: julia-actions/julia-runtest@latest
+        env:
+          JULIA_DEBUG: "all"
+          PREDICTMD_OPEN_PLOTS_DURING_TESTS: "true"
+          PREDICTMD_TEST_GROUP: "all"
+          PREDICTMD_TEST_PLOTS: "true"
+      - uses: julia-actions/julia-processcoverage@v1
+      - uses: codecov/codecov-action@v1

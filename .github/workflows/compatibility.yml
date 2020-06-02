@@ -1,0 +1,19 @@
+name: Compatibility
+
+on:
+  push:
+    branches:
+      - master
+      - staging
+      - trying
+    tags: '*'
+
+jobs:
+  Compatibility:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: julia-actions/setup-julia@v1
+        with:
+          version: "1"
+      - run: ./ci/github_actions/compatibility.sh
