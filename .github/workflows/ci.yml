@@ -16,7 +16,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        julia-version: ["1"]
+        julia-version: ["1", "nightly"]
         julia-arch: [x64]
         os: [macos-latest, ubuntu-latest]
       fail-fast: false
@@ -28,7 +28,6 @@ jobs:
       - if: startsWith(matrix.os, 'ubuntu')
         run: |
           sudo apt-get update
-          # sudo apt-get install pgf
           sudo apt-get install pdf2svg poppler-utils texlive-binaries texlive-latex-base texlive-latex-extra texlive-luatex texlive-pictures tree
       - if: startsWith(matrix.os, 'macOS')
         run: |

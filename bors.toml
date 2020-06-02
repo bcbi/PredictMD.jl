@@ -6,7 +6,7 @@ status = [
     "CI",
     "Compatibility",
     "Docs",
-    # "VersionVigilante",
+    "VersionVigilante",
     # "codecov/patch",
     # "codecov/project",
 ]
