@@ -3,13 +3,15 @@ block_labels = [ "DO NOT MERGE" ]
 delete_merged_branches = true
 
 status = [
+    "CI",
+    "Compatibility",
+    "Docs",
+    # "VersionVigilante",
     # "codecov/patch",
     # "codecov/project",
-    "continuous-integration/travis-ci/push",
-    "VersionVigilante",
 ]
 
-timeout_sec = 576000
+timeout_sec = 36000
 
 [committer]
 name = "BCBI Bot"
