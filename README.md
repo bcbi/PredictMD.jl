@@ -16,7 +16,7 @@
 [docs-development-img]: https://img.shields.io/badge/docs-development-blue.svg
 [docs-development-url]: https://predictmd.net/development
 
-[pkgeval-img]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/P/PredictMD.svg
+[pkgeval-img]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/P/PredictMD.named.svg
 [pkgeval-url]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/P/PredictMD.html
 [ghactions-ci-img]: https://github.com/bcbi/PredictMD.jl/workflows/CI/badge.svg?branch=master
 [ghactions-ci-url]: https://github.com/bcbi/PredictMD.jl/actions?query=workflow%3ACI+branch%3Amaster
