@@ -3,7 +3,10 @@ block_labels = [ "DO NOT MERGE" ]
 delete_merged_branches = true
 
 status = [
-    "CI",
+    "CI (1, x64, macos-latest)",
+    "CI (1, x64, ubuntu-latest)",
+    "CI (nightly, x64, macos-latest)",
+    "CI (nightly, x64, ubuntu-latest)",
     "Compatibility",
     "Docs",
     "VersionVigilante",
