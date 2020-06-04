@@ -37,7 +37,7 @@ jobs:
           echo "::add-path::/Library/TeX/texbin"
       - if: startsWith(matrix.os, 'macOS')
         run: |
-          sudo tlmgr update --self
+          sudo tlmgr update --self || sudo tlmgr update --self || sudo tlmgr update --self
           sudo tlmgr install luatex85
           sudo tlmgr install pgfplots
           sudo tlmgr install standalone

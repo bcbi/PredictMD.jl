@@ -1,11 +1,15 @@
 name: Docs
 
 on:
+  pull_request:
+    branches:
+      - master
   push:
     branches:
       - master
+      - staging
+      - trying
     tags: '*'
-  pull_request:
 
 jobs:
   Docs:
