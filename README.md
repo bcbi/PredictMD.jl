@@ -1,49 +1,27 @@
 # PredictMD - Uniform interface for machine learning in Julia
 
-<p>
-<a
-href="https://doi.org/10.5281/zenodo.1291209">
-<img
-src="https://zenodo.org/badge/109460252.svg"/>
-</a>
-</p>
+[![Zenodo][zenodo-img]][zenodo-url]
 
-<p>
-<a
-href="https://predictmd.net/stable">
-<img
-src="https://img.shields.io/badge/docs-stable-blue.svg" />
-</a>
-<a
-href="https://predictmd.net/development">
-<img
-src="https://img.shields.io/badge/docs-development-blue.svg" />
-</a>
-</p>
-
-<p>
-<a
-href="https://app.bors.tech/repositories/12304">
-<img
-src="https://bors.tech/images/badge_small.svg"
-alt="Bors enabled">
-</a>
-<a
-href="https://travis-ci.org/bcbi/PredictMD.jl/branches">
-<img
-src="https://travis-ci.org/bcbi/PredictMD.jl.svg?branch=master"
-/></a>
-<a
-href="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master">
-<img
-src="https://codecov.io/gh/bcbi/PredictMD.jl/branch/master/graph/badge.svg"
-/></a>
-</p>
+[![Documentation (stable)][docs-stable-img]][docs-stable-url]
+[![Documentation (development)][docs-development-img]][docs-development-url]
 
 [![PkgEval][pkgeval-img]][pkgeval-url]
+[![Continuous integration (CI)][ghactions-ci-img]][ghactions-ci-url]
+[![Code coverage][codecov-img]][codecov-url]
+
+[zenodo-img]: https://zenodo.org/badge/109460252.svg
+[zenodo-url]: https://doi.org/10.5281/zenodo.1291209
+[docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
+[docs-stable-url]: https://predictmd.net/stable
+[docs-development-img]: https://img.shields.io/badge/docs-development-blue.svg
+[docs-development-url]: https://predictmd.net/development
 
 [pkgeval-img]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/P/PredictMD.svg
 [pkgeval-url]: https://juliaci.github.io/NanosoldierReports/pkgeval_badges/P/PredictMD.html
+[ghactions-ci-img]: https://github.com/bcbi/PredictMD.jl/workflows/CI/badge.svg?branch=master
+[ghactions-ci-url]: https://github.com/bcbi/PredictMD.jl/actions?query=workflow%3ACI+branch%3Amaster
+[codecov-img]: https://codecov.io/gh/bcbi/PredictMD.jl/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/bcbi/PredictMD.jl/branch/master
 
 [PredictMD](https://predictmd.net) is a free and open-source Julia package that provides a uniform interface for machine learning.
 
