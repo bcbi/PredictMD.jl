@@ -15,16 +15,23 @@ jobs:
   CI:
     runs-on: ${{ matrix.os }}
     strategy:
-      matrix:
-        julia-version: ["1", "nightly"]
-        julia-arch: [x64]
-        os: [macos-latest, ubuntu-latest]
       fail-fast: false
+      matrix:
+        julia-version:
+          - "1.5"
+          - "1"
+          - "nightly"
+        arch:
+          - x64
+        os:
+          - macos-latest
+          - ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: julia-actions/setup-julia@v1
         with:
           version: ${{ matrix.julia-version }}
+          arch: ${{ matrix.arch }}
       - if: startsWith(matrix.os, 'ubuntu')
         run: |
           sudo apt-get update
@@ -33,8 +40,8 @@ jobs:
         run: |
           brew update
           brew install pdf2svg tree
-          brew cask install basictex
-          echo "::add-path::/Library/TeX/texbin"
+          brew install --cask basictex
+          echo "/Library/TeX/texbin" >> $GITHUB_PATH
       - if: startsWith(matrix.os, 'macOS')
         run: |
           sudo tlmgr update --self || sudo tlmgr update --self || sudo tlmgr update --self
@@ -44,7 +51,7 @@ jobs:
       - uses: julia-actions/julia-buildpkg@latest
       - uses: julia-actions/julia-runtest@latest
         env:
-          JULIA_DEBUG: "all"
+          # JULIA_DEBUG: "all"
           PREDICTMD_OPEN_PLOTS_DURING_TESTS: "true"
           PREDICTMD_TEST_GROUP: "all"
           PREDICTMD_TEST_PLOTS: "true"
