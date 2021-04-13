@@ -1,5 +1,3 @@
-import Adapt
-import CUDAapi
 # import Flux
 # import GPUArrays
 # import NNlib

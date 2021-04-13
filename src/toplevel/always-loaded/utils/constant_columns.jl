@@ -1,24 +1,4 @@
 import DataFrames
-import StatsBase
-
-function get_countmap(itr; skip_missings::Bool = true)
-    if skip_missings
-        result = get_countmap_skip_missings(itr)
-    else
-        result = get_countmap_include_missings(itr)
-    end
-    return result
-end
-
-function get_countmap_skip_missings(itr)
-    result = StatsBase.countmap(collect(skipmissing(itr)))
-    return result
-end
-
-function get_countmap_include_missings(itr)
-    result = StatsBase.countmap(collect(itr))
-    return result
-end
 
 function get_unique_values(itr; skip_missings::Bool = true)
     if skip_missings
@@ -30,13 +10,11 @@ function get_unique_values(itr; skip_missings::Bool = true)
 end
 
 function get_unique_values_skip_missings(itr)
-    result = keys(get_countmap_skip_missings(itr))
-    return result
+    return unique(skipmissing(collect(itr)))
 end
 
-function get_unique_values_include_missings(itr)
-    result = keys(get_countmap_include_missings(itr))
-    return result
+function get_unique_values_include_missings(itr) 
+    return unique(collect(itr))
 end
 
 function get_number_of_unique_values(itr; skip_missings::Bool = true)::Int
