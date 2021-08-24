@@ -7,6 +7,6 @@ jobs:
   CompatHelper:
     runs-on: ubuntu-latest
     steps:
-      - uses: JuliaRegistries/compathelper-action@dpa/default-token
+      - uses: JuliaRegistries/compathelper-action@main
         with:
           ssh: ${{ secrets.DOCUMENTER_KEY }}
