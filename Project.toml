@@ -54,7 +54,7 @@ UnicodePlots = "b8865327-cd53-5732-bb35-84acbb429228"
 ValueHistories = "98cad3c8-aec3-5f06-8e41-884608649ab7"
 
 [compat]
-BSON = "0.2"
+BSON = "0.2, 0.3"
 CSVFiles = "0.16, 1.0"
 Cassette = "0.2, 0.3"
 CategoricalArrays = "0.7, 0.8"
